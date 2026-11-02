@@ -117,6 +117,7 @@ export function Controls() {
         )}
       </section>
 
+      <Shoulders />
       <section>
         <h3>Cara</h3>
         <div className="face-row">
@@ -262,6 +263,40 @@ function Gestures() {
         ))}
       </div>
       <p className="muted small">Se añade en el instante actual ({time.toFixed(1).replace('.', ',')} s). Ctrl+Z para quitarlo.</p>
+    </section>
+  )
+}
+
+/** Subir los hombros (los dos o uno): mueve los brazos desde el hombro y la camiseta los acompaña. */
+function Shoulders() {
+  const project = useStore((s) => s.project)
+  const time = useStore((s) => s.time)
+  const keyMany = useStore((s) => s.keyMany)
+  const ch = activeCharacter(project)
+  const inst = project.instances[0]
+  const sides = (['izq', 'der'] as const).filter((s) => ch.parts.some((p) => p.id === `brazo_${s}`))
+  if (!sides.length) return null
+  const fore = ch.parts.find((p) => p.id.startsWith('antebrazo_'))
+  const top = 0.12 * (fore ? Math.hypot(fore.offset.x, fore.offset.y) : 200)
+  const pose = poseAt(ch, inst.tracks, time)
+  const level = (s: string) => Math.max(0, Math.min(1, -(pose.parts[`brazo_${s}`]?.y ?? 0) / top))
+  const set = (which: readonly string[], v: number) =>
+    keyMany(Object.fromEntries(which.map((s) => [`part:brazo_${s}:y`, Math.round(-v * top)])), `hombros:${which.join()}`)
+  return (
+    <section>
+      <h3>Hombros</h3>
+      <label className="slider">
+        <span className="slider-label">Los dos</span>
+        <input type="range" min={0} max={1} step={0.01} value={Math.max(...sides.map(level))} onChange={(e) => set(sides, Number(e.target.value))} />
+        <span className="slider-value">{Math.round(Math.max(...sides.map(level)) * 100)}%</span>
+      </label>
+      {sides.map((s) => (
+        <label className="slider" key={s}>
+          <span className="slider-label">{s === 'izq' ? 'Izquierdo' : 'Derecho'}</span>
+          <input type="range" min={0} max={1} step={0.01} value={level(s)} onChange={(e) => set([s], Number(e.target.value))} />
+          <span className="slider-value">{Math.round(level(s) * 100)}%</span>
+        </label>
+      ))}
     </section>
   )
 }

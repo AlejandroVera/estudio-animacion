@@ -206,7 +206,12 @@ function drawSkinned(
   const childPose = childPl ? pose.parts[childPl.part.id] : undefined
   const bendsParent = !!parentPl && !still(own)
   const bendsChild = !!childPl && !!childPose && Math.abs(childPose.rot) > 0.01
-  if (!bendsParent && !bendsChild) return false
+  const lifts = (skin.lift ?? []).flatMap((lf) => {
+    const c = character.parts.find((p) => p.id === lf.id)
+    const pp = pose.parts[lf.id]
+    return c && pp && (Math.abs(pp.x) > 0.01 || Math.abs(pp.y) > 0.01) ? [{ off: c.offset, dx: pp.x, dy: pp.y, r: lf.r }] : []
+  })
+  if (!bendsParent && !bendsChild && !lifts.length) return false
 
   const axis = partAxis(part, character, W, H)
   const A = part.anchor
@@ -215,9 +220,11 @@ function drawSkinned(
   const nx = Math.max(2, Math.ceil(W / 30))
   const ny = Math.max(2, Math.ceil(H / 30))
   // Matriz de la pieza con una fracción a (0..1) de su propio movimiento respecto al padre.
+  // El desplazamiento se aplica entero (la pieza sube o baja en bloque, el torso la acompaña con
+  // «lift»); solo el giro y el tamaño se reparten a lo largo de la articulación.
   const partial = (a: number) =>
     parentPl!.matrix
-      .translate(part.offset.x + a * own.x, part.offset.y + a * own.y)
+      .translate(part.offset.x + own.x, part.offset.y + own.y)
       .rotate(a * own.rot)
       .scale(1 + a * (own.scale - 1))
   const cache = new Map<number, DOMMatrix>()
@@ -248,7 +255,18 @@ function drawSkinned(
           deformed = true
         }
       }
-      const p = m.transformPoint(new DOMPoint(lx, ly))
+      let qx = lx
+      let qy = ly
+      for (const lf of lifts) {
+        const d = Math.hypot(lx - lf.off.x, ly - lf.off.y)
+        const c = 1 - smooth((d - lf.r[0]) / (lf.r[1] - lf.r[0]))
+        if (c > 0) {
+          qx += c * lf.dx
+          qy += c * lf.dy
+          deformed = true
+        }
+      }
+      const p = m.transformPoint(new DOMPoint(qx, qy))
       src.push({ x: u, y: v })
       dst.push({ x: p.x, y: p.y })
       moved.push(deformed)

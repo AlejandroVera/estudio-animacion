@@ -35,6 +35,17 @@ export function svgSrc(box: Box, body: string): string {
  */
 function autoSkin(d: PartDef, defs: PartDef[]): Part['skin'] | undefined {
   if (d.skin || !d.image) return d.skin
+  if (d.id === 'torso') {
+    // Cuando un brazo sube o baja desde el hombro, la camiseta del hombro lo acompaña.
+    const lift = ['brazo_izq', 'brazo_der'].flatMap((id) => {
+      const arm = defs.find((x) => x.id === id && x.parent === 'torso')
+      const fore = defs.find((x) => x.parent === id)
+      if (!arm || !fore) return []
+      const L = Math.hypot(fore.pivot.x - arm.pivot.x, fore.pivot.y - arm.pivot.y)
+      return [{ id, r: [0.38 * L, 0.62 * L] as [number, number] }]
+    })
+    return lift.length ? { lift } : undefined
+  }
   const m = /^(brazo|antebrazo|muslo|pierna)_(.+)$/.exec(d.id)
   if (!m) return undefined
   const [, kind, side] = m

@@ -40,7 +40,12 @@ export interface Part {
    *    misma; en medio mezcla. Hace que hombros, caderas o codos se doblen suavemente.
    *  - child: igual respecto a la articulación de una pieza hija (medido desde esa articulación).
    */
-  skin?: { parent?: [number, number]; child?: { id: string; range: [number, number] } }
+  skin?: {
+    parent?: [number, number]
+    child?: { id: string; range: [number, number] }
+    /** La zona alrededor de la articulación de una hija acompaña su desplazamiento (hombros que suben). */
+    lift?: { id: string; r: [number, number] }[]
+  }
 }
 
 export interface Character {
