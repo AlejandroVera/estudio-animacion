@@ -42,11 +42,15 @@ en lenguaje llano y pídele que pruebe en la web publicada.
 
 ## Hoja de ruta
 1. ✅ Editor: piezas, articulaciones, cara, línea de tiempo, exportar MP4.
-2. Copiloto: órdenes en español → claves de animación (Claude API).
+2. ✅ Copiloto: órdenes en español (escritas o dictadas con el micrófono del navegador) → claves de
+   animación. `api/copiloto.ts` (función de Vercel) llama a Claude Opus 5.5 con salida JSON
+   estructurada; `src/copilot/context.ts` le pasa piezas con su ángulo de reposo, variantes de cara y
+   pistas actuales, y valida/aplica la respuesta en un solo paso de deshacer. Necesita en Vercel
+   `ANTHROPIC_API_KEY` y `CLAVE_ESTUDIO` (contraseña que pide la web).
 3. Voz (ElevenLabs) + bocas sincronizadas.
 4. Asistente «Crear personaje»: diseño, vistas, despiece, bocas/ojos con IA (fal.ai).
 5. Escenas: fondos, cámara, varios personajes, subtítulos, plantillas.
 
 Ideas pendientes anotadas: cinemática inversa (arrastrar la mano mueve todo el brazo),
-proteger la web con contraseña antes de añadir claves, guardar en IndexedDB cuando haya
+guardar en IndexedDB cuando haya
 imágenes grandes.

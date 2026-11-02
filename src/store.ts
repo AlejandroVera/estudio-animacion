@@ -51,6 +51,8 @@ interface State {
   setProjectProps: (patch: Partial<Pick<Project, 'duration' | 'background' | 'name'>>) => void
   /** Cambia el personaje de la escena por otro de la biblioteca, conservando la animación. */
   setCharacter: (libraryId: string) => void
+  /** Sustituye todas las pistas (y la duración) en un solo paso de deshacer: lo usa el copiloto. */
+  replaceTracks: (tracks: Tracks, duration: number) => void
 }
 
 function loadSaved(): Project | null {
@@ -233,6 +235,12 @@ export const useStore = create<State>((set, get) => ({
     const { project } = get()
     const [inst, ...rest] = project.instances
     get().commit({ ...project, instances: [{ ...inst, ...patch }, ...rest] }, tag)
+  },
+
+  replaceTracks: (tracks, duration) => {
+    const { project } = get()
+    get().commit({ ...withTracks(project, () => tracks), duration })
+    set({ selectedKey: null })
   },
 
   setCharacter: (libraryId) => {

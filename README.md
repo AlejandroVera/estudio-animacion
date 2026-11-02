@@ -2,7 +2,13 @@
 
 Herramienta para animar personajes de dibujo animado por piezas y sacar vídeos, sin After Effects.
 
-## Cómo se usa (fase 1)
+## Copiloto IA
+
+Arriba a la derecha. Escribe (o dicta con 🎤) lo que quieres que haga el personaje —«que salude
+con la mano derecha y sonría», «que diga hola y parpadee»— y pulsa **Animar ✨**. La primera vez
+pide la contraseña del estudio. Lo que hace se añade a la animación y **Ctrl+Z** lo deshace entero.
+
+## Cómo se usa a mano
 
 **Seleccionar una pieza:** púlsala en el dibujo, en la lista de la izquierda o en el desplegable «Pieza».
 

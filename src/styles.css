@@ -537,3 +537,61 @@ select {
   padding: 18px;
   color: var(--muted);
 }
+
+/* ---------- Copiloto ---------- */
+.copilot {
+  background: linear-gradient(180deg, rgba(59, 130, 246, 0.1), transparent);
+}
+.copilot-input {
+  display: flex;
+  gap: 6px;
+  align-items: stretch;
+}
+.copilot textarea,
+.copilot-pass {
+  width: 100%;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 8px;
+  resize: vertical;
+  font: inherit;
+  color: inherit;
+}
+.copilot textarea:focus,
+.copilot-pass:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+.copilot-pass {
+  margin-top: 6px;
+}
+.btn.mic {
+  flex: none;
+}
+.btn.mic.on {
+  background: var(--danger);
+  border-color: var(--danger);
+  color: #fff;
+}
+.btn.full {
+  width: 100%;
+  margin-top: 8px;
+}
+.copilot-reply {
+  margin: 10px 0 4px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.35);
+}
+.copilot-reply.error {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.4);
+}
+.copilot-examples {
+  margin-top: 10px;
+}
+.copilot .muted.small {
+  margin: 8px 0 0;
+}

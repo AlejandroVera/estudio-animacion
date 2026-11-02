@@ -2,6 +2,7 @@ import { useRef } from 'react'
 import { KEY_EPS, poseAt } from '../model/anim'
 import type { Tracks } from '../model/types'
 import { activeCharacter, useStore } from '../store'
+import { Copilot } from './Copilot'
 
 function hasKeyAt(tracks: Tracks, channel: string, t: number) {
   return (tracks[channel] ?? []).some((k) => Math.abs(k.t - t) < KEY_EPS)
@@ -88,6 +89,7 @@ export function Controls() {
 
   return (
     <aside className="panel controls">
+      <Copilot />
       <section>
         <h3>Pieza</h3>
         <select value={selectedPart ?? ''} onChange={(e) => selectPart(e.target.value || null)}>

@@ -9,12 +9,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "1.4.0",
     "mp4-muxer": "5.2.2",
     "react": "19.3.1",
     "react-dom": "19.3.1",
     "zustand": "5.0.16"
   },
   "devDependencies": {
+    "@types/node": "22.19.1",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
     "@vitejs/plugin-react": "5.2.0",
