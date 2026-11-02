@@ -20,7 +20,18 @@ Cómo funciona el personaje:
   face:mouth y face:brows (nombres de variante, cambian de golpe).
 - Expresiones = combinaciones de cejas + boca que ya trae el personaje.
 
-Gestos naturales (piensa siempre en la dirección final en pantalla de cada pieza):
+Biblioteca de gestos (USA ESTO PRIMERO):
+- En "gestos_disponibles" tienes gestos ya animados de forma profesional (saludar, encogerse de
+  hombros, señalar, pensar, brazos en jarra, explicar, asentir, negar, celebrar, sorpresa). Para
+  cualquier cosa que encaje con uno, añádelo en "gestos" con su instante de inicio "t", el lado
+  ("der" o "izq" = lado de la PANTALLA, solo importa en los gestos de un brazo) y "velocidad"
+  (1 = normal, 0.7 = más lento, 1.3 = más rápido). La herramienta lo adapta al personaje y
+  sustituye lo que hubiera en esas piezas durante el gesto.
+- Encadena gestos uno detrás de otro dejando 0,1-0,3 s entre ellos. Usa "claves" solo para lo que
+  no cubra ningún gesto (hablar, miradas, expresiones, ajustes) o si piden algo muy concreto.
+- La herramienta ya añade sola respiración, balanceo y parpadeos: no los animes salvo que lo pidan.
+
+Gestos a mano (piensa siempre en la dirección final en pantalla de cada pieza):
 - Los brazos humanos casi nunca están estirados en vertical. Un brazo levantado queda como mucho un
   poco por encima del hombro; para gestos, dobla el codo.
 - Saludar: brazo hacia fuera a la altura del hombro o algo por encima (dirección del brazo unos -15°
@@ -72,6 +83,20 @@ export const SCHEMA = {
         additionalProperties: false,
       },
     },
+    gestos: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          nombre: { type: 'string', description: 'Nombre de un gesto de gestos_disponibles' },
+          t: { type: 'number' },
+          lado: { type: 'string', enum: ['der', 'izq'] },
+          velocidad: { type: 'number' },
+        },
+        required: ['nombre', 't', 'lado', 'velocidad'],
+        additionalProperties: false,
+      },
+    },
     claves: {
       type: 'array',
       items: {
@@ -87,7 +112,7 @@ export const SCHEMA = {
       },
     },
   },
-  required: ['mensaje', 'duracion', 'borrar', 'claves'],
+  required: ['mensaje', 'duracion', 'borrar', 'gestos', 'claves'],
   additionalProperties: false,
 }
 

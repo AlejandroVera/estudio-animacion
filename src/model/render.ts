@@ -1,4 +1,5 @@
 import { poseAt } from './anim'
+import { withLife } from './life'
 import type { Character, CharacterInstance, Part, Pose, Project, Vec } from './types'
 
 // ---------- Imágenes ----------
@@ -113,8 +114,13 @@ export function drawCharacter(
   inst: CharacterInstance,
   t: number,
   restPose = false,
+  life = false,
 ): Placed[] {
-  const pose = poseAt(character, inst.tracks, t)
+  let pose = poseAt(character, inst.tracks, t)
+  if (life && !restPose) {
+    const fore = character.parts.find((p) => p.id === 'antebrazo_der' || p.id === 'antebrazo_izq')
+    pose = withLife(pose, t, inst.tracks, fore ? Math.hypot(fore.offset.x, fore.offset.y) : 200)
+  }
   const placed = layout(character, inst, pose, restPose)
   const byId = new Map(placed.map((p) => [p.part.id, p]))
   for (const pl of placed) {
@@ -138,7 +144,7 @@ export function drawFrame(g: CanvasRenderingContext2D, project: Project, t: numb
   g.fillRect(0, 0, project.width, project.height)
   for (const inst of project.instances) {
     const c = project.characters[inst.characterId]
-    if (c) drawCharacter(g, c, inst, t)
+    if (c) drawCharacter(g, c, inst, t, false, project.vida !== false)
   }
   g.restore()
 }

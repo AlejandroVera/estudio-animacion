@@ -69,7 +69,7 @@ export function Stage() {
     const inst = project.instances[0]
     const ch = activeCharacter(project)
     const rest = mode === 'articulaciones'
-    placedRef.current = drawCharacter(g, ch, inst, time, rest)
+    placedRef.current = drawCharacter(g, ch, inst, time, rest, project.vida !== false)
     g.restore()
 
     // Ayudas visuales (no salen en el vídeo)

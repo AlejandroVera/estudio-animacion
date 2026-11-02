@@ -46,6 +46,18 @@ en lenguaje llano y pídele que pruebe en la web publicada.
 - `public/personajes/rosa/` son las piezas de la primera versión; solo se conservan para que los
   proyectos guardados antiguos sigan viéndose.
 
+## Gestos y vida automática
+- `src/model/gestures.ts`: biblioteca de gestos (saludar, encogerse, señalar, pensar, jarras,
+  explicar, asentir, negar, celebrar, sorpresa) escritos para el lado derecho en direcciones de
+  pantalla; `expandGesture` los traduce a giros de cualquier personaje con el esqueleto estándar
+  (ángulos de reposo + espejo para el lado izquierdo). Desplazamientos en fracciones de la longitud
+  del brazo. Al añadir o retocar un gesto, revisarlo fotograma a fotograma (modo `?pruebas`, que
+  expone el estado en `window.estudio`).
+- El copiloto (API y MCP) recibe `gestos_disponibles` y responde `gestos: [{nombre, t, lado,
+  velocidad}]`; `applyCopilot` los expande y sustituye lo que hubiera en esos canales.
+- `src/model/life.ts`: respiración, balanceo y parpadeos sumados al dibujar (no son claves).
+  Se desactiva con «Vida automática» (`project.vida === false`).
+
 ## Hoja de ruta
 1. ✅ Editor: piezas, articulaciones, cara, línea de tiempo, exportar MP4.
 2. ✅ Copiloto, por dos vías que comparten la guía de animación y el formato (`api/_guia.ts`):

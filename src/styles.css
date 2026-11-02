@@ -629,3 +629,19 @@ select {
 .connector-url .btn.small {
   margin-top: 0;
 }
+
+.gesture-side {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.small-seg button {
+  padding: 3px 10px;
+  font-size: 12px;
+}
+.field input[type='checkbox'] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent);
+}

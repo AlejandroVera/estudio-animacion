@@ -14,7 +14,7 @@ export interface LibraryEntry {
 }
 
 export const LIBRARY: LibraryEntry[] = [
-  { id: 'chico-rosa', name: 'Chico rosa', make: chicoRosaCharacter, place: { x: 540, y: 1100, scale: 0.78 }, background: '#CE544E' },
+  { id: 'chico-rosa', name: 'Chico rosa', make: chicoRosaCharacter, place: { x: 540, y: 1230, scale: 0.6 }, background: '#CE544E' },
   { id: 'pepe', name: 'Pepe (dibujo simple)', make: sampleCharacter, place: { x: 540, y: 1250, scale: 1.6 }, background: '#F4EFE6' },
 ]
 

@@ -2,6 +2,7 @@
 // y aplica su respuesta como claves de animación.
 
 import { KEY_EPS, poseAt, removeKey, setKey } from '../model/anim'
+import { expandGesture, GESTOS } from '../model/gestures'
 import { layout } from '../model/render'
 import type { Character, Ease, Project, Tracks } from '../model/types'
 
@@ -9,6 +10,7 @@ export interface CopilotResult {
   mensaje: string
   duracion: number
   borrar: { canal: string; desde: number; hasta: number }[]
+  gestos?: { nombre: string; t: number; lado: 'der' | 'izq'; velocidad: number }[]
   claves: { canal: string; t: number; valor: string; transicion: Ease }[]
 }
 
@@ -61,6 +63,12 @@ export function buildContext(project: Project, character: Character, time: numbe
       cejas: variantsOf('brows'),
       expresiones: character.expressions,
     },
+    gestos_disponibles: GESTOS.map((g) => ({
+      nombre: g.id,
+      descripcion: g.descripcion,
+      duracion: g.duracion,
+      lado: g.lados === 'uno' ? 'elige "der" o "izq"' : 'da igual',
+    })),
     pistas,
   }
 }
@@ -85,13 +93,33 @@ export function applyCopilot(
     }
   }
 
+  // Gestos de la biblioteca: se convierten en claves para este personaje y sustituyen lo que
+  // hubiera en sus canales durante el gesto.
+  const extra: CopilotResult['claves'] = []
+  let end = duration
+  for (const g of result.gestos ?? []) {
+    const gesto = GESTOS.find((x) => x.id === g.nombre)
+    if (!gesto) continue
+    const lado = g.lado === 'izq' ? 'izq' : 'der'
+    const t0 = Math.max(0, snap(g.t))
+    const { claves, canales, fin } = expandGesture(gesto, lado, t0, Math.min(3, Math.max(0.3, g.velocidad || 1)), character, project.instances[0])
+    for (const ch of canales) {
+      for (const k of tracks[ch] ?? []) {
+        if (k.t >= t0 - KEY_EPS && k.t <= fin + KEY_EPS) tracks = removeKey(tracks, ch, k.t)
+      }
+    }
+    extra.push(...claves)
+    end = Math.max(end, fin)
+  }
+  const finalDuration = Math.min(120, Math.ceil(end * 2) / 2)
+
   const partIds = new Set(character.parts.map((p) => p.id))
   const variants = (role: string) => new Set(Object.keys(character.parts.find((p) => p.role === role)?.variants ?? {}))
   const mouths = variants('mouth')
   const brows = variants('brows')
   let added = 0
-  for (const k of result.claves ?? []) {
-    const t = Math.min(duration, snap(k.t))
+  for (const k of [...extra, ...(result.claves ?? [])]) {
+    const t = Math.min(finalDuration, snap(k.t))
     const ease: Ease = ['suave', 'lineal', 'salto'].includes(k.transicion) ? k.transicion : 'suave'
     let value: number | string
     if (k.canal === 'face:mouth' || k.canal === 'face:brows') {
@@ -109,5 +137,5 @@ export function applyCopilot(
     tracks = setKey(tracks, k.canal, t, value, typeof value === 'string' ? 'salto' : ease)
     added++
   }
-  return { tracks, duration, added }
+  return { tracks, duration: finalDuration, added }
 }

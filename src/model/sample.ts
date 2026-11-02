@@ -4,8 +4,10 @@
 // que la herramienta genere con IA: una imagen por pieza + articulación + padre.
 
 import { buildParts as build, type PartDef } from './build'
+import { setKey } from './anim'
+import { expandGesture, GESTOS } from './gestures'
 import { LIBRARY } from './library'
-import type { Character, Project } from './types'
+import type { Character, Project, Tracks } from './types'
 
 const INK = '#2B2B2B'
 const SKIN = '#F2C9A0'
@@ -195,38 +197,32 @@ export function sampleCharacter(): Character {
   }
 }
 
-const k = (t: number, v: number | string, ease: 'suave' | 'lineal' | 'salto' = typeof v === 'string' ? 'salto' : 'suave') => ({ t, v, ease })
 
 export function sampleProject(): Project {
   const entry = LIBRARY[0]
   const character = entry.make()
+  const inst = { characterId: character.id, ...entry.place, tracks: {} as Tracks }
+  // Ejemplo hecho con gestos de la biblioteca: saluda, explica algo y se encoge de hombros.
+  let tracks: Tracks = {}
+  let fin = 0
+  for (const [id, t0, lado] of [['saludar', 0.2, 'der'], ['explicar', 3.0, 'der'], ['encogerse', 5.9, 'der']] as const) {
+    const gesto = GESTOS.find((g) => g.id === id)!
+    const r = expandGesture(gesto, lado, t0, 1, character, inst)
+    for (const c of r.claves) {
+      const v = c.transicion === 'salto' && Number.isNaN(Number(c.valor)) ? c.valor : Number(c.valor)
+      tracks = setKey(tracks, c.canal, Math.round(c.t * 30) / 30, v, c.transicion)
+    }
+    fin = Math.max(fin, r.fin)
+  }
   return {
     version: 1,
     name: 'Proyecto de ejemplo',
     width: 1080,
     height: 1920,
     fps: 30,
-    duration: 6,
+    duration: Math.ceil(fin + 0.5),
     background: entry.background,
     characters: { [character.id]: character },
-    instances: [
-      {
-        characterId: character.id,
-        ...entry.place,
-        tracks: {
-          // Saludo humano: el brazo sube hasta el hombro, el codo se dobla con el antebrazo vertical y la
-          // mano se agita; el antebrazo llega un poco después que el brazo y cuerpo y cabeza acompañan.
-          'part:brazo_der:rot': [k(0, 0), k(0.2, 4), k(0.65, -83), k(2.0, -83), k(2.5, 0)],
-          'part:antebrazo_der:rot': [k(0, 0), k(0.45, -20), k(0.75, -70), k(0.95, -92), k(1.2, -50), k(1.45, -92), k(1.7, -50), k(1.95, -70), k(2.1, -70), k(2.6, 0)],
-          'part:brazo_izq:rot': [k(0, 0), k(0.65, 3), k(2.5, 0)],
-          'part:cabeza:rot': [k(0, 0), k(0.7, 6), k(2.0, 6), k(2.6, 0), k(4, -4), k(5, 0)],
-          'part:torso:rot': [k(0, 0), k(0.65, -2), k(2.0, -2), k(2.5, 0)],
-          'face:mouth': [k(0, 'cerrada'), k(0.4, 'sonrisa'), k(4, 'O'), k(5, 'sonrisa')],
-          'face:brows': [k(0, 'neutral'), k(4, 'sorprendido'), k(5, 'neutral')],
-          'face:blink': [k(0.9, 0), k(1.0, 1), k(1.1, 0), k(3.4, 0), k(3.5, 1), k(3.6, 0)],
-          'face:gazeX': [k(0, 0), k(2.8, 0), k(3.1, 0.9), k(4.4, 0.9), k(4.8, 0)],
-        },
-      },
-    ],
+    instances: [{ ...inst, tracks }],
   }
 }

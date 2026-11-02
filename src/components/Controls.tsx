@@ -3,6 +3,9 @@ import { KEY_EPS, poseAt } from '../model/anim'
 import type { Tracks } from '../model/types'
 import { activeCharacter, useStore } from '../store'
 import { Copilot } from './Copilot'
+import { applyCopilot } from '../copilot/context'
+import { GESTOS } from '../model/gestures'
+import { useState } from 'react'
 
 function hasKeyAt(tracks: Tracks, channel: string, t: number) {
   return (tracks[channel] ?? []).some((k) => Math.abs(k.t - t) < KEY_EPS)
@@ -90,6 +93,7 @@ export function Controls() {
   return (
     <aside className="panel controls">
       <Copilot />
+      <Gestures />
       <section>
         <h3>Pieza</h3>
         <select value={selectedPart ?? ''} onChange={(e) => selectPart(e.target.value || null)}>
@@ -194,6 +198,10 @@ export function Controls() {
           <span className="slider-value">{inst.scale.toFixed(2)}</span>
         </label>
         <label className="field">
+          <span title="Respiración, balanceo y parpadeos automáticos">Vida automática</span>
+          <input type="checkbox" checked={project.vida !== false} onChange={(e) => setProjectProps({ vida: e.target.checked })} />
+        </label>
+        <label className="field">
           <span>Fondo</span>
           <input type="color" value={project.background} onChange={(e) => setProjectProps({ background: e.target.value })} />
         </label>
@@ -213,5 +221,47 @@ export function Controls() {
         </label>
       </section>
     </aside>
+  )
+}
+
+function Gestures() {
+  const [lado, setLado] = useState<'der' | 'izq'>('der')
+  const time = useStore((s) => s.time)
+  const add = (id: string) => {
+    const st = useStore.getState()
+    const ch = activeCharacter(st.project)
+    const { tracks, duration } = applyCopilot(
+      { mensaje: '', duracion: 0, borrar: [], claves: [], gestos: [{ nombre: id, t: st.time, lado, velocidad: 1 }] },
+      st.project,
+      ch,
+    )
+    const start = st.time
+    st.replaceTracks(tracks, duration)
+    st.setTime(Math.max(0, start - 0.3))
+    st.setPlaying(true)
+  }
+  return (
+    <section>
+      <h3>Gestos</h3>
+      <div className="gesture-side">
+        <span className="muted small">Brazo:</span>
+        <div className="segmented small-seg">
+          <button className={lado === 'izq' ? 'active' : ''} onClick={() => setLado('izq')}>
+            izquierdo
+          </button>
+          <button className={lado === 'der' ? 'active' : ''} onClick={() => setLado('der')}>
+            derecho
+          </button>
+        </div>
+      </div>
+      <div className="chips">
+        {GESTOS.map((g) => (
+          <button key={g.id} className="chip" title={g.descripcion} onClick={() => add(g.id)}>
+            {g.nombre}
+          </button>
+        ))}
+      </div>
+      <p className="muted small">Se añade en el instante actual ({time.toFixed(1).replace('.', ',')} s). Ctrl+Z para quitarlo.</p>
+    </section>
   )
 }

@@ -84,6 +84,8 @@ export interface Project {
   fps: number
   duration: number
   background: string
+  /** Vida automática (respiración, balanceo, parpadeos). Si falta, está activada. */
+  vida?: boolean
   characters: Record<string, Character>
   instances: CharacterInstance[]
 }
