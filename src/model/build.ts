@@ -19,6 +19,7 @@ export interface PartDef {
   defaultVariant?: string
   role?: Part['role']
   gazeRange?: Vec
+  skin?: Part['skin']
 }
 
 export function svgSrc(box: Box, body: string): string {
@@ -48,6 +49,7 @@ export function buildParts(defs: PartDef[]): Pick<Character, 'parts' | 'assets'>
       z: d.z,
       role: d.role,
       gazeRange: d.gazeRange,
+      skin: d.skin,
     }
   })
   return { parts, assets }

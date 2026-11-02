@@ -23,6 +23,9 @@ en lenguaje llano y pídele que pruebe en la web publicada.
   transiciones `suave | lineal | salto`. `src/model/anim.ts` evalúa la pose en un instante.
 - `src/model/render.ts`: matrices, dibujo en canvas, detección de clic por transparencia.
   El mismo dibujo sirve para el editor y para exportar.
+- Deformación por malla (`Part.skin`, `drawSkinned` en `render.ts`): cerca de una articulación los
+  vértices mezclan el movimiento de la pieza con el de su padre/hija (skinning lineal) y la imagen
+  se dibuja en triángulos. Solo se activa cuando la pieza gira respecto a sus vecinas.
 - `src/export/exportMp4.ts`: exporta H.264 con WebCodecs + mp4-muxer (Chrome/Edge).
 - `src/model/sample.ts`: personaje de ejemplo en SVG; es la referencia del formato que deben
   producir los personajes generados con IA.

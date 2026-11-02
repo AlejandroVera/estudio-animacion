@@ -33,6 +33,14 @@ export interface Part {
   role?: FaceRole
   /** Para pupilas: cuánto pueden desplazarse con la mirada (px). */
   gazeRange?: Vec
+  /**
+   * Deformación por malla junto a las articulaciones (en vez de girar como pieza rígida).
+   * Distancias en px medidas a lo largo del eje de la pieza (de su articulación hacia su hija).
+   *  - parent [desde, hasta]: antes de "desde" la pieza sigue al padre, después de "hasta" a sí
+   *    misma; en medio mezcla. Hace que hombros, caderas o codos se doblen suavemente.
+   *  - child: igual respecto a la articulación de una pieza hija (medido desde esa articulación).
+   */
+  skin?: { parent?: [number, number]; child?: { id: string; range: [number, number] } }
 }
 
 export interface Character {

@@ -116,11 +116,13 @@ export function drawCharacter(
 ): Placed[] {
   const pose = poseAt(character, inst.tracks, t)
   const placed = layout(character, inst, pose, restPose)
+  const byId = new Map(placed.map((p) => [p.part.id, p]))
   for (const pl of placed) {
     const asset = character.assets[pl.assetId]
     if (!asset) continue
     const img = getImage(asset.src)
     if (!img.complete || !img.naturalWidth) continue
+    if (pl.part.skin && !restPose && drawSkinned(g, img, asset.w, asset.h, pl, byId, character)) continue
     g.save()
     g.setTransform(g.getTransform().multiply(pl.matrix))
     g.drawImage(img, -pl.part.anchor.x, -pl.part.anchor.y, asset.w, asset.h)
@@ -154,4 +156,142 @@ export function hitTest(character: Character, placed: Placed[], pt: Vec): Part |
     if (alphaAt(asset.src, asset.w, asset.h, ix, iy) > 20) return pl.part
   }
   return null
+}
+
+// ---------- Deformación por malla ----------
+
+const smooth = (t: number) => {
+  const u = Math.max(0, Math.min(1, t))
+  return u * u * (3 - 2 * u)
+}
+
+function sameMatrix(a: DOMMatrix, b: DOMMatrix) {
+  return (
+    Math.abs(a.a - b.a) < 1e-4 && Math.abs(a.b - b.b) < 1e-4 && Math.abs(a.c - b.c) < 1e-4 &&
+    Math.abs(a.d - b.d) < 1e-4 && Math.abs(a.e - b.e) < 0.05 && Math.abs(a.f - b.f) < 0.05
+  )
+}
+
+/** Eje de la pieza en su espacio local: hacia su primera hija, o hacia el centro de su dibujo. */
+function partAxis(part: Part, character: Character, w: number, h: number): Vec {
+  const child = character.parts.find((c) => c.parent === part.id && !c.role)
+  const v = child ? child.offset : { x: w / 2 - part.anchor.x, y: h / 2 - part.anchor.y }
+  const n = Math.hypot(v.x, v.y) || 1
+  return { x: v.x / n, y: v.y / n }
+}
+
+/**
+ * Dibuja la pieza como una malla de triángulos cuyos vértices mezclan el movimiento de la pieza
+ * con el de su padre o hija cerca de la articulación (skinning lineal). Devuelve false si no hace
+ * falta deformar (la pieza no se mueve respecto a sus vecinas) para dibujarla rígida, más rápido.
+ */
+function drawSkinned(
+  g: CanvasRenderingContext2D,
+  img: HTMLImageElement,
+  W: number,
+  H: number,
+  pl: Placed,
+  byId: Map<string, Placed>,
+  character: Character,
+): boolean {
+  const part = pl.part
+  const skin = part.skin!
+  const self = pl.matrix
+  const parentPl = skin.parent && part.parent ? byId.get(part.parent) : undefined
+  const parentM = parentPl ? parentPl.matrix.translate(part.offset.x, part.offset.y) : undefined
+  const childPl = skin.child ? byId.get(skin.child.id) : undefined
+  const childOff = childPl ? childPl.part.offset : undefined
+  const childM = childPl && childOff ? childPl.matrix.translate(-childOff.x, -childOff.y) : undefined
+  const bendsParent = parentM && !sameMatrix(parentM, self)
+  const bendsChild = childM && !sameMatrix(childM, self)
+  if (!bendsParent && !bendsChild) return false
+
+  const axis = partAxis(part, character, W, H)
+  const A = part.anchor
+  const childS = childOff ? childOff.x * axis.x + childOff.y * axis.y : 0
+  const nx = Math.max(2, Math.ceil(W / 36))
+  const ny = Math.max(2, Math.ceil(H / 36))
+  const src: Vec[] = []
+  const dst: Vec[] = []
+  for (let j = 0; j <= ny; j++) {
+    for (let i = 0; i <= nx; i++) {
+      const u = (i / nx) * W
+      const v = (j / ny) * H
+      const lx = u - A.x
+      const ly = v - A.y
+      const s = lx * axis.x + ly * axis.y
+      let wp = bendsParent && skin.parent ? 1 - smooth((s - skin.parent[0]) / (skin.parent[1] - skin.parent[0])) : 0
+      let wc = bendsChild && skin.child ? smooth((s - childS - skin.child.range[0]) / (skin.child.range[1] - skin.child.range[0])) : 0
+      if (wp + wc > 1) {
+        const k = 1 / (wp + wc)
+        wp *= k
+        wc *= k
+      }
+      const ws = 1 - wp - wc
+      const p = self.transformPoint(new DOMPoint(lx, ly))
+      let x = p.x * ws
+      let y = p.y * ws
+      if (wp > 0) {
+        const q = parentM!.transformPoint(new DOMPoint(lx, ly))
+        x += q.x * wp
+        y += q.y * wp
+      }
+      if (wc > 0) {
+        const q = childM!.transformPoint(new DOMPoint(lx, ly))
+        x += q.x * wc
+        y += q.y * wc
+      }
+      src.push({ x: u, y: v })
+      dst.push({ x, y })
+    }
+  }
+
+  // Cada triángulo se agranda ~1 px de pantalla para que no se vean costuras entre ellos.
+  const m = g.getTransform()
+  const grow = 0.9 / (Math.hypot(m.a, m.b) || 1)
+  const tri = (a: number, b: number, c: number) => {
+    const s0 = src[a], s1 = src[b], s2 = src[c]
+    const d0 = dst[a], d1 = dst[b], d2 = dst[c]
+    const den = (s1.x - s0.x) * (s2.y - s0.y) - (s2.x - s0.x) * (s1.y - s0.y)
+    if (Math.abs(den) < 1e-9) return
+    // Transformación afín que lleva el triángulo de la imagen al de destino.
+    const ta = ((d1.x - d0.x) * (s2.y - s0.y) - (d2.x - d0.x) * (s1.y - s0.y)) / den
+    const tb = ((d1.y - d0.y) * (s2.y - s0.y) - (d2.y - d0.y) * (s1.y - s0.y)) / den
+    const tc = ((d2.x - d0.x) * (s1.x - s0.x) - (d1.x - d0.x) * (s2.x - s0.x)) / den
+    const td = ((d2.y - d0.y) * (s1.x - s0.x) - (d1.y - d0.y) * (s2.x - s0.x)) / den
+    const te = d0.x - ta * s0.x - tc * s0.y
+    const tf = d0.y - tb * s0.x - td * s0.y
+    const cx = (d0.x + d1.x + d2.x) / 3
+    const cy = (d0.y + d1.y + d2.y) / 3
+    g.save()
+    g.beginPath()
+    for (const [k, d] of [d0, d1, d2].entries()) {
+      const dx = d.x - cx
+      const dy = d.y - cy
+      const n = Math.hypot(dx, dy) || 1
+      const x = d.x + (dx / n) * grow
+      const y = d.y + (dy / n) * grow
+      if (k === 0) g.moveTo(x, y)
+      else g.lineTo(x, y)
+    }
+    g.closePath()
+    g.clip()
+    g.transform(ta, tb, tc, td, te, tf)
+    const sx = Math.max(0, Math.floor(Math.min(s0.x, s1.x, s2.x)) - 2)
+    const sy = Math.max(0, Math.floor(Math.min(s0.y, s1.y, s2.y)) - 2)
+    const sw = Math.min(W, Math.ceil(Math.max(s0.x, s1.x, s2.x)) + 2) - sx
+    const sh = Math.min(H, Math.ceil(Math.max(s0.y, s1.y, s2.y)) + 2) - sy
+    const kx = img.naturalWidth / W
+    const ky = img.naturalHeight / H
+    if (sw > 0 && sh > 0) g.drawImage(img, sx * kx, sy * ky, sw * kx, sh * ky, sx, sy, sw, sh)
+    g.restore()
+  }
+  for (let j = 0; j < ny; j++) {
+    for (let i = 0; i < nx; i++) {
+      const a = j * (nx + 1) + i
+      tri(a, a + 1, a + nx + 1)
+      tri(a + 1, a + nx + 2, a + nx + 1)
+    }
+  }
+  return true
 }
