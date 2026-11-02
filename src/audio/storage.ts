@@ -49,3 +49,18 @@ export async function decodeAudio(id: string): Promise<AudioBuffer | null> {
   decoded.set(id, buf)
   return buf
 }
+
+// Imágenes de fondo: mismo almacén. Se convierten en una URL del navegador para dibujarlas.
+const urls = new Map<string, string>()
+export const saveImage = saveAudio
+export function mediaUrl(id: string): string | undefined {
+  return urls.get(id)
+}
+export async function ensureMedia(ids: string[]): Promise<void> {
+  await Promise.all(
+    ids.filter((id) => !urls.has(id)).map(async (id) => {
+      const blob = await loadAudio(id)
+      if (blob) urls.set(id, URL.createObjectURL(blob))
+    }),
+  )
+}

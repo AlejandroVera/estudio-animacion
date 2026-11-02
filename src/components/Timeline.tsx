@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { decodeAudio } from '../audio/storage'
-import { channelLabel, KEY_EPS } from '../model/anim'
+import { channelLabel, KEY_EPS, layerNames } from '../model/anim'
 import type { Ease } from '../model/types'
 import { activeCharacter, useStore } from '../store'
 
@@ -22,7 +22,10 @@ export function Timeline() {
 
   const ch = activeCharacter(project)
   const tracks = project.instances[0].tracks
+  for (const l of project.fondos ?? []) layerNames[l.id] = l.name
   const order = (c: string) => {
+    if (c.startsWith('cam:')) return -3
+    if (c.startsWith('bg:')) return -2
     if (c.startsWith('face:')) return -1
     const id = c.split(':')[1]
     return ch.parts.findIndex((p) => p.id === id)

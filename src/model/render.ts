@@ -1,5 +1,7 @@
 import { poseAt } from './anim'
 import { withLife } from './life'
+import { ensureMedia, mediaUrl } from '../audio/storage'
+import { evalTrack } from './anim'
 import type { Character, CharacterInstance, Part, Pose, Project, Vec } from './types'
 
 // ---------- Imágenes ----------
@@ -20,6 +22,14 @@ export function getImage(src: string): HTMLImageElement {
 
 export async function ensureImages(project: Project): Promise<void> {
   const all: Promise<void>[] = []
+  await ensureMedia((project.fondos ?? []).map((l) => l.imageId))
+  for (const l of project.fondos ?? []) {
+    const url = mediaUrl(l.imageId)
+    if (url) {
+      const img = getImage(url)
+      if (!img.complete) all.push(img.decode().catch(() => undefined))
+    }
+  }
   for (const c of Object.values(project.characters)) {
     for (const a of Object.values(c.assets)) {
       const img = getImage(a.src)
@@ -139,14 +149,52 @@ export function drawCharacter(
 }
 
 /** Dibuja el fotograma completo del proyecto en el instante t (sin ayudas de edición). */
+const num = (v: number | string) => (typeof v === 'number' ? v : Number(v) || 0)
+
+/** Transformación de la cámara en el instante t (zoom alrededor del centro del vídeo). */
+export function cameraMatrix(project: Project, t: number): DOMMatrix {
+  const tr = project.instances[0]?.tracks ?? {}
+  const zoom = Math.max(0.1, num(evalTrack(tr['cam:zoom'], t, 1)))
+  const cx = num(evalTrack(tr['cam:x'], t, 0))
+  const cy = num(evalTrack(tr['cam:y'], t, 0))
+  const W = project.width / 2
+  const H = project.height / 2
+  return new DOMMatrix().translate(W, H).scale(zoom).translate(-W - cx, -H - cy)
+}
+
+/** Dibuja las capas de imagen de un lado (detrás o delante del personaje). */
+export function drawLayers(g: CanvasRenderingContext2D, project: Project, t: number, delante: boolean) {
+  const tr = project.instances[0]?.tracks ?? {}
+  for (const l of project.fondos ?? []) {
+    if (!!l.delante !== delante) continue
+    const url = mediaUrl(l.imageId)
+    if (!url) continue
+    const img = getImage(url)
+    if (!img.complete || !img.naturalWidth) continue
+    const ch = (p: string, d: number) => num(evalTrack(tr[`bg:${l.id}:${p}`], t, d))
+    const cover = Math.max(project.width / l.w, project.height / l.h)
+    g.save()
+    g.globalAlpha = Math.max(0, Math.min(1, ch('opacity', 1)))
+    g.translate(project.width / 2 + ch('x', 0), project.height / 2 + ch('y', 0))
+    g.rotate((ch('rot', 0) * Math.PI) / 180)
+    const k = cover * ch('scale', 1)
+    g.scale(k, k)
+    g.drawImage(img, -l.w / 2, -l.h / 2, l.w, l.h)
+    g.restore()
+  }
+}
+
 export function drawFrame(g: CanvasRenderingContext2D, project: Project, t: number) {
   g.save()
   g.fillStyle = project.background
   g.fillRect(0, 0, project.width, project.height)
+  g.setTransform(g.getTransform().multiply(cameraMatrix(project, t)))
+  drawLayers(g, project, t, false)
   for (const inst of project.instances) {
     const c = project.characters[inst.characterId]
     if (c) drawCharacter(g, c, inst, t, false, project.vida !== false)
   }
+  drawLayers(g, project, t, true)
   g.restore()
 }
 

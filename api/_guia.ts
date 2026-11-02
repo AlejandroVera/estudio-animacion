@@ -17,6 +17,12 @@ Cómo funciona el personaje:
   sobre todo en la cadera (raíz) para botes, pasos o agacharse. part:<id>:scale cambia el tamaño (1 = normal).
 - Piezas con "dibujos" (las manos): part:<id>:v elige el dibujo (natural, abierta, palma_arriba,
   puno, indice, dorso, pulgar); cambia de golpe y transición "salto". Los gestos ya cambian las manos.
+- Cámara (toda la escena): cam:zoom (1 normal, 1.8 primer plano), cam:x y cam:y (px de desplazamiento
+  del encuadre; positivo = la cámara va a la derecha/abajo). Úsala para planos: acercarse a la cara
+  en un momento importante, zoom lento durante una explicación, volver al plano general.
+- Capas de imagen ("fondos", por id): bg:<id>:x, bg:<id>:y (px), bg:<id>:scale (1 = cubre el
+  vídeo), bg:<id>:rot (grados) y bg:<id>:opacity (0..1). Sirven para mover o acercar un fondo
+  despacio, hacer aparecer/desaparecer imágenes (opacidad 0 → 1 en 0,5 s) o cambiar de fondo.
 - Cara: face:gazeX y face:gazeY (-1..1, mirada; x positivo = mirar a la derecha de la pantalla,
   y positivo = abajo), face:blink (0 abierto .. 1 cerrado; un parpadeo dura ~0,2 s: 0 → 1 → 0),
   face:mouth y face:brows (nombres de variante, cambian de golpe).

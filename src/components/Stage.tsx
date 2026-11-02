@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { poseAt } from '../model/anim'
-import { drawCharacter, ensureImages, hitTest, pivotOf, type Placed } from '../model/render'
+import { cameraMatrix, drawCharacter, drawLayers, ensureImages, hitTest, pivotOf, type Placed } from '../model/render'
 import type { Vec } from '../model/types'
 import { activeCharacter, useStore } from '../store'
 
@@ -14,6 +14,7 @@ export function Stage() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const viewRef = useRef({ scale: 1, ox: 0, oy: 0, dpr: 1 })
   const placedRef = useRef<Placed[]>([])
+  const camRef = useRef(new DOMMatrix())
   const dragRef = useRef<Drag | null>(null)
   const [size, setSize] = useState({ w: 0, h: 0 })
   const [loaded, setLoaded] = useState(0)
@@ -33,7 +34,7 @@ export function Stage() {
 
   useEffect(() => {
     ensureImages(project).then(() => setLoaded((n) => n + 1))
-  }, [project.characters])
+  }, [project.characters, project.fondos])
 
   // Dibujo
   useEffect(() => {
@@ -69,8 +70,15 @@ export function Stage() {
     const inst = project.instances[0]
     const ch = activeCharacter(project)
     const rest = mode === 'articulaciones'
+    const cam = rest ? new DOMMatrix() : cameraMatrix(project, time)
+    camRef.current = cam
+    g.setTransform(g.getTransform().multiply(cam))
+    drawLayers(g, project, time, false)
     placedRef.current = drawCharacter(g, ch, inst, time, rest, project.vida !== false)
+    drawLayers(g, project, time, true)
     g.restore()
+    g.save()
+    g.setTransform(g.getTransform().multiply(cam))
 
     // Ayudas visuales (no salen en el vídeo)
     const px = 1 / scale
@@ -96,12 +104,16 @@ export function Stage() {
       g.strokeStyle = '#fff'
       g.stroke()
     }
+    g.restore()
   }, [project, time, mode, selectedPart, size, loaded])
 
   const toStage = (e: React.PointerEvent): Vec => {
     const r = canvasRef.current!.getBoundingClientRect()
     const v = viewRef.current
-    return { x: (e.clientX - r.left - v.ox) / v.scale, y: (e.clientY - r.top - v.oy) / v.scale }
+    const p = new DOMPoint((e.clientX - r.left - v.ox) / v.scale, (e.clientY - r.top - v.oy) / v.scale)
+    // Del vídeo a la escena: se deshace la cámara
+    const q = camRef.current.inverse().transformPoint(p)
+    return { x: q.x, y: q.y }
   }
 
   const onPointerDown = (e: React.PointerEvent) => {

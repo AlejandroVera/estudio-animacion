@@ -6,7 +6,9 @@ import { Copilot } from './Copilot'
 import { applyCopilot } from '../copilot/context'
 import { GESTOS } from '../model/gestures'
 import { useState } from 'react'
-import { decodeAudio, saveAudio } from '../audio/storage'
+import { decodeAudio, saveAudio, saveImage } from '../audio/storage'
+import { evalTrack, setKey } from '../model/anim'
+import { layout } from '../model/render'
 import { mouthKeys } from '../audio/lipsync'
 import { KEY_EPS as EPS } from '../model/anim'
 
@@ -107,6 +109,7 @@ export function Controls() {
     <aside className="panel controls">
       <Copilot />
       <Voice />
+      <Backgrounds />
       <Gestures />
       <section>
         <h3>Pieza</h3>
@@ -417,6 +420,164 @@ function Voice() {
         ref={fileRef}
         type="file"
         accept="audio/*"
+        hidden
+        onChange={(e) => {
+          const f = e.target.files?.[0]
+          if (f) onFile(f)
+          e.target.value = ''
+        }}
+      />
+    </section>
+  )
+}
+
+function Backgrounds() {
+  const project = useStore((s) => s.project)
+  const time = useStore((s) => s.time)
+  const key = useStore((s) => s.key)
+  const fileRef = useRef<HTMLInputElement>(null)
+  const [sel, setSel] = useState<string | null>(null)
+  const [msg, setMsg] = useState<string | null>(null)
+  const layers = project.fondos ?? []
+  const tracks = project.instances[0].tracks
+  const val = (ch: string, d: number) => {
+    const v = evalTrack(tracks[ch], time, d)
+    return typeof v === 'number' ? v : Number(v) || d
+  }
+  const layer = layers.find((l) => l.id === sel) ?? null
+
+  const onFile = async (file: File) => {
+    try {
+      const bmp = await createImageBitmap(file)
+      const id = `fondo-${Date.now()}`
+      await saveImage(id, file)
+      const st = useStore.getState()
+      const next = [...(st.project.fondos ?? []), { id, name: file.name.replace(/\.[^.]+$/, ''), imageId: id, w: bmp.width, h: bmp.height }]
+      st.setProjectProps({ fondos: next })
+      setSel(id)
+      setMsg(null)
+    } catch {
+      setMsg('No se ha podido leer esa imagen (usa JPG, PNG o WEBP).')
+    }
+  }
+
+  const update = (patch: Partial<NonNullable<typeof layer>>) => {
+    if (!layer) return
+    useStore.getState().setProjectProps({ fondos: layers.map((l) => (l.id === layer.id ? { ...l, ...patch } : l)) })
+  }
+
+  /** Movimiento de un tramo: pone claves al principio y al final desde el instante actual. */
+  const preset = (pairs: [string, number, number][], dur: number) => {
+    const st = useStore.getState()
+    const fps = st.project.fps
+    const t0 = Math.round(st.time * fps) / fps
+    const t1 = Math.min(st.project.duration, t0 + dur)
+    const tr = pairs.reduce((acc, [ch, a, b]) => setKey(setKey(acc, ch, t0, a, 'suave'), ch, t1, b, 'suave'), { ...st.project.instances[0].tracks })
+    st.replaceTracks(tr, st.project.duration)
+  }
+  const rest = Math.max(1, project.duration - time)
+
+  const slider = (label: string, ch: string, d: number, min: number, max: number, step = 1, unit = '') => {
+    const v = val(ch, d)
+    return (
+      <label className="slider" key={ch}>
+        <span className="slider-label">
+          <span className={'keydot' + ((tracks[ch] ?? []).some((k) => Math.abs(k.t - time) < 1 / 120) ? ' on' : '')} />
+          {label}
+        </span>
+        <input type="range" min={min} max={max} step={step} value={v} onChange={(e) => key(ch, Number(e.target.value))} />
+        <span className="slider-value">
+          {step < 1 ? v.toFixed(2) : Math.round(v)}
+          {unit}
+        </span>
+      </label>
+    )
+  }
+
+  return (
+    <section>
+      <h3>Fondos y cámara</h3>
+      <div className="chips">
+        {layers.map((l) => (
+          <button key={l.id} className={'chip' + (l.id === sel ? ' active' : '')} onClick={() => setSel(l.id === sel ? null : l.id)} title={l.delante ? 'Delante del personaje' : 'Detrás del personaje'}>
+            {l.delante ? '▲ ' : ''}
+            {l.name}
+          </button>
+        ))}
+        <button className="chip" onClick={() => fileRef.current?.click()}>
+          + Añadir imagen
+        </button>
+      </div>
+      {msg && <p className="muted small">{msg}</p>}
+      {layer && (
+        <div className="layer-box">
+          {slider('Mover ↔', `bg:${layer.id}:x`, 0, -project.width, project.width)}
+          {slider('Mover ↕', `bg:${layer.id}:y`, 0, -project.height, project.height)}
+          {slider('Tamaño', `bg:${layer.id}:scale`, 1, 0.1, 3, 0.01)}
+          {slider('Giro', `bg:${layer.id}:rot`, 0, -180, 180, 1, '°')}
+          {slider('Opacidad', `bg:${layer.id}:opacity`, 1, 0, 1, 0.01)}
+          <div className="chips">
+            <button className="chip" title="Acerca la imagen poco a poco hasta el final" onClick={() => preset([[`bg:${layer.id}:scale`, val(`bg:${layer.id}:scale`, 1), val(`bg:${layer.id}:scale`, 1) * 1.15]], rest)}>
+              Acercar despacio
+            </button>
+            <button className="chip" title="Desplaza la imagen de un lado a otro hasta el final" onClick={() => preset([[`bg:${layer.id}:x`, val(`bg:${layer.id}:x`, 0) + 60, val(`bg:${layer.id}:x`, 0) - 60], [`bg:${layer.id}:scale`, Math.max(1.1, val(`bg:${layer.id}:scale`, 1)), Math.max(1.1, val(`bg:${layer.id}:scale`, 1))]], rest)}>
+              Desplazar
+            </button>
+            <button className="chip" onClick={() => preset([[`bg:${layer.id}:opacity`, 0, 1]], 0.6)}>
+              Aparecer
+            </button>
+            <button className="chip" onClick={() => preset([[`bg:${layer.id}:opacity`, 1, 0]], 0.6)}>
+              Desaparecer
+            </button>
+          </div>
+          <div className="voice-row">
+            <button className="btn small" onClick={() => update({ delante: !layer.delante })}>
+              {layer.delante ? 'Poner detrás del personaje' : 'Poner delante del personaje'}
+            </button>
+            <button
+              className="btn small danger"
+              onClick={() => {
+                const st = useStore.getState()
+                const tr = Object.fromEntries(Object.entries(st.project.instances[0].tracks).filter(([c]) => !c.startsWith(`bg:${layer.id}:`)))
+                st.setProjectProps({ fondos: layers.filter((l) => l.id !== layer.id) })
+                useStore.getState().replaceTracks(tr, st.project.duration)
+                setSel(null)
+              }}
+            >
+              Quitar
+            </button>
+          </div>
+        </div>
+      )}
+      <div className="sublabel">Cámara</div>
+      {slider('Zoom', 'cam:zoom', 1, 0.5, 3, 0.01)}
+      {slider('Mover ↔', 'cam:x', 0, -project.width / 2, project.width / 2)}
+      {slider('Mover ↕', 'cam:y', 0, -project.height / 2, project.height / 2)}
+      <div className="chips">
+        <button className="chip" title="Acerca la cámara a la cara en 1 segundo" onClick={() => {
+          const st = useStore.getState()
+          const ch = activeCharacter(st.project)
+          const inst = st.project.instances[0]
+          // Centro de la cabeza en la escena (vale para cualquier personaje con pieza «cabeza»)
+          const pl = layout(ch, inst, poseAt(ch, inst.tracks, st.time)).find((p) => p.part.id === 'cabeza')
+          const a = pl && ch.assets[pl.assetId]
+          const c = pl && a ? pl.matrix.transformPoint(new DOMPoint(a.w / 2 - pl.part.anchor.x, a.h / 2 - pl.part.anchor.y)) : { x: inst.x, y: inst.y - 600 }
+          const hy = c.y + 0.15 * project.height / 1.8
+          preset([['cam:zoom', val('cam:zoom', 1), 1.8], ['cam:y', val('cam:y', 0), hy - project.height / 2], ['cam:x', val('cam:x', 0), c.x - project.width / 2]], 1)
+        }}>
+          Primer plano
+        </button>
+        <button className="chip" onClick={() => preset([['cam:zoom', val('cam:zoom', 1), 1], ['cam:x', val('cam:x', 0), 0], ['cam:y', val('cam:y', 0), 0]], 1)}>
+          Plano general
+        </button>
+        <button className="chip" title="Acerca la cámara muy poco a poco hasta el final" onClick={() => preset([['cam:zoom', val('cam:zoom', 1), val('cam:zoom', 1) * 1.12]], rest)}>
+          Zoom lento
+        </button>
+      </div>
+      <input
+        ref={fileRef}
+        type="file"
+        accept="image/*"
         hidden
         onChange={(e) => {
           const f = e.target.files?.[0]

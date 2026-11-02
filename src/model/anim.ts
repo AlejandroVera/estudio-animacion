@@ -94,6 +94,9 @@ export function moveKey(tracks: Tracks, channel: string, from: number, to: numbe
   return { ...tracks, [channel]: next }
 }
 
+/** Nombres de las capas de fondo (los pone la línea de tiempo antes de pedir etiquetas). */
+export const layerNames: Record<string, string> = {}
+
 /** Nombre legible de un canal para la línea de tiempo. */
 export function channelLabel(character: Character, channel: string): string {
   const faceNames: Record<string, string> = {
@@ -104,6 +107,13 @@ export function channelLabel(character: Character, channel: string): string {
     'face:brows': 'Cejas',
   }
   if (faceNames[channel]) return faceNames[channel]
+  const cam: Record<string, string> = { 'cam:zoom': 'Cámara · zoom', 'cam:x': 'Cámara · mover ↔', 'cam:y': 'Cámara · mover ↕' }
+  if (cam[channel]) return cam[channel]
+  if (channel.startsWith('bg:')) {
+    const [, id, prop] = channel.split(':')
+    const n: Record<string, string> = { x: 'mover ↔', y: 'mover ↕', scale: 'tamaño', rot: 'giro', opacity: 'opacidad' }
+    return `${layerNames[id] ?? 'Fondo'} · ${n[prop] ?? prop}`
+  }
   const [, id, prop] = channel.split(':')
   const part = character.parts.find((p) => p.id === id)
   const propNames: Record<string, string> = { rot: 'giro', x: 'mover ↔', y: 'mover ↕', scale: 'tamaño', v: 'dibujo' }

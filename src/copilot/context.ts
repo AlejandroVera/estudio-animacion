@@ -72,6 +72,7 @@ export function buildContext(project: Project, character: Character, time: numbe
       cejas: variantsOf('brows'),
       expresiones: character.expressions,
     },
+    fondos: (project.fondos ?? []).map((l) => ({ id: l.id, nombre: l.name, delante: !!l.delante })),
     gestos_disponibles: GESTOS.map((g) => ({
       nombre: g.id,
       descripcion: g.descripcion,
@@ -140,6 +141,12 @@ export function applyCopilot(
     if (k.canal === 'face:mouth' || k.canal === 'face:brows') {
       if (!(k.canal === 'face:mouth' ? mouths : brows).has(k.valor)) continue
       value = k.valor
+    } else if (/^cam:(x|y|zoom)$/.test(k.canal) || /^bg:[^:]+:(x|y|scale|rot|opacity)$/.test(k.canal)) {
+      if (k.canal.startsWith('bg:') && !(project.fondos ?? []).some((l) => l.id === k.canal.split(':')[1])) continue
+      value = Number(String(k.valor).replace(',', '.'))
+      if (!Number.isFinite(value)) continue
+      if (k.canal === 'cam:zoom') value = Math.max(0.3, Math.min(4, value))
+      if (k.canal.endsWith(':opacity')) value = Math.max(0, Math.min(1, value))
     } else if (/^part:[^:]+:v$/.test(k.canal)) {
       const part = character.parts.find((p) => p.id === k.canal.split(':')[1])
       if (!part?.variants[k.valor]) continue

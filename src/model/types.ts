@@ -82,6 +82,20 @@ export interface CharacterInstance {
   tracks: Tracks
 }
 
+/**
+ * Capa de imagen. Se anima con los canales bg:<id>:x|y (px), :scale (1 = cubre el vídeo), :rot (°)
+ * y :opacity (0..1). La cámara usa cam:x|y (px) y cam:zoom (1 = normal).
+ */
+export interface BgLayer {
+  id: string
+  name: string
+  imageId: string
+  w: number
+  h: number
+  /** true = se dibuja delante del personaje */
+  delante?: boolean
+}
+
 export interface Project {
   version: 1
   name: string
@@ -92,6 +106,8 @@ export interface Project {
   background: string
   /** Vida automática (respiración, balanceo, parpadeos). Si falta, está activada. */
   vida?: boolean
+  /** Capas de imagen (fondos o elementos delante del personaje); sus imágenes se guardan aparte. */
+  fondos?: BgLayer[]
   /** Audio (voz) del vídeo; el archivo se guarda aparte, en el navegador (IndexedDB). */
   audio?: { id: string; name: string; start: number; duration: number }
   characters: Record<string, Character>

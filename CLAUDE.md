@@ -86,7 +86,10 @@ en lenguaje llano y pídele que pruebe en la web publicada.
    boca por energía y brillo del sonido (`src/audio/lipsync.ts`) y el MP4 sale con audio (AAC u Opus).
    Pendiente: generar la voz con ElevenLabs desde la herramienta (necesita su clave).
 4. Asistente «Crear personaje»: diseño, vistas, despiece, bocas/ojos con IA (fal.ai).
-5. Escenas: fondos, cámara, varios personajes, subtítulos, plantillas.
+5. Escenas: ✅ capas de imagen (`project.fondos`, imagen en IndexedDB, detrás o delante del personaje,
+   canales `bg:<id>:x|y|scale|rot|opacity`) y ✅ cámara (`cam:x|y|zoom`, `cameraMatrix` en
+   `render.ts`, se deshace al convertir clics en `Stage`). Panel «Fondos y cámara» con atajos (acercar,
+   desplazar, aparecer, primer plano, zoom lento). Pendiente: varios personajes, subtítulos, plantillas.
 
 Ideas pendientes anotadas: cinemática inversa (arrastrar la mano mueve todo el brazo),
 guardar en IndexedDB cuando haya
