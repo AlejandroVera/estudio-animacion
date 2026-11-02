@@ -681,3 +681,101 @@ select {
 .layer-box .chips {
   margin: 6px 0;
 }
+
+/* ---------- Guion ---------- */
+.script-panel {
+  position: fixed;
+  top: 52px;
+  left: 0;
+  bottom: 0;
+  width: min(440px, 100vw);
+  z-index: 20;
+  background: var(--panel);
+  border-right: 1px solid var(--line);
+  box-shadow: 8px 0 30px rgba(0, 0, 0, 0.4);
+  padding: 14px;
+  overflow-y: auto;
+}
+.script-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.script-head h2 {
+  margin: 0;
+  font-size: 16px;
+}
+.script-text,
+.scene-card textarea {
+  width: 100%;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 8px;
+  resize: vertical;
+  font: inherit;
+  color: inherit;
+}
+.script-actions {
+  margin: 8px 0;
+}
+.script-sum {
+  margin: 12px 0 6px;
+}
+.scene-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.scene-card {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.02);
+}
+.scene-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.scene-top .btn.small {
+  margin-top: 0;
+}
+.scene-fields {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.2fr) minmax(0, 0.6fr);
+  gap: 6px;
+  margin: 6px 0 2px;
+}
+.scene-fields label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 11px;
+  color: var(--muted);
+}
+.scene-fields select,
+.scene-fields input {
+  width: 100%;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 4px;
+  min-width: 0;
+}
+.tl-scene {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-left: 2px solid rgba(167, 139, 250, 0.8);
+  pointer-events: none;
+}
+.tl-scene span {
+  position: absolute;
+  left: 3px;
+  bottom: 2px;
+  font-size: 10px;
+  color: #c4b5fd;
+}

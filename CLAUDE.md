@@ -68,6 +68,15 @@ en lenguaje llano y pídele que pruebe en la web publicada.
 - Hombros: el canal `part:brazo_*:y` sube el brazo entero y el torso acompaña con `skin.lift`
   (automático en `autoSkin`). Panel «Hombros» y canal `hombros` en los gestos.
 
+## Guion
+- Panel «📝 Guion» (`src/components/ScriptPanel.tsx`): texto o idea → escenas (`Escena` en types:
+  diálogo, acción, plano general/medio/primer, expresión, duración, gestos, fondo deseado).
+  «Escenas con IA» llama a `api/guion.ts` (guía y esquema `GUIA_GUION`/`SCHEMA_GUION` en `_guia.ts`);
+  «Dividir sin IA» parte por párrafos (`scenesFromText`). El conector MCP tiene la herramienta `guion`.
+- `src/script/scenes.ts` → `animateScenes`: escenas consecutivas, corte de cámara por plano, cejas
+  de la expresión, gestos de la biblioteca y boca que «habla» el texto (`textMouthKeys`, por vocales;
+  la sustituirá la voz real). Marcas E1, E2… en la regla de la línea de tiempo.
+
 ## Hoja de ruta
 1. ✅ Editor: piezas, articulaciones, cara, línea de tiempo, exportar MP4.
 2. ✅ Copiloto, por dos vías que comparten la guía de animación y el formato (`api/_guia.ts`):

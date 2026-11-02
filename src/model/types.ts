@@ -96,6 +96,22 @@ export interface BgLayer {
   delante?: boolean
 }
 
+export type Plano = 'general' | 'medio' | 'primer'
+
+/** Escena del guion: una frase (o silencio) con su acción, plano y expresión. */
+export interface Escena {
+  id: string
+  dialogo: string
+  accion: string
+  plano: Plano
+  expresion: string
+  /** Segundos que dura la escena (si está vacía, se calcula por el texto). */
+  duracion: number
+  gestos: { nombre: string; t: number; lado: 'der' | 'izq'; velocidad: number }[]
+  /** Descripción del fondo deseado (para generarlo cuando haya IA de imágenes). */
+  fondo: string
+}
+
 export interface Project {
   version: 1
   name: string
@@ -106,6 +122,8 @@ export interface Project {
   background: string
   /** Vida automática (respiración, balanceo, parpadeos). Si falta, está activada. */
   vida?: boolean
+  /** Guion del vídeo dividido en escenas (se animan una detrás de otra). */
+  guion?: { texto: string; escenas: Escena[] }
   /** Capas de imagen (fondos o elementos delante del personaje); sus imágenes se guardan aparte. */
   fondos?: BgLayer[]
   /** Audio (voz) del vídeo; el archivo se guarda aparte, en el navegador (IndexedDB). */

@@ -4,11 +4,16 @@
 import { useEffect, useRef } from 'react'
 import { activeCharacter, useStore } from '../store'
 import { applyCopilot, buildContext, type CopilotResult } from './context'
+import { applyScript } from '../components/ScriptPanel'
+import type { Escena } from '../model/types'
 
 const POLL_MS = 4000
 const HEARTBEAT_MS = 60_000
 
-type Op = { seq: number; op: { tipo: 'animar'; resultado: CopilotResult } | { tipo: 'deshacer' } }
+type Op = {
+  seq: number
+  op: { tipo: 'animar'; resultado: CopilotResult } | { tipo: 'guion'; resultado: { titulo?: string; mensaje?: string; escenas: Omit<Escena, 'id'>[] } } | { tipo: 'deshacer' }
+}
 
 export function useClaudeLink(enabled: boolean, pass: string, onMessage: (text: string, ok: boolean) => void) {
   const msgRef = useRef(onMessage)
@@ -60,6 +65,14 @@ export function useClaudeLink(enabled: boolean, pass: string, onMessage: (text: 
         if (seq <= lastSeq) continue
         lastSeq = seq
         const st = useStore.getState()
+        if (op.tipo === 'guion') {
+          const escenas = op.resultado.escenas.map((e) => ({ ...e, id: Math.random().toString(36).slice(2, 9) }))
+          const texto = escenas.map((e) => e.dialogo).filter(Boolean).join('\n\n')
+          applyScript(escenas, texto)
+          msgRef.current(`Claude ha montado el guion${op.resultado.titulo ? ` «${op.resultado.titulo}»` : ''}: ${escenas.length} escenas.`, true)
+          await push(true)
+          continue
+        }
         if (op.tipo === 'deshacer') {
           st.undo()
           msgRef.current('Claude ha deshecho el último cambio.', true)

@@ -17,7 +17,7 @@ async function redis<T = unknown>(...cmd: (string | number)[]): Promise<T> {
   return data.result as T
 }
 
-export type Operacion = { tipo: 'animar'; resultado: unknown } | { tipo: 'deshacer' }
+export type Operacion = { tipo: 'animar'; resultado: unknown } | { tipo: 'guion'; resultado: unknown } | { tipo: 'deshacer' }
 export interface EntradaCola {
   seq: number
   at: number

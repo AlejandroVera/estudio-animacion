@@ -126,3 +126,69 @@ export const SCHEMA = {
   additionalProperties: false,
 }
 
+
+// ---------- Guion → escenas ----------
+
+export const GUIA_GUION = `Eres guionista y director de animación de un estudio de vídeos cortos verticales con un
+personaje de dibujo animado (estilo cut-out). Recibes un guion, o solo una idea, y lo conviertes en
+escenas listas para animar. Recibes en JSON el personaje (expresiones disponibles) y la biblioteca de
+gestos ("gestos_disponibles").
+
+Si te dan solo una idea, escribe tú el guion: frases cortas y naturales en español de España, tono
+cercano, pensadas para decirse en voz alta en un reel (gancho en la primera frase, una idea por frase,
+cierre con llamada a la acción si encaja). Si te dan un guion, respeta su texto (puedes partir frases
+largas, no reescribas el contenido).
+
+Cada escena:
+- "dialogo": lo que dice el personaje en esa escena (una o dos frases; vacío si es una pausa o solo acción).
+- "accion": breve nota de lo que hace (para el usuario).
+- "plano": "general" (cuerpo entero), "medio" (de cintura arriba) o "primer" (cara). Varía los planos
+  para dar ritmo: general al empezar, primer plano en lo importante o emocional, medio para explicar.
+- "expresion": una de las expresiones del personaje.
+- "duracion": segundos (unas 2,6 palabras por segundo + 0,8 s; mínimo 2).
+- "gestos": 0-2 gestos de la biblioteca que acompañen lo que dice, con "t" en segundos DESDE EL INICIO
+  DE LA ESCENA, "lado" ("der"/"izq") y "velocidad" (1 normal). No pongas un gesto que no quepa en la
+  escena. Varía los gestos; no repitas el mismo en escenas seguidas salvo que tenga sentido.
+- "fondo": descripción breve del fondo ideal para esa escena (lugar, ambiente), o "" si sirve el anterior.
+
+"titulo": título corto del vídeo. "mensaje": una frase para el usuario explicando cómo lo has planteado.`
+
+export const SCHEMA_GUION = {
+  type: 'object',
+  properties: {
+    titulo: { type: 'string' },
+    mensaje: { type: 'string' },
+    escenas: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          dialogo: { type: 'string' },
+          accion: { type: 'string' },
+          plano: { type: 'string', enum: ['general', 'medio', 'primer'] },
+          expresion: { type: 'string' },
+          duracion: { type: 'number' },
+          gestos: {
+            type: 'array',
+            items: {
+              type: 'object',
+              properties: {
+                nombre: { type: 'string' },
+                t: { type: 'number' },
+                lado: { type: 'string', enum: ['der', 'izq'] },
+                velocidad: { type: 'number' },
+              },
+              required: ['nombre', 't', 'lado', 'velocidad'],
+              additionalProperties: false,
+            },
+          },
+          fondo: { type: 'string' },
+        },
+        required: ['dialogo', 'accion', 'plano', 'expresion', 'duracion', 'gestos', 'fondo'],
+        additionalProperties: false,
+      },
+    },
+  },
+  required: ['titulo', 'mensaje', 'escenas'],
+  additionalProperties: false,
+}

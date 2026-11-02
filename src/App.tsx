@@ -1,4 +1,5 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { ScriptPanel } from './components/ScriptPanel'
 import { loadAudio } from './audio/storage'
 import { Controls } from './components/Controls'
 import { PartsTree } from './components/PartsTree'
@@ -93,9 +94,11 @@ function useShortcuts() {
 export default function App() {
   usePlayback()
   useShortcuts()
+  const [guion, setGuion] = useState(false)
   return (
     <div className="app">
-      <Toolbar />
+      <Toolbar onGuion={() => setGuion(!guion)} />
+      {guion && <ScriptPanel onClose={() => setGuion(false)} />}
       <PartsTree />
       <Stage />
       <Controls />

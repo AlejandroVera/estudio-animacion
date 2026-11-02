@@ -3,7 +3,7 @@ import { download, exportMp4 } from '../export/exportMp4'
 import type { Project } from '../model/types'
 import { useStore } from '../store'
 
-export function Toolbar() {
+export function Toolbar({ onGuion }: { onGuion: () => void }) {
   const project = useStore((s) => s.project)
   const mode = useStore((s) => s.mode)
   const canUndo = useStore((s) => s.past.length > 0)
@@ -56,6 +56,10 @@ export function Toolbar() {
         <button className={mode === 'colocar' ? 'active' : ''} onClick={() => setMode('colocar')} title="Arrastra el personaje para colocarlo; rueda del ratón para su tamaño">Colocar</button>
         <button className={mode === 'articulaciones' ? 'active' : ''} onClick={() => setMode('articulaciones')}>Articulaciones</button>
       </div>
+
+      <button className="btn" onClick={onGuion} title="Escribe el guion y conviértelo en escenas animadas">
+        📝 Guion
+      </button>
 
       <div className="spacer" />
 

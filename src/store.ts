@@ -50,7 +50,7 @@ interface State {
   resetPart: (id: string) => void
   movePivot: (partId: string, delta: Vec) => void
   setInstance: (patch: Partial<Pick<CharacterInstance, 'x' | 'y' | 'scale'>>, tag?: string) => void
-  setProjectProps: (patch: Partial<Pick<Project, 'duration' | 'background' | 'name' | 'vida' | 'audio' | 'fondos'>>) => void
+  setProjectProps: (patch: Partial<Pick<Project, 'duration' | 'background' | 'name' | 'vida' | 'audio' | 'fondos' | 'guion'>>) => void
   /** Cambia el personaje de la escena por otro de la biblioteca, conservando la animación. */
   setCharacter: (libraryId: string) => void
   /** Sustituye todas las pistas (y la duración) en un solo paso de deshacer: lo usa el copiloto. */

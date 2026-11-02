@@ -5,13 +5,17 @@
 // Implementa el transporte HTTP de MCP sin sesiones, respondiendo siempre JSON.
 
 import { almacenListo, encolar, leerContexto } from './_almacen.js'
-import { GUIA, SCHEMA } from './_guia.js'
+import { GUIA, GUIA_GUION, SCHEMA, SCHEMA_GUION } from './_guia.js'
 
 const INSTRUCCIONES = `Estás conectado al Estudio de Animación de Alejandro (una web donde anima personajes
 de dibujo animado por piezas). Antes de animar, llama a ver_estudio para conocer el personaje, sus piezas
 y la animación actual. Después usa animar con las claves. Tras animar puedes volver a llamar a
 ver_estudio para comprobar que se aplicó. La web tiene que estar abierta con «Conectar con Claude» activado.
 
+Para vídeos completos a partir de un guion o una idea usa la herramienta guion:
+${GUIA_GUION}
+
+Para retoques sobre la animación existente usa animar:
 ${GUIA.replace('El usuario,\nque no es animador, te pide', 'El usuario te pide').replace(
   'Recibes la descripción del personaje y la animación actual en JSON.',
   'La descripción del personaje y la animación actual te las da ver_estudio.',
@@ -29,6 +33,12 @@ const TOOLS = [
     description:
       'Añade claves de animación al proyecto abierto en la web (y opcionalmente borra claves de un tramo o cambia la duración). Sigue la guía de animación de las instrucciones del servidor. El usuario puede deshacerlo en la web con Ctrl+Z.',
     inputSchema: SCHEMA,
+  },
+  {
+    name: 'guion',
+    description:
+      'Monta un vídeo completo a partir de escenas: cada escena con su diálogo, plano de cámara, expresión, duración y gestos de la biblioteca. Sustituye la animación del proyecto (se puede deshacer). Sigue la guía de guion de las instrucciones del servidor.',
+    inputSchema: SCHEMA_GUION,
   },
   {
     name: 'deshacer',
@@ -65,6 +75,11 @@ async function llamarHerramienta(name: string, args: Record<string, unknown>) {
       `Enviado a la web (orden ${seq}).` +
         (conectada ? ' Se aplicará en unos segundos.' : ' Ojo: la web no parece conectada; se aplicará cuando el usuario la abra y active «Conectar con Claude» si no han pasado muchas órdenes.'),
     )
+  }
+  if (name === 'guion') {
+    if (!Array.isArray(args.escenas) || !args.escenas.length) return texto('Faltan las escenas.', true)
+    const seq = await encolar({ tipo: 'guion', resultado: args })
+    return texto(`Guion enviado a la web (orden ${seq}): ${args.escenas.length} escenas.`)
   }
   if (name === 'deshacer') {
     const seq = await encolar({ tipo: 'deshacer' })

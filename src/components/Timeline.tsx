@@ -41,6 +41,12 @@ export function Timeline() {
   const snapT = (t: number) => Math.max(0, Math.min(project.duration, Math.round(t * project.fps) / project.fps))
   const pct = (t: number) => `${(t / project.duration) * 100}%`
 
+  let accS = 0
+  const sceneStarts = (project.guion?.escenas ?? []).map((e) => {
+    const s0 = accS
+    accS += e.duracion
+    return s0
+  })
   const ticks: number[] = []
   const step = project.duration > 30 ? 5 : project.duration > 10 ? 1 : 0.5
   for (let t = 0; t <= project.duration + 1e-6; t += step) ticks.push(t)
@@ -97,6 +103,11 @@ export function Timeline() {
             {ticks.map((t) => (
               <div key={t} className="tick" style={{ left: pct(t) }}>
                 <span>{Number.isInteger(t) ? `${t}s` : ''}</span>
+              </div>
+            ))}
+            {sceneStarts.map((t, i) => (
+              <div key={i} className="tl-scene" style={{ left: pct(t) }}>
+                <span>E{i + 1}</span>
               </div>
             ))}
             <div className="playhead" style={{ left: pct(time) }}>
