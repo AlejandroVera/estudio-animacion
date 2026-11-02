@@ -7,7 +7,7 @@ import type { Character, CharacterInstance, Ease, Project, Tracks, Vec } from '.
 const STORAGE_KEY = 'estudio-animacion:proyecto'
 const HISTORY_LIMIT = 100
 
-export type Mode = 'animar' | 'articulaciones'
+export type Mode = 'animar' | 'colocar' | 'articulaciones'
 
 export interface SelectedKey {
   channel: string
@@ -20,6 +20,7 @@ interface State {
   playing: boolean
   mode: Mode
   selectedPart: string | null
+  selectedLayer: string | null
   selectedKey: SelectedKey | null
   past: Project[]
   future: Project[]
@@ -36,6 +37,7 @@ interface State {
   setPlaying: (on: boolean) => void
   setMode: (m: Mode) => void
   selectPart: (id: string | null) => void
+  selectLayer: (id: string | null) => void
   selectKey: (k: SelectedKey | null) => void
 
   /** Pone una clave en el instante actual (auto-clave). */
@@ -96,6 +98,7 @@ export const useStore = create<State>((set, get) => ({
   playing: false,
   mode: 'animar',
   selectedPart: null,
+  selectedLayer: null,
   selectedKey: null,
   past: [],
   future: [],
@@ -146,7 +149,8 @@ export const useStore = create<State>((set, get) => ({
   },
   setPlaying: (on) => set({ playing: on }),
   setMode: (m) => set({ mode: m, playing: false }),
-  selectPart: (id) => set({ selectedPart: id }),
+  selectPart: (id) => set(id ? { selectedPart: id, selectedLayer: null } : { selectedPart: null }),
+  selectLayer: (id) => set(id ? { selectedLayer: id, selectedPart: null } : { selectedLayer: null }),
   selectKey: (k) => set({ selectedKey: k }),
 
   key: (channel, value, tag) => {

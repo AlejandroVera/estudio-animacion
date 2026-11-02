@@ -2,7 +2,7 @@ import { poseAt } from './anim'
 import { withLife } from './life'
 import { ensureMedia, mediaUrl } from '../audio/storage'
 import { evalTrack } from './anim'
-import type { Character, CharacterInstance, Part, Pose, Project, Vec } from './types'
+import type { BgLayer, Character, CharacterInstance, Part, Pose, Project, Vec } from './types'
 
 // ---------- Imágenes ----------
 
@@ -162,6 +162,28 @@ export function cameraMatrix(project: Project, t: number): DOMMatrix {
   return new DOMMatrix().translate(W, H).scale(zoom).translate(-W - cx, -H - cy)
 }
 
+/** Matriz de una capa de imagen en el instante t (coordenadas de la imagen centradas). */
+export function layerMatrix(project: Project, l: BgLayer, t: number): DOMMatrix {
+  const tr = project.instances[0]?.tracks ?? {}
+  const ch = (p: string, d: number) => num(evalTrack(tr[`bg:${l.id}:${p}`], t, d))
+  const cover = Math.max(project.width / l.w, project.height / l.h)
+  return new DOMMatrix()
+    .translate(project.width / 2 + ch('x', 0), project.height / 2 + ch('y', 0))
+    .rotate(ch('rot', 0))
+    .scale(cover * ch('scale', 1))
+}
+
+/** Capa bajo un punto de la escena (primero las de delante). */
+export function hitLayer(project: Project, t: number, pt: Vec, delante: boolean): BgLayer | null {
+  const layers = (project.fondos ?? []).filter((l) => !!l.delante === delante)
+  for (let i = layers.length - 1; i >= 0; i--) {
+    const l = layers[i]
+    const q = layerMatrix(project, l, t).inverse().transformPoint(new DOMPoint(pt.x, pt.y))
+    if (Math.abs(q.x) <= l.w / 2 && Math.abs(q.y) <= l.h / 2) return l
+  }
+  return null
+}
+
 /** Dibuja las capas de imagen de un lado (detrás o delante del personaje). */
 export function drawLayers(g: CanvasRenderingContext2D, project: Project, t: number, delante: boolean) {
   const tr = project.instances[0]?.tracks ?? {}
@@ -171,14 +193,10 @@ export function drawLayers(g: CanvasRenderingContext2D, project: Project, t: num
     if (!url) continue
     const img = getImage(url)
     if (!img.complete || !img.naturalWidth) continue
-    const ch = (p: string, d: number) => num(evalTrack(tr[`bg:${l.id}:${p}`], t, d))
-    const cover = Math.max(project.width / l.w, project.height / l.h)
+    const opacity = num(evalTrack(tr[`bg:${l.id}:opacity`], t, 1))
     g.save()
-    g.globalAlpha = Math.max(0, Math.min(1, ch('opacity', 1)))
-    g.translate(project.width / 2 + ch('x', 0), project.height / 2 + ch('y', 0))
-    g.rotate((ch('rot', 0) * Math.PI) / 180)
-    const k = cover * ch('scale', 1)
-    g.scale(k, k)
+    g.globalAlpha = Math.max(0, Math.min(1, opacity))
+    g.setTransform(g.getTransform().multiply(layerMatrix(project, l, t)))
     g.drawImage(img, -l.w / 2, -l.h / 2, l.w, l.h)
     g.restore()
   }

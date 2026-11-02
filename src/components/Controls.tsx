@@ -436,7 +436,8 @@ function Backgrounds() {
   const time = useStore((s) => s.time)
   const key = useStore((s) => s.key)
   const fileRef = useRef<HTMLInputElement>(null)
-  const [sel, setSel] = useState<string | null>(null)
+  const sel = useStore((s) => s.selectedLayer)
+  const setSel = useStore((s) => s.selectLayer)
   const [msg, setMsg] = useState<string | null>(null)
   const layers = project.fondos ?? []
   const tracks = project.instances[0].tracks

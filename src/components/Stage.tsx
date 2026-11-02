@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { poseAt } from '../model/anim'
-import { cameraMatrix, drawCharacter, drawLayers, ensureImages, hitTest, pivotOf, type Placed } from '../model/render'
+import { cameraMatrix, drawCharacter, drawLayers, ensureImages, hitLayer, hitTest, layerMatrix, pivotOf, type Placed } from '../model/render'
+import { evalTrack } from '../model/anim'
 import type { Vec } from '../model/types'
 import { activeCharacter, useStore } from '../store'
 
@@ -8,6 +9,8 @@ type Drag =
   | { kind: 'rotate'; partId: string; pivot: Vec; startAngle: number; startRot: number }
   | { kind: 'move'; partId: string; last: Vec; inv: DOMMatrix; base: Vec; acc: Vec }
   | { kind: 'pivot'; partId: string; last: Vec }
+  | { kind: 'layer'; id: string; last: Vec; x: number; y: number }
+  | { kind: 'inst'; last: Vec }
 
 export function Stage() {
   const wrapRef = useRef<HTMLDivElement>(null)
@@ -24,6 +27,7 @@ export function Stage() {
   const time = useStore((s) => s.time)
   const mode = useStore((s) => s.mode)
   const selectedPart = useStore((s) => s.selectedPart)
+  const selectedLayer = useStore((s) => s.selectedLayer)
 
   useEffect(() => {
     const el = wrapRef.current!
@@ -82,6 +86,18 @@ export function Stage() {
 
     // Ayudas visuales (no salen en el vídeo)
     const px = 1 / scale
+    const layerSel = (project.fondos ?? []).find((l) => l.id === selectedLayer)
+    if (layerSel) {
+      const m = cam.multiply(layerMatrix(project, layerSel, time))
+      g.save()
+      g.setTransform(g.getTransform().multiply(layerMatrix(project, layerSel, time)))
+      const k = Math.hypot(m.a, m.b)
+      g.strokeStyle = '#F5B301'
+      g.lineWidth = (3 * px) / k
+      g.setLineDash([10 * px / k, 6 * px / k])
+      g.strokeRect(-layerSel.w / 2, -layerSel.h / 2, layerSel.w, layerSel.h)
+      g.restore()
+    }
     for (const pl of placedRef.current) {
       const sel = pl.part.id === selectedPart
       if (!rest && !sel) continue
@@ -105,7 +121,7 @@ export function Stage() {
       g.stroke()
     }
     g.restore()
-  }, [project, time, mode, selectedPart, size, loaded])
+  }, [project, time, mode, selectedPart, selectedLayer, size, loaded])
 
   const toStage = (e: React.PointerEvent): Vec => {
     const r = canvasRef.current!.getBoundingClientRect()
@@ -134,8 +150,29 @@ export function Stage() {
       return
     }
 
-    st.selectPart(hit?.id ?? null)
-    if (!hit) return
+    // Lo que está delante del personaje se coge primero; luego el personaje; luego el fondo.
+    const front = hitLayer(st.project, st.time, pt, true)
+    const layer = front ?? (hit ? null : hitLayer(st.project, st.time, pt, false))
+    if (layer) {
+      st.selectLayer(layer.id)
+      ;(e.target as Element).setPointerCapture(e.pointerId)
+      const tr = inst.tracks
+      const n = (c: string) => Number(evalTrack(tr[c], st.time, 0)) || 0
+      dragRef.current = { kind: 'layer', id: layer.id, last: pt, x: n(`bg:${layer.id}:x`), y: n(`bg:${layer.id}:y`) }
+      return
+    }
+    if (!hit) {
+      st.selectPart(null)
+      st.selectLayer(null)
+      return
+    }
+    if (st.mode === 'colocar') {
+      st.selectPart(null)
+      ;(e.target as Element).setPointerCapture(e.pointerId)
+      dragRef.current = { kind: 'inst', last: pt }
+      return
+    }
+    st.selectPart(hit.id)
     ;(e.target as Element).setPointerCapture(e.pointerId)
     const pl = placedRef.current.find((p) => p.part.id === hit.id)!
     const pose = poseAt(ch, inst.tracks, st.time)
@@ -163,7 +200,7 @@ export function Stage() {
     const st = useStore.getState()
     if (!d) {
       const ch = activeCharacter(st.project)
-      setHover(!!hitTest(ch, placedRef.current, pt))
+      setHover(!!hitTest(ch, placedRef.current, pt) || !!hitLayer(st.project, st.time, pt, true) || (st.selectedLayer !== null && !!hitLayer(st.project, st.time, pt, false)))
       return
     }
     if (d.kind === 'rotate') {
@@ -186,12 +223,36 @@ export function Stage() {
         },
         `drag:${d.partId}:xy`,
       )
+    } else if (d.kind === 'layer') {
+      d.x += pt.x - d.last.x
+      d.y += pt.y - d.last.y
+      d.last = pt
+      st.keyMany({ [`bg:${d.id}:x`]: Math.round(d.x), [`bg:${d.id}:y`]: Math.round(d.y) }, `drag:bg:${d.id}`)
+    } else if (d.kind === 'inst') {
+      const inst = st.project.instances[0]
+      const dx = pt.x - d.last.x
+      const dy = pt.y - d.last.y
+      d.last = pt
+      st.setInstance({ x: Math.round(inst.x + dx), y: Math.round(inst.y + dy) }, 'drag-inst')
     } else {
       const inst = st.project.instances[0]
       const dx = (pt.x - d.last.x) / inst.scale
       const dy = (pt.y - d.last.y) / inst.scale
       d.last = pt
       st.movePivot(d.partId, { x: dx, y: dy })
+    }
+  }
+
+  const onWheel = (e: React.WheelEvent) => {
+    const st = useStore.getState()
+    const f = e.deltaY < 0 ? 1.05 : 1 / 1.05
+    if (st.selectedLayer) {
+      const c = `bg:${st.selectedLayer}:scale`
+      const v = Number(evalTrack(st.project.instances[0].tracks[c], st.time, 1)) || 1
+      st.key(c, Math.round(Math.max(0.1, Math.min(5, v * f)) * 1000) / 1000, `wheel:${c}`)
+    } else if (st.mode === 'colocar') {
+      const inst = st.project.instances[0]
+      st.setInstance({ scale: Math.round(Math.max(0.1, Math.min(5, inst.scale * f)) * 1000) / 1000 }, 'wheel-inst')
     }
   }
 
@@ -203,16 +264,19 @@ export function Stage() {
     <div ref={wrapRef} className="stage">
       <canvas
         ref={canvasRef}
-        style={{ width: size.w, height: size.h, cursor: hover ? (mode === 'articulaciones' ? 'crosshair' : 'grab') : 'default' }}
+        style={{ width: size.w, height: size.h, cursor: hover ? (mode === 'articulaciones' ? 'crosshair' : mode === 'colocar' ? 'move' : 'grab') : 'default' }}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
+        onWheel={onWheel}
         onPointerCancel={onPointerUp}
       />
       <div className="stage-hint">
         {mode === 'animar'
-          ? 'Arrastra una pieza para girarla · Mayús + arrastrar para moverla · Alt para girar de 15 en 15°'
-          : 'Modo articulaciones: arrastra para recolocar el punto de giro de la pieza'}
+          ? 'Arrastra una pieza para girarla · Mayús + arrastrar para moverla · Fondos: pulsa y arrastra, rueda = tamaño'
+          : mode === 'colocar'
+            ? 'Arrastra el personaje para colocarlo · rueda del ratón = tamaño · los fondos también se arrastran'
+            : 'Modo articulaciones: arrastra para recolocar el punto de giro de la pieza'}
       </div>
     </div>
   )

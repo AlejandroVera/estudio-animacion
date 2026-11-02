@@ -38,6 +38,10 @@ arrastrarlos para recolocarlos.
 **Guardar:** el proyecto se guarda solo en este navegador. «Guardar copia» descarga un archivo
 que puedes volver a cargar con «Abrir…».
 
+**Arrastrar en el lienzo:** pulsa un fondo y arrástralo (se crean claves de posición; la rueda del
+ratón cambia su tamaño). En el modo **Colocar** arrastras el personaje entero por la escena y con la
+rueda cambias su tamaño (sin crear animación).
+
 ### Atajos
 | Tecla | Acción |
 |---|---|

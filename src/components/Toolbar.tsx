@@ -53,6 +53,7 @@ export function Toolbar() {
 
       <div className="segmented" role="tablist">
         <button className={mode === 'animar' ? 'active' : ''} onClick={() => setMode('animar')}>Animar</button>
+        <button className={mode === 'colocar' ? 'active' : ''} onClick={() => setMode('colocar')} title="Arrastra el personaje para colocarlo; rueda del ratón para su tamaño">Colocar</button>
         <button className={mode === 'articulaciones' ? 'active' : ''} onClick={() => setMode('articulaciones')}>Articulaciones</button>
       </div>
 
