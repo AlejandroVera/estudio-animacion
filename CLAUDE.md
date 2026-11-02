@@ -23,9 +23,12 @@ en lenguaje llano y pídele que pruebe en la web publicada.
   transiciones `suave | lineal | salto`. `src/model/anim.ts` evalúa la pose en un instante.
 - `src/model/render.ts`: matrices, dibujo en canvas, detección de clic por transparencia.
   El mismo dibujo sirve para el editor y para exportar.
-- Deformación por malla (`Part.skin`, `drawSkinned` en `render.ts`): cerca de una articulación los
-  vértices mezclan el movimiento de la pieza con el de su padre/hija (skinning lineal) y la imagen
-  se dibuja en triángulos. Solo se activa cuando la pieza gira respecto a sus vecinas.
+- Deformación por malla (`Part.skin`, `drawSkinned` en `render.ts`): cerca de una articulación cada
+  vértice gira una fracción del giro de la pieza (o de su hija), lo que dobla hombros, codos, caderas
+  y rodillas sin adelgazar el dibujo; la imagen se dibuja en triángulos y solo cuando hay giro.
+  Los rangos se calculan solos (`autoSkin` en `build.ts`) para las piezas de imagen del esqueleto
+  estándar (`brazo_*`, `antebrazo_*`, `muslo_*`, `pierna_*`): cualquier personaje nuevo que use esos
+  ids lo hereda sin configurar nada.
 - `src/export/exportMp4.ts`: exporta H.264 con WebCodecs + mp4-muxer (Chrome/Edge).
 - `src/model/sample.ts`: personaje de ejemplo en SVG; es la referencia del formato que deben
   producir los personajes generados con IA.

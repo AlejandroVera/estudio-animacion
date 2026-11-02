@@ -4,7 +4,7 @@
 // Coordenadas = píxeles de la ilustración (1696×2528).
 
 import { buildParts, type PartDef } from '../build'
-import type { Character, Part } from '../types'
+import type { Character } from '../types'
 import manifest from './chicoRosa.manifest.json'
 
 const INK = '#1C181A'
@@ -20,20 +20,19 @@ const EYES = [
   { cx: 948, cy: 377, px: 955, py: 376 },
 ]
 
-// skin: zonas que se doblan junto a la articulación en vez de girar rígidas (ver Part.skin).
-// Hombro: la manga entera hace de transición entre torso y brazo; codo y rodilla, ±35-40 px.
-const BODY: Record<string, { name: string; parent: string | null; z: number; skin?: Part['skin'] }> = {
+// Hombros, codos, caderas y rodillas se doblan con la deformación automática (autoSkin en build.ts).
+const BODY: Record<string, { name: string; parent: string | null; z: number }> = {
   cadera: { name: 'Cadera', parent: null, z: 15 },
   torso: { name: 'Torso', parent: 'cadera', z: 25 },
   cabeza: { name: 'Cabeza', parent: 'torso', z: 40 },
-  brazo_izq: { name: 'Brazo izq.', parent: 'torso', z: 30, skin: { parent: [-110, 150], child: { id: 'antebrazo_izq', range: [-35, 35] } } },
-  antebrazo_izq: { name: 'Antebrazo izq.', parent: 'brazo_izq', z: 29, skin: { parent: [-35, 35] } },
-  brazo_der: { name: 'Brazo der.', parent: 'torso', z: 30, skin: { parent: [-110, 150], child: { id: 'antebrazo_der', range: [-35, 35] } } },
-  antebrazo_der: { name: 'Antebrazo der.', parent: 'brazo_der', z: 29, skin: { parent: [-35, 35] } },
-  muslo_izq: { name: 'Muslo izq.', parent: 'cadera', z: 12, skin: { parent: [-60, 90], child: { id: 'pierna_izq', range: [-40, 40] } } },
-  pierna_izq: { name: 'Pierna izq.', parent: 'muslo_izq', z: 10, skin: { parent: [-40, 40] } },
-  muslo_der: { name: 'Muslo der.', parent: 'cadera', z: 12, skin: { parent: [-60, 90], child: { id: 'pierna_der', range: [-40, 40] } } },
-  pierna_der: { name: 'Pierna der.', parent: 'muslo_der', z: 10, skin: { parent: [-40, 40] } },
+  brazo_izq: { name: 'Brazo izq.', parent: 'torso', z: 30 },
+  antebrazo_izq: { name: 'Antebrazo izq.', parent: 'brazo_izq', z: 29 },
+  brazo_der: { name: 'Brazo der.', parent: 'torso', z: 30 },
+  antebrazo_der: { name: 'Antebrazo der.', parent: 'brazo_der', z: 29 },
+  muslo_izq: { name: 'Muslo izq.', parent: 'cadera', z: 12 },
+  pierna_izq: { name: 'Pierna izq.', parent: 'muslo_izq', z: 10 },
+  muslo_der: { name: 'Muslo der.', parent: 'cadera', z: 12 },
+  pierna_der: { name: 'Pierna der.', parent: 'muslo_der', z: 10 },
 }
 
 // Bocas dibujadas a la escala de la boca original (centro 853,509).

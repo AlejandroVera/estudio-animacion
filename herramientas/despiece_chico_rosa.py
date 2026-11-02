@@ -9,6 +9,10 @@ os.makedirs(out_dir, exist_ok=True)
 rgba = np.array(Image.open(os.path.join(src_dir, 'cut_isnet-anime.png')).convert('RGBA'))
 H, W = rgba.shape[:2]
 alpha = np.clip((rgba[..., 3].astype(np.float32) / 255 - 0.35) / 0.3, 0, 1)
+# Quitar motas sueltas del recorte: solo se conservan las zonas grandes (el personaje).
+n, labels, stats, _ = cv2.connectedComponentsWithStats((alpha > 0.05).astype(np.uint8), 8)
+grandes = [i for i in range(1, n) if stats[i, cv2.CC_STAT_AREA] >= 2000]
+alpha[~np.isin(labels, grandes)] = 0
 rgb = rgba[..., :3].copy()
 INK = (28, 24, 26)
 
@@ -42,14 +46,6 @@ def save(pid, mask, pivot, rgb_img=None, alpha_img=None):
     Image.fromarray(img, 'RGBA').save(os.path.join(out_dir, pid + '.png'), optimize=True)
     pieces[pid] = {'box': [int(x0), int(y0), int(x1 - x0), int(y1 - y0)], 'pivot': [float(pivot[0]), float(pivot[1])]}
 
-def joint_rgb(center, rr, d):
-    """Remate redondo con contorno en la parte de arriba de la pieza inferior (oculto en reposo)."""
-    out = rgb.copy()
-    dist = np.sqrt((xx - center[0]) ** 2 + (yy - center[1]) ** 2)
-    ring = (dist >= rr - 7) & (dist <= rr) & (side_of(center, d) < 0) & (alpha > 0)
-    out[ring] = INK
-    return out
-
 # ---- cabeza con la cara limpia (ojos y boca se redibujan en SVG)
 rows = [(y, np.where(alpha[y] > 0.5)[0]) for y in range(140, 560)]
 pts = np.array([p for y, xs in rows if len(xs) for p in ((xs[0], y), (xs[-1], y))], np.float32)
@@ -74,9 +70,11 @@ L_CUT = [(598, 748), (632, 1020)]
 R_CUT = [(1106, 748), (1068, 1020)]
 t_rgb, t_alpha = rgb.copy(), alpha.copy()
 NECK_ROW, NECK_TOP = 618, 555
+oculto = circle((cx, cy), r - 6)  # solo se toca lo que queda debajo de la cabeza
 for y in range(NECK_TOP, NECK_ROW):
-    t_rgb[y, 760:945] = rgb[NECK_ROW, 760:945]
-    t_alpha[y, 760:945] = alpha[NECK_ROW, 760:945]
+    cols = np.where(oculto[y, 760:945])[0] + 760
+    t_rgb[y, cols] = rgb[NECK_ROW, cols]
+    t_alpha[y, cols] = alpha[NECK_ROW, cols]
 img = Image.fromarray(t_rgb)
 dr = ImageDraw.Draw(img)
 dr.line(L_CUT, fill=INK, width=7)
@@ -93,7 +91,7 @@ def arm(side, region, shoulder, elbow, wrist, rr=46):
     d = (wrist[0] - elbow[0], wrist[1] - elbow[1])
     s = side_of(elbow, d)
     save('brazo_' + side, region & ((s <= 0) | circle(elbow, rr - 12)), shoulder)
-    save('antebrazo_' + side, region & ((s >= 0) | circle(elbow, rr)), elbow, rgb_img=joint_rgb(elbow, rr, d))
+    save('antebrazo_' + side, region & ((s >= 0) | circle(elbow, rr)), elbow)
 
 arm('izq', poly([(150, 690), (598, 690), L_CUT[0], L_CUT[1], (628, 1720), (150, 1720)]), (612, 870), (478, 1180), (392, 1365))
 arm('der', poly([(1550, 690), (1106, 690), R_CUT[0], R_CUT[1], (1074, 1720), (1550, 1720)]), (1092, 870), (1220, 1180), (1310, 1365))
@@ -104,7 +102,7 @@ def leg(side, region_x, hip, knee, rr=66):
     thigh = poly([(x0, 1440), (x1, 1440), (x1, 1960), (x0, 1960)]) & ((yy <= knee[1]) | circle(knee, rr - 14))
     shin = poly([(x0 - 40, 1800), (x1 + 50, 1800), (x1 + 50, 2470), (x0 - 40, 2470)]) & ((yy >= knee[1]) | circle(knee, rr))
     save('muslo_' + side, thigh, hip)
-    save('pierna_' + side, shin, knee, rgb_img=joint_rgb(knee, rr, (0, 1)))
+    save('pierna_' + side, shin, knee)
 
 leg('izq', (630, 852), (742, 1500), (722, 1880))
 leg('der', (853, 1078), (962, 1500), (982, 1880))

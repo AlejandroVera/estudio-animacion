@@ -122,7 +122,7 @@ export function drawCharacter(
     if (!asset) continue
     const img = getImage(asset.src)
     if (!img.complete || !img.naturalWidth) continue
-    if (pl.part.skin && !restPose && drawSkinned(g, img, asset.w, asset.h, pl, byId, character)) continue
+    if (pl.part.skin && !restPose && drawSkinned(g, img, asset.w, asset.h, pl, byId, character, pose)) continue
     g.save()
     g.setTransform(g.getTransform().multiply(pl.matrix))
     g.drawImage(img, -pl.part.anchor.x, -pl.part.anchor.y, asset.w, asset.h)
@@ -165,13 +165,6 @@ const smooth = (t: number) => {
   return u * u * (3 - 2 * u)
 }
 
-function sameMatrix(a: DOMMatrix, b: DOMMatrix) {
-  return (
-    Math.abs(a.a - b.a) < 1e-4 && Math.abs(a.b - b.b) < 1e-4 && Math.abs(a.c - b.c) < 1e-4 &&
-    Math.abs(a.d - b.d) < 1e-4 && Math.abs(a.e - b.e) < 0.05 && Math.abs(a.f - b.f) < 0.05
-  )
-}
-
 /** Eje de la pieza en su espacio local: hacia su primera hija, o hacia el centro de su dibujo. */
 function partAxis(part: Part, character: Character, w: number, h: number): Vec {
   const child = character.parts.find((c) => c.parent === part.id && !c.role)
@@ -180,10 +173,14 @@ function partAxis(part: Part, character: Character, w: number, h: number): Vec {
   return { x: v.x / n, y: v.y / n }
 }
 
+const still = (p: { rot: number; x: number; y: number; scale: number } | undefined) =>
+  !p || (Math.abs(p.rot) < 0.01 && Math.abs(p.x) < 0.01 && Math.abs(p.y) < 0.01 && Math.abs(p.scale - 1) < 1e-4)
+
 /**
- * Dibuja la pieza como una malla de triángulos cuyos vértices mezclan el movimiento de la pieza
- * con el de su padre o hija cerca de la articulación (skinning lineal). Devuelve false si no hace
- * falta deformar (la pieza no se mueve respecto a sus vecinas) para dibujarla rígida, más rápido.
+ * Dibuja la pieza como una malla de triángulos. Cerca de la articulación con su padre, cada vértice
+ * gira solo una fracción del giro de la pieza; cerca de la articulación con su hija, gira además una
+ * fracción del giro de la hija. Girar (en vez de promediar posiciones) mantiene el grosor del dibujo.
+ * Devuelve false si no hace falta deformar, para dibujar la pieza rígida (más rápido).
  */
 function drawSkinned(
   g: CanvasRenderingContext2D,
@@ -193,24 +190,31 @@ function drawSkinned(
   pl: Placed,
   byId: Map<string, Placed>,
   character: Character,
+  pose: Pose,
 ): boolean {
   const part = pl.part
   const skin = part.skin!
-  const self = pl.matrix
+  const own = pose.parts[part.id]
   const parentPl = skin.parent && part.parent ? byId.get(part.parent) : undefined
-  const parentM = parentPl ? parentPl.matrix.translate(part.offset.x, part.offset.y) : undefined
   const childPl = skin.child ? byId.get(skin.child.id) : undefined
-  const childOff = childPl ? childPl.part.offset : undefined
-  const childM = childPl && childOff ? childPl.matrix.translate(-childOff.x, -childOff.y) : undefined
-  const bendsParent = parentM && !sameMatrix(parentM, self)
-  const bendsChild = childM && !sameMatrix(childM, self)
+  const childPose = childPl ? pose.parts[childPl.part.id] : undefined
+  const bendsParent = !!parentPl && !still(own)
+  const bendsChild = !!childPl && !!childPose && Math.abs(childPose.rot) > 0.01
   if (!bendsParent && !bendsChild) return false
 
   const axis = partAxis(part, character, W, H)
   const A = part.anchor
-  const childS = childOff ? childOff.x * axis.x + childOff.y * axis.y : 0
-  const nx = Math.max(2, Math.ceil(W / 36))
-  const ny = Math.max(2, Math.ceil(H / 36))
+  const cOff = childPl?.part.offset ?? { x: 0, y: 0 }
+  const childS = cOff.x * axis.x + cOff.y * axis.y
+  const nx = Math.max(2, Math.ceil(W / 30))
+  const ny = Math.max(2, Math.ceil(H / 30))
+  // Matriz de la pieza con una fracción a (0..1) de su propio movimiento respecto al padre.
+  const partial = (a: number) =>
+    parentPl!.matrix
+      .translate(part.offset.x + a * own.x, part.offset.y + a * own.y)
+      .rotate(a * own.rot)
+      .scale(1 + a * (own.scale - 1))
+  const cache = new Map<number, DOMMatrix>()
   const src: Vec[] = []
   const dst: Vec[] = []
   for (let j = 0; j <= ny; j++) {
@@ -220,29 +224,21 @@ function drawSkinned(
       const lx = u - A.x
       const ly = v - A.y
       const s = lx * axis.x + ly * axis.y
-      let wp = bendsParent && skin.parent ? 1 - smooth((s - skin.parent[0]) / (skin.parent[1] - skin.parent[0])) : 0
-      let wc = bendsChild && skin.child ? smooth((s - childS - skin.child.range[0]) / (skin.child.range[1] - skin.child.range[0])) : 0
-      if (wp + wc > 1) {
-        const k = 1 / (wp + wc)
-        wp *= k
-        wc *= k
+      let m = pl.matrix
+      if (bendsParent) {
+        const a = Math.round(smooth((s - skin.parent![0]) / (skin.parent![1] - skin.parent![0])) * 200) / 200
+        if (a < 1) {
+          m = cache.get(a) ?? partial(a)
+          cache.set(a, m)
+        }
       }
-      const ws = 1 - wp - wc
-      const p = self.transformPoint(new DOMPoint(lx, ly))
-      let x = p.x * ws
-      let y = p.y * ws
-      if (wp > 0) {
-        const q = parentM!.transformPoint(new DOMPoint(lx, ly))
-        x += q.x * wp
-        y += q.y * wp
+      if (bendsChild) {
+        const c = smooth((s - childS - skin.child!.range[0]) / (skin.child!.range[1] - skin.child!.range[0]))
+        if (c > 0) m = m.translate(cOff.x, cOff.y).rotate(c * childPose!.rot).translate(-cOff.x, -cOff.y)
       }
-      if (wc > 0) {
-        const q = childM!.transformPoint(new DOMPoint(lx, ly))
-        x += q.x * wc
-        y += q.y * wc
-      }
+      const p = m.transformPoint(new DOMPoint(lx, ly))
       src.push({ x: u, y: v })
-      dst.push({ x, y })
+      dst.push({ x: p.x, y: p.y })
     }
   }
 
