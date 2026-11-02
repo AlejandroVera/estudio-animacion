@@ -214,7 +214,7 @@ export function sampleProject(): Project {
         characterId: character.id,
         ...entry.place,
         tracks: {
-          'part:brazo_der:rot': [k(0, 0), k(0.6, -140), k(1.9, -140), k(2.5, 0)],
+          'part:brazo_der:rot': [k(0, 0), k(0.6, -110), k(1.9, -110), k(2.5, 0)],
           'part:antebrazo_der:rot': [k(0.6, 0), k(0.9, -35), k(1.2, 15), k(1.5, -35), k(1.8, 0)],
           'part:cabeza:rot': [k(0, 0), k(1.2, 7), k(2.5, 0), k(4, -4), k(5, 0)],
           'part:torso:rot': [k(0, 0), k(1.2, -3), k(2.5, 0)],

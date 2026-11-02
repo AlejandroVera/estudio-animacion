@@ -31,11 +31,14 @@ en lenguaje llano y pídele que pruebe en la web publicada.
 - `src/model/library.ts` lista los personajes disponibles (selector «Personaje» del panel izquierdo).
   Usar los mismos ids de pieza entre personajes (`cabeza`, `torso`, `brazo_der`…) para que la
   animación se pueda pasar de uno a otro.
-- «Chico rosa» (`src/model/characters/rosa.ts`) viene de una ilustración de Alejandro despiezada
-  con `herramientas/despiece_rosa.py` (rembg `isnet-anime` para quitar el fondo, cortes por
-  polígonos, cara borrada con inpaint y redibujada en SVG, remates redondos con contorno en codos
-  y rodillas). Piezas PNG en `public/personajes/rosa/`, cajas y articulaciones en
-  `rosa.manifest.json`. Es la referencia para automatizar el despiece en la fase 4.
+- «Chico rosa» (`src/model/characters/chicoRosa.ts`): ilustración de Alejandro redibujada en pose
+  animable (en «A», brazos y piernas separados) con Magnific (Nano Banana 2.1) y despiezada con
+  `herramientas/despiece_chico_rosa.py`: rembg `isnet-anime` quita el fondo, cortes por polígonos
+  (codos perpendiculares al brazo), cara borrada con inpaint y redibujada en SVG, remates redondos
+  con contorno en codos y rodillas. Piezas PNG en `public/personajes/chico-rosa/`, cajas y
+  articulaciones en `chicoRosa.manifest.json`. Es la referencia para automatizar el despiece (fase 4).
+- `public/personajes/rosa/` son las piezas de la primera versión; solo se conservan para que los
+  proyectos guardados antiguos sigan viéndose.
 
 ## Hoja de ruta
 1. ✅ Editor: piezas, articulaciones, cara, línea de tiempo, exportar MP4.

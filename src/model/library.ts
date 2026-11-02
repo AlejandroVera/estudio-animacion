@@ -1,6 +1,6 @@
 // Biblioteca de personajes disponibles en el estudio.
 
-import { rosaCharacter } from './characters/rosa'
+import { chicoRosaCharacter } from './characters/chicoRosa'
 import { sampleCharacter } from './sample'
 import type { Character } from './types'
 
@@ -14,6 +14,6 @@ export interface LibraryEntry {
 }
 
 export const LIBRARY: LibraryEntry[] = [
-  { id: 'rosa', name: 'Chico rosa', make: rosaCharacter, place: { x: 540, y: 1117, scale: 0.98 }, background: '#CE544E' },
+  { id: 'chico-rosa', name: 'Chico rosa', make: chicoRosaCharacter, place: { x: 540, y: 1100, scale: 0.78 }, background: '#CE544E' },
   { id: 'pepe', name: 'Pepe (dibujo simple)', make: sampleCharacter, place: { x: 540, y: 1250, scale: 1.6 }, background: '#F4EFE6' },
 ]
