@@ -8,6 +8,12 @@ Arriba a la derecha. Escribe (o dicta con 🎤) lo que quieres que haga el perso
 con la mano derecha y sonría», «que diga hola y parpadee»— y pulsa **Animar ✨**. La primera vez
 pide la contraseña del estudio. Lo que hace se añade a la animación y **Ctrl+Z** lo deshace entero.
 
+### Desde la app de Claude (sin coste de API)
+
+Activa **«Conectar con Claude»** en el panel del copiloto, copia la dirección del conector y añádela
+en Claude (Ajustes → Conectores → Añadir conector personalizado). Con la web abierta y conectada,
+pídele a Claude en su chat lo que quieras animar: verá tu personaje y aplicará la animación en la web.
+
 ## Cómo se usa a mano
 
 **Seleccionar una pieza:** púlsala en el dibujo, en la lista de la izquierda o en el desplegable «Pieza».

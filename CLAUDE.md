@@ -42,11 +42,17 @@ en lenguaje llano y pídele que pruebe en la web publicada.
 
 ## Hoja de ruta
 1. ✅ Editor: piezas, articulaciones, cara, línea de tiempo, exportar MP4.
-2. ✅ Copiloto: órdenes en español (escritas o dictadas con el micrófono del navegador) → claves de
-   animación. `api/copiloto.ts` (función de Vercel) llama a Claude Opus 5.5 con salida JSON
-   estructurada; `src/copilot/context.ts` le pasa piezas con su ángulo de reposo, variantes de cara y
-   pistas actuales, y valida/aplica la respuesta en un solo paso de deshacer. Necesita en Vercel
-   `ANTHROPIC_API_KEY` y `CLAVE_ESTUDIO` (contraseña que pide la web).
+2. ✅ Copiloto, por dos vías que comparten la guía de animación y el formato (`api/_guia.ts`):
+   - **API** (`api/copiloto.ts`): orden escrita o dictada en la web → Claude (por defecto
+     `claude-haiku-5-5`, cambiable con `COPILOTO_MODELO`) con salida JSON estructurada.
+   - **MCP** (`api/mcp.ts`, sin coste de API): conector para la app de Claude con las herramientas
+     `ver_estudio`, `animar` y `deshacer`. La web, con «Conectar con Claude» activado
+     (`src/copilot/link.ts`), publica su estado y recoge cada 4 s las órdenes de la cola en Upstash
+     Redis (`api/_almacen.ts`, `api/estado.ts`).
+   `src/copilot/context.ts` describe el personaje (ángulo de reposo de cada pieza) y valida/aplica
+   las respuestas en un solo paso de deshacer. Variables en Vercel: `ANTHROPIC_API_KEY`,
+   `CLAVE_ESTUDIO` (contraseña de la web y del conector), `KV_REST_API_URL`/`KV_REST_API_TOKEN`
+   (las crea la integración de Upstash) y opcional `COPILOTO_MODELO`.
 3. Voz (ElevenLabs) + bocas sincronizadas.
 4. Asistente «Crear personaje»: diseño, vistas, despiece, bocas/ojos con IA (fal.ai).
 5. Escenas: fondos, cámara, varios personajes, subtítulos, plantillas.

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { applyCopilot, buildContext, type CopilotResult } from '../copilot/context'
+import { useClaudeLink } from '../copilot/link'
 import { activeCharacter, useStore } from '../store'
 
 const PASS_KEY = 'estudio-animacion:clave'
@@ -35,7 +36,17 @@ export function Copilot() {
   const [needPass, setNeedPass] = useState(false)
   const [pass, setPass] = useState(readPass)
   const [listening, setListening] = useState(false)
+  const [linked, setLinked] = useState(false)
+  const [copied, setCopied] = useState(false)
   const recRef = useRef<Recognition | null>(null)
+  useClaudeLink(linked, pass, (msg, ok) => {
+    setReply({ ok, text: msg })
+    if (!ok) {
+      setLinked(false)
+      if (msg.includes('contraseña')) setNeedPass(true)
+    }
+  })
+  const connectorUrl = `${window.location.origin}/api/mcp?clave=${encodeURIComponent(pass)}`
   const baseText = useRef('')
 
   useEffect(() => () => recRef.current?.stop(), [])
@@ -154,6 +165,43 @@ export function Copilot() {
         </div>
       )}
       <p className="muted small">Se añade a la animación actual. Si no te gusta, Ctrl+Z lo deshace entero.</p>
+
+      <div className="claude-link">
+        <button
+          className={'btn full' + (linked ? ' linked' : '')}
+          onClick={() => {
+            if (!pass) {
+              setNeedPass(true)
+              setReply({ ok: false, text: 'Escribe primero la contraseña del estudio.' })
+              return
+            }
+            setLinked(!linked)
+            if (!linked) setReply({ ok: true, text: 'Conectado. Ya puedes pedirle animaciones a Claude desde su app.' })
+          }}
+          title="Deja que Claude (con tu suscripción, mediante el conector) vea y anime este proyecto"
+        >
+          {linked ? '● Conectado con Claude (pulsa para desconectar)' : 'Conectar con Claude (sin coste de API)'}
+        </button>
+        {linked && (
+          <div className="connector-url">
+            <span className="muted small">Dirección del conector para Claude:</span>
+            <div>
+              <code>{connectorUrl.replace(/clave=[^&]*/, 'clave=••••')}</code>
+              <button
+                className="btn small"
+                onClick={() => {
+                  navigator.clipboard?.writeText(connectorUrl).then(() => {
+                    setCopied(true)
+                    setTimeout(() => setCopied(false), 1500)
+                  })
+                }}
+              >
+                {copied ? 'Copiada' : 'Copiar'}
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
     </section>
   )
 }

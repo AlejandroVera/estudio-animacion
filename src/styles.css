@@ -595,3 +595,37 @@ select {
 .copilot .muted.small {
   margin: 8px 0 0;
 }
+
+.claude-link {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+.btn.linked {
+  border-color: #22c55e;
+  color: #86efac;
+}
+.connector-url {
+  margin-top: 8px;
+}
+.connector-url > div {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin-top: 4px;
+}
+.connector-url code {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 11px;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 5px 6px;
+}
+.connector-url .btn.small {
+  margin-top: 0;
+}
