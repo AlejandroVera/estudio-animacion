@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { KEY_EPS, moveKey, removeKey, setKey } from './model/anim'
-import { LIBRARY } from './model/library'
+import { LIBRARY, refreshCharacters } from './model/library'
 import { sampleProject } from './model/sample'
 import type { Character, CharacterInstance, Ease, Project, Tracks, Vec } from './model/types'
 
@@ -58,7 +58,7 @@ function loadSaved(): Project | null {
     const raw = localStorage.getItem(STORAGE_KEY)
     if (!raw) return null
     const p = JSON.parse(raw) as Project
-    return p.version === 1 ? p : null
+    return p.version === 1 ? refreshCharacters(p) : null
   } catch {
     return null
   }
@@ -132,7 +132,7 @@ export const useStore = create<State>((set, get) => ({
   },
 
   loadProject: (p) => {
-    get().commit(p)
+    get().commit(refreshCharacters(p))
     set({ time: 0, selectedPart: null, selectedKey: null, playing: false })
   },
 
