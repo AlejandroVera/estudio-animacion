@@ -180,6 +180,14 @@ select {
 .parts h3 {
   padding: 0 6px;
 }
+.char-select {
+  width: calc(100% - 12px);
+  margin: 0 6px 16px;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 6px;
+}
 .tree-item {
   display: flex;
   align-items: center;

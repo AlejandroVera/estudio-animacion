@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { KEY_EPS, moveKey, removeKey, setKey } from './model/anim'
+import { LIBRARY } from './model/library'
 import { sampleProject } from './model/sample'
 import type { Character, CharacterInstance, Ease, Project, Tracks, Vec } from './model/types'
 
@@ -48,6 +49,8 @@ interface State {
   movePivot: (partId: string, delta: Vec) => void
   setInstance: (patch: Partial<Pick<CharacterInstance, 'x' | 'y' | 'scale'>>, tag?: string) => void
   setProjectProps: (patch: Partial<Pick<Project, 'duration' | 'background' | 'name'>>) => void
+  /** Cambia el personaje de la escena por otro de la biblioteca, conservando la animación. */
+  setCharacter: (libraryId: string) => void
 }
 
 function loadSaved(): Project | null {
@@ -230,6 +233,21 @@ export const useStore = create<State>((set, get) => ({
     const { project } = get()
     const [inst, ...rest] = project.instances
     get().commit({ ...project, instances: [{ ...inst, ...patch }, ...rest] }, tag)
+  },
+
+  setCharacter: (libraryId) => {
+    const entry = LIBRARY.find((e) => e.id === libraryId)
+    if (!entry) return
+    const { project } = get()
+    const character = entry.make()
+    const [inst, ...rest] = project.instances
+    get().commit({
+      ...project,
+      background: entry.background,
+      characters: { ...project.characters, [character.id]: character },
+      instances: [{ ...inst, characterId: character.id, ...entry.place }, ...rest],
+    })
+    set({ selectedPart: null, selectedKey: null })
   },
 
   setProjectProps: (patch) => {

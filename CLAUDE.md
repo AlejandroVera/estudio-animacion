@@ -27,6 +27,16 @@ en lenguaje llano y pídele que pruebe en la web publicada.
 - `src/model/sample.ts`: personaje de ejemplo en SVG; es la referencia del formato que deben
   producir los personajes generados con IA.
 
+## Personajes
+- `src/model/library.ts` lista los personajes disponibles (selector «Personaje» del panel izquierdo).
+  Usar los mismos ids de pieza entre personajes (`cabeza`, `torso`, `brazo_der`…) para que la
+  animación se pueda pasar de uno a otro.
+- «Chico rosa» (`src/model/characters/rosa.ts`) viene de una ilustración de Alejandro despiezada
+  con `herramientas/despiece_rosa.py` (rembg `isnet-anime` para quitar el fondo, cortes por
+  polígonos, cara borrada con inpaint y redibujada en SVG, remates redondos con contorno en codos
+  y rodillas). Piezas PNG en `public/personajes/rosa/`, cajas y articulaciones en
+  `rosa.manifest.json`. Es la referencia para automatizar el despiece en la fase 4.
+
 ## Hoja de ruta
 1. ✅ Editor: piezas, articulaciones, cara, línea de tiempo, exportar MP4.
 2. Copiloto: órdenes en español → claves de animación (Claude API).

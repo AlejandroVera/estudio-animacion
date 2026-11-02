@@ -3,7 +3,9 @@
 // y cada pieza recorta su caja. Así el formato es el mismo que tendrán los personajes
 // que la herramienta genere con IA: una imagen por pieza + articulación + padre.
 
-import type { Asset, Character, Part, Project, Vec } from './types'
+import { buildParts as build, type PartDef } from './build'
+import { LIBRARY } from './library'
+import type { Character, Project } from './types'
 
 const INK = '#2B2B2B'
 const SKIN = '#F2C9A0'
@@ -14,26 +16,6 @@ const MOUTH = '#7A2430'
 const TONGUE = '#E86A7A'
 const BROW = '#3A2618'
 const S = `stroke="${INK}" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"`
-
-type Box = { x: number; y: number; w: number; h: number }
-
-interface PartDef {
-  id: string
-  name: string
-  parent: string | null
-  box: Box
-  pivot: Vec
-  z: number
-  variants: Record<string, string>
-  defaultVariant?: string
-  role?: Part['role']
-  gazeRange?: Vec
-}
-
-function svgSrc(box: Box, body: string): string {
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${box.w}" height="${box.h}" viewBox="${box.x} ${box.y} ${box.w} ${box.h}">${body}</svg>`
-  return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg)
-}
 
 const W = 400 // ancho del lienzo del personaje, para hacer el lado derecho en espejo
 
@@ -51,33 +33,6 @@ function mirror(def: PartDef, id: string, name: string, parent: string | null): 
     pivot: { x: W - def.pivot.x, y: def.pivot.y },
     variants,
   }
-}
-
-function build(defs: PartDef[]): Pick<Character, 'parts' | 'assets'> {
-  const assets: Record<string, Asset> = {}
-  const pivots = new Map(defs.map((d) => [d.id, d.pivot]))
-  const parts: Part[] = defs.map((d) => {
-    const variants: Record<string, string> = {}
-    for (const [k, body] of Object.entries(d.variants)) {
-      const id = `${d.id}__${k}`
-      assets[id] = { id, src: svgSrc(d.box, body), w: d.box.w, h: d.box.h }
-      variants[k] = id
-    }
-    const pp = d.parent ? pivots.get(d.parent)! : d.pivot
-    return {
-      id: d.id,
-      name: d.name,
-      parent: d.parent,
-      variants,
-      defaultVariant: d.defaultVariant ?? Object.keys(d.variants)[0],
-      anchor: { x: d.pivot.x - d.box.x, y: d.pivot.y - d.box.y },
-      offset: d.parent ? { x: d.pivot.x - pp.x, y: d.pivot.y - pp.y } : { x: 0, y: 0 },
-      z: d.z,
-      role: d.role,
-      gazeRange: d.gazeRange,
-    }
-  })
-  return { parts, assets }
 }
 
 function eyeHalf(cx: number) {
@@ -243,7 +198,8 @@ export function sampleCharacter(): Character {
 const k = (t: number, v: number | string, ease: 'suave' | 'lineal' | 'salto' = typeof v === 'string' ? 'salto' : 'suave') => ({ t, v, ease })
 
 export function sampleProject(): Project {
-  const pepe = sampleCharacter()
+  const entry = LIBRARY[0]
+  const character = entry.make()
   return {
     version: 1,
     name: 'Proyecto de ejemplo',
@@ -251,14 +207,12 @@ export function sampleProject(): Project {
     height: 1920,
     fps: 30,
     duration: 6,
-    background: '#F4EFE6',
-    characters: { [pepe.id]: pepe },
+    background: entry.background,
+    characters: { [character.id]: character },
     instances: [
       {
-        characterId: pepe.id,
-        x: 540,
-        y: 1250,
-        scale: 1.6,
+        characterId: character.id,
+        ...entry.place,
         tracks: {
           'part:brazo_der:rot': [k(0, 0), k(0.6, -140), k(1.9, -140), k(2.5, 0)],
           'part:antebrazo_der:rot': [k(0.6, 0), k(0.9, -35), k(1.2, 15), k(1.5, -35), k(1.8, 0)],
