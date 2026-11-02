@@ -11,6 +11,16 @@ function hasKeyAt(tracks: Tracks, channel: string, t: number) {
   return (tracks[channel] ?? []).some((k) => Math.abs(k.t - t) < KEY_EPS)
 }
 
+const VARIANT_NAMES: Record<string, string> = {
+  natural: 'Natural',
+  abierta: 'Abierta',
+  palma_arriba: 'Palma arriba',
+  puno: 'Puño',
+  indice: 'Señalar',
+  dorso: 'Dorso',
+  pulgar: 'Pulgar',
+}
+
 function KeyDot({ on, title }: { on: boolean; title?: string }) {
   return <span className={'keydot' + (on ? ' on' : '')} title={title ?? (on ? 'Hay clave en este instante' : 'Sin clave en este instante')} />
 }
@@ -110,6 +120,24 @@ export function Controls() {
             <Slider label="Mover ↔" channel={`part:${part.id}:x`} value={pp.x} min={-300} max={300} />
             <Slider label="Mover ↕" channel={`part:${part.id}:y`} value={pp.y} min={-300} max={300} />
             <Slider label="Tamaño" channel={`part:${part.id}:scale`} value={pp.scale} min={0.3} max={2} step={0.01} />
+            {Object.keys(part.variants).length > 1 && !part.role && (
+              <>
+                <div className="sublabel">
+                  <KeyDot on={hasKeyAt(inst.tracks, `part:${part.id}:v`, time)} /> Dibujo
+                </div>
+                <div className="chips">
+                  {Object.keys(part.variants).map((v) => (
+                    <button
+                      key={v}
+                      className={'chip' + ((pose.variants[part.id] ?? part.defaultVariant) === v ? ' active' : '')}
+                      onClick={() => key(`part:${part.id}:v`, v)}
+                    >
+                      {VARIANT_NAMES[v] ?? v}
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
             <button className="btn small" onClick={() => resetPart(part.id)}>
               Volver a la postura inicial
             </button>

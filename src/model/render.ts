@@ -61,6 +61,7 @@ export function variantFor(part: Part, pose: Pose): string {
   if (part.role === 'lids') v = lidsVariant(pose.blink)
   else if (part.role === 'mouth') v = pose.mouth
   else if (part.role === 'brows') v = pose.brows
+  else if (pose.variants?.[part.id]) v = pose.variants[part.id]
   return part.variants[v] ? v : part.defaultVariant
 }
 

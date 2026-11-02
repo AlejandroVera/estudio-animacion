@@ -57,7 +57,13 @@ export function buildContext(project: Project, character: Character, time: numbe
       nombre: character.name,
       piezas: character.parts
         .filter((p) => !p.role)
-        .map((p) => ({ id: p.id, nombre: p.name, cuelga_de: p.parent, angulo_reposo: angles[p.id] })),
+        .map((p) => ({
+          id: p.id,
+          nombre: p.name,
+          cuelga_de: p.parent,
+          angulo_reposo: angles[p.id],
+          ...(Object.keys(p.variants).length > 1 ? { dibujos: Object.keys(p.variants) } : {}),
+        })),
       nota_lados: '"izq" y "der" se refieren al lado de la PANTALLA, no al del personaje.',
       bocas: variantsOf('mouth'),
       cejas: variantsOf('brows'),
@@ -124,6 +130,10 @@ export function applyCopilot(
     let value: number | string
     if (k.canal === 'face:mouth' || k.canal === 'face:brows') {
       if (!(k.canal === 'face:mouth' ? mouths : brows).has(k.valor)) continue
+      value = k.valor
+    } else if (/^part:[^:]+:v$/.test(k.canal)) {
+      const part = character.parts.find((p) => p.id === k.canal.split(':')[1])
+      if (!part?.variants[k.valor]) continue
       value = k.valor
     } else {
       const m = /^part:([^:]+):(rot|x|y|scale)$/.exec(k.canal)

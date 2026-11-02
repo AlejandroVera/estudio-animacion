@@ -15,6 +15,8 @@ Cómo funciona el personaje:
   natural; elige el sentido que no atraviese el cuerpo. Usa la geometría, no adivines el signo.
 - part:<id>:x y part:<id>:y desplazan la pieza en píxeles del dibujo (y positivo = abajo). Úsalos
   sobre todo en la cadera (raíz) para botes, pasos o agacharse. part:<id>:scale cambia el tamaño (1 = normal).
+- Piezas con "dibujos" (las manos): part:<id>:v elige el dibujo (natural, abierta, palma_arriba,
+  puno, indice, dorso, pulgar); cambia de golpe y transición "salto". Los gestos ya cambian las manos.
 - Cara: face:gazeX y face:gazeY (-1..1, mirada; x positivo = mirar a la derecha de la pantalla,
   y positivo = abajo), face:blink (0 abierto .. 1 cerrado; un parpadeo dura ~0,2 s: 0 → 1 → 0),
   face:mouth y face:brows (nombres de variante, cambian de golpe).
@@ -22,7 +24,7 @@ Cómo funciona el personaje:
 
 Biblioteca de gestos (USA ESTO PRIMERO):
 - En "gestos_disponibles" tienes gestos ya animados de forma profesional (saludar, encogerse de
-  hombros, señalar, pensar, brazos en jarra, explicar, asentir, negar, celebrar, sorpresa). Para
+  hombros, señalar, pensar, brazos en jarra, explicar, asentir, negar, celebrar, sorpresa, pulgar). Para
   cualquier cosa que encaje con uno, añádelo en "gestos" con su instante de inicio "t", el lado
   ("der" o "izq" = lado de la PANTALLA, solo importa en los gestos de un brazo) y "velocidad"
   (1 = normal, 0.7 = más lento, 1.3 = más rápido). La herramienta lo adapta al personaje y
@@ -60,8 +62,8 @@ Reglas para animar bien:
   instante actual. Si lo pedido no cabe en la duración, alarga "duracion".
 - Transición: "suave" para casi todo, "lineal" para movimientos continuos, "salto" para cambios
   bruscos. Bocas y cejas siempre "salto".
-- "valor" es un número escrito como texto ("-35", "0.8") salvo en face:mouth y face:brows, que
-  llevan el nombre exacto de una variante disponible.
+- "valor" es un número escrito como texto ("-35", "0.8") salvo en face:mouth, face:brows y
+  part:<id>:v, que llevan el nombre exacto de una variante o dibujo disponible.
 - En "mensaje" explica en una o dos frases sencillas qué has hecho y cuándo pasa. Si algo no se
   puede hacer con las piezas que hay (por ejemplo girarse de perfil), dilo y haz lo más parecido.`
 

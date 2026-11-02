@@ -28,6 +28,7 @@ type V =
  *  hombros  (alto)           sube o baja los dos brazos desde el hombro
  *  cabeza, torso (giro)      cabeza_y, cadera_y (alto)
  *  mirada (mirada), mirada_y, boca, cejas
+ *  mano / mano2              dibujo de la mano (natural, abierta, palma_arriba, puno, indice, dorso, pulgar)
  */
 interface GK {
   t: number
@@ -47,7 +48,7 @@ export interface Gesto {
 }
 
 const k = (t: number, c: string, v: V, e?: Ease): GK => ({ t, c, v, e })
-const both = (t: number, c: 'brazo' | 'antebrazo', v: V, e?: Ease): GK[] => [k(t, c, v, e), k(t, `${c}2`, v, e)]
+const both = (t: number, c: 'brazo' | 'antebrazo' | 'mano', v: V, e?: Ease): GK[] => [k(t, c, v, e), k(t, `${c}2`, v, e)]
 
 export const GESTOS: Gesto[] = [
   {
@@ -63,7 +64,7 @@ export const GESTOS: Gesto[] = [
       k(1.83, 'antebrazo', { dir: -90 }), k(2.0, 'antebrazo', { dir: -90 }), k(2.55, 'antebrazo', { reposo: 0 }),
       k(0, 'torso', { giro: 0 }), k(0.55, 'torso', { giro: -2 }), k(2.0, 'torso', { giro: -2 }), k(2.5, 'torso', { giro: 0 }),
       k(0, 'cabeza', { giro: 0 }), k(0.6, 'cabeza', { giro: 5 }), k(2.0, 'cabeza', { giro: 5 }), k(2.6, 'cabeza', { giro: 0 }),
-      k(0.3, 'boca', 'sonrisa'),
+      k(0.3, 'boca', 'sonrisa'), k(0.45, 'mano', 'abierta'), k(2.15, 'mano', 'natural'),
     ],
   },
   {
@@ -82,6 +83,7 @@ export const GESTOS: Gesto[] = [
       k(0, 'cabeza_y', { alto: 0 }), k(0.38, 'cabeza_y', { alto: 0.05 }), k(1.1, 'cabeza_y', { alto: 0.05 }), k(1.5, 'cabeza_y', { alto: 0 }),
       k(0, 'cadera_y', { alto: 0 }), k(0.12, 'cadera_y', { alto: 0.015 }), k(0.38, 'cadera_y', { alto: -0.01 }), k(1.5, 'cadera_y', { alto: 0 }),
       k(0.25, 'cejas', 'triste'), k(0.25, 'boca', 'MBP'), k(1.7, 'cejas', 'neutral'), k(1.7, 'boca', 'cerrada'),
+      ...both(0.3, 'mano', 'palma_arriba'), ...both(1.3, 'mano', 'natural'),
     ],
   },
   {
@@ -96,6 +98,7 @@ export const GESTOS: Gesto[] = [
       k(0, 'torso', { giro: 0 }), k(0.45, 'torso', { giro: -2 }), k(1.7, 'torso', { giro: -2 }), k(2.2, 'torso', { giro: 0 }),
       k(0, 'cabeza', { giro: 0 }), k(0.5, 'cabeza', { giro: 4 }), k(1.7, 'cabeza', { giro: 4 }), k(2.2, 'cabeza', { giro: 0 }),
       k(0, 'mirada', { mirada: 0 }), k(0.35, 'mirada', { mirada: 0.85 }), k(1.75, 'mirada', { mirada: 0.85 }), k(2.05, 'mirada', { mirada: 0 }),
+      k(0.35, 'mano', 'indice'), k(1.85, 'mano', 'natural'),
     ],
   },
   {
@@ -111,6 +114,7 @@ export const GESTOS: Gesto[] = [
       k(0, 'mirada', { mirada: 0 }), k(0.5, 'mirada', { mirada: -0.6 }), k(2.4, 'mirada', { mirada: -0.6 }), k(2.8, 'mirada', { mirada: 0 }),
       k(0, 'mirada_y', 0), k(0.5, 'mirada_y', -0.6), k(2.4, 'mirada_y', -0.6), k(2.8, 'mirada_y', 0),
       k(0.4, 'boca', 'MBP'), k(0.4, 'cejas', 'triste'), k(2.8, 'boca', 'cerrada'), k(2.8, 'cejas', 'neutral'),
+      k(0.45, 'mano', 'puno'), k(2.5, 'mano', 'natural'),
     ],
   },
   {
@@ -124,6 +128,7 @@ export const GESTOS: Gesto[] = [
       ...both(0, 'antebrazo', { reposo: 0 }), ...both(0.45, 'antebrazo', { dir: 150 }), ...both(0.55, 'antebrazo', { dir: 145 }), ...both(2.1, 'antebrazo', { dir: 145 }), ...both(2.6, 'antebrazo', { reposo: 0 }),
       k(0, 'cadera_y', { alto: 0 }), k(0.4, 'cadera_y', { alto: -0.015 }), k(0.6, 'cadera_y', { alto: 0 }),
       k(0, 'cabeza', { giro: 0 }), k(0.5, 'cabeza', { giro: -3 }), k(2.1, 'cabeza', { giro: -3 }), k(2.6, 'cabeza', { giro: 0 }),
+      ...both(0.4, 'mano', 'puno'), ...both(2.2, 'mano', 'natural'),
     ],
   },
   {
@@ -139,6 +144,7 @@ export const GESTOS: Gesto[] = [
       k(0.5, 'antebrazo2', { dir: 5 }), k(0.85, 'antebrazo2', { dir: -25 }), k(1.15, 'antebrazo2', { dir: 10 }), k(1.45, 'antebrazo2', { dir: -20 }), k(1.75, 'antebrazo2', { dir: 5 }), k(2.1, 'antebrazo2', { dir: 0 }),
       ...both(2.65, 'antebrazo', { reposo: 0 }),
       k(0, 'cabeza', { giro: 0 }), k(0.7, 'cabeza', { giro: 3 }), k(1.3, 'cabeza', { giro: -2 }), k(1.9, 'cabeza', { giro: 2 }), k(2.6, 'cabeza', { giro: 0 }),
+      ...both(0.3, 'mano', 'palma_arriba'), ...both(2.2, 'mano', 'natural'),
     ],
   },
   {
@@ -178,6 +184,7 @@ export const GESTOS: Gesto[] = [
       k(0, 'cadera_y', { alto: 0 }), k(0.12, 'cadera_y', { alto: 0.03 }), k(0.35, 'cadera_y', { alto: -0.07 }), k(0.55, 'cadera_y', { alto: 0 }),
       k(0.75, 'cadera_y', { alto: -0.04 }), k(0.95, 'cadera_y', { alto: 0 }),
       k(0.25, 'boca', 'abierta'), k(0.25, 'cejas', 'sorprendido'), k(1.4, 'boca', 'sonrisa'), k(1.4, 'cejas', 'neutral'),
+      ...both(0.3, 'mano', 'puno'), ...both(1.5, 'mano', 'natural'),
     ],
   },
   {
@@ -192,6 +199,21 @@ export const GESTOS: Gesto[] = [
       ...both(0, 'antebrazo', { reposo: 0 }), ...both(0.15, 'antebrazo', { reposo: -18 }), ...both(1.0, 'antebrazo', { reposo: -14 }), ...both(1.3, 'antebrazo', { reposo: 0 }),
       k(0, 'cabeza_y', { alto: 0 }), k(0.1, 'cabeza_y', { alto: -0.02 }), k(0.4, 'cabeza_y', { alto: 0 }),
       k(0.05, 'cejas', 'sorprendido'), k(0.05, 'boca', 'O'), k(1.15, 'cejas', 'neutral'), k(1.15, 'boca', 'cerrada'),
+      ...both(0.08, 'mano', 'abierta'), ...both(1.2, 'mano', 'natural'),
+    ],
+  },
+  {
+    id: 'pulgar',
+    nombre: 'Pulgar arriba',
+    descripcion: 'Lleva la mano delante del pecho con el pulgar hacia arriba y sonríe.',
+    lados: 'uno',
+    duracion: 2.0,
+    claves: [
+      k(0, 'brazo', { reposo: 0 }), k(0.15, 'brazo', { reposo: 4 }), k(0.45, 'brazo', { dir: 78 }), k(1.5, 'brazo', { dir: 78 }), k(1.95, 'brazo', { reposo: 0 }),
+      k(0, 'antebrazo', { reposo: 0 }), k(0.5, 'antebrazo', { dir: -160 }), k(0.6, 'antebrazo', { dir: -170 }), k(1.5, 'antebrazo', { dir: -170 }), k(2.0, 'antebrazo', { reposo: 0 }),
+      k(0.35, 'mano', 'pulgar'), k(1.65, 'mano', 'natural'),
+      k(0, 'cabeza', { giro: 0 }), k(0.5, 'cabeza', { giro: 4 }), k(1.5, 'cabeza', { giro: 4 }), k(2.0, 'cabeza', { giro: 0 }),
+      k(0.3, 'boca', 'sonrisa'), k(0.3, 'cejas', 'neutral'),
     ],
   },
 ]
@@ -304,9 +326,20 @@ export function expandGesture(
       push('face:gazeX', g.t, v.mirada * mirror(lado), g.e)
     } else if (g.c === 'mirada_y' && typeof v === 'number') {
       push('face:gazeY', g.t, v, g.e)
+    } else if ((g.c === 'mano' || g.c === 'mano2') && typeof v === 'string') {
+      const id = `mano_${sideOf(g.c)}`
+      const part = character.parts.find((p) => p.id === id)
+      if (part?.variants[v]) push(`part:${id}:v`, g.t, v)
     } else if ((g.c === 'boca' || g.c === 'cejas') && typeof v === 'string') {
       push(g.c === 'boca' ? 'face:mouth' : 'face:brows', g.t, v)
     }
+  }
+  // Un dibujo de mano se mantiene hacia atrás hasta el inicio de la pista: la mano empieza el gesto
+  // con su dibujo natural y solo cambia en su clave.
+  for (const canal of new Set(out.filter((c) => c.canal.endsWith(':v')).map((c) => c.canal))) {
+    const first = Math.min(...out.filter((c) => c.canal === canal).map((c) => c.t))
+    const part = character.parts.find((p) => p.id === canal.split(':')[1])
+    if (part && first > t0 + 1e-3) out.push({ canal, t: t0, valor: part.defaultVariant, transicion: 'salto' })
   }
   return { claves: out, canales: [...new Set(out.map((c) => c.canal))], fin: t0 + gesto.duracion / speed }
 }

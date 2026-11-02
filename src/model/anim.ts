@@ -43,7 +43,10 @@ const str = (v: number | string) => String(v)
 
 export function poseAt(character: Character, tracks: Tracks, t: number): Pose {
   const parts: Pose['parts'] = {}
+  const variants: Pose['variants'] = {}
   for (const p of character.parts) {
+    const vk = tracks[`part:${p.id}:v`]
+    if (vk?.length && !p.role) variants[p.id] = str(evalTrack(vk, t, p.defaultVariant))
     const k = `part:${p.id}:`
     parts[p.id] = {
       rot: num(evalTrack(tracks[k + 'rot'], t, DEFAULTS.rot)),
@@ -59,6 +62,7 @@ export function poseAt(character: Character, tracks: Tracks, t: number): Pose {
     blink: num(evalTrack(tracks['face:blink'], t, DEFAULTS.blink)),
     mouth: str(evalTrack(tracks['face:mouth'], t, DEFAULTS.mouth)),
     brows: str(evalTrack(tracks['face:brows'], t, DEFAULTS.brows)),
+    variants,
   }
 }
 
@@ -102,6 +106,6 @@ export function channelLabel(character: Character, channel: string): string {
   if (faceNames[channel]) return faceNames[channel]
   const [, id, prop] = channel.split(':')
   const part = character.parts.find((p) => p.id === id)
-  const propNames: Record<string, string> = { rot: 'giro', x: 'mover ↔', y: 'mover ↕', scale: 'tamaño' }
+  const propNames: Record<string, string> = { rot: 'giro', x: 'mover ↔', y: 'mover ↕', scale: 'tamaño', v: 'dibujo' }
   return `${part?.name ?? id} · ${propNames[prop] ?? prop}`
 }

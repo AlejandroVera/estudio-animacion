@@ -68,6 +68,7 @@ export interface Keyframe {
 /**
  * Canales animables:
  *  - `part:<id>:rot` | `:x` | `:y` | `:scale`
+ *  - `part:<id>:v` (dibujo de la pieza, p. ej. la postura de una mano)
  *  - `face:gazeX` | `face:gazeY` (−1..1) | `face:blink` (0..1) | `face:mouth` | `face:brows`
  */
 export type Tracks = Record<string, Keyframe[]>
@@ -103,4 +104,6 @@ export interface Pose {
   blink: number
   mouth: string
   brows: string
+  /** Dibujo elegido para las piezas con varios (canal part:<id>:v). */
+  variants: Record<string, string>
 }

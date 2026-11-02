@@ -33,6 +33,8 @@ const BODY: Record<string, { name: string; parent: string | null; z: number }> =
   pierna_izq: { name: 'Pierna izq.', parent: 'muslo_izq', z: 10 },
   muslo_der: { name: 'Muslo der.', parent: 'cadera', z: 12 },
   pierna_der: { name: 'Pierna der.', parent: 'muslo_der', z: 10 },
+  mano_izq: { name: 'Mano izq.', parent: 'antebrazo_izq', z: 31 },
+  mano_der: { name: 'Mano der.', parent: 'antebrazo_der', z: 31 },
 }
 
 // Bocas dibujadas a la escala de la boca original (centro 853,509).
@@ -48,16 +50,20 @@ const MOUTHS: Record<string, string> = {
 }
 
 export function chicoRosaCharacter(): Character {
-  const pieces = manifest.pieces as Record<string, { box: number[]; pivot: number[] }>
+  const pieces = manifest.pieces as Record<string, { box: number[]; pivot: number[]; variants?: string[] }>
   const body: PartDef[] = Object.entries(BODY).map(([id, b]) => {
     const p = pieces[id]
+    // Las manos tienen varios dibujos (natural, abierta, palma_arriba, puno...), uno por archivo.
+    const variants = p.variants
+      ? Object.fromEntries(p.variants.map((v) => [v, `/personajes/chico-rosa/${id}__${v}.png`]))
+      : { normal: `/personajes/chico-rosa/${id}.png` }
     return {
       id,
       ...b,
       box: { x: p.box[0], y: p.box[1], w: p.box[2], h: p.box[3] },
       pivot: { x: p.pivot[0], y: p.pivot[1] },
       image: true,
-      variants: { normal: `/personajes/chico-rosa/${id}.png` },
+      variants,
     }
   })
 

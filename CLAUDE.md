@@ -58,6 +58,16 @@ en lenguaje llano y pídele que pruebe en la web publicada.
 - `src/model/life.ts`: respiración, balanceo y parpadeos sumados al dibujar (no son claves).
   Se desactiva con «Vida automática» (`project.vida === false`).
 
+## Manos y hombros
+- Manos como pieza propia (`mano_izq`, `mano_der`, hijas del antebrazo) con varios dibujos
+  (`natural`, `abierta`, `palma_arriba`, `puno`, `indice`, `dorso`, `pulgar`), elegidos con el canal
+  `part:<id>:v`. `herramientas/manos.py` las prepara para cualquier personaje: busca la muñeca (punto
+  más estrecho del antebrazo), separa la mano original y coloca las de una hoja de seis manos
+  derechas generada con IA (Magnific, referencia = ilustración del personaje), escaladas y giradas
+  al eje del antebrazo y espejadas para el otro lado.
+- Hombros: el canal `part:brazo_*:y` sube el brazo entero y el torso acompaña con `skin.lift`
+  (automático en `autoSkin`). Panel «Hombros» y canal `hombros` en los gestos.
+
 ## Hoja de ruta
 1. ✅ Editor: piezas, articulaciones, cara, línea de tiempo, exportar MP4.
 2. ✅ Copiloto, por dos vías que comparten la guía de animación y el formato (`api/_guia.ts`):
