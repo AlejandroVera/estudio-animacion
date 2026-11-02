@@ -214,10 +214,13 @@ export function sampleProject(): Project {
         characterId: character.id,
         ...entry.place,
         tracks: {
-          'part:brazo_der:rot': [k(0, 0), k(0.6, -110), k(1.9, -110), k(2.5, 0)],
-          'part:antebrazo_der:rot': [k(0.6, 0), k(0.9, -35), k(1.2, 15), k(1.5, -35), k(1.8, 0)],
-          'part:cabeza:rot': [k(0, 0), k(1.2, 7), k(2.5, 0), k(4, -4), k(5, 0)],
-          'part:torso:rot': [k(0, 0), k(1.2, -3), k(2.5, 0)],
+          // Saludo humano: el brazo sube hasta el hombro, el codo se dobla con el antebrazo vertical y la
+          // mano se agita; el antebrazo llega un poco después que el brazo y cuerpo y cabeza acompañan.
+          'part:brazo_der:rot': [k(0, 0), k(0.2, 4), k(0.65, -83), k(2.0, -83), k(2.5, 0)],
+          'part:antebrazo_der:rot': [k(0, 0), k(0.45, -20), k(0.75, -70), k(0.95, -92), k(1.2, -50), k(1.45, -92), k(1.7, -50), k(1.95, -70), k(2.1, -70), k(2.6, 0)],
+          'part:brazo_izq:rot': [k(0, 0), k(0.65, 3), k(2.5, 0)],
+          'part:cabeza:rot': [k(0, 0), k(0.7, 6), k(2.0, 6), k(2.6, 0), k(4, -4), k(5, 0)],
+          'part:torso:rot': [k(0, 0), k(0.65, -2), k(2.0, -2), k(2.5, 0)],
           'face:mouth': [k(0, 'cerrada'), k(0.4, 'sonrisa'), k(4, 'O'), k(5, 'sonrisa')],
           'face:brows': [k(0, 'neutral'), k(4, 'sorprendido'), k(5, 'neutral')],
           'face:blink': [k(0.9, 0), k(1.0, 1), k(1.1, 0), k(3.4, 0), k(3.5, 1), k(3.6, 0)],

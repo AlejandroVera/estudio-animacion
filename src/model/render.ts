@@ -217,6 +217,7 @@ function drawSkinned(
   const cache = new Map<number, DOMMatrix>()
   const src: Vec[] = []
   const dst: Vec[] = []
+  const moved: boolean[] = []
   for (let j = 0; j <= ny; j++) {
     for (let i = 0; i <= nx; i++) {
       const u = (i / nx) * W
@@ -225,20 +226,26 @@ function drawSkinned(
       const ly = v - A.y
       const s = lx * axis.x + ly * axis.y
       let m = pl.matrix
+      let deformed = false
       if (bendsParent) {
         const a = Math.round(smooth((s - skin.parent![0]) / (skin.parent![1] - skin.parent![0])) * 200) / 200
         if (a < 1) {
           m = cache.get(a) ?? partial(a)
           cache.set(a, m)
+          deformed = true
         }
       }
       if (bendsChild) {
         const c = smooth((s - childS - skin.child!.range[0]) / (skin.child!.range[1] - skin.child!.range[0]))
-        if (c > 0) m = m.translate(cOff.x, cOff.y).rotate(c * childPose!.rot).translate(-cOff.x, -cOff.y)
+        if (c > 0) {
+          m = m.translate(cOff.x, cOff.y).rotate(c * childPose!.rot).translate(-cOff.x, -cOff.y)
+          deformed = true
+        }
       }
       const p = m.transformPoint(new DOMPoint(lx, ly))
       src.push({ x: u, y: v })
       dst.push({ x: p.x, y: p.y })
+      moved.push(deformed)
     }
   }
 
@@ -282,12 +289,33 @@ function drawSkinned(
     if (sw > 0 && sh > 0) g.drawImage(img, sx * kx, sy * ky, sw * kx, sh * ky, sx, sy, sw, sh)
     g.restore()
   }
+  // Los cuadros de la malla que no se deforman se dibujan juntos, de una vez y rígidos.
+  const rigid: number[] = []
+  const bent: number[] = []
   for (let j = 0; j < ny; j++) {
     for (let i = 0; i < nx; i++) {
       const a = j * (nx + 1) + i
-      tri(a, a + 1, a + nx + 1)
-      tri(a + 1, a + nx + 2, a + nx + 1)
+      const quad = [a, a + 1, a + nx + 2, a + nx + 1]
+      ;(quad.some((q) => moved[q]) ? bent : rigid).push(a)
     }
+  }
+  if (rigid.length) {
+    g.save()
+    g.beginPath()
+    for (const a of rigid) {
+      const q = [src[a], src[a + 1], src[a + nx + 2], src[a + nx + 1]].map((p) => pl.matrix.transformPoint(new DOMPoint(p.x - A.x, p.y - A.y)))
+      g.moveTo(q[0].x, q[0].y)
+      for (let k = 1; k < 4; k++) g.lineTo(q[k].x, q[k].y)
+      g.closePath()
+    }
+    g.clip()
+    g.setTransform(g.getTransform().multiply(pl.matrix))
+    g.drawImage(img, -A.x, -A.y, W, H)
+    g.restore()
+  }
+  for (const a of bent) {
+    tri(a, a + 1, a + nx + 1)
+    tri(a + 1, a + nx + 2, a + nx + 1)
   }
   return true
 }

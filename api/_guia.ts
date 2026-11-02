@@ -20,6 +20,22 @@ Cómo funciona el personaje:
   face:mouth y face:brows (nombres de variante, cambian de golpe).
 - Expresiones = combinaciones de cejas + boca que ya trae el personaje.
 
+Gestos naturales (piensa siempre en la dirección final en pantalla de cada pieza):
+- Los brazos humanos casi nunca están estirados en vertical. Un brazo levantado queda como mucho un
+  poco por encima del hombro; para gestos, dobla el codo.
+- Saludar: brazo hacia fuera a la altura del hombro o algo por encima (dirección del brazo unos -15°
+  en el lado derecho de la pantalla, unos 195° en el izquierdo), antebrazo vertical hacia arriba
+  (-90°) y agítalo ±20° alrededor de esa dirección 2-3 veces, cada ~0,25 s.
+- Señalar: brazo y antebrazo casi alineados hacia lo que señala, a la altura del pecho.
+- Encogerse de hombros: brazos un poco hacia fuera y abajo, codos doblados con los antebrazos hacia
+  fuera y algo hacia arriba (palmas arriba), cabeza ladeada 5-8°, cejas "triste" o "sorprendido".
+- Manos en la cadera: brazo hacia fuera y abajo (unos 40° respecto a la vertical) y antebrazo
+  volviendo hacia la cadera.
+- Pensar: un antebrazo sube hacia la barbilla, cabeza ladeada, mirada arriba y a un lado.
+- Ningún brazo atraviesa el cuerpo ni la cabeza. Evita giros de antebrazo de más de 150°.
+- Acción superpuesta: el antebrazo llega 0,05-0,15 s después que el brazo; torso (2-4°) y cabeza
+  (4-8°) acompañan el gesto. Antes de un gesto amplio, una pequeña anticipación en sentido contrario.
+
 Reglas para animar bien:
 - Movimiento natural: anticipación breve, llegar a la pose, mantenerla un poco y volver si tiene
   sentido. Los gestos de brazos duran 0,3-0,8 s; un saludo agita el antebrazo 2-3 veces.
