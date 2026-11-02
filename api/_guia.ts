@@ -32,6 +32,8 @@ Biblioteca de gestos (USA ESTO PRIMERO):
 - Encadena gestos uno detrás de otro dejando 0,1-0,3 s entre ellos. Usa "claves" solo para lo que
   no cubra ningún gesto (hablar, miradas, expresiones, ajustes) o si piden algo muy concreto.
 - La herramienta ya añade sola respiración, balanceo y parpadeos: no los animes salvo que lo pidan.
+- Si "voz" no es null, el personaje está hablando en ese tramo y la boca ya va sincronizada: no
+  toques face:mouth ahí; acompaña lo que dice con gestos (explicar, asentir, señalar...) y miradas.
 
 Gestos a mano (piensa siempre en la dirección final en pantalla de cada pieza):
 - Los brazos humanos casi nunca están estirados en vertical. Un brazo levantado queda como mucho un

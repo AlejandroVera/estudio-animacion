@@ -81,7 +81,10 @@ en lenguaje llano y pídele que pruebe en la web publicada.
    las respuestas en un solo paso de deshacer. Variables en Vercel: `ANTHROPIC_API_KEY`,
    `CLAVE_ESTUDIO` (contraseña de la web y del conector), `KV_REST_API_URL`/`KV_REST_API_TOKEN`
    (las crea la integración de Upstash) y opcional `COPILOTO_MODELO`.
-3. Voz (ElevenLabs) + bocas sincronizadas.
+3. ✅ Voz: se sube un audio (panel «Voz», guardado en IndexedDB por `src/audio/storage.ts`), suena al
+   reproducir, se ve su onda en la línea de tiempo, «Mover la boca con la voz» crea las claves de
+   boca por energía y brillo del sonido (`src/audio/lipsync.ts`) y el MP4 sale con audio (AAC u Opus).
+   Pendiente: generar la voz con ElevenLabs desde la herramienta (necesita su clave).
 4. Asistente «Crear personaje»: diseño, vistas, despiece, bocas/ojos con IA (fal.ai).
 5. Escenas: fondos, cámara, varios personajes, subtítulos, plantillas.
 

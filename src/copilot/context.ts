@@ -53,6 +53,9 @@ export function buildContext(project: Project, character: Character, time: numbe
     fps: project.fps,
     instante_actual: round(time),
     pieza_seleccionada: selectedPart,
+    voz: project.audio
+      ? { empieza: round(project.audio.start), termina: round(project.audio.start + project.audio.duration), nota: 'La boca ya se mueve con la voz: no animes face:mouth en ese tramo.' }
+      : null,
     personaje: {
       nombre: character.name,
       piezas: character.parts

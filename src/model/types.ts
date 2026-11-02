@@ -92,6 +92,8 @@ export interface Project {
   background: string
   /** Vida automática (respiración, balanceo, parpadeos). Si falta, está activada. */
   vida?: boolean
+  /** Audio (voz) del vídeo; el archivo se guarda aparte, en el navegador (IndexedDB). */
+  audio?: { id: string; name: string; start: number; duration: number }
   characters: Record<string, Character>
   instances: CharacterInstance[]
 }

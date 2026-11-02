@@ -6,6 +6,9 @@ import { Copilot } from './Copilot'
 import { applyCopilot } from '../copilot/context'
 import { GESTOS } from '../model/gestures'
 import { useState } from 'react'
+import { decodeAudio, saveAudio } from '../audio/storage'
+import { mouthKeys } from '../audio/lipsync'
+import { KEY_EPS as EPS } from '../model/anim'
 
 function hasKeyAt(tracks: Tracks, channel: string, t: number) {
   return (tracks[channel] ?? []).some((k) => Math.abs(k.t - t) < KEY_EPS)
@@ -103,6 +106,7 @@ export function Controls() {
   return (
     <aside className="panel controls">
       <Copilot />
+      <Voice />
       <Gestures />
       <section>
         <h3>Pieza</h3>
@@ -325,6 +329,101 @@ function Shoulders() {
           <span className="slider-value">{Math.round(level(s) * 100)}%</span>
         </label>
       ))}
+    </section>
+  )
+}
+
+function Voice() {
+  const project = useStore((s) => s.project)
+  const fileRef = useRef<HTMLInputElement>(null)
+  const [msg, setMsg] = useState<string | null>(null)
+  const audio = project.audio
+
+  const onFile = async (file: File) => {
+    try {
+      setMsg('Cargando audio…')
+      const id = `${Date.now()}-${file.name}`
+      await saveAudio(id, file)
+      const buf = await decodeAudio(id)
+      if (!buf) throw new Error('no se pudo leer')
+      const st = useStore.getState()
+      const start = Math.round(st.time * st.project.fps) / st.project.fps
+      const duration = Math.max(st.project.duration, Math.ceil((start + buf.duration + 0.5) * 2) / 2)
+      st.setProjectProps({ audio: { id, name: file.name, start, duration: buf.duration } })
+      if (duration !== st.project.duration) useStore.getState().setProjectProps({ duration })
+      setMsg('Audio añadido. Pulsa «Mover la boca con la voz».')
+    } catch {
+      setMsg('No se ha podido leer ese archivo de audio (prueba con MP3 o WAV).')
+    }
+  }
+
+  const sync = async () => {
+    const st = useStore.getState()
+    if (!st.project.audio) return
+    const buf = await decodeAudio(st.project.audio.id)
+    if (!buf) {
+      setMsg('Este navegador no tiene guardado el audio: vuelve a añadirlo.')
+      return
+    }
+    const ch = activeCharacter(st.project)
+    const mouths = Object.keys(ch.parts.find((p) => p.role === 'mouth')?.variants ?? {})
+    const a = st.project.audio
+    const keys = mouthKeys(buf, a.start, st.project.fps, mouths)
+    const tracks = { ...st.project.instances[0].tracks }
+    const kept = (tracks['face:mouth'] ?? []).filter((k) => k.t < a.start - EPS || k.t > a.start + a.duration + EPS)
+    tracks['face:mouth'] = [...kept, ...keys].sort((x, y) => x.t - y.t)
+    st.replaceTracks(tracks, st.project.duration)
+    setMsg(`Boca sincronizada: ${keys.length} cambios.`)
+  }
+
+  return (
+    <section>
+      <h3>Voz</h3>
+      {audio ? (
+        <>
+          <div className="voice-name" title={audio.name}>🔊 {audio.name}</div>
+          <label className="field">
+            <span>Empieza en (s)</span>
+            <input
+              type="number"
+              min={0}
+              step={0.1}
+              value={audio.start}
+              onChange={(e) => {
+                const v = Math.max(0, Number(e.target.value) || 0)
+                useStore.getState().setProjectProps({ audio: { ...audio, start: v } })
+              }}
+            />
+          </label>
+          <button className="btn primary full" onClick={sync}>
+            Mover la boca con la voz
+          </button>
+          <div className="voice-row">
+            <button className="btn small" onClick={() => fileRef.current?.click()}>
+              Cambiar audio
+            </button>
+            <button className="btn small danger" onClick={() => useStore.getState().setProjectProps({ audio: undefined })}>
+              Quitar
+            </button>
+          </div>
+        </>
+      ) : (
+        <button className="btn full" onClick={() => fileRef.current?.click()}>
+          Añadir audio de voz…
+        </button>
+      )}
+      {msg && <p className="muted small">{msg}</p>}
+      <input
+        ref={fileRef}
+        type="file"
+        accept="audio/*"
+        hidden
+        onChange={(e) => {
+          const f = e.target.files?.[0]
+          if (f) onFile(f)
+          e.target.value = ''
+        }}
+      />
     </section>
   )
 }

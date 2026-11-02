@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { loadAudio } from './audio/storage'
 import { Controls } from './components/Controls'
 import { PartsTree } from './components/PartsTree'
 import { Stage } from './components/Stage'
@@ -8,8 +9,25 @@ import { useStore } from './store'
 
 function usePlayback() {
   const playing = useStore((s) => s.playing)
+  const audioInfo = useStore((s) => s.project.audio)
   useEffect(() => {
     if (!playing) return
+    let el: HTMLAudioElement | null = null
+    let url = ''
+    let cancelled = false
+    if (audioInfo) {
+      loadAudio(audioInfo.id).then((blob) => {
+        if (!blob || cancelled) return
+        url = URL.createObjectURL(blob)
+        el = new Audio(url)
+        const offset = useStore.getState().time - audioInfo.start
+        if (offset < audioInfo.duration) {
+          if (offset >= 0) el.currentTime = offset
+          const delay = Math.max(0, -offset)
+          setTimeout(() => !cancelled && el?.play().catch(() => undefined), delay * 1000)
+        }
+      })
+    }
     let raf = 0
     let last = performance.now()
     const tick = (now: number) => {
@@ -17,13 +35,24 @@ function usePlayback() {
       const dt = (now - last) / 1000
       last = now
       let t = time + dt
-      if (t >= project.duration) t = 0
+      if (t >= project.duration) {
+        // Al volver al principio se reinicia también el audio
+        useStore.getState().setPlaying(false)
+        setTime(0)
+        setTimeout(() => useStore.getState().setPlaying(true), 0)
+        return
+      }
       setTime(t)
       raf = requestAnimationFrame(tick)
     }
     raf = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(raf)
-  }, [playing])
+    return () => {
+      cancelled = true
+      cancelAnimationFrame(raf)
+      el?.pause()
+      if (url) URL.revokeObjectURL(url)
+    }
+  }, [playing, audioInfo])
 }
 
 function useShortcuts() {

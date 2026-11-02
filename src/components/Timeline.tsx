@@ -1,4 +1,5 @@
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
+import { decodeAudio } from '../audio/storage'
 import { channelLabel, KEY_EPS } from '../model/anim'
 import type { Ease } from '../model/types'
 import { activeCharacter, useStore } from '../store'
@@ -101,6 +102,22 @@ export function Timeline() {
           </div>
         </div>
         <div className="tl-rows">
+          {project.audio && (
+            <div className="tl-row">
+              <div className="tl-label" style={{ width: LABEL_W }} title={project.audio.name}>
+                🔊 Voz
+              </div>
+              <div className="tl-track" onPointerDown={onScrubDown} onPointerMove={onScrubMove}>
+                <div className="row-playhead" style={{ left: pct(time) }} />
+                <div
+                  className="tl-wave"
+                  style={{ left: pct(project.audio.start), width: pct(Math.min(project.audio.duration, project.duration - project.audio.start)) }}
+                >
+                  <Waveform id={project.audio.id} />
+                </div>
+              </div>
+            </div>
+          )}
           {channels.length === 0 && (
             <div className="tl-empty">Aún no hay animación. Mueve una pieza o cambia la cara y se creará una clave en el instante actual.</div>
           )}
@@ -154,4 +171,31 @@ export function Timeline() {
       </div>
     </div>
   )
+}
+
+function Waveform({ id }: { id: string }) {
+  const ref = useRef<HTMLCanvasElement>(null)
+  useEffect(() => {
+    let alive = true
+    decodeAudio(id).then((buf) => {
+      const c = ref.current
+      if (!buf || !c || !alive) return
+      const w = (c.width = 800)
+      const h = (c.height = 40)
+      const g = c.getContext('2d')!
+      const data = buf.getChannelData(0)
+      const step = Math.floor(data.length / w)
+      g.fillStyle = 'rgba(147, 197, 253, 0.9)'
+      for (let x = 0; x < w; x++) {
+        let m = 0
+        for (let i = 0; i < step; i += 8) m = Math.max(m, Math.abs(data[x * step + i]))
+        const bh = Math.max(1, m * h)
+        g.fillRect(x, (h - bh) / 2, 1, bh)
+      }
+    })
+    return () => {
+      alive = false
+    }
+  }, [id])
+  return <canvas ref={ref} />
 }
