@@ -111,7 +111,13 @@ export function applyCopilot(
     if (!gesto) continue
     const lado = g.lado === 'izq' ? 'izq' : 'der'
     const t0 = Math.max(0, snap(g.t))
-    const { claves, canales, fin } = expandGesture(gesto, lado, t0, Math.min(3, Math.max(0.3, g.velocidad || 1)), character, project.instances[0])
+    const r = expandGesture(gesto, lado, t0, Math.min(3, Math.max(0.3, g.velocidad || 1)), character, project.instances[0])
+    const fin = r.fin
+    // Mientras el personaje habla, la boca la lleva la voz: el gesto no la toca.
+    const a = project.audio
+    const habla = (t: number) => !!a && t >= a.start - KEY_EPS && t <= a.start + a.duration + KEY_EPS
+    const claves = r.claves.filter((c) => !(c.canal === 'face:mouth' && habla(c.t)))
+    const canales = r.canales.filter((c) => !(c === 'face:mouth' && a && t0 < a.start + a.duration && fin > a.start))
     for (const ch of canales) {
       for (const k of tracks[ch] ?? []) {
         if (k.t >= t0 - KEY_EPS && k.t <= fin + KEY_EPS) tracks = removeKey(tracks, ch, k.t)
