@@ -143,8 +143,11 @@ export function animateScenes(escenas: Escena[], project: Project, character: Ch
       // Personaje por poses, como habla una persona: las manos tienen una postura de descanso
       // (juntas o a la altura de la cintura) y de vez en cuando salen a un gesto y vuelven.
       // Solo se cambia entre poses que tienen dibujo intermedio, y sin prisas.
-      const CASA = ['manos_juntas', 'hablar_b'].filter((p) => raiz.variants[p])
-      const ACENTO = ['hablar_a', 'explicar', 'hablar_c'].filter((p) => raiz.variants[p])
+      // La emoción de la escena cambia el estilo: triste = recogido y quieto; contento = más abierto
+      const triste = /triste/i.test(e.expresion)
+      const contento = /contento|sorprendido/i.test(e.expresion)
+      const CASA = (triste ? ['manos_juntas'] : contento ? ['hablar_b', 'explicar'] : ['manos_juntas', 'hablar_b']).filter((p) => raiz.variants[p])
+      const ACENTO = (triste ? ['hablar_b'] : contento ? ['hablar_a', 'hablar_c', 'explicar'] : ['hablar_a', 'explicar', 'hablar_c']).filter((p) => raiz.variants[p])
       let cur = inicio + 0.3
       let lado = placed.length % 2 ? 1 : -1
       let acento = !CASA.includes(ultimaPose ?? '')
@@ -163,7 +166,7 @@ export function animateScenes(escenas: Escena[], project: Project, character: Ch
         ultimaPose = pose
         result.claves.push({ canal: 'part:cabeza:rot', t: cur + 0.12, valor: String(acento ? lado * (1.5 + rnd() * 1.5) : 0), transicion: 'suave' })
         if (acento) lado = -lado
-        const hold = acento ? 1.4 + rnd() * 0.8 : 2.2 + rnd() * 1.4
+        const hold = acento ? 1.4 + rnd() * 0.8 : (contento ? 1.6 : triste ? 3 : 2.2) + rnd() * 1.4
         cur += Math.min(hold, Math.max(1.1, sig - cur))
       }
     } else if (e.dialogo.trim()) {

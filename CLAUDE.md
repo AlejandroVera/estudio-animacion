@@ -67,6 +67,12 @@ NUNCA vídeo generativo: Alejandro lo rechaza; solo imágenes fijas hechas con I
 - CUERPO COMÚN: `preparar_poses.py` monta cada pose (e intermedio) sobre el cuerpo de reposo y solo
   toma de ella los brazos (piel rosa + contorno). Sin esto la camiseta y las zapatillas cambiaban en
   cada pose (dibujadas por separado por la IA) y el personaje «temblaba» al cambiar.
+- SIN VIBRACIÓN: en modo poses el cuerpo no se escala, no se balancea ni rebota (en un dibujo se ve
+  como temblor); la vida va en cabeza y cara.
+- Gesticulación por la voz (`src/script/emocion.ts`, `gesticular`, lo llama `voiceScript` con el tiempo
+  de cada palabra): cabeceo y cejas arriba en la palabra importante de cada frase, cejas arriba y
+  cabeza ladeada en las preguntas, parpadeo en las pausas, cabeza baja y ladeada en escenas tristes.
+  La expresión de la escena también elige el estilo de poses (triste recogido, contento abierto).
 - Ritmo al hablar (`animateScenes`): postura de descanso (manos_juntas / hablar_b) 2,2-3,6 s y
   salidas cortas a un acento (hablar_a, explicar, hablar_c) 1,4-2,2 s, siempre entre poses con intermedio.
 - Dibujos INTERMEDIOS (sin ellos los brazos «saltan» y Alejandro lo ve poco fluido): variantes

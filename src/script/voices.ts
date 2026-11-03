@@ -3,6 +3,7 @@
 // alargan o acortan a lo que dura su frase, los audios se unen en una sola pista y la boca se
 // sincroniza con ella.
 
+import { gesticular, type Palabra } from './emocion'
 import { decodeAudio, loadAudio, saveAudio } from '../audio/storage'
 import type { Escena, Tracks } from '../model/types'
 import { activeCharacter, useStore } from '../store'
@@ -212,13 +213,33 @@ export async function voiceScript(escenas: Escena[], texto: string, voz: Voz, pa
     tracks[canal] = ks
   }
 
+  // Gesticulación según lo que dice: cabeceos, cejas, parpadeos en pausas y emoción de la escena
+  const palabras: Palabra[] = []
+  let enPregunta = false
+  for (let i = 0; i < al.characters.length; i++) {
+    const c = al.characters[i]
+    if (c === '¿') enPregunta = true
+    const antes = i > 0 ? al.characters[i - 1] : ' '
+    if (/[\p{L}\p{N}]/u.test(c) && !/[\p{L}\p{N}]/u.test(antes)) {
+      let j = i
+      while (j + 1 < al.characters.length && /[\p{L}\p{N}]/u.test(al.characters[j + 1])) j++
+      const t0 = desplaza(al.character_start_times_seconds[i])
+      const t1 = desplaza(al.character_end_times_seconds[j])
+      const sigue = al.characters.slice(j + 1, j + 4).join('')
+      const punt = (sigue.match(/^\s*([,.;:?!…])/) ?? [])[1] ?? ''
+      if (t0 !== null && t1 !== null) palabras.push({ t: t0, fin: t1, texto: al.characters.slice(i, j + 1).join(''), punt, pregunta: enPregunta })
+      if (punt === '?') enPregunta = false
+    }
+  }
+  const conGestos = gesticular(tracks, palabras, ch, m.escenas)
+
   const [inst, ...rest] = st.project.instances
   st.commit({
     ...st.project,
     duration: m.duration,
     audio: { id: audioId, name: `Voces (${voz.nombre})`, start: 0, duration: mezcla.duration },
     guion: { texto, escenas: m.escenas.map(({ inicio: _i, ...e }) => e), voz },
-    instances: [{ ...inst, tracks }, ...rest],
+    instances: [{ ...inst, tracks: conGestos }, ...rest],
   })
   st.setTime(0)
   st.setPlaying(true)

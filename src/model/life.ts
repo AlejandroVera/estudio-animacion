@@ -39,19 +39,17 @@ export function withLife(pose: Pose, t: number, tracks: Tracks, armLength: numbe
   }
   const breath = Math.sin((TAU * t) / 3.6)
   add('cadera', { y: breath * armLength * 0.006 })
-  if (!parts.cadera && raiz && parts[raiz]) {
-    // Por poses: respira escalando un poco desde los pies (los pies no se mueven)
-    // y se balancea muy poco sobre los pies, para que nunca quede congelado entre pose y pose
-    const sway = Math.sin((TAU * t) / 4.7 + 0.8) * 0.35 + Math.sin((TAU * t) / 2.3) * 0.12
-    parts[raiz] = { ...parts[raiz], scale: parts[raiz].scale * (1 + 0.0035 * breath), rot: parts[raiz].rot + sway }
-  }
+  // Personaje por poses: el cuerpo no se escala ni se balancea (en un dibujo eso se ve como una
+  // vibración); la vida va en la cabeza y en la cara.
+  void raiz
   add('torso', { rot: Math.sin((TAU * t) / 3.6 + 0.6) * 0.5 })
   add('cabeza', { rot: Math.sin((TAU * t) / 5.3 + 1.3) * 0.9, y: -breath * armLength * 0.004 })
   add('brazo_der', { rot: Math.sin((TAU * t) / 4.1 + 0.4) * 1.0 })
   add('brazo_izq', { rot: -Math.sin((TAU * t) / 4.4 + 2.1) * 1.0 })
   add('antebrazo_der', { rot: Math.sin((TAU * t) / 4.1 - 0.3) * 1.2 })
   add('antebrazo_izq', { rot: -Math.sin((TAU * t) / 4.4 + 1.4) * 1.2 })
-  const blink = tracks['face:blink']?.length ? pose.blink : Math.max(pose.blink, blinkAt(t))
+  const blink = Math.max(pose.blink, blinkAt(t))
+  void tracks
   return { ...pose, parts, blink }
 }
 
