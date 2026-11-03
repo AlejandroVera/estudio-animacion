@@ -20,7 +20,7 @@ const round = (n: number, d = 2) => Math.round(n * 10 ** d) / 10 ** d
 /** Hacia dónde apunta cada pieza en reposo (grados de pantalla: 0 derecha, 90 abajo). */
 function restAngles(character: Character, project: Project): Record<string, number> {
   const inst = project.instances[0]
-  const placed = layout(character, inst, poseAt(character, {}, 0), true)
+  const placed = layout(character, inst, poseAt(character, {}, 0), false)
   const byId = new Map(placed.map((p) => [p.part.id, p]))
   const out: Record<string, number> = {}
   for (const pl of placed) {

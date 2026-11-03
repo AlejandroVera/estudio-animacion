@@ -146,7 +146,8 @@ Cada escena:
   para dar ritmo: general al empezar, primer plano en lo importante o emocional, medio para explicar.
 - "expresion": una de las expresiones del personaje.
 - "duracion": segundos (unas 2,6 palabras por segundo + 0,8 s; mínimo 2).
-- "gestos": 0-2 gestos de la biblioteca que acompañen lo que dice, con "t" en segundos DESDE EL INICIO
+- "gestos": 1-2 gestos de la biblioteca que acompañen lo que dice (los huecos mientras habla se
+  rellenan solos con «hablar», no lo pongas tú), con "t" en segundos DESDE EL INICIO
   DE LA ESCENA, "lado" ("der"/"izq") y "velocidad" (1 normal). No pongas un gesto que no quepa en la
   escena. Varía los gestos; no repitas el mismo en escenas seguidas salvo que tenga sentido.
 - "fondo": descripción breve del fondo ideal para esa escena (lugar, ambiente), o "" si sirve el anterior.

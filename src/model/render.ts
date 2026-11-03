@@ -134,6 +134,7 @@ export function drawCharacter(
   }
   const placed = layout(character, inst, pose, restPose)
   const byId = new Map(placed.map((p) => [p.part.id, p]))
+  if (!restPose) drawShadow(g, character, inst, placed)
   for (const pl of placed) {
     const asset = character.assets[pl.assetId]
     if (!asset) continue
@@ -409,4 +410,52 @@ function drawSkinned(
     tri(a + 1, a + nx + 2, a + nx + 1)
   }
   return true
+}
+
+// ---------- Sombra en el suelo ----------
+
+/** Punto más bajo (los pies) de las piezas de pierna, en coordenadas de la escena. */
+function feet(character: Character, placed: Placed[]): Vec[] {
+  const out: Vec[] = []
+  for (const pl of placed) {
+    if (!/^pierna_/.test(pl.part.id)) continue
+    const a = character.assets[pl.assetId]
+    if (!a) continue
+    const p = pl.matrix.transformPoint(new DOMPoint(a.w / 2 - pl.part.anchor.x, a.h * 0.93 - pl.part.anchor.y))
+    out.push({ x: p.x, y: p.y })
+  }
+  return out
+}
+
+const groundCache = new WeakMap<Character, number>()
+
+/** Sombra suave bajo los pies: el suelo no se mueve si el personaje salta (la sombra se aclara). */
+function drawShadow(g: CanvasRenderingContext2D, character: Character, inst: CharacterInstance, placed: Placed[]) {
+  const now = feet(character, placed)
+  if (!now.length) return
+  let ground = groundCache.get(character)
+  if (ground === undefined) {
+    const rest = layout(character, { ...inst, x: 0, y: 0, scale: 1, tracks: {} }, poseAt(character, {}, 0))
+    const f = feet(character, rest)
+    ground = f.length ? Math.max(...f.map((p) => p.y)) : 0
+    groundCache.set(character, ground)
+  }
+  const gy = inst.y + ground * inst.scale
+  const xs = now.map((p) => p.x)
+  const cx = (Math.min(...xs) + Math.max(...xs)) / 2
+  const lift = Math.max(0, gy - Math.max(...now.map((p) => p.y)))
+  const w = (Math.max(...xs) - Math.min(...xs)) / 2 + 150 * inst.scale
+  const alpha = 0.22 * Math.max(0.25, 1 - lift / (300 * inst.scale))
+  g.save()
+  g.translate(cx, gy)
+  g.scale(1, 0.16)
+  const grad = g.createRadialGradient(0, 0, 0, 0, 0, w)
+  grad.addColorStop(0, `rgba(0,0,0,${alpha})`)
+  grad.addColorStop(0.6, `rgba(0,0,0,${alpha * 0.6})`)
+  grad.addColorStop(1, 'rgba(0,0,0,0)')
+  g.fillStyle = grad
+  g.beginPath()
+  g.arc(0, 0, w, 0, Math.PI * 2)
+  g.fill()
+  g.restore()
 }

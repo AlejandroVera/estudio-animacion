@@ -118,9 +118,33 @@ export function animateScenes(escenas: Escena[], project: Project, character: Ch
     // Expresión (cejas) y gestos
     const ex = expr[e.expresion] ?? expr.Neutral
     if (ex) result.claves.push({ canal: 'face:brows', t: inicio, valor: ex.brows, transicion: 'salto' })
+    const ocupado: [number, number][] = []
     for (const g of e.gestos ?? []) {
       if (!has(g.nombre)) continue
-      result.gestos!.push({ ...g, t: inicio + Math.max(0, Math.min(dur - 0.3, g.t)) })
+      const t0 = inicio + Math.max(0, Math.min(dur - 0.3, g.t))
+      result.gestos!.push({ ...g, t: t0 })
+      const gd = (GESTOS.find((x) => x.id === g.nombre)?.duracion ?? 2) / (g.velocidad || 1)
+      ocupado.push([t0, t0 + gd])
+    }
+    // Mientras habla, nadie se queda quieto: los huecos sin gesto se rellenan con «hablar»
+    if (e.dialogo.trim()) {
+      const HD = GESTOS.find((x) => x.id === 'hablar')!.duracion
+      let cur = inicio + 0.2
+      let lado: 'der' | 'izq' = placed.length % 2 ? 'izq' : 'der'
+      while (cur + HD / 1.7 <= inicio + dur - 0.1) {
+        const choca = ocupado.find(([a, b]) => cur < b + 0.1 && cur + HD > a - 0.1)
+        if (choca) {
+          cur = choca[1] + 0.15
+          continue
+        }
+        const hueco = Math.min(inicio + dur - 0.1, ocupado.filter(([a]) => a > cur).reduce((m, [a]) => Math.min(m, a - 0.1), Infinity)) - cur
+        const vel = Math.min(1.7, Math.max(1, HD / hueco))
+        if (HD / vel > hueco + 1e-3) break
+        result.gestos!.push({ nombre: 'hablar', t: cur, lado, velocidad: vel })
+        ocupado.push([cur, cur + HD / vel])
+        cur += HD / vel + 0.15
+        lado = lado === 'der' ? 'izq' : 'der'
+      }
     }
     t += dur
   }

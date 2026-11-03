@@ -55,6 +55,8 @@ export interface Character {
   referencia?: string
   parts: Part[]
   assets: Record<string, Asset>
+  /** Giro de reposo natural de cada pieza (grados); las pistas de giro se suman a él. */
+  idle?: Record<string, number>
   /** Expresiones predefinidas: valores de los canales de cara. */
   expressions: Record<string, { brows: string; mouth: string }>
 }

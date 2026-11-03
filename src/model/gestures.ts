@@ -206,6 +206,23 @@ export const GESTOS: Gesto[] = [
     ],
   },
   {
+    id: 'hablar',
+    nombre: 'Hablar (manos)',
+    descripcion: 'Acompaña lo que dice con pequeños movimientos de manos y cabeza, sin un gesto concreto. Para rellenar mientras habla.',
+    lados: 'uno',
+    duracion: 2.4,
+    claves: [
+      k(0, 'brazo', { reposo: 0 }), k(0.3, 'brazo', { reposo: -6 }), k(2.0, 'brazo', { reposo: -6 }), k(2.4, 'brazo', { reposo: 0 }),
+      k(0, 'antebrazo', { reposo: 0 }), k(0.35, 'antebrazo', { reposo: -38 }), k(0.75, 'antebrazo', { reposo: -24 }), k(1.15, 'antebrazo', { reposo: -42 }),
+      k(1.55, 'antebrazo', { reposo: -26 }), k(1.95, 'antebrazo', { reposo: -36 }), k(2.4, 'antebrazo', { reposo: 0 }),
+      k(0.25, 'mano', 'abierta'), k(2.2, 'mano', 'natural'),
+      k(0, 'brazo2', { reposo: 0 }), k(0.5, 'brazo2', { reposo: -3 }), k(2.4, 'brazo2', { reposo: 0 }),
+      k(0, 'antebrazo2', { reposo: 0 }), k(0.6, 'antebrazo2', { reposo: -14 }), k(1.4, 'antebrazo2', { reposo: -8 }), k(2.4, 'antebrazo2', { reposo: 0 }),
+      k(0, 'cabeza', { giro: 0 }), k(0.4, 'cabeza', { giro: 3 }), k(1.0, 'cabeza', { giro: -1 }), k(1.6, 'cabeza', { giro: 2 }), k(2.4, 'cabeza', { giro: 0 }),
+      k(0, 'cabeza_y', { alto: 0 }), k(0.75, 'cabeza_y', { alto: 0.015 }), k(0.95, 'cabeza_y', { alto: 0 }), k(1.55, 'cabeza_y', { alto: 0.015 }), k(1.75, 'cabeza_y', { alto: 0 }),
+    ],
+  },
+  {
     id: 'pulgar',
     nombre: 'Pulgar arriba',
     descripcion: 'Lleva la mano delante del pecho con el pulgar hacia arriba y sonríe.',
@@ -236,7 +253,7 @@ const norm = (a: number) => {
 
 /** Ángulo de reposo en pantalla de cada pieza y longitud del brazo (para escalar desplazamientos). */
 export function skeletonInfo(character: Character, inst: CharacterInstance) {
-  const placed = layout(character, { ...inst, x: 0, y: 0, scale: 1 }, poseAt(character, {}, 0), true)
+  const placed = layout(character, { ...inst, x: 0, y: 0, scale: 1 }, poseAt(character, {}, 0), false)
   const byId = new Map(placed.map((p) => [p.part.id, p]))
   const angles: Record<string, number> = {}
   for (const pl of placed) {

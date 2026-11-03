@@ -3,7 +3,6 @@
 // alargan o acortan a lo que dura su frase, los audios se unen en una sola pista y la boca se
 // sincroniza con ella.
 
-import { mouthKeys } from '../audio/lipsync'
 import { decodeAudio, loadAudio, saveAudio } from '../audio/storage'
 import type { Escena } from '../model/types'
 import { activeCharacter, useStore } from '../store'
@@ -32,19 +31,73 @@ function hash(s: string): string {
   return (h >>> 0).toString(36)
 }
 
-async function clip(texto: string, voz: string, pass: string): Promise<AudioBuffer> {
-  const id = `tts-${voz}-${hash(texto)}`
-  if (!(await loadAudio(id))) {
-    const res = await fetch('/api/voz', { method: 'POST', headers: headers(pass), body: JSON.stringify({ texto, voz }) })
-    if (!res.ok) {
-      const d = await res.json().catch(() => ({}))
-      throw new Error(res.status === 401 ? 'La contraseña del estudio no es correcta.' : d.error ?? `Error ${res.status}`)
-    }
-    await saveAudio(id, await res.blob())
+export type Modelo = 'eleven_v3' | 'eleven_multilingual_v2'
+interface Alineacion {
+  characters: string[]
+  character_start_times_seconds: number[]
+  character_end_times_seconds: number[]
+}
+
+/** Lee el guion entero de una vez (entonación continua) y devuelve el audio y el tiempo de cada letra. */
+async function lectura(texto: string, voz: string, modelo: Modelo, pass: string): Promise<{ buf: AudioBuffer; al: Alineacion }> {
+  const id = `ttsfull-${voz}-${modelo}-${hash(texto)}`
+  let alBlob = await loadAudio(id + '-al')
+  if (!(await loadAudio(id)) || !alBlob) {
+    const res = await fetch('/api/voz', { method: 'POST', headers: headers(pass), body: JSON.stringify({ texto, voz, modelo, tiempos: true }) })
+    const d = await res.json().catch(() => ({}))
+    if (!res.ok) throw new Error(res.status === 401 ? 'La contraseña del estudio no es correcta.' : d.error ?? `Error ${res.status}`)
+    const bytes = Uint8Array.from(atob(d.audio), (c) => c.charCodeAt(0))
+    await saveAudio(id, new Blob([bytes], { type: 'audio/mpeg' }))
+    alBlob = new Blob([JSON.stringify(d.alineacion)], { type: 'application/json' })
+    await saveAudio(id + '-al', alBlob)
   }
   const buf = await decodeAudio(id)
   if (!buf) throw new Error('No se pudo leer el audio generado.')
-  return buf
+  return { buf, al: JSON.parse(await alBlob.text()) }
+}
+
+/** Boca por letras: cada vocal abre la boca en su instante; m/b/p la cierran; en las pausas, cerrada. */
+function visemas(al: Alineacion, desplaza: (t: number) => number | null, fps: number, mouths: string[]) {
+  const has = (m: string) => mouths.includes(m)
+  const forma = (c: string): string | null => {
+    const l = c.toLowerCase()
+    if ('aá'.includes(l)) return has('abierta') ? 'abierta' : 'O'
+    if ('eéií'.includes(l)) return has('E') ? 'E' : 'abierta'
+    if ('oóuúü'.includes(l)) return has('O') ? 'O' : 'abierta'
+    if ('mbpv'.includes(l)) return has('MBP') ? 'MBP' : 'cerrada'
+    if ('fdtsnlrzcj'.includes(l)) return has('E') ? 'E' : null // dientes y lengua: boca entreabierta
+    if ('gkqxyhñ'.includes(l)) return null // mantiene la forma anterior
+    return 'pausa'
+  }
+  // Cada letra propone una forma en su fotograma; si caen varias en el mismo, gana la más visible
+  // (pausa > vocal/labios > consonante).
+  const porFotograma = new Map<number, { v: string; p: number }>()
+  const put = (t: number, v: string, p: number) => {
+    const f = Math.round(t * fps)
+    const prev = porFotograma.get(f)
+    if (!prev || p >= prev.p) porFotograma.set(f, { v, p })
+  }
+  const n = al.characters.length
+  for (let i = 0; i < n; i++) {
+    const t = desplaza(al.character_start_times_seconds[i])
+    if (t === null) continue
+    const c = al.characters[i]
+    const f = forma(c)
+    if (f === 'pausa') {
+      const sig = i + 1 < n ? al.character_start_times_seconds[i + 1] - al.character_end_times_seconds[i] : 1
+      const dur = al.character_end_times_seconds[i] - al.character_start_times_seconds[i]
+      if (sig > 0.12 || dur > 0.12 || /[.,;:!?…\n]/.test(c)) put(t, 'cerrada', 3)
+    } else if (f) put(t, f, /[aeiouáéíóúü]/i.test(c) || f === 'MBP' ? 2 : 1)
+  }
+  const fin = desplaza(al.character_end_times_seconds[n - 1] ?? 0)
+  if (fin !== null) put(fin, 'cerrada', 3)
+  const keys: { t: number; v: string }[] = []
+  for (const f of [...porFotograma.keys()].sort((x, y) => x - y)) {
+    const v = porFotograma.get(f)!.v
+    if (keys.length && keys[keys.length - 1].v === v) continue
+    keys.push({ t: f / fps, v })
+  }
+  return keys.map((k) => ({ t: k.t, v: k.v, ease: 'salto' as const }))
 }
 
 function wav(buf: AudioBuffer): Blob {
@@ -69,46 +122,69 @@ function wav(buf: AudioBuffer): Blob {
 }
 
 const LEAD = 0.15 // la frase empieza un poco después del corte de cámara
-const TAIL = 0.45 // respiro al final de cada frase
+const TAIL = 0.6 // respiro al final del vídeo
 
-/** Genera las voces, ajusta las escenas y monta animación + audio + boca en un solo paso de deshacer. */
-export async function voiceScript(escenas: Escena[], texto: string, voz: Voz, pass: string, onProgress: (msg: string) => void) {
-  const clips: (AudioBuffer | null)[] = []
-  let n = 0
-  const conTexto = escenas.filter((e) => e.dialogo.trim()).length
-  for (const e of escenas) {
-    if (!e.dialogo.trim()) {
-      clips.push(null)
-      continue
-    }
-    onProgress(`Generando voz ${++n} de ${conTexto}…`)
-    clips.push(await clip(e.dialogo.trim(), voz.id, pass))
+/**
+ * Voz del guion: se lee entero de una vez con ElevenLabs, el audio se reparte entre las escenas según
+ * cuándo empieza cada frase, las escenas duran lo que su frase y la boca sigue las letras.
+ */
+export async function voiceScript(escenas: Escena[], texto: string, voz: Voz, pass: string, onProgress: (msg: string) => void, modelo: Modelo = 'eleven_v3') {
+  const conTexto = escenas.map((e, i) => ({ i, d: e.dialogo.trim() })).filter((x) => x.d)
+  if (!conTexto.length) throw new Error('Ninguna escena tiene diálogo.')
+  // Texto completo y dónde empieza cada frase dentro de él
+  let completo = ''
+  const rangos = new Map<number, [number, number]>()
+  for (const { i, d } of conTexto) {
+    if (completo) completo += '\n\n'
+    rangos.set(i, [completo.length, completo.length + d.length])
+    completo += d
   }
-  const ajustadas = escenas.map((e, i) => (clips[i] ? { ...e, duracion: Math.round((clips[i]!.duration + LEAD + TAIL) * 100) / 100 } : e))
+  onProgress(`Generando la voz (${voz.nombre})…`)
+  const { buf, al } = await lectura(completo, voz.id, modelo, pass)
+  const ini = al.character_start_times_seconds
+  const finT = al.character_end_times_seconds
+  // Tramo de audio de cada escena: desde un poco antes de su primera letra hasta antes de la siguiente frase
+  const tramoAudio = new Map<number, [number, number]>()
+  conTexto.forEach(({ i }, k) => {
+    const [a, b] = rangos.get(i)!
+    const desde = Math.max(0, ini[a] - 0.06)
+    const sig = conTexto[k + 1] ? rangos.get(conTexto[k + 1].i)![0] : null
+    const hasta = sig !== null ? Math.max(finT[b - 1], ini[sig] - 0.06) : Math.min(buf.duration, finT[b - 1] + 0.25)
+    tramoAudio.set(i, [desde, hasta])
+  })
+  const ajustadas = escenas.map((e, i) => {
+    const tr = tramoAudio.get(i)
+    return tr ? { ...e, duracion: Math.round((tr[1] - tr[0] + LEAD + (i === escenas.length - 1 ? TAIL : 0.05)) * 100) / 100 } : e
+  })
 
   onProgress('Montando la animación…')
   const st = useStore.getState()
   const ch = activeCharacter(st.project)
   const m = animateScenes(ajustadas, st.project, ch)
 
-  // Una sola pista con cada frase en su escena
   const sr = 44100
   const ctx = new OfflineAudioContext(1, Math.ceil((m.duration + 0.5) * sr), sr)
+  const sitio = new Map<number, number>() // desplazamiento: tiempo del audio -> tiempo del vídeo
   m.escenas.forEach((e, i) => {
-    const c = clips[i]
-    if (!c) return
+    const tr = tramoAudio.get(i)
+    if (!tr) return
     const node = ctx.createBufferSource()
-    node.buffer = c
+    node.buffer = buf
     node.connect(ctx.destination)
-    node.start(e.inicio + LEAD)
+    node.start(e.inicio + LEAD, tr[0], tr[1] - tr[0])
+    sitio.set(i, e.inicio + LEAD - tr[0])
   })
   const mezcla = await ctx.startRendering()
   const audioId = `voces-${Date.now()}`
   await saveAudio(audioId, wav(mezcla))
 
-  // Boca sincronizada con la voz real (sustituye la que seguía el texto)
+  // Cada letra se lleva al momento del vídeo en que suena (según el tramo de su escena)
+  const desplaza = (t: number) => {
+    for (const [i, [a, b]] of tramoAudio) if (t >= a - 1e-3 && t < b) return t + sitio.get(i)!
+    return null
+  }
   const mouths = Object.keys(ch.parts.find((p) => p.role === 'mouth')?.variants ?? {})
-  const tracks = { ...m.tracks, 'face:mouth': mouthKeys(mezcla, 0, st.project.fps, mouths) }
+  const tracks = { ...m.tracks, 'face:mouth': visemas(al, desplaza, st.project.fps, mouths) }
 
   const [inst, ...rest] = st.project.instances
   st.commit({

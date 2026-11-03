@@ -124,7 +124,7 @@ export function Controls() {
         </select>
         {part && pp && (
           <>
-            <Slider label="Giro" channel={`part:${part.id}:rot`} value={pp.rot} min={-180} max={180} unit="°" />
+            <Slider label="Giro" channel={`part:${part.id}:rot`} value={pp.rot - (ch.idle?.[part.id] ?? 0)} min={-180} max={180} unit="°" />
             <Slider label="Mover ↔" channel={`part:${part.id}:x`} value={pp.x} min={-300} max={300} />
             <Slider label="Mover ↕" channel={`part:${part.id}:y`} value={pp.y} min={-300} max={300} />
             <Slider label="Tamaño" channel={`part:${part.id}:scale`} value={pp.scale} min={0.3} max={2} step={0.01} />

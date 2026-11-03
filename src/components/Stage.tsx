@@ -189,7 +189,7 @@ export function Stage() {
         partId: hit.id,
         pivot,
         startAngle: Math.atan2(pt.y - pivot.y, pt.x - pivot.x),
-        startRot: pp.rot,
+        startRot: pp.rot - (ch.idle?.[hit.id] ?? 0),
       }
     }
   }

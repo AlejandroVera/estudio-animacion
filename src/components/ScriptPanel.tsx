@@ -5,7 +5,7 @@ import type { Escena, Plano } from '../model/types'
 import { animateScenes, estimateDuration, scenesFromText } from '../script/scenes'
 import { activeCharacter, useStore } from '../store'
 import { ScriptStyles } from './ScriptStyles'
-import { listVoices, voiceScript, type Voz } from '../script/voices'
+import { listVoices, voiceScript, type Modelo, type Voz } from '../script/voices'
 import { generateSceneBackgrounds } from '../script/images'
 
 const PASS_KEY = 'estudio-animacion:clave'
@@ -70,6 +70,7 @@ export function ScriptPanel({ onClose }: { onClose: () => void }) {
     }
   })
   const [vozManual, setVozManual] = useState('')
+  const [modelo, setModelo] = useState<Modelo>('eleven_v3')
   const elegirVoz = (v: Voz | null) => {
     setVoz(v)
     try {
@@ -92,7 +93,7 @@ export function ScriptPanel({ onClose }: { onClose: () => void }) {
     if (hay && !confirm('Esto sustituye la animación actual por la de las escenas, con voz. Se puede deshacer con Ctrl+Z. ¿Seguir?')) return
     setBusy(true)
     try {
-      const r = await voiceScript(escenas, texto, voz, pass, (t) => setMsg({ ok: true, text: t }))
+      const r = await voiceScript(escenas, texto, voz, pass, (t) => setMsg({ ok: true, text: t }), modelo)
       setEscenas(r.escenas)
       setMsg({ ok: true, text: `Listo: ${r.duracion.toFixed(1).replace('.', ',')} s con la voz de ${voz.nombre}. Las voces quedan guardadas: si cambias solo gestos o planos no se vuelven a pagar.` })
     } catch (e) {
@@ -280,6 +281,10 @@ export function ScriptPanel({ onClose }: { onClose: () => void }) {
                 </button>
               </div>
             )}
+            <select value={modelo} onChange={(e) => setModelo(e.target.value as Modelo)} title="Modelo de ElevenLabs">
+              <option value="eleven_v3">Expresiva (ElevenLabs v3)</option>
+              <option value="eleven_multilingual_v2">Estable (Multilingual v2)</option>
+            </select>
             <button className="btn primary full" disabled={!voz || busy} onClick={conVoz}>
               {busy ? 'Trabajando…' : '🎙 Generar voces y animar'}
             </button>

@@ -46,6 +46,13 @@ en lenguaje llano y pídele que pruebe en la web publicada.
 - `public/personajes/rosa/` son las piezas de la primera versión; solo se conservan para que los
   proyectos guardados antiguos sigan viéndose.
 
+## Postura y naturalidad
+- `src/model/idle.ts` (`withIdle`): postura de reposo natural (brazos caídos) calculada del esqueleto;
+  `Character.idle` se suma en `poseAt` y TODAS las pistas de giro son relativas a ella (los ángulos de
+  reposo del copiloto y los gestos se miden en esta postura, no en la de montaje en «A»).
+- Sombra de contacto bajo los pies (`drawShadow` en `render.ts`).
+- Gesto «hablar» (manos y cabeza sutiles); `animateScenes` rellena con él los huecos mientras habla.
+
 ## Gestos y vida automática
 - `src/model/gestures.ts`: biblioteca de gestos (saludar, encogerse, señalar, pensar, jarras,
   explicar, asentir, negar, celebrar, sorpresa) escritos para el lado derecho en direcciones de
@@ -100,9 +107,11 @@ en lenguaje llano y pídele que pruebe en la web publicada.
    reproducir, se ve su onda en la línea de tiempo, «Mover la boca con la voz» crea las claves de
    boca por energía y brillo del sonido (`src/audio/lipsync.ts`) y el MP4 sale con audio (AAC u Opus).
    ✅ Voz con ElevenLabs (`api/voz.ts`, variable `ELEVENLABS_API_KEY`, gasta la suscripción del
-   usuario): en el panel Guion se elige voz y «Generar voces y animar» (`src/script/voices.ts`)
-   genera una voz por escena (guardada en IndexedDB por voz+texto, no se paga dos veces), ajusta la
-   duración de cada escena a su frase, une los audios en una pista WAV y sincroniza la boca con ella.
+   usuario): en el panel Guion se elige voz y modelo (v3 por defecto) y «Generar voces y animar»
+   (`src/script/voices.ts`) lee el guion ENTERO de una vez con `with-timestamps` (entonación
+   continua, ajustes guardados de la voz), reparte el audio entre escenas por el tiempo de su primera
+   letra, ajusta duraciones y crea la boca por letras (`visemas`: en cada fotograma gana pausa >
+   vocal/labios > consonante). Audio y alineación se guardan en IndexedDB (no se paga dos veces).
 4. Asistente «Crear personaje»: diseño, vistas, despiece, bocas/ojos con IA (fal.ai).
 5. Escenas: ✅ capas de imagen (`project.fondos`, imagen en IndexedDB, detrás o delante del personaje,
    canales `bg:<id>:x|y|scale|rot|opacity`) y ✅ cámara (`cam:x|y|zoom`, `cameraMatrix` en

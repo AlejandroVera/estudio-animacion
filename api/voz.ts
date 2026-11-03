@@ -36,7 +36,7 @@ export async function GET(request: Request): Promise<Response> {
 export async function POST(request: Request): Promise<Response> {
   const fallo = comprobar(request)
   if (fallo) return fallo
-  let body: { texto?: string; voz?: string; estabilidad?: number }
+  let body: { texto?: string; voz?: string; modelo?: string; tiempos?: boolean }
   try {
     body = await request.json()
   } catch {
@@ -44,17 +44,20 @@ export async function POST(request: Request): Promise<Response> {
   }
   const texto = (body.texto ?? '').trim()
   const voz = (body.voz ?? '').trim()
-  if (!texto || texto.length > 2500) return json({ error: 'Texto vacío o demasiado largo.' }, 400)
+  if (!texto || texto.length > 4500) return json({ error: 'Texto vacío o demasiado largo (máx. 4500 letras).' }, 400)
   if (!/^[A-Za-z0-9]{10,40}$/.test(voz)) return json({ error: 'Elige una voz.' }, 400)
-  const res = await fetch(`${API}/text-to-speech/${voz}?output_format=mp3_44100_128`, {
+  const modelo = ['eleven_v3', 'eleven_multilingual_v2'].includes(body.modelo ?? '') ? body.modelo! : 'eleven_v3'
+  // Sin voice_settings: se usan los ajustes guardados de la voz en la cuenta del usuario.
+  const ruta = body.tiempos ? 'with-timestamps' : ''
+  const res = await fetch(`${API}/text-to-speech/${voz}${ruta ? '/' + ruta : ''}?output_format=mp3_44100_128`, {
     method: 'POST',
     headers: { 'xi-api-key': process.env.ELEVENLABS_API_KEY!, 'content-type': 'application/json' },
-    body: JSON.stringify({
-      text: texto,
-      model_id: 'eleven_multilingual_v2',
-      voice_settings: { stability: body.estabilidad ?? 0.45, similarity_boost: 0.8, style: 0.2, use_speaker_boost: true },
-    }),
+    body: JSON.stringify({ text: texto, model_id: modelo }),
   })
   if (!res.ok) return json({ error: await errorDe(res) }, 502)
+  if (body.tiempos) {
+    const d = (await res.json()) as { audio_base64: string; alignment: unknown }
+    return json({ audio: d.audio_base64, alineacion: d.alignment })
+  }
   return new Response(await res.arrayBuffer(), { headers: { 'content-type': 'audio/mpeg' } })
 }

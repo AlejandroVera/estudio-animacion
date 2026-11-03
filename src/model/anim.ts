@@ -49,7 +49,7 @@ export function poseAt(character: Character, tracks: Tracks, t: number): Pose {
     if (vk?.length && !p.role) variants[p.id] = str(evalTrack(vk, t, p.defaultVariant))
     const k = `part:${p.id}:`
     parts[p.id] = {
-      rot: num(evalTrack(tracks[k + 'rot'], t, DEFAULTS.rot)),
+      rot: (character.idle?.[p.id] ?? 0) + num(evalTrack(tracks[k + 'rot'], t, DEFAULTS.rot)),
       x: num(evalTrack(tracks[k + 'x'], t, DEFAULTS.x)),
       y: num(evalTrack(tracks[k + 'y'], t, DEFAULTS.y)),
       scale: num(evalTrack(tracks[k + 'scale'], t, DEFAULTS.scale)),
