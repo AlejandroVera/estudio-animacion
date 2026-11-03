@@ -140,24 +140,31 @@ export function animateScenes(escenas: Escena[], project: Project, character: Ch
     }
     // Mientras habla, nadie se queda quieto: los huecos sin gesto se rellenan.
     if (e.dialogo.trim() && raiz) {
-      // Personaje por poses: va cambiando entre poses de conversación, con un leve giro de cabeza
-      const TALK = ['hablar_a', 'hablar_b', 'manos_juntas', 'hablar_c', 'explicar', 'reposo'].filter((p) => raiz.variants[p])
-      let cur = inicio + 0.25
+      // Personaje por poses, como habla una persona: las manos tienen una postura de descanso
+      // (juntas o a la altura de la cintura) y de vez en cuando salen a un gesto y vuelven.
+      // Solo se cambia entre poses que tienen dibujo intermedio, y sin prisas.
+      const CASA = ['manos_juntas', 'hablar_b'].filter((p) => raiz.variants[p])
+      const ACENTO = ['hablar_a', 'explicar', 'hablar_c'].filter((p) => raiz.variants[p])
+      let cur = inicio + 0.3
       let lado = placed.length % 2 ? 1 : -1
-      while (cur < inicio + dur - 0.7) {
-        const choca = ocupado.find(([a, b]) => cur < b && cur + 0.9 > a)
+      let acento = !CASA.includes(ultimaPose ?? '')
+      while (cur < inicio + dur - 0.9 && CASA.length && ACENTO.length) {
+        const choca = ocupado.find(([a, b]) => cur < b && cur + 1.1 > a)
         if (choca) {
-          cur = choca[1] + 0.05
+          cur = choca[1] + 0.1
           continue
         }
         const sig = Math.min(inicio + dur, ocupado.filter(([a]) => a > cur).reduce((m, [a]) => Math.min(m, a), Infinity))
-        let pose = TALK[Math.floor(rnd() * TALK.length)]
-        if (pose === ultimaPose) pose = TALK[(TALK.indexOf(pose) + 1) % TALK.length]
+        acento = !acento
+        const lista = acento ? ACENTO : CASA
+        let pose = lista[Math.floor(rnd() * lista.length)]
+        if (pose === ultimaPose) pose = lista[(lista.indexOf(pose) + 1) % lista.length]
+        if (pose !== ultimaPose) result.claves.push({ canal: `part:${raiz.id}:v`, t: cur, valor: pose, transicion: 'salto' })
         ultimaPose = pose
-        result.claves.push({ canal: `part:${raiz.id}:v`, t: cur, valor: pose, transicion: 'salto' })
-        result.claves.push({ canal: 'part:cabeza:rot', t: cur + 0.08, valor: String(lado * (1.5 + rnd() * 2)), transicion: 'suave' })
-        lado = -lado
-        cur += Math.min(1.3 + rnd() * 1.2, Math.max(0.9, sig - cur))
+        result.claves.push({ canal: 'part:cabeza:rot', t: cur + 0.12, valor: String(acento ? lado * (1.5 + rnd() * 1.5) : 0), transicion: 'suave' })
+        if (acento) lado = -lado
+        const hold = acento ? 1.4 + rnd() * 0.8 : 2.2 + rnd() * 1.4
+        cur += Math.min(hold, Math.max(1.1, sig - cur))
       }
     } else if (e.dialogo.trim()) {
       const HD = GESTOS.find((x) => x.id === 'hablar')!.duracion

@@ -53,11 +53,43 @@ for f in sorted(os.listdir(src)):
     m = alpha > 0.02
     union = m if union is None else (union | m)
 
+# Cuerpo común: cada pose la dibujó la IA por separado y la camiseta, los pliegues y las zapatillas
+# cambian un poco de una a otra (al cambiar de pose todo el cuerpo «temblaba»). Se toma todo de la
+# pose de reposo salvo los brazos (piel rosa fuera del cuello, con su contorno) de cada pose.
+ROSA = lambda c: (c[..., 0] > 190) & (c[..., 1] > 95) & (c[..., 1] < 175) & (c[..., 2] > 120) & (c[..., 2] < 200)
+
+def brazos(rgb, alpha):
+    m = ROSA(rgb.astype(int)) & (alpha > 0.5)
+    hh, ww = m.shape
+    y, x = np.mgrid[0:hh, 0:ww]
+    m &= ~((y < CY + R + 90) & (np.abs(x - CX) < 110))  # cuello y cabeza
+    m = cv2.morphologyEx(m.astype(np.uint8), cv2.MORPH_OPEN, np.ones((5, 5), np.uint8))
+    n, lab, st, _ = cv2.connectedComponentsWithStats(m, 8)
+    m = np.isin(lab, [i for i in range(1, n) if st[i, cv2.CC_STAT_AREA] > 1500])
+    return cv2.dilate(m.astype(np.uint8), np.ones((15, 15), np.uint8)) > 0
+
+def cuerpo_comun(nombre, rgb, alpha, base):
+    brgb, balpha, bmask = base
+    zona = brazos(rgb, alpha) | bmask
+    zona = cv2.GaussianBlur(zona.astype(np.float32), (9, 9), 0)  # borde suave
+    zona = np.clip(zona * 1.6, 0, 1)
+    out_rgb = (rgb * zona[..., None] + brgb * (1 - zona[..., None])).astype(np.uint8)
+    out_a = alpha * zona + balpha * (1 - zona)
+    # restos sueltos (trocitos del contorno de las manos de reposo)
+    n, lab, st, _ = cv2.connectedComponentsWithStats((out_a > 0.05).astype(np.uint8), 8)
+    out_a[~np.isin(lab, [i for i in range(1, n) if st[i, cv2.CC_STAT_AREA] >= 3000])] = 0
+    return out_rgb, out_a
+
 # Lienzo común: la unión de todas las poses con margen
 ys, xs = np.where(union)
 x0, y0, x1, y1 = max(0, xs.min() - 6), max(0, ys.min() - 6), min(W, xs.max() + 7), min(H, ys.max() + 7)
 # Se borra la cabeza con margen (también su contorno), salvo abajo, donde empieza el cuello
 cabeza = ((xx - CX) ** 2 + (yy - CY) ** 2 <= (R + 8) ** 2) & (yy < CY + 0.6 * R) | ((xx - CX) ** 2 + (yy - CY) ** 2 <= (R + 2) ** 2)
+
+base = (poses['reposo'][0], poses['reposo'][1], cv2.dilate(brazos(*poses['reposo']).astype(np.uint8), np.ones((11, 11), np.uint8)) > 0)
+for nombre in list(poses):
+    if nombre != 'reposo':
+        poses[nombre] = cuerpo_comun(nombre, *poses[nombre], base)
 
 for nombre, (rgb, alpha) in poses.items():
     al = alpha.copy()
@@ -70,7 +102,7 @@ if len(sys.argv) > 4:
     os.makedirs(os.path.join(dst, 'entre'), exist_ok=True)
     for f in sorted(os.listdir(sys.argv[4])):
         if f.endswith('.png'):
-            rgb_i, alpha_i = limpia(np.array(Image.open(os.path.join(sys.argv[4], f)).convert('RGBA')))
+            rgb_i, alpha_i = cuerpo_comun(f, *limpia(np.array(Image.open(os.path.join(sys.argv[4], f)).convert('RGBA'))), base)
             alpha_i[cabeza] = 0
             img = np.dstack([rgb_i, (alpha_i * 255).astype(np.uint8)])[y0:y1, x0:x1]
             Image.fromarray(img, 'RGBA').save(os.path.join(dst, 'entre', f[:-4] + '.webp'), quality=90, method=6)

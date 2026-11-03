@@ -64,6 +64,11 @@ NUNCA vídeo generativo: Alejandro lo rechaza; solo imágenes fijas hechas con I
   pieza `cabeza`), crea la cabeza común sin cara (inpaint) y escribe `chicoRosaPoses.manifest.json`
   (lienzo común, caja y cuello de la cabeza, pies). Imágenes WebP en `public/personajes/chico-rosa/poses/`.
   Para otro personaje: misma receta (es la base de la fase 4).
+- CUERPO COMÚN: `preparar_poses.py` monta cada pose (e intermedio) sobre el cuerpo de reposo y solo
+  toma de ella los brazos (piel rosa + contorno). Sin esto la camiseta y las zapatillas cambiaban en
+  cada pose (dibujadas por separado por la IA) y el personaje «temblaba» al cambiar.
+- Ritmo al hablar (`animateScenes`): postura de descanso (manos_juntas / hablar_b) 2,2-3,6 s y
+  salidas cortas a un acento (hablar_a, explicar, hablar_c) 1,4-2,2 s, siempre entre poses con intermedio.
 - Dibujos INTERMEDIOS (sin ellos los brazos «saltan» y Alejandro lo ve poco fluido): variantes
   `entre:A__B` de `cuerpo` (`public/personajes/chico-rosa/poses/entre/`, lista en el manifest), hechas
   con Nano Banana dando las dos poses («edita la primera, brazos a mitad de camino hacia la segunda»,
