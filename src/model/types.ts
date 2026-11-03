@@ -112,6 +112,8 @@ export interface Escena {
   gestos: { nombre: string; t: number; lado: 'der' | 'izq'; velocidad: number }[]
   /** Descripción del fondo deseado (para generarlo cuando haya IA de imágenes). */
   fondo: string
+  /** Capa de fondo generada para esta escena (se ve mientras dura la escena). */
+  capa?: string
 }
 
 export interface Project {

@@ -53,7 +53,7 @@ export function ScriptPanel({ onClose }: { onClose: () => void }) {
   }, [borrador])
   const montado = useStore((s) => s.project.guion)
   useEffect(() => {
-    if (montado && !borrador) {
+    if (montado?.escenas.length && !borrador) {
       setTexto(montado.texto)
       setEscenas(montado.escenas)
     }
@@ -297,13 +297,15 @@ export function ScriptPanel({ onClose }: { onClose: () => void }) {
           </button>
           <button
             className="btn full"
-            disabled={busy || !useStore.getState().project.guion?.escenas.length}
+            disabled={busy || !escenas.length}
             title="Genera con IA el fondo que pide cada escena y lo cambia en cada corte"
             onClick={async () => {
               setBusy(true)
               try {
-                const n = await generateSceneBackgrounds((t) => setMsg({ ok: true, text: t }))
-                setMsg({ ok: true, text: `${n} fondos generados y colocados en sus escenas.` })
+                const nuevas = await generateSceneBackgrounds(escenas, (t) => setMsg({ ok: true, text: t }))
+                setEscenas(nuevas)
+                const n = new Set(nuevas.map((e) => e.capa).filter(Boolean)).size
+                setMsg({ ok: true, text: `${n} fondos generados. Quedan unidos a sus escenas: aunque generes voces o vuelvas a animar, se recolocan solos.` })
               } catch (e) {
                 setMsg({ ok: false, text: e instanceof Error ? e.message : String(e) })
               } finally {

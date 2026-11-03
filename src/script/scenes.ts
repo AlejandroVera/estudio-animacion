@@ -3,7 +3,7 @@
 // que «habla» siguiendo el texto (hasta que haya voz real, que la sustituye).
 
 import { applyCopilot, type CopilotResult } from '../copilot/context'
-import { poseAt } from '../model/anim'
+import { poseAt, setKey } from '../model/anim'
 import { GESTOS } from '../model/gestures'
 import { layout } from '../model/render'
 import type { Character, Escena, Plano, Project } from '../model/types'
@@ -141,5 +141,33 @@ export function animateScenes(escenas: Escena[], project: Project, character: Ch
     .sort((a, b) => a.t - b.t)
     .filter((k, i, arr) => !arr[i + 1] || Math.abs(arr[i + 1].t - k.t) > 1e-3)
     .map((k) => ({ t: k.t, v: k.valor, ease: 'salto' as const }))
+  tracks = { ...tracks, ...backgroundKeys(placed, total, fps) }
   return { tracks, duration: total, escenas: placed }
+}
+
+/**
+ * Claves de las capas de fondo asociadas a escenas: cada capa se ve solo en sus escenas (cambio en
+ * seco en el corte) y se acerca despacio mientras dura su tramo.
+ */
+export function backgroundKeys(placed: (Escena & { inicio: number })[], total: number, fps: number) {
+  const r = (x: number) => Math.round(x * fps) / fps
+  const tramos: { id: string; desde: number; hasta: number }[] = []
+  for (const e of placed) {
+    if (!e.capa) continue
+    const last = tramos[tramos.length - 1]
+    if (last && last.id === e.capa && Math.abs(last.hasta - e.inicio) < 1e-3) last.hasta = e.inicio + e.duracion
+    else tramos.push({ id: e.capa, desde: e.inicio, hasta: e.inicio + e.duracion })
+  }
+  let tr: Project['instances'][0]['tracks'] = {}
+  const fin = Math.max(0, ...placed.map((e) => e.inicio + e.duracion))
+  for (const t of tramos) {
+    const op = `bg:${t.id}:opacity`
+    if (!tr[op]) tr = setKey(tr, op, 0, t.desde > 1e-3 ? 0 : 1, 'salto')
+    tr = setKey(tr, op, r(t.desde), 1, 'salto')
+    // El fondo de la última escena se queda hasta el final del vídeo
+    if (t.hasta < fin - 1e-3 && t.hasta < total - 1e-3) tr = setKey(tr, op, r(t.hasta), 0, 'salto')
+    tr = setKey(tr, `bg:${t.id}:scale`, r(t.desde), 1, 'lineal')
+    tr = setKey(tr, `bg:${t.id}:scale`, r(t.hasta) - 1 / fps, 1.06, 'lineal')
+  }
+  return tr
 }

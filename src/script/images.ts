@@ -1,10 +1,9 @@
 // Fondos generados con IA (fal.ai) en el estilo del personaje, añadidos como capas.
 
-import { setKey } from '../model/anim'
 import type { BgLayer, Escena, Project } from '../model/types'
 import { saveImage } from '../audio/storage'
 import { activeCharacter, useStore } from '../store'
-import { estimateDuration } from './scenes'
+import { backgroundKeys, estimateDuration } from './scenes'
 
 const readPass = () => {
   try {
@@ -46,50 +45,55 @@ export function addLayer(layer: BgLayer) {
 }
 
 /**
- * Fondos para las escenas del guion: una imagen por cada fondo distinto (si una escena no describe
- * fondo, sigue el anterior). Cada capa se ve solo en sus escenas y se acerca un poco mientras dura.
+ * Fondos para las escenas: una imagen por cada fondo distinto (si una escena no describe fondo,
+ * sigue el anterior). Devuelve las escenas con su capa asignada; si el guion ya está animado,
+ * coloca también las capas en la línea de tiempo.
  */
-export async function generateSceneBackgrounds(onProgress: (m: string) => void): Promise<number> {
-  const st0 = useStore.getState()
-  const escenas: Escena[] = st0.project.guion?.escenas ?? []
-  if (!escenas.length) throw new Error('Primero anima las escenas del guion.')
-  // Tramos: escenas seguidas con el mismo fondo
-  const tramos: { desc: string; desde: number; hasta: number }[] = []
-  let t = 0
+export async function generateSceneBackgrounds(escenas: Escena[], onProgress: (m: string) => void): Promise<Escena[]> {
+  if (!escenas.length) throw new Error('Primero prepara las escenas.')
+  const grupos: { desc: string; idx: number[] }[] = []
   let actual = ''
-  for (const e of escenas) {
-    const dur = e.duracion || estimateDuration(e.dialogo)
+  escenas.forEach((e, i) => {
     const desc = e.fondo.trim() || actual
-    if (desc && (desc !== actual || !tramos.length)) tramos.push({ desc, desde: t, hasta: t + dur })
-    else if (tramos.length) tramos[tramos.length - 1].hasta = t + dur
+    if (!desc) return
+    if (desc !== actual || !grupos.length) grupos.push({ desc, idx: [i] })
+    else grupos[grupos.length - 1].idx.push(i)
     actual = desc
-    t += dur
-  }
-  if (!tramos.length) throw new Error('Las escenas no describen ningún fondo. Escribe uno en alguna escena o pide las escenas con IA.')
+  })
+  if (!grupos.length) throw new Error('Las escenas no describen ningún fondo. Escribe uno en alguna escena o pide las escenas con IA.')
 
-  const capas: { layer: BgLayer; desde: number; hasta: number }[] = []
-  for (let i = 0; i < tramos.length; i++) {
-    onProgress(`Generando fondo ${i + 1} de ${tramos.length}: ${tramos[i].desc}`)
-    capas.push({ layer: await generateBackground(tramos[i].desc, useStore.getState().project), ...tramos[i] })
+  const out = escenas.map((e) => ({ ...e }))
+  const capas: BgLayer[] = []
+  for (let g = 0; g < grupos.length; g++) {
+    onProgress(`Generando fondo ${g + 1} de ${grupos.length}: ${grupos[g].desc}`)
+    const layer = await generateBackground(grupos[g].desc, useStore.getState().project)
+    capas.push(layer)
+    for (const i of grupos[g].idx) out[i].capa = layer.id
   }
 
   const st = useStore.getState()
   const fps = st.project.fps
-  const r = (x: number) => Math.round(x * fps) / fps
-  let tracks = { ...st.project.instances[0].tracks }
-  for (const c of capas) {
-    const id = c.layer.id
-    if (c.desde > 0) tracks = setKey(tracks, `bg:${id}:opacity`, 0, 0, 'salto')
-    tracks = setKey(tracks, `bg:${id}:opacity`, r(c.desde), 1, 'salto')
-    if (c.hasta < st.project.duration - 1e-3) tracks = setKey(tracks, `bg:${id}:opacity`, r(c.hasta), 0, 'salto')
-    tracks = setKey(tracks, `bg:${id}:scale`, r(c.desde), 1, 'lineal')
-    tracks = setKey(tracks, `bg:${id}:scale`, r(c.hasta), 1.06, 'lineal')
+  // Quita las capas de fondo de escenas anteriores que ya no se usen
+  const viejas = new Set((st.project.guion?.escenas ?? []).map((e) => e.capa).filter(Boolean) as string[])
+  let tracks = Object.fromEntries(
+    Object.entries(st.project.instances[0].tracks).filter(([c]) => !(c.startsWith('bg:') && viejas.has(c.split(':')[1]))),
+  )
+  const animado = !!st.project.guion?.escenas.length
+  if (animado) {
+    let t = 0
+    const placed = out.map((e) => {
+      const p = { ...e, inicio: t }
+      t += e.duracion || estimateDuration(e.dialogo)
+      return p
+    })
+    tracks = { ...tracks, ...backgroundKeys(placed, st.project.duration, fps) }
   }
   const [inst, ...rest] = st.project.instances
   st.commit({
     ...st.project,
-    fondos: [...capas.map((c) => c.layer), ...(st.project.fondos ?? [])],
+    fondos: [...capas, ...(st.project.fondos ?? []).filter((l) => !viejas.has(l.id))],
+    guion: animado ? { ...st.project.guion!, escenas: out } : st.project.guion,
     instances: [{ ...inst, tracks }, ...rest],
   })
-  return capas.length
+  return out
 }
