@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { ScriptPanel } from './components/ScriptPanel'
 import { loadAudio } from './audio/storage'
 import { Controls } from './components/Controls'
@@ -94,7 +94,8 @@ function useShortcuts() {
 export default function App() {
   usePlayback()
   useShortcuts()
-  const [guion, setGuion] = useState(false)
+  const guion = useStore((s) => s.guionAbierto)
+  const setGuion = useStore((s) => s.setGuionAbierto)
   return (
     <div className="app">
       <Toolbar onGuion={() => setGuion(!guion)} />

@@ -72,7 +72,9 @@ en lenguaje llano y pídele que pruebe en la web publicada.
 - Panel «📝 Guion» (`src/components/ScriptPanel.tsx`): texto o idea → escenas (`Escena` en types:
   diálogo, acción, plano general/medio/primer, expresión, duración, gestos, fondo deseado).
   «Escenas con IA» llama a `api/guion.ts` (guía y esquema `GUIA_GUION`/`SCHEMA_GUION` en `_guia.ts`);
-  «Dividir sin IA» parte por párrafos (`scenesFromText`). El conector MCP tiene la herramienta `guion`.
+  «Dividir sin IA» parte por párrafos (`scenesFromText`). Por MCP: `proponer_guion` (lo deja en el
+  panel para revisar, abre el panel solo), `guion` (lo monta y anima) y `ver_estudio` devuelve el guion
+  montado en "guion" para corregirlo o continuarlo.
 - `src/script/scenes.ts` → `animateScenes`: escenas consecutivas, corte de cámara por plano, cejas
   de la expresión, gestos de la biblioteca y boca que «habla» el texto (`textMouthKeys`, por vocales;
   la sustituirá la voz real). Marcas E1, E2… en la regla de la línea de tiempo.

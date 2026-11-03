@@ -12,7 +12,7 @@ const HEARTBEAT_MS = 60_000
 
 type Op = {
   seq: number
-  op: { tipo: 'animar'; resultado: CopilotResult } | { tipo: 'guion'; resultado: { titulo?: string; mensaje?: string; escenas: Omit<Escena, 'id'>[] } } | { tipo: 'deshacer' }
+  op: { tipo: 'animar'; resultado: CopilotResult } | { tipo: 'guion' | 'proponer'; resultado: { titulo?: string; mensaje?: string; escenas: Omit<Escena, 'id'>[] } } | { tipo: 'deshacer' }
 }
 
 export function useClaudeLink(enabled: boolean, pass: string, onMessage: (text: string, ok: boolean) => void) {
@@ -45,9 +45,9 @@ export function useClaudeLink(enabled: boolean, pass: string, onMessage: (text: 
       const res = await fetch('/api/estado', { method: 'POST', headers, body }).catch(() => null)
       if (res && !res.ok) await fail(res)
     }
-    const schedulePush = () => {
+    const schedulePush = (force = false) => {
       clearTimeout(pushTimer)
-      pushTimer = setTimeout(() => push(), 1500)
+      pushTimer = setTimeout(() => push(force), 1500)
     }
 
     const poll = async () => {
@@ -65,10 +65,17 @@ export function useClaudeLink(enabled: boolean, pass: string, onMessage: (text: 
         if (seq <= lastSeq) continue
         lastSeq = seq
         const st = useStore.getState()
-        if (op.tipo === 'guion') {
+        if (op.tipo === 'guion' || op.tipo === 'proponer') {
           const escenas = op.resultado.escenas.map((e) => ({ ...e, id: Math.random().toString(36).slice(2, 9) }))
           const texto = escenas.map((e) => e.dialogo).filter(Boolean).join('\n\n')
+          if (op.tipo === 'proponer') {
+            st.proponerGuion(texto, escenas, op.resultado.mensaje)
+            msgRef.current(`Claude te ha propuesto un guion${op.resultado.titulo ? ` («${op.resultado.titulo}»)` : ''}: revísalo en el panel Guion.`, true)
+            await push(true)
+            continue
+          }
           applyScript(escenas, texto)
+          useStore.getState().proponerGuion(texto, escenas, op.resultado.mensaje)
           msgRef.current(`Claude ha montado el guion${op.resultado.titulo ? ` «${op.resultado.titulo}»` : ''}: ${escenas.length} escenas.`, true)
           await push(true)
           continue
@@ -76,7 +83,7 @@ export function useClaudeLink(enabled: boolean, pass: string, onMessage: (text: 
         if (op.tipo === 'deshacer') {
           st.undo()
           msgRef.current('Claude ha deshecho el último cambio.', true)
-        } else {
+        } else if (op.tipo === 'animar') {
           const { tracks, duration, added } = applyCopilot(op.resultado, st.project, activeCharacter(st.project))
           st.replaceTracks(tracks, duration)
           msgRef.current(`Claude: ${op.resultado.mensaje ?? 'animación aplicada'}${added ? '' : ' (sin claves nuevas)'}`, true)
@@ -92,7 +99,8 @@ export function useClaudeLink(enabled: boolean, pass: string, onMessage: (text: 
     poll()
     const iv = setInterval(poll, POLL_MS)
     const unsub = useStore.subscribe((s, prev) => {
-      if (s.project !== prev.project || s.selectedPart !== prev.selectedPart || (!s.playing && s.time !== prev.time)) schedulePush()
+      if (s.project !== prev.project) schedulePush(true)
+      else if (s.selectedPart !== prev.selectedPart || (!s.playing && s.time !== prev.time)) schedulePush()
     })
     return () => {
       stopped = true

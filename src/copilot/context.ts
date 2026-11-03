@@ -72,6 +72,9 @@ export function buildContext(project: Project, character: Character, time: numbe
       cejas: variantsOf('brows'),
       expresiones: character.expressions,
     },
+    guion: project.guion
+      ? project.guion.escenas.map((e, i) => ({ n: i + 1, dialogo: e.dialogo, accion: e.accion, plano: e.plano, expresion: e.expresion, duracion: e.duracion, gestos: e.gestos, fondo: e.fondo }))
+      : null,
     fondos: (project.fondos ?? []).map((l) => ({ id: l.id, nombre: l.name, delante: !!l.delante })),
     gestos_disponibles: GESTOS.map((g) => ({
       nombre: g.id,

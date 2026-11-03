@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { buildContext } from '../copilot/context'
 import { GESTOS } from '../model/gestures'
 import type { Escena, Plano } from '../model/types'
@@ -40,6 +40,22 @@ export function ScriptPanel({ onClose }: { onClose: () => void }) {
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null)
   const [pass, setPass] = useState(readPass)
   const [needPass, setNeedPass] = useState(false)
+  // Un guion que llega de Claude (propuesto o ya montado) se carga en el panel
+  const borrador = useStore((s) => s.borradorGuion)
+  useEffect(() => {
+    if (!borrador) return
+    setTexto(borrador.texto)
+    setEscenas(borrador.escenas)
+    setMsg({ ok: true, text: borrador.mensaje ? `Claude: ${borrador.mensaje}` : 'Claude te ha propuesto este guion. Revísalo y pulsa «Animar escenas».' })
+  }, [borrador])
+  const montado = useStore((s) => s.project.guion)
+  useEffect(() => {
+    if (montado && !borrador) {
+      setTexto(montado.texto)
+      setEscenas(montado.escenas)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [montado])
   const ch = activeCharacter(project)
   const expresiones = Object.keys(ch.expressions)
 

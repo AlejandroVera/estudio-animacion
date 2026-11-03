@@ -21,6 +21,9 @@ interface State {
   mode: Mode
   selectedPart: string | null
   selectedLayer: string | null
+  guionAbierto: boolean
+  /** Guion propuesto (por Claude) pendiente de revisar en el panel; cambia de id en cada propuesta. */
+  borradorGuion: { id: number; texto: string; escenas: import('./model/types').Escena[]; mensaje?: string } | null
   selectedKey: SelectedKey | null
   past: Project[]
   future: Project[]
@@ -38,6 +41,8 @@ interface State {
   setMode: (m: Mode) => void
   selectPart: (id: string | null) => void
   selectLayer: (id: string | null) => void
+  setGuionAbierto: (on: boolean) => void
+  proponerGuion: (texto: string, escenas: import('./model/types').Escena[], mensaje?: string) => void
   selectKey: (k: SelectedKey | null) => void
 
   /** Pone una clave en el instante actual (auto-clave). */
@@ -99,6 +104,8 @@ export const useStore = create<State>((set, get) => ({
   mode: 'animar',
   selectedPart: null,
   selectedLayer: null,
+  guionAbierto: false,
+  borradorGuion: null,
   selectedKey: null,
   past: [],
   future: [],
@@ -150,6 +157,8 @@ export const useStore = create<State>((set, get) => ({
   setPlaying: (on) => set({ playing: on }),
   setMode: (m) => set({ mode: m, playing: false }),
   selectPart: (id) => set(id ? { selectedPart: id, selectedLayer: null } : { selectedPart: null }),
+  setGuionAbierto: (on) => set({ guionAbierto: on }),
+  proponerGuion: (texto, escenas, mensaje) => set({ guionAbierto: true, borradorGuion: { id: Date.now(), texto, escenas, mensaje } }),
   selectLayer: (id) => set(id ? { selectedLayer: id, selectedPart: null } : { selectedLayer: null }),
   selectKey: (k) => set({ selectedKey: k }),
 

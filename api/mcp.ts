@@ -12,7 +12,11 @@ de dibujo animado por piezas). Antes de animar, llama a ver_estudio para conocer
 y la animación actual. Después usa animar con las claves. Tras animar puedes volver a llamar a
 ver_estudio para comprobar que se aplicó. La web tiene que estar abierta con «Conectar con Claude» activado.
 
-Para vídeos completos a partir de un guion o una idea usa la herramienta guion:
+Guiones: ver_estudio devuelve en "guion" las escenas montadas ahora (para corregir o continuar un
+guion, reenvíalo completo con los cambios). Usa proponer_guion para dejar el guion en el panel de la
+web y que el usuario lo revise antes de animar (por defecto si pide «escríbeme un guion»), y guion
+para montarlo y animarlo directamente (si pide que lo monte, lo anime o haga el vídeo).
+Para vídeos completos a partir de un guion o una idea:
 ${GUIA_GUION}
 
 Para retoques sobre la animación existente usa animar:
@@ -38,6 +42,12 @@ const TOOLS = [
     name: 'guion',
     description:
       'Monta un vídeo completo a partir de escenas: cada escena con su diálogo, plano de cámara, expresión, duración y gestos de la biblioteca. Sustituye la animación del proyecto (se puede deshacer). Sigue la guía de guion de las instrucciones del servidor.',
+    inputSchema: SCHEMA_GUION,
+  },
+  {
+    name: 'proponer_guion',
+    description:
+      'Deja un guion (escenas) en el panel Guion de la web para que el usuario lo revise y edite antes de animarlo. No cambia la animación. Úsalo cuando el usuario quiera ver o retocar el guion antes, o cuando no esté claro que quiera montarlo ya.',
     inputSchema: SCHEMA_GUION,
   },
   {
@@ -80,6 +90,11 @@ async function llamarHerramienta(name: string, args: Record<string, unknown>) {
     if (!Array.isArray(args.escenas) || !args.escenas.length) return texto('Faltan las escenas.', true)
     const seq = await encolar({ tipo: 'guion', resultado: args })
     return texto(`Guion enviado a la web (orden ${seq}): ${args.escenas.length} escenas.`)
+  }
+  if (name === 'proponer_guion') {
+    if (!Array.isArray(args.escenas) || !args.escenas.length) return texto('Faltan las escenas.', true)
+    const seq = await encolar({ tipo: 'proponer', resultado: args })
+    return texto(`Guion propuesto en la web (orden ${seq}): ${args.escenas.length} escenas. El usuario lo revisará y pulsará «Animar escenas».`)
   }
   if (name === 'deshacer') {
     const seq = await encolar({ tipo: 'deshacer' })
