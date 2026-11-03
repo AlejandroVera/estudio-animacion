@@ -44,3 +44,24 @@ export async function leerCola(): Promise<EntradaCola[]> {
   const items = await redis<string[]>('LRANGE', 'estudio:cola', 0, -1)
   return items.map((s) => JSON.parse(s))
 }
+
+// Estilos de guion (compartidos por la web y el conector de Claude)
+export interface EstiloGuion {
+  id: string
+  nombre: string
+  texto: string
+}
+
+export async function leerEstilos(): Promise<{ estilos: EstiloGuion[]; activo: string | null }> {
+  const raw = await redis<string | null>('GET', 'estudio:estilos')
+  return raw ? JSON.parse(raw) : { estilos: [], activo: null }
+}
+
+export async function guardarEstilos(data: { estilos: EstiloGuion[]; activo: string | null }) {
+  await redis('SET', 'estudio:estilos', JSON.stringify(data))
+}
+
+export async function estiloActivo(): Promise<EstiloGuion | null> {
+  const { estilos, activo } = await leerEstilos()
+  return estilos.find((e) => e.id === activo) ?? null
+}

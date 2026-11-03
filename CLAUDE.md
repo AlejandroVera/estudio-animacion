@@ -79,6 +79,10 @@ en lenguaje llano y pídele que pruebe en la web publicada.
   de la expresión, gestos de la biblioteca y boca que «habla» el texto (`textMouthKeys`, por vocales;
   la sustituirá la voz real). Marcas E1, E2… en la regla de la línea de tiempo.
 
+- Estilos de guion (`ScriptStyles.tsx`, `api/estilos.ts`): varios estilos con nombre guardados en
+  Upstash (`estudio:estilos`), uno activo. `api/guion.ts` lo añade al system prompt y `ver_estudio`
+  del MCP lo devuelve al final, así lo siguen la IA de la web y Claude por igual.
+
 ## Hoja de ruta
 1. ✅ Editor: piezas, articulaciones, cara, línea de tiempo, exportar MP4.
 2. ✅ Copiloto, por dos vías que comparten la guía de animación y el formato (`api/_guia.ts`):

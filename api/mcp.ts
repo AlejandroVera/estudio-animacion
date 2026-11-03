@@ -4,7 +4,7 @@
 // «conectada» las aplica en segundos (y se pueden deshacer con Ctrl+Z).
 // Implementa el transporte HTTP de MCP sin sesiones, respondiendo siempre JSON.
 
-import { almacenListo, encolar, leerContexto } from './_almacen.js'
+import { almacenListo, encolar, estiloActivo, leerContexto } from './_almacen.js'
 import { GUIA, GUIA_GUION, SCHEMA, SCHEMA_GUION } from './_guia.js'
 
 const INSTRUCCIONES = `Estás conectado al Estudio de Animación de Alejandro (una web donde anima personajes
@@ -12,7 +12,8 @@ de dibujo animado por piezas). Antes de animar, llama a ver_estudio para conocer
 y la animación actual. Después usa animar con las claves. Tras animar puedes volver a llamar a
 ver_estudio para comprobar que se aplicó. La web tiene que estar abierta con «Conectar con Claude» activado.
 
-Guiones: ver_estudio devuelve en "guion" las escenas montadas ahora (para corregir o continuar un
+Guiones: antes de escribir un guion llama a ver_estudio: al final trae el ESTILO Y ESTRUCTURA que el
+usuario ha definido para sus guiones; síguelo por encima de las pautas generales. ver_estudio devuelve en "guion" las escenas montadas ahora (para corregir o continuar un
 guion, reenvíalo completo con los cambios). Usa proponer_guion para dejar el guion en el panel de la
 web y que el usuario lo revise antes de animar (por defecto si pide «escríbeme un guion»), y guion
 para montarlo y animarlo directamente (si pide que lo monte, lo anime o haga el vídeo).
@@ -75,7 +76,11 @@ async function llamarHerramienta(name: string, args: Record<string, unknown>) {
     const { guardado, conectada } = await estadoWeb()
     if (!guardado) return texto('La web todavía no ha publicado ningún proyecto. Pide al usuario que abra la web y active «Conectar con Claude».', true)
     const aviso = conectada ? '' : 'AVISO: la web no ha dado señales en los últimos minutos; puede estar cerrada o desconectada.\n'
-    return texto(aviso + JSON.stringify(guardado.contexto))
+    const estilo = await estiloActivo().catch(() => null)
+    const extra = estilo
+      ? `\n\nESTILO Y ESTRUCTURA DE GUION DEL USUARIO («${estilo.nombre}») — síguelo siempre al escribir guiones:\n${estilo.texto}`
+      : ''
+    return texto(aviso + JSON.stringify(guardado.contexto) + extra)
   }
   if (name === 'animar') {
     if (!Array.isArray(args.claves)) return texto('Faltan las claves.', true)

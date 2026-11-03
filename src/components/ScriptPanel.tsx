@@ -4,6 +4,7 @@ import { GESTOS } from '../model/gestures'
 import type { Escena, Plano } from '../model/types'
 import { animateScenes, estimateDuration, scenesFromText } from '../script/scenes'
 import { activeCharacter, useStore } from '../store'
+import { ScriptStyles } from './ScriptStyles'
 
 const PASS_KEY = 'estudio-animacion:clave'
 const readPass = () => {
@@ -111,6 +112,7 @@ export function ScriptPanel({ onClose }: { onClose: () => void }) {
       <p className="muted small">
         Escribe el guion (un párrafo o línea por escena) o solo una idea, por ejemplo «reel de 30 segundos sobre cómo calmar la ansiedad antes de dormir», y la IA lo escribe.
       </p>
+      <ScriptStyles />
       <textarea className="script-text" rows={7} value={texto} onChange={(e) => setTexto(e.target.value)} placeholder="Hola, soy... / Hoy te cuento..." />
       {needPass && (
         <input
