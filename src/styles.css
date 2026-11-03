@@ -812,3 +812,17 @@ select {
 .voice-pick .sublabel {
   margin-top: 0;
 }
+
+.gen-row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin-top: 8px;
+}
+.gen-row .copilot-pass {
+  margin-top: 0;
+}
+.gen-row .btn.small {
+  margin-top: 0;
+  flex: none;
+}

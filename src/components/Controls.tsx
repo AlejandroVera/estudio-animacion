@@ -9,6 +9,7 @@ import { useState } from 'react'
 import { decodeAudio, saveAudio, saveImage } from '../audio/storage'
 import { evalTrack, setKey } from '../model/anim'
 import { layout } from '../model/render'
+import { addLayer, generateBackground } from '../script/images'
 import { mouthKeys } from '../audio/lipsync'
 import { KEY_EPS as EPS } from '../model/anim'
 
@@ -446,6 +447,24 @@ function Backgrounds() {
     return typeof v === 'number' ? v : Number(v) || d
   }
   const layer = layers.find((l) => l.id === sel) ?? null
+  const [desc, setDesc] = useState('')
+  const [genBusy, setGenBusy] = useState(false)
+  const generar = async () => {
+    if (!desc.trim() || genBusy) return
+    setGenBusy(true)
+    setMsg('Generando fondo… (unos 10-20 s)')
+    try {
+      const l = await generateBackground(desc.trim(), useStore.getState().project)
+      addLayer(l)
+      setSel(l.id)
+      setMsg('Fondo añadido.')
+      setDesc('')
+    } catch (e) {
+      setMsg(e instanceof Error ? e.message : String(e))
+    } finally {
+      setGenBusy(false)
+    }
+  }
 
   const onFile = async (file: File) => {
     try {
@@ -507,6 +526,19 @@ function Backgrounds() {
         ))}
         <button className="chip" onClick={() => fileRef.current?.click()}>
           + Añadir imagen
+        </button>
+      </div>
+      <div className="gen-row">
+        <input
+          className="copilot-pass"
+          placeholder="Describe un fondo: consulta de psicólogo de noche…"
+          value={desc}
+          onChange={(e) => setDesc(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && generar()}
+          disabled={genBusy}
+        />
+        <button className="btn small primary" onClick={generar} disabled={genBusy || !desc.trim()} title="Genera el fondo con IA en el estilo del personaje">
+          {genBusy ? '…' : '✨ Generar'}
         </button>
       </div>
       {msg && <p className="muted small">{msg}</p>}

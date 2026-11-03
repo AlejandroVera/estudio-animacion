@@ -119,6 +119,7 @@ export function chicoRosaCharacter(): Character {
   return {
     id: 'chico-rosa',
     name: 'Chico rosa',
+    referencia: '/personajes/chico-rosa/referencia.jpg',
     ...buildParts([...body, ...face]),
     expressions: {
       Neutral: { brows: 'neutral', mouth: 'cerrada' },

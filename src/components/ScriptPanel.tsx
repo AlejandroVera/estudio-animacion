@@ -6,6 +6,7 @@ import { animateScenes, estimateDuration, scenesFromText } from '../script/scene
 import { activeCharacter, useStore } from '../store'
 import { ScriptStyles } from './ScriptStyles'
 import { listVoices, voiceScript, type Voz } from '../script/voices'
+import { generateSceneBackgrounds } from '../script/images'
 
 const PASS_KEY = 'estudio-animacion:clave'
 const readPass = () => {
@@ -293,6 +294,24 @@ export function ScriptPanel({ onClose }: { onClose: () => void }) {
             }}
           >
             ▶ Animar escenas (sin voz)
+          </button>
+          <button
+            className="btn full"
+            disabled={busy || !useStore.getState().project.guion?.escenas.length}
+            title="Genera con IA el fondo que pide cada escena y lo cambia en cada corte"
+            onClick={async () => {
+              setBusy(true)
+              try {
+                const n = await generateSceneBackgrounds((t) => setMsg({ ok: true, text: t }))
+                setMsg({ ok: true, text: `${n} fondos generados y colocados en sus escenas.` })
+              } catch (e) {
+                setMsg({ ok: false, text: e instanceof Error ? e.message : String(e) })
+              } finally {
+                setBusy(false)
+              }
+            }}
+          >
+            🖼 Generar fondos de las escenas
           </button>
         </>
       )}

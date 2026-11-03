@@ -107,7 +107,11 @@ en lenguaje llano y pídele que pruebe en la web publicada.
 5. Escenas: ✅ capas de imagen (`project.fondos`, imagen en IndexedDB, detrás o delante del personaje,
    canales `bg:<id>:x|y|scale|rot|opacity`) y ✅ cámara (`cam:x|y|zoom`, `cameraMatrix` en
    `render.ts`, se deshace al convertir clics en `Stage`). Panel «Fondos y cámara» con atajos (acercar,
-   desplazar, aparecer, primer plano, zoom lento). Pendiente: varios personajes, subtítulos, plantillas.
+   desplazar, aparecer, primer plano, zoom lento). ✅ Fondos con IA (`api/imagen.ts`, fal.ai Nano
+   Banana, variable `FAL_KEY`): «✨ Generar» en el panel Fondos y «Generar fondos de las escenas» en el
+   Guion (`src/script/images.ts`: un fondo por tramo de escenas, visible solo en su tramo, con zoom
+   lento). Usan `Character.referencia` (ilustración del personaje en esta web) como referencia de
+   estilo. Pendiente: varios personajes, subtítulos, plantillas.
 
 Ideas pendientes anotadas: cinemática inversa (arrastrar la mano mueve todo el brazo),
 guardar en IndexedDB cuando haya

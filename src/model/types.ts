@@ -51,6 +51,8 @@ export interface Part {
 export interface Character {
   id: string
   name: string
+  /** Ilustración del personaje (ruta de esta web) usada como referencia de estilo al generar imágenes. */
+  referencia?: string
   parts: Part[]
   assets: Record<string, Asset>
   /** Expresiones predefinidas: valores de los canales de cara. */
