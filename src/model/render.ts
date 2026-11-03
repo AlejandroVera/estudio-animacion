@@ -131,7 +131,14 @@ export function drawCharacter(
   if (!restPose) pose = withFollowThrough(pose, character, inst.tracks, t)
   if (life && !restPose) {
     const fore = character.parts.find((p) => p.id === 'antebrazo_der' || p.id === 'antebrazo_izq')
-    pose = withLife(pose, t, inst.tracks, fore ? Math.hypot(fore.offset.x, fore.offset.y) : 200)
+    pose = withLife(pose, t, inst.tracks, fore ? Math.hypot(fore.offset.x, fore.offset.y) : 200, character.parts.find((p) => !p.parent)?.id)
+  }
+  // Rebote al cambiar de pose: el cuerpo se encoge un poco y vuelve (desde los pies)
+  if (!restPose && pose.fades) {
+    for (const [id, f] of Object.entries(pose.fades)) {
+      const pp = pose.parts[id]
+      if (pp) pose.parts[id] = { ...pp, scale: pp.scale * (1 - 0.012 * Math.sin(Math.PI * Math.min(1, f.u))) }
+    }
   }
   const placed = layout(character, inst, pose, restPose)
   const byId = new Map(placed.map((p) => [p.part.id, p]))
@@ -145,6 +152,16 @@ export function drawCharacter(
     g.save()
     g.setTransform(g.getTransform().multiply(pl.matrix))
     g.drawImage(img, -pl.part.anchor.x, -pl.part.anchor.y, asset.w, asset.h)
+    // Fundido del dibujo anterior encima del nuevo mientras cambia de pose
+    const f = !restPose ? pose.fades?.[pl.part.id] : undefined
+    const prevAsset = f && character.assets[pl.part.variants[f.prev]]
+    if (f && prevAsset) {
+      const pimg = getImage(prevAsset.src)
+      if (pimg.complete && pimg.naturalWidth) {
+        g.globalAlpha = 1 - f.u * f.u * (3 - 2 * f.u)
+        g.drawImage(pimg, -pl.part.anchor.x, -pl.part.anchor.y, prevAsset.w, prevAsset.h)
+      }
+    }
     g.restore()
   }
   return placed
@@ -427,6 +444,14 @@ function feet(character: Character, placed: Placed[]): Vec[] {
     if (!a) continue
     const p = pl.matrix.transformPoint(new DOMPoint(a.w / 2 - pl.part.anchor.x, a.h * 0.93 - pl.part.anchor.y))
     out.push({ x: p.x, y: p.y })
+  }
+  if (!out.length) {
+    // Personaje por poses: la articulación del cuerpo está entre los pies; se toma un ancho de pies fijo
+    const root = placed.find((p) => !p.part.parent)
+    if (root) {
+      const k = Math.hypot(root.matrix.a, root.matrix.b)
+      out.push({ x: root.matrix.e - 230 * k, y: root.matrix.f }, { x: root.matrix.e + 230 * k, y: root.matrix.f })
+    }
   }
   return out
 }

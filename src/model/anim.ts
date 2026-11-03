@@ -44,9 +44,19 @@ const str = (v: number | string) => String(v)
 export function poseAt(character: Character, tracks: Tracks, t: number): Pose {
   const parts: Pose['parts'] = {}
   const variants: Pose['variants'] = {}
+  const fades: NonNullable<Pose['fades']> = {}
   for (const p of character.parts) {
     const vk = tracks[`part:${p.id}:v`]
-    if (vk?.length && !p.role) variants[p.id] = str(evalTrack(vk, t, p.defaultVariant))
+    if (vk?.length && !p.role) {
+      variants[p.id] = str(evalTrack(vk, t, p.defaultVariant))
+      if (p.fade) {
+        // Último cambio de dibujo antes de t: si fue hace menos de `fade`, se funde con el anterior
+        let k = -1
+        for (let i = 0; i < vk.length; i++) if (vk[i].t <= t) k = i
+        const prev = k > 0 ? str(vk[k - 1].v) : k === 0 && vk[0].t > 0 ? p.defaultVariant : null
+        if (k >= 0 && prev !== null && prev !== str(vk[k].v) && t - vk[k].t < p.fade) fades[p.id] = { prev, u: (t - vk[k].t) / p.fade }
+      }
+    }
     const k = `part:${p.id}:`
     parts[p.id] = {
       rot: (character.idle?.[p.id] ?? 0) + num(evalTrack(tracks[k + 'rot'], t, DEFAULTS.rot)),
@@ -63,6 +73,7 @@ export function poseAt(character: Character, tracks: Tracks, t: number): Pose {
     mouth: str(evalTrack(tracks['face:mouth'], t, DEFAULTS.mouth)),
     brows: str(evalTrack(tracks['face:brows'], t, DEFAULTS.brows)),
     variants,
+    fades,
   }
 }
 

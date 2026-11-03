@@ -2,6 +2,7 @@
 
 import { chicoRosaCharacter } from './characters/chicoRosa'
 import { withIdle } from './idle'
+import { chicoRosaPosesCharacter } from './characters/chicoRosaPoses'
 import { sampleCharacter } from './sample'
 import type { Character, Project } from './types'
 
@@ -15,7 +16,14 @@ export interface LibraryEntry {
 }
 
 export const LIBRARY: LibraryEntry[] = [
-  { id: 'chico-rosa', name: 'Chico rosa', make: () => withIdle(chicoRosaCharacter()), place: { x: 540, y: 1230, scale: 0.6 }, background: '#CE544E' },
+  { id: 'chico-rosa', name: 'Chico rosa', make: chicoRosaPosesCharacter, place: { x: 540, y: 1700, scale: 0.62 }, background: '#CE544E' },
+  {
+    id: 'chico-rosa-piezas',
+    name: 'Chico rosa (piezas, antiguo)',
+    make: () => ({ ...withIdle(chicoRosaCharacter()), id: 'chico-rosa-piezas', name: 'Chico rosa (piezas, antiguo)' }),
+    place: { x: 540, y: 1230, scale: 0.6 },
+    background: '#CE544E',
+  },
   { id: 'pepe', name: 'Pepe (dibujo simple)', make: sampleCharacter, place: { x: 540, y: 1250, scale: 1.6 }, background: '#F4EFE6' },
 ]
 
@@ -33,8 +41,19 @@ export function refreshCharacters(p: Project): Project {
     const newId = REPLACED[inst.characterId]
     const entry = LIBRARY.find((e) => e.id === (newId ?? inst.characterId))
     if (!entry) return inst
-    characters[entry.id] = entry.make()
-    return newId ? { ...inst, characterId: entry.id, ...entry.place } : inst
+    const viejo = p.characters[inst.characterId]
+    const nuevo = entry.make()
+    characters[entry.id] = nuevo
+    // Si el personaje ha cambiado de esqueleto (p. ej. de piezas a poses) se recoloca y se quitan
+    // las pistas de piezas que ya no existen.
+    const raizVieja = viejo?.parts?.find((x) => !x.parent)?.id
+    const raizNueva = nuevo.parts.find((x) => !x.parent)?.id
+    if (newId || (raizVieja && raizVieja !== raizNueva)) {
+      const ids = new Set(nuevo.parts.map((x) => x.id))
+      const tracks = Object.fromEntries(Object.entries(inst.tracks).filter(([c]) => !c.startsWith('part:') || ids.has(c.split(':')[1])))
+      return { ...inst, characterId: entry.id, ...entry.place, tracks }
+    }
+    return inst
   })
   for (const old of Object.keys(REPLACED)) {
     if (!instances.some((i) => i.characterId === old)) delete characters[old]

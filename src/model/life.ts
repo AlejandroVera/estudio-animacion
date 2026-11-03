@@ -30,7 +30,7 @@ function blinkAt(t: number): number {
 }
 
 /** Devuelve una copia de la pose con la vida automática sumada. */
-export function withLife(pose: Pose, t: number, tracks: Tracks, armLength: number): Pose {
+export function withLife(pose: Pose, t: number, tracks: Tracks, armLength: number, raiz?: string): Pose {
   const parts = { ...pose.parts }
   const add = (id: string, d: Partial<{ rot: number; x: number; y: number }>) => {
     const p = parts[id]
@@ -39,6 +39,10 @@ export function withLife(pose: Pose, t: number, tracks: Tracks, armLength: numbe
   }
   const breath = Math.sin((TAU * t) / 3.6)
   add('cadera', { y: breath * armLength * 0.006 })
+  if (!parts.cadera && raiz && parts[raiz]) {
+    // Por poses: respira escalando un poco desde los pies (los pies no se mueven)
+    parts[raiz] = { ...parts[raiz], scale: parts[raiz].scale * (1 + 0.0035 * breath) }
+  }
   add('torso', { rot: Math.sin((TAU * t) / 3.6 + 0.6) * 0.5 })
   add('cabeza', { rot: Math.sin((TAU * t) / 5.3 + 1.3) * 0.9, y: -breath * armLength * 0.004 })
   add('brazo_der', { rot: Math.sin((TAU * t) / 4.1 + 0.4) * 1.0 })

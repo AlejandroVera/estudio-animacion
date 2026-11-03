@@ -37,7 +37,12 @@ en lenguaje llano y pídele que pruebe en la web publicada.
 - `src/model/library.ts` lista los personajes disponibles (selector «Personaje» del panel izquierdo).
   Usar los mismos ids de pieza entre personajes (`cabeza`, `torso`, `brazo_der`…) para que la
   animación se pueda pasar de uno a otro.
-- «Chico rosa» (`src/model/characters/chicoRosa.ts`): ilustración de Alejandro redibujada en pose
+- «Chico rosa» (id `chico-rosa`, `src/model/characters/chicoRosaPoses.ts`) es un personaje POR POSES
+  (ver sección siguiente); es el que usa Alejandro. Los proyectos guardados con la versión por piezas
+  se pasan solos a esta (`refreshCharacters` en `library.ts`: si cambia la pieza raíz, recoloca el
+  personaje y quita las pistas de piezas que ya no existen).
+- «Chico rosa (piezas)» (id `chico-rosa-piezas`, `src/model/characters/chicoRosa.ts`): la versión
+  marioneta. Ilustración de Alejandro redibujada en pose
   animable (en «A», brazos y piernas separados) con Magnific (Nano Banana 2.1) y despiezada con
   `herramientas/despiece_chico_rosa.py`: rembg `isnet-anime` quita el fondo, cortes por polígonos
   (codos perpendiculares al brazo), cara borrada con inpaint y redibujada en SVG, remates redondos
@@ -45,6 +50,29 @@ en lenguaje llano y pídele que pruebe en la web publicada.
   articulaciones en `chicoRosa.manifest.json`. Es la referencia para automatizar el despiece (fase 4).
 - `public/personajes/rosa/` son las piezas de la primera versión; solo se conservan para que los
   proyectos guardados antiguos sigan viéndose.
+
+## Personajes por poses (el método bueno)
+La marioneta por piezas giradas quedaba robótica y Alejandro la descartó. Ahora el cuerpo entero es
+UNA pieza raíz `cuerpo` con muchos dibujos completos (poses: reposo, hablar_a/b/c, explicar,
+manos_juntas, encogerse, senalar_der/izq/abajo, jarras, cruzado, saludar_a/b, pulgar, celebrar,
+sorpresa) que se cambian con el canal `part:cuerpo:v`; encima va una cabeza común (`cabeza`, gira y
+asiente) con la cara en SVG (ojos, pupilas, párpados, cejas y bocas dibujadas como las del original).
+NUNCA vídeo generativo: Alejandro lo rechaza; solo imágenes fijas hechas con IA.
+- Las poses se hacen con Magnific (Nano Banana 2.1) EDITANDO la misma imagen base («misma cámara,
+  mismo tamaño, solo cambian los brazos»), así encajan al píxel (cabeza y pies en el mismo sitio).
+- `herramientas/preparar_poses.py`: limpia los recortes, borra la cabeza de cada pose (la pone la
+  pieza `cabeza`), crea la cabeza común sin cara (inpaint) y escribe `chicoRosaPoses.manifest.json`
+  (lienzo común, caja y cuello de la cabeza, pies). Imágenes WebP en `public/personajes/chico-rosa/poses/`.
+  Para otro personaje: misma receta (es la base de la fase 4).
+- `Part.fade` (0,1 s): al cambiar de pose se funde con la anterior y da un pequeño rebote
+  (`poseAt` calcula `fades`, `drawCharacter` lo dibuja). La respiración escala desde los pies.
+- Gestos: cada gesto tiene además `poses` (secuencia de poses en el tiempo); `expandGesture` usa
+  `expandPoseGesture` cuando la raíz tiene varios dibujos (claves de pose + cabeza y cara).
+- `animateScenes`: mientras habla rellena con poses de conversación (hablar_a/b/c, manos_juntas,
+  explicar, reposo; 1,3-2,5 s cada una) e inclinaciones de cabeza; quita un reposo si la siguiente
+  pose llega antes de 0,9 s (si no, parpadean los brazos). `voiceScript` cuadra los cambios de pose
+  con el inicio de las palabras.
+- Cámara de los planos (`shot` en `scenes.ts`): nunca sale del vídeo (si no, asoma el color de fondo).
 
 ## Postura y naturalidad
 - `src/model/idle.ts` (`withIdle`): postura de reposo natural (brazos caídos) calculada del esqueleto;
@@ -119,7 +147,8 @@ en lenguaje llano y pídele que pruebe en la web publicada.
    reproducir, se ve su onda en la línea de tiempo, «Mover la boca con la voz» crea las claves de
    boca por energía y brillo del sonido (`src/audio/lipsync.ts`) y el MP4 sale con audio (AAC u Opus).
    ✅ Voz con ElevenLabs (`api/voz.ts`, variable `ELEVENLABS_API_KEY`, gasta la suscripción del
-   usuario): en el panel Guion se elige voz y modelo (v3 por defecto) y «Generar voces y animar»
+   usuario): en el panel Guion se elige voz y modelo («Estable», Multilingual v2, por defecto: la v3
+   sonaba rara; la elección se recuerda en el navegador) y «Generar voces y animar»
    (`src/script/voices.ts`) lee el guion ENTERO de una vez con `with-timestamps` (entonación
    continua, ajustes guardados de la voz), reparte el audio entre escenas por el tiempo de su primera
    letra, ajusta duraciones y crea la boca por letras (`visemas`: en cada fotograma gana pausa >

@@ -1,0 +1,48 @@
+{
+ "lienzo": [
+  23,
+  248,
+  1492,
+  2361
+ ],
+ "cabeza": {
+  "caja": [
+   551,
+   253,
+   441,
+   441
+  ],
+  "centro": [
+   771.7,
+   473.8
+  ],
+  "r": 213.9,
+  "cuello": [
+   771.7,
+   652
+  ]
+ },
+ "pies": [
+  780.5,
+  2601
+ ],
+ "poses": [
+  "celebrar",
+  "cruzado",
+  "encogerse",
+  "explicar",
+  "hablar_a",
+  "hablar_b",
+  "hablar_c",
+  "jarras",
+  "manos_juntas",
+  "pulgar",
+  "reposo",
+  "saludar_a",
+  "saludar_b",
+  "senalar_abajo",
+  "senalar_der",
+  "senalar_izq",
+  "sorpresa"
+ ]
+}

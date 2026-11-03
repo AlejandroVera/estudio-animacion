@@ -70,7 +70,22 @@ export function ScriptPanel({ onClose }: { onClose: () => void }) {
     }
   })
   const [vozManual, setVozManual] = useState('')
-  const [modelo, setModelo] = useState<Modelo>('eleven_v3')
+  const MODELO_KEY = 'estudio-animacion:modelo-voz'
+  const [modelo, setModeloState] = useState<Modelo>(() => {
+    try {
+      return (localStorage.getItem(MODELO_KEY) as Modelo) || 'eleven_multilingual_v2'
+    } catch {
+      return 'eleven_multilingual_v2'
+    }
+  })
+  const setModelo = (m: Modelo) => {
+    setModeloState(m)
+    try {
+      localStorage.setItem(MODELO_KEY, m)
+    } catch {
+      // sin almacenamiento
+    }
+  }
   const elegirVoz = (v: Voz | null) => {
     setVoz(v)
     try {
@@ -282,8 +297,8 @@ export function ScriptPanel({ onClose }: { onClose: () => void }) {
               </div>
             )}
             <select value={modelo} onChange={(e) => setModelo(e.target.value as Modelo)} title="Modelo de ElevenLabs">
-              <option value="eleven_v3">Expresiva (ElevenLabs v3)</option>
               <option value="eleven_multilingual_v2">Estable (Multilingual v2)</option>
+              <option value="eleven_v3">Expresiva (ElevenLabs v3)</option>
             </select>
             <button className="btn primary full" disabled={!voz || busy} onClick={conVoz}>
               {busy ? 'Trabajando…' : '🎙 Generar voces y animar'}

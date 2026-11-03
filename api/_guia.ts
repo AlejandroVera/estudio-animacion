@@ -15,6 +15,11 @@ Cómo funciona el personaje:
   natural; elige el sentido que no atraviese el cuerpo. Usa la geometría, no adivines el signo.
 - part:<id>:x y part:<id>:y desplazan la pieza en píxeles del dibujo (y positivo = abajo). Úsalos
   sobre todo en la cadera (raíz) para botes, pasos o agacharse. part:<id>:scale cambia el tamaño (1 = normal).
+- PERSONAJE POR POSES: si la pieza raíz se llama "cuerpo" y tiene "dibujos", el personaje no tiene
+  brazos que girar: cada dibujo es una pose completa (hablar_a, explicar, senalar_der, encogerse,
+  jarras, cruzado, saludar_a/b, pulgar, celebrar, sorpresa, senalar_abajo, manos_juntas, reposo).
+  Usa los gestos de la biblioteca (ya cambian de pose) o pon claves part:cuerpo:v con el nombre de la
+  pose; mantén cada pose al menos 0,8 s. La cabeza (part:cabeza:rot / :y) y la cara sí se animan.
 - Piezas con "dibujos" (las manos): part:<id>:v elige el dibujo (natural, abierta, palma_arriba,
   puno, indice, dorso, pulgar); cambia de golpe y transición "salto". Los gestos ya cambian las manos.
 - Cámara (toda la escena): cam:zoom (1 normal, 1.8 primer plano), cam:x y cam:y (px de desplazamiento

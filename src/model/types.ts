@@ -34,6 +34,11 @@ export interface Part {
   /** Para pupilas: cuánto pueden desplazarse con la mirada (px). */
   gazeRange?: Vec
   /**
+   * Segundos de fundido al cambiar de dibujo (personajes por poses): el dibujo anterior se desvanece
+   * encima del nuevo y el cuerpo hace un pequeño rebote.
+   */
+  fade?: number
+  /**
    * Deformación por malla junto a las articulaciones (en vez de girar como pieza rígida).
    * Distancias en px medidas a lo largo del eje de la pieza (de su articulación hacia su hija).
    *  - parent [desde, hasta]: antes de "desde" la pieza sigue al padre, después de "hasta" a sí
@@ -148,4 +153,6 @@ export interface Pose {
   brows: string
   /** Dibujo elegido para las piezas con varios (canal part:<id>:v). */
   variants: Record<string, string>
+  /** Cambios de dibujo en curso (piezas con `fade`): dibujo anterior y avance 0..1 del fundido. */
+  fades?: Record<string, { prev: string; u: number }>
 }

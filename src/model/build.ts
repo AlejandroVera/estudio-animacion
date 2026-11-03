@@ -20,6 +20,7 @@ export interface PartDef {
   role?: Part['role']
   gazeRange?: Vec
   skin?: Part['skin']
+  fade?: number
 }
 
 export function svgSrc(box: Box, body: string): string {
@@ -92,6 +93,7 @@ export function buildParts(defs: PartDef[]): Pick<Character, 'parts' | 'assets'>
       role: d.role,
       gazeRange: d.gazeRange,
       skin: autoSkin(d, defs),
+      fade: d.fade,
     }
   })
   return { parts, assets }

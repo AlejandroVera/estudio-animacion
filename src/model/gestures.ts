@@ -45,6 +45,11 @@ export interface Gesto {
   lados: 'uno' | 'ambos' | 'ninguno'
   duracion: number
   claves: GK[]
+  /**
+   * Para personajes por poses: secuencia de dibujos del cuerpo (en lugar de girar brazos).
+   * `izq` es el dibujo a usar si el gesto se pide hacia el lado izquierdo de la pantalla.
+   */
+  poses?: { t: number; pose: string; izq?: string }[]
 }
 
 const k = (t: number, c: string, v: V, e?: Ease): GK => ({ t, c, v, e })
@@ -57,6 +62,7 @@ export const GESTOS: Gesto[] = [
     descripcion: 'Sube la mano por delante del cuerpo hasta la altura de la cabeza y la agita; sonríe.',
     lados: 'uno',
     duracion: 2.75,
+    poses: [{ t: 0, pose: 'saludar_a' }, { t: 0.32, pose: 'saludar_b' }, { t: 0.62, pose: 'saludar_a' }, { t: 0.92, pose: 'saludar_b' }, { t: 1.22, pose: 'saludar_a' }, { t: 2.1, pose: 'reposo' }],
     claves: [
       // Primero sube la mano por delante del pecho (antebrazo acortado = viene hacia la cámara),
       // luego el codo se abre y la mano queda junto a la cabeza. Al bajar, la mano baja por delante.
@@ -78,6 +84,7 @@ export const GESTOS: Gesto[] = [
     descripcion: 'Sube los hombros, codos junto al cuerpo y antebrazos hacia fuera; cabeza ladeada y cara de duda.',
     lados: 'ninguno',
     duracion: 1.9,
+    poses: [{ t: 0.05, pose: 'encogerse' }, { t: 1.45, pose: 'reposo' }],
     claves: [
       k(0, 'hombros', { alto: 0 }), k(0.12, 'hombros', { alto: 0.02 }), k(0.38, 'hombros', { alto: -0.09 }), k(1.1, 'hombros', { alto: -0.09 }), k(1.5, 'hombros', { alto: 0 }),
       ...both(0, 'brazo', { reposo: 0 }), ...both(0.12, 'brazo', { reposo: 3 }), ...both(0.38, 'brazo', { dir: 84 }), ...both(1.1, 'brazo', { dir: 84 }), ...both(1.55, 'brazo', { reposo: 0 }),
@@ -97,6 +104,7 @@ export const GESTOS: Gesto[] = [
     descripcion: 'Estira el brazo hacia un lado a la altura del pecho y mira hacia donde señala.',
     lados: 'uno',
     duracion: 2.2,
+    poses: [{ t: 0.1, pose: 'senalar_der', izq: 'senalar_izq' }, { t: 1.85, pose: 'reposo' }],
     claves: [
       k(0, 'brazo', { reposo: 0 }), k(0.15, 'brazo', { reposo: 5 }), k(0.45, 'brazo', { dir: -6 }), k(0.6, 'brazo', { dir: 0 }), k(1.7, 'brazo', { dir: 0 }), k(2.15, 'brazo', { reposo: 0 }),
       k(0, 'antebrazo', { reposo: 0 }), k(0.2, 'antebrazo', { reposo: -10 }), k(0.5, 'antebrazo', { dir: -10 }), k(0.65, 'antebrazo', { dir: 0 }), k(1.7, 'antebrazo', { dir: 0 }), k(2.2, 'antebrazo', { reposo: 0 }),
@@ -112,6 +120,7 @@ export const GESTOS: Gesto[] = [
     descripcion: 'Se rasca la cabeza con cara de duda, mirando hacia arriba.',
     lados: 'uno',
     duracion: 3.0,
+    poses: [{ t: 0.1, pose: 'cruzado' }, { t: 2.6, pose: 'reposo' }],
     claves: [
       k(0, 'brazo', { reposo: 0 }), k(0.15, 'brazo', { reposo: 5 }), k(0.55, 'brazo', { dir: -38 }), k(2.4, 'brazo', { dir: -38 }), k(2.9, 'brazo', { reposo: 0 }),
       k(0, 'antebrazo', { reposo: 0 }), k(0.3, 'antebrazo', { reposo: -20 }), k(0.65, 'antebrazo', { dir: -150 }),
@@ -131,6 +140,7 @@ export const GESTOS: Gesto[] = [
     descripcion: 'Manos en la cintura con los codos hacia fuera; postura firme o desafiante.',
     lados: 'ninguno',
     duracion: 2.6,
+    poses: [{ t: 0.1, pose: 'jarras' }, { t: 2.2, pose: 'reposo' }],
     claves: [
       ...both(0, 'brazo', { reposo: 0 }), ...both(0.4, 'brazo', { dir: 36 }), ...both(0.52, 'brazo', { dir: 40 }), ...both(2.1, 'brazo', { dir: 40 }), ...both(2.6, 'brazo', { reposo: 0 }),
       ...both(0, 'antebrazo', { reposo: 0 }), ...both(0.45, 'antebrazo', { dir: 150 }), ...both(0.55, 'antebrazo', { dir: 145 }), ...both(2.1, 'antebrazo', { dir: 145 }), ...both(2.6, 'antebrazo', { reposo: 0 }),
@@ -145,6 +155,7 @@ export const GESTOS: Gesto[] = [
     descripcion: 'Codos junto al cuerpo y manos delante de la tripa, palmas arriba, moviéndolas a golpes y alternando, como quien explica algo.',
     lados: 'ninguno',
     duracion: 2.7,
+    poses: [{ t: 0.05, pose: 'hablar_b' }, { t: 1.0, pose: 'explicar' }, { t: 2.2, pose: 'reposo' }],
     claves: [
       // Antebrazos muy acortados (apuntan hacia la cámara): las manos quedan delante de la tripa,
       // separadas. Movimiento a golpes: llega, se queda, otro golpe; cada mano a su ritmo.
@@ -190,6 +201,7 @@ export const GESTOS: Gesto[] = [
     descripcion: 'Levanta los dos brazos con un pequeño salto y cara de alegría.',
     lados: 'ninguno',
     duracion: 1.9,
+    poses: [{ t: 0.1, pose: 'celebrar' }, { t: 1.5, pose: 'reposo' }],
     claves: [
       ...both(0, 'brazo', { reposo: 0 }), ...both(0.12, 'brazo', { reposo: 6 }), ...both(0.35, 'brazo', { dir: -60 }), ...both(0.45, 'brazo', { dir: -55 }), ...both(1.35, 'brazo', { dir: -55 }), ...both(1.85, 'brazo', { reposo: 0 }),
       ...both(0, 'antebrazo', { reposo: 0 }), ...both(0.4, 'antebrazo', { dir: -85 }), ...both(0.5, 'antebrazo', { dir: -78 }), ...both(1.35, 'antebrazo', { dir: -78 }), ...both(1.9, 'antebrazo', { reposo: 0 }),
@@ -205,6 +217,7 @@ export const GESTOS: Gesto[] = [
     descripcion: 'Respingo: da un pequeño salto, abre los brazos y pone cara de asombro.',
     lados: 'ninguno',
     duracion: 1.3,
+    poses: [{ t: 0.03, pose: 'sorpresa' }, { t: 1.1, pose: 'reposo' }],
     claves: [
       k(0, 'cadera_y', { alto: 0 }), k(0.08, 'cadera_y', { alto: -0.04 }), k(0.3, 'cadera_y', { alto: 0 }),
       ...both(0, 'brazo', { reposo: 0 }), ...both(0.12, 'brazo', { reposo: -10 }), ...both(1.0, 'brazo', { reposo: -8 }), ...both(1.3, 'brazo', { reposo: 0 }),
@@ -220,6 +233,7 @@ export const GESTOS: Gesto[] = [
     descripcion: 'Acompaña lo que dice con una mano delante de la tripa que marca el ritmo, sin un gesto concreto. Para rellenar mientras habla.',
     lados: 'uno',
     duracion: 2.4,
+    poses: [{ t: 0.05, pose: 'hablar_a', izq: 'hablar_c' }, { t: 2.1, pose: 'reposo' }],
     claves: [
       // Una mano sube delante de la tripa (antebrazo hacia la cámara) y marca el ritmo a golpes;
       // la otra apenas se mueve.
@@ -239,6 +253,7 @@ export const GESTOS: Gesto[] = [
     descripcion: 'Lleva la mano delante del pecho con el pulgar hacia arriba y sonríe.',
     lados: 'uno',
     duracion: 2.0,
+    poses: [{ t: 0.1, pose: 'pulgar' }, { t: 1.7, pose: 'reposo' }],
     claves: [
       k(0, 'brazo', { reposo: 0 }), k(0.15, 'brazo', { reposo: 4 }), k(0.45, 'brazo', { dir: 78 }), k(1.5, 'brazo', { dir: 78 }), k(1.95, 'brazo', { reposo: 0 }),
       k(0, 'antebrazo', { reposo: 0 }), k(0.5, 'antebrazo', { dir: -160 }), k(0.6, 'antebrazo', { dir: -170 }), k(1.5, 'antebrazo', { dir: -170 }), k(2.0, 'antebrazo', { reposo: 0 }),
@@ -248,6 +263,36 @@ export const GESTOS: Gesto[] = [
     ],
   },
 ]
+
+GESTOS.push(
+  {
+    id: 'cruzar_brazos',
+    nombre: 'Brazos cruzados',
+    descripcion: 'Se cruza de brazos: escéptico, firme o esperando.',
+    lados: 'ninguno',
+    duracion: 2.4,
+    poses: [{ t: 0.1, pose: 'cruzado' }, { t: 2.3, pose: 'reposo' }],
+    claves: [k(0, 'cabeza', { giro: 0 }), k(0.5, 'cabeza', { giro: -3 }), k(2.0, 'cabeza', { giro: -3 }), k(2.4, 'cabeza', { giro: 0 })],
+  },
+  {
+    id: 'comenta_abajo',
+    nombre: 'Señalar abajo (comenta)',
+    descripcion: 'Señala hacia abajo con las dos manos, como invitando a comentar o a mirar la descripción.',
+    lados: 'ninguno',
+    duracion: 2.0,
+    poses: [{ t: 0.1, pose: 'senalar_abajo' }, { t: 1.9, pose: 'reposo' }],
+    claves: [k(0, 'mirada_y', 0), k(0.3, 'mirada_y', 0.5), k(1.6, 'mirada_y', 0.5), k(1.9, 'mirada_y', 0), k(0.2, 'boca', 'sonrisa'), k(1.9, 'boca', 'cerrada')],
+  },
+  {
+    id: 'manos_juntas',
+    nombre: 'Manos juntas',
+    descripcion: 'Junta las manos delante del cuerpo: escucha, reflexiona o habla con calma.',
+    lados: 'ninguno',
+    duracion: 2.2,
+    poses: [{ t: 0.1, pose: 'manos_juntas' }, { t: 2.1, pose: 'reposo' }],
+    claves: [],
+  },
+)
 
 export interface ClaveSalida {
   canal: string
@@ -298,6 +343,8 @@ export function expandGesture(
   character: Character,
   inst: CharacterInstance,
 ): { claves: ClaveSalida[]; canales: string[]; fin: number } {
+  const raiz = character.parts.find((p) => !p.parent && Object.keys(p.variants).length > 1)
+  if (raiz) return expandPoseGesture(gesto, lado, t0, velocidad, character, raiz.id)
   const { angles, armLength } = skeletonInfo(character, inst)
   const has = (id: string) => character.parts.some((p) => p.id === id)
   const sideOf = (c: string) => (c.endsWith('2') ? (lado === 'der' ? 'izq' : 'der') : lado)
@@ -383,6 +430,37 @@ export function expandGesture(
     const first = Math.min(...out.filter((c) => c.canal === canal).map((c) => c.t))
     const part = character.parts.find((p) => p.id === canal.split(':')[1])
     if (part && first > t0 + 1e-3) out.push({ canal, t: t0, valor: part.defaultVariant, transicion: 'salto' })
+  }
+  return { claves: out, canales: [...new Set(out.map((c) => c.canal))], fin: t0 + gesto.duracion / speed }
+}
+
+// ---------- Personajes por poses ----------
+
+/** Canales de cabeza y cara que se aplican tal cual a un personaje por poses. */
+const CARA = new Set(['cabeza', 'cabeza_y', 'mirada', 'mirada_y', 'boca', 'cejas'])
+
+function expandPoseGesture(gesto: Gesto, lado: Lado, t0: number, velocidad: number, character: Character, raiz: string) {
+  const speed = velocidad > 0 ? velocidad : 1
+  const root = character.parts.find((p) => p.id === raiz)!
+  const head = character.parts.find((p) => p.id === 'cabeza')
+  const out: ClaveSalida[] = []
+  for (const p of gesto.poses ?? []) {
+    const pose = lado === 'izq' && p.izq ? p.izq : p.pose
+    if (!root.variants[pose]) continue
+    out.push({ canal: `part:${raiz}:v`, t: t0 + p.t / speed, valor: pose, transicion: 'salto' })
+  }
+  // Movimientos de cabeza en píxeles de la cabeza (los gestos los dan en fracciones del brazo)
+  const unidad = head ? head.anchor.y * 0.6 : 240
+  const mirror = lado === 'der' ? 1 : -1
+  for (const g of gesto.claves) {
+    if (!CARA.has(g.c)) continue
+    const v = g.v
+    const t = t0 + g.t / speed
+    if (g.c === 'cabeza' && typeof v === 'object' && 'giro' in v) out.push({ canal: 'part:cabeza:rot', t, valor: String(v.giro * mirror), transicion: g.e ?? 'suave' })
+    else if (g.c === 'cabeza_y' && typeof v === 'object' && 'alto' in v) out.push({ canal: 'part:cabeza:y', t, valor: String(Math.round(v.alto * unidad)), transicion: g.e ?? 'suave' })
+    else if (g.c === 'mirada' && typeof v === 'object' && 'mirada' in v) out.push({ canal: 'face:gazeX', t, valor: String(v.mirada * mirror), transicion: g.e ?? 'suave' })
+    else if (g.c === 'mirada_y' && typeof v === 'number') out.push({ canal: 'face:gazeY', t, valor: String(v), transicion: g.e ?? 'suave' })
+    else if ((g.c === 'boca' || g.c === 'cejas') && typeof v === 'string') out.push({ canal: g.c === 'boca' ? 'face:mouth' : 'face:brows', t, valor: v, transicion: 'salto' })
   }
   return { claves: out, canales: [...new Set(out.map((c) => c.canal))], fin: t0 + gesto.duracion / speed }
 }

@@ -3,6 +3,7 @@ import { KEY_EPS, poseAt } from '../model/anim'
 import type { Tracks } from '../model/types'
 import { activeCharacter, useStore } from '../store'
 import { Copilot } from './Copilot'
+import { NOMBRES_POSES } from '../model/characters/chicoRosaPoses'
 import { applyCopilot } from '../copilot/context'
 import { GESTOS } from '../model/gestures'
 import { useState } from 'react'
@@ -18,6 +19,7 @@ function hasKeyAt(tracks: Tracks, channel: string, t: number) {
 }
 
 const VARIANT_NAMES: Record<string, string> = {
+  ...NOMBRES_POSES,
   natural: 'Natural',
   abierta: 'Abierta',
   palma_arriba: 'Palma arriba',

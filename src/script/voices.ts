@@ -4,7 +4,7 @@
 // sincroniza con ella.
 
 import { decodeAudio, loadAudio, saveAudio } from '../audio/storage'
-import type { Escena } from '../model/types'
+import type { Escena, Tracks } from '../model/types'
 import { activeCharacter, useStore } from '../store'
 import { animateScenes } from './scenes'
 
@@ -128,7 +128,7 @@ const TAIL = 0.6 // respiro al final del vídeo
  * Voz del guion: se lee entero de una vez con ElevenLabs, el audio se reparte entre las escenas según
  * cuándo empieza cada frase, las escenas duran lo que su frase y la boca sigue las letras.
  */
-export async function voiceScript(escenas: Escena[], texto: string, voz: Voz, pass: string, onProgress: (msg: string) => void, modelo: Modelo = 'eleven_v3') {
+export async function voiceScript(escenas: Escena[], texto: string, voz: Voz, pass: string, onProgress: (msg: string) => void, modelo: Modelo = 'eleven_multilingual_v2') {
   const conTexto = escenas.map((e, i) => ({ i, d: e.dialogo.trim() })).filter((x) => x.d)
   if (!conTexto.length) throw new Error('Ninguna escena tiene diálogo.')
   // Texto completo y dónde empieza cada frase dentro de él
@@ -184,7 +184,33 @@ export async function voiceScript(escenas: Escena[], texto: string, voz: Voz, pa
     return null
   }
   const mouths = Object.keys(ch.parts.find((p) => p.role === 'mouth')?.variants ?? {})
-  const tracks = { ...m.tracks, 'face:mouth': visemas(al, desplaza, st.project.fps, mouths) }
+  const tracks: Tracks = { ...m.tracks, 'face:mouth': visemas(al, desplaza, st.project.fps, mouths) }
+
+  // Personaje por poses: los cambios de pose sueltos caen al empezar una palabra, como al gesticular
+  const raiz = ch.parts.find((p) => !p.parent && Object.keys(p.variants).length > 1)
+  const canal = raiz ? `part:${raiz.id}:v` : ''
+  if (raiz && tracks[canal]?.length) {
+    const palabras: number[] = []
+    for (let i = 0; i < al.characters.length; i++) {
+      const c = al.characters[i]
+      const antes = i > 0 ? al.characters[i - 1] : ' '
+      if (/[\p{L}\p{N}]/u.test(c) && !/[\p{L}\p{N}]/u.test(antes)) {
+        const tv = desplaza(al.character_start_times_seconds[i])
+        if (tv !== null) palabras.push(tv)
+      }
+    }
+    const ks = [...tracks[canal]].sort((a, b) => a.t - b.t)
+    const fps = st.project.fps
+    for (let i = 0; i < ks.length; i++) {
+      const antes = i > 0 ? ks[i].t - ks[i - 1].t : Infinity
+      const despues = i + 1 < ks.length ? ks[i + 1].t - ks[i].t : Infinity
+      if (antes < 0.6 || despues < 0.6 || !palabras.length) continue // secuencias rápidas (saludar) no se tocan
+      const cerca = palabras.reduce((b, w) => (Math.abs(w - 0.06 - ks[i].t) < Math.abs(b - 0.06 - ks[i].t) ? w : b))
+      const nuevo = Math.round((cerca - 0.06) * fps) / fps
+      if (Math.abs(nuevo - ks[i].t) <= 0.35 && (i === 0 || nuevo - ks[i - 1].t > 0.3) && (i + 1 >= ks.length || ks[i + 1].t - nuevo > 0.3)) ks[i] = { ...ks[i], t: nuevo }
+    }
+    tracks[canal] = ks
+  }
 
   const [inst, ...rest] = st.project.instances
   st.commit({

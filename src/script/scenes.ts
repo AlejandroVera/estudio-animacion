@@ -86,9 +86,13 @@ function shot(plano: Plano, project: Project, character: Character) {
   const a = pl && character.assets[pl.assetId]
   const head = pl && a ? pl.matrix.transformPoint(new DOMPoint(a.w / 2 - pl.part.anchor.x, a.h / 2 - pl.part.anchor.y)) : { x: inst.x, y: inst.y - 600 }
   const zoom = plano === 'primer' ? 1.8 : 1.35
-  // La cabeza queda en el tercio superior del encuadre
+  // La cabeza queda en el tercio superior del encuadre, sin que la cámara salga del vídeo (si no,
+  // asomaría el color de fondo por arriba o por los lados)
   const y = head.y + (plano === 'primer' ? 0.12 : 0.22) * (project.height / zoom) - project.height / 2
-  return { zoom, x: head.x - project.width / 2, y }
+  const x = head.x - project.width / 2
+  const my = (project.height / 2) * (1 - 1 / zoom)
+  const mx = (project.width / 2) * (1 - 1 / zoom)
+  return { zoom, x: Math.max(-mx, Math.min(mx, x)), y: Math.max(-my, Math.min(my, y)) }
 }
 
 export interface Montaje {
@@ -106,6 +110,14 @@ export function animateScenes(escenas: Escena[], project: Project, character: Ch
   const result: CopilotResult = { mensaje: '', duracion: 0, borrar: [{ canal: '*', desde: 0, hasta: 9999 }], gestos: [], claves: [] }
   const has = (n: string) => GESTOS.some((g) => g.id === n)
   const expr = character.expressions
+  // Personaje por poses (la pieza raíz tiene varios dibujos)
+  const raiz = character.parts.find((p) => !p.parent && Object.keys(p.variants).length > 1)
+  let semilla = 7
+  const rnd = () => {
+    semilla = (semilla * 9301 + 49297) % 233280
+    return semilla / 233280
+  }
+  let ultimaPose = ''
   for (const e of con) {
     const dur = Math.max(1, e.duracion || estimateDuration(e.dialogo))
     const inicio = Math.round(t * fps) / fps
@@ -126,8 +138,28 @@ export function animateScenes(escenas: Escena[], project: Project, character: Ch
       const gd = (GESTOS.find((x) => x.id === g.nombre)?.duracion ?? 2) / (g.velocidad || 1)
       ocupado.push([t0, t0 + gd])
     }
-    // Mientras habla, nadie se queda quieto: los huecos sin gesto se rellenan con «hablar»
-    if (e.dialogo.trim()) {
+    // Mientras habla, nadie se queda quieto: los huecos sin gesto se rellenan.
+    if (e.dialogo.trim() && raiz) {
+      // Personaje por poses: va cambiando entre poses de conversación, con un leve giro de cabeza
+      const TALK = ['hablar_a', 'hablar_b', 'manos_juntas', 'hablar_c', 'explicar', 'reposo'].filter((p) => raiz.variants[p])
+      let cur = inicio + 0.25
+      let lado = placed.length % 2 ? 1 : -1
+      while (cur < inicio + dur - 0.7) {
+        const choca = ocupado.find(([a, b]) => cur < b && cur + 0.9 > a)
+        if (choca) {
+          cur = choca[1] + 0.05
+          continue
+        }
+        const sig = Math.min(inicio + dur, ocupado.filter(([a]) => a > cur).reduce((m, [a]) => Math.min(m, a), Infinity))
+        let pose = TALK[Math.floor(rnd() * TALK.length)]
+        if (pose === ultimaPose) pose = TALK[(TALK.indexOf(pose) + 1) % TALK.length]
+        ultimaPose = pose
+        result.claves.push({ canal: `part:${raiz.id}:v`, t: cur, valor: pose, transicion: 'salto' })
+        result.claves.push({ canal: 'part:cabeza:rot', t: cur + 0.08, valor: String(lado * (1.5 + rnd() * 2)), transicion: 'suave' })
+        lado = -lado
+        cur += Math.min(1.3 + rnd() * 1.2, Math.max(0.9, sig - cur))
+      }
+    } else if (e.dialogo.trim()) {
       const HD = GESTOS.find((x) => x.id === 'hablar')!.duracion
       let cur = inicio + 0.2
       let lado: 'der' | 'izq' = placed.length % 2 ? 'izq' : 'der'
@@ -154,6 +186,13 @@ export function animateScenes(escenas: Escena[], project: Project, character: Ch
   const r = applyCopilot(result, base, character)
   // La boca va al final para que los gestos no la pisen
   let tracks = { ...r.tracks }
+  if (raiz) {
+    // Por poses: si un gesto termina en reposo y enseguida empieza otra pose, se salta el reposo
+    // (si no, se ve un parpadeo de brazos bajando y subiendo)
+    const canal = `part:${raiz.id}:v`
+    const ks = [...(tracks[canal] ?? [])].sort((a, b) => a.t - b.t)
+    tracks[canal] = ks.filter((k, i) => !(k.v === raiz.defaultVariant && ks[i + 1] && ks[i + 1].t - k.t < 0.9))
+  }
   delete tracks['face:mouth']
   const mouth: { canal: string; t: number; valor: string; transicion: 'salto' }[] = []
   for (const e of placed) {

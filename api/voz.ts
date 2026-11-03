@@ -46,7 +46,7 @@ export async function POST(request: Request): Promise<Response> {
   const voz = (body.voz ?? '').trim()
   if (!texto || texto.length > 4500) return json({ error: 'Texto vacío o demasiado largo (máx. 4500 letras).' }, 400)
   if (!/^[A-Za-z0-9]{10,40}$/.test(voz)) return json({ error: 'Elige una voz.' }, 400)
-  const modelo = ['eleven_v3', 'eleven_multilingual_v2'].includes(body.modelo ?? '') ? body.modelo! : 'eleven_v3'
+  const modelo = ['eleven_v3', 'eleven_multilingual_v2'].includes(body.modelo ?? '') ? body.modelo! : 'eleven_multilingual_v2'
   // Sin voice_settings: se usan los ajustes guardados de la voz en la cuenta del usuario.
   const ruta = body.tiempos ? 'with-timestamps' : ''
   const res = await fetch(`${API}/text-to-speech/${voz}${ruta ? '/' + ruta : ''}?output_format=mp3_44100_128`, {
