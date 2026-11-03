@@ -44,5 +44,32 @@
   "senalar_der",
   "senalar_izq",
   "sorpresa"
+ ],
+ "entre": [
+  "hablar_a__explicar",
+  "hablar_a__hablar_b",
+  "hablar_a__hablar_c",
+  "hablar_a__manos_juntas",
+  "hablar_b__explicar",
+  "hablar_b__hablar_c",
+  "hablar_b__manos_juntas",
+  "hablar_c__explicar",
+  "hablar_c__manos_juntas",
+  "manos_juntas__explicar",
+  "reposo__celebrar",
+  "reposo__cruzado",
+  "reposo__encogerse",
+  "reposo__explicar",
+  "reposo__hablar_a",
+  "reposo__hablar_b",
+  "reposo__hablar_c",
+  "reposo__jarras",
+  "reposo__manos_juntas",
+  "reposo__pulgar",
+  "reposo__saludar_a",
+  "reposo__senalar_abajo",
+  "reposo__senalar_der",
+  "reposo__senalar_izq",
+  "reposo__sorpresa"
  ]
 }

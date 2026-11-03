@@ -64,8 +64,14 @@ NUNCA vídeo generativo: Alejandro lo rechaza; solo imágenes fijas hechas con I
   pieza `cabeza`), crea la cabeza común sin cara (inpaint) y escribe `chicoRosaPoses.manifest.json`
   (lienzo común, caja y cuello de la cabeza, pies). Imágenes WebP en `public/personajes/chico-rosa/poses/`.
   Para otro personaje: misma receta (es la base de la fase 4).
-- `Part.fade` (0,1 s): al cambiar de pose se funde con la anterior y da un pequeño rebote
-  (`poseAt` calcula `fades`, `drawCharacter` lo dibuja). La respiración escala desde los pies.
+- Dibujos INTERMEDIOS (sin ellos los brazos «saltan» y Alejandro lo ve poco fluido): variantes
+  `entre:A__B` de `cuerpo` (`public/personajes/chico-rosa/poses/entre/`, lista en el manifest), hechas
+  con Nano Banana dando las dos poses («edita la primera, brazos a mitad de camino hacia la segunda»,
+  2 versiones y se elige la mejor). Hay para cada pareja de poses de conversación y de reposo a cada
+  gesto; si no hay directo se usa el de reposo↔pose (`intermedio` en `anim.ts`). `transicion`: 0,1 s
+  antes de la clave se ve el intermedio y luego la pose nueva, con fundidos de `Part.fade` (0,07 s) y
+  un rebote pequeño. No salen en los selectores (filtro `ENTRE`). La respiración escala desde los pies y
+  el cuerpo se balancea muy poco (`withLife`), para que nunca quede congelado.
 - Gestos: cada gesto tiene además `poses` (secuencia de poses en el tiempo); `expandGesture` usa
   `expandPoseGesture` cuando la raíz tiene varios dibujos (claves de pose + cabeza y cara).
 - `animateScenes`: mientras habla rellena con poses de conversación (hablar_a/b/c, manos_juntas,

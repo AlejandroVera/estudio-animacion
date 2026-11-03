@@ -1,7 +1,7 @@
 // Prepara lo que el copiloto necesita saber del personaje y de la animación actual,
 // y aplica su respuesta como claves de animación.
 
-import { KEY_EPS, poseAt, removeKey, setKey } from '../model/anim'
+import { ENTRE, KEY_EPS, poseAt, removeKey, setKey } from '../model/anim'
 import { expandGesture, GESTOS } from '../model/gestures'
 import { layout } from '../model/render'
 import type { Character, Ease, Project, Tracks } from '../model/types'
@@ -65,7 +65,7 @@ export function buildContext(project: Project, character: Character, time: numbe
           nombre: p.name,
           cuelga_de: p.parent,
           angulo_reposo: angles[p.id],
-          ...(Object.keys(p.variants).length > 1 ? { dibujos: Object.keys(p.variants) } : {}),
+          ...(Object.keys(p.variants).length > 1 ? { dibujos: Object.keys(p.variants).filter((v) => !v.startsWith(ENTRE)) } : {}),
         })),
       nota_lados: '"izq" y "der" se refieren al lado de la PANTALLA, no al del personaje.',
       bocas: variantsOf('mouth'),

@@ -137,7 +137,7 @@ export function drawCharacter(
   if (!restPose && pose.fades) {
     for (const [id, f] of Object.entries(pose.fades)) {
       const pp = pose.parts[id]
-      if (pp) pose.parts[id] = { ...pp, scale: pp.scale * (1 - 0.012 * Math.sin(Math.PI * Math.min(1, f.u))) }
+      if (pp) pose.parts[id] = { ...pp, scale: pp.scale * (1 - 0.006 * Math.sin(Math.PI * Math.min(1, f.u))) }
     }
   }
   const placed = layout(character, inst, pose, restPose)

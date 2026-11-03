@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { KEY_EPS, poseAt } from '../model/anim'
+import { ENTRE, KEY_EPS, poseAt } from '../model/anim'
 import type { Tracks } from '../model/types'
 import { activeCharacter, useStore } from '../store'
 import { Copilot } from './Copilot'
@@ -136,7 +136,7 @@ export function Controls() {
                   <KeyDot on={hasKeyAt(inst.tracks, `part:${part.id}:v`, time)} /> Dibujo
                 </div>
                 <div className="chips">
-                  {Object.keys(part.variants).map((v) => (
+                  {Object.keys(part.variants).filter((v) => !v.startsWith(ENTRE)).map((v) => (
                     <button
                       key={v}
                       className={'chip' + ((pose.variants[part.id] ?? part.defaultVariant) === v ? ' active' : '')}

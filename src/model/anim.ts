@@ -41,6 +41,47 @@ export function evalTrack(keys: Keyframe[] | undefined, t: number, fallback: num
 const num = (v: number | string) => (typeof v === 'number' ? v : Number(v) || 0)
 const str = (v: number | string) => String(v)
 
+/** Dibujos intermedios: variantes «entre:A__B» de una pieza por poses. */
+export const ENTRE = 'entre:'
+/** Tiempo que se ve el dibujo intermedio antes de llegar a la pose nueva (s). */
+const T_ENTRE = 0.1
+
+/** Dibujo intermedio para ir de la pose a a la b (o el de reposo↔b / a↔reposo si no hay uno directo). */
+export function intermedio(p: Character['parts'][number], a: string, b: string): string | null {
+  const v = p.variants
+  for (const k of [`${a}__${b}`, `${b}__${a}`]) if (v[ENTRE + k]) return ENTRE + k
+  const r = p.defaultVariant
+  if (a !== r && b !== r) {
+    // Hacia un gesto: el intermedio desde reposo; volviendo de un gesto: el intermedio hacia reposo
+    for (const k of [`${r}__${b}`, `${r}__${a}`]) if (v[ENTRE + k]) return ENTRE + k
+  }
+  return null
+}
+
+/**
+ * Cambio de pose fluido: un poco antes de cada clave se muestra el dibujo intermedio (fundiéndose
+ * desde la pose anterior) y al llegar a la clave se funde del intermedio a la pose nueva.
+ */
+function transicion(p: Character['parts'][number], vk: Keyframe[], t: number): { v: string; prev?: string; u: number } | null {
+  const fade = p.fade ?? 0.07
+  let k = -1
+  for (let i = 0; i < vk.length; i++) if (vk[i].t <= t) k = i
+  const actual = k >= 0 ? str(vk[k].v) : p.defaultVariant
+  const sig = vk[k + 1]
+  if (sig && str(sig.v) !== actual && sig.t - t < T_ENTRE) {
+    const mid = intermedio(p, actual, str(sig.v))
+    if (mid) {
+      const u = (t - (sig.t - T_ENTRE)) / fade
+      return u < 1 ? { v: mid, prev: actual, u } : { v: mid, u: 1 }
+    }
+  }
+  if (k < 0) return null
+  const antes = k > 0 ? str(vk[k - 1].v) : vk[0].t > 0 ? p.defaultVariant : null
+  if (antes === null || antes === actual || t - vk[k].t >= fade) return null
+  const desde = vk[k].t - (k > 0 ? vk[k - 1].t : 0) > T_ENTRE ? intermedio(p, antes, actual) ?? antes : antes
+  return { v: actual, prev: desde, u: (t - vk[k].t) / fade }
+}
+
 export function poseAt(character: Character, tracks: Tracks, t: number): Pose {
   const parts: Pose['parts'] = {}
   const variants: Pose['variants'] = {}
@@ -50,11 +91,11 @@ export function poseAt(character: Character, tracks: Tracks, t: number): Pose {
     if (vk?.length && !p.role) {
       variants[p.id] = str(evalTrack(vk, t, p.defaultVariant))
       if (p.fade) {
-        // Último cambio de dibujo antes de t: si fue hace menos de `fade`, se funde con el anterior
-        let k = -1
-        for (let i = 0; i < vk.length; i++) if (vk[i].t <= t) k = i
-        const prev = k > 0 ? str(vk[k - 1].v) : k === 0 && vk[0].t > 0 ? p.defaultVariant : null
-        if (k >= 0 && prev !== null && prev !== str(vk[k].v) && t - vk[k].t < p.fade) fades[p.id] = { prev, u: (t - vk[k].t) / p.fade }
+        const tr = transicion(p, vk, t)
+        if (tr) {
+          variants[p.id] = tr.v
+          if (tr.prev) fades[p.id] = { prev: tr.prev, u: tr.u }
+        }
       }
     }
     const k = `part:${p.id}:`

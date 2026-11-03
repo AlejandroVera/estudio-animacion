@@ -41,7 +41,9 @@ export function withLife(pose: Pose, t: number, tracks: Tracks, armLength: numbe
   add('cadera', { y: breath * armLength * 0.006 })
   if (!parts.cadera && raiz && parts[raiz]) {
     // Por poses: respira escalando un poco desde los pies (los pies no se mueven)
-    parts[raiz] = { ...parts[raiz], scale: parts[raiz].scale * (1 + 0.0035 * breath) }
+    // y se balancea muy poco sobre los pies, para que nunca quede congelado entre pose y pose
+    const sway = Math.sin((TAU * t) / 4.7 + 0.8) * 0.35 + Math.sin((TAU * t) / 2.3) * 0.12
+    parts[raiz] = { ...parts[raiz], scale: parts[raiz].scale * (1 + 0.0035 * breath), rot: parts[raiz].rot + sway }
   }
   add('torso', { rot: Math.sin((TAU * t) / 3.6 + 0.6) * 0.5 })
   add('cabeza', { rot: Math.sin((TAU * t) / 5.3 + 1.3) * 0.9, y: -breath * armLength * 0.004 })

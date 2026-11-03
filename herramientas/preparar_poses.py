@@ -5,7 +5,9 @@
 #  - crea la cabeza común a partir de la pose de reposo, con ojos, cejas y boca borrados,
 #  - recorta todas las poses al mismo lienzo y las guarda en WebP,
 #  - escribe manifest.json con el lienzo, la cabeza y la lista de poses.
-# Uso: python preparar_poses.py <carpeta con poses recortadas *.png> <carpeta salida> <medidas.json>
+#  - opcional: prepara los dibujos INTERMEDIOS (entre dos poses, «A__B.png») con el mismo lienzo y los
+#    guarda en <salida>/entre/ (los usa el fundido entre poses para que el movimiento sea fluido).
+# Uso: python preparar_poses.py <poses recortadas *.png> <carpeta salida> <medidas.json> [<intermedios recortados>]
 import json, os, sys
 import numpy as np, cv2
 from PIL import Image
@@ -62,6 +64,16 @@ for nombre, (rgb, alpha) in poses.items():
     al[cabeza] = 0  # la cabeza la dibuja la cabeza común
     img = np.dstack([rgb, (al * 255).astype(np.uint8)])[y0:y1, x0:x1]
     Image.fromarray(img, 'RGBA').save(os.path.join(dst, f'{nombre}.webp'), quality=90, method=6)
+
+# Dibujos intermedios: mismo tratamiento y mismo lienzo
+if len(sys.argv) > 4:
+    os.makedirs(os.path.join(dst, 'entre'), exist_ok=True)
+    for f in sorted(os.listdir(sys.argv[4])):
+        if f.endswith('.png'):
+            rgb_i, alpha_i = limpia(np.array(Image.open(os.path.join(sys.argv[4], f)).convert('RGBA')))
+            alpha_i[cabeza] = 0
+            img = np.dstack([rgb_i, (alpha_i * 255).astype(np.uint8)])[y0:y1, x0:x1]
+            Image.fromarray(img, 'RGBA').save(os.path.join(dst, 'entre', f[:-4] + '.webp'), quality=90, method=6)
 
 # Cabeza común (de la pose de reposo) con la cara limpia
 rgb, alpha = poses['reposo']

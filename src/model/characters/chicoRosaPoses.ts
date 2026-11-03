@@ -1,7 +1,7 @@
 // Chico rosa «por poses»: en lugar de piezas que giran, el cuerpo es un dibujo completo por cada
 // postura (todas generadas con IA editando el mismo dibujo base, así encajan al píxel) y la cabeza
 // es común a todas, con ojos, párpados, cejas y boca animables encima. Al cambiar de pose el dibujo
-// se funde en ~0,15 s y el cuerpo hace un pequeño rebote.
+// pasa por un dibujo intermedio (si lo hay para esa pareja), se funde y hace un pequeño rebote.
 // Preparado con herramientas/preparar_poses.py. Coordenadas = píxeles del dibujo base (1536×2752).
 
 import { buildParts, type PartDef } from '../build'
@@ -17,6 +17,7 @@ const TEETH = '#F3EDE4'
 const S = (w = 5.5) => `stroke="${INK}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"`
 const line = (d: string, w = 5.5) => `<path d="${d}" fill="none" ${S(w)}/>`
 const RUTA = '/personajes/chico-rosa/poses'
+const ENTRE = 'entre:'
 
 /** Nombre que se ve en la herramienta para cada pose. */
 export const NOMBRES_POSES: Record<string, string> = {
@@ -95,9 +96,13 @@ export function chicoRosaPosesCharacter(): Character {
       box: { x: lx, y: ly, w: lw, h: lh },
       pivot: { x: manifest.pies[0], y: manifest.pies[1] },
       image: true,
-      fade: 0.1,
+      fade: 0.07,
       defaultVariant: 'reposo',
-      variants: Object.fromEntries(poses.map((p) => [p, `${RUTA}/${p}.webp`])),
+      variants: Object.fromEntries([
+        ...poses.map((p) => [p, `${RUTA}/${p}.webp`]),
+        // Dibujos intermedios entre dos poses (los usa la transición, no se eligen a mano)
+        ...manifest.entre.map((p) => [ENTRE + p, `${RUTA}/entre/${p}.webp`]),
+      ]),
     },
     {
       id: 'cabeza',
