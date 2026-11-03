@@ -5,6 +5,7 @@ import type { Escena, Plano } from '../model/types'
 import { animateScenes, estimateDuration, scenesFromText } from '../script/scenes'
 import { activeCharacter, useStore } from '../store'
 import { ScriptStyles } from './ScriptStyles'
+import { listVoices, voiceScript, type Voz } from '../script/voices'
 
 const PASS_KEY = 'estudio-animacion:clave'
 const readPass = () => {
@@ -57,6 +58,48 @@ export function ScriptPanel({ onClose }: { onClose: () => void }) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [montado])
+  // Voz de ElevenLabs
+  const VOZ_KEY = 'estudio-animacion:voz'
+  const [voces, setVoces] = useState<Voz[] | null>(null)
+  const [voz, setVoz] = useState<Voz | null>(() => {
+    try {
+      return project.guion?.voz ?? JSON.parse(localStorage.getItem(VOZ_KEY) ?? 'null')
+    } catch {
+      return null
+    }
+  })
+  const [vozManual, setVozManual] = useState('')
+  const elegirVoz = (v: Voz | null) => {
+    setVoz(v)
+    try {
+      localStorage.setItem(VOZ_KEY, JSON.stringify(v))
+    } catch {
+      // sin almacenamiento
+    }
+  }
+  const cargarVoces = async () => {
+    try {
+      setVoces(await listVoices(pass))
+    } catch (e) {
+      setVoces([])
+      setMsg({ ok: false, text: e instanceof Error ? e.message : String(e) })
+    }
+  }
+  const conVoz = async () => {
+    if (!voz || busy || !escenas.length) return
+    const hay = Object.keys(useStore.getState().project.instances[0].tracks).length > 0
+    if (hay && !confirm('Esto sustituye la animación actual por la de las escenas, con voz. Se puede deshacer con Ctrl+Z. ¿Seguir?')) return
+    setBusy(true)
+    try {
+      const r = await voiceScript(escenas, texto, voz, pass, (t) => setMsg({ ok: true, text: t }))
+      setEscenas(r.escenas)
+      setMsg({ ok: true, text: `Listo: ${r.duracion.toFixed(1).replace('.', ',')} s con la voz de ${voz.nombre}. Las voces quedan guardadas: si cambias solo gestos o planos no se vuelven a pagar.` })
+    } catch (e) {
+      setMsg({ ok: false, text: e instanceof Error ? e.message : String(e) })
+    } finally {
+      setBusy(false)
+    }
+  }
   const ch = activeCharacter(project)
   const expresiones = Object.keys(ch.expressions)
 
@@ -207,8 +250,41 @@ export function ScriptPanel({ onClose }: { onClose: () => void }) {
               </div>
             ))}
           </div>
+          <div className="voice-pick">
+            <div className="sublabel">Voz (ElevenLabs)</div>
+            {voces === null ? (
+              <button className="btn small" onClick={cargarVoces}>
+                {voz ? `Voz: ${voz.nombre} · cambiar` : 'Elegir voz…'}
+              </button>
+            ) : (
+              <select
+                value={voz?.id ?? ''}
+                onChange={(ev) => elegirVoz(voces.find((v) => v.id === ev.target.value) ?? null)}
+              >
+                <option value="">— Elige una voz —</option>
+                {voz && !voces.some((v) => v.id === voz.id) && <option value={voz.id}>{voz.nombre}</option>}
+                {voces.map((v) => (
+                  <option key={v.id} value={v.id}>
+                    {v.nombre}
+                    {v.tipo === 'cloned' ? ' (clonada)' : v.tipo === 'generated' ? ' (diseñada)' : ''}
+                  </option>
+                ))}
+              </select>
+            )}
+            {voces !== null && voces.length === 0 && (
+              <div className="voice-row">
+                <input className="copilot-pass" placeholder="O pega el ID de una voz" value={vozManual} onChange={(e) => setVozManual(e.target.value.trim())} />
+                <button className="btn small" disabled={vozManual.length < 10} onClick={() => elegirVoz({ id: vozManual, nombre: 'Voz ' + vozManual.slice(0, 6) })}>
+                  Usar
+                </button>
+              </div>
+            )}
+            <button className="btn primary full" disabled={!voz || busy} onClick={conVoz}>
+              {busy ? 'Trabajando…' : '🎙 Generar voces y animar'}
+            </button>
+          </div>
           <button
-            className="btn primary full"
+            className="btn full"
             onClick={() => {
               const hay = Object.keys(useStore.getState().project.instances[0].tracks).length > 0
               if (hay && !confirm('Esto sustituye la animación actual por la de las escenas. Se puede deshacer con Ctrl+Z. ¿Seguir?')) return
@@ -216,7 +292,7 @@ export function ScriptPanel({ onClose }: { onClose: () => void }) {
               setMsg({ ok: true, text: 'Animación creada. Se está reproduciendo; retócala con los controles o el copiloto.' })
             }}
           >
-            ▶ Animar escenas
+            ▶ Animar escenas (sin voz)
           </button>
         </>
       )}

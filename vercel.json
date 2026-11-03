@@ -1,6 +1,7 @@
 {
   "functions": {
     "api/copiloto.ts": { "maxDuration": 120 },
-    "api/guion.ts": { "maxDuration": 120 }
+    "api/guion.ts": { "maxDuration": 120 },
+    "api/voz.ts": { "maxDuration": 60 }
   }
 }

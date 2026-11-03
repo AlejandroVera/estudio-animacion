@@ -123,7 +123,7 @@ export interface Project {
   /** Vida automática (respiración, balanceo, parpadeos). Si falta, está activada. */
   vida?: boolean
   /** Guion del vídeo dividido en escenas (se animan una detrás de otra). */
-  guion?: { texto: string; escenas: Escena[] }
+  guion?: { texto: string; escenas: Escena[]; voz?: { id: string; nombre: string } }
   /** Capas de imagen (fondos o elementos delante del personaje); sus imágenes se guardan aparte. */
   fondos?: BgLayer[]
   /** Audio (voz) del vídeo; el archivo se guarda aparte, en el navegador (IndexedDB). */

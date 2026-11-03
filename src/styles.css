@@ -795,3 +795,20 @@ select {
 .styles-body .btn.small {
   margin-top: 0;
 }
+
+.voice-pick {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px;
+  margin-bottom: 8px;
+}
+.voice-pick select {
+  width: 100%;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 6px;
+}
+.voice-pick .sublabel {
+  margin-top: 0;
+}

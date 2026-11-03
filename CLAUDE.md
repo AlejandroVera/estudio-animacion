@@ -99,7 +99,10 @@ en lenguaje llano y pídele que pruebe en la web publicada.
 3. ✅ Voz: se sube un audio (panel «Voz», guardado en IndexedDB por `src/audio/storage.ts`), suena al
    reproducir, se ve su onda en la línea de tiempo, «Mover la boca con la voz» crea las claves de
    boca por energía y brillo del sonido (`src/audio/lipsync.ts`) y el MP4 sale con audio (AAC u Opus).
-   Pendiente: generar la voz con ElevenLabs desde la herramienta (necesita su clave).
+   ✅ Voz con ElevenLabs (`api/voz.ts`, variable `ELEVENLABS_API_KEY`, gasta la suscripción del
+   usuario): en el panel Guion se elige voz y «Generar voces y animar» (`src/script/voices.ts`)
+   genera una voz por escena (guardada en IndexedDB por voz+texto, no se paga dos veces), ajusta la
+   duración de cada escena a su frase, une los audios en una pista WAV y sincroniza la boca con ella.
 4. Asistente «Crear personaje»: diseño, vistas, despiece, bocas/ojos con IA (fal.ai).
 5. Escenas: ✅ capas de imagen (`project.fondos`, imagen en IndexedDB, detrás o delante del personaje,
    canales `bg:<id>:x|y|scale|rot|opacity`) y ✅ cámara (`cam:x|y|zoom`, `cameraMatrix` en
