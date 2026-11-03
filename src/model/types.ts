@@ -62,6 +62,19 @@ export interface Character {
   assets: Record<string, Asset>
   /** Giro de reposo natural de cada pieza (grados); las pistas de giro se suman a él. */
   idle?: Record<string, number>
+  /**
+   * Personaje EXPRESIVO (estilo «Estoy Tiesa»): la pieza raíz tiene un dibujo completo por postura,
+   * con la cara y la emoción incluidas, y cada uno su versión «<pose>~b» con la boca al revés
+   * (abierta/cerrada) para hablar. `abiertas`: posturas cuyo dibujo ya tiene la boca abierta.
+   * `cabeza`: centro de la cabeza en el dibujo (para los planos de cámara). `gestos`: postura para
+   * cada gesto de la biblioteca. `emociones`: posturas que encajan con cada expresión de escena.
+   */
+  expresivo?: {
+    abiertas: string[]
+    cabeza: { x: number; y: number }
+    gestos: Record<string, string>
+    emociones: Record<string, string[]>
+  }
   /** Expresiones predefinidas: valores de los canales de cara. */
   expressions: Record<string, { brows: string; mouth: string }>
 }

@@ -3,6 +3,7 @@
 import { chicoRosaCharacter } from './characters/chicoRosa'
 import { withIdle } from './idle'
 import { chicoRosaPosesCharacter } from './characters/chicoRosaPoses'
+import { chicoRosaExpresivoCharacter } from './characters/chicoRosaExpresivo'
 import { sampleCharacter } from './sample'
 import type { Character, Project } from './types'
 
@@ -16,7 +17,14 @@ export interface LibraryEntry {
 }
 
 export const LIBRARY: LibraryEntry[] = [
-  { id: 'chico-rosa', name: 'Chico rosa', make: chicoRosaPosesCharacter, place: { x: 540, y: 1700, scale: 0.62 }, background: '#CE544E' },
+  { id: 'chico-rosa', name: 'Chico rosa', make: chicoRosaExpresivoCharacter, place: { x: 540, y: 1700, scale: 0.62 }, background: '#CE544E' },
+  {
+    id: 'chico-rosa-poses',
+    name: 'Chico rosa (poses, anterior)',
+    make: () => ({ ...chicoRosaPosesCharacter(), id: 'chico-rosa-poses', name: 'Chico rosa (poses, anterior)' }),
+    place: { x: 540, y: 1700, scale: 0.62 },
+    background: '#CE544E',
+  },
   {
     id: 'chico-rosa-piezas',
     name: 'Chico rosa (piezas, antiguo)',
@@ -48,9 +56,13 @@ export function refreshCharacters(p: Project): Project {
     // las pistas de piezas que ya no existen.
     const raizVieja = viejo?.parts?.find((x) => !x.parent)?.id
     const raizNueva = nuevo.parts.find((x) => !x.parent)?.id
-    if (newId || (raizVieja && raizVieja !== raizNueva)) {
+    const cambiaTipo = !!viejo?.expresivo !== !!nuevo.expresivo
+    if (newId || (raizVieja && raizVieja !== raizNueva) || cambiaTipo) {
       const ids = new Set(nuevo.parts.map((x) => x.id))
-      const tracks = Object.fromEntries(Object.entries(inst.tracks).filter(([c]) => !c.startsWith('part:') || ids.has(c.split(':')[1])))
+      // Las posturas de otro tipo de personaje no sirven: se quitan sus claves de dibujo
+      const tracks = Object.fromEntries(
+        Object.entries(inst.tracks).filter(([c]) => !c.startsWith('part:') || (ids.has(c.split(':')[1]) && !(cambiaTipo && c.endsWith(':v')))),
+      )
       return { ...inst, characterId: entry.id, ...entry.place, tracks }
     }
     return inst

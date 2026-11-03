@@ -4,6 +4,7 @@ import type { Tracks } from '../model/types'
 import { activeCharacter, useStore } from '../store'
 import { Copilot } from './Copilot'
 import { NOMBRES_POSES } from '../model/characters/chicoRosaPoses'
+import { NOMBRES_EXPRESIVO } from '../model/characters/chicoRosaExpresivo'
 import { applyCopilot } from '../copilot/context'
 import { GESTOS } from '../model/gestures'
 import { useState } from 'react'
@@ -20,6 +21,7 @@ function hasKeyAt(tracks: Tracks, channel: string, t: number) {
 
 const VARIANT_NAMES: Record<string, string> = {
   ...NOMBRES_POSES,
+  ...NOMBRES_EXPRESIVO,
   natural: 'Natural',
   abierta: 'Abierta',
   palma_arriba: 'Palma arriba',
@@ -136,10 +138,10 @@ export function Controls() {
                   <KeyDot on={hasKeyAt(inst.tracks, `part:${part.id}:v`, time)} /> Dibujo
                 </div>
                 <div className="chips">
-                  {Object.keys(part.variants).filter((v) => !v.startsWith(ENTRE)).map((v) => (
+                  {Object.keys(part.variants).filter((v) => !v.startsWith(ENTRE) && !v.includes('~')).map((v) => (
                     <button
                       key={v}
-                      className={'chip' + ((pose.variants[part.id] ?? part.defaultVariant) === v ? ' active' : '')}
+                      className={'chip' + ((pose.variants[part.id] ?? part.defaultVariant).split('~')[0] === v ? ' active' : '')}
                       onClick={() => key(`part:${part.id}:v`, v)}
                     >
                       {VARIANT_NAMES[v] ?? v}

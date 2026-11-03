@@ -65,7 +65,7 @@ export function buildContext(project: Project, character: Character, time: numbe
           nombre: p.name,
           cuelga_de: p.parent,
           angulo_reposo: angles[p.id],
-          ...(Object.keys(p.variants).length > 1 ? { dibujos: Object.keys(p.variants).filter((v) => !v.startsWith(ENTRE)) } : {}),
+          ...(Object.keys(p.variants).length > 1 ? { dibujos: Object.keys(p.variants).filter((v) => !v.startsWith(ENTRE) && !v.includes('~')) } : {}),
         })),
       nota_lados: '"izq" y "der" se refieren al lado de la PANTALLA, no al del personaje.',
       bocas: variantsOf('mouth'),

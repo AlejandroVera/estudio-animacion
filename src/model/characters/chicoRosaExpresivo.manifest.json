@@ -1,0 +1,58 @@
+{
+ "lienzo": [
+  64,
+  248,
+  1426,
+  2361
+ ],
+ "pies": [
+  780.5,
+  2601
+ ],
+ "cabeza": [
+  771.7,
+  473.8,
+  213.9
+ ],
+ "poses": [
+  "celebrar",
+  "corazon",
+  "cruzado",
+  "encogerse",
+  "enfado",
+  "guino",
+  "hablar",
+  "indice",
+  "llorar",
+  "mejillas",
+  "pensar",
+  "presentar",
+  "reposo",
+  "saludar",
+  "senalar",
+  "stop",
+  "tapar",
+  "tres",
+  "victoria"
+ ],
+ "bocas": [
+  "celebrar",
+  "corazon",
+  "cruzado",
+  "encogerse",
+  "enfado",
+  "guino",
+  "hablar",
+  "indice",
+  "llorar",
+  "mejillas",
+  "pensar",
+  "presentar",
+  "reposo",
+  "saludar",
+  "senalar",
+  "stop",
+  "tres",
+  "victoria"
+ ]
+}

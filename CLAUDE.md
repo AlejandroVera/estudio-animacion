@@ -51,7 +51,24 @@ en lenguaje llano y pídele que pruebe en la web publicada.
 - `public/personajes/rosa/` son las piezas de la primera versión; solo se conservan para que los
   proyectos guardados antiguos sigan viéndose.
 
-## Personajes por poses (el método bueno)
+## Personaje EXPRESIVO (el método actual, estilo «Estoy Tiesa»)
+Referencia de Alejandro: vídeos de YouTube del canal «Estoy Tiesa». Análisis: el personaje cambia de
+POSTURA COMPLETA CON SU CARA (susto, enfado, ojos de corazón, lágrimas, guiño…) de golpe, sin fundidos,
+cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y solo se mueve la boca
+(2-3 formas). Nada de cabeza separada, balanceos, respiración ni deformaciones.
+- «Chico rosa» (id `chico-rosa`) = `src/model/characters/chicoRosaExpresivo.ts`: raíz `cuerpo` con 19
+  posturas (`public/personajes/chico-rosa/expresivo/`) y, para hablar, `<pose>~b` con la boca al revés.
+  `Character.expresivo`: `abiertas` (posturas con la boca ya abierta), `cabeza` (para los planos),
+  `gestos` (gesto de la biblioteca → postura) y `emociones` (expresión de escena → posturas).
+- Se hacen con Magnific Nano Banana 2.1 editando el dibujo base («misma figura y sitio, cambia postura Y
+  expresión: …»), 2 versiones y se elige; luego otra edición por postura solo de la boca.
+  `herramientas/preparar_expresivo.py` recorta, alinea y de la versión «~b» toma SOLO la boca.
+- `poseAt`: si la boca (canal `face:mouth`) está abierta y la postura no, usa `~b` (y al revés).
+- `animateScenes`: postura por trozo de frase (≥4 palabras, ≤8): «?» → encogerse/pensar, números →
+  tres/índice, «coment/suscr» → señalar, «hola» → saludar, «!» → susto/para; si no, de la lista de la
+  emoción de la escena. Los gestos del guion son una postura y ocupan solo 1,2 s.
+
+## Personajes por poses (método anterior, «Chico rosa (poses, anterior)»)
 La marioneta por piezas giradas quedaba robótica y Alejandro la descartó. Ahora el cuerpo entero es
 UNA pieza raíz `cuerpo` con muchos dibujos completos (poses: reposo, hablar_a/b/c, explicar,
 manos_juntas, encogerse, senalar_der/izq/abajo, jarras, cruzado, saludar_a/b, pulgar, celebrar,

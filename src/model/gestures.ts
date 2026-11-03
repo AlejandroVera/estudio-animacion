@@ -444,6 +444,12 @@ function expandPoseGesture(gesto: Gesto, lado: Lado, t0: number, velocidad: numb
   const root = character.parts.find((p) => p.id === raiz)!
   const head = character.parts.find((p) => p.id === 'cabeza')
   const out: ClaveSalida[] = []
+  if (character.expresivo) {
+    // Expresivo: el gesto es UNA postura con su cara, de golpe, que se mantiene
+    const pose = character.expresivo.gestos[gesto.id]
+    if (pose && root.variants[pose]) out.push({ canal: `part:${raiz}:v`, t: t0, valor: pose, transicion: 'salto' })
+    return { claves: out, canales: [...new Set(out.map((c) => c.canal))], fin: t0 + Math.min(2.2, gesto.duracion / speed) }
+  }
   for (const p of gesto.poses ?? []) {
     const pose = lado === 'izq' && p.izq ? p.izq : p.pose
     if (!root.variants[pose]) continue

@@ -184,7 +184,7 @@ export async function voiceScript(escenas: Escena[], texto: string, voz: Voz, pa
     for (const [i, [a, b]] of tramoAudio) if (t >= a - 1e-3 && t < b) return t + sitio.get(i)!
     return null
   }
-  const mouths = Object.keys(ch.parts.find((p) => p.role === 'mouth')?.variants ?? {})
+  const mouths = ch.expresivo ? ['cerrada', 'abierta', 'O', 'MBP'] : Object.keys(ch.parts.find((p) => p.role === 'mouth')?.variants ?? {})
   const tracks: Tracks = { ...m.tracks, 'face:mouth': visemas(al, desplaza, st.project.fps, mouths) }
 
   // Personaje por poses: los cambios de pose sueltos caen al empezar una palabra, como al gesticular

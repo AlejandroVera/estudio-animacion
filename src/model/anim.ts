@@ -86,9 +86,16 @@ export function poseAt(character: Character, tracks: Tracks, t: number): Pose {
   const parts: Pose['parts'] = {}
   const variants: Pose['variants'] = {}
   const fades: NonNullable<Pose['fades']> = {}
+  const mouth = str(evalTrack(tracks['face:mouth'], t, DEFAULTS.mouth))
   for (const p of character.parts) {
     const vk = tracks[`part:${p.id}:v`]
-    if (vk?.length && !p.role) {
+    if (character.expresivo && !p.parent) {
+      // Personaje expresivo: la postura es la clave; para hablar se usa su versión con la boca al revés
+      const v = vk?.length ? str(evalTrack(vk, t, p.defaultVariant)) : p.defaultVariant
+      const abierta = ['abierta', 'E', 'O', 'grito'].includes(mouth)
+      const alt = abierta !== character.expresivo.abiertas.includes(v)
+      variants[p.id] = alt && p.variants[v + '~b'] ? v + '~b' : v
+    } else if (vk?.length && !p.role) {
       variants[p.id] = str(evalTrack(vk, t, p.defaultVariant))
       if (p.fade) {
         const tr = transicion(p, vk, t)
@@ -111,7 +118,7 @@ export function poseAt(character: Character, tracks: Tracks, t: number): Pose {
     gazeX: num(evalTrack(tracks['face:gazeX'], t, DEFAULTS.gazeX)),
     gazeY: num(evalTrack(tracks['face:gazeY'], t, DEFAULTS.gazeY)),
     blink: num(evalTrack(tracks['face:blink'], t, DEFAULTS.blink)),
-    mouth: str(evalTrack(tracks['face:mouth'], t, DEFAULTS.mouth)),
+    mouth,
     brows: str(evalTrack(tracks['face:brows'], t, DEFAULTS.brows)),
     variants,
     fades,

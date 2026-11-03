@@ -84,7 +84,13 @@ function shot(plano: Plano, project: Project, character: Character) {
   const inst = project.instances[0]
   const pl = layout(character, inst, poseAt(character, {}, 0)).find((p) => p.part.id === 'cabeza')
   const a = pl && character.assets[pl.assetId]
-  const head = pl && a ? pl.matrix.transformPoint(new DOMPoint(a.w / 2 - pl.part.anchor.x, a.h / 2 - pl.part.anchor.y)) : { x: inst.x, y: inst.y - 600 }
+  const raizPl = character.expresivo ? layout(character, inst, poseAt(character, {}, 0)).find((p) => !p.part.parent) : undefined
+  const ce = character.expresivo?.cabeza
+  const head = pl && a
+    ? pl.matrix.transformPoint(new DOMPoint(a.w / 2 - pl.part.anchor.x, a.h / 2 - pl.part.anchor.y))
+    : raizPl && ce
+      ? raizPl.matrix.transformPoint(new DOMPoint(ce.x - raizPl.part.anchor.x, ce.y - raizPl.part.anchor.y))
+      : { x: inst.x, y: inst.y - 600 }
   const zoom = plano === 'primer' ? 1.8 : 1.35
   // La cabeza queda en el tercio superior del encuadre, sin que la cámara salga del vídeo (si no,
   // asomaría el color de fondo por arriba o por los lados)
@@ -135,11 +141,52 @@ export function animateScenes(escenas: Escena[], project: Project, character: Ch
       if (!has(g.nombre)) continue
       const t0 = inicio + Math.max(0, Math.min(dur - 0.3, g.t))
       result.gestos!.push({ ...g, t: t0 })
-      const gd = (GESTOS.find((x) => x.id === g.nombre)?.duracion ?? 2) / (g.velocidad || 1)
+      const gd = character.expresivo ? 1.2 : (GESTOS.find((x) => x.id === g.nombre)?.duracion ?? 2) / (g.velocidad || 1)
       ocupado.push([t0, t0 + gd])
     }
     // Mientras habla, nadie se queda quieto: los huecos sin gesto se rellenan.
-    if (e.dialogo.trim() && raiz) {
+    if (e.dialogo.trim() && raiz && character.expresivo) {
+      // Expresivo (estilo «Estoy Tiesa»): una postura con su cara por cada trozo de frase, de golpe,
+      // elegida por lo que dice (pregunta, números, exclamación…) y por la emoción de la escena.
+      const ex = character.expresivo
+      const lista = (ex.emociones[e.expresion] ?? ex.emociones.Neutral).filter((p) => raiz.variants[p])
+      const trozos = e.dialogo.match(/[^,.;:!?…]+[,.;:!?…]*/g) ?? [e.dialogo]
+      // Trozos de al menos ~1,5 s (unas 4 palabras): se juntan los cortos
+      const grupos: string[] = []
+      for (const tz of trozos) {
+        const last = grupos[grupos.length - 1]
+        if (last && last.split(/\s+/).filter(Boolean).length < 4) grupos[grupos.length - 1] = last + tz
+        else grupos.push(tz)
+      }
+      // Y los largos se parten: nunca más de ~7 palabras (unos 3 s) en la misma postura
+      for (let i = 0; i < grupos.length; i++) {
+        const w = grupos[i].split(/\s+/).filter(Boolean)
+        if (w.length > 8) grupos.splice(i, 1, w.slice(0, Math.ceil(w.length / 2)).join(' ') + ' ', w.slice(Math.ceil(w.length / 2)).join(' '))
+      }
+      const total = grupos.reduce((n, g) => n + g.length, 0) || 1
+      let acum = 0
+      let idx = Math.floor(rnd() * lista.length)
+      grupos.forEach((g, gi) => {
+        const t = inicio + 0.1 + (acum / total) * Math.max(0.5, dur - 0.4)
+        acum += g.length
+        if (ocupado.some(([a, b]) => t >= a - 0.8 && t < b)) return
+        const low = g.toLowerCase()
+        let pose: string | undefined
+        if (gi === 0 && e.expresion !== 'Neutral') pose = lista[0]
+        else if (/coment|suscr/.test(low)) pose = 'senalar'
+        else if (/\bhola\b/.test(low)) pose = 'saludar'
+        else if (/\?/.test(g)) pose = rnd() < 0.5 ? 'encogerse' : 'pensar'
+        else if (/\d|\b(uno|dos|tres|primer|segund|tercer)/.test(low)) pose = rnd() < 0.5 ? 'tres' : 'indice'
+        else if (/!/.test(g) && e.expresion === 'Neutral') pose = rnd() < 0.5 ? 'mejillas' : 'stop'
+        if (!pose || !raiz.variants[pose] || pose === ultimaPose) {
+          pose = lista[idx++ % lista.length]
+          if (pose === ultimaPose) pose = lista[idx++ % lista.length]
+        }
+        if (pose === ultimaPose) return
+        ultimaPose = pose
+        result.claves.push({ canal: `part:${raiz.id}:v`, t, valor: pose, transicion: 'salto' })
+      })
+    } else if (e.dialogo.trim() && raiz) {
       // Personaje por poses, como habla una persona: las manos tienen una postura de descanso
       // (juntas o a la altura de la cintura) y de vez en cuando salen a un gesto y vuelven.
       // Solo se cambia entre poses que tienen dibujo intermedio, y sin prisas.
