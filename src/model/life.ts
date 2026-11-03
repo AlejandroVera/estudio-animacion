@@ -2,7 +2,8 @@
 // claves, para que el personaje nunca parezca congelado: respiración, balanceo de cabeza y brazos,
 // y parpadeos (solo si el usuario no ha animado los párpados).
 
-import type { Pose, Tracks } from './types'
+import { poseAt } from './anim'
+import type { Character, Pose, Tracks } from './types'
 
 const TAU = Math.PI * 2
 
@@ -46,4 +47,40 @@ export function withLife(pose: Pose, t: number, tracks: Tracks, armLength: numbe
   add('antebrazo_izq', { rot: -Math.sin((TAU * t) / 4.4 + 1.4) * 1.2 })
   const blink = tracks['face:blink']?.length ? pose.blink : Math.max(pose.blink, blinkAt(t))
   return { ...pose, parts, blink }
+}
+
+// ---------- Acción superpuesta ----------
+// Las piezas que cuelgan de otra (antebrazo del brazo, mano del antebrazo) no la siguen a la vez:
+// se quedan un poco atrás cuando arranca y se pasan un poco cuando se para, como un brazo real.
+const LAG = 0.07
+const CADENAS: [string, string, number, number][] = [
+  // [pieza, pieza de la que cuelga, retraso, inercia]
+  ['antebrazo_der', 'brazo_der', 0.8, 0.45],
+  ['antebrazo_izq', 'brazo_izq', 0.8, 0.45],
+  ['mano_der', 'antebrazo_der', 0.6, 0.35],
+  ['mano_izq', 'antebrazo_izq', 0.6, 0.35],
+  ['cabeza', 'torso', 0.5, 0.3],
+]
+
+export function withFollowThrough(pose: Pose, character: Character, tracks: Tracks, t: number): Pose {
+  if (t < LAG) return pose
+  const a = poseAt(character, tracks, t - LAG)
+  const b = poseAt(character, tracks, Math.max(0, t - 2.3 * LAG))
+  const parts = { ...pose.parts }
+  // Giro acumulado de la cadena (lo que se mueve de verdad cada pieza respecto al mundo)
+  const total = (p: Pose, id: string): number => {
+    const part = character.parts.find((x) => x.id === id)
+    if (!part) return 0
+    return (p.parts[id]?.rot ?? 0) + (part.parent ? total(p, part.parent) : 0)
+  }
+  for (const [id, padre, retraso, inercia] of CADENAS) {
+    if (!parts[id] || !parts[padre]) continue
+    const ahora = total(pose, padre)
+    const antes = total(a, padre)
+    const mucho = total(b, padre)
+    const extra = -retraso * (ahora - antes) + inercia * (antes - mucho) - inercia * (ahora - antes)
+    const lim = Math.max(-25, Math.min(25, extra))
+    parts[id] = { ...parts[id], rot: parts[id].rot + lim }
+  }
+  return { ...pose, parts }
 }

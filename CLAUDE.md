@@ -53,6 +53,18 @@ en lenguaje llano y pídele que pruebe en la web publicada.
 - Sombra de contacto bajo los pies (`drawShadow` en `render.ts`).
 - Gesto «hablar» (manos y cabeza sutiles); `animateScenes` rellena con él los huecos mientras habla.
 
+## Cómo se escriben gestos naturales (lecciones aprendidas)
+- Las manos trabajan DELANTE del cuerpo (antebrazo hacia dentro, dir ~190-215 en el lado derecho),
+  no hacia fuera en horizontal (parece un espantapájaros).
+- Un antebrazo que apunta hacia la cámara se ACORTA (`escala` 0.4-0.6); `expandGesture` compensa la
+  mano (escala inversa) para que no encoja. Las transiciones que pasan por delante se acortan a mitad.
+- Primero se mueve la mano y luego el codo se abre (no subir el brazo estirado como una barrera).
+- Giro continuo: cada clave `dir` elige la vuelta más cercana a la anterior del mismo canal; la malla
+  se dibuja rígida si el pliegue supera 150°.
+- Movimiento a golpes (llegar, sostener, otro golpe), cada mano a su ritmo; el segundo brazo va
+  0,08 s detrás (`DESFASE`); acción superpuesta automática (`withFollowThrough` en `life.ts`); reposo
+  asimétrico (`idle.ts`).
+
 ## Gestos y vida automática
 - `src/model/gestures.ts`: biblioteca de gestos (saludar, encogerse, señalar, pensar, jarras,
   explicar, asentir, negar, celebrar, sorpresa) escritos para el lado derecho en direcciones de

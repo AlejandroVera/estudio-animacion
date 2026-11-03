@@ -1,5 +1,5 @@
 import { poseAt } from './anim'
-import { withLife } from './life'
+import { withFollowThrough, withLife } from './life'
 import { ensureMedia, mediaUrl } from '../audio/storage'
 import { evalTrack } from './anim'
 import type { BgLayer, Character, CharacterInstance, Part, Pose, Project, Vec } from './types'
@@ -128,6 +128,7 @@ export function drawCharacter(
   life = false,
 ): Placed[] {
   let pose = poseAt(character, inst.tracks, t)
+  if (!restPose) pose = withFollowThrough(pose, character, inst.tracks, t)
   if (life && !restPose) {
     const fore = character.parts.find((p) => p.id === 'antebrazo_der' || p.id === 'antebrazo_izq')
     pose = withLife(pose, t, inst.tracks, fore ? Math.hypot(fore.offset.x, fore.offset.y) : 200)
@@ -272,8 +273,11 @@ function drawSkinned(
   const parentPl = skin.parent && part.parent ? byId.get(part.parent) : undefined
   const childPl = skin.child ? byId.get(skin.child.id) : undefined
   const childPose = childPl ? pose.parts[childPl.part.id] : undefined
-  const bendsParent = !!parentPl && !still(own)
-  const bendsChild = !!childPl && !!childPose && Math.abs(childPose.rot) > 0.01
+  const nrm = (a: number) => ((((a + 180) % 360) + 360) % 360) - 180
+  const ownRot = nrm(own?.rot ?? 0)
+  const childRot = nrm(childPose?.rot ?? 0)
+  const bendsParent = !!parentPl && !still(own) && Math.abs(ownRot) < 150
+  const bendsChild = !!childPl && !!childPose && Math.abs(childRot) > 0.01 && Math.abs(childRot) < 150
   const lifts = (skin.lift ?? []).flatMap((lf) => {
     const c = character.parts.find((p) => p.id === lf.id)
     const pp = pose.parts[lf.id]
@@ -293,7 +297,7 @@ function drawSkinned(
   const partial = (a: number) =>
     parentPl!.matrix
       .translate(part.offset.x + own.x, part.offset.y + own.y)
-      .rotate(a * own.rot)
+      .rotate(a * ownRot)
       .scale(1 + a * (own.scale - 1))
   const cache = new Map<number, DOMMatrix>()
   const src: Vec[] = []
@@ -319,7 +323,7 @@ function drawSkinned(
       if (bendsChild) {
         const c = smooth((s - childS - skin.child!.range[0]) / (skin.child!.range[1] - skin.child!.range[0]))
         if (c > 0) {
-          m = m.translate(cOff.x, cOff.y).rotate(c * childPose!.rot).translate(-cOff.x, -cOff.y)
+          m = m.translate(cOff.x, cOff.y).rotate(c * childRot).translate(-cOff.x, -cOff.y)
           deformed = true
         }
       }

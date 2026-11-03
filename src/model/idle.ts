@@ -7,8 +7,9 @@ import type { Character } from './types'
 
 // Dirección en pantalla (0 derecha, 90 abajo) de brazo y antebrazo del lado derecho de la pantalla;
 // el izquierdo es el espejo.
-const BRAZO = 85
-const ANTEBRAZO = 93
+// Asimétrico a propósito: el brazo izquierdo de la pantalla cae algo más abierto y con el codo más
+// doblado que el derecho. Una postura simétrica parece un maniquí.
+const POSTURA = { der: { brazo: 84, antebrazo: 97 }, izq: { brazo: 88, antebrazo: 104 } }
 
 export function withIdle(character: Character): Character {
   const sinIdle = { ...character, idle: {} }
@@ -27,11 +28,11 @@ export function withIdle(character: Character): Character {
     const mano = character.parts.find((p) => p.parent === `antebrazo_${lado}` && !p.role)
     const f = mano ? ang(`antebrazo_${lado}`, mano.id) : null
     if (b === null) continue
-    const tb = lado === 'der' ? BRAZO : 180 - BRAZO
+    const tb = lado === 'der' ? POSTURA.der.brazo : 180 - POSTURA.izq.brazo
     const rb = norm(tb - b)
     idle[`brazo_${lado}`] = rb
     if (f !== null) {
-      const tf = lado === 'der' ? ANTEBRAZO : 180 - ANTEBRAZO
+      const tf = lado === 'der' ? POSTURA.der.antebrazo : 180 - POSTURA.izq.antebrazo
       idle[`antebrazo_${lado}`] = norm(tf - f - rb)
     }
   }

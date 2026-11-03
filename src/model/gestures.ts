@@ -54,17 +54,22 @@ export const GESTOS: Gesto[] = [
   {
     id: 'saludar',
     nombre: 'Saludar',
-    descripcion: 'Sube el brazo a la altura del hombro con el codo doblado y agita la mano; sonríe.',
+    descripcion: 'Sube la mano por delante del cuerpo hasta la altura de la cabeza y la agita; sonríe.',
     lados: 'uno',
-    duracion: 2.6,
+    duracion: 2.75,
     claves: [
-      k(0, 'brazo', { reposo: 0 }), k(0.18, 'brazo', { reposo: 6 }), k(0.55, 'brazo', { dir: -14 }), k(2.0, 'brazo', { dir: -14 }), k(2.45, 'brazo', { reposo: 0 }),
-      k(0, 'antebrazo', { reposo: 0 }), k(0.3, 'antebrazo', { reposo: -15 }), k(0.62, 'antebrazo', { dir: -100 }), k(0.75, 'antebrazo', { dir: -88 }),
-      k(0.95, 'antebrazo', { dir: -112 }), k(1.17, 'antebrazo', { dir: -68 }), k(1.39, 'antebrazo', { dir: -112 }), k(1.61, 'antebrazo', { dir: -68 }),
-      k(1.83, 'antebrazo', { dir: -90 }), k(2.0, 'antebrazo', { dir: -90 }), k(2.55, 'antebrazo', { reposo: 0 }),
-      k(0, 'torso', { giro: 0 }), k(0.55, 'torso', { giro: -2 }), k(2.0, 'torso', { giro: -2 }), k(2.5, 'torso', { giro: 0 }),
-      k(0, 'cabeza', { giro: 0 }), k(0.6, 'cabeza', { giro: 5 }), k(2.0, 'cabeza', { giro: 5 }), k(2.6, 'cabeza', { giro: 0 }),
-      k(0.3, 'boca', 'sonrisa'), k(0.45, 'mano', 'abierta'), k(2.15, 'mano', 'natural'),
+      // Primero sube la mano por delante del pecho (antebrazo acortado = viene hacia la cámara),
+      // luego el codo se abre y la mano queda junto a la cabeza. Al bajar, la mano baja por delante.
+      k(0, 'brazo', { reposo: 0 }), k(0.15, 'brazo', { reposo: 5 }), k(0.5, 'brazo', { dir: 70 }), k(0.74, 'brazo', { dir: -12 }), k(2.0, 'brazo', { dir: -12 }),
+      k(2.3, 'brazo', { dir: 60 }), k(2.6, 'brazo', { reposo: 0 }),
+      k(0, 'antebrazo', { reposo: 0 }), k(0.3, 'antebrazo', { dir: 185 }), k(0.5, 'antebrazo', { dir: 228 }), k(0.74, 'antebrazo', { dir: -96 }), k(0.86, 'antebrazo', { dir: -86 }),
+      k(1.06, 'antebrazo', { dir: -112 }), k(1.28, 'antebrazo', { dir: -70 }), k(1.5, 'antebrazo', { dir: -112 }), k(1.72, 'antebrazo', { dir: -72 }),
+      k(1.9, 'antebrazo', { dir: -92 }), k(2.0, 'antebrazo', { dir: -92 }), k(2.3, 'antebrazo', { dir: 200 }), k(2.65, 'antebrazo', { reposo: 0 }),
+      k(0, 'antebrazo', { escala: 1 }), k(0.3, 'antebrazo', { escala: 0.45 }), k(0.5, 'antebrazo', { escala: 0.75 }), k(0.74, 'antebrazo', { escala: 1 }),
+      k(2.0, 'antebrazo', { escala: 1 }), k(2.3, 'antebrazo', { escala: 0.5 }), k(2.65, 'antebrazo', { escala: 1 }),
+      k(0, 'torso', { giro: 0 }), k(0.7, 'torso', { giro: -2 }), k(2.0, 'torso', { giro: -2 }), k(2.6, 'torso', { giro: 0 }),
+      k(0, 'cabeza', { giro: 0 }), k(0.75, 'cabeza', { giro: 5 }), k(2.0, 'cabeza', { giro: 5 }), k(2.7, 'cabeza', { giro: 0 }),
+      k(0.3, 'boca', 'sonrisa'), k(0.35, 'mano', 'abierta'), k(2.45, 'mano', 'natural'),
     ],
   },
   {
@@ -137,17 +142,21 @@ export const GESTOS: Gesto[] = [
   {
     id: 'explicar',
     nombre: 'Explicar',
-    descripcion: 'Gesticula con las dos manos, alternándolas, como quien explica algo.',
+    descripcion: 'Codos junto al cuerpo y manos delante de la tripa, palmas arriba, moviéndolas a golpes y alternando, como quien explica algo.',
     lados: 'ninguno',
-    duracion: 2.6,
+    duracion: 2.7,
     claves: [
-      ...both(0, 'brazo', { reposo: 0 }), ...both(0.35, 'brazo', { dir: 80 }), ...both(2.1, 'brazo', { dir: 80 }), ...both(2.6, 'brazo', { reposo: 0 }),
-      ...both(0, 'antebrazo', { reposo: 0 }),
-      k(0.4, 'antebrazo', { dir: -20 }), k(0.7, 'antebrazo', { dir: 10 }), k(1.0, 'antebrazo', { dir: -25 }), k(1.3, 'antebrazo', { dir: 8 }), k(1.6, 'antebrazo', { dir: -20 }), k(2.1, 'antebrazo', { dir: 0 }),
-      k(0.5, 'antebrazo2', { dir: 5 }), k(0.85, 'antebrazo2', { dir: -25 }), k(1.15, 'antebrazo2', { dir: 10 }), k(1.45, 'antebrazo2', { dir: -20 }), k(1.75, 'antebrazo2', { dir: 5 }), k(2.1, 'antebrazo2', { dir: 0 }),
-      ...both(2.65, 'antebrazo', { reposo: 0 }),
-      k(0, 'cabeza', { giro: 0 }), k(0.7, 'cabeza', { giro: 3 }), k(1.3, 'cabeza', { giro: -2 }), k(1.9, 'cabeza', { giro: 2 }), k(2.6, 'cabeza', { giro: 0 }),
-      ...both(0.3, 'mano', 'palma_arriba'), ...both(2.2, 'mano', 'natural'),
+      // Antebrazos muy acortados (apuntan hacia la cámara): las manos quedan delante de la tripa,
+      // separadas. Movimiento a golpes: llega, se queda, otro golpe; cada mano a su ritmo.
+      ...both(0, 'brazo', { reposo: 0 }), ...both(0.28, 'brazo', { dir: 84 }), ...both(2.25, 'brazo', { dir: 84 }), ...both(2.6, 'brazo', { reposo: 0 }),
+      k(0, 'antebrazo', { reposo: 0 }), k(0.3, 'antebrazo', { dir: 205 }), k(0.42, 'antebrazo', { dir: 200 }), k(0.85, 'antebrazo', { dir: 218 }), k(0.95, 'antebrazo', { dir: 212 }),
+      k(1.45, 'antebrazo', { dir: 196 }), k(1.55, 'antebrazo', { dir: 202 }), k(2.25, 'antebrazo', { dir: 204 }), k(2.62, 'antebrazo', { reposo: 0 }),
+      k(0, 'antebrazo2', { reposo: 0 }), k(0.38, 'antebrazo2', { dir: 198 }), k(0.5, 'antebrazo2', { dir: 203 }), k(1.15, 'antebrazo2', { dir: 220 }), k(1.25, 'antebrazo2', { dir: 214 }),
+      k(1.8, 'antebrazo2', { dir: 194 }), k(1.9, 'antebrazo2', { dir: 199 }), k(2.3, 'antebrazo2', { dir: 200 }), k(2.68, 'antebrazo2', { reposo: 0 }),
+      ...both(0, 'antebrazo', { escala: 1 }), ...both(0.32, 'antebrazo', { escala: 0.4 }), ...both(2.28, 'antebrazo', { escala: 0.4 }), ...both(2.65, 'antebrazo', { escala: 1 }),
+      k(0, 'cabeza', { giro: 0 }), k(0.85, 'cabeza', { giro: 3 }), k(1.45, 'cabeza', { giro: -2 }), k(2.0, 'cabeza', { giro: 1 }), k(2.6, 'cabeza', { giro: 0 }),
+      k(0, 'cabeza_y', { alto: 0 }), k(0.85, 'cabeza_y', { alto: 0.012 }), k(1.0, 'cabeza_y', { alto: 0 }), k(1.45, 'cabeza_y', { alto: 0.012 }), k(1.6, 'cabeza_y', { alto: 0 }),
+      ...both(0.25, 'mano', 'palma_arriba'), ...both(2.45, 'mano', 'natural'),
     ],
   },
   {
@@ -208,18 +217,20 @@ export const GESTOS: Gesto[] = [
   {
     id: 'hablar',
     nombre: 'Hablar (manos)',
-    descripcion: 'Acompaña lo que dice con pequeños movimientos de manos y cabeza, sin un gesto concreto. Para rellenar mientras habla.',
+    descripcion: 'Acompaña lo que dice con una mano delante de la tripa que marca el ritmo, sin un gesto concreto. Para rellenar mientras habla.',
     lados: 'uno',
     duracion: 2.4,
     claves: [
-      k(0, 'brazo', { reposo: 0 }), k(0.3, 'brazo', { reposo: -6 }), k(2.0, 'brazo', { reposo: -6 }), k(2.4, 'brazo', { reposo: 0 }),
-      k(0, 'antebrazo', { reposo: 0 }), k(0.35, 'antebrazo', { reposo: -38 }), k(0.75, 'antebrazo', { reposo: -24 }), k(1.15, 'antebrazo', { reposo: -42 }),
-      k(1.55, 'antebrazo', { reposo: -26 }), k(1.95, 'antebrazo', { reposo: -36 }), k(2.4, 'antebrazo', { reposo: 0 }),
-      k(0.25, 'mano', 'abierta'), k(2.2, 'mano', 'natural'),
-      k(0, 'brazo2', { reposo: 0 }), k(0.5, 'brazo2', { reposo: -3 }), k(2.4, 'brazo2', { reposo: 0 }),
-      k(0, 'antebrazo2', { reposo: 0 }), k(0.6, 'antebrazo2', { reposo: -14 }), k(1.4, 'antebrazo2', { reposo: -8 }), k(2.4, 'antebrazo2', { reposo: 0 }),
-      k(0, 'cabeza', { giro: 0 }), k(0.4, 'cabeza', { giro: 3 }), k(1.0, 'cabeza', { giro: -1 }), k(1.6, 'cabeza', { giro: 2 }), k(2.4, 'cabeza', { giro: 0 }),
-      k(0, 'cabeza_y', { alto: 0 }), k(0.75, 'cabeza_y', { alto: 0.015 }), k(0.95, 'cabeza_y', { alto: 0 }), k(1.55, 'cabeza_y', { alto: 0.015 }), k(1.75, 'cabeza_y', { alto: 0 }),
+      // Una mano sube delante de la tripa (antebrazo hacia la cámara) y marca el ritmo a golpes;
+      // la otra apenas se mueve.
+      k(0, 'brazo', { reposo: 0 }), k(0.25, 'brazo', { dir: 84 }), k(1.95, 'brazo', { dir: 84 }), k(2.4, 'brazo', { reposo: 0 }),
+      k(0, 'antebrazo', { reposo: 0 }), k(0.28, 'antebrazo', { dir: 200 }), k(0.4, 'antebrazo', { dir: 195 }), k(0.85, 'antebrazo', { dir: 214 }), k(0.95, 'antebrazo', { dir: 208 }),
+      k(1.45, 'antebrazo', { dir: 190 }), k(1.55, 'antebrazo', { dir: 196 }), k(1.95, 'antebrazo', { dir: 198 }), k(2.4, 'antebrazo', { reposo: 0 }),
+      k(0, 'antebrazo', { escala: 1 }), k(0.28, 'antebrazo', { escala: 0.55 }), k(1.95, 'antebrazo', { escala: 0.55 }), k(2.4, 'antebrazo', { escala: 1 }),
+      k(0.22, 'mano', 'abierta'), k(2.2, 'mano', 'natural'),
+      k(0, 'antebrazo2', { reposo: 0 }), k(0.6, 'antebrazo2', { reposo: 10 }), k(1.6, 'antebrazo2', { reposo: 6 }), k(2.4, 'antebrazo2', { reposo: 0 }),
+      k(0, 'cabeza', { giro: 0 }), k(0.85, 'cabeza', { giro: 3 }), k(1.45, 'cabeza', { giro: -1 }), k(2.4, 'cabeza', { giro: 0 }),
+      k(0, 'cabeza_y', { alto: 0 }), k(0.85, 'cabeza_y', { alto: 0.015 }), k(1.0, 'cabeza_y', { alto: 0 }), k(1.45, 'cabeza_y', { alto: 0.015 }), k(1.6, 'cabeza_y', { alto: 0 }),
     ],
   },
   {
@@ -304,15 +315,18 @@ export function expandGesture(
     }
     return ks[ks.length - 1].r
   }
+  // El otro brazo nunca va clavado al primero: arranca un poco después
+  const DESFASE = 0.08
   const push = (canal: string, t: number, valor: number | string, e?: Ease) =>
     out.push({
       canal,
-      t: t0 + t / speed,
+      t: t0 + (t > 0 && /_(izq|der):/.test(canal) && canal.includes(`_${lado === 'der' ? 'izq' : 'der'}:`) && /brazo|mano/.test(canal) ? t + DESFASE : t) / speed,
       valor: typeof valor === 'number' ? String(Math.round(valor * 100) / 100) : valor,
       transicion: e ?? (typeof valor === 'string' ? 'salto' : 'suave'),
     })
   const dirOf = (d: number, s: Lado) => (s === 'der' ? d : 180 - d)
 
+  const ultimo = new Map<string, number>()
   // Primero los brazos (los antebrazos dependen de ellos).
   const ordered = [...gesto.claves].sort((a, b) => Number(a.c.startsWith('antebrazo')) - Number(b.c.startsWith('antebrazo')) || a.t - b.t)
   for (const g of ordered) {
@@ -324,15 +338,24 @@ export function expandGesture(
       if (!has(id) || typeof v !== 'object') continue
       if ('escala' in v) {
         push(`part:${id}:scale`, g.t, v.escala, g.e)
+        // La mano cuelga del antebrazo y encogería con él: se compensa para que no cambie de tamaño
+        const mano = `mano_${s}`
+        if (!isArm && has(mano)) push(`part:${mano}:scale`, g.t, Math.round((1 / Math.max(0.2, v.escala)) * 1000) / 1000, g.e)
         continue
       }
       let rot: number
       if ('dir' in v) {
         const target = dirOf(v.dir, s)
         rot = isArm ? norm(target - angles[id]) : norm(target - angles[id] - armRotAt(s, g.t))
+        const prev = ultimo.get(id)
+        if (prev !== undefined) {
+          while (rot - prev > 180) rot -= 360
+          while (rot - prev < -180) rot += 360
+        }
       } else if ('reposo' in v) {
         rot = v.reposo * mirror(s)
       } else continue
+      ultimo.set(id, rot)
       if (isArm) armRot[s].push({ t: g.t, r: rot })
       push(`part:${id}:rot`, g.t, rot, g.e)
     } else if (g.c === 'hombros' && typeof v === 'object' && 'alto' in v) {
