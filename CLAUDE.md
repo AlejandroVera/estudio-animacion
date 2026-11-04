@@ -32,6 +32,7 @@ en lenguaje llano y pídele que pruebe en la web publicada.
   Los rangos se calculan solos (`autoSkin` en `build.ts`) para las piezas de imagen del esqueleto
   estándar (`brazo_*`, `antebrazo_*`, `muslo_*`, `pierna_*`): cualquier personaje nuevo que use esos
   ids lo hereda sin configurar nada.
+- FORMATO del vídeo (selector «Formato» del panel izquierdo: vertical 9:16, horizontal 16:9, cuadrado, 4:5): `setFormato` en `store.ts` cambia `width/height` y escala personaje (misma parte del alto) y cámara; `LIBRARY.place` está pensado para 1080×1920 y `colocar` lo adapta; los fondos se piden con `formatoDe` y solo se reutilizan si tienen la misma forma.
 - `src/export/exportMp4.ts`: exporta H.264 con WebCodecs + mp4-muxer (Chrome/Edge).
 - `src/model/sample.ts`: personaje de ejemplo en SVG; es la referencia del formato que deben
   producir los personajes generados con IA.

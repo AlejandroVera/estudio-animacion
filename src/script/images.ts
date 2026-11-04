@@ -13,6 +13,13 @@ const readPass = () => {
   }
 }
 
+/** Proporción que se pide a la IA según la forma del vídeo. */
+export function formatoDe(p: Project) {
+  const r = p.width / p.height
+  const op: [string, number][] = [['9:16', 9 / 16], ['4:5', 4 / 5], ['1:1', 1], ['16:9', 16 / 9]]
+  return op.reduce((a, b) => (Math.abs(b[1] - r) < Math.abs(a[1] - r) ? b : a))[0]
+}
+
 /** Genera un fondo y lo guarda; devuelve la capa (sin añadirla al proyecto). */
 export async function generateBackground(descripcion: string, project: Project): Promise<BgLayer> {
   const ch = activeCharacter(project)
@@ -33,7 +40,7 @@ export async function generateBackground(descripcion: string, project: Project):
     body: JSON.stringify({
       descripcion,
       referencia: ch.referencia ? location.origin + ch.referencia : undefined,
-      formato: project.width >= project.height ? '16:9' : '9:16',
+      formato: formatoDe(project),
     }),
   })
   const d = await res.json().catch(() => ({}))
@@ -83,7 +90,9 @@ export async function generateSceneBackgrounds(escenas: Escena[], onProgress: (m
   const capas: BgLayer[] = []
   for (let g = 0; g < grupos.length; g++) {
     // Si ya hay un fondo con esa misma descripción, se reutiliza (no se paga otra vez)
-    const previa = useStore.getState().project.fondos?.find((l) => l.descripcion === grupos[g].desc)
+    // Se reutiliza el fondo con la misma descripción, pero solo si tiene la misma forma que el vídeo
+    const pr = useStore.getState().project
+    const previa = pr.fondos?.find((l) => l.descripcion === grupos[g].desc && Math.abs(l.w / l.h - pr.width / pr.height) < 0.15)
     onProgress(previa ? `Reutilizando fondo: ${grupos[g].desc}` : `Generando fondo ${g + 1} de ${grupos.length}: ${grupos[g].desc}`)
     const layer = previa ?? { ...(await generateBackground(grupos[g].desc, useStore.getState().project)), descripcion: grupos[g].desc }
     capas.push(layer)

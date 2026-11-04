@@ -263,7 +263,7 @@ export function drawRotulos(g: CanvasRenderingContext2D, project: Project, t: nu
     const rot = (((semilla % 11) - 5) * Math.PI) / 180
     // Tamaño: grande, pero que quepa en su sitio (hasta 2 líneas)
     const palabras = r.texto.split(/\s+/)
-    let tam = Math.round(W * 0.13)
+    let tam = Math.round(Math.min(W, H) * 0.13)
     let lineas: string[] = [r.texto]
     for (; tam > 30; tam -= 4) {
       g.font = `700 ${tam}px Kalam, 'Comic Sans MS', cursive`

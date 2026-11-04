@@ -58,6 +58,8 @@ interface State {
   setProjectProps: (patch: Partial<Pick<Project, 'duration' | 'background' | 'name' | 'vida' | 'audio' | 'fondos' | 'guion' | 'posturasExtra'>>) => void
   /** Cambia el personaje de la escena por otro de la biblioteca, conservando la animación. */
   setCharacter: (libraryId: string) => void
+  /** Cambia el tamaño del vídeo (vertical, horizontal…) y recoloca personaje y cámara en proporción. */
+  setFormato: (width: number, height: number) => void
   /** Sustituye todas las pistas (y la duración) en un solo paso de deshacer: lo usa el copiloto. */
   replaceTracks: (tracks: Tracks, duration: number) => void
 }
@@ -266,9 +268,25 @@ export const useStore = create<State>((set, get) => ({
       ...project,
       background: entry.background,
       characters: { ...project.characters, [character.id]: character },
-      instances: [{ ...inst, characterId: character.id, ...entry.place }, ...rest],
+      instances: [{ ...inst, characterId: character.id, ...colocar(entry.place, project) }, ...rest],
     })
     set({ selectedPart: null, selectedKey: null })
+  },
+
+  setFormato: (width, height) => {
+    const { project } = get()
+    if (project.width === width && project.height === height) return
+    // El personaje ocupa la misma parte del alto y mantiene su sitio relativo (pies abajo, centrado)
+    const k = height / project.height
+    const kx = width / project.width
+    const escalar = (tracks: Tracks): Tracks => {
+      const out = { ...tracks }
+      for (const [canal, f] of [['cam:x', kx], ['cam:y', k]] as const)
+        if (out[canal]) out[canal] = out[canal].map((key) => (typeof key.v === 'number' ? { ...key, v: key.v * f } : key))
+      return out
+    }
+    const instances = project.instances.map((i) => ({ ...i, x: i.x * kx, y: i.y * k, scale: i.scale * k, tracks: escalar(i.tracks) }))
+    get().commit({ ...project, width, height, instances }, 'formato')
   },
 
   setProjectProps: (patch) => {
@@ -278,3 +296,9 @@ export const useStore = create<State>((set, get) => ({
     if (time > next.duration) set({ time: next.duration })
   },
 }))
+
+/** Colocación de la biblioteca (pensada para 1080×1920) llevada al formato del proyecto. */
+function colocar(place: { x: number; y: number; scale: number }, project: Project) {
+  const k = project.height / 1920
+  return { x: (place.x / 1080) * project.width, y: place.y * k, scale: place.scale * k }
+}
