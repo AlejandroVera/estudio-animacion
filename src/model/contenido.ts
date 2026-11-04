@@ -46,12 +46,12 @@ export function drawContenido(g: CanvasRenderingContext2D, project: Project, t: 
   const els: Elemento[] = []
   for (const r of project.rotulos ?? []) {
     if (r.vin !== k) continue
-    const alto = r.estilo === 'grande' ? H * 0.17 : r.estilo === 'cartel' ? H * 0.12 : H * 0.11
+    const alto = r.estilo === 'grande' ? H * 0.17 : r.estilo === 'cartel' ? H * 0.13 : H * 0.13
     els.push({ tipo: 'rotulo', r, t: r.t, alto })
   }
   for (const o of project.objetos ?? []) {
     if (o.vin !== k) continue
-    els.push({ tipo: 'objeto', o, t: o.t, alto: o.pos === 'pensamiento' ? H * 0.36 : H * 0.3 })
+    els.push({ tipo: 'objeto', o, t: o.t, alto: o.pos === 'pensamiento' ? H * 0.34 : H * 0.26 })
   }
   if (!els.length) return true
   els.sort((a, b) => a.t - b.t)
