@@ -98,8 +98,10 @@ export function ScriptPanel({ onClose }: { onClose: () => void }) {
     try {
       setVoces(await listVoices(pass))
     } catch (e) {
-      setVoces([])
-      setMsg({ ok: false, text: e instanceof Error ? e.message : String(e) })
+      setVoces(null)
+      const t = e instanceof Error ? e.message : String(e)
+      if (/contraseña|clave|401/i.test(t)) setNeedPass(true)
+      setMsg({ ok: false, text: /contraseña|clave|401/i.test(t) ? 'Escribe la contraseña del estudio (arriba, debajo del cuadro del guion) y vuelve a pulsar «Elegir voz…».' : t })
     }
   }
   const conVoz = async () => {
@@ -112,7 +114,9 @@ export function ScriptPanel({ onClose }: { onClose: () => void }) {
       setEscenas(r.escenas)
       setMsg({ ok: true, text: `Listo: ${r.duracion.toFixed(1).replace('.', ',')} s con la voz de ${voz.nombre}. Las voces quedan guardadas: si cambias solo gestos o planos no se vuelven a pagar.` })
     } catch (e) {
-      setMsg({ ok: false, text: e instanceof Error ? e.message : String(e) })
+      const t = e instanceof Error ? e.message : String(e)
+      if (/contraseña|clave|401/i.test(t)) setNeedPass(true)
+      setMsg({ ok: false, text: t })
     } finally {
       setBusy(false)
     }
@@ -174,7 +178,7 @@ export function ScriptPanel({ onClose }: { onClose: () => void }) {
       </p>
       <ScriptStyles />
       <textarea className="script-text" rows={7} value={texto} onChange={(e) => setTexto(e.target.value)} placeholder="Hola, soy... / Hoy te cuento..." />
-      {needPass && (
+      {(needPass || !pass) && (
         <input
           className="copilot-pass"
           type="password"
