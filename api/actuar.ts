@@ -37,7 +37,12 @@ Cómo actúa un buen narrador (síguelo):
   veces por minuto. Los gestos con los dedos (índice arriba, contar) solo cuando lo que dice lo pide de
   verdad. Cada escena empieza con una postura en su
   palabra 0 (puede ser la misma que venía si la frase continúa la idea).
-- Usa SOLO nombres de postura del catálogo.
+- Usa nombres de postura del catálogo. GESTOS A MEDIDA (si te lo permiten): cuando en un momento
+  importante lo que dice pide un gesto CONCRETO que no está en el catálogo (cocinar con una sartén, mirar
+  el móvil, comer, bostezar, tirarse del pelo, sujetar dinero…), puedes pedir que se dibuje: añádelo a
+  «nuevas» con un nombre corto (minúsculas, sin espacios) y «dibujo» = descripción EN INGLÉS de qué
+  hacen los brazos y manos (y el objeto si lo hay), y úsalo en «cambios» como postura «x_<nombre>».
+  Como mucho las que te digan; solo si aporta de verdad (lo concreto y visual es lo que hace gracia).
 
 MIRADAS (si te dan un catálogo de miradas): casi todo el rato mira AL FRENTE, a cámara («propios»).
 Cada postura ya trae una mirada coherente; una mirada distinta solo añade un matiz que encaje con el
@@ -67,6 +72,15 @@ const SCHEMA = {
         },
       },
     },
+    nuevas: {
+      type: 'array',
+      items: {
+        type: 'object',
+        additionalProperties: false,
+        required: ['nombre', 'dibujo', 'que_expresa'],
+        properties: { nombre: { type: 'string' }, dibujo: { type: 'string' }, que_expresa: { type: 'string' } },
+      },
+    },
     miradas: {
       type: 'array',
       items: {
@@ -87,7 +101,7 @@ const SCHEMA = {
 export async function POST(request: Request): Promise<Response> {
   if (!process.env.ANTHROPIC_API_KEY) return json({ error: 'Falta configurar las claves en Vercel.' }, 503)
   if (!claveOk(request)) return json({ error: 'clave' }, 401)
-  let body: { escenas?: { escena: number; emocion: string; palabras: string[] }[]; posturas?: Record<string, string>; miradas?: Record<string, string> }
+  let body: { escenas?: { escena: number; emocion: string; palabras: string[] }[]; posturas?: Record<string, string>; miradas?: Record<string, string>; nuevasMax?: number }
   try {
     body = await request.json()
   } catch {
@@ -113,7 +127,7 @@ export async function POST(request: Request): Promise<Response> {
       messages: [
         {
           role: 'user',
-          content: `Catálogo de posturas:\n${catalogo}\n\n${body.miradas ? `Catálogo de miradas:\n${Object.entries(body.miradas).map(([k, v]) => `- ${k}: ${v}`).join('\n')}\n\n` : ''}Texto completo (para entender el tono):\n${textoSeguido}\n\nGuion por escenas con las palabras numeradas:\n${guion}`,
+          content: `Catálogo de posturas:\n${catalogo}\n\n${body.miradas ? `Catálogo de miradas:\n${Object.entries(body.miradas).map(([k, v]) => `- ${k}: ${v}`).join('\n')}\n\n` : ''}${body.nuevasMax ? `Gestos a medida permitidos: hasta ${Math.min(4, body.nuevasMax)}.\n\n` : 'No pidas gestos a medida (nuevas vacío).\n\n'}Texto completo (para entender el tono):\n${textoSeguido}\n\nGuion por escenas con las palabras numeradas:\n${guion}`,
         },
       ],
     })

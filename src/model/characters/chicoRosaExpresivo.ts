@@ -114,6 +114,8 @@ export interface ManifestExpresivo {
   poses: string[]
   bocas: string[]
   parpadeo?: string[]
+  original?: number[]
+  base?: string
   /** Capas de cara independientes (ojos y boca) para la familia tranquila t_*: caja y nombres. */
   capas?: Record<string, { caja: number[]; nombres: string[] }>
 }
@@ -187,6 +189,9 @@ export function personajeExpresivo(cfg: {
     ...buildParts(defs),
     expresivo: {
       abiertas: cfg.abiertas,
+      base: manifest.base ? `${ruta}/${manifest.base}` : undefined,
+      original: manifest.original,
+      lienzo: manifest.lienzo,
       ojosPorDefecto: cfg.ojosPorDefecto ?? {},
       sinCapas: cfg.sinCapas ?? [],
       cabeza: { x: manifest.cabeza[0] - lx, y: manifest.cabeza[1] - ly },

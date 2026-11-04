@@ -71,6 +71,10 @@ export interface Character {
    */
   expresivo?: {
     abiertas: string[]
+    /** Para dibujar gestos a medida: imagen base (fondo blanco), tamaño del dibujo original y lienzo. */
+    base?: string
+    original?: number[]
+    lienzo?: number[]
     ojosPorDefecto?: Record<string, string>
     sinCapas?: string[]
     cabeza: { x: number; y: number }
@@ -158,6 +162,8 @@ export interface Project {
   guion?: { texto: string; escenas: Escena[]; voz?: { id: string; nombre: string } }
   /** Capas de imagen (fondos o elementos delante del personaje); sus imágenes se guardan aparte. */
   fondos?: BgLayer[]
+  /** Gestos a medida dibujados con IA para este proyecto (imagen en IndexedDB). */
+  posturasExtra?: { nombre: string; imageId: string; descripcion: string }[]
   /** Audio (voz) del vídeo; el archivo se guarda aparte, en el navegador (IndexedDB). */
   audio?: { id: string; name: string; start: number; duration: number }
   characters: Record<string, Character>

@@ -1,3 +1,4 @@
+import { cargarExtras } from './script/posturas'
 import { useEffect } from 'react'
 import { ScriptPanel } from './components/ScriptPanel'
 import { loadAudio } from './audio/storage'
@@ -109,6 +110,11 @@ function PlayFab() {
 }
 
 export default function App() {
+  const extras = useStore((s) => s.project.posturasExtra)
+  const personajes = useStore((s) => s.project.characters)
+  useEffect(() => {
+    void cargarExtras()
+  }, [extras, personajes])
   usePlayback()
   useShortcuts()
   const guion = useStore((s) => s.guionAbierto)

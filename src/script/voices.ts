@@ -7,6 +7,7 @@ import { gesticular, type Palabra } from './emocion'
 import { decodeAudio, loadAudio, saveAudio } from '../audio/storage'
 import type { Character, Escena, Part, Tracks } from '../model/types'
 import { DESCRIPCIONES, MIRADAS } from '../model/characters/chicoRosaExpresivo'
+import { cargarExtras, dibujarPostura } from './posturas'
 import { activeCharacter, useStore } from '../store'
 import { animateScenes } from './scenes'
 
@@ -134,24 +135,47 @@ function silabas(al: Alineacion, desplaza: (t: number) => number | null, fps: nu
 }
 
 /** Pide a /api/actuar las posturas por palabra y las convierte en claves exactas (0,08 s antes). */
-async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number })[], ch: Character, raiz: Part, pass: string, fps: number) {
+async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number })[], ch: Character, raiz: Part, pass: string, fps: number, onProgress?: (m: string) => void) {
   const porEscena = escenas.map((e) => palabras.filter((w) => w.t >= e.inicio - 0.05 && w.t < e.inicio + e.duracion - 0.05))
   const ojosPart = ch.parts.find((p) => p.id === 'ojos')
-  const posturas = Object.fromEntries(Object.keys(raiz.variants).filter((v) => !v.includes('~') && DESCRIPCIONES[v]).map((v) => [v, DESCRIPCIONES[v]]))
+  const extras = Object.fromEntries((useStore.getState().project.posturasExtra ?? []).map((e) => [e.nombre, `(a medida) ${e.descripcion}`]))
+  const posturas = { ...Object.fromEntries(Object.keys(raiz.variants).filter((v) => !v.includes('~') && DESCRIPCIONES[v]).map((v) => [v, DESCRIPCIONES[v]])), ...extras }
   const res = await fetch('/api/actuar', {
     method: 'POST',
     headers: { 'content-type': 'application/json', 'x-clave-estudio': pass },
     body: JSON.stringify({
       posturas,
       escenas: escenas.map((e, i) => ({ escena: i, emocion: e.expresion, palabras: porEscena[i].map((w) => w.texto) })).filter((e) => e.palabras.length),
+      nuevasMax: ch.expresivo?.base ? 3 : 0,
       ...(ojosPart ? { miradas: Object.fromEntries(Object.entries(MIRADAS).filter(([k]) => k === 'propios' || ojosPart.variants[k])) } : {}),
     }),
   })
   if (!res.ok) throw new Error(((await res.json().catch(() => ({}))) as { error?: string }).error ?? `error ${res.status}`)
-  const { cambios, miradas } = (await res.json()) as {
+  const { cambios, miradas, nuevas } = (await res.json()) as {
     cambios: { escena: number; palabra: number; postura: string }[]
     miradas?: { escena: number; palabra: number; ojos: string }[]
+    nuevas?: { nombre: string; dibujo: string; que_expresa: string }[]
   }
+  // Gestos a medida: se dibujan con IA (los que ya existan en el proyecto se reutilizan)
+  for (const n of (nuevas ?? []).slice(0, 3)) {
+    const nombre = 't_x_' + n.nombre.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 20)
+    if (!cambios.some((c) => c.postura === 'x_' + n.nombre || c.postura === nombre)) continue
+    cambios.forEach((c) => {
+      if (c.postura === 'x_' + n.nombre) c.postura = nombre
+    })
+    const st = useStore.getState()
+    if (st.project.posturasExtra?.some((e) => e.nombre === nombre)) continue
+    try {
+      onProgress?.(`Dibujando un gesto a medida: ${n.que_expresa}…`)
+      const imageId = await dibujarPostura(activeCharacter(st.project), n.dibujo)
+      const lista = [...(useStore.getState().project.posturasExtra ?? []), { nombre, imageId, descripcion: n.que_expresa }]
+      useStore.getState().setProjectProps({ posturasExtra: lista })
+      await cargarExtras()
+    } catch {
+      // si no se puede dibujar, ese cambio se ignora y quedan los demás
+    }
+  }
+  raiz = activeCharacter(useStore.getState().project).parts.find((p) => !p.parent) ?? raiz
   // Si la IA marca una palabra corta (y, que, el, con…), el gesto pasa a la siguiente palabra con peso
   const conPeso = (esc: number, i: number) => {
     const ws = porEscena[esc] ?? []
@@ -349,7 +373,7 @@ export async function voiceScript(escenas: Escena[], texto: string, voz: Voz, pa
   // Expresivo: una IA «directora» decide en qué palabra cambia de postura y a cuál, según lo que dice
   if (ch.expresivo && raiz && palabras.length) {
     onProgress('Dirigiendo los gestos según el guion…')
-    const dir = await dirigir(palabras, m.escenas, ch, raiz, pass, st.project.fps).catch((e) => {
+    const dir = await dirigir(palabras, m.escenas, ch, raiz, pass, st.project.fps, onProgress).catch((e) => {
       aviso = `La IA directora no respondió (${e instanceof Error ? e.message : e}); los gestos se han elegido con reglas simples.`
       return null
     })
@@ -360,9 +384,11 @@ export async function voiceScript(escenas: Escena[], texto: string, voz: Voz, pa
   }
   const conGestos = gesticular(tracks, palabras, ch, m.escenas)
 
-  const [inst, ...rest] = st.project.instances
+  const [inst, ...rest] = useStore.getState().project.instances
+  // Proyecto actual (puede traer gestos a medida recién dibujados)
+  const actual = useStore.getState().project
   st.commit({
-    ...st.project,
+    ...actual,
     duration: m.duration,
     audio: { id: audioId, name: `Voces (${voz.nombre})`, start: 0, duration: mezcla.duration },
     guion: { texto, escenas: m.escenas.map(({ inicio: _i, ...e }) => e), voz },

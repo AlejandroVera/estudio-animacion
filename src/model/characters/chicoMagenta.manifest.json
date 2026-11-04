@@ -142,5 +142,10 @@
     "dientes"
    ]
   }
- }
+ },
+ "original": [
+  1792,
+  2400
+ ],
+ "base": "base_gestos.jpg"
 }
