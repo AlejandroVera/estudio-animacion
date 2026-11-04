@@ -1,6 +1,7 @@
 import { poseAt } from './anim'
 import { withFollowThrough, withLife } from './life'
 import { ensureMedia, mediaUrl } from '../audio/storage'
+import { drawContenido } from './contenido'
 import { evalTrack } from './anim'
 import type { BgLayer, Character, CharacterInstance, Part, Pose, Project, Vec } from './types'
 
@@ -236,8 +237,10 @@ export function drawFrame(g: CanvasRenderingContext2D, project: Project, t: numb
   }
   drawLayers(g, project, t, true)
   g.restore()
-  drawObjetos(g, project, t)
-  drawRotulos(g, project, t)
+  if (!drawContenido(g, project, t, getImage)) {
+    drawObjetos(g, project, t)
+    drawRotulos(g, project, t)
+  }
 }
 
 const COLORES: Record<string, string> = { negro: '#262020', rojo: '#D63030', verde: '#28A046', azul: '#285AC8' }
@@ -263,7 +266,7 @@ export function drawObjetos(g: CanvasRenderingContext2D, project: Project, t: nu
     if (!url) continue
     const img = getImage(url)
     if (!img.complete || !img.naturalWidth) continue
-    const [x, y] = sitio[o.pos] ?? sitio.der
+    const [x, y] = sitio[o.pos] ?? sitio.arriba_der
     const dt = t - o.t
     const pop = dt < 0.07 ? 0.7 + (1.12 - 0.7) * (dt / 0.07) : dt < 0.15 ? 1.12 - 0.12 * ((dt - 0.07) / 0.08) : 1
     const k = (lado / Math.max(o.w, o.h)) * pop

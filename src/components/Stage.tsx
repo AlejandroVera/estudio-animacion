@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { poseAt } from '../model/anim'
-import { cameraMatrix, drawCharacter, drawLayers, drawObjetos, drawRotulos, ensureImages, hitLayer, hitTest, layerMatrix, pivotOf, type Placed } from '../model/render'
+import { drawContenido } from '../model/contenido'
+import { cameraMatrix, drawCharacter, drawLayers, drawObjetos, drawRotulos, getImage, ensureImages, hitLayer, hitTest, layerMatrix, pivotOf, type Placed } from '../model/render'
 import { evalTrack } from '../model/anim'
 import type { Vec } from '../model/types'
 import { activeCharacter, useStore } from '../store'
@@ -82,8 +83,10 @@ export function Stage() {
     drawLayers(g, project, time, true)
     // Objetos y rótulos (fuera de la cámara, como en el vídeo)
     g.setTransform(g.getTransform().multiply(cam.inverse()))
-    drawObjetos(g, project, time)
-    drawRotulos(g, project, time)
+    if (!drawContenido(g, project, time, getImage)) {
+      drawObjetos(g, project, time)
+      drawRotulos(g, project, time)
+    }
     g.restore()
     g.save()
     g.setTransform(g.getTransform().multiply(cam))

@@ -134,6 +134,19 @@ export interface Rotulo {
   texto: string
   color: 'negro' | 'rojo' | 'verde' | 'azul'
   pos: 'arriba' | 'izq' | 'der' | 'izq_baja' | 'der_baja' | 'abajo'
+  /** grande = palabras enormes en negro; nota = concepto subrayado; cartel = cifra en un cartelito */
+  estilo?: 'grande' | 'nota' | 'cartel'
+  /** Flecha a mano que apunta desde lo anterior */
+  flecha?: boolean
+  /** Viñeta a la que pertenece (se compone con lo demás de su viñeta) */
+  vin?: number
+}
+
+/** Composición de una viñeta del montaje: dónde está el personaje (el otro lado es para el contenido). */
+export interface VinetaMontaje {
+  t: number
+  fin: number
+  lado: 'izq' | 'centro' | 'der'
 }
 
 /** Dibujo que aparece de golpe en una palabra junto al personaje (objeto, bocadillo, cartel…). */
@@ -144,7 +157,9 @@ export interface Objeto {
   h: number
   t: number
   fin: number
-  pos: 'arriba_izq' | 'arriba_der' | 'izq' | 'der' | 'izq_baja' | 'der_baja'
+  pos: 'arriba_izq' | 'arriba_der' | 'izq' | 'der' | 'izq_baja' | 'der_baja' | 'pensamiento'
+  flecha?: boolean
+  vin?: number
   /** Qué es (español) y descripción con la que se dibujó (inglés, para reutilizarlo) */
   que: string
   dibujo: string
@@ -201,6 +216,8 @@ export interface Project {
   rotulos?: Rotulo[]
   /** Objetos que aparecen en escena (dibujos con IA, imagen en IndexedDB) */
   objetos?: Objeto[]
+  /** Viñetas del montaje (composición de cada corte) */
+  vinetas?: VinetaMontaje[]
   /** Gestos a medida dibujados con IA para este proyecto (imagen en IndexedDB). */
   posturasExtra?: { nombre: string; imageId: string; descripcion: string; sinOjos?: boolean; sinBoca?: boolean; revisada?: number }[]
   /** Audio (voz) del vídeo; el archivo se guarda aparte, en el navegador (IndexedDB). */

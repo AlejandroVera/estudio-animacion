@@ -60,7 +60,7 @@ FONDOS Y RÓTULOS (si te lo piden), como en «Estoy Tiesa»:
   Mantén el mismo lugar en escenas seguidas que hablan de lo mismo (escribe exactamente el mismo texto)
   y cambia cuando cambia la idea. Como mucho un lugar distinto cada 2-3 escenas.
 - «rotulos»: palabras escritas a mano que aparecen de golpe EN la palabra que se dice: cifras y precios
-  («33.000 €»), conceptos clave («DEPRECIACIÓN»), la conclusión o el remate. 0-3 por escena, 1-3
+  («33.000 €»), conceptos clave («DEPRECIACIÓN»), la conclusión o el remate. Hasta 5 por viñeta, 1-3
   palabras cada uno, en mayúsculas si es un concepto. Color: «negro» normal, «rojo» lo malo/escandaloso,
   «verde» lo bueno, «azul» un dato neutro. Posición: «arriba», «izq», «der», «izq_baja», «der_baja» o
   «abajo»; en una misma escena cada rótulo en un sitio distinto (se acumulan hasta que cambia la
@@ -86,6 +86,20 @@ corte, «fondo» y «tamano», y «idea» (qué cuenta la viñeta, en pocas pala
   en tres viñetas seguidas, y un corte a «primer» justo en la palabra del chiste.
 - Las indicaciones del usuario mandan: si pide un fondo o un tamaño para una escena, úsalo en todas
   las viñetas de esa escena (puedes partirla igualmente cambiando el encuadre).
+
+COMPOSICIÓN DE CADA VIÑETA (lo que le da riqueza visual, como «Estoy Tiesa»):
+- «lado» de la viñeta: dónde está el personaje. «izq» o «der»: el personaje grande a un lado y el otro
+  lado LIBRE para el contenido, que se va llenando mientras habla; «centro»: sin contenido o con poco
+  (un primer plano, una reacción). Alterna el lado entre viñetas para que no sea siempre igual.
+- El contenido de la viñeta APARECE PALABRA A PALABRA y se ACUMULA (no todo a la vez) y se borra de golpe
+  al cortar. Llena el lado libre: lo normal son 2-5 elementos por viñeta con contenido.
+- Rótulos con «estilo»: «grande» = palabras enormes en negro, la frase clave dicha palabra a palabra (un
+  rótulo por palabra, en el momento en que se dice: «QUE» … «HAY» … «NO»); «nota» = concepto en color
+  subrayado, más pequeño («DEPRECIACIÓN» en rojo, «TODO INCLUIDO» en verde); «cartel» = un precio, cifra
+  o dato dentro de un cartelito («33.000 €», «685 €/mes ♥»). «flecha»: true si apunta a lo anterior
+  (una consecuencia, el precio de algo, «y encima…»).
+- Objetos con «pensamiento» en pos: se dibujan DENTRO de un bocadillo de pensamiento junto a su cabeza
+  (lo que imagina, desea, teme o recuerda). Un objeto también puede llevar «flecha».
 
 OBJETOS EN ESCENA (si te lo piden): lo que hace que «pase algo» en los vídeos de «Estoy Tiesa». Mientras
 habla, APARECEN de golpe junto al personaje dibujos sencillos de lo que está contando: el objeto del que
@@ -154,13 +168,15 @@ const SCHEMA = {
       items: {
         type: 'object',
         additionalProperties: false,
-        required: ['escena', 'palabra', 'texto', 'color', 'pos'],
+        required: ['escena', 'palabra', 'texto', 'color', 'pos', 'estilo', 'flecha'],
         properties: {
           escena: { type: 'integer' },
           palabra: { type: 'integer' },
           texto: { type: 'string' },
           color: { type: 'string', enum: ['negro', 'rojo', 'verde', 'azul'] },
           pos: { type: 'string', enum: ['arriba', 'izq', 'der', 'izq_baja', 'der_baja', 'abajo'] },
+          estilo: { type: 'string', enum: ['grande', 'nota', 'cartel'] },
+          flecha: { type: 'boolean' },
         },
       },
     },
@@ -169,13 +185,14 @@ const SCHEMA = {
       items: {
         type: 'object',
         additionalProperties: false,
-        required: ['escena', 'palabra', 'idea', 'fondo', 'tamano'],
+        required: ['escena', 'palabra', 'idea', 'fondo', 'tamano', 'lado'],
         properties: {
           escena: { type: 'integer' },
           palabra: { type: 'integer' },
           idea: { type: 'string' },
           fondo: { type: 'string' },
           tamano: { type: 'string', enum: ['lejos', 'general', 'medio', 'primer'] },
+          lado: { type: 'string', enum: ['izq', 'centro', 'der'] },
         },
       },
     },
@@ -184,13 +201,14 @@ const SCHEMA = {
       items: {
         type: 'object',
         additionalProperties: false,
-        required: ['escena', 'palabra', 'que', 'dibujo', 'pos'],
+        required: ['escena', 'palabra', 'que', 'dibujo', 'pos', 'flecha'],
         properties: {
           escena: { type: 'integer' },
           palabra: { type: 'integer' },
           que: { type: 'string' },
           dibujo: { type: 'string' },
-          pos: { type: 'string', enum: ['arriba_izq', 'arriba_der', 'izq', 'der', 'izq_baja', 'der_baja'] },
+          pos: { type: 'string', enum: ['arriba_izq', 'arriba_der', 'izq', 'der', 'izq_baja', 'der_baja', 'pensamiento'] },
+          flecha: { type: 'boolean' },
         },
       },
     },
