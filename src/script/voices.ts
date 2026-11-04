@@ -152,16 +152,23 @@ async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number 
     cambios: { escena: number; palabra: number; postura: string }[]
     miradas?: { escena: number; palabra: number; ojos: string }[]
   }
+  // Si la IA marca una palabra corta (y, que, el, con…), el gesto pasa a la siguiente palabra con peso
+  const conPeso = (esc: number, i: number) => {
+    const ws = porEscena[esc] ?? []
+    let j = i
+    while (ws[j] && ws[j].texto.replace(/[^\p{L}\p{N}]/gu, '').length <= 3 && j + 1 < ws.length && j - i < 2) j++
+    return ws[j]
+  }
   const ojos: { t: number; v: string; ease: 'salto' }[] = []
   for (const mi of [...(miradas ?? [])].sort((a, b) => a.escena - b.escena || a.palabra - b.palabra)) {
-    const w = porEscena[mi.escena]?.[mi.palabra]
+    const w = conPeso(mi.escena, mi.palabra)
     const v = mi.ojos === 'propios' ? 'nada' : mi.ojos
     if (!w || !(v === 'nada' || ojosPart?.variants[v])) continue
     ojos.push({ t: Math.max(0, Math.round((w.t - 0.05) * fps) / fps), v, ease: 'salto' })
   }
   const keys: { t: number; v: string; ease: 'salto' }[] = []
   for (const c of [...cambios].sort((a, b) => a.escena - b.escena || a.palabra - b.palabra)) {
-    const w = porEscena[c.escena]?.[c.palabra]
+    const w = conPeso(c.escena, c.palabra)
     if (!w || !raiz.variants[c.postura]) continue
     const t = Math.max(0, Math.round((w.t - 0.08) * fps) / fps)
     const prev = keys[keys.length - 1]
