@@ -14,3 +14,6 @@ createRoot(document.getElementById('root')!).render(
     <App />
   </StrictMode>,
 )
+
+// Letra de los rótulos
+void document.fonts?.load('700 80px Kalam').catch(() => undefined)

@@ -16,6 +16,17 @@ const readPass = () => {
 /** Genera un fondo y lo guarda; devuelve la capa (sin añadirla al proyecto). */
 export async function generateBackground(descripcion: string, project: Project): Promise<BgLayer> {
   const ch = activeCharacter(project)
+  // Fondo blanco liso: no hace falta IA
+  if (/^blanco\b/i.test(descripcion.trim())) {
+    const c = new OffscreenCanvas(project.width, project.height)
+    const g = c.getContext('2d')!
+    g.fillStyle = '#FFFFFF'
+    g.fillRect(0, 0, c.width, c.height)
+    const blob = await c.convertToBlob({ type: 'image/png' })
+    const id = `fondo-blanco-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`
+    await saveImage(id, blob)
+    return { id, name: 'Blanco', imageId: id, w: c.width, h: c.height }
+  }
   const res = await fetch('/api/imagen', {
     method: 'POST',
     headers: { 'content-type': 'application/json', 'x-clave-estudio': readPass() },

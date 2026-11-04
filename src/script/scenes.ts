@@ -295,7 +295,7 @@ export function backgroundKeys(placed: (Escena & { inicio: number })[], total: n
     // El fondo de la última escena se queda hasta el final del vídeo
     if (t.hasta < fin - 1e-3 && t.hasta < total - 1e-3) tr = setKey(tr, op, r(t.hasta), 0, 'salto')
     tr = setKey(tr, `bg:${t.id}:scale`, r(t.desde), 1, 'lineal')
-    tr = setKey(tr, `bg:${t.id}:scale`, r(t.hasta) - 1 / fps, 1.06, 'lineal')
+    tr = setKey(tr, `bg:${t.id}:scale`, r(t.hasta) - 1 / fps, 1, 'lineal') // fondo fijo, sin zoom (como la referencia)
   }
   return tr
 }

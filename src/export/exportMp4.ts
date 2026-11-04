@@ -7,6 +7,8 @@ const CODECS = ['avc1.640033', 'avc1.640028', 'avc1.4d0028', 'avc1.42003e']
 
 /** Renderiza el proyecto fotograma a fotograma y devuelve un MP4 (H.264). */
 export async function exportMp4(project: Project, onProgress: (p: number) => void): Promise<Blob> {
+  // La letra de los rótulos tiene que estar cargada antes de dibujar
+  await document.fonts.load('700 80px Kalam').catch(() => undefined)
   if (typeof VideoEncoder === 'undefined') {
     throw new Error('Este navegador no puede crear vídeo. Usa Google Chrome o Edge actualizados.')
   }

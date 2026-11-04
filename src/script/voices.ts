@@ -5,7 +5,8 @@
 
 import { gesticular, type Palabra } from './emocion'
 import { decodeAudio, loadAudio, saveAudio } from '../audio/storage'
-import type { Character, Escena, Part, Tracks } from '../model/types'
+import type { Character, Escena, Part, Rotulo, Tracks } from '../model/types'
+import { generateSceneBackgrounds } from './images'
 import { DESCRIPCIONES, MIRADAS } from '../model/characters/chicoRosaExpresivo'
 import { cargarExtras, dibujarPostura } from './posturas'
 import { activeCharacter, useStore } from '../store'
@@ -147,11 +148,14 @@ async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number 
       posturas,
       escenas: escenas.map((e, i) => ({ escena: i, emocion: e.expresion, palabras: porEscena[i].map((w) => w.texto) })).filter((e) => e.palabras.length),
       nuevasMax: ch.expresivo?.base ? 3 : 0,
+      escenografia: true,
       ...(ojosPart ? { miradas: Object.fromEntries(Object.entries(MIRADAS).filter(([k]) => k === 'propios' || ojosPart.variants[k])) } : {}),
     }),
   })
   if (!res.ok) throw new Error(((await res.json().catch(() => ({}))) as { error?: string }).error ?? `error ${res.status}`)
-  const { cambios, miradas, nuevas } = (await res.json()) as {
+  const { cambios, miradas, nuevas, fondos, rotulos } = (await res.json()) as {
+    fondos?: { escena: number; fondo: string }[]
+    rotulos?: { escena: number; palabra: number; texto: string; color: Rotulo['color']; pos: Rotulo['pos'] }[]
     cambios: { escena: number; palabra: number; postura: string }[]
     miradas?: { escena: number; palabra: number; ojos: string }[]
     nuevas?: { nombre: string; dibujo: string; que_expresa: string }[]
@@ -211,7 +215,21 @@ async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number 
     const sig = keys.find((k) => k.t > o.t)
     if (o.v !== 'nada' && sig && !ojos.some((x) => x.t > o.t && x.t < sig.t)) ojosFin.push({ t: sig.t, v: 'nada', ease: 'salto' })
   }
-  return { posturas: keys, ojos: ojosFin.length ? [{ t: 0, v: 'nada', ease: 'salto' as const }, ...ojosFin] : [] }
+  // Rótulos: aparecen en su palabra y se quedan hasta que acaba la escena
+  const rots: Rotulo[] = []
+  for (const r of rotulos ?? []) {
+    const w = porEscena[r.escena]?.[r.palabra]
+    const e = escenas[r.escena]
+    if (!w || !e || !r.texto.trim()) continue
+    rots.push({ id: `r${r.escena}-${r.palabra}-${rots.length}`, t: Math.round(w.t * fps) / fps, fin: e.inicio + e.duracion, texto: r.texto.trim().slice(0, 40), color: r.color, pos: r.pos })
+  }
+  const fondoDe = new Map((fondos ?? []).map((f) => [f.escena, f.fondo.trim()]))
+  return {
+    posturas: keys,
+    ojos: ojosFin.length ? [{ t: 0, v: 'nada', ease: 'salto' as const }, ...ojosFin] : [],
+    rotulos: rots,
+    fondos: escenas.map((_, i) => fondoDe.get(i) ?? ''),
+  }
 }
 
 function wav(buf: AudioBuffer): Blob {
@@ -370,6 +388,8 @@ export async function voiceScript(escenas: Escena[], texto: string, voz: Voz, pa
       if (punt === '?') enPregunta = false
     }
   }
+  let rotulosNuevos: Rotulo[] | null = null
+  let fondosNuevos: string[] | null = null
   // Expresivo: una IA «directora» decide en qué palabra cambia de postura y a cuál, según lo que dice
   if (ch.expresivo && raiz && palabras.length) {
     onProgress('Dirigiendo los gestos según el guion…')
@@ -380,6 +400,8 @@ export async function voiceScript(escenas: Escena[], texto: string, voz: Voz, pa
     if (dir) {
       tracks[`part:${raiz.id}:v`] = dir.posturas
       if (dir.ojos.length) tracks['face:brows'] = dir.ojos
+      rotulosNuevos = dir.rotulos
+      fondosNuevos = dir.fondos
     }
   }
   const conGestos = gesticular(tracks, palabras, ch, m.escenas)
@@ -391,9 +413,18 @@ export async function voiceScript(escenas: Escena[], texto: string, voz: Voz, pa
     ...actual,
     duration: m.duration,
     audio: { id: audioId, name: `Voces (${voz.nombre})`, start: 0, duration: mezcla.duration },
-    guion: { texto, escenas: m.escenas.map(({ inicio: _i, ...e }) => e), voz },
+    guion: { texto, escenas: m.escenas.map(({ inicio: _i, ...e }, i) => ({ ...e, fondo: fondosNuevos?.[i] || e.fondo })), voz },
     instances: [{ ...inst, tracks: conGestos }, ...rest],
+    ...(rotulosNuevos ? { rotulos: rotulosNuevos } : {}),
   })
+  // Fondos de cada escena (lugares dibujados en el estilo del personaje o blanco), ya en su sitio
+  if (fondosNuevos?.some(Boolean)) {
+    try {
+      await generateSceneBackgrounds(useStore.getState().project.guion!.escenas, onProgress)
+    } catch (e) {
+      aviso += ` No se pudieron generar los fondos: ${e instanceof Error ? e.message : e}.`
+    }
+  }
   st.setTime(0)
   st.setPlaying(true)
   return { escenas: ajustadas, duracion: m.duration, aviso }

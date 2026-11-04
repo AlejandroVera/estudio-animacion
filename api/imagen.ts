@@ -27,7 +27,7 @@ export async function POST(request: Request): Promise<Response> {
   const prompt =
     body.tipo === 'libre'
       ? descripcion
-      : `Background illustration for a 2D animated video. ${ref ? 'Use the reference image ONLY as a style reference: same drawing style, flat colors, clean black ink outlines, subtle paper grain, similar color palette. Do NOT draw the character from the reference or any other person. ' : 'Flat colors, clean black ink outlines, subtle paper grain. '}Scene: ${descripcion}. Empty location with no people, no characters, no animals unless asked, no text, no letters, no watermark. Leave open space in the lower middle where a standing character will be placed. Full-bleed, ${formato} composition.`
+      : `Background illustration for a 2D animated video. ${ref ? 'Use the reference image ONLY as a style reference: same simple drawing style: hand-drawn black outlines, completely flat colors with no shading, minimal detail, like a simple YouTube doodle explainer, similar color palette. Do NOT draw the character from the reference or any other person. ' : 'Flat colors, clean black ink outlines, subtle paper grain. '}Scene: ${descripcion}. Empty location with no people, no characters, no animals unless asked, no text, no letters, no watermark. Leave open space in the lower middle where a standing character will be placed. Full-bleed, ${formato} composition.`
 
   const model = ref ? 'fal-ai/nano-banana/edit' : 'fal-ai/nano-banana'
   const res = await fetch(`https://fal.run/${model}`, {

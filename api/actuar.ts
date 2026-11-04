@@ -44,6 +44,19 @@ Cómo actúa un buen narrador (síguelo):
   hacen los brazos y manos (y el objeto si lo hay), y úsalo en «cambios» como postura «x_<nombre>».
   Como mucho las que te digan; solo si aporta de verdad (lo concreto y visual es lo que hace gracia).
 
+FONDOS Y RÓTULOS (si te lo piden), como en «Estoy Tiesa»:
+- «fondos»: para cada escena, «blanco» (fondo blanco liso: cuando explica una idea abstracta, da datos o
+  hay rótulos importantes) o la descripción breve en español de un LUGAR concreto y cotidiano que
+  ilustre lo que cuenta (una cocina desordenada, el sofá de casa, un concesionario, una oficina…).
+  Mantén el mismo lugar en escenas seguidas que hablan de lo mismo (escribe exactamente el mismo texto)
+  y cambia cuando cambia la idea. Como mucho un lugar distinto cada 2-3 escenas.
+- «rotulos»: palabras escritas a mano que aparecen de golpe EN la palabra que se dice: cifras y precios
+  («33.000 €»), conceptos clave («DEPRECIACIÓN»), la conclusión o el remate. 0-3 por escena, 1-3
+  palabras cada uno, en mayúsculas si es un concepto. Color: «negro» normal, «rojo» lo malo/escandaloso,
+  «verde» lo bueno, «azul» un dato neutro. Posición: «arriba», «izq», «der», «izq_baja», «der_baja» o
+  «abajo»; en una misma escena cada rótulo en un sitio distinto (se acumulan hasta que cambia la
+  escena). No repitas tal cual frases enteras: el rótulo resume.
+
 MIRADAS (si te dan un catálogo de miradas): casi todo el rato mira AL FRENTE, a cámara («propios»).
 Cada postura ya trae una mirada coherente; una mirada distinta solo añade un matiz que encaje con el
 gesto que esté haciendo en ese momento (nunca ojos felices con un gesto triste, ni al revés). Los ojos
@@ -81,6 +94,30 @@ const SCHEMA = {
         properties: { nombre: { type: 'string' }, dibujo: { type: 'string' }, que_expresa: { type: 'string' } },
       },
     },
+    fondos: {
+      type: 'array',
+      items: {
+        type: 'object',
+        additionalProperties: false,
+        required: ['escena', 'fondo'],
+        properties: { escena: { type: 'integer' }, fondo: { type: 'string' } },
+      },
+    },
+    rotulos: {
+      type: 'array',
+      items: {
+        type: 'object',
+        additionalProperties: false,
+        required: ['escena', 'palabra', 'texto', 'color', 'pos'],
+        properties: {
+          escena: { type: 'integer' },
+          palabra: { type: 'integer' },
+          texto: { type: 'string' },
+          color: { type: 'string', enum: ['negro', 'rojo', 'verde', 'azul'] },
+          pos: { type: 'string', enum: ['arriba', 'izq', 'der', 'izq_baja', 'der_baja', 'abajo'] },
+        },
+      },
+    },
     miradas: {
       type: 'array',
       items: {
@@ -101,7 +138,7 @@ const SCHEMA = {
 export async function POST(request: Request): Promise<Response> {
   if (!process.env.ANTHROPIC_API_KEY) return json({ error: 'Falta configurar las claves en Vercel.' }, 503)
   if (!claveOk(request)) return json({ error: 'clave' }, 401)
-  let body: { escenas?: { escena: number; emocion: string; palabras: string[] }[]; posturas?: Record<string, string>; miradas?: Record<string, string>; nuevasMax?: number }
+  let body: { escenas?: { escena: number; emocion: string; palabras: string[] }[]; posturas?: Record<string, string>; miradas?: Record<string, string>; nuevasMax?: number; escenografia?: boolean }
   try {
     body = await request.json()
   } catch {
@@ -127,7 +164,7 @@ export async function POST(request: Request): Promise<Response> {
       messages: [
         {
           role: 'user',
-          content: `Catálogo de posturas:\n${catalogo}\n\n${body.miradas ? `Catálogo de miradas:\n${Object.entries(body.miradas).map(([k, v]) => `- ${k}: ${v}`).join('\n')}\n\n` : ''}${body.nuevasMax ? `Gestos a medida permitidos: hasta ${Math.min(4, body.nuevasMax)}.\n\n` : 'No pidas gestos a medida (nuevas vacío).\n\n'}Texto completo (para entender el tono):\n${textoSeguido}\n\nGuion por escenas con las palabras numeradas:\n${guion}`,
+          content: `Catálogo de posturas:\n${catalogo}\n\n${body.miradas ? `Catálogo de miradas:\n${Object.entries(body.miradas).map(([k, v]) => `- ${k}: ${v}`).join('\n')}\n\n` : ''}${body.nuevasMax ? `Gestos a medida permitidos: hasta ${Math.min(4, body.nuevasMax)}.\n\n` : 'No pidas gestos a medida (nuevas vacío).\n\n'}${body.escenografia ? 'Decide también «fondos» (uno por escena) y «rotulos».\n\n' : 'No hace falta «fondos» ni «rotulos» (déjalos vacíos).\n\n'}Texto completo (para entender el tono):\n${textoSeguido}\n\nGuion por escenas con las palabras numeradas:\n${guion}`,
         },
       ],
     })

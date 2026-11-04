@@ -234,6 +234,69 @@ export function drawFrame(g: CanvasRenderingContext2D, project: Project, t: numb
   }
   drawLayers(g, project, t, true)
   g.restore()
+  drawRotulos(g, project, t)
+}
+
+const COLORES: Record<string, string> = { negro: '#262020', rojo: '#D63030', verde: '#28A046', azul: '#285AC8' }
+
+/** Rótulos a mano (fuera de la cámara: no hacen zoom). Entran con un «pop» rápido. */
+export function drawRotulos(g: CanvasRenderingContext2D, project: Project, t: number) {
+  const W = project.width
+  const H = project.height
+  const sitio: Record<string, [number, number, number]> = {
+    // x, y, ancho máximo
+    // La cabeza ocupa el centro de arriba: los laterales van a la altura del cuerpo, que es estrecho
+    arriba: [W / 2, H * 0.09, W * 0.92],
+    izq: [W * 0.2, H * 0.47, W * 0.38],
+    der: [W * 0.8, H * 0.47, W * 0.38],
+    izq_baja: [W * 0.2, H * 0.66, W * 0.38],
+    der_baja: [W * 0.8, H * 0.66, W * 0.38],
+    abajo: [W / 2, H * 0.93, W * 0.92],
+  }
+  for (const r of project.rotulos ?? []) {
+    if (t < r.t || t >= r.fin) continue
+    const [x, y, maxW] = sitio[r.pos] ?? sitio.arriba
+    const dt = t - r.t
+    const pop = dt < 0.07 ? 0.7 + (1.12 - 0.7) * (dt / 0.07) : dt < 0.15 ? 1.12 - 0.12 * ((dt - 0.07) / 0.08) : 1
+    let semilla = 0
+    for (const ch of r.id) semilla = (semilla * 31 + ch.charCodeAt(0)) % 997
+    const rot = (((semilla % 11) - 5) * Math.PI) / 180
+    // Tamaño: grande, pero que quepa en su sitio (hasta 2 líneas)
+    const palabras = r.texto.split(/\s+/)
+    let tam = Math.round(W * 0.13)
+    let lineas: string[] = [r.texto]
+    for (; tam > 30; tam -= 4) {
+      g.font = `700 ${tam}px Kalam, 'Comic Sans MS', cursive`
+      if (g.measureText(r.texto).width <= maxW) {
+        lineas = [r.texto]
+        break
+      }
+      const mitad = Math.ceil(palabras.length / 2)
+      const a = palabras.slice(0, mitad).join(' ')
+      const b = palabras.slice(mitad).join(' ')
+      if (palabras.length > 1 && Math.max(g.measureText(a).width, g.measureText(b).width) <= maxW) {
+        lineas = [a, b]
+        break
+      }
+    }
+    g.save()
+    g.translate(x, y)
+    g.rotate(rot)
+    g.scale(pop, pop)
+    g.font = `700 ${tam}px Kalam, 'Comic Sans MS', cursive`
+    g.textAlign = 'center'
+    g.textBaseline = 'middle'
+    g.lineJoin = 'round'
+    lineas.forEach((l, i) => {
+      const ly = (i - (lineas.length - 1) / 2) * tam * 1.05
+      g.lineWidth = tam * 0.16
+      g.strokeStyle = '#FFFFFF'
+      g.strokeText(l, 0, ly)
+      g.fillStyle = COLORES[r.color] ?? COLORES.negro
+      g.fillText(l, 0, ly)
+    })
+    g.restore()
+  }
 }
 
 /** Pieza bajo un punto del escenario (respetando la transparencia del dibujo). */

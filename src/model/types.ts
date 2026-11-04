@@ -120,6 +120,16 @@ export interface CharacterInstance {
  * Capa de imagen. Se anima con los canales bg:<id>:x|y (px), :scale (1 = cubre el vídeo), :rot (°)
  * y :opacity (0..1). La cámara usa cam:x|y (px) y cam:zoom (1 = normal).
  */
+export interface Rotulo {
+  id: string
+  /** Aparece en t (s) y desaparece en fin */
+  t: number
+  fin: number
+  texto: string
+  color: 'negro' | 'rojo' | 'verde' | 'azul'
+  pos: 'arriba' | 'izq' | 'der' | 'izq_baja' | 'der_baja' | 'abajo'
+}
+
 export interface BgLayer {
   id: string
   name: string
@@ -162,6 +172,8 @@ export interface Project {
   guion?: { texto: string; escenas: Escena[]; voz?: { id: string; nombre: string } }
   /** Capas de imagen (fondos o elementos delante del personaje); sus imágenes se guardan aparte. */
   fondos?: BgLayer[]
+  /** Rótulos escritos a mano que aparecen de golpe en una palabra (estilo «Estoy Tiesa»). */
+  rotulos?: Rotulo[]
   /** Gestos a medida dibujados con IA para este proyecto (imagen en IndexedDB). */
   posturasExtra?: { nombre: string; imageId: string; descripcion: string }[]
   /** Audio (voz) del vídeo; el archivo se guarda aparte, en el navegador (IndexedDB). */

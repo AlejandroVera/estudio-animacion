@@ -108,6 +108,12 @@ cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y
   alinea por la cabeza con t_reposo, guarda en IndexedDB y lo apunta en `project.posturasExtra`
   (`t_x_<nombre>`, familia tranquila: lleva capas de boca y ojos). `cargarExtras` los añade al
   personaje al cargar. Probado en la web real (sartén y espátula).
+- ESCENOGRAFÍA (como la referencia): el director también devuelve `fondos` (por escena: «blanco» o un
+  lugar cotidiano; el mismo texto = mismo fondo) y `rotulos` (palabra, texto 1-3 palabras, color
+  negro/rojo/verde/azul, pos arriba/izq/der/izq_baja/der_baja/abajo). `project.rotulos` se dibujan con
+  `drawRotulos` (render.ts) en letra Kalam a mano con borde blanco, fuera de la cámara, con «pop» de
+  0,15 s, hasta el final de su escena. Al acabar «Generar voces y animar» se generan los fondos solos
+  (`generateSceneBackgrounds`; «blanco» se hace sin IA). Fondos fijos, sin zoom lento.
 - DIRECTOR IA (`api/actuar.ts`, lo llama `dirigir` en `voices.ts` al generar voces): recibe las palabras
   de cada escena, la emoción y el catálogo `DESCRIPCIONES` (qué expresa cada postura) y devuelve en qué
   palabra cambia y a qué postura según lo que dice, y `miradas` (catálogo `MIRADAS`) en otras palabras; las claves caen 0,08 s antes de esa palabra. Si
