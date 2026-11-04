@@ -250,8 +250,8 @@ export function drawObjetos(g: CanvasRenderingContext2D, project: Project, t: nu
   // Centro de cada sitio: a los lados del personaje (que ocupa el centro)
   const mx = W > H ? 0.24 : 0.17
   const sitio: Record<string, [number, number]> = {
-    arriba_izq: [W * mx, H * 0.24],
-    arriba_der: [W * (1 - mx), H * 0.24],
+    arriba_izq: [W * mx, H * (W > H ? 0.24 : 0.14)],
+    arriba_der: [W * (1 - mx), H * (W > H ? 0.24 : 0.14)],
     izq: [W * mx, H * 0.5],
     der: [W * (1 - mx), H * 0.5],
     izq_baja: [W * mx, H * 0.74],

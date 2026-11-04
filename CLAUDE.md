@@ -32,7 +32,7 @@ en lenguaje llano y pídele que pruebe en la web publicada.
   Los rangos se calculan solos (`autoSkin` en `build.ts`) para las piezas de imagen del esqueleto
   estándar (`brazo_*`, `antebrazo_*`, `muslo_*`, `pierna_*`): cualquier personaje nuevo que use esos
   ids lo hereda sin configurar nada.
-- FORMATO del vídeo (selector «Formato» del panel izquierdo: vertical 9:16, horizontal 16:9, cuadrado, 4:5): `setFormato` en `store.ts` cambia `width/height` y escala personaje (misma parte del alto) y cámara; `LIBRARY.place` está pensado para 1080×1920 y `colocar` lo adapta; los fondos se piden con `formatoDe` y solo se reutilizan si tienen la misma forma.
+- FORMATO del vídeo (selector «Formato» de la barra de arriba, junto a «Duración»: vertical 9:16, horizontal 16:9, cuadrado, 4:5): `setFormato` en `store.ts` cambia `width/height` y escala personaje (misma parte del alto) y cámara; `LIBRARY.place` está pensado para 1080×1920 y `colocar` lo adapta; los fondos se piden con `formatoDe` y solo se reutilizan si tienen la misma forma.
 - `src/export/exportMp4.ts`: exporta H.264 con WebCodecs + mp4-muxer (Chrome/Edge).
 - `src/model/sample.ts`: personaje de ejemplo en SVG; es la referencia del formato que deben
   producir los personajes generados con IA.
@@ -115,6 +115,21 @@ cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y
   `drawRotulos` (render.ts) en letra Kalam a mano con borde blanco, fuera de la cámara, con «pop» de
   0,15 s, hasta el final de su escena. La referencia de estilo de los fondos es `Character.referencia` (debe EXISTIR en `public/`: con el chico rosa faltaba y fal daba 422; ahora `referencia.jpg`); si fal falla con referencia, `api/imagen.ts` reintenta sin ella. Al acabar «Generar voces y animar» se generan los fondos solos
   (`generateSceneBackgrounds`; «blanco» se hace sin IA). Fondos fijos, sin zoom lento. Estilo de fondo «cutre» a petición de Alejandro (garabato de tableta, trazo irregular, colores apagados), descrito en el texto de `api/imagen.ts`, sin usar imágenes de la referencia.
+- OBJETOS EN ESCENA (tras «en la escena no ocurre nada»): el director devuelve `objetos` (escena, palabra,
+  que, dibujo en inglés, pos arriba_izq/arriba_der/izq/der/izq_baja/der_baja): el objeto del que habla,
+  bocadillos de pensamiento, carteles con precio… `src/script/objetos.ts` (`ponerObjetos`) los dibuja con
+  `api/imagen.ts` tipo «objeto» (garabato sobre blanco), quita el fondo (`quitarFondo`), recorta, guarda en
+  IndexedDB y los apunta en `project.objetos` (mismo dibujo = se reutiliza). `drawObjetos` (render.ts) los
+  pinta fuera de la cámara con «pop», como los rótulos; el editor (Stage) también pinta objetos y rótulos.
+- TAMAÑO POR ESCENA: selector «Tamaño» de cada escena = `Escena.plano` (`lejos` pequeño: escala 0,7 de la
+  raíz desde los pies; `general`; `medio` y `primer` con zoom de cámara). Las indicaciones mandan:
+  `planoDeIndicaciones` («pequeño», «primer plano», «de cintura arriba»…) y `fondoDeIndicaciones`
+  («Fondo: …», «fondo blanco») en scenes.ts, aplicadas en `voiceScript`. Si un fondo falla, los demás se
+  generan igual.
+- Mano delante de la cara en gestos a medida: `revisar` busca trazos oscuros unidos al contorno de la
+  cabeza que entran en la caja de ojos/boca (>200 px); NO compara la cara (la IA la redibuja con otra
+  expresión y eso dejaba al personaje sin boca). Alinea también el tamaño de la cabeza. El parpadeo no
+  pega ojos cerrados en posturas `sinCapas`/`sinOjos`.
 - EL USUARIO DIRIGE (petición expresa: «quiero yo dirigir a la IA»): cada escena tiene «🎬 Lo que quieres
   que haga» (`Escena.indicaciones`) y el guion «Indicaciones para todo el vídeo»
   (`guion.indicaciones`). `api/actuar.ts` las trata como ÓRDENES por encima de todo (gesto → a medida
