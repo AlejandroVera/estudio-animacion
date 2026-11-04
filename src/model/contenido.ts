@@ -94,15 +94,34 @@ export function drawContenido(g: CanvasRenderingContext2D, project: Project, t: 
 function dibujarRotulo(g: CanvasRenderingContext2D, r: Rotulo, x: number, y: number, maxW: number, h: number, escala: number) {
   const estilo = r.estilo ?? 'nota'
   const color = estilo === 'grande' ? COLORES.negro : COLORES[r.color] ?? COLORES.negro
-  let tam = Math.round(h * (estilo === 'grande' ? 0.85 : estilo === 'cartel' ? 0.55 : 0.7))
-  g.save()
-  g.font = `700 ${tam}px ${LETRA}`
+  const base = Math.round(h * (estilo === 'grande' ? 0.85 : estilo === 'cartel' ? 0.55 : 0.7))
   const maxTexto = estilo === 'cartel' ? maxW * 0.8 : maxW
-  while (g.measureText(r.texto).width + tam * 0.3 > maxTexto && tam > 20) {
-    tam -= 3
-    g.font = `700 ${tam}px ${LETRA}`
+  g.save()
+  // Tamaño que cabe en una línea y en dos (partiendo por la mitad de las palabras): gana el más grande
+  const cabe = (lineas: string[], tope: number) => {
+    let t = tope
+    g.font = `700 ${t}px ${LETRA}`
+    while (Math.max(...lineas.map((l) => g.measureText(l).width)) + t * 0.3 > maxTexto && t > 20) {
+      t -= 3
+      g.font = `700 ${t}px ${LETRA}`
+    }
+    return t
   }
-  const ancho = g.measureText(r.texto).width
+  const palabras = r.texto.split(/\s+/)
+  let lineas = [r.texto]
+  let tam = cabe(lineas, base)
+  if (palabras.length > 1) {
+    const mitad = Math.ceil(palabras.length / 2)
+    const dos = [palabras.slice(0, mitad).join(' '), palabras.slice(mitad).join(' ')]
+    const tam2 = cabe(dos, Math.round(base * 0.62))
+    if (tam2 > tam * 1.15) {
+      lineas = dos
+      tam = tam2
+    }
+  }
+  g.font = `700 ${tam}px ${LETRA}`
+  const ancho = Math.max(...lineas.map((l) => g.measureText(l).width))
+  const altoTexto = tam * 1.05 * lineas.length
   const rot = (((semilla(r.id) % 9) - 4) * Math.PI) / 180
   g.translate(x, y)
   g.rotate(rot)
@@ -112,7 +131,7 @@ function dibujarRotulo(g: CanvasRenderingContext2D, r: Rotulo, x: number, y: num
   g.lineJoin = 'round'
   if (estilo === 'cartel') {
     // Cartelito amarillo pálido con borde a mano
-    const pw = ancho + tam * 0.9, ph = tam * 1.5
+    const pw = ancho + tam * 0.9, ph = altoTexto + tam * 0.45
     g.fillStyle = r.color === 'rojo' ? '#FFE9A8' : r.color === 'verde' ? '#FFD84A' : '#FFF3C4'
     g.strokeStyle = '#262020'
     g.lineWidth = Math.max(3, tam * 0.07)
@@ -120,21 +139,25 @@ function dibujarRotulo(g: CanvasRenderingContext2D, r: Rotulo, x: number, y: num
     g.fill()
     g.stroke()
     g.fillStyle = '#262020'
-    g.fillText(r.texto, 0, tam * 0.04)
+    lineas.forEach((l, i) => g.fillText(l, 0, tam * 0.04 + (i - (lineas.length - 1) / 2) * tam * 1.05))
   } else {
     g.lineWidth = tam * 0.14
-    g.strokeStyle = '#FFFFFF'
-    g.strokeText(r.texto, 0, 0)
-    g.fillStyle = color
-    g.fillText(r.texto, 0, 0)
+    lineas.forEach((l, i) => {
+      const ly = (i - (lineas.length - 1) / 2) * tam * 1.05
+      g.strokeStyle = '#FFFFFF'
+      g.strokeText(l, 0, ly)
+      g.fillStyle = color
+      g.fillText(l, 0, ly)
+    })
     if (estilo === 'nota') {
       // Subrayado a mano
       g.strokeStyle = color
       g.lineWidth = Math.max(3, tam * 0.07)
       g.lineCap = 'round'
       g.beginPath()
-      g.moveTo(-ancho / 2, tam * 0.55)
-      g.quadraticCurveTo(0, tam * (0.5 + ((semilla(r.id) % 5) - 2) * 0.04), ancho / 2, tam * 0.6)
+      const yb = altoTexto / 2 + tam * 0.05
+      g.moveTo(-ancho / 2, yb)
+      g.quadraticCurveTo(0, yb + tam * (((semilla(r.id) % 5) - 2) * 0.04 - 0.05), ancho / 2, yb + tam * 0.05)
       g.stroke()
     }
   }
