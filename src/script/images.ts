@@ -49,12 +49,51 @@ export async function generateBackground(descripcion: string, project: Project):
   if (!res.ok) throw new Error(d.error ?? `Error ${res.status}`)
   const img = await fetch(d.url)
   if (!img.ok) throw new Error('No se pudo descargar la imagen generada.')
-  const blob = await img.blob()
-  const bmp = await createImageBitmap(blob)
+  const bmp0 = await createImageBitmap(await img.blob())
+  // La IA a veces deja un marco blanco alrededor: se recorta para que el dibujo llegue a los bordes
+  const { blob, bmp } = await sinMarco(bmp0)
   const id = `fondo-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`
   await saveImage(id, blob)
   const name = descripcion.length > 28 ? descripcion.slice(0, 26) + '…' : descripcion
   return { id, name, imageId: id, w: bmp.width, h: bmp.height }
+}
+
+/** Recorta las bandas casi blancas de los bordes (marco que deja a veces la IA). */
+export async function sinMarco(bmp: ImageBitmap): Promise<{ blob: Blob; bmp: ImageBitmap }> {
+  const W = bmp.width, H = bmp.height
+  const c = new OffscreenCanvas(W, H)
+  const g = c.getContext('2d', { willReadFrequently: true })!
+  g.drawImage(bmp, 0, 0)
+  const d = g.getImageData(0, 0, W, H).data
+  // Fracción de píxeles casi blancos de una fila o columna
+  const blancaFila = (y: number) => {
+    let n = 0
+    for (let x = 0; x < W; x += 4) if (Math.min(d[(y * W + x) * 4], d[(y * W + x) * 4 + 1], d[(y * W + x) * 4 + 2]) > 235) n++
+    return n / Math.ceil(W / 4) > 0.97
+  }
+  const blancaCol = (x: number) => {
+    let n = 0
+    for (let y = 0; y < H; y += 4) if (Math.min(d[(y * W + x) * 4], d[(y * W + x) * 4 + 1], d[(y * W + x) * 4 + 2]) > 235) n++
+    return n / Math.ceil(H / 4) > 0.97
+  }
+  let y0 = 0, y1 = H - 1, x0 = 0, x1 = W - 1
+  while (y0 < H * 0.2 && blancaFila(y0)) y0++
+  while (y1 > H * 0.8 && blancaFila(y1)) y1--
+  while (x0 < W * 0.2 && blancaCol(x0)) x0++
+  while (x1 > W * 0.8 && blancaCol(x1)) x1--
+  // Un poco más hacia dentro para quitar también la línea del borde del marco
+  if (y0 > 0) y0 += 6
+  if (y1 < H - 1) y1 -= 6
+  if (x0 > 0) x0 += 6
+  if (x1 < W - 1) x1 -= 6
+  if (x0 === 0 && y0 === 0 && x1 === W - 1 && y1 === H - 1) {
+    return { blob: await c.convertToBlob({ type: 'image/jpeg', quality: 0.92 }), bmp }
+  }
+  const w = x1 - x0 + 1, h = y1 - y0 + 1
+  const out = new OffscreenCanvas(w, h)
+  out.getContext('2d')!.drawImage(c, x0, y0, w, h, 0, 0, w, h)
+  const blob = await out.convertToBlob({ type: 'image/jpeg', quality: 0.92 })
+  return { blob, bmp: await createImageBitmap(blob) }
 }
 
 /** Añade una capa al fondo (detrás de las demás capas de fondo). */

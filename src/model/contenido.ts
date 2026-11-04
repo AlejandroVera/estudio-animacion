@@ -78,8 +78,9 @@ export function drawContenido(g: CanvasRenderingContext2D, project: Project, t: 
     if (t < s.e.t) return
     const dt = t - s.e.t
     const flecha = s.e.tipo === 'rotulo' ? s.e.r.flecha : s.e.o.flecha
-    if (flecha) {
-      // Desde lo anterior (o desde el personaje si es lo primero) hasta este elemento, dibujándose
+    // Flecha solo si hay algo anterior a lo que unirlo (si no, quedaba una rayita suelta)
+    if (flecha && i > 0) {
+      // Desde lo anterior hasta este elemento, dibujándose
       const prev = sitios[i - 1]
       const desde = prev ? { x: prev.x + (v.lado === 'izq' ? -1 : 1) * prev.w * 0.25, y: prev.y + prev.h * 0.4 } : { x: cabeza.x + (v.lado === 'izq' ? 1 : -1) * W * 0.08, y: s.y }
       const hasta = { x: s.x + (v.lado === 'izq' ? -1 : 1) * s.w * 0.3, y: s.y }
