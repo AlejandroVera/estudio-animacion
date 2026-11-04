@@ -102,6 +102,12 @@ cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y
   `frente` (pupilas a cámara) por defecto; `ojosPorDefecto` da a cada postura su mirada coherente
   (triste→triste, barbilla→arriba…); `sinCapas` (mano delante de la cara) usa su propia cara y `~b`.
   Índice y contar con los dedos, solo cuando el texto lo pide (lo decía el usuario: no pegaba).
+- GESTOS A MEDIDA: el director puede pedir hasta 3 por vídeo («nuevas»: nombre + dibujo en inglés). La
+  web llama a `api/postura.ts` (fal Nano Banana edita `base_gestos.jpg`, el t_reposo con ojos al frente
+  y fondo blanco), `src/script/posturas.ts` quita el fondo blanco unido a los bordes, recorta al lienzo,
+  alinea por la cabeza con t_reposo, guarda en IndexedDB y lo apunta en `project.posturasExtra`
+  (`t_x_<nombre>`, familia tranquila: lleva capas de boca y ojos). `cargarExtras` los añade al
+  personaje al cargar. Probado en la web real (sartén y espátula).
 - DIRECTOR IA (`api/actuar.ts`, lo llama `dirigir` en `voices.ts` al generar voces): recibe las palabras
   de cada escena, la emoción y el catálogo `DESCRIPCIONES` (qué expresa cada postura) y devuelve en qué
   palabra cambia y a qué postura según lo que dice, y `miradas` (catálogo `MIRADAS`) en otras palabras; las claves caen 0,08 s antes de esa palabra. Si
