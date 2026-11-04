@@ -133,12 +133,11 @@ export function drawCharacter(
     const fore = character.parts.find((p) => p.id === 'antebrazo_der' || p.id === 'antebrazo_izq')
     pose = withLife(pose, t, inst.tracks, fore ? Math.hypot(fore.offset.x, fore.offset.y) : 200, character.parts.find((p) => !p.parent)?.id)
   }
-  // Expresivo: «pop» al cambiar de postura (crece un poco desde los pies y vuelve)
-  if (!restPose && character.expresivo && pose.fades) {
-    for (const [id, f] of Object.entries(pose.fades)) {
-      const pp = pose.parts[id]
-      if (pp) pose.parts[id] = { ...pp, scale: pp.scale * (1 + 0.025 * Math.sin(Math.PI * Math.min(1, f.u))) }
-    }
+  // Expresivo: parpadeo con su dibujo de ojos cerrados
+  if (!restPose && character.expresivo && pose.blink > 0.5) {
+    const raiz = character.parts.find((p) => !p.parent)
+    const v = raiz && (pose.variants[raiz.id] ?? raiz.defaultVariant).split('~')[0]
+    if (raiz && v && raiz.variants[v + '~c']) pose = { ...pose, variants: { ...pose.variants, [raiz.id]: v + '~c' } }
   }
   const placed = layout(character, inst, pose, restPose)
   const byId = new Map(placed.map((p) => [p.part.id, p]))

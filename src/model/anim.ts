@@ -98,13 +98,12 @@ export function poseAt(character: Character, tracks: Tracks, t: number): Pose {
       const abierta = ['abierta', 'E', 'O', 'grito'].includes(mouth)
       const alt = abierta !== character.expresivo.abiertas.includes(v)
       variants[p.id] = alt && p.variants[v + '~b'] ? v + '~b' : v
-      // Cambio de postura: fundido muy corto (3 fotogramas) con un pequeño «pop», para que no sea un
-      // salto seco pero tampoco se vean dos dibujos a la vez
+      // Corte seco (como en la referencia) y un parpadeo justo después de cambiar de postura
       if (vk?.length) {
         let k = -1
         for (let i = 0; i < vk.length; i++) if (vk[i].t <= t) k = i
-        const antes = k > 0 ? str(vk[k - 1].v) : k === 0 && vk[0].t > 0 ? p.defaultVariant : null
-        if (k >= 0 && antes !== null && antes !== str(vk[k].v) && t - vk[k].t < POP) fades[p.id] = { prev: antes, u: (t - vk[k].t) / POP }
+        const dt = k >= 0 ? t - vk[k].t : -1
+        if (k >= 0 && (k > 0 || vk[0].t > 0) && dt > 0.04 && dt < 0.12 && p.variants[v + '~c']) variants[p.id] = v + '~c'
       }
     } else if (vk?.length && !p.role) {
       variants[p.id] = str(evalTrack(vk, t, p.defaultVariant))

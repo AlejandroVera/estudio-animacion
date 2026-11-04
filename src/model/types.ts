@@ -73,6 +73,12 @@ export interface Character {
     abiertas: string[]
     cabeza: { x: number; y: number }
     gestos: Record<string, string>
+    calma: string[]
+    pregunta: string[]
+    numero: string[]
+    comentario: string
+    saludo: string
+    gag: Record<string, string>
     emociones: Record<string, string[]>
   }
   /** Expresiones predefinidas: valores de los canales de cara. */

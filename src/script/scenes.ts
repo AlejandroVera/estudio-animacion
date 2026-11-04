@@ -149,40 +149,48 @@ export function animateScenes(escenas: Escena[], project: Project, character: Ch
       // Expresivo (estilo «Estoy Tiesa»): una postura con su cara por cada trozo de frase, de golpe,
       // elegida por lo que dice (pregunta, números, exclamación…) y por la emoción de la escena.
       const ex = character.expresivo
-      const lista = (ex.emociones[e.expresion] ?? ex.emociones.Neutral).filter((p) => raiz.variants[p])
+      const ok = (p?: string) => !!p && !!raiz.variants[p]
+      const tranquilas = [...(ex.emociones[e.expresion] ?? []), ...ex.calma].filter(ok)
       const trozos = e.dialogo.match(/[^,.;:!?…]+[,.;:!?…]*/g) ?? [e.dialogo]
-      // Trozos de al menos ~1,5 s (unas 4 palabras): se juntan los cortos
+      // Trozos de 4 a 8 palabras (unos 1,5-3 s): se juntan los cortos y se parten los largos
       const grupos: string[] = []
       for (const tz of trozos) {
         const last = grupos[grupos.length - 1]
         if (last && last.split(/\s+/).filter(Boolean).length < 4) grupos[grupos.length - 1] = last + tz
         else grupos.push(tz)
       }
-      // Y los largos se parten: nunca más de ~7 palabras (unos 3 s) en la misma postura
       for (let i = 0; i < grupos.length; i++) {
         const w = grupos[i].split(/\s+/).filter(Boolean)
         if (w.length > 8) grupos.splice(i, 1, w.slice(0, Math.ceil(w.length / 2)).join(' ') + ' ', w.slice(Math.ceil(w.length / 2)).join(' '))
       }
       const total = grupos.reduce((n, g) => n + g.length, 0) || 1
       let acum = 0
-      let idx = Math.floor(rnd() * lista.length)
+      let idx = Math.floor(rnd() * tranquilas.length)
+      const pick = (l: string[]) => {
+        const c = l.filter(ok)
+        if (!c.length) return undefined
+        let p = c[Math.floor(rnd() * c.length)]
+        if (p === ultimaPose && c.length > 1) p = c[(c.indexOf(p) + 1) % c.length]
+        return p
+      }
       grupos.forEach((g, gi) => {
         const t = inicio + 0.1 + (acum / total) * Math.max(0.5, dur - 0.4)
         acum += g.length
         if (ocupado.some(([a, b]) => t >= a - 0.8 && t < b)) return
         const low = g.toLowerCase()
         let pose: string | undefined
-        if (gi === 0 && e.expresion !== 'Neutral') pose = lista[0]
-        else if (/coment|suscr/.test(low)) pose = 'senalar'
-        else if (/\bhola\b/.test(low)) pose = 'saludar'
-        else if (/\?/.test(g)) pose = rnd() < 0.5 ? 'encogerse' : 'pensar'
-        else if (/\d|\b(uno|dos|tres|primer|segund|tercer)/.test(low)) pose = rnd() < 0.5 ? 'tres' : 'indice'
-        else if (/!/.test(g) && e.expresion === 'Neutral') pose = rnd() < 0.5 ? 'mejillas' : 'stop'
-        if (!pose || !raiz.variants[pose] || pose === ultimaPose) {
-          pose = lista[idx++ % lista.length]
-          if (pose === ultimaPose) pose = lista[idx++ % lista.length]
+        // Lo exagerado, solo de vez en cuando: al empezar una escena con emoción o en una exclamación
+        if (gi === 0 && ok(ex.gag[e.expresion])) pose = ex.gag[e.expresion]
+        else if (/!/.test(g) && e.expresion !== 'Neutral' && ok(ex.gag[e.expresion]) && rnd() < 0.5) pose = ex.gag[e.expresion]
+        else if (/coment|suscr/.test(low)) pose = ex.comentario
+        else if (/\bhola\b/.test(low)) pose = ex.saludo
+        else if (/\?/.test(g)) pose = pick(ex.pregunta)
+        else if (/\d|\b(uno|dos|tres|primer|segund|tercer)/.test(low)) pose = pick(ex.numero)
+        if (!ok(pose) || pose === ultimaPose) {
+          pose = tranquilas[idx++ % tranquilas.length]
+          if (pose === ultimaPose) pose = tranquilas[idx++ % tranquilas.length]
         }
-        if (pose === ultimaPose) return
+        if (!pose || pose === ultimaPose) return
         ultimaPose = pose
         result.claves.push({ canal: `part:${raiz.id}:v`, t, valor: pose, transicion: 'salto' })
       })

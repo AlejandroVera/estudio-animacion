@@ -13,7 +13,20 @@ const RUTA = '/personajes/chico-rosa/expresivo'
 
 /** Nombre que se ve en la herramienta para cada postura. */
 export const NOMBRES_EXPRESIVO: Record<string, string> = {
-  reposo: 'Reposo',
+  t_reposo: 'Tranquilo',
+  t_explica: 'Explica (mano)',
+  t_indice: 'Índice (tranquilo)',
+  t_presenta: 'Presenta (tranquilo)',
+  t_pecho: 'Mano en el pecho',
+  t_encoge: 'Medio encogido',
+  t_cuenta: 'Cuenta con los dedos',
+  t_barbilla: 'Mano en la barbilla',
+  t_cadera: 'Mano en la cadera',
+  t_triste: 'Apenado',
+  t_saluda: 'Saluda (tranquilo)',
+  t_duda: 'Rascarse la cabeza',
+  t_abajo: 'Señala abajo (tranquilo)',
+  reposo: 'De frente',
   hablar: 'Hablar',
   indice: 'Índice arriba',
   presentar: 'Presentar',
@@ -39,6 +52,7 @@ export function chicoRosaExpresivoCharacter(): Character {
   const variants: Record<string, string> = {}
   for (const p of manifest.poses) variants[p] = `${RUTA}/${p}.webp`
   for (const p of manifest.bocas) variants[p + '~b'] = `${RUTA}/${p}~b.webp`
+  for (const p of manifest.parpadeo) variants[p + '~c'] = `${RUTA}/${p}~c.webp`
   const defs: PartDef[] = [
     {
       id: 'cuerpo',
@@ -48,7 +62,7 @@ export function chicoRosaExpresivoCharacter(): Character {
       box: { x: lx, y: ly, w: lw, h: lh },
       pivot: { x: manifest.pies[0], y: manifest.pies[1] },
       image: true,
-      defaultVariant: 'reposo',
+      defaultVariant: 't_reposo',
       variants,
     },
   ]
@@ -61,17 +75,26 @@ export function chicoRosaExpresivoCharacter(): Character {
       abiertas: ['enfado', 'celebrar', 'senalar', 'tres'],
       cabeza: { x: manifest.cabeza[0] - lx, y: manifest.cabeza[1] - ly },
       gestos: {
-        saludar: 'saludar', encogerse: 'encogerse', senalar: 'presentar', pensar: 'pensar', jarras: 'indice',
-        explicar: 'presentar', asentir: 'hablar', negar: 'stop', celebrar: 'celebrar', sorpresa: 'mejillas',
-        hablar: 'hablar', pulgar: 'guino', cruzar_brazos: 'cruzado', comenta_abajo: 'senalar', manos_juntas: 'hablar',
+        saludar: 't_saluda', encogerse: 't_encoge', senalar: 't_presenta', pensar: 't_barbilla', jarras: 't_cadera',
+        explicar: 't_explica', asentir: 't_pecho', negar: 'stop', celebrar: 'celebrar', sorpresa: 'mejillas',
+        hablar: 't_explica', pulgar: 'guino', cruzar_brazos: 'cruzado', comenta_abajo: 't_abajo', manos_juntas: 't_pecho',
       },
+      // Lo normal al hablar: la familia tranquila de tres cuartos (mismo cuerpo, solo cambia un brazo)
+      calma: ['t_explica', 't_reposo', 't_indice', 't_presenta', 't_cadera', 't_pecho', 't_explica', 't_reposo'],
+      pregunta: ['t_encoge', 't_duda', 't_barbilla'],
+      numero: ['t_cuenta', 't_indice'],
+      comentario: 't_abajo',
+      saludo: 't_saluda',
+      // Gag: postura exagerada (de frente) solo al empezar una escena con esa emoción o en una exclamación
+      gag: { Sorprendido: 'mejillas', Enfadado: 'enfado', Gritando: 'enfado' },
+      // Postura tranquila que encaja con cada emoción, para el resto de la escena
       emociones: {
-        Neutral: ['hablar', 'indice', 'presentar', 'encogerse', 'pensar', 'hablar', 'tres', 'reposo'],
-        Contento: ['victoria', 'presentar', 'guino', 'corazon', 'celebrar', 'saludar'],
-        Triste: ['llorar', 'pensar', 'tapar'],
-        Enfadado: ['enfado', 'cruzado', 'stop'],
-        Sorprendido: ['mejillas', 'encogerse', 'tapar'],
-        Gritando: ['enfado', 'mejillas'],
+        Neutral: [],
+        Contento: ['t_cadera', 't_presenta', 't_saluda'],
+        Triste: ['t_triste', 't_pecho', 't_barbilla'],
+        Enfadado: ['t_encoge', 't_cadera'],
+        Sorprendido: ['t_duda', 't_encoge'],
+        Gritando: ['t_encoge'],
       },
     },
     expressions: {

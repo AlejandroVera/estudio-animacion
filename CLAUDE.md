@@ -63,8 +63,15 @@ cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y
 - Se hacen con Magnific Nano Banana 2.1 editando el dibujo base («misma figura y sitio, cambia postura Y
   expresión: …»), 2 versiones y se elige; luego otra edición por postura solo de la boca.
   `herramientas/preparar_expresivo.py` recorta, alinea y de la versión «~b» toma SOLO la boca.
-- `poseAt`: si la boca (canal `face:mouth`) está abierta y la postura no, usa `~b` (y al revés).
-  Cambio de postura con fundido de 0,1 s (`POP`) y un «pop» de escala 2,5 % desde los pies.
+- Segundo análisis de la referencia (lo que la hace natural): ~45 % del tiempo tranquila, ~35 % gestos
+  suaves, ~20 % exagerado y SOLO en chistes; de tres cuartos y asimétrica (peso en una pierna, mano en
+  el bolsillo); posturas seguidas con el MISMO cuerpo cambiando solo un brazo y la cara; cortes SECOS
+  (nada de fundidos ni pop: lo hacía robótico); parpadeo cada 3-5 s y al cambiar de postura.
+- Por eso hay dos familias: tranquila `t_*` (tres cuartos, misma postura base, solo cambia el brazo
+  libre y la cara; con `~b` boca y `~c` ojos cerrados, el parpadeo copiado de una sola imagen) y la de
+  gags de frente (susto, enfado, llorar…), que solo sale con `gag[expresión]` o una exclamación.
+- `poseAt`: si la boca (canal `face:mouth`) está abierta y la postura no, usa `~b` (y al revés); justo
+  después de cambiar de postura, `~c` (parpadeo). `drawCharacter` pone `~c` en los parpadeos de la vida.
 - Boca del expresivo (`silabas` en `voices.ts`): se abre al empezar cada vocal y se cierra al acabarla
   (mínimo 2 fotogramas), no por letras. Cada cambio de postura se pega al inicio de la palabra más
   cercana (0,08 s antes). Comprobado: la boca va a 0 fotogramas de la voz (correlación boca/energía).
