@@ -204,6 +204,14 @@ export function ScriptPanel({ onClose }: { onClose: () => void }) {
         <>
           <div className="script-sum muted small">
             {escenas.length} escenas · {total.toFixed(1).replace('.', ',')} s
+            <button
+              className="btn small"
+              style={{ marginLeft: 8 }}
+              onClick={() => setEscenas((es) => es.map((e) => ({ ...e, plano: 'general' as Plano })))}
+              title="Pone todas las escenas en plano general: cuerpo entero, sin zooms"
+            >
+              Todo en plano general
+            </button>
           </div>
           <div className="scene-list">
             {escenas.map((e, i) => (
