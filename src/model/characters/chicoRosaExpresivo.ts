@@ -47,12 +47,33 @@ export const NOMBRES_EXPRESIVO: Record<string, string> = {
   saludar: 'Saludar',
 }
 
-export function chicoRosaExpresivoCharacter(): Character {
+export interface ManifestExpresivo {
+  lienzo: number[]
+  pies: number[]
+  cabeza: number[]
+  poses: string[]
+  bocas: string[]
+  parpadeo?: string[]
+}
+
+/**
+ * Construye un personaje expresivo a partir de su carpeta de imágenes y su manifest
+ * (lo que escribe herramientas/preparar_expresivo.py). Sirve para cualquier personaje.
+ */
+export function personajeExpresivo(cfg: {
+  id: string
+  name: string
+  ruta: string
+  manifest: ManifestExpresivo
+  referencia?: string
+  abiertas: string[]
+}): Character {
+  const { manifest, ruta } = cfg
   const [lx, ly, lw, lh] = manifest.lienzo
   const variants: Record<string, string> = {}
-  for (const p of manifest.poses) variants[p] = `${RUTA}/${p}.webp`
-  for (const p of manifest.bocas) variants[p + '~b'] = `${RUTA}/${p}~b.webp`
-  for (const p of manifest.parpadeo) variants[p + '~c'] = `${RUTA}/${p}~c.webp`
+  for (const p of manifest.poses) variants[p] = `${ruta}/${p}.webp`
+  for (const p of manifest.bocas) variants[p + '~b'] = `${ruta}/${p}~b.webp`
+  for (const p of manifest.parpadeo ?? []) variants[p + '~c'] = `${ruta}/${p}~c.webp`
   const defs: PartDef[] = [
     {
       id: 'cuerpo',
@@ -62,17 +83,17 @@ export function chicoRosaExpresivoCharacter(): Character {
       box: { x: lx, y: ly, w: lw, h: lh },
       pivot: { x: manifest.pies[0], y: manifest.pies[1] },
       image: true,
-      defaultVariant: 't_reposo',
+      defaultVariant: variants.t_reposo ? 't_reposo' : 'reposo',
       variants,
     },
   ]
   return {
-    id: 'chico-rosa',
-    name: 'Chico rosa',
-    referencia: '/personajes/chico-rosa/poses/referencia.jpg',
+    id: cfg.id,
+    name: cfg.name,
+    referencia: cfg.referencia,
     ...buildParts(defs),
     expresivo: {
-      abiertas: ['enfado', 'celebrar', 'senalar', 'tres'],
+      abiertas: cfg.abiertas,
       cabeza: { x: manifest.cabeza[0] - lx, y: manifest.cabeza[1] - ly },
       gestos: {
         saludar: 't_saluda', encogerse: 't_encoge', senalar: 't_presenta', pensar: 't_barbilla', jarras: 't_cadera',
@@ -97,13 +118,26 @@ export function chicoRosaExpresivoCharacter(): Character {
         Gritando: ['t_encoge'],
       },
     },
-    expressions: {
-      Neutral: { brows: 'neutral', mouth: 'cerrada' },
-      Contento: { brows: 'neutral', mouth: 'cerrada' },
-      Triste: { brows: 'neutral', mouth: 'cerrada' },
-      Enfadado: { brows: 'neutral', mouth: 'cerrada' },
-      Sorprendido: { brows: 'neutral', mouth: 'cerrada' },
-      Gritando: { brows: 'neutral', mouth: 'abierta' },
-    },
+    expressions: EXPRESIONES,
   }
+}
+
+const EXPRESIONES: Character['expressions'] = {
+  Neutral: { brows: 'neutral', mouth: 'cerrada' },
+  Contento: { brows: 'neutral', mouth: 'cerrada' },
+  Triste: { brows: 'neutral', mouth: 'cerrada' },
+  Enfadado: { brows: 'neutral', mouth: 'cerrada' },
+  Sorprendido: { brows: 'neutral', mouth: 'cerrada' },
+  Gritando: { brows: 'neutral', mouth: 'abierta' },
+}
+
+export function chicoRosaExpresivoCharacter(): Character {
+  return personajeExpresivo({
+    id: 'chico-rosa-detallado',
+    name: 'Chico rosa (detallado)',
+    ruta: RUTA,
+    manifest,
+    referencia: '/personajes/chico-rosa/poses/referencia.jpg',
+    abiertas: ['enfado', 'celebrar', 'senalar', 'tres'],
+  })
 }

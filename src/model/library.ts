@@ -4,6 +4,7 @@ import { chicoRosaCharacter } from './characters/chicoRosa'
 import { withIdle } from './idle'
 import { chicoRosaPosesCharacter } from './characters/chicoRosaPoses'
 import { chicoRosaExpresivoCharacter } from './characters/chicoRosaExpresivo'
+import { chicoMagentaCharacter } from './characters/chicoMagenta'
 import { sampleCharacter } from './sample'
 import type { Character, Project } from './types'
 
@@ -17,7 +18,8 @@ export interface LibraryEntry {
 }
 
 export const LIBRARY: LibraryEntry[] = [
-  { id: 'chico-rosa', name: 'Chico rosa', make: chicoRosaExpresivoCharacter, place: { x: 540, y: 1700, scale: 0.62 }, background: '#CE544E' },
+  { id: 'chico-rosa', name: 'Chico rosa', make: chicoMagentaCharacter, place: { x: 540, y: 1700, scale: 0.62 }, background: '#BDF2D2' },
+  { id: 'chico-rosa-detallado', name: 'Chico rosa (detallado)', make: chicoRosaExpresivoCharacter, place: { x: 540, y: 1700, scale: 0.62 }, background: '#CE544E' },
   {
     id: 'chico-rosa-poses',
     name: 'Chico rosa (poses, anterior)',

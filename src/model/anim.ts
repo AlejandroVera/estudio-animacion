@@ -94,7 +94,8 @@ export function poseAt(character: Character, tracks: Tracks, t: number): Pose {
     const vk = tracks[`part:${p.id}:v`]
     if (character.expresivo && !p.parent) {
       // Personaje expresivo: la postura es la clave; para hablar se usa su versión con la boca al revés
-      const v = vk?.length ? str(evalTrack(vk, t, p.defaultVariant)) : p.defaultVariant
+      let v = vk?.length ? str(evalTrack(vk, t, p.defaultVariant)) : p.defaultVariant
+      if (!p.variants[v]) v = p.defaultVariant // postura de otro personaje
       const abierta = ['abierta', 'E', 'O', 'grito'].includes(mouth)
       const alt = abierta !== character.expresivo.abiertas.includes(v)
       variants[p.id] = alt && p.variants[v + '~b'] ? v + '~b' : v

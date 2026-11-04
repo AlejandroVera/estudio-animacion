@@ -1,0 +1,76 @@
+{
+ "lienzo": [
+  258,
+  81,
+  1255,
+  2263
+ ],
+ "pies": [
+  915.0,
+  2336
+ ],
+ "cabeza": [
+  901.6,
+  446.9,
+  361.9
+ ],
+ "poses": [
+  "celebrar",
+  "cruzado",
+  "enfado",
+  "llorar",
+  "mejillas",
+  "reposo",
+  "stop",
+  "t_abajo",
+  "t_barbilla",
+  "t_cadera",
+  "t_cuenta",
+  "t_duda",
+  "t_encoge",
+  "t_explica",
+  "t_indice",
+  "t_pecho",
+  "t_presenta",
+  "t_reposo",
+  "t_saluda",
+  "t_triste"
+ ],
+ "bocas": [
+  "celebrar",
+  "cruzado",
+  "enfado",
+  "llorar",
+  "mejillas",
+  "reposo",
+  "stop",
+  "t_abajo",
+  "t_barbilla",
+  "t_cadera",
+  "t_cuenta",
+  "t_duda",
+  "t_encoge",
+  "t_explica",
+  "t_indice",
+  "t_pecho",
+  "t_presenta",
+  "t_reposo",
+  "t_saluda",
+  "t_triste"
+ ],
+ "parpadeo": [
+  "t_abajo",
+  "t_barbilla",
+  "t_cadera",
+  "t_cuenta",
+  "t_duda",
+  "t_encoge",
+  "t_explica",
+  "t_indice",
+  "t_pecho",
+  "t_presenta",
+  "t_reposo",
+  "t_saluda",
+  "t_triste"
+ ]
+}

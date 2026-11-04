@@ -56,8 +56,18 @@ Referencia de Alejandro: vídeos de YouTube del canal «Estoy Tiesa». Análisis
 POSTURA COMPLETA CON SU CARA (susto, enfado, ojos de corazón, lágrimas, guiño…) de golpe, sin fundidos,
 cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y solo se mueve la boca
 (2-3 formas). Nada de cabeza separada, balanceos, respiración ni deformaciones.
-- «Chico rosa» (id `chico-rosa`) = `src/model/characters/chicoRosaExpresivo.ts`: raíz `cuerpo` con 19
-  posturas (`public/personajes/chico-rosa/expresivo/`) y, para hablar, `<pose>~b` con la boca al revés.
+- «Chico rosa» (id `chico-rosa`) = `src/model/characters/chicoMagenta.ts`: el personaje NUEVO de
+  Alejandro (cabeza magenta, aro en la nariz, camiseta gris con montaña), dibujo SIMPLE de trazo a mano
+  y colores planos, como el de Estoy Tiesa (con el personaje detallado los cortes «saltaban» porque la
+  IA variaba los detalles en cada dibujo). Imágenes en `public/personajes/chico-magenta/`.
+- Todos los expresivos se construyen con `personajeExpresivo(...)` (en `chicoRosaExpresivo.ts`) a partir
+  de su carpeta y su manifest. Receta para un personaje nuevo: subir su dibujo a Magnific; base de frente
+  con boca cerrada y base tranquila (mano en el bolsillo); familia `t_*` editando la base tranquila
+  (solo brazo libre y cara); gags editando la de frente; una edición de boca por postura y una de ojos
+  cerrados de `t_reposo`; recortar (`recortar_poses.py`), medir (`herramientas/medir_cabeza.py`, toma
+  el color de la cabeza solo) y `preparar_expresivo.py … <parpadeo.png> t_reposo t_`.
+- «Chico rosa (detallado)» (`chicoRosaExpresivoCharacter`, id `chico-rosa-detallado`): el anterior, raíz
+  `cuerpo` con posturas en `public/personajes/chico-rosa/expresivo/` y `<pose>~b` con la boca al revés.
   `Character.expresivo`: `abiertas` (posturas con la boca ya abierta), `cabeza` (para los planos),
   `gestos` (gesto de la biblioteca → postura) y `emociones` (expresión de escena → posturas).
 - Se hacen con Magnific Nano Banana 2.1 editando el dibujo base («misma figura y sitio, cambia postura Y
