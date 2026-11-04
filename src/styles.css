@@ -42,7 +42,7 @@ select {
   display: grid;
   height: 100%;
   grid-template-columns: 200px 1fr 320px;
-  grid-template-rows: 52px minmax(0, 1fr) 260px;
+  grid-template-rows: auto minmax(0, 1fr) 260px;
   grid-template-areas:
     'top top top'
     'parts stage controls'
@@ -53,9 +53,11 @@ select {
 .toolbar {
   grid-area: top;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 12px;
-  padding: 0 14px;
+  gap: 8px 12px;
+  padding: 7px 14px;
+  min-height: 52px;
   background: var(--panel);
   border-bottom: 1px solid var(--line);
   position: relative;
@@ -72,7 +74,9 @@ select {
   border: 1px solid transparent;
   border-radius: 6px;
   padding: 5px 8px;
-  width: 200px;
+  width: 160px;
+  min-width: 90px;
+  flex-shrink: 1;
   color: var(--muted);
 }
 .project-name:hover,
@@ -857,4 +861,12 @@ textarea.indicaciones {
   border: 1px dashed #4f7cff;
   background: rgba(79, 124, 255, 0.07);
   font-size: 13px;
+}
+
+.tb-field { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted, #9aa0aa); }
+.tb-field select, .tb-field input { background: #2a2d35; color: #e8e8ea; border: 1px solid #3a3e48; border-radius: 6px; padding: 5px 6px; font-size: 13px; }
+.tb-field input { width: 64px; }
+
+@media (max-width: 1450px) {
+  .brand-text { display: none; }
 }

@@ -247,25 +247,6 @@ export function Controls() {
           <input type="color" value={project.background} onChange={(e) => setProjectProps({ background: e.target.value })} />
         </label>
         <label className="field">
-          <span title="Forma del vídeo. Al cambiarla, el personaje se recoloca solo; los fondos nuevos se generan con esta forma">Formato</span>
-          <select
-            value={`${project.width}x${project.height}`}
-            onChange={(e) => {
-              const [w, h] = e.target.value.split('x').map(Number)
-              useStore.getState().setFormato(w, h)
-            }}
-          >
-            {![...FORMATOS_VIDEO.map((f) => f.v)].includes(`${project.width}x${project.height}`) && (
-              <option value={`${project.width}x${project.height}`}>{project.width}×{project.height}</option>
-            )}
-            {FORMATOS_VIDEO.map((f) => (
-              <option key={f.v} value={f.v}>
-                {f.n}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label className="field">
           <span>Duración (s)</span>
           <input
             type="number"
@@ -283,13 +264,6 @@ export function Controls() {
     </aside>
   )
 }
-
-const FORMATOS_VIDEO = [
-  { v: '1080x1920', n: 'Vertical 9:16 (reels, TikTok, Shorts)' },
-  { v: '1920x1080', n: 'Horizontal 16:9 (YouTube)' },
-  { v: '1080x1080', n: 'Cuadrado 1:1' },
-  { v: '1080x1350', n: 'Vertical 4:5 (Instagram)' },
-]
 
 function Gestures() {
   const [lado, setLado] = useState<'der' | 'izq'>('der')

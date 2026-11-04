@@ -3,6 +3,13 @@ import { download, exportMp4 } from '../export/exportMp4'
 import type { Project } from '../model/types'
 import { useStore } from '../store'
 
+const FORMATOS_VIDEO = [
+  { v: '1080x1920', n: 'Vertical 9:16' },
+  { v: '1920x1080', n: 'Horizontal 16:9' },
+  { v: '1080x1080', n: 'Cuadrado 1:1' },
+  { v: '1080x1350', n: 'Vertical 4:5' },
+]
+
 export function Toolbar({ onGuion }: { onGuion: () => void }) {
   const project = useStore((s) => s.project)
   const mode = useStore((s) => s.mode)
@@ -42,7 +49,7 @@ export function Toolbar({ onGuion }: { onGuion: () => void }) {
   return (
     <header className="toolbar">
       <div className="brand">
-        <span className="logo">◆</span> Estudio de Animación
+        <span className="logo">◆</span><span className="brand-text"> Estudio de Animación</span>
       </div>
       <input className="project-name" value={project.name} onChange={(e) => setProjectProps({ name: e.target.value })} aria-label="Nombre del proyecto" />
 
@@ -61,6 +68,42 @@ export function Toolbar({ onGuion }: { onGuion: () => void }) {
         📝 Guion
       </button>
 
+      <label className="tb-field" title="Forma del vídeo. Al cambiarla, el personaje se recoloca solo y los fondos nuevos salen con esta forma">
+        <span>Formato</span>
+        <select
+          value={`${project.width}x${project.height}`}
+          onChange={(e) => {
+            const [w, h] = e.target.value.split('x').map(Number)
+            useStore.getState().setFormato(w, h)
+          }}
+        >
+          {!FORMATOS_VIDEO.some((f) => f.v === `${project.width}x${project.height}`) && (
+            <option value={`${project.width}x${project.height}`}>
+              {project.width}×{project.height}
+            </option>
+          )}
+          {FORMATOS_VIDEO.map((f) => (
+            <option key={f.v} value={f.v}>
+              {f.n}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label className="tb-field" title="Duración total del vídeo (al generar voces se ajusta sola)">
+        <span>Duración</span>
+        <input
+          type="number"
+          min={1}
+          max={600}
+          step={0.5}
+          value={project.duration}
+          onChange={(e) => {
+            const d = Number(e.target.value)
+            if (d >= 1 && d <= 600) setProjectProps({ duration: d })
+          }}
+        />
+        <span>s</span>
+      </label>
       <div className="spacer" />
 
       <div className="group">
