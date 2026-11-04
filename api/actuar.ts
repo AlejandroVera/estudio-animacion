@@ -14,7 +14,7 @@ const json = (body: unknown, status = 200) =>
 const ORDENES = `ÓRDENES DEL USUARIO (mandan sobre TODO lo demás): el usuario es el director y tú su
 ayudante. Si una escena trae «indicaciones», cúmplelas al pie de la letra: el gesto que pida (si no
 está en el catálogo, pídelo como gesto a medida en «nuevas»), la cara/mirada, el fondo exacto que
-describa (en «fondos») y los rótulos que pida (en «rotulos») con su texto EXACTO letra por letra, su
+describa (en «fondos», con una entrada para CADA escena, repitiendo el texto si sigue el mismo lugar), los objetos que pida (en «objetos») y los rótulos que pida (en «rotulos») con su texto EXACTO letra por letra, su
 color EXACTO y su sitio EXACTO, sin cambiarlos ni añadir palabras, en la palabra que encaje (o en la que
 diga). Si pide una cara o mirada, ponla en «miradas» en ese momento. No sustituyas lo pedido por algo
 «parecido»: el usuario lo ha decidido así. Las indicaciones generales se aplican a todo el vídeo. Lo que no te indique, complétalo tú
@@ -65,6 +65,19 @@ FONDOS Y RÓTULOS (si te lo piden), como en «Estoy Tiesa»:
   «verde» lo bueno, «azul» un dato neutro. Posición: «arriba», «izq», «der», «izq_baja», «der_baja» o
   «abajo»; en una misma escena cada rótulo en un sitio distinto (se acumulan hasta que cambia la
   escena). No repitas tal cual frases enteras: el rótulo resume.
+
+OBJETOS EN ESCENA (si te lo piden): lo que hace que «pase algo» en los vídeos de «Estoy Tiesa». Mientras
+habla, APARECEN de golpe junto al personaje dibujos sencillos de lo que está contando: el objeto del que
+habla (un táper, un coche, una factura, una pesa, un móvil con un podcast), un bocadillo de pensamiento
+con un dibujo dentro (lo que imagina o desea), un cartel con un precio o una cifra con su flecha, un
+icono (corazón roto, rayo de cansancio, reloj)… En «objetos»: escena, palabra (en la que aparece, la
+palabra que lo nombra), «que» (en español, corto) y «dibujo» (EN INGLÉS, qué dibujar: un solo objeto o
+bocadillo, simple y reconocible; si lleva texto, como mucho 1-3 palabras o una cifra). Pon 1-2 por
+escena en casi todas las escenas con algo concreto (no en todas: alguna escena solo con el personaje
+está bien) y nunca más de 2 a la vez. «pos»: «arriba_izq», «arriba_der», «izq», «der», «izq_baja» o
+«der_baja», cada uno en un sitio distinto y distinto del de los rótulos de esa escena. En una
+enumeración, un objeto por cosa enumerada en su palabra (se van acumulando). Si el usuario pide un
+objeto en sus indicaciones, ponlo tal cual.
 
 MIRADAS (si te dan un catálogo de miradas): casi todo el rato mira AL FRENTE, a cámara («propios»).
 Cada postura ya trae una mirada coherente; una mirada distinta solo añade un matiz que encaje con el
@@ -127,6 +140,21 @@ const SCHEMA = {
         },
       },
     },
+    objetos: {
+      type: 'array',
+      items: {
+        type: 'object',
+        additionalProperties: false,
+        required: ['escena', 'palabra', 'que', 'dibujo', 'pos'],
+        properties: {
+          escena: { type: 'integer' },
+          palabra: { type: 'integer' },
+          que: { type: 'string' },
+          dibujo: { type: 'string' },
+          pos: { type: 'string', enum: ['arriba_izq', 'arriba_der', 'izq', 'der', 'izq_baja', 'der_baja'] },
+        },
+      },
+    },
     miradas: {
       type: 'array',
       items: {
@@ -147,7 +175,7 @@ const SCHEMA = {
 export async function POST(request: Request): Promise<Response> {
   if (!process.env.ANTHROPIC_API_KEY) return json({ error: 'Falta configurar las claves en Vercel.' }, 503)
   if (!claveOk(request)) return json({ error: 'clave' }, 401)
-  let body: { indicaciones?: string; escenas?: { escena: number; emocion: string; palabras: string[]; indicaciones?: string }[]; posturas?: Record<string, string>; miradas?: Record<string, string>; nuevasMax?: number; escenografia?: boolean }
+  let body: { indicaciones?: string; escenas?: { escena: number; emocion: string; palabras: string[]; indicaciones?: string }[]; posturas?: Record<string, string>; miradas?: Record<string, string>; nuevasMax?: number; escenografia?: boolean; objetosMax?: number }
   try {
     body = await request.json()
   } catch {
@@ -177,7 +205,7 @@ export async function POST(request: Request): Promise<Response> {
       messages: [
         {
           role: 'user',
-          content: `Catálogo de posturas:\n${catalogo}\n\n${body.miradas ? `Catálogo de miradas:\n${Object.entries(body.miradas).map(([k, v]) => `- ${k}: ${v}`).join('\n')}\n\n` : ''}${body.nuevasMax ? `Gestos a medida permitidos: hasta ${Math.min(8, body.nuevasMax)}.\n\n` : 'No pidas gestos a medida (nuevas vacío).\n\n'}${body.escenografia ? 'Decide también «fondos» (uno por escena) y «rotulos».\n\n' : 'No hace falta «fondos» ni «rotulos» (déjalos vacíos).\n\n'}${body.indicaciones ? `INDICACIONES GENERALES DEL USUARIO: ${body.indicaciones}\n\n` : ''}Texto completo (para entender el tono):\n${textoSeguido}\n\nGuion por escenas con las palabras numeradas:\n${guion}`,
+          content: `Catálogo de posturas:\n${catalogo}\n\n${body.miradas ? `Catálogo de miradas:\n${Object.entries(body.miradas).map(([k, v]) => `- ${k}: ${v}`).join('\n')}\n\n` : ''}${body.nuevasMax ? `Gestos a medida permitidos: hasta ${Math.min(8, body.nuevasMax)}.\n\n` : 'No pidas gestos a medida (nuevas vacío).\n\n'}${body.escenografia ? 'Decide también «fondos» (uno por escena) y «rotulos».\n\n' : 'No hace falta «fondos» ni «rotulos» (déjalos vacíos).\n\n'}${body.objetosMax ? `Pon «objetos» en escena (como mucho ${Math.min(14, body.objetosMax)} en todo el vídeo).\n\n` : 'No pongas «objetos» (vacío).\n\n'}${body.indicaciones ? `INDICACIONES GENERALES DEL USUARIO: ${body.indicaciones}\n\n` : ''}Texto completo (para entender el tono):\n${textoSeguido}\n\nGuion por escenas con las palabras numeradas:\n${guion}`,
         },
       ],
     })

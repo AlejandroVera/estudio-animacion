@@ -80,7 +80,7 @@ export function textMouthKeys(text: string, t0: number, t1: number, fps: number)
 
 /** Encuadre de cada plano: zoom y desplazamiento de cámara hacia la cabeza del personaje. */
 function shot(plano: Plano, project: Project, character: Character) {
-  if (plano === 'general') return { zoom: 1, x: 0, y: 0 }
+  if (plano === 'general' || plano === 'lejos') return { zoom: 1, x: 0, y: 0 }
   const inst = project.instances[0]
   const pl = layout(character, inst, poseAt(character, {}, 0)).find((p) => p.part.id === 'cabeza')
   const a = pl && character.assets[pl.assetId]
@@ -133,6 +133,10 @@ export function animateScenes(escenas: Escena[], project: Project, character: Ch
     for (const [canal, v] of [['cam:zoom', s.zoom], ['cam:x', s.x], ['cam:y', s.y]] as const) {
       result.claves.push({ canal, t: inicio, valor: String(Math.round(v * 1000) / 1000), transicion: 'salto' })
     }
+    // «Lejos»: el personaje más pequeño (desde los pies) con el fondo igual
+    const raizP = character.parts.find((p) => !p.parent)
+    if (raizP && character.expresivo)
+      result.claves.push({ canal: `part:${raizP.id}:scale`, t: inicio, valor: e.plano === 'lejos' ? '0.7' : '1', transicion: 'salto' })
     // Expresión (cejas) y gestos
     const ex = expr[e.expresion] ?? expr.Neutral
     if (ex) result.claves.push({ canal: 'face:brows', t: inicio, valor: ex.brows, transicion: 'salto' })
@@ -298,4 +302,25 @@ export function backgroundKeys(placed: (Escena & { inicio: number })[], total: n
     tr = setKey(tr, `bg:${t.id}:scale`, r(t.hasta) - 1 / fps, 1, 'lineal') // fondo fijo, sin zoom (como la referencia)
   }
   return tr
+}
+
+/** Tamaño pedido en las indicaciones de la escena («pequeño», «primer plano», «de cintura arriba»…). */
+export function planoDeIndicaciones(texto?: string): Plano | null {
+  const t = (texto ?? '').toLowerCase()
+  if (!t.trim()) return null
+  if (/primer[oa]? plano|primerísimo|muy grande|solo la cara|cara de cerca|cara grande/.test(t)) return 'primer'
+  if (/plano medio|cintura|medio cuerpo|más grande|\bgrande\b|más cerca|de cerca/.test(t)) return 'medio'
+  if (/peque[ñn]o|lejos|plano lejano|plano abierto/.test(t)) return 'lejos'
+  if (/plano general|cuerpo entero|tamaño normal/.test(t)) return 'general'
+  return null
+}
+
+/** Fondo pedido en las indicaciones de la escena («Fondo: una cocina…», «fondo blanco»). */
+export function fondoDeIndicaciones(texto?: string): string | null {
+  const t = texto ?? ''
+  if (/fondo\s+blanco/i.test(t)) return 'blanco'
+  const m = t.match(/fondo\s*(?::|de\b|con\b)\s*([^.\n;]+)/i)
+  if (!m) return null
+  const d = m[1].trim()
+  return d.length >= 3 ? d.slice(0, 120) : null
 }

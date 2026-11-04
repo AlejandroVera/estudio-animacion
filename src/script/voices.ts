@@ -5,10 +5,12 @@
 
 import { gesticular, type Palabra } from './emocion'
 import { decodeAudio, loadAudio, saveAudio } from '../audio/storage'
-import type { Character, Escena, Part, Rotulo, Tracks } from '../model/types'
+import type { Character, Escena, Objeto, Part, Rotulo, Tracks } from '../model/types'
 import { generateSceneBackgrounds } from './images'
+import { fondoDeIndicaciones, planoDeIndicaciones } from './scenes'
 import { DESCRIPCIONES, MIRADAS } from '../model/characters/chicoRosaExpresivo'
 import { cargarExtras, dibujarPostura } from './posturas'
+import { ponerObjetos, type ObjetoPedido } from './objetos'
 import { activeCharacter, useStore } from '../store'
 import { animateScenes } from './scenes'
 
@@ -152,11 +154,13 @@ async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number 
         .filter((e) => e.palabras.length),
       nuevasMax: ch.expresivo?.base ? 3 + escenas.filter((e) => e.indicaciones?.trim()).length : 0,
       escenografia: true,
+      objetosMax: Math.min(14, 2 * escenas.length),
       ...(ojosPart ? { miradas: Object.fromEntries(Object.entries(MIRADAS).filter(([k]) => k === 'propios' || ojosPart.variants[k])) } : {}),
     }),
   })
   if (!res.ok) throw new Error(((await res.json().catch(() => ({}))) as { error?: string }).error ?? `error ${res.status}`)
-  const { cambios, miradas, nuevas, fondos, rotulos } = (await res.json()) as {
+  const { cambios, miradas, nuevas, fondos, rotulos, objetos } = (await res.json()) as {
+    objetos?: { escena: number; palabra: number; que: string; dibujo: string; pos: Objeto['pos'] }[]
     fondos?: { escena: number; fondo: string }[]
     rotulos?: { escena: number; palabra: number; texto: string; color: Rotulo['color']; pos: Rotulo['pos'] }[]
     cambios: { escena: number; palabra: number; postura: string }[]
@@ -226,11 +230,20 @@ async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number 
     if (!w || !e || !r.texto.trim()) continue
     rots.push({ id: `r${r.escena}-${r.palabra}-${rots.length}`, t: Math.round(w.t * fps) / fps, fin: e.inicio + e.duracion, texto: r.texto.trim().slice(0, 40), color: r.color, pos: r.pos })
   }
+  // Objetos: aparecen en su palabra (un pelín antes) y se quedan hasta el final de la escena
+  const objs: ObjetoPedido[] = []
+  for (const o of objetos ?? []) {
+    const w = conPeso(o.escena, o.palabra)
+    const e = escenas[o.escena]
+    if (!w || !e || !o.dibujo.trim()) continue
+    objs.push({ t: Math.max(e.inicio, Math.round((w.t - 0.08) * fps) / fps), fin: e.inicio + e.duracion, pos: o.pos, que: o.que, dibujo: o.dibujo.trim() })
+  }
   const fondoDe = new Map((fondos ?? []).map((f) => [f.escena, f.fondo.trim()]))
   return {
     posturas: keys,
     ojos: ojosFin.length ? [{ t: 0, v: 'nada', ease: 'salto' as const }, ...ojosFin] : [],
     rotulos: rots,
+    objetos: objs,
     fondos: escenas.map((_, i) => fondoDe.get(i) ?? ''),
   }
 }
@@ -296,7 +309,10 @@ export async function voiceScript(escenas: Escena[], texto: string, voz: Voz, pa
   const ajustadas = escenas.map((e, i) => {
     const tr = tramoAudio.get(i)
     const extra = (i === 0 ? LEAD : 0) + (i === escenas.length - 1 ? TAIL : 0)
-    return tr ? { ...e, duracion: Math.round((tr[1] - tr[0] + extra) * fps0) / fps0 } : e
+    // El tamaño que pida el usuario en las indicaciones manda («pequeño», «primer plano»…)
+    const pl = planoDeIndicaciones(e.indicaciones)
+    const e2 = pl ? { ...e, plano: pl } : e
+    return tr ? { ...e2, duracion: Math.round((tr[1] - tr[0] + extra) * fps0) / fps0 } : e2
   })
 
   onProgress('Montando la animación…')
@@ -393,6 +409,7 @@ export async function voiceScript(escenas: Escena[], texto: string, voz: Voz, pa
   }
   let rotulosNuevos: Rotulo[] | null = null
   let fondosNuevos: string[] | null = null
+  let objetosNuevos: ObjetoPedido[] | null = null
   // Expresivo: una IA «directora» decide en qué palabra cambia de postura y a cuál, según lo que dice
   if (ch.expresivo && raiz && palabras.length) {
     onProgress('Dirigiendo los gestos según el guion…')
@@ -405,8 +422,12 @@ export async function voiceScript(escenas: Escena[], texto: string, voz: Voz, pa
       if (dir.ojos.length) tracks['face:brows'] = dir.ojos
       rotulosNuevos = dir.rotulos
       fondosNuevos = dir.fondos
+      objetosNuevos = dir.objetos
     }
   }
+  // El fondo que escriba el usuario en las indicaciones («Fondo: un salón…») manda sobre el director
+  const pedidos = m.escenas.map((e) => fondoDeIndicaciones(e.indicaciones))
+  if (pedidos.some(Boolean)) fondosNuevos = m.escenas.map((e, i) => pedidos[i] || fondosNuevos?.[i] || e.fondo || '')
   const conGestos = gesticular(tracks, palabras, ch, m.escenas)
 
   const [inst, ...rest] = useStore.getState().project.instances
@@ -427,6 +448,11 @@ export async function voiceScript(escenas: Escena[], texto: string, voz: Voz, pa
     } catch (e) {
       aviso += ` No se pudieron generar los fondos: ${e instanceof Error ? e.message : e}.`
     }
+  }
+  // Objetos que aparecen en escena (lo que cuenta, dibujado), como en «Estoy Tiesa»
+  if (objetosNuevos) {
+    const fallos = await ponerObjetos(objetosNuevos, onProgress).catch(() => objetosNuevos!.length)
+    if (fallos) aviso += ` No se pudieron dibujar ${fallos} objeto(s) de las escenas.`
   }
   st.setTime(0)
   st.setPlaying(true)

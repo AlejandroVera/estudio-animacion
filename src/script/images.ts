@@ -88,13 +88,21 @@ export async function generateSceneBackgrounds(escenas: Escena[], onProgress: (m
 
   const out = escenas.map((e) => ({ ...e }))
   const capas: BgLayer[] = []
+  const fallos: string[] = []
   for (let g = 0; g < grupos.length; g++) {
     // Si ya hay un fondo con esa misma descripción, se reutiliza (no se paga otra vez)
     // Se reutiliza el fondo con la misma descripción, pero solo si tiene la misma forma que el vídeo
     const pr = useStore.getState().project
     const previa = pr.fondos?.find((l) => l.descripcion === grupos[g].desc && Math.abs(l.w / l.h - pr.width / pr.height) < 0.15)
     onProgress(previa ? `Reutilizando fondo: ${grupos[g].desc}` : `Generando fondo ${g + 1} de ${grupos.length}: ${grupos[g].desc}`)
-    const layer = previa ?? { ...(await generateBackground(grupos[g].desc, useStore.getState().project)), descripcion: grupos[g].desc }
+    let layer: BgLayer
+    try {
+      layer = previa ?? { ...(await generateBackground(grupos[g].desc, useStore.getState().project)), descripcion: grupos[g].desc }
+    } catch (e) {
+      // Si un fondo falla, los demás se generan igual
+      fallos.push(`«${grupos[g].desc}»: ${e instanceof Error ? e.message : e}`)
+      continue
+    }
     capas.push(layer)
     for (const i of grupos[g].idx) out[i].capa = layer.id
   }
@@ -123,5 +131,6 @@ export async function generateSceneBackgrounds(escenas: Escena[], onProgress: (m
     guion: animado ? { ...st.project.guion!, escenas: out } : st.project.guion,
     instances: [{ ...inst, tracks }, ...rest],
   })
+  if (fallos.length) throw new Error(`no salió ${fallos.length === 1 ? 'un fondo' : fallos.length + ' fondos'} (${fallos.join('; ')})`)
   return out
 }

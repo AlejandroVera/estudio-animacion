@@ -252,12 +252,13 @@ export function ScriptPanel({ onClose }: { onClose: () => void }) {
                   placeholder="🎬 Lo que quieres que haga aquí: gesto, cara, fondo, rótulos… (p. ej. «cara de agotado sujetando una sartén, fondo de cocina, rótulo AGOTADOS en rojo»)"
                 />
                 <div className="scene-fields">
-                  <label>
-                    Plano
+                  <label title="Tamaño del personaje en esta escena (también puedes escribirlo en las indicaciones: «pequeño», «primer plano»…)">
+                    Tamaño
                     <select value={e.plano} onChange={(ev) => edit(i, { plano: ev.target.value as Plano })}>
-                      <option value="general">General</option>
-                      <option value="medio">Medio</option>
-                      <option value="primer">Primer plano</option>
+                      <option value="lejos">Pequeño (lejos)</option>
+                      <option value="general">Normal (cuerpo entero)</option>
+                      <option value="medio">Grande (de cintura arriba)</option>
+                      <option value="primer">Muy grande (la cara)</option>
                     </select>
                   </label>
                   <label>

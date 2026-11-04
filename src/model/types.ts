@@ -136,6 +136,20 @@ export interface Rotulo {
   pos: 'arriba' | 'izq' | 'der' | 'izq_baja' | 'der_baja' | 'abajo'
 }
 
+/** Dibujo que aparece de golpe en una palabra junto al personaje (objeto, bocadillo, cartel…). */
+export interface Objeto {
+  id: string
+  imageId: string
+  w: number
+  h: number
+  t: number
+  fin: number
+  pos: 'arriba_izq' | 'arriba_der' | 'izq' | 'der' | 'izq_baja' | 'der_baja'
+  /** Qué es (español) y descripción con la que se dibujó (inglés, para reutilizarlo) */
+  que: string
+  dibujo: string
+}
+
 export interface BgLayer {
   id: string
   name: string
@@ -148,7 +162,8 @@ export interface BgLayer {
   descripcion?: string
 }
 
-export type Plano = 'general' | 'medio' | 'primer'
+/** Tamaño del personaje en la escena: lejos (pequeño), general (cuerpo entero), medio (cintura arriba), primer (cara). */
+export type Plano = 'lejos' | 'general' | 'medio' | 'primer'
 
 /** Escena del guion: una frase (o silencio) con su acción, plano y expresión. */
 export interface Escena {
@@ -184,6 +199,8 @@ export interface Project {
   fondos?: BgLayer[]
   /** Rótulos escritos a mano que aparecen de golpe en una palabra (estilo «Estoy Tiesa»). */
   rotulos?: Rotulo[]
+  /** Objetos que aparecen en escena (dibujos con IA, imagen en IndexedDB) */
+  objetos?: Objeto[]
   /** Gestos a medida dibujados con IA para este proyecto (imagen en IndexedDB). */
   posturasExtra?: { nombre: string; imageId: string; descripcion: string; sinOjos?: boolean; sinBoca?: boolean; revisada?: number }[]
   /** Audio (voz) del vídeo; el archivo se guarda aparte, en el navegador (IndexedDB). */

@@ -10,7 +10,7 @@ import { activeCharacter, useStore } from '../store'
 const cargar = async (src: string) => createImageBitmap(await (await fetch(src)).blob())
 
 /** Quita el fondo blanco unido a los bordes (los blancos de dentro, como ojos o zapatillas, se quedan). */
-function quitarFondo(d: ImageData) {
+export function quitarFondo(d: ImageData) {
   const { width: W, height: H, data } = d
   const visto = new Uint8Array(W * H)
   const pila: number[] = []
@@ -82,53 +82,91 @@ async function revisar(ch: Character, img: CanvasImageSource) {
   const r = ex.radio ?? 300
   const x0 = Math.max(70, Math.round(ex.cabeza.x - 1.1 * r)), x1 = Math.min(W - 70, Math.round(ex.cabeza.x + 1.1 * r))
   const y0 = Math.max(70, Math.round(ex.cabeza.y - 1.1 * r)), y1 = Math.min(H - 70, Math.round(ex.cabeza.y + 1.1 * r))
-  // Desplazamiento que mejor encaja la cabeza (color de la cabeza) con la de la base
-  const encaje = (dx: number, dy: number, paso: number) => {
+  // Desplazamiento y tamaño que mejor encajan la cabeza (color de la cabeza) con la de la base.
+  // Un punto p de la base corresponde en el dibujo nuevo a c + (p - c)·k + d (c = centro de la cabeza)
+  const hx = ex.cabeza.x, hy = ex.cabeza.y
+  const encaje = (dx: number, dy: number, k: number, paso: number) => {
     let ambos = 0, alguno = 0
     for (let y = y0; y < y1; y += paso)
       for (let x = x0; x < x1; x += paso) {
-        const a = ref.clases[y * W + x] === 1, b = cl[(y + dy) * W + x + dx] === 1
+        const nx = Math.round(hx + (x - hx) * k + dx), ny = Math.round(hy + (y - hy) * k + dy)
+        const a = ref.clases[y * W + x] === 1
+        const b = nx >= 0 && ny >= 0 && nx < W && ny < H && cl[ny * W + nx] === 1
         if (a && b) ambos++
         if (a || b) alguno++
       }
     return ambos / (alguno || 1)
   }
-  let mejor = { s: -1, dx: 0, dy: 0 }
-  for (let dy = -64; dy <= 64; dy += 4)
-    for (let dx = -64; dx <= 64; dx += 4) {
-      const s = encaje(dx, dy, 4)
-      if (s > mejor.s) mejor = { s, dx, dy }
+  let mejor = { s: -1, dx: 0, dy: 0, k: 1 }
+  for (const k of [0.88, 0.94, 1, 1.06, 1.12])
+    for (let dy = -96; dy <= 96; dy += 8)
+      for (let dx = -96; dx <= 96; dx += 8) {
+        const sc = encaje(dx, dy, k, 8)
+        if (sc > mejor.s) mejor = { s: sc, dx, dy, k }
+      }
+  for (const paso of [4, 2]) {
+    const g0 = mejor
+    for (const k of [g0.k - 0.03, g0.k - 0.015, g0.k, g0.k + 0.015, g0.k + 0.03])
+      for (let dy = g0.dy - paso * 2; dy <= g0.dy + paso * 2; dy += paso / 2)
+        for (let dx = g0.dx - paso * 2; dx <= g0.dx + paso * 2; dx += paso / 2) {
+          const sc = encaje(dx, dy, k, paso)
+          if (sc > mejor.s) mejor = { s: sc, dx, dy, k }
+        }
+  }
+  // ¿Una mano tapa la cara? Una mano (o un objeto) es un trazo que ENTRA desde fuera de la cabeza:
+  // sus líneas cruzan el contorno. Los ojos y la boca redibujados por la IA no tocan el contorno.
+  // Se buscan los trazos oscuros unidos al contorno de la cabeza y se mira cuánto llegan a cada caja.
+  const cx = hx + mejor.dx, cy = hy + mejor.dy
+  const rr = r * mejor.k
+  const unido = new Uint8Array(W * H)
+  const pila: number[] = []
+  for (let y = Math.max(0, Math.round(cy - 1.15 * rr)); y < Math.min(H, cy + 1.15 * rr); y++)
+    for (let x = Math.max(0, Math.round(cx - 1.15 * rr)); x < Math.min(W, cx + 1.15 * rr); x++) {
+      const d = Math.hypot(x - cx, y - cy)
+      if (d > 0.98 * rr && d < 1.1 * rr && cl[y * W + x] === 2) pila.push(y * W + x)
     }
-  const grueso = mejor
-  mejor = { s: -1, dx: 0, dy: 0 }
-  for (let dy = grueso.dy - 3; dy <= grueso.dy + 3; dy++)
-    for (let dx = grueso.dx - 3; dx <= grueso.dx + 3; dx++) {
-      const s = encaje(dx, dy, 2)
-      if (s > mejor.s) mejor = { s, dx, dy }
-    }
-  // Qué parte de cada caja de la cara ha cambiado (ya alineado)
-  const cambio = (caja?: number[]) => {
+  while (pila.length) {
+    const q = pila.pop()!
+    if (unido[q]) continue
+    unido[q] = 1
+    const x = q % W, y = (q - x) / W
+    if (Math.hypot(x - cx, y - cy) > 1.15 * rr) continue
+    for (let dy = -2; dy <= 2; dy++)
+      for (let dx = -2; dx <= 2; dx++) {
+        const nx = x + dx, ny = y + dy
+        if (nx < 0 || ny < 0 || nx >= W || ny >= H) continue
+        const n = ny * W + nx
+        if (!unido[n] && cl[n] === 2) pila.push(n)
+      }
+  }
+  const intrusion = (caja?: number[]) => {
     if (!caja) return 0
     const [bx, by, bw, bh] = caja.map(Math.round)
-    let dist = 0, n = 0
-    for (let y = by; y < by + bh; y += 2)
-      for (let x = bx; x < bx + bw; x += 2) {
-        const yy = y + mejor.dy, xx = x + mejor.dx
-        if (yy < 0 || yy >= H || xx < 0 || xx >= W) continue
-        n++
-        if (ref.clases[y * W + x] !== cl[yy * W + xx]) dist++
+    let n = 0
+    const k = mejor.k
+    const X0 = Math.round(hx + (bx - hx) * k + mejor.dx), X1 = Math.round(hx + (bx + bw - hx) * k + mejor.dx)
+    const Y0 = Math.round(hy + (by - hy) * k + mejor.dy), Y1 = Math.round(hy + (by + bh - hy) * k + mejor.dy)
+    for (let y = Y0; y < Y1; y++)
+      for (let x = X0; x < X1; x++) {
+        if (x < 0 || y < 0 || x >= W || y >= H) continue
+        if (unido[y * W + x] && Math.hypot(x - cx, y - cy) < 0.9 * rr) n++
       }
-    return dist / (n || 1)
+    return n
   }
-  const ojos = cambio(ex.cajas?.ojos), boca = cambio(ex.cajas?.boca)
-  // Medido con gestos reales: mano en la frente ≈ 0,26 en los ojos; sin nada delante, ≤ 0,09
-  return { dx: mejor.dx, dy: mejor.dy, ojos, boca, sinOjos: ojos > 0.15, sinBoca: boca > 0.1 }
+  const ojos = intrusion(ex.cajas?.ojos), boca = intrusion(ex.cajas?.boca)
+  // Píxeles de trazo de una mano dentro de la caja (una mano son miles; nada delante, casi 0)
+  return { dx: mejor.dx, dy: mejor.dy, k: mejor.k, cx: hx, cy: hy, ojos, boca, sinOjos: ojos > 200, sinBoca: boca > 200 }
 }
 
 /** Mueve el dibujo para que la cabeza quede donde la de las demás posturas. */
-async function alinear(img: CanvasImageSource, W: number, H: number, dx: number, dy: number) {
+async function alinear(img: CanvasImageSource, W: number, H: number, rev: { dx: number; dy: number; k: number; cx: number; cy: number }) {
   const out = new OffscreenCanvas(W, H)
-  out.getContext('2d')!.drawImage(img, -dx, -dy, W, H)
+  const g = out.getContext('2d')!
+  // p = c + (q - c - d) / k
+  g.translate(rev.cx, rev.cy)
+  g.scale(1 / rev.k, 1 / rev.k)
+  g.translate(-rev.cx - rev.dx, -rev.cy - rev.dy)
+  g.drawImage(img, 0, 0, W, H)
   return out.convertToBlob({ type: 'image/png' })
 }
 
@@ -149,7 +187,7 @@ export async function dibujarPostura(ch: Character, descripcion: string): Promis
   const recorte = await recortarDibujo(ch, d.url)
   const [, , lw, lh] = ex.lienzo
   const rev = await revisar(ch, recorte)
-  const blob = await alinear(recorte, lw, lh, rev.dx, rev.dy)
+  const blob = await alinear(recorte, lw, lh, rev)
   const imageId = `postura-${Date.now()}-${Math.round(Math.random() * 1e6)}`
   await saveImage(imageId, blob)
   return { imageId, sinOjos: rev.sinOjos, sinBoca: rev.sinBoca }
@@ -219,7 +257,7 @@ export async function cargarExtras() {
       try {
         const img = await cargar(mediaUrl(e.imageId)!)
         const rev = await revisar(ch, img)
-        if (rev.dx || rev.dy) await replaceImage(e.imageId, await alinear(img, lw, lh, rev.dx, rev.dy))
+        if (rev.dx || rev.dy || rev.k !== 1) await replaceImage(e.imageId, await alinear(img, lw, lh, rev))
         hechas[e.imageId] = { sinOjos: rev.sinOjos, sinBoca: rev.sinBoca }
       } catch {
         // si falla, se queda como estaba

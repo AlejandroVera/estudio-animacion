@@ -22,8 +22,8 @@ export function getImage(src: string): HTMLImageElement {
 
 export async function ensureImages(project: Project): Promise<void> {
   const all: Promise<void>[] = []
-  await ensureMedia((project.fondos ?? []).map((l) => l.imageId))
-  for (const l of project.fondos ?? []) {
+  await ensureMedia([...(project.fondos ?? []), ...(project.objetos ?? [])].map((l) => l.imageId))
+  for (const l of [...(project.fondos ?? []), ...(project.objetos ?? [])]) {
     const url = mediaUrl(l.imageId)
     if (url) {
       const img = getImage(url)
@@ -138,7 +138,9 @@ export function drawCharacter(
     const raiz = character.parts.find((p) => !p.parent)
     const v = raiz && (pose.variants[raiz.id] ?? raiz.defaultVariant).split('~')[0]
     const ojos = character.parts.find((p) => p.id === 'ojos')
-    if (raiz && v?.startsWith('t_') && ojos?.variants.cerrados) pose = { ...pose, variants: { ...pose.variants, ojos: 'cerrados' } }
+    // Si una mano tapa la cara (sinCapas / sinOjos), nada de ojos cerrados pegados encima de la mano
+    const tapada = !!v && (character.expresivo.sinCapas?.includes(v) || character.expresivo.sinOjos?.includes(v))
+    if (raiz && v?.startsWith('t_') && !tapada && ojos?.variants.cerrados) pose = { ...pose, variants: { ...pose.variants, ojos: 'cerrados' } }
     else if (raiz && v && raiz.variants[v + '~c']) pose = { ...pose, variants: { ...pose.variants, [raiz.id]: v + '~c' } }
   }
   const placed = layout(character, inst, pose, restPose)
@@ -234,10 +236,46 @@ export function drawFrame(g: CanvasRenderingContext2D, project: Project, t: numb
   }
   drawLayers(g, project, t, true)
   g.restore()
+  drawObjetos(g, project, t)
   drawRotulos(g, project, t)
 }
 
 const COLORES: Record<string, string> = { negro: '#262020', rojo: '#D63030', verde: '#28A046', azul: '#285AC8' }
+
+/** Objetos que aparecen junto al personaje (fuera de la cámara, como los rótulos), con un «pop». */
+export function drawObjetos(g: CanvasRenderingContext2D, project: Project, t: number) {
+  const W = project.width
+  const H = project.height
+  const lado = Math.min(W, H) * (W > H ? 0.36 : 0.3)
+  // Centro de cada sitio: a los lados del personaje (que ocupa el centro)
+  const mx = W > H ? 0.24 : 0.17
+  const sitio: Record<string, [number, number]> = {
+    arriba_izq: [W * mx, H * 0.24],
+    arriba_der: [W * (1 - mx), H * 0.24],
+    izq: [W * mx, H * 0.5],
+    der: [W * (1 - mx), H * 0.5],
+    izq_baja: [W * mx, H * 0.74],
+    der_baja: [W * (1 - mx), H * 0.74],
+  }
+  for (const o of project.objetos ?? []) {
+    if (t < o.t || t >= o.fin) continue
+    const url = mediaUrl(o.imageId)
+    if (!url) continue
+    const img = getImage(url)
+    if (!img.complete || !img.naturalWidth) continue
+    const [x, y] = sitio[o.pos] ?? sitio.der
+    const dt = t - o.t
+    const pop = dt < 0.07 ? 0.7 + (1.12 - 0.7) * (dt / 0.07) : dt < 0.15 ? 1.12 - 0.12 * ((dt - 0.07) / 0.08) : 1
+    const k = (lado / Math.max(o.w, o.h)) * pop
+    let semilla = 0
+    for (const ch of o.id) semilla = (semilla * 31 + ch.charCodeAt(0)) % 997
+    g.save()
+    g.translate(x, y)
+    g.rotate((((semilla % 9) - 4) * Math.PI) / 180)
+    g.drawImage(img, (-o.w / 2) * k, (-o.h / 2) * k, o.w * k, o.h * k)
+    g.restore()
+  }
+}
 
 /** Rótulos a mano (fuera de la cámara: no hacen zoom). Entran con un «pop» rápido. */
 export function drawRotulos(g: CanvasRenderingContext2D, project: Project, t: number) {

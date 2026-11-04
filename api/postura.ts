@@ -23,7 +23,7 @@ export async function POST(request: Request): Promise<Response> {
   if (!body.base || !body.base.startsWith(propio + '/')) return json({ error: 'Falta la imagen base.' }, 400)
   const prompt =
     'Edit this image. Keep EXACTLY the same: character, head and face in exactly the same place and size ' +
-    '(same eyes looking at the viewer, same nose ring, closed mouth), same legs and feet in exactly the same ' +
+    '(same eyes looking at the viewer, same nose ring, closed mouth; do NOT change the facial expression at all, even if the gesture is sad, tired or angry: the face is animated separately), same legs and feet in exactly the same ' +
     'place, same t-shirt and jeans, same hand-drawn wobbly black outline and flat colors, plain pure white ' +
     'background. Change ONLY the arms and hands (both arms may move, he may hold one simple object if the ' +
     `gesture needs it): ${descripcion}. Keep the arms and any object CLOSE to the body, never reaching far ` +
