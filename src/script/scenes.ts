@@ -322,5 +322,7 @@ export function fondoDeIndicaciones(texto?: string): string | null {
   const m = t.match(/fondo\s*(?::|de\b|con\b)\s*([^.\n;]+)/i)
   if (!m) return null
   const d = m[1].trim()
+  // «la misma cocina», «el mismo», «igual que antes»: sigue el lugar anterior (lo decide el director)
+  if (/^(el|la|los|las)\s+mism[oa]s?\b|^igual|^el de antes|^la de antes|^anterior/i.test(d)) return null
   return d.length >= 3 ? d.slice(0, 120) : null
 }

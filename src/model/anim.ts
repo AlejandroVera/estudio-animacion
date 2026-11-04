@@ -153,6 +153,11 @@ export function poseAt(character: Character, tracks: Tracks, t: number): Pose {
       if (!v.includes('~')) {
         const alt = abierta !== ex.abiertas.includes(v)
         if (alt && raizX.variants[v + '~b']) variants[raizX.id] = v + '~b'
+        // Mano en la cara pero sin dibujo de boca abierta (t_frente): boca de capa, para que no se quede callado
+        else if (abierta && cuerpo.startsWith('t_') && !raizX.variants[v + '~b'] && boca) {
+          const forma = mouth === 'O' ? 'o' : mouth === 'E' ? 'dientes' : 'abierta'
+          if (boca.variants[forma]) variants.boca = forma
+        }
       }
     }
   }

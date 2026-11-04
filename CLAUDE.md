@@ -121,6 +121,17 @@ cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y
   `api/imagen.ts` tipo «objeto» (garabato sobre blanco), quita el fondo (`quitarFondo`), recorta, guarda en
   IndexedDB y los apunta en `project.objetos` (mismo dibujo = se reutiliza). `drawObjetos` (render.ts) los
   pinta fuera de la cámara con «pop», como los rótulos; el editor (Stage) también pinta objetos y rótulos.
+- MONTAJE POR VIÑETAS (tras «le falta ritmo, pone elementos porque sí»): el director devuelve `vinetas`
+  (escena, palabra, idea, fondo, tamano) de 2-5 s: en cada corte cambian a la vez encuadre (cámara y
+  escala) y, si toca, fondo; objetos y rótulos desaparecen al cortar (rótulos al menos 1,6 s). En
+  `voiceScript` las indicaciones de la escena mandan (fondo y tamaño), «plano fijo» = todo general,
+  «lejos» en blanco pasa a «medio». `fondosPorVinetas` (images.ts) dibuja un fondo por lugar distinto y
+  pone las claves de opacidad por viñeta. «Fondo: la misma cocina» = sigue el lugar anterior.
+- HUECOS: el blanco encerrado entre brazo y cuerpo/cabeza no toca el borde y quitarFondo no lo borraba
+  (mancha blanca). `quitarHuecos` (posturas.ts) lo borra en los gestos a medida (zona que en t_reposo es
+  fondo); en las posturas fijas se borró con un script (componentes blancas >300 px que en t_reposo son
+  fondo). `REVISION` en posturas.ts: subirla hace que los gestos guardados se revisen otra vez al cargar.
+- Postura con mano en la cara sin `~b` (t_frente): usa la boca de capa para no quedarse callado.
 - TAMAÑO POR ESCENA: selector «Tamaño» de cada escena = `Escena.plano` (`lejos` pequeño: escala 0,7 de la
   raíz desde los pies; `general`; `medio` y `primer` con zoom de cámara). Las indicaciones mandan:
   `planoDeIndicaciones` («pequeño», «primer plano», «de cintura arriba»…) y `fondoDeIndicaciones`

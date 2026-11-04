@@ -158,20 +158,68 @@ async function revisar(ch: Character, img: CanvasImageSource) {
   return { dx: mejor.dx, dy: mejor.dy, k: mejor.k, cx: hx, cy: hy, ojos, boca, sinOjos: ojos > 200, sinBoca: boca > 200 }
 }
 
-/** Mueve el dibujo para que la cabeza quede donde la de las demás posturas. */
-async function alinear(img: CanvasImageSource, W: number, H: number, rev: { dx: number; dy: number; k: number; cx: number; cy: number }) {
+/** Mueve el dibujo para que la cabeza quede donde la de las demás posturas y quita los huecos de fondo. */
+async function alinear(ch: Character, img: CanvasImageSource, W: number, H: number, rev: { dx: number; dy: number; k: number; cx: number; cy: number }) {
   const out = new OffscreenCanvas(W, H)
-  const g = out.getContext('2d')!
+  const g = out.getContext('2d', { willReadFrequently: true })!
   // p = c + (q - c - d) / k
   g.translate(rev.cx, rev.cy)
   g.scale(1 / rev.k, 1 / rev.k)
   g.translate(-rev.cx - rev.dx, -rev.cy - rev.dy)
   g.drawImage(img, 0, 0, W, H)
+  g.setTransform(1, 0, 0, 1, 0, 0)
+  const d = g.getImageData(0, 0, W, H)
+  await quitarHuecos(ch, d)
+  g.putImageData(d, 0, 0)
   return out.convertToBlob({ type: 'image/png' })
 }
 
+/**
+ * Fondo blanco ENCERRADO (entre el brazo y la cabeza o el cuerpo): no toca el borde de la imagen, así
+ * que quitarFondo no lo borra y se veía como una mancha blanca. Se reconoce porque en la postura de
+ * reposo esa zona es fondo (los blancos de ojos y zapatillas no).
+ */
+async function quitarHuecos(ch: Character, d: ImageData) {
+  const raiz = ch.parts.find((p) => !p.parent)
+  if (!raiz) return
+  const { width: W, height: H, data } = d
+  const c = new OffscreenCanvas(W, H)
+  const g = c.getContext('2d', { willReadFrequently: true })!
+  g.drawImage(await cargar(ch.assets[raiz.variants[raiz.defaultVariant]].src), 0, 0, W, H)
+  const ref = g.getImageData(0, 0, W, H).data
+  const blanco = (p: number) => data[p * 4 + 3] > 200 && Math.min(data[p * 4], data[p * 4 + 1], data[p * 4 + 2]) > 215
+  const visto = new Uint8Array(W * H)
+  for (let p0 = 0; p0 < W * H; p0++) {
+    if (visto[p0] || !blanco(p0)) continue
+    const comp: number[] = []
+    const pila = [p0]
+    visto[p0] = 1
+    while (pila.length) {
+      const p = pila.pop()!
+      comp.push(p)
+      const x = p % W
+      for (const n of [x > 0 ? p - 1 : -1, x < W - 1 ? p + 1 : -1, p - W, p + W]) {
+        if (n < 0 || n >= W * H || visto[n] || !blanco(n)) continue
+        visto[n] = 1
+        pila.push(n)
+      }
+    }
+    if (comp.length < 300) continue
+    let fondo = 0
+    for (const p of comp) if (ref[p * 4 + 3] < 40) fondo++
+    if (fondo / comp.length < 0.6) continue
+    for (const p of comp) {
+      data[p * 4 + 3] = 0
+      // y el borde suavizado del blanco
+      const x = p % W
+      for (const n of [x > 0 ? p - 1 : -1, x < W - 1 ? p + 1 : -1, p - W, p + W])
+        if (n >= 0 && n < W * H && Math.min(data[n * 4], data[n * 4 + 1], data[n * 4 + 2]) > 190) data[n * 4 + 3] = 0
+    }
+  }
+}
+
 /** Versión de la revisión: al mejorarla se sube y los gestos guardados se revisan otra vez. */
-export const REVISION = 2
+export const REVISION = 3
 
 export type PosturaDibujada = { imageId: string; sinOjos: boolean; sinBoca: boolean }
 
@@ -190,7 +238,7 @@ export async function dibujarPostura(ch: Character, descripcion: string): Promis
   const recorte = await recortarDibujo(ch, d.url)
   const [, , lw, lh] = ex.lienzo
   const rev = await revisar(ch, recorte)
-  const blob = await alinear(recorte, lw, lh, rev)
+  const blob = await alinear(ch, recorte, lw, lh, rev)
   const imageId = `postura-${Date.now()}-${Math.round(Math.random() * 1e6)}`
   await saveImage(imageId, blob)
   return { imageId, sinOjos: rev.sinOjos, sinBoca: rev.sinBoca }
@@ -260,7 +308,7 @@ export async function cargarExtras() {
       try {
         const img = await cargar(mediaUrl(e.imageId)!)
         const rev = await revisar(ch, img)
-        if (rev.dx || rev.dy || rev.k !== 1) await replaceImage(e.imageId, await alinear(img, lw, lh, rev))
+        await replaceImage(e.imageId, await alinear(ch, img, lw, lh, rev))
         hechas[e.imageId] = { sinOjos: rev.sinOjos, sinBoca: rev.sinBoca }
       } catch {
         // si falla, se queda como estaba

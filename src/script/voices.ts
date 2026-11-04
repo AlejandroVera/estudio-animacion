@@ -253,7 +253,7 @@ async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number 
     const e = escenas[r.escena]
     if (!w || !e || !r.texto.trim()) continue
     const tr = Math.round(w.t * fps) / fps
-    rots.push({ id: `r${r.escena}-${r.palabra}-${rots.length}`, t: tr, fin: finDe(tr, r.escena), texto: r.texto.trim().slice(0, 40), color: r.color, pos: r.pos })
+    rots.push({ id: `r${r.escena}-${r.palabra}-${rots.length}`, t: tr, fin: Math.max(finDe(tr, r.escena), Math.min(tr + 1.6, e.inicio + e.duracion + 1)), texto: r.texto.trim().slice(0, 40), color: r.color, pos: r.pos })
   }
   // Objetos: aparecen en su palabra (un pelín antes) y se quedan hasta el final de la escena
   const objs: ObjetoPedido[] = []
@@ -466,6 +466,8 @@ export async function voiceScript(escenas: Escena[], texto: string, voz: Voz, pa
         plano: planoDeIndicaciones(e.indicaciones) || (fijo ? 'general' : v.plano),
       }
     })
+    // «Pequeño» solo tiene sentido en un lugar; en blanco queda un muñequito perdido
+    vinetasNuevas = vinetasNuevas.map((v) => (v.plano === 'lejos' && /^blanco\b/i.test(v.fondo) ? { ...v, plano: 'medio' } : v))
     for (const c of Object.keys(tracks)) if (c.startsWith('cam:') || c === `part:${raiz?.id}:scale`) delete tracks[c]
     for (const v of vinetasNuevas) {
       const s0 = encuadre(v.plano, st.project, ch)
