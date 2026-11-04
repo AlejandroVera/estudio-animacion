@@ -14,8 +14,10 @@ const json = (body: unknown, status = 200) =>
 const ORDENES = `ÓRDENES DEL USUARIO (mandan sobre TODO lo demás): el usuario es el director y tú su
 ayudante. Si una escena trae «indicaciones», cúmplelas al pie de la letra: el gesto que pida (si no
 está en el catálogo, pídelo como gesto a medida en «nuevas»), la cara/mirada, el fondo exacto que
-describa (en «fondos») y los rótulos que pida con su texto, color y sitio (en «rotulos»), en la palabra
-que encaje. Las indicaciones generales se aplican a todo el vídeo. Lo que no te indique, complétalo tú
+describa (en «fondos») y los rótulos que pida (en «rotulos») con su texto EXACTO letra por letra, su
+color EXACTO y su sitio EXACTO, sin cambiarlos ni añadir palabras, en la palabra que encaje (o en la que
+diga). Si pide una cara o mirada, ponla en «miradas» en ese momento. No sustituyas lo pedido por algo
+«parecido»: el usuario lo ha decidido así. Las indicaciones generales se aplican a todo el vídeo. Lo que no te indique, complétalo tú
 con las pautas.`
 
 const GUIA = `Eres director de animación de vídeos de YouTube de dibujos al estilo del canal «Estoy Tiesa»: un
