@@ -6,6 +6,7 @@
 //   CLAVE_ESTUDIO      contraseña que pide la web antes de usar el copiloto
 //   COPILOTO_MODELO    (opcional) modelo de Claude; por defecto claude-haiku-5-5, el más barato
 
+import { claveOk } from './_clave.js'
 import Anthropic from '@anthropic-ai/sdk'
 import { GUIA, SCHEMA } from './_guia.js'
 
@@ -17,11 +18,10 @@ const json = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json' } })
 
 export async function POST(request: Request): Promise<Response> {
-  const clave = process.env.CLAVE_ESTUDIO
-  if (!process.env.ANTHROPIC_API_KEY || !clave) {
+  if (!process.env.ANTHROPIC_API_KEY) {
     return json({ error: 'El copiloto aún no está configurado: faltan las claves en Vercel.' }, 503)
   }
-  if (request.headers.get('x-clave-estudio') !== clave) {
+  if (!claveOk(request)) {
     return json({ error: 'clave' }, 401)
   }
 

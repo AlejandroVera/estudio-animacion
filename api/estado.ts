@@ -2,14 +2,14 @@
 //   GET  ?desde=N  -> órdenes de Claude pendientes (número de orden > N)
 //   POST {contexto} -> la web publica el estado de su proyecto para que Claude lo vea
 
+import { claveOk } from './_clave.js'
 import { almacenListo, guardarContexto, leerCola } from './_almacen.js'
 
 const json = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json', 'cache-control': 'no-store' } })
 
 function comprobar(request: Request): Response | null {
-  if (!process.env.CLAVE_ESTUDIO) return json({ error: 'Falta CLAVE_ESTUDIO en Vercel.' }, 503)
-  if (request.headers.get('x-clave-estudio') !== process.env.CLAVE_ESTUDIO) return json({ error: 'clave' }, 401)
+  if (!claveOk(request)) return json({ error: 'clave' }, 401)
   if (!almacenListo()) return json({ error: 'Falta conectar el almacén (Upstash Redis) en Vercel.' }, 503)
   return null
 }

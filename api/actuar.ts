@@ -2,6 +2,7 @@
 // cambia de postura el personaje y a cuál, según lo que dice (no al azar), al estilo de los vídeos
 // de «Estoy Tiesa». Usa ANTHROPIC_API_KEY, CLAVE_ESTUDIO y COPILOTO_MODELO como el copiloto.
 
+import { claveOk } from './_clave.js'
 import Anthropic from '@anthropic-ai/sdk'
 
 const MODELOS = ['claude-haiku-5-5', 'claude-sonnet-5-5', 'claude-opus-5-5']
@@ -63,9 +64,8 @@ const SCHEMA = {
 }
 
 export async function POST(request: Request): Promise<Response> {
-  const clave = process.env.CLAVE_ESTUDIO
-  if (!process.env.ANTHROPIC_API_KEY || !clave) return json({ error: 'Falta configurar las claves en Vercel.' }, 503)
-  if (request.headers.get('x-clave-estudio') !== clave) return json({ error: 'clave' }, 401)
+  if (!process.env.ANTHROPIC_API_KEY) return json({ error: 'Falta configurar las claves en Vercel.' }, 503)
+  if (!claveOk(request)) return json({ error: 'clave' }, 401)
   let body: { escenas?: { escena: number; emocion: string; palabras: string[] }[]; posturas?: Record<string, string>; miradas?: Record<string, string> }
   try {
     body = await request.json()

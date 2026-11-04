@@ -2,14 +2,15 @@
 //   POST {descripcion, referencia?, formato?} -> {url}
 // Variables en Vercel: FAL_KEY, CLAVE_ESTUDIO
 
+import { claveOk } from './_clave.js'
 const json = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json' } })
 
 const FORMATOS = ['9:16', '16:9', '1:1', '4:5', '3:4']
 
 export async function POST(request: Request): Promise<Response> {
-  if (!process.env.FAL_KEY || !process.env.CLAVE_ESTUDIO) return json({ error: 'Falta FAL_KEY en Vercel.' }, 503)
-  if (request.headers.get('x-clave-estudio') !== process.env.CLAVE_ESTUDIO) return json({ error: 'clave' }, 401)
+  if (!process.env.FAL_KEY) return json({ error: 'Falta FAL_KEY en Vercel.' }, 503)
+  if (!claveOk(request)) return json({ error: 'clave' }, 401)
   let body: { descripcion?: string; referencia?: string; formato?: string; tipo?: 'fondo' | 'libre' }
   try {
     body = await request.json()

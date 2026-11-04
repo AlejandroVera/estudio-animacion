@@ -1,6 +1,7 @@
 // Función del servidor: convierte un guion (o una idea) en escenas listas para animar.
 // Usa las mismas variables que el copiloto (ANTHROPIC_API_KEY, CLAVE_ESTUDIO, COPILOTO_MODELO).
 
+import { claveOk } from './_clave.js'
 import Anthropic from '@anthropic-ai/sdk'
 import { almacenListo, estiloActivo } from './_almacen.js'
 import { GUIA_GUION, SCHEMA_GUION } from './_guia.js'
@@ -12,9 +13,8 @@ const json = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json' } })
 
 export async function POST(request: Request): Promise<Response> {
-  const clave = process.env.CLAVE_ESTUDIO
-  if (!process.env.ANTHROPIC_API_KEY || !clave) return json({ error: 'Falta configurar las claves en Vercel.' }, 503)
-  if (request.headers.get('x-clave-estudio') !== clave) return json({ error: 'clave' }, 401)
+  if (!process.env.ANTHROPIC_API_KEY) return json({ error: 'Falta configurar las claves en Vercel.' }, 503)
+  if (!claveOk(request)) return json({ error: 'clave' }, 401)
 
   let body: { texto?: string; contexto?: unknown }
   try {

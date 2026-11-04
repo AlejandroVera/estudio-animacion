@@ -178,7 +178,7 @@ export function ScriptPanel({ onClose }: { onClose: () => void }) {
       </p>
       <ScriptStyles />
       <textarea className="script-text" rows={7} value={texto} onChange={(e) => setTexto(e.target.value)} placeholder="Hola, soy... / Hoy te cuento..." />
-      {(needPass || !pass) && (
+      {needPass && (
         <input
           className="copilot-pass"
           type="password"

@@ -11,6 +11,9 @@ en lenguaje llano y pídele que pruebe en la web publicada.
 - Sin dependencias nuevas salvo que hagan falta de verdad; versiones exactas en `package.json`.
 - Las claves de IA (fases 2-4) van como variables de entorno en Vercel y solo se usan desde
   funciones del servidor (`api/`), nunca en el código del navegador ni en el repositorio.
+- La contraseña del estudio está DESACTIVADA a petición de Alejandro (`PEDIR_CLAVE = false` en
+  `api/_clave.ts`): la web no la pide y cualquiera con el enlace puede gastar los saldos. Para volver a
+  activarla, poner `true`. El conector MCP sigue con `?clave=`.
 
 ## Arquitectura
 - Vite + React + TypeScript, estado con zustand (`src/store.ts`, con deshacer/rehacer y

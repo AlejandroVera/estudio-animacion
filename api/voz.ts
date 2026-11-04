@@ -3,13 +3,14 @@
 //   POST {texto, voz} -> audio MP3
 // Variables en Vercel: ELEVENLABS_API_KEY, CLAVE_ESTUDIO
 
+import { claveOk } from './_clave.js'
 const API = 'https://api.elevenlabs.io/v1'
 const json = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json' } })
 
 function comprobar(request: Request): Response | null {
-  if (!process.env.ELEVENLABS_API_KEY || !process.env.CLAVE_ESTUDIO) return json({ error: 'Falta ELEVENLABS_API_KEY en Vercel.' }, 503)
-  if (request.headers.get('x-clave-estudio') !== process.env.CLAVE_ESTUDIO) return json({ error: 'clave' }, 401)
+  if (!process.env.ELEVENLABS_API_KEY) return json({ error: 'Falta ELEVENLABS_API_KEY en Vercel.' }, 503)
+  if (!claveOk(request)) return json({ error: 'clave' }, 401)
   return null
 }
 
