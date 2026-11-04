@@ -14,10 +14,9 @@ export function chicoMagentaCharacter(): Character {
     ruta: '/personajes/chico-magenta',
     manifest,
     referencia: '/personajes/chico-magenta/referencia.jpg',
-    abiertas: ['enfado', 'celebrar'],
+    abiertas: ['enfado', 'celebrar', 't_e_corazones', 't_e_susto', 't_e_carcajada', 't_e_agotado', 't_e_asco', 't_e_dinero', 't_e_explota', 't_e_ilusion'],
     ojosPorDefecto: { t_triste: 'triste', t_barbilla: 'arriba', t_rendido: 'triste', t_cruzado: 'recelo', t_nolose: 'duda', t_porfavor: 'triste' },
-    sinCapas: ['t_duda', 't_frente'],
-    // Repertorio de caras exageradas (t_e_*): conservan sus ojos; al hablar se pone la boca de capa
-    sinOjos: ['t_e_corazones', 't_e_susto', 't_e_llora', 't_e_carcajada', 't_e_agotado', 't_e_furioso', 't_e_verguenza', 't_e_asco', 't_e_dinero', 't_e_explota', 't_e_nervioso', 't_e_dormido', 't_e_chulo', 't_e_suplica', 't_e_mareado', 't_e_ilusion'],
+    // Caras exageradas (t_e_*): su propia cara; al hablar alternan con su versión ~b (boca al revés)
+    sinCapas: ['t_duda', 't_frente', 't_e_corazones', 't_e_susto', 't_e_llora', 't_e_carcajada', 't_e_agotado', 't_e_furioso', 't_e_verguenza', 't_e_asco', 't_e_dinero', 't_e_explota', 't_e_nervioso', 't_e_dormido', 't_e_chulo', 't_e_suplica', 't_e_mareado', 't_e_ilusion'],
   })
 }

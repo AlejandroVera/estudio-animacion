@@ -127,6 +127,21 @@ cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y
   `voiceScript` las indicaciones de la escena mandan (fondo y tamaño), «plano fijo» = todo general,
   «lejos» en blanco pasa a «medio». `fondosPorVinetas` (images.ts) dibuja un fondo por lugar distinto y
   pone las claves de opacidad por viñeta. «Fondo: la misma cocina» = sigue el lugar anterior.
+- COMPOSICIÓN (tras «parece todo encorsetado»; fotogramas de la referencia: personaje grande a un lado y el
+  otro lado se llena palabra a palabra, se borra al cortar): cada viñeta lleva `lado` (izq/centro/der) y
+  se guarda en `project.vinetas`; el personaje se desplaza con `part:<raíz>:x`. `src/model/contenido.ts`
+  (`drawContenido`) apila en el lado libre lo de esa viñeta (`vin`): rótulos con `estilo` grande (palabras
+  enormes negras), nota (color subrayado) o cartel (cifra en cartelito), objetos, bocadillos de
+  pensamiento (objeto con pos «pensamiento», nube dibujada) y flechas rojas a mano que se dibujan
+  (`flecha`). Solo en horizontal; en vertical, los sitios fijos de siempre. Viñeta a un lado sin
+  contenido = al centro. Con pocos elementos se agrandan (hasta ×1,7).
+- REPERTORIO DE CARAS EXAGERADAS `t_e_*` (16: corazones, susto, llora, carcajada, agotado, furioso,
+  verguenza, asco, dinero, explota, nervioso, dormido, chulo, suplica, mareado, ilusion): `api/postura.ts`
+  con `cara` (expresión exagerada, se permiten lágrimas, sudor, corazones…), procesadas en la web con
+  `procesarDibujo` (posturas.ts) y guardadas como posturas fijas; `~b` = la misma con la boca al revés
+  (api/imagen «libre» sobre el original de `public/personajes/chico-magenta/originales/`, y de esa solo
+  se copia la zona de la boca). Van en `sinCapas` (su cara) y las de boca abierta en `abiertas`.
+  `quitarHuecos` no toca la cabeza ni los pies y solo borra blanco que en reposo no era blanco.
 - HUECOS: el blanco encerrado entre brazo y cuerpo/cabeza no toca el borde y quitarFondo no lo borraba
   (mancha blanca). `quitarHuecos` (posturas.ts) lo borra en los gestos a medida (zona que en t_reposo es
   fondo); en las posturas fijas se borró con un script (componentes blancas >300 px que en t_reposo son
