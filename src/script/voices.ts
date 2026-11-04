@@ -156,7 +156,7 @@ async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number 
         .filter((e) => e.palabras.length),
       nuevasMax: ch.expresivo?.base ? 3 + escenas.filter((e) => e.indicaciones?.trim()).length : 0,
       escenografia: true,
-      objetosMax: Math.min(14, 2 * escenas.length),
+      objetosMax: Math.min(16, 4 * escenas.length),
       vinetas: true,
       ...(ojosPart ? { miradas: Object.fromEntries(Object.entries(MIRADAS).filter(([k]) => k === 'propios' || ojosPart.variants[k])) } : {}),
     }),
@@ -480,6 +480,9 @@ export async function voiceScript(escenas: Escena[], texto: string, voz: Voz, pa
     vinetasNuevas = vinetasNuevas.map((v) =>
       /^blanco\b/i.test(v.fondo) && (v.plano === 'lejos' || (ancho && v.plano === 'general')) ? { ...v, plano: 'medio' } : v,
     )
+    // Una viñeta a un lado sin nada que mostrar en el otro queda coja: al centro
+    const conContenido = new Set([...(rotulosNuevos ?? []), ...(objetosNuevos ?? [])].map((x) => x.vin))
+    vinetasNuevas = vinetasNuevas.map((v, i) => (conContenido.has(i) ? v : { ...v, lado: 'centro' as const }))
     // En vertical no hay sitio a los lados: siempre en el centro (el contenido va arriba y a los lados)
     if (st.project.width <= st.project.height * 1.1) vinetasNuevas = vinetasNuevas.map((v) => ({ ...v, lado: 'centro' as const }))
     for (const c of Object.keys(tracks)) if (c.startsWith('cam:') || c === `part:${raiz?.id}:scale` || c === `part:${raiz?.id}:x`) delete tracks[c]

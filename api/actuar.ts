@@ -92,7 +92,10 @@ COMPOSICIÓN DE CADA VIÑETA (lo que le da riqueza visual, como «Estoy Tiesa»)
   lado LIBRE para el contenido, que se va llenando mientras habla; «centro»: sin contenido o con poco
   (un primer plano, una reacción). Alterna el lado entre viñetas para que no sea siempre igual.
 - El contenido de la viñeta APARECE PALABRA A PALABRA y se ACUMULA (no todo a la vez) y se borra de golpe
-  al cortar. Llena el lado libre: lo normal son 2-5 elementos por viñeta con contenido.
+  al cortar. OBLIGATORIO: toda viñeta con lado «izq» o «der» LLENA su lado libre con 2-5 elementos
+  (rótulos y objetos) que aparecen en palabras distintas; si no tienes nada que poner, usa «centro».
+  Al menos la mitad de las viñetas deben ir a un lado con contenido. Escribe las palabras clave tal
+  cual se dicen (en mayúsculas), dibuja lo que se nombra y lo que se imagina: es lo que da riqueza.
 - Rótulos con «estilo»: «grande» = palabras enormes en negro, la frase clave dicha palabra a palabra (un
   rótulo por palabra, en el momento en que se dice: «QUE» … «HAY» … «NO»); «nota» = concepto en color
   subrayado, más pequeño («DEPRECIACIÓN» en rojo, «TODO INCLUIDO» en verde); «cartel» = un precio, cifra
@@ -109,7 +112,7 @@ icono (corazón roto, rayo de cansancio, reloj)… En «objetos»: escena, palab
 palabra que lo nombra), «que» (en español, corto) y «dibujo» (EN INGLÉS, qué dibujar: un solo objeto o
 bocadillo, simple y reconocible; si lleva texto, como mucho 1-3 palabras o una cifra). Solo cosas que se
 NOMBRAN o se imaginan en esa viñeta y que tengan gracia o aclaren (nunca decoración «porque sí»):
-mejor pocos y con sentido que muchos. Desaparecen al cortar a la viñeta siguiente. Lo que imagina,
+siempre con sentido (lo que se nombra, lo que se imagina, la cifra). Desaparecen al cortar a la viñeta siguiente. Lo que imagina,
 desea o recuerda va en un BOCADILLO DE PENSAMIENTO arriba (arriba_izq/arriba_der); un precio o cifra, en
 un cartel; si el fondo es un lugar, el objeto debe encajar en él. Nunca más de 2 a la vez. Si el
 personaje ya lo SUJETA en su postura (un gesto a medida con ese objeto), no lo pongas también como objeto. «pos»: «arriba_izq», «arriba_der», «izq», «der», «izq_baja» o
@@ -262,7 +265,7 @@ export async function POST(request: Request): Promise<Response> {
       messages: [
         {
           role: 'user',
-          content: `Catálogo de posturas:\n${catalogo}\n\n${body.miradas ? `Catálogo de miradas:\n${Object.entries(body.miradas).map(([k, v]) => `- ${k}: ${v}`).join('\n')}\n\n` : ''}${body.nuevasMax ? `Gestos a medida permitidos: hasta ${Math.min(8, body.nuevasMax)}.\n\n` : 'No pidas gestos a medida (nuevas vacío).\n\n'}${body.escenografia ? 'Decide también «fondos» (uno por escena) y «rotulos».\n\n' : 'No hace falta «fondos» ni «rotulos» (déjalos vacíos).\n\n'}${body.vinetas ? 'Monta el vídeo por «vinetas» (los fondos van en cada viñeta; «fondos» puede ir vacío).\n\n' : ''}${body.objetosMax ? `Pon «objetos» en escena (como mucho ${Math.min(14, body.objetosMax)} en todo el vídeo).\n\n` : 'No pongas «objetos» (vacío).\n\n'}${body.indicaciones ? `INDICACIONES GENERALES DEL USUARIO: ${body.indicaciones}\n\n` : ''}Texto completo (para entender el tono):\n${textoSeguido}\n\nGuion por escenas con las palabras numeradas:\n${guion}`,
+          content: `Catálogo de posturas:\n${catalogo}\n\n${body.miradas ? `Catálogo de miradas:\n${Object.entries(body.miradas).map(([k, v]) => `- ${k}: ${v}`).join('\n')}\n\n` : ''}${body.nuevasMax ? `Gestos a medida permitidos: hasta ${Math.min(8, body.nuevasMax)}.\n\n` : 'No pidas gestos a medida (nuevas vacío).\n\n'}${body.escenografia ? 'Decide también «fondos» (uno por escena) y «rotulos».\n\n' : 'No hace falta «fondos» ni «rotulos» (déjalos vacíos).\n\n'}${body.vinetas ? 'Monta el vídeo por «vinetas» (los fondos van en cada viñeta; «fondos» puede ir vacío).\n\n' : ''}${body.objetosMax ? `Pon «objetos» en escena (como mucho ${Math.min(16, body.objetosMax)} en todo el vídeo).\n\n` : 'No pongas «objetos» (vacío).\n\n'}${body.indicaciones ? `INDICACIONES GENERALES DEL USUARIO: ${body.indicaciones}\n\n` : ''}Texto completo (para entender el tono):\n${textoSeguido}\n\nGuion por escenas con las palabras numeradas:\n${guion}`,
         },
       ],
     })
