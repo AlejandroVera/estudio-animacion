@@ -205,9 +205,19 @@ async function quitarHuecos(ch: Character, d: ImageData) {
       }
     }
     if (comp.length < 300) continue
-    let fondo = 0
-    for (const p of comp) if (ref[p * 4 + 3] < 40) fondo++
-    if (fondo / comp.length < 0.6) continue
+    // Ni dentro de la cabeza (ojos, dientes) ni en los pies (zapatillas, que pueden haberse movido), y solo
+    // lo que en la postura de reposo NO era blanco (fondo, brazo o camiseta que ahora deja un hueco)
+    let sx = 0, sy = 0, eraBlanco = 0
+    for (const p of comp) {
+      sx += p % W
+      sy += (p - (p % W)) / W
+      if (ref[p * 4 + 3] > 200 && Math.min(ref[p * 4], ref[p * 4 + 1], ref[p * 4 + 2]) > 215) eraBlanco++
+    }
+    const mx = sx / comp.length, my = sy / comp.length
+    const ex = ch.expresivo
+    if (ex && Math.hypot(mx - ex.cabeza.x, my - ex.cabeza.y) < (ex.radio ?? 300) * 1.05) continue
+    if (my > H * 0.8) continue
+    if (eraBlanco / comp.length > 0.3) continue
     for (const p of comp) {
       data[p * 4 + 3] = 0
       // y el borde suavizado del blanco
@@ -219,7 +229,7 @@ async function quitarHuecos(ch: Character, d: ImageData) {
 }
 
 /** Versión de la revisión: al mejorarla se sube y los gestos guardados se revisan otra vez. */
-export const REVISION = 3
+export const REVISION = 4
 
 export type PosturaDibujada = { imageId: string; sinOjos: boolean; sinBoca: boolean }
 

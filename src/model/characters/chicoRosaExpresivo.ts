@@ -105,6 +105,22 @@ export const DESCRIPCIONES: Record<string, string> = {
   celebrar: 'EXAGERADO celebrando con los puños arriba: victoria, alegría grande',
   cruzado: 'EXAGERADO brazos cruzados mirando de reojo: escepticismo, «ya, claro»',
   stop: 'EXAGERADO palmas delante: «¡para!», «espera», negarse',
+  t_e_corazones: 'EXAGERADO enamorado, ojos de corazón: le encanta algo, deseo, «me flipa» (cara propia)',
+  t_e_susto: 'EXAGERADO susto u horror: «¡¿QUÉ?!», algo escandaloso, un precio terrible (cara propia)',
+  t_e_llora: 'EXAGERADO llorando a mares: drama, pena exagerada, «qué triste mi vida» (cara propia)',
+  t_e_carcajada: 'EXAGERADO carcajada: algo muy gracioso, ironía que le hace reír (cara propia)',
+  t_e_agotado: 'EXAGERADO agotado, sin energía: cansancio extremo, «no puedo más» (cara propia)',
+  t_e_furioso: 'EXAGERADO furioso: rabia, indignación, «¡me hierve la sangre!» (cara propia)',
+  t_e_verguenza: 'vergüenza, incomodidad: admitir algo, «bueno… sí, lo hago» (cara propia)',
+  t_e_asco: 'EXAGERADO asco: algo repugnante, rechazo, «puaj» (cara propia)',
+  t_e_dinero: 'EXAGERADO ojos de euro: dinero, ganar pasta, codicia, ofertas (cara propia)',
+  t_e_explota: 'EXAGERADO le explota la cabeza: descubrimiento increíble, «no puede ser» (cara propia)',
+  t_e_nervioso: 'nervioso o pillado: incomodidad, mentirijilla, «eh… claro» (cara propia)',
+  t_e_dormido: 'EXAGERADO dormido de pie: aburrimiento, cansancio, «zzz» (cara propia)',
+  t_e_chulo: 'chulo u orgulloso: presumir, «obvio», seguridad en sí mismo (cara propia)',
+  t_e_suplica: 'EXAGERADO suplicando con ojos de cachorrito: pedir por favor, «porfa» (cara propia)',
+  t_e_mareado: 'EXAGERADO mareado o saturado: demasiada información, agobio, lío (cara propia)',
+  t_e_ilusion: 'EXAGERADO ilusión o éxito: «¡lo he conseguido!», alegría con brillo (cara propia)',
 }
 
 export interface ManifestExpresivo {
