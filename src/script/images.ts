@@ -4,6 +4,7 @@ import type { BgLayer, Escena, Project } from '../model/types'
 import { saveImage } from '../audio/storage'
 import { activeCharacter, useStore } from '../store'
 import { backgroundKeys, estimateDuration } from './scenes'
+import { setKey } from '../model/anim'
 
 const readPass = () => {
   try {
@@ -133,4 +134,59 @@ export async function generateSceneBackgrounds(escenas: Escena[], onProgress: (m
   })
   if (fallos.length) throw new Error(`no salió ${fallos.length === 1 ? 'un fondo' : fallos.length + ' fondos'} (${fallos.join('; ')})`)
   return out
+}
+
+/**
+ * Fondos del montaje por viñetas: un dibujo por lugar distinto (los ya hechos con la misma descripción y
+ * forma se reutilizan) y cada uno visible solo en sus viñetas, con corte seco.
+ */
+export async function fondosPorVinetas(vinetas: { t: number; fondo: string }[], onProgress: (m: string) => void) {
+  const unicos = [...new Set(vinetas.map((v) => v.fondo))]
+  const capaDe = new Map<string, BgLayer>()
+  const fallos: string[] = []
+  let n = 0
+  for (const d of unicos) {
+    const pr = useStore.getState().project
+    const previa = pr.fondos?.find((l) => l.descripcion === d && Math.abs(l.w / l.h - pr.width / pr.height) < 0.15)
+    n++
+    onProgress(previa ? `Reutilizando fondo: ${d}` : `Generando fondo ${n} de ${unicos.length}: ${d}`)
+    try {
+      capaDe.set(d, previa ?? { ...(await generateBackground(d, pr)), descripcion: d })
+    } catch (e) {
+      fallos.push(`«${d}»: ${e instanceof Error ? e.message : e}`)
+    }
+  }
+  const st = useStore.getState()
+  const total = st.project.duration
+  const fps = st.project.fps
+  const r = (x: number) => Math.round(x * fps) / fps
+  // Fuera las pistas de los fondos automáticos anteriores (los que tienen descripción)
+  const auto = new Set((st.project.fondos ?? []).filter((l) => l.descripcion).map((l) => l.id))
+  let tracks = Object.fromEntries(Object.entries(st.project.instances[0].tracks).filter(([c]) => !(c.startsWith('bg:') && auto.has(c.split(':')[1]))))
+  // Tramos de cada capa (juntando viñetas seguidas con el mismo fondo)
+  const tramos: { id: string; desde: number; hasta: number }[] = []
+  vinetas.forEach((v, i) => {
+    const capa = capaDe.get(v.fondo)
+    const hasta = vinetas[i + 1]?.t ?? total
+    const last = tramos[tramos.length - 1]
+    if (!capa) return
+    if (last && last.id === capa.id && Math.abs(last.hasta - v.t) < 1e-3) last.hasta = hasta
+    else tramos.push({ id: capa.id, desde: v.t, hasta })
+  })
+  for (const t of tramos) {
+    const op = `bg:${t.id}:opacity`
+    if (!tracks[op]) tracks = setKey(tracks, op, 0, t.desde > 1e-3 ? 0 : 1, 'salto')
+    tracks = setKey(tracks, op, r(t.desde), 1, 'salto')
+    if (t.hasta < total - 1e-3) tracks = setKey(tracks, op, r(t.hasta), 0, 'salto')
+    tracks = setKey(tracks, `bg:${t.id}:scale`, r(t.desde), 1, 'salto')
+  }
+  const usadas = [...new Map([...capaDe.values()].map((c) => [c.id, c])).values()]
+  const [inst, ...rest] = st.project.instances
+  st.commit({
+    ...st.project,
+    // Las capas automáticas que ya no se usan se quitan; las que puso el usuario a mano se quedan
+    fondos: [...usadas, ...(st.project.fondos ?? []).filter((l) => !l.descripcion)],
+    instances: [{ ...inst, tracks }, ...rest],
+  })
+  if (fallos.length) throw new Error(`no salió ${fallos.length === 1 ? 'un fondo' : fallos.length + ' fondos'} (${fallos.join('; ')})`)
 }

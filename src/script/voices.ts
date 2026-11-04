@@ -5,11 +5,11 @@
 
 import { gesticular, type Palabra } from './emocion'
 import { decodeAudio, loadAudio, saveAudio } from '../audio/storage'
-import type { Character, Escena, Objeto, Part, Rotulo, Tracks } from '../model/types'
-import { generateSceneBackgrounds } from './images'
-import { fondoDeIndicaciones, planoDeIndicaciones } from './scenes'
+import type { Character, Escena, Objeto, Part, Plano, Rotulo, Tracks } from '../model/types'
+import { fondosPorVinetas, generateSceneBackgrounds } from './images'
+import { encuadre, fondoDeIndicaciones, planoDeIndicaciones } from './scenes'
 import { DESCRIPCIONES, MIRADAS } from '../model/characters/chicoRosaExpresivo'
-import { cargarExtras, dibujarPostura } from './posturas'
+import { cargarExtras, dibujarPostura, REVISION } from './posturas'
 import { ponerObjetos, type ObjetoPedido } from './objetos'
 import { activeCharacter, useStore } from '../store'
 import { animateScenes } from './scenes'
@@ -137,6 +137,8 @@ function silabas(al: Alineacion, desplaza: (t: number) => number | null, fps: nu
   return keys
 }
 
+export type Vineta = { t: number; escena: number; fondo: string; plano: Plano }
+
 /** Pide a /api/actuar las posturas por palabra y las convierte en claves exactas (0,08 s antes). */
 async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number })[], ch: Character, raiz: Part, pass: string, fps: number, onProgress?: (m: string) => void, indicaciones = '') {
   const porEscena = escenas.map((e) => palabras.filter((w) => w.t >= e.inicio - 0.05 && w.t < e.inicio + e.duracion - 0.05))
@@ -155,11 +157,13 @@ async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number 
       nuevasMax: ch.expresivo?.base ? 3 + escenas.filter((e) => e.indicaciones?.trim()).length : 0,
       escenografia: true,
       objetosMax: Math.min(14, 2 * escenas.length),
+      vinetas: true,
       ...(ojosPart ? { miradas: Object.fromEntries(Object.entries(MIRADAS).filter(([k]) => k === 'propios' || ojosPart.variants[k])) } : {}),
     }),
   })
   if (!res.ok) throw new Error(((await res.json().catch(() => ({}))) as { error?: string }).error ?? `error ${res.status}`)
-  const { cambios, miradas, nuevas, fondos, rotulos, objetos } = (await res.json()) as {
+  const { cambios, miradas, nuevas, fondos, rotulos, objetos, vinetas } = (await res.json()) as {
+    vinetas?: { escena: number; palabra: number; fondo: string; tamano: Plano }[]
     objetos?: { escena: number; palabra: number; que: string; dibujo: string; pos: Objeto['pos'] }[]
     fondos?: { escena: number; fondo: string }[]
     rotulos?: { escena: number; palabra: number; texto: string; color: Rotulo['color']; pos: Rotulo['pos'] }[]
@@ -179,7 +183,7 @@ async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number 
     try {
       onProgress?.(`Dibujando un gesto a medida: ${n.que_expresa}…`)
       const dib = await dibujarPostura(activeCharacter(st.project), n.dibujo)
-      const lista = [...(useStore.getState().project.posturasExtra ?? []), { nombre, descripcion: n.que_expresa, ...dib, revisada: 1 }]
+      const lista = [...(useStore.getState().project.posturasExtra ?? []), { nombre, descripcion: n.que_expresa, ...dib, revisada: REVISION }]
       useStore.getState().setProjectProps({ posturasExtra: lista })
       await cargarExtras()
     } catch {
@@ -222,13 +226,34 @@ async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number 
     const sig = keys.find((k) => k.t > o.t)
     if (o.v !== 'nada' && sig && !ojos.some((x) => x.t > o.t && x.t < sig.t)) ojosFin.push({ t: sig.t, v: 'nada', ease: 'salto' })
   }
+  // Viñetas (montaje): cada una empieza justo antes de su palabra; la primera, al principio
+  const fin = escenas.length ? escenas[escenas.length - 1].inicio + escenas[escenas.length - 1].duracion : 0
+  const vins: Vineta[] = []
+  for (const v of [...(vinetas ?? [])].sort((a, b) => a.escena - b.escena || a.palabra - b.palabra)) {
+    const e = escenas[v.escena]
+    const w = porEscena[v.escena]?.[v.palabra]
+    if (!e) continue
+    let t = v.palabra === 0 || !w ? e.inicio : Math.max(e.inicio, Math.round((w.t - 0.08) * fps) / fps)
+    if (!vins.length) t = 0
+    // Cortes demasiado seguidos: se queda el último
+    if (vins.length && t - vins[vins.length - 1].t < 1.2) vins.pop()
+    if (!vins.length) t = 0
+    vins.push({ t, escena: v.escena, fondo: v.fondo.trim() || 'blanco', plano: v.tamano })
+  }
+  // Lo que aparece en escena se va al cortar a la viñeta siguiente (o al acabar su escena si no hay viñetas)
+  const finDe = (t: number, esc: number) => {
+    const sig = vins.find((v) => v.t > t + 1e-3)
+    const e = escenas[esc]
+    return vins.length ? (sig ? sig.t : fin) : e.inicio + e.duracion
+  }
   // Rótulos: aparecen en su palabra y se quedan hasta que acaba la escena
   const rots: Rotulo[] = []
   for (const r of rotulos ?? []) {
     const w = porEscena[r.escena]?.[r.palabra]
     const e = escenas[r.escena]
     if (!w || !e || !r.texto.trim()) continue
-    rots.push({ id: `r${r.escena}-${r.palabra}-${rots.length}`, t: Math.round(w.t * fps) / fps, fin: e.inicio + e.duracion, texto: r.texto.trim().slice(0, 40), color: r.color, pos: r.pos })
+    const tr = Math.round(w.t * fps) / fps
+    rots.push({ id: `r${r.escena}-${r.palabra}-${rots.length}`, t: tr, fin: finDe(tr, r.escena), texto: r.texto.trim().slice(0, 40), color: r.color, pos: r.pos })
   }
   // Objetos: aparecen en su palabra (un pelín antes) y se quedan hasta el final de la escena
   const objs: ObjetoPedido[] = []
@@ -236,7 +261,8 @@ async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number 
     const w = conPeso(o.escena, o.palabra)
     const e = escenas[o.escena]
     if (!w || !e || !o.dibujo.trim()) continue
-    objs.push({ t: Math.max(e.inicio, Math.round((w.t - 0.08) * fps) / fps), fin: e.inicio + e.duracion, pos: o.pos, que: o.que, dibujo: o.dibujo.trim() })
+    const to = Math.max(e.inicio, Math.round((w.t - 0.08) * fps) / fps)
+    objs.push({ t: to, fin: finDe(to, o.escena), pos: o.pos, que: o.que, dibujo: o.dibujo.trim() })
   }
   const fondoDe = new Map((fondos ?? []).map((f) => [f.escena, f.fondo.trim()]))
   return {
@@ -244,6 +270,7 @@ async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number 
     ojos: ojosFin.length ? [{ t: 0, v: 'nada', ease: 'salto' as const }, ...ojosFin] : [],
     rotulos: rots,
     objetos: objs,
+    vinetas: vins,
     fondos: escenas.map((_, i) => fondoDe.get(i) ?? ''),
   }
 }
@@ -410,6 +437,7 @@ export async function voiceScript(escenas: Escena[], texto: string, voz: Voz, pa
   let rotulosNuevos: Rotulo[] | null = null
   let fondosNuevos: string[] | null = null
   let objetosNuevos: ObjetoPedido[] | null = null
+  let vinetasNuevas: Vineta[] | null = null
   // Expresivo: una IA «directora» decide en qué palabra cambia de postura y a cuál, según lo que dice
   if (ch.expresivo && raiz && palabras.length) {
     onProgress('Dirigiendo los gestos según el guion…')
@@ -423,11 +451,33 @@ export async function voiceScript(escenas: Escena[], texto: string, voz: Voz, pa
       rotulosNuevos = dir.rotulos
       fondosNuevos = dir.fondos
       objetosNuevos = dir.objetos
+      if (dir.vinetas.length) vinetasNuevas = dir.vinetas
     }
+  }
+  // Montaje por viñetas: lo que pida el usuario en cada escena manda (fondo y tamaño); con «plano fijo»
+  // (todas las escenas en general) no hay cambios de tamaño
+  if (vinetasNuevas) {
+    const fijo = m.escenas.every((e) => e.plano === 'general')
+    vinetasNuevas = vinetasNuevas.map((v) => {
+      const e = m.escenas[v.escena]
+      return {
+        ...v,
+        fondo: fondoDeIndicaciones(e.indicaciones) || v.fondo,
+        plano: planoDeIndicaciones(e.indicaciones) || (fijo ? 'general' : v.plano),
+      }
+    })
+    for (const c of Object.keys(tracks)) if (c.startsWith('cam:') || c === `part:${raiz?.id}:scale`) delete tracks[c]
+    for (const v of vinetasNuevas) {
+      const s0 = encuadre(v.plano, st.project, ch)
+      for (const [canal, val] of [['cam:zoom', s0.zoom], ['cam:x', s0.x], ['cam:y', s0.y]] as const)
+        tracks[canal] = [...(tracks[canal] ?? []), { t: v.t, v: Math.round(val * 1000) / 1000, ease: 'salto' }]
+      if (raiz) tracks[`part:${raiz.id}:scale`] = [...(tracks[`part:${raiz.id}:scale`] ?? []), { t: v.t, v: v.plano === 'lejos' ? 0.7 : 1, ease: 'salto' }]
+    }
+    fondosNuevos = null
   }
   // El fondo que escriba el usuario en las indicaciones («Fondo: un salón…») manda sobre el director
   const pedidos = m.escenas.map((e) => fondoDeIndicaciones(e.indicaciones))
-  if (pedidos.some(Boolean)) fondosNuevos = m.escenas.map((e, i) => pedidos[i] || fondosNuevos?.[i] || e.fondo || '')
+  if (!vinetasNuevas && pedidos.some(Boolean)) fondosNuevos = m.escenas.map((e, i) => pedidos[i] || fondosNuevos?.[i] || e.fondo || '')
   const conGestos = gesticular(tracks, palabras, ch, m.escenas)
 
   const [inst, ...rest] = useStore.getState().project.instances
@@ -445,6 +495,14 @@ export async function voiceScript(escenas: Escena[], texto: string, voz: Voz, pa
   if (fondosNuevos?.some(Boolean)) {
     try {
       await generateSceneBackgrounds(useStore.getState().project.guion!.escenas, onProgress)
+    } catch (e) {
+      aviso += ` No se pudieron generar los fondos: ${e instanceof Error ? e.message : e}.`
+    }
+  }
+  // Fondos de cada viñeta
+  if (vinetasNuevas) {
+    try {
+      await fondosPorVinetas(vinetasNuevas, onProgress)
     } catch (e) {
       aviso += ` No se pudieron generar los fondos: ${e instanceof Error ? e.message : e}.`
     }

@@ -170,6 +170,9 @@ async function alinear(img: CanvasImageSource, W: number, H: number, rev: { dx: 
   return out.convertToBlob({ type: 'image/png' })
 }
 
+/** Versión de la revisión: al mejorarla se sube y los gestos guardados se revisan otra vez. */
+export const REVISION = 2
+
 export type PosturaDibujada = { imageId: string; sinOjos: boolean; sinBoca: boolean }
 
 /** Dibuja un gesto nuevo y lo guarda (alineado con las demás posturas por la cabeza). */
@@ -224,11 +227,11 @@ export function conExtras(p: Project): Project {
   const assets = { ...ch.assets }
   const variants = { ...raiz.variants }
   let cambio = false
-  const sinOjos = new Set(ch.expresivo.sinOjos ?? [])
-  const sinBoca = new Set(ch.expresivo.sinBoca ?? [])
+  // Se rehacen desde los gestos (si una revisión nueva quita la marca, deja de aplicarse)
+  const sinOjos = extras.filter((e) => e.sinOjos).map((e) => e.nombre).sort()
+  const sinBoca = extras.filter((e) => e.sinBoca).map((e) => e.nombre).sort()
+  if (sinOjos.join() !== (ch.expresivo.sinOjos ?? []).join() || sinBoca.join() !== (ch.expresivo.sinBoca ?? []).join()) cambio = true
   for (const e of extras) {
-    if (e.sinOjos && !sinOjos.has(e.nombre)) (sinOjos.add(e.nombre), (cambio = true))
-    if (e.sinBoca && !sinBoca.has(e.nombre)) (sinBoca.add(e.nombre), (cambio = true))
     const url = mediaUrl(e.imageId)
     const aid = `extra-${e.nombre}`
     if (!url || (variants[e.nombre] && assets[aid]?.src === url)) continue
@@ -238,7 +241,7 @@ export function conExtras(p: Project): Project {
   }
   if (!cambio) return p
   const parts = ch.parts.map((x) => (x === raiz ? { ...x, variants } : x))
-  const expresivo = { ...ch.expresivo, sinOjos: [...sinOjos], sinBoca: [...sinBoca] }
+  const expresivo = { ...ch.expresivo, sinOjos, sinBoca }
   return { ...p, characters: { ...p.characters, [ch.id]: { ...ch, assets, parts, expresivo } } }
 }
 
@@ -249,7 +252,7 @@ export async function cargarExtras() {
   await ensureMedia(p.posturasExtra.map((e) => e.imageId))
   // Las hechas antes de la revisión (cabeza movida, mano delante de la cara): se arreglan una vez
   const ch = activeCharacter(p)
-  const pendientes = p.posturasExtra.filter((e) => !e.revisada && mediaUrl(e.imageId))
+  const pendientes = p.posturasExtra.filter((e) => (e.revisada ?? 0) < REVISION && mediaUrl(e.imageId))
   if (pendientes.length && ch.expresivo?.base && ch.expresivo.lienzo) {
     const [, , lw, lh] = ch.expresivo.lienzo
     const hechas: Record<string, { sinOjos: boolean; sinBoca: boolean }> = {}
@@ -266,7 +269,7 @@ export async function cargarExtras() {
     useStore.setState((s) => ({
       project: {
         ...s.project,
-        posturasExtra: s.project.posturasExtra?.map((e) => (hechas[e.imageId] ? { ...e, ...hechas[e.imageId], revisada: 1 } : e)),
+        posturasExtra: s.project.posturasExtra?.map((e) => (hechas[e.imageId] ? { ...e, ...hechas[e.imageId], revisada: REVISION } : e)),
       },
     }))
   }

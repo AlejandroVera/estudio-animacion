@@ -66,15 +66,38 @@ FONDOS Y RÓTULOS (si te lo piden), como en «Estoy Tiesa»:
   «abajo»; en una misma escena cada rótulo en un sitio distinto (se acumulan hasta que cambia la
   escena). No repitas tal cual frases enteras: el rótulo resume.
 
+MONTAJE POR VIÑETAS (si te lo piden): así se monta «Estoy Tiesa» y es lo que le da RITMO. El vídeo no es
+un plano fijo por escena: es una sucesión de VIÑETAS de 2 a 5 segundos (normalmente una por frase o por
+golpe de humor) y en cada corte cambia la composición de golpe: el encuadre y, si la idea lo pide, el
+lugar. Cada viñeta es un dibujo PENSADO para lo que se dice en ella: el fondo ilustra ESA frase, los
+objetos son de ESA frase y la postura la interpreta. En «vinetas»: escena, palabra donde empieza el
+corte, «fondo» y «tamano», y «idea» (qué cuenta la viñeta, en pocas palabras).
+- La primera viñeta empieza en la escena 0, palabra 0. Una viñeta nueva al empezar cada frase con una
+  idea nueva, en el remate de un chiste o en un giro («pero…», «y entonces…»). Ni más corta de 1,8 s ni
+  más larga de 6 s: si una frase es larga, pártela en su coma o en su «y».
+- «fondo»: «blanco» (lo más habitual para ideas abstractas, reflexiones, datos y remates: deja que
+  mande el personaje con sus rótulos) o un LUGAR concreto y cotidiano que ilustre lo que dice en esa
+  viñeta (la cocina cuando habla de cocinar, el sofá cuando habla de no tener fuerzas, el gimnasio
+  cuando dice «entrena»…). Para volver a un lugar ya usado escribe EXACTAMENTE el mismo texto. Como
+  mucho 4-5 lugares distintos en el vídeo (cada uno se dibuja aparte); alterna lugares con blanco.
+- «tamano»: «general» (cuerpo entero, para situar en un lugar), «lejos» (pequeño en un lugar grande:
+  soledad, agobio, algo enorme), «medio» (de cintura arriba: explicar, la mayoría de viñetas en blanco)
+  o «primer» (la cara: el remate, la ironía, la emoción fuerte; corto). Alterna: nunca el mismo tamaño
+  en tres viñetas seguidas, y un corte a «primer» justo en la palabra del chiste.
+- Las indicaciones del usuario mandan: si pide un fondo o un tamaño para una escena, úsalo en todas
+  las viñetas de esa escena (puedes partirla igualmente cambiando el encuadre).
+
 OBJETOS EN ESCENA (si te lo piden): lo que hace que «pase algo» en los vídeos de «Estoy Tiesa». Mientras
 habla, APARECEN de golpe junto al personaje dibujos sencillos de lo que está contando: el objeto del que
 habla (un táper, un coche, una factura, una pesa, un móvil con un podcast), un bocadillo de pensamiento
 con un dibujo dentro (lo que imagina o desea), un cartel con un precio o una cifra con su flecha, un
 icono (corazón roto, rayo de cansancio, reloj)… En «objetos»: escena, palabra (en la que aparece, la
 palabra que lo nombra), «que» (en español, corto) y «dibujo» (EN INGLÉS, qué dibujar: un solo objeto o
-bocadillo, simple y reconocible; si lleva texto, como mucho 1-3 palabras o una cifra). Pon 1-2 por
-escena en casi todas las escenas con algo concreto (no en todas: alguna escena solo con el personaje
-está bien) y nunca más de 2 a la vez. «pos»: «arriba_izq», «arriba_der», «izq», «der», «izq_baja» o
+bocadillo, simple y reconocible; si lleva texto, como mucho 1-3 palabras o una cifra). Solo cosas que se
+NOMBRAN o se imaginan en esa viñeta y que tengan gracia o aclaren (nunca decoración «porque sí»):
+mejor pocos y con sentido que muchos. Desaparecen al cortar a la viñeta siguiente. Lo que imagina,
+desea o recuerda va en un BOCADILLO DE PENSAMIENTO arriba (arriba_izq/arriba_der); un precio o cifra, en
+un cartel; si el fondo es un lugar, el objeto debe encajar en él. Nunca más de 2 a la vez. «pos»: «arriba_izq», «arriba_der», «izq», «der», «izq_baja» o
 «der_baja», cada uno en un sitio distinto y distinto del de los rótulos de esa escena. En una
 enumeración, un objeto por cosa enumerada en su palabra (se van acumulando). Si el usuario pide un
 objeto en sus indicaciones, ponlo tal cual.
@@ -140,6 +163,21 @@ const SCHEMA = {
         },
       },
     },
+    vinetas: {
+      type: 'array',
+      items: {
+        type: 'object',
+        additionalProperties: false,
+        required: ['escena', 'palabra', 'idea', 'fondo', 'tamano'],
+        properties: {
+          escena: { type: 'integer' },
+          palabra: { type: 'integer' },
+          idea: { type: 'string' },
+          fondo: { type: 'string' },
+          tamano: { type: 'string', enum: ['lejos', 'general', 'medio', 'primer'] },
+        },
+      },
+    },
     objetos: {
       type: 'array',
       items: {
@@ -175,7 +213,7 @@ const SCHEMA = {
 export async function POST(request: Request): Promise<Response> {
   if (!process.env.ANTHROPIC_API_KEY) return json({ error: 'Falta configurar las claves en Vercel.' }, 503)
   if (!claveOk(request)) return json({ error: 'clave' }, 401)
-  let body: { indicaciones?: string; escenas?: { escena: number; emocion: string; palabras: string[]; indicaciones?: string }[]; posturas?: Record<string, string>; miradas?: Record<string, string>; nuevasMax?: number; escenografia?: boolean; objetosMax?: number }
+  let body: { indicaciones?: string; escenas?: { escena: number; emocion: string; palabras: string[]; indicaciones?: string }[]; posturas?: Record<string, string>; miradas?: Record<string, string>; nuevasMax?: number; escenografia?: boolean; objetosMax?: number; vinetas?: boolean }
   try {
     body = await request.json()
   } catch {
@@ -205,7 +243,7 @@ export async function POST(request: Request): Promise<Response> {
       messages: [
         {
           role: 'user',
-          content: `Catálogo de posturas:\n${catalogo}\n\n${body.miradas ? `Catálogo de miradas:\n${Object.entries(body.miradas).map(([k, v]) => `- ${k}: ${v}`).join('\n')}\n\n` : ''}${body.nuevasMax ? `Gestos a medida permitidos: hasta ${Math.min(8, body.nuevasMax)}.\n\n` : 'No pidas gestos a medida (nuevas vacío).\n\n'}${body.escenografia ? 'Decide también «fondos» (uno por escena) y «rotulos».\n\n' : 'No hace falta «fondos» ni «rotulos» (déjalos vacíos).\n\n'}${body.objetosMax ? `Pon «objetos» en escena (como mucho ${Math.min(14, body.objetosMax)} en todo el vídeo).\n\n` : 'No pongas «objetos» (vacío).\n\n'}${body.indicaciones ? `INDICACIONES GENERALES DEL USUARIO: ${body.indicaciones}\n\n` : ''}Texto completo (para entender el tono):\n${textoSeguido}\n\nGuion por escenas con las palabras numeradas:\n${guion}`,
+          content: `Catálogo de posturas:\n${catalogo}\n\n${body.miradas ? `Catálogo de miradas:\n${Object.entries(body.miradas).map(([k, v]) => `- ${k}: ${v}`).join('\n')}\n\n` : ''}${body.nuevasMax ? `Gestos a medida permitidos: hasta ${Math.min(8, body.nuevasMax)}.\n\n` : 'No pidas gestos a medida (nuevas vacío).\n\n'}${body.escenografia ? 'Decide también «fondos» (uno por escena) y «rotulos».\n\n' : 'No hace falta «fondos» ni «rotulos» (déjalos vacíos).\n\n'}${body.vinetas ? 'Monta el vídeo por «vinetas» (los fondos van en cada viñeta; «fondos» puede ir vacío).\n\n' : ''}${body.objetosMax ? `Pon «objetos» en escena (como mucho ${Math.min(14, body.objetosMax)} en todo el vídeo).\n\n` : 'No pongas «objetos» (vacío).\n\n'}${body.indicaciones ? `INDICACIONES GENERALES DEL USUARIO: ${body.indicaciones}\n\n` : ''}Texto completo (para entender el tono):\n${textoSeguido}\n\nGuion por escenas con las palabras numeradas:\n${guion}`,
         },
       ],
     })

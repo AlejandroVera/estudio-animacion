@@ -79,7 +79,7 @@ export function textMouthKeys(text: string, t0: number, t1: number, fps: number)
 }
 
 /** Encuadre de cada plano: zoom y desplazamiento de cámara hacia la cabeza del personaje. */
-function shot(plano: Plano, project: Project, character: Character) {
+export function encuadre(plano: Plano, project: Project, character: Character) {
   if (plano === 'general' || plano === 'lejos') return { zoom: 1, x: 0, y: 0 }
   const inst = project.instances[0]
   const pl = layout(character, inst, poseAt(character, {}, 0)).find((p) => p.part.id === 'cabeza')
@@ -129,7 +129,7 @@ export function animateScenes(escenas: Escena[], project: Project, character: Ch
     const inicio = Math.round(t * fps) / fps
     placed.push({ ...e, duracion: dur, inicio })
     // Corte de cámara al empezar la escena
-    const s = shot(e.plano, project, character)
+    const s = encuadre(e.plano, project, character)
     for (const [canal, v] of [['cam:zoom', s.zoom], ['cam:x', s.x], ['cam:y', s.y]] as const) {
       result.claves.push({ canal, t: inicio, valor: String(Math.round(v * 1000) / 1000), transicion: 'salto' })
     }
