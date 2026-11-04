@@ -147,7 +147,7 @@ async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number 
       ...(ojosPart ? { miradas: Object.fromEntries(Object.entries(MIRADAS).filter(([k]) => k === 'propios' || ojosPart.variants[k])) } : {}),
     }),
   })
-  if (!res.ok) throw new Error('actuar')
+  if (!res.ok) throw new Error(((await res.json().catch(() => ({}))) as { error?: string }).error ?? `error ${res.status}`)
   const { cambios, miradas } = (await res.json()) as {
     cambios: { escena: number; palabra: number; postura: string }[]
     miradas?: { escena: number; palabra: number; ojos: string }[]
@@ -212,13 +212,16 @@ const TAIL = 0.6 // respiro al final del vídeo
  * cuándo empieza cada frase, las escenas duran lo que su frase y la boca sigue las letras.
  */
 export async function voiceScript(escenas: Escena[], texto: string, voz: Voz, pass: string, onProgress: (msg: string) => void, modelo: Modelo = 'eleven_multilingual_v2') {
+  let aviso = ''
   const conTexto = escenas.map((e, i) => ({ i, d: e.dialogo.trim() })).filter((x) => x.d)
   if (!conTexto.length) throw new Error('Ninguna escena tiene diálogo.')
   // Texto completo y dónde empieza cada frase dentro de él
   let completo = ''
   const rangos = new Map<number, [number, number]>()
   for (const { i, d } of conTexto) {
-    if (completo) completo += '\n\n'
+    // Texto seguido (un espacio, no párrafos): ElevenLabs lo lee de corrido, sin pausa ni cambio de
+    // entonación en cada escena
+    if (completo) completo += ' '
     rangos.set(i, [completo.length, completo.length + d.length])
     completo += d
   }
@@ -339,7 +342,10 @@ export async function voiceScript(escenas: Escena[], texto: string, voz: Voz, pa
   // Expresivo: una IA «directora» decide en qué palabra cambia de postura y a cuál, según lo que dice
   if (ch.expresivo && raiz && palabras.length) {
     onProgress('Dirigiendo los gestos según el guion…')
-    const dir = await dirigir(palabras, m.escenas, ch, raiz, pass, st.project.fps).catch(() => null)
+    const dir = await dirigir(palabras, m.escenas, ch, raiz, pass, st.project.fps).catch((e) => {
+      aviso = `La IA directora no respondió (${e instanceof Error ? e.message : e}); los gestos se han elegido con reglas simples.`
+      return null
+    })
     if (dir) {
       tracks[`part:${raiz.id}:v`] = dir.posturas
       if (dir.ojos.length) tracks['face:brows'] = dir.ojos
@@ -357,5 +363,5 @@ export async function voiceScript(escenas: Escena[], texto: string, voz: Voz, pa
   })
   st.setTime(0)
   st.setPlaying(true)
-  return { escenas: ajustadas, duracion: m.duration }
+  return { escenas: ajustadas, duracion: m.duration, aviso }
 }

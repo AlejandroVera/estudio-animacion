@@ -112,7 +112,7 @@ export function ScriptPanel({ onClose }: { onClose: () => void }) {
     try {
       const r = await voiceScript(escenas, texto, voz, pass, (t) => setMsg({ ok: true, text: t }), modelo)
       setEscenas(r.escenas)
-      setMsg({ ok: true, text: `Listo: ${r.duracion.toFixed(1).replace('.', ',')} s con la voz de ${voz.nombre}. Las voces quedan guardadas: si cambias solo gestos o planos no se vuelven a pagar.` })
+      setMsg({ ok: !r.aviso, text: `Listo: ${r.duracion.toFixed(1).replace('.', ',')} s con la voz de ${voz.nombre}. ${r.aviso || 'Gestos dirigidos por la IA según el guion.'}` })
     } catch (e) {
       const t = e instanceof Error ? e.message : String(e)
       if (/contraseña|clave|401/i.test(t)) setNeedPass(true)

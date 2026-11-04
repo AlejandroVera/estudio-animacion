@@ -51,6 +51,12 @@ export function addLayer(layer: BgLayer) {
  */
 export async function generateSceneBackgrounds(escenas: Escena[], onProgress: (m: string) => void): Promise<Escena[]> {
   if (!escenas.length) throw new Error('Primero prepara las escenas.')
+  // Si ninguna escena describe su fondo (p. ej. «Dividir sin IA»), un único fondo sencillo que encaje
+  // con lo que cuenta el guion
+  if (!escenas.some((e) => e.fondo.trim())) {
+    const tema = escenas.map((e) => e.dialogo).join(' ').slice(0, 400)
+    escenas = escenas.map((e, i) => (i === 0 ? { ...e, fondo: `un lugar cotidiano y sencillo que encaje con lo que cuenta este texto: «${tema}»` } : e))
+  }
   const grupos: { desc: string; idx: number[] }[] = []
   let actual = ''
   escenas.forEach((e, i) => {

@@ -25,8 +25,14 @@ Cómo actúa un buen narrador (síguelo):
 - Reparto: ~45 % del tiempo posturas tranquilas, ~35 % gestos suaves, ~20 % exageradas. Las exageradas
   (las de frente: susto, enfado, llorar, celebrar, cruzado, ¡para!) SOLO en el remate de un chiste, una
   cifra escandalosa o una emoción fuerte, y como mucho una por escena.
+- Antes de decidir, entiende el TONO de cada frase (queja irónica, consejo, dato, chiste, confesión) y lo
+  que siente el narrador: el gesto tiene que contar eso, no ser decorativo. Ejemplos: «estamos
+  agotados» → apenado o (si es el remate) llorar; «es tu culpa» dicho con ironía → índice/cadera con
+  mirada escéptica; una lista de consejos («entrena, medita, haz terapia») → contar con los dedos;
+  «somos lo que comemos» en tono de burla → encogerse con mirada escéptica.
 - Cambia en la palabra que lleva el peso (el sustantivo, la cifra, el verbo clave), nunca en artículos o
-  preposiciones. Mantén cada postura entre 4 y 9 palabras (1,5-3,5 s). Nada de cambios cada dos palabras.
+  preposiciones. Cada postura dura entre 3 y 8 palabras (1,2-3 s): NUNCA más de 8 palabras seguidas sin
+  cambiar de brazos o de mirada. Nada de cambios cada dos palabras.
 - Varía: no repitas la misma postura en cambios seguidos. Cada escena empieza con una postura en su
   palabra 0 (puede ser la misma que venía si la frase continúa la idea).
 - Usa SOLO nombres de postura del catálogo.
@@ -34,8 +40,8 @@ Cómo actúa un buen narrador (síguelo):
 MIRADAS (si te dan un catálogo de miradas): los ojos cambian POR SU CUENTA, entre un cambio de brazos y
 el siguiente, como en la referencia (brazos, ojos y boca nunca cambian todos a la vez). Úsalas para dar
 matiz: ironía → escéptico, cifra escandalosa → platos, pensar → arriba, algo bonito → felices… Vuelve
-a «propios» cuando pase el momento. Unas 1-2 miradas por escena como mucho, nunca en la misma palabra
-que un cambio de postura. Solo valen con posturas tranquilas (las que empiezan por t_).`
+a «propios» cuando pase el momento. Unas 1-3 miradas por escena, nunca en la misma palabra que un
+cambio de postura. Solo valen con posturas tranquilas (las que empiezan por t_).`
 
 const SCHEMA = {
   type: 'object',
@@ -47,8 +53,13 @@ const SCHEMA = {
       items: {
         type: 'object',
         additionalProperties: false,
-        required: ['escena', 'palabra', 'postura'],
-        properties: { escena: { type: 'integer' }, palabra: { type: 'integer' }, postura: { type: 'string' } },
+        required: ['motivo', 'escena', 'palabra', 'postura'],
+        properties: {
+          motivo: { type: 'string', description: 'Por qué este gesto en esta palabra (tono y significado), en pocas palabras.' },
+          escena: { type: 'integer' },
+          palabra: { type: 'integer' },
+          postura: { type: 'string' },
+        },
       },
     },
     miradas: {
@@ -56,8 +67,13 @@ const SCHEMA = {
       items: {
         type: 'object',
         additionalProperties: false,
-        required: ['escena', 'palabra', 'ojos'],
-        properties: { escena: { type: 'integer' }, palabra: { type: 'integer' }, ojos: { type: 'string' } },
+        required: ['motivo', 'escena', 'palabra', 'ojos'],
+        properties: {
+          motivo: { type: 'string' },
+          escena: { type: 'integer' },
+          palabra: { type: 'integer' },
+          ojos: { type: 'string' },
+        },
       },
     },
   },
@@ -73,24 +89,26 @@ export async function POST(request: Request): Promise<Response> {
     return json({ error: 'Petición no válida.' }, 400)
   }
   if (!body.escenas?.length || !body.posturas) return json({ error: 'Faltan escenas o posturas.' }, 400)
+  const textoSeguido = body.escenas.map((e) => e.palabras.join(' ')).join(' ')
   const guion = body.escenas
     .map((e) => `Escena ${e.escena} (emoción: ${e.emocion}): ${e.palabras.map((w, i) => `${i}:${w}`).join(' ')}`)
     .join('\n')
   const catalogo = Object.entries(body.posturas).map(([k, v]) => `- ${k}: ${v}`).join('\n')
   if (guion.length > 20000) return json({ error: 'Guion demasiado largo.' }, 400)
-  const model = MODELOS.includes(process.env.COPILOTO_MODELO ?? '') ? process.env.COPILOTO_MODELO! : 'claude-haiku-5-5'
+  // La dirección necesita entender ironía y tono: por defecto Sonnet (cambiable con ACTUAR_MODELO)
+  const model = MODELOS.includes(process.env.ACTUAR_MODELO ?? '') ? process.env.ACTUAR_MODELO! : 'claude-sonnet-5-5'
   const client = new Anthropic()
   try {
     const response = await client.beta.messages.create({
       model,
-      max_tokens: 8000,
+      max_tokens: 16000,
       ...(CON_RESPALDO.has(model) ? { betas: ['server-side-fallback-2026-07-01'], fallbacks: 'default' as const } : {}),
       output_config: { effort: 'medium', format: { type: 'json_schema', schema: SCHEMA } },
       system: [{ type: 'text', text: GUIA, cache_control: { type: 'ephemeral' } }],
       messages: [
         {
           role: 'user',
-          content: `Catálogo de posturas:\n${catalogo}\n\n${body.miradas ? `Catálogo de miradas:\n${Object.entries(body.miradas).map(([k, v]) => `- ${k}: ${v}`).join('\n')}\n\n` : ''}Guion:\n${guion}`,
+          content: `Catálogo de posturas:\n${catalogo}\n\n${body.miradas ? `Catálogo de miradas:\n${Object.entries(body.miradas).map(([k, v]) => `- ${k}: ${v}`).join('\n')}\n\n` : ''}Texto completo (para entender el tono):\n${textoSeguido}\n\nGuion por escenas con las palabras numeradas:\n${guion}`,
         },
       ],
     })
