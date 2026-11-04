@@ -40,6 +40,7 @@ export function ScriptPanel({ onClose }: { onClose: () => void }) {
   const [texto, setTexto] = useState(project.guion?.texto ?? '')
   const [escenas, setEscenas] = useState<Escena[]>(project.guion?.escenas ?? [])
   const planosPrevios = useRef<Plano[] | null>(null)
+  const [indicaciones, setIndicaciones] = useState(project.guion?.indicaciones ?? '')
   const todoGeneral = escenas.length > 0 && escenas.every((e) => e.plano === 'general')
   const [busy, setBusy] = useState(false)
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null)
@@ -112,7 +113,7 @@ export function ScriptPanel({ onClose }: { onClose: () => void }) {
     if (hay && !confirm('Esto sustituye la animación actual por la de las escenas, con voz. Se puede deshacer con Ctrl+Z. ¿Seguir?')) return
     setBusy(true)
     try {
-      const r = await voiceScript(escenas, texto, voz, pass, (t) => setMsg({ ok: true, text: t }), modelo)
+      const r = await voiceScript(escenas, texto, voz, pass, (t) => setMsg({ ok: true, text: t }), modelo, indicaciones)
       setEscenas(r.escenas)
       setMsg({ ok: !r.aviso, text: `Listo: ${r.duracion.toFixed(1).replace('.', ',')} s con la voz de ${voz.nombre}. ${r.aviso || 'Gestos dirigidos por la IA según el guion.'}` })
     } catch (e) {
@@ -243,6 +244,13 @@ export function ScriptPanel({ onClose }: { onClose: () => void }) {
                   </button>
                 </div>
                 <textarea rows={2} value={e.dialogo} onChange={(ev) => edit(i, { dialogo: ev.target.value, duracion: estimateDuration(ev.target.value) })} placeholder="(sin diálogo)" />
+                <textarea
+                  className="indicaciones"
+                  rows={2}
+                  value={e.indicaciones ?? ''}
+                  onChange={(ev) => edit(i, { indicaciones: ev.target.value })}
+                  placeholder="🎬 Lo que quieres que haga aquí: gesto, cara, fondo, rótulos… (p. ej. «cara de agotado sujetando una sartén, fondo de cocina, rótulo AGOTADOS en rojo»)"
+                />
                 <div className="scene-fields">
                   <label>
                     Plano
@@ -290,6 +298,14 @@ export function ScriptPanel({ onClose }: { onClose: () => void }) {
               </div>
             ))}
           </div>
+          <label className="sublabel">🎬 Indicaciones para todo el vídeo (la IA las cumple)</label>
+          <textarea
+            className="indicaciones"
+            rows={2}
+            value={indicaciones}
+            onChange={(ev) => setIndicaciones(ev.target.value)}
+            placeholder="p. ej. «tono irónico, que exagere en los remates, fondos de casa, rótulos en las cifras»"
+          />
           <div className="voice-pick">
             <div className="sublabel">Voz (ElevenLabs)</div>
             {voces === null ? (

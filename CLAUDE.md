@@ -114,6 +114,11 @@ cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y
   `drawRotulos` (render.ts) en letra Kalam a mano con borde blanco, fuera de la cámara, con «pop» de
   0,15 s, hasta el final de su escena. Al acabar «Generar voces y animar» se generan los fondos solos
   (`generateSceneBackgrounds`; «blanco» se hace sin IA). Fondos fijos, sin zoom lento.
+- EL USUARIO DIRIGE (petición expresa: «quiero yo dirigir a la IA»): cada escena tiene «🎬 Lo que quieres
+  que haga» (`Escena.indicaciones`) y el guion «Indicaciones para todo el vídeo»
+  (`guion.indicaciones`). `api/actuar.ts` las trata como ÓRDENES por encima de todo (gesto → a medida
+  si no existe, fondo, rótulos, cara). Para corregir: cambiar la indicación y volver a «Generar voces y
+  animar» (la voz está en caché y los fondos con la misma descripción se reutilizan: no se repaga).
 - DIRECTOR IA (`api/actuar.ts`, lo llama `dirigir` en `voices.ts` al generar voces): recibe las palabras
   de cada escena, la emoción y el catálogo `DESCRIPCIONES` (qué expresa cada postura) y devuelve en qué
   palabra cambia y a qué postura según lo que dice, y `miradas` (catálogo `MIRADAS`) en otras palabras; las claves caen 0,08 s antes de esa palabra. Si

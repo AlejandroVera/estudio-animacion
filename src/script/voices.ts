@@ -136,7 +136,7 @@ function silabas(al: Alineacion, desplaza: (t: number) => number | null, fps: nu
 }
 
 /** Pide a /api/actuar las posturas por palabra y las convierte en claves exactas (0,08 s antes). */
-async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number })[], ch: Character, raiz: Part, pass: string, fps: number, onProgress?: (m: string) => void) {
+async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number })[], ch: Character, raiz: Part, pass: string, fps: number, onProgress?: (m: string) => void, indicaciones = '') {
   const porEscena = escenas.map((e) => palabras.filter((w) => w.t >= e.inicio - 0.05 && w.t < e.inicio + e.duracion - 0.05))
   const ojosPart = ch.parts.find((p) => p.id === 'ojos')
   const extras = Object.fromEntries((useStore.getState().project.posturasExtra ?? []).map((e) => [e.nombre, `(a medida) ${e.descripcion}`]))
@@ -146,8 +146,11 @@ async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number 
     headers: { 'content-type': 'application/json', 'x-clave-estudio': pass },
     body: JSON.stringify({
       posturas,
-      escenas: escenas.map((e, i) => ({ escena: i, emocion: e.expresion, palabras: porEscena[i].map((w) => w.texto) })).filter((e) => e.palabras.length),
-      nuevasMax: ch.expresivo?.base ? 3 : 0,
+      indicaciones: indicaciones.trim() || undefined,
+      escenas: escenas
+        .map((e, i) => ({ escena: i, emocion: e.expresion, palabras: porEscena[i].map((w) => w.texto), indicaciones: e.indicaciones?.trim() || undefined }))
+        .filter((e) => e.palabras.length),
+      nuevasMax: ch.expresivo?.base ? 3 + escenas.filter((e) => e.indicaciones?.trim()).length : 0,
       escenografia: true,
       ...(ojosPart ? { miradas: Object.fromEntries(Object.entries(MIRADAS).filter(([k]) => k === 'propios' || ojosPart.variants[k])) } : {}),
     }),
@@ -161,7 +164,7 @@ async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number 
     nuevas?: { nombre: string; dibujo: string; que_expresa: string }[]
   }
   // Gestos a medida: se dibujan con IA (los que ya existan en el proyecto se reutilizan)
-  for (const n of (nuevas ?? []).slice(0, 3)) {
+  for (const n of (nuevas ?? []).slice(0, 8)) {
     const nombre = 't_x_' + n.nombre.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 20)
     if (!cambios.some((c) => c.postura === 'x_' + n.nombre || c.postura === nombre)) continue
     cambios.forEach((c) => {
@@ -260,7 +263,7 @@ const TAIL = 0.6 // respiro al final del vídeo
  * Voz del guion: se lee entero de una vez con ElevenLabs, el audio se reparte entre las escenas según
  * cuándo empieza cada frase, las escenas duran lo que su frase y la boca sigue las letras.
  */
-export async function voiceScript(escenas: Escena[], texto: string, voz: Voz, pass: string, onProgress: (msg: string) => void, modelo: Modelo = 'eleven_multilingual_v2') {
+export async function voiceScript(escenas: Escena[], texto: string, voz: Voz, pass: string, onProgress: (msg: string) => void, modelo: Modelo = 'eleven_multilingual_v2', indicaciones = '') {
   let aviso = ''
   const conTexto = escenas.map((e, i) => ({ i, d: e.dialogo.trim() })).filter((x) => x.d)
   if (!conTexto.length) throw new Error('Ninguna escena tiene diálogo.')
@@ -393,7 +396,7 @@ export async function voiceScript(escenas: Escena[], texto: string, voz: Voz, pa
   // Expresivo: una IA «directora» decide en qué palabra cambia de postura y a cuál, según lo que dice
   if (ch.expresivo && raiz && palabras.length) {
     onProgress('Dirigiendo los gestos según el guion…')
-    const dir = await dirigir(palabras, m.escenas, ch, raiz, pass, st.project.fps, onProgress).catch((e) => {
+    const dir = await dirigir(palabras, m.escenas, ch, raiz, pass, st.project.fps, onProgress, indicaciones).catch((e) => {
       aviso = `La IA directora no respondió (${e instanceof Error ? e.message : e}); los gestos se han elegido con reglas simples.`
       return null
     })
@@ -413,7 +416,7 @@ export async function voiceScript(escenas: Escena[], texto: string, voz: Voz, pa
     ...actual,
     duration: m.duration,
     audio: { id: audioId, name: `Voces (${voz.nombre})`, start: 0, duration: mezcla.duration },
-    guion: { texto, escenas: m.escenas.map(({ inicio: _i, ...e }, i) => ({ ...e, fondo: fondosNuevos?.[i] || e.fondo })), voz },
+    guion: { texto, escenas: m.escenas.map(({ inicio: _i, ...e }, i) => ({ ...e, fondo: fondosNuevos?.[i] || e.fondo })), voz, indicaciones },
     instances: [{ ...inst, tracks: conGestos }, ...rest],
     ...(rotulosNuevos ? { rotulos: rotulosNuevos } : {}),
   })

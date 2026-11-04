@@ -11,6 +11,13 @@ const CON_RESPALDO = new Set(['claude-sonnet-5-5', 'claude-opus-5-5'])
 const json = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json' } })
 
+const ORDENES = `ÓRDENES DEL USUARIO (mandan sobre TODO lo demás): el usuario es el director y tú su
+ayudante. Si una escena trae «indicaciones», cúmplelas al pie de la letra: el gesto que pida (si no
+está en el catálogo, pídelo como gesto a medida en «nuevas»), la cara/mirada, el fondo exacto que
+describa (en «fondos») y los rótulos que pida con su texto, color y sitio (en «rotulos»), en la palabra
+que encaje. Las indicaciones generales se aplican a todo el vídeo. Lo que no te indique, complétalo tú
+con las pautas.`
+
 const GUIA = `Eres director de animación de vídeos de YouTube de dibujos al estilo del canal «Estoy Tiesa»: un
 narrador dibujado que habla a cámara y cambia de POSTURA COMPLETA (cuerpo y cara) de golpe. Recibes el
 guion ya dividido en escenas y palabras numeradas, la emoción de cada escena y el catálogo de posturas
@@ -138,7 +145,7 @@ const SCHEMA = {
 export async function POST(request: Request): Promise<Response> {
   if (!process.env.ANTHROPIC_API_KEY) return json({ error: 'Falta configurar las claves en Vercel.' }, 503)
   if (!claveOk(request)) return json({ error: 'clave' }, 401)
-  let body: { escenas?: { escena: number; emocion: string; palabras: string[] }[]; posturas?: Record<string, string>; miradas?: Record<string, string>; nuevasMax?: number; escenografia?: boolean }
+  let body: { indicaciones?: string; escenas?: { escena: number; emocion: string; palabras: string[]; indicaciones?: string }[]; posturas?: Record<string, string>; miradas?: Record<string, string>; nuevasMax?: number; escenografia?: boolean }
   try {
     body = await request.json()
   } catch {
@@ -147,7 +154,11 @@ export async function POST(request: Request): Promise<Response> {
   if (!body.escenas?.length || !body.posturas) return json({ error: 'Faltan escenas o posturas.' }, 400)
   const textoSeguido = body.escenas.map((e) => e.palabras.join(' ')).join(' ')
   const guion = body.escenas
-    .map((e) => `Escena ${e.escena} (emoción: ${e.emocion}): ${e.palabras.map((w, i) => `${i}:${w}`).join(' ')}`)
+    .map(
+      (e) =>
+        `Escena ${e.escena} (emoción: ${e.emocion}): ${e.palabras.map((w, i) => `${i}:${w}`).join(' ')}` +
+        (e.indicaciones ? `\n  ➜ INDICACIONES DEL USUARIO PARA ESTA ESCENA: ${e.indicaciones}` : ''),
+    )
     .join('\n')
   const catalogo = Object.entries(body.posturas).map(([k, v]) => `- ${k}: ${v}`).join('\n')
   if (guion.length > 20000) return json({ error: 'Guion demasiado largo.' }, 400)
@@ -160,11 +171,11 @@ export async function POST(request: Request): Promise<Response> {
       max_tokens: 16000,
       ...(CON_RESPALDO.has(model) ? { betas: ['server-side-fallback-2026-07-01'], fallbacks: 'default' as const } : {}),
       output_config: { effort: 'medium', format: { type: 'json_schema', schema: SCHEMA } },
-      system: [{ type: 'text', text: GUIA, cache_control: { type: 'ephemeral' } }],
+      system: [{ type: 'text', text: GUIA + '\n\n' + ORDENES, cache_control: { type: 'ephemeral' } }],
       messages: [
         {
           role: 'user',
-          content: `Catálogo de posturas:\n${catalogo}\n\n${body.miradas ? `Catálogo de miradas:\n${Object.entries(body.miradas).map(([k, v]) => `- ${k}: ${v}`).join('\n')}\n\n` : ''}${body.nuevasMax ? `Gestos a medida permitidos: hasta ${Math.min(4, body.nuevasMax)}.\n\n` : 'No pidas gestos a medida (nuevas vacío).\n\n'}${body.escenografia ? 'Decide también «fondos» (uno por escena) y «rotulos».\n\n' : 'No hace falta «fondos» ni «rotulos» (déjalos vacíos).\n\n'}Texto completo (para entender el tono):\n${textoSeguido}\n\nGuion por escenas con las palabras numeradas:\n${guion}`,
+          content: `Catálogo de posturas:\n${catalogo}\n\n${body.miradas ? `Catálogo de miradas:\n${Object.entries(body.miradas).map(([k, v]) => `- ${k}: ${v}`).join('\n')}\n\n` : ''}${body.nuevasMax ? `Gestos a medida permitidos: hasta ${Math.min(8, body.nuevasMax)}.\n\n` : 'No pidas gestos a medida (nuevas vacío).\n\n'}${body.escenografia ? 'Decide también «fondos» (uno por escena) y «rotulos».\n\n' : 'No hace falta «fondos» ni «rotulos» (déjalos vacíos).\n\n'}${body.indicaciones ? `INDICACIONES GENERALES DEL USUARIO: ${body.indicaciones}\n\n` : ''}Texto completo (para entender el tono):\n${textoSeguido}\n\nGuion por escenas con las palabras numeradas:\n${guion}`,
         },
       ],
     })

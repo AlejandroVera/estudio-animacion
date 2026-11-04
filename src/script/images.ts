@@ -82,8 +82,10 @@ export async function generateSceneBackgrounds(escenas: Escena[], onProgress: (m
   const out = escenas.map((e) => ({ ...e }))
   const capas: BgLayer[] = []
   for (let g = 0; g < grupos.length; g++) {
-    onProgress(`Generando fondo ${g + 1} de ${grupos.length}: ${grupos[g].desc}`)
-    const layer = await generateBackground(grupos[g].desc, useStore.getState().project)
+    // Si ya hay un fondo con esa misma descripción, se reutiliza (no se paga otra vez)
+    const previa = useStore.getState().project.fondos?.find((l) => l.descripcion === grupos[g].desc)
+    onProgress(previa ? `Reutilizando fondo: ${grupos[g].desc}` : `Generando fondo ${g + 1} de ${grupos.length}: ${grupos[g].desc}`)
+    const layer = previa ?? { ...(await generateBackground(grupos[g].desc, useStore.getState().project)), descripcion: grupos[g].desc }
     capas.push(layer)
     for (const i of grupos[g].idx) out[i].capa = layer.id
   }
@@ -108,7 +110,7 @@ export async function generateSceneBackgrounds(escenas: Escena[], onProgress: (m
   const [inst, ...rest] = st.project.instances
   st.commit({
     ...st.project,
-    fondos: [...capas, ...(st.project.fondos ?? []).filter((l) => !viejas.has(l.id))],
+    fondos: [...capas, ...(st.project.fondos ?? []).filter((l) => !viejas.has(l.id) && !capas.some((c) => c.id === l.id))],
     guion: animado ? { ...st.project.guion!, escenas: out } : st.project.guion,
     instances: [{ ...inst, tracks }, ...rest],
   })
