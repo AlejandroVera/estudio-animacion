@@ -101,6 +101,34 @@ function visemas(al: Alineacion, desplaza: (t: number) => number | null, fps: nu
   return keys.map((k) => ({ t: k.t, v: k.v, ease: 'salto' as const }))
 }
 
+/**
+ * Boca a golpes para personajes de dos bocas (abierta/cerrada): se abre al empezar cada vocal y se
+ * cierra al terminarla, con un mínimo de 2 fotogramas en cada estado (como la animación limitada).
+ */
+function silabas(al: Alineacion, desplaza: (t: number) => number | null, fps: number) {
+  const ab: [number, number][] = []
+  for (let i = 0; i < al.characters.length; i++) {
+    if (!/[aeiouáéíóúü]/i.test(al.characters[i])) continue
+    let j = i
+    while (j + 1 < al.characters.length && /[aeiouáéíóúüy]/i.test(al.characters[j + 1])) j++ // diptongos
+    const a = desplaza(al.character_start_times_seconds[i])
+    const b = desplaza(al.character_end_times_seconds[j])
+    if (a !== null && b !== null) ab.push([Math.round(a * fps), Math.max(Math.round(a * fps) + 2, Math.round(b * fps))])
+    i = j
+  }
+  const keys: { t: number; v: string; ease: 'salto' }[] = [{ t: 0, v: 'cerrada', ease: 'salto' }]
+  let finAnterior = -10
+  for (const [a, b] of ab) {
+    if (a - finAnterior < 2 && keys.length > 1) {
+      // vocal pegada a la anterior: se alarga la apertura en vez de cerrar un instante
+      keys.pop()
+    } else keys.push({ t: a / fps, v: 'abierta', ease: 'salto' })
+    keys.push({ t: b / fps, v: 'cerrada', ease: 'salto' })
+    finAnterior = b
+  }
+  return keys
+}
+
 function wav(buf: AudioBuffer): Blob {
   const data = buf.getChannelData(0)
   const sr = buf.sampleRate
@@ -185,7 +213,7 @@ export async function voiceScript(escenas: Escena[], texto: string, voz: Voz, pa
     return null
   }
   const mouths = ch.expresivo ? ['cerrada', 'abierta', 'O', 'MBP'] : Object.keys(ch.parts.find((p) => p.role === 'mouth')?.variants ?? {})
-  const tracks: Tracks = { ...m.tracks, 'face:mouth': visemas(al, desplaza, st.project.fps, mouths) }
+  const tracks: Tracks = { ...m.tracks, 'face:mouth': ch.expresivo ? silabas(al, desplaza, st.project.fps) : visemas(al, desplaza, st.project.fps, mouths) }
 
   // Personaje por poses: los cambios de pose sueltos caen al empezar una palabra, como al gesticular
   const raiz = ch.parts.find((p) => !p.parent && Object.keys(p.variants).length > 1)
@@ -205,10 +233,13 @@ export async function voiceScript(escenas: Escena[], texto: string, voz: Voz, pa
     for (let i = 0; i < ks.length; i++) {
       const antes = i > 0 ? ks[i].t - ks[i - 1].t : Infinity
       const despues = i + 1 < ks.length ? ks[i + 1].t - ks[i].t : Infinity
-      if (antes < 0.6 || despues < 0.6 || !palabras.length) continue // secuencias rápidas (saludar) no se tocan
-      const cerca = palabras.reduce((b, w) => (Math.abs(w - 0.06 - ks[i].t) < Math.abs(b - 0.06 - ks[i].t) ? w : b))
-      const nuevo = Math.round((cerca - 0.06) * fps) / fps
-      if (Math.abs(nuevo - ks[i].t) <= 0.35 && (i === 0 || nuevo - ks[i - 1].t > 0.3) && (i + 1 >= ks.length || ks[i + 1].t - nuevo > 0.3)) ks[i] = { ...ks[i], t: nuevo }
+      if (!palabras.length) continue
+      if (!ch.expresivo && (antes < 0.6 || despues < 0.6)) continue // secuencias rápidas (saludar) no se tocan
+      // Cada cambio cae justo antes de empezar la palabra más cercana (el expresivo, siempre)
+      const cerca = palabras.reduce((b, w) => (Math.abs(w - 0.08 - ks[i].t) < Math.abs(b - 0.08 - ks[i].t) ? w : b))
+      const nuevo = Math.round((cerca - 0.08) * fps) / fps
+      const max = ch.expresivo ? 0.9 : 0.35
+      if (Math.abs(nuevo - ks[i].t) <= max && (i === 0 || nuevo - ks[i - 1].t > 0.3) && (i + 1 >= ks.length || ks[i + 1].t - nuevo > 0.3)) ks[i] = { ...ks[i], t: nuevo }
     }
     tracks[canal] = ks
   }

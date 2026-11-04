@@ -41,6 +41,9 @@ export function evalTrack(keys: Keyframe[] | undefined, t: number, fallback: num
 const num = (v: number | string) => (typeof v === 'number' ? v : Number(v) || 0)
 const str = (v: number | string) => String(v)
 
+/** Duración del cambio de postura de un personaje expresivo (s). */
+export const POP = 0.1
+
 /** Dibujos intermedios: variantes «entre:A__B» de una pieza por poses. */
 export const ENTRE = 'entre:'
 /** Tiempo que se ve el dibujo intermedio antes de llegar a la pose nueva (s). */
@@ -95,6 +98,14 @@ export function poseAt(character: Character, tracks: Tracks, t: number): Pose {
       const abierta = ['abierta', 'E', 'O', 'grito'].includes(mouth)
       const alt = abierta !== character.expresivo.abiertas.includes(v)
       variants[p.id] = alt && p.variants[v + '~b'] ? v + '~b' : v
+      // Cambio de postura: fundido muy corto (3 fotogramas) con un pequeño «pop», para que no sea un
+      // salto seco pero tampoco se vean dos dibujos a la vez
+      if (vk?.length) {
+        let k = -1
+        for (let i = 0; i < vk.length; i++) if (vk[i].t <= t) k = i
+        const antes = k > 0 ? str(vk[k - 1].v) : k === 0 && vk[0].t > 0 ? p.defaultVariant : null
+        if (k >= 0 && antes !== null && antes !== str(vk[k].v) && t - vk[k].t < POP) fades[p.id] = { prev: antes, u: (t - vk[k].t) / POP }
+      }
     } else if (vk?.length && !p.role) {
       variants[p.id] = str(evalTrack(vk, t, p.defaultVariant))
       if (p.fade) {

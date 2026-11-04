@@ -64,6 +64,10 @@ cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y
   expresión: …»), 2 versiones y se elige; luego otra edición por postura solo de la boca.
   `herramientas/preparar_expresivo.py` recorta, alinea y de la versión «~b» toma SOLO la boca.
 - `poseAt`: si la boca (canal `face:mouth`) está abierta y la postura no, usa `~b` (y al revés).
+  Cambio de postura con fundido de 0,1 s (`POP`) y un «pop» de escala 2,5 % desde los pies.
+- Boca del expresivo (`silabas` en `voices.ts`): se abre al empezar cada vocal y se cierra al acabarla
+  (mínimo 2 fotogramas), no por letras. Cada cambio de postura se pega al inicio de la palabra más
+  cercana (0,08 s antes). Comprobado: la boca va a 0 fotogramas de la voz (correlación boca/energía).
 - `animateScenes`: postura por trozo de frase (≥4 palabras, ≤8): «?» → encogerse/pensar, números →
   tres/índice, «coment/suscr» → señalar, «hola» → saludar, «!» → susto/para; si no, de la lista de la
   emoción de la escena. Los gestos del guion son una postura y ocupan solo 1,2 s.
