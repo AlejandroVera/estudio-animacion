@@ -71,6 +71,8 @@ export interface Character {
    */
   expresivo?: {
     abiertas: string[]
+    ojosPorDefecto?: Record<string, string>
+    sinCapas?: string[]
     cabeza: { x: number; y: number }
     gestos: Record<string, string>
     calma: string[]

@@ -96,6 +96,12 @@ cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y
   suave y pegadas encima; `nada` = lo de la postura. `poseAt` elige la boca por la vocal (`silabas`
   da abierta/O/E) y los ojos por el canal `face:brows`; el parpadeo usa `ojos: cerrados`. Las posturas
   de gag (de frente) siguen con su cara y `~b`.
+- Repertorio (tras «poco repertorio, mira de lado, cuerpo y cara por caminos distintos»): 33 posturas
+  tranquilas t_* (20 nuevas con los dos brazos: tu, yo, abiertos, dosmanos, juntas, frente, rendido,
+  barriga, pulgar, jarras, porfavor, reloj, dinero, cruzado, nolose, masomenos, alla, espera…). Ojos
+  `frente` (pupilas a cámara) por defecto; `ojosPorDefecto` da a cada postura su mirada coherente
+  (triste→triste, barbilla→arriba…); `sinCapas` (mano delante de la cara) usa su propia cara y `~b`.
+  Índice y contar con los dedos, solo cuando el texto lo pide (lo decía el usuario: no pegaba).
 - DIRECTOR IA (`api/actuar.ts`, lo llama `dirigir` en `voices.ts` al generar voces): recibe las palabras
   de cada escena, la emoción y el catálogo `DESCRIPCIONES` (qué expresa cada postura) y devuelve en qué
   palabra cambia y a qué postura según lo que dice, y `miradas` (catálogo `MIRADAS`) en otras palabras; las claves caen 0,08 s antes de esa palabra. Si

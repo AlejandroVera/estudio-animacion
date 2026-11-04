@@ -33,11 +33,16 @@ Cómo actúa un buen narrador (síguelo):
 - Cambia en la palabra que lleva el peso (el sustantivo, la cifra, el verbo clave), nunca en artículos o
   preposiciones. Cada postura dura entre 3 y 8 palabras (1,2-3 s): NUNCA más de 8 palabras seguidas sin
   cambiar de brazos o de mirada. Nada de cambios cada dos palabras.
-- Varía: no repitas la misma postura en cambios seguidos. Cada escena empieza con una postura en su
+- Varía y usa TODO el catálogo: no repitas la misma postura en cambios seguidos ni la uses más de dos
+  veces por minuto. Los gestos con los dedos (índice arriba, contar) solo cuando lo que dice lo pide de
+  verdad. Cada escena empieza con una postura en su
   palabra 0 (puede ser la misma que venía si la frase continúa la idea).
 - Usa SOLO nombres de postura del catálogo.
 
-MIRADAS (si te dan un catálogo de miradas): los ojos cambian POR SU CUENTA, entre un cambio de brazos y
+MIRADAS (si te dan un catálogo de miradas): casi todo el rato mira AL FRENTE, a cámara («propios»).
+Cada postura ya trae una mirada coherente; una mirada distinta solo añade un matiz que encaje con el
+gesto que esté haciendo en ese momento (nunca ojos felices con un gesto triste, ni al revés). Los ojos
+cambian POR SU CUENTA, entre un cambio de brazos y
 el siguiente, como en la referencia (brazos, ojos y boca nunca cambian todos a la vez). Úsalas para dar
 matiz: ironía → escéptico, cifra escandalosa → platos, pensar → arriba, algo bonito → felices… Vuelve
 a «propios» cuando pase el momento. Unas 1-3 miradas por escena, nunca en la misma palabra que un

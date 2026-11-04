@@ -26,6 +26,24 @@ export const NOMBRES_EXPRESIVO: Record<string, string> = {
   t_saluda: 'Saluda (tranquilo)',
   t_duda: 'Rascarse la cabeza',
   t_abajo: 'Señala abajo (tranquilo)',
+  t_tu: 'Señala a cámara («tú»)',
+  t_yo: 'Manos al pecho («yo»)',
+  t_abiertos: 'Brazos abiertos',
+  t_dosmanos: 'Explica con las dos manos',
+  t_juntas: 'Manos juntas',
+  t_frente: 'Mano en la frente',
+  t_rendido: 'Rendido / agotado',
+  t_barriga: 'Mano en la barriga',
+  t_pulgar: 'Pulgar arriba',
+  t_jarras: 'En jarras',
+  t_porfavor: 'Por favor',
+  t_reloj: 'Señala el reloj',
+  t_dinero: 'Dinero',
+  t_cruzado: 'Brazos cruzados (tranquilo)',
+  t_nolose: '«No sé»',
+  t_masomenos: 'Más o menos',
+  t_alla: 'Señala allá',
+  t_espera: '«Espera»',
   reposo: 'De frente',
   hablar: 'Hablar',
   indice: 'Índice arriba',
@@ -51,17 +69,35 @@ export const NOMBRES_EXPRESIVO: Record<string, string> = {
 export const DESCRIPCIONES: Record<string, string> = {
   t_reposo: 'tranquilo, mano en el bolsillo, escuchando o frase neutra',
   t_explica: 'tranquilo explicando, mano abierta con la palma arriba',
-  t_indice: 'tranquilo, índice arriba: el dato clave, «ojo», una idea importante',
+  t_indice: 'índice arriba: SOLO para avisar «ojo» o dar UNA regla/dato clave; no abusar',
   t_presenta: 'tranquilo presentando algo a un lado: introducir un tema, una opción, «esto es…»',
   t_pecho: 'mano en el pecho: hablar de sí mismo, «yo», sinceridad, algo que le toca',
   t_encoge: 'medio encogido con la palma arriba: resignación, «qué le vamos a hacer», obviedad',
-  t_cuenta: 'cuenta con los dedos: enumerar, cifras, «primero/segundo», varias cosas',
+  t_cuenta: 'muestra tres dedos: SOLO al enumerar una lista de tres o más cosas, y poco rato',
   t_barbilla: 'mano en la barbilla: pensar, plantear una pregunta, duda',
   t_cadera: 'mano en la cadera: seguro de sí, chulería, conclusión firme',
   t_triste: 'apenado frotándose la nuca: tristeza suave, apuro, vergüenza',
   t_saluda: 'saluda con la mano: hola, adiós, presentarse',
   t_duda: 'se rasca la cabeza: confusión, «no lo entiendo», sorpresa leve',
   t_abajo: 'señala abajo: comentarios, suscríbete, enlace',
+  t_tu: 'señala al espectador: «tú», «a ti te pasa», dirigirse a quien mira',
+  t_yo: 'las dos manos al pecho: «yo», «a mí», confesar algo propio',
+  t_abiertos: 'brazos abiertos con las palmas arriba: «todo esto», «imagínate», algo grande o absurdo',
+  t_dosmanos: 'las dos manos delante con las palmas arriba: explicar con calma, razonar',
+  t_juntas: 'manos juntas delante de la barriga: calma, escuchar, frase tranquila o seria',
+  t_frente: 'mano en la frente: agobio, «qué desastre», cansancio, metedura de pata',
+  t_rendido: 'brazos caídos y hombros hundidos: agotado, sin energía, derrota',
+  t_barriga: 'mano en la barriga: comida, hambre, comer',
+  t_pulgar: 'pulgar arriba: aprobar, «bien», recomendar',
+  t_jarras: 'las dos manos en la cintura: decidido, mandón, «a ver», reto',
+  t_porfavor: 'palmas juntas suplicando: «por favor», pedir, rogar',
+  t_reloj: 'se toca la muñeca: tiempo, prisa, horarios, «no hay tiempo»',
+  t_dinero: 'frota los dedos: dinero, precio, pagar, caro',
+  t_cruzado: 'brazos cruzados tranquilo: esperar, «ya veremos», escepticismo suave',
+  t_nolose: 'encogerse del todo con las dos palmas arriba: «no sé», «ni idea», incredulidad',
+  t_masomenos: 'mano que oscila: «más o menos», «regular», matizar',
+  t_alla: 'señala con el pulgar a un lado: «eso de ahí», mencionar algo o a otros',
+  t_espera: 'las dos palmas delante: «espera», «un momento», frenar una idea',
   reposo: 'de frente neutro',
   mejillas: 'EXAGERADO susto con las manos en la cara: cifra escandalosa, «¿¡qué!?»',
   enfado: 'EXAGERADO enfado gritando con puños: indignación, injusticia',
@@ -84,7 +120,7 @@ export interface ManifestExpresivo {
 
 /** Qué expresa cada mirada (capa de ojos), para la IA directora. «propios» = los de la postura. */
 export const MIRADAS: Record<string, string> = {
-  propios: 'los ojos que trae la postura (lo normal)',
+  propios: 'mirada normal al frente, a cámara (lo habitual: casi todo el rato)',
   esceptico: 'párpados a media asta, mirada de «ya, claro»: ironía, desconfianza, sarcasmo',
   recelo: 'un ojo entornado: sospecha, «a ver…»',
   arriba: 'mira hacia arriba: pensando, recordando, «a ver cómo lo digo»',
@@ -105,6 +141,10 @@ export function personajeExpresivo(cfg: {
   manifest: ManifestExpresivo
   referencia?: string
   abiertas: string[]
+  /** Mirada que lleva cada postura (si no está, «frente», a cámara). */
+  ojosPorDefecto?: Record<string, string>
+  /** Posturas con la mano delante de la cara: sin capas (su propia cara y su boca ~b). */
+  sinCapas?: string[]
 }): Character {
   const { manifest, ruta } = cfg
   const [lx, ly, lw, lh] = manifest.lienzo
@@ -147,6 +187,8 @@ export function personajeExpresivo(cfg: {
     ...buildParts(defs),
     expresivo: {
       abiertas: cfg.abiertas,
+      ojosPorDefecto: cfg.ojosPorDefecto ?? {},
+      sinCapas: cfg.sinCapas ?? [],
       cabeza: { x: manifest.cabeza[0] - lx, y: manifest.cabeza[1] - ly },
       gestos: {
         saludar: 't_saluda', encogerse: 't_encoge', senalar: 't_presenta', pensar: 't_barbilla', jarras: 't_cadera',
@@ -154,7 +196,7 @@ export function personajeExpresivo(cfg: {
         hablar: 't_explica', pulgar: 'guino', cruzar_brazos: 'cruzado', comenta_abajo: 't_abajo', manos_juntas: 't_pecho',
       },
       // Lo normal al hablar: la familia tranquila de tres cuartos (mismo cuerpo, solo cambia un brazo)
-      calma: ['t_explica', 't_reposo', 't_indice', 't_presenta', 't_cadera', 't_pecho', 't_explica', 't_reposo'],
+      calma: ['t_explica', 't_dosmanos', 't_reposo', 't_juntas', 't_presenta', 't_cadera', 't_pecho', 't_abiertos', 't_reposo'],
       pregunta: ['t_encoge', 't_duda', 't_barbilla'],
       numero: ['t_cuenta', 't_indice'],
       comentario: 't_abajo',

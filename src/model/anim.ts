@@ -129,7 +129,8 @@ export function poseAt(character: Character, tracks: Tracks, t: number): Pose {
   const raizX = character.expresivo ? character.parts.find((p) => !p.parent) : undefined
   if (raizX) {
     const cuerpo = (variants[raizX.id] ?? raizX.defaultVariant).split('~')[0]
-    const conCapas = cuerpo.startsWith('t_') && character.parts.some((p) => p.id === 'boca' || p.id === 'ojos')
+    const ex = character.expresivo!
+    const conCapas = cuerpo.startsWith('t_') && !ex.sinCapas?.includes(cuerpo) && character.parts.some((p) => p.id === 'boca' || p.id === 'ojos')
     const boca = character.parts.find((p) => p.id === 'boca')
     const ojos = character.parts.find((p) => p.id === 'ojos')
     if (conCapas) {
@@ -137,11 +138,20 @@ export function poseAt(character: Character, tracks: Tracks, t: number): Pose {
       const forma = mouth === 'O' ? 'o' : mouth === 'E' ? 'dientes' : ['abierta', 'grito'].includes(mouth) ? 'abierta' : 'nada'
       if (boca) variants.boca = boca.variants[forma] ? forma : 'nada'
       const brows = str(evalTrack(tracks['face:brows'], t, 'nada'))
-      if (ojos) variants.ojos = variants[raizX.id].endsWith('~c') ? 'cerrados' : ojos.variants[brows] ? brows : 'nada'
+      // Mirada: la que pida la animación; si no, la de la postura; si no, al frente (a cámara)
+      const porDefecto = ex.ojosPorDefecto?.[cuerpo] ?? (ojos?.variants.frente ? 'frente' : 'nada')
+      if (ojos) variants.ojos = variants[raizX.id].endsWith('~c') ? 'cerrados' : ojos.variants[brows] ? brows : porDefecto
       if (variants[raizX.id].endsWith('~c')) variants[raizX.id] = cuerpo
     } else {
       if (boca) variants.boca = 'nada'
       if (ojos) variants.ojos = 'nada'
+      // Sin capas (gags o mano delante de la cara): su propia boca abierta (~b) al hablar
+      const v = variants[raizX.id] ?? raizX.defaultVariant
+      const abierta = ['abierta', 'E', 'O', 'grito'].includes(mouth)
+      if (!v.includes('~')) {
+        const alt = abierta !== ex.abiertas.includes(v)
+        if (alt && raizX.variants[v + '~b']) variants[raizX.id] = v + '~b'
+      }
     }
   }
   return {
