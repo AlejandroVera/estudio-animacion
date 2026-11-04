@@ -77,6 +77,12 @@ export interface Character {
     lienzo?: number[]
     ojosPorDefecto?: Record<string, string>
     sinCapas?: string[]
+    /** Gestos a medida con la mano delante de los ojos o de la boca: esa capa no se pone (se ve su propio dibujo). */
+    sinOjos?: string[]
+    sinBoca?: string[]
+    /** Cajas de las capas de cara (en píxeles del lienzo) y radio de la cabeza, para revisar los gestos a medida. */
+    cajas?: Record<string, number[]>
+    radio?: number
     cabeza: { x: number; y: number }
     gestos: Record<string, string>
     calma: string[]
@@ -179,7 +185,7 @@ export interface Project {
   /** Rótulos escritos a mano que aparecen de golpe en una palabra (estilo «Estoy Tiesa»). */
   rotulos?: Rotulo[]
   /** Gestos a medida dibujados con IA para este proyecto (imagen en IndexedDB). */
-  posturasExtra?: { nombre: string; imageId: string; descripcion: string }[]
+  posturasExtra?: { nombre: string; imageId: string; descripcion: string; sinOjos?: boolean; sinBoca?: boolean; revisada?: number }[]
   /** Audio (voz) del vídeo; el archivo se guarda aparte, en el navegador (IndexedDB). */
   audio?: { id: string; name: string; start: number; duration: number }
   characters: Record<string, Character>

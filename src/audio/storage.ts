@@ -56,6 +56,13 @@ export const saveImage = saveAudio
 export function mediaUrl(id: string): string | undefined {
   return urls.get(id)
 }
+/** Cambia la imagen guardada con ese id (y la que se dibuja). */
+export async function replaceImage(id: string, blob: Blob): Promise<void> {
+  await saveImage(id, blob)
+  const old = urls.get(id)
+  urls.set(id, URL.createObjectURL(blob))
+  if (old) URL.revokeObjectURL(old)
+}
 export async function ensureMedia(ids: string[]): Promise<void> {
   await Promise.all(
     ids.filter((id) => !urls.has(id)).map(async (id) => {

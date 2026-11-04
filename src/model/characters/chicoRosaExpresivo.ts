@@ -195,6 +195,8 @@ export function personajeExpresivo(cfg: {
       ojosPorDefecto: cfg.ojosPorDefecto ?? {},
       sinCapas: cfg.sinCapas ?? [],
       cabeza: { x: manifest.cabeza[0] - lx, y: manifest.cabeza[1] - ly },
+      radio: manifest.cabeza[2],
+      cajas: Object.fromEntries(Object.entries(manifest.capas ?? {}).map(([t, c]) => [t, [c.caja[0] - lx, c.caja[1] - ly, c.caja[2], c.caja[3]]])),
       gestos: {
         saludar: 't_saluda', encogerse: 't_encoge', senalar: 't_presenta', pensar: 't_barbilla', jarras: 't_cadera',
         explicar: 't_explica', asentir: 't_pecho', negar: 'stop', celebrar: 'celebrar', sorpresa: 'mejillas',

@@ -174,8 +174,8 @@ async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number 
     if (st.project.posturasExtra?.some((e) => e.nombre === nombre)) continue
     try {
       onProgress?.(`Dibujando un gesto a medida: ${n.que_expresa}…`)
-      const imageId = await dibujarPostura(activeCharacter(st.project), n.dibujo)
-      const lista = [...(useStore.getState().project.posturasExtra ?? []), { nombre, imageId, descripcion: n.que_expresa }]
+      const dib = await dibujarPostura(activeCharacter(st.project), n.dibujo)
+      const lista = [...(useStore.getState().project.posturasExtra ?? []), { nombre, descripcion: n.que_expresa, ...dib, revisada: 1 }]
       useStore.getState().setProjectProps({ posturasExtra: lista })
       await cargarExtras()
     } catch {

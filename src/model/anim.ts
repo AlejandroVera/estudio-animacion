@@ -136,12 +136,13 @@ export function poseAt(character: Character, tracks: Tracks, t: number): Pose {
     if (conCapas) {
       variants[raizX.id] = variants[raizX.id] === cuerpo + '~c' ? cuerpo + '~c' : cuerpo
       const forma = mouth === 'O' ? 'o' : mouth === 'E' ? 'dientes' : ['abierta', 'grito'].includes(mouth) ? 'abierta' : 'nada'
-      if (boca) variants.boca = boca.variants[forma] ? forma : 'nada'
+      if (boca) variants.boca = boca.variants[forma] && !ex.sinBoca?.includes(cuerpo) ? forma : 'nada'
       const brows = str(evalTrack(tracks['face:brows'], t, 'nada'))
       // Mirada: la que pida la animación; si no, la de la postura; si no, al frente (a cámara)
       const porDefecto = ex.ojosPorDefecto?.[cuerpo] ?? (ojos?.variants.frente ? 'frente' : 'nada')
       // «nada»/«neutral» = la mirada normal de la postura (al frente), nunca los ojos del dibujo original
       if (ojos) variants.ojos = variants[raizX.id].endsWith('~c') ? 'cerrados' : brows !== 'nada' && ojos.variants[brows] ? brows : porDefecto
+      if (ojos && ex.sinOjos?.includes(cuerpo)) variants.ojos = 'nada'
       if (variants[raizX.id].endsWith('~c')) variants[raizX.id] = cuerpo
     } else {
       if (boca) variants.boca = 'nada'

@@ -107,13 +107,13 @@ cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y
   y fondo blanco), `src/script/posturas.ts` quita el fondo blanco unido a los bordes, recorta al lienzo,
   alinea por la cabeza con t_reposo, guarda en IndexedDB y lo apunta en `project.posturasExtra`
   (`t_x_<nombre>`, familia tranquila: lleva capas de boca y ojos). `cargarExtras` los añade al
-  personaje al cargar. Probado en la web real (sartén y espátula).
+  personaje al cargar. Probado en la web real (sartén y espátula). REVISIÓN (`revisar` en posturas.ts): compara el dibujo con la base, recoloca la cabeza (la IA la mueve hasta ~20 px y el borde de la capa de ojos asomaba) y si una mano tapa los ojos o la boca (cambio en su caja > 0,15 / 0,10) apunta `sinOjos`/`sinBoca` y esa capa no se pone (antes el ojo quedaba pegado DELANTE de la mano). Los gestos guardados sin `revisada` se arreglan solos al cargar.
 - ESCENOGRAFÍA (como la referencia): el director también devuelve `fondos` (por escena: «blanco» o un
   lugar cotidiano; el mismo texto = mismo fondo) y `rotulos` (palabra, texto 1-3 palabras, color
   negro/rojo/verde/azul, pos arriba/izq/der/izq_baja/der_baja/abajo). `project.rotulos` se dibujan con
   `drawRotulos` (render.ts) en letra Kalam a mano con borde blanco, fuera de la cámara, con «pop» de
   0,15 s, hasta el final de su escena. La referencia de estilo de los fondos es `Character.referencia` (debe EXISTIR en `public/`: con el chico rosa faltaba y fal daba 422; ahora `referencia.jpg`); si fal falla con referencia, `api/imagen.ts` reintenta sin ella. Al acabar «Generar voces y animar» se generan los fondos solos
-  (`generateSceneBackgrounds`; «blanco» se hace sin IA). Fondos fijos, sin zoom lento.
+  (`generateSceneBackgrounds`; «blanco» se hace sin IA). Fondos fijos, sin zoom lento. Estilo de fondo «cutre» a petición de Alejandro (garabato de tableta, trazo irregular, colores apagados), descrito en el texto de `api/imagen.ts`, sin usar imágenes de la referencia.
 - EL USUARIO DIRIGE (petición expresa: «quiero yo dirigir a la IA»): cada escena tiene «🎬 Lo que quieres
   que haga» (`Escena.indicaciones`) y el guion «Indicaciones para todo el vídeo»
   (`guion.indicaciones`). `api/actuar.ts` las trata como ÓRDENES por encima de todo (gesto → a medida
