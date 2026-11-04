@@ -97,7 +97,8 @@ bocadillo, simple y reconocible; si lleva texto, como mucho 1-3 palabras o una c
 NOMBRAN o se imaginan en esa viñeta y que tengan gracia o aclaren (nunca decoración «porque sí»):
 mejor pocos y con sentido que muchos. Desaparecen al cortar a la viñeta siguiente. Lo que imagina,
 desea o recuerda va en un BOCADILLO DE PENSAMIENTO arriba (arriba_izq/arriba_der); un precio o cifra, en
-un cartel; si el fondo es un lugar, el objeto debe encajar en él. Nunca más de 2 a la vez. «pos»: «arriba_izq», «arriba_der», «izq», «der», «izq_baja» o
+un cartel; si el fondo es un lugar, el objeto debe encajar en él. Nunca más de 2 a la vez. Si el
+personaje ya lo SUJETA en su postura (un gesto a medida con ese objeto), no lo pongas también como objeto. «pos»: «arriba_izq», «arriba_der», «izq», «der», «izq_baja» o
 «der_baja», cada uno en un sitio distinto y distinto del de los rótulos de esa escena. En una
 enumeración, un objeto por cosa enumerada en su palabra (se van acumulando). Si el usuario pide un
 objeto en sus indicaciones, ponlo tal cual.
