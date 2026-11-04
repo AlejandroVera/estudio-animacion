@@ -24,18 +24,24 @@ export async function POST(request: Request): Promise<Response> {
   const propio = new URL(request.url).origin
   const ref = body.referencia && body.referencia.startsWith(propio + '/') ? body.referencia : null
 
-  const prompt =
-    body.tipo === 'libre'
-      ? descripcion
-      : `Background illustration for a 2D animated video. ${ref ? 'Use the reference image ONLY as a style reference: same simple drawing style: hand-drawn black outlines, completely flat colors with no shading, minimal detail, like a simple YouTube doodle explainer, similar color palette. Do NOT draw the character from the reference or any other person. ' : 'Flat colors, clean black ink outlines, subtle paper grain. '}Scene: ${descripcion}. Empty location with no people, no characters, no animals unless asked, no text, no letters, no watermark. Leave open space in the lower middle where a standing character will be placed. Full-bleed, ${formato} composition.`
+  const llamar = async (conRef: boolean) => {
+    const prompt =
+      body.tipo === 'libre'
+        ? descripcion
+        : `Background illustration for a 2D animated video. ${conRef ? 'Use the reference image ONLY as a style reference: same simple drawing style: hand-drawn black outlines, completely flat colors with no shading, minimal detail, like a simple YouTube doodle explainer, similar color palette. Do NOT draw the character from the reference or any other person. ' : 'Simple hand-drawn style: black ink outlines, completely flat colors with no shading, minimal detail, like a simple YouTube doodle explainer. '}Scene: ${descripcion}. Empty location with no people, no characters, no animals unless asked, no text, no letters, no watermark. Leave open space in the lower middle where a standing character will be placed. Full-bleed, ${formato} composition.`
+    const model = conRef ? 'fal-ai/nano-banana/edit' : 'fal-ai/nano-banana'
+    const res = await fetch(`https://fal.run/${model}`, {
+      method: 'POST',
+      headers: { authorization: `Key ${process.env.FAL_KEY}`, 'content-type': 'application/json' },
+      body: JSON.stringify({ prompt, num_images: 1, aspect_ratio: formato, output_format: 'jpeg', ...(conRef ? { image_urls: [ref] } : {}) }),
+    })
+    const data = (await res.json().catch(() => ({}))) as { images?: { url: string }[]; detail?: unknown }
+    return { res, data }
+  }
 
-  const model = ref ? 'fal-ai/nano-banana/edit' : 'fal-ai/nano-banana'
-  const res = await fetch(`https://fal.run/${model}`, {
-    method: 'POST',
-    headers: { authorization: `Key ${process.env.FAL_KEY}`, 'content-type': 'application/json' },
-    body: JSON.stringify({ prompt, num_images: 1, aspect_ratio: formato, output_format: 'jpeg', ...(ref ? { image_urls: [ref] } : {}) }),
-  })
-  const data = (await res.json().catch(() => ({}))) as { images?: { url: string }[]; detail?: unknown }
+  let { res, data } = await llamar(!!ref)
+  // Si fal no puede usar la referencia (no la descarga, formato…), se hace sin ella: mejor un fondo que un error
+  if (ref && res.status !== 401 && res.status !== 403 && (!res.ok || !data.images?.[0]?.url)) ({ res, data } = await llamar(false))
   if (!res.ok || !data.images?.[0]?.url) {
     const det = typeof data.detail === 'string' ? data.detail : JSON.stringify(data.detail ?? '')
     if (res.status === 401 || res.status === 403) return json({ error: 'La clave de fal.ai no es válida o no tiene saldo.' }, 502)

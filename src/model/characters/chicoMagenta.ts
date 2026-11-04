@@ -13,7 +13,7 @@ export function chicoMagentaCharacter(): Character {
     name: 'Chico rosa',
     ruta: '/personajes/chico-magenta',
     manifest,
-    referencia: '/personajes/chico-magenta/referencia.webp',
+    referencia: '/personajes/chico-magenta/referencia.jpg',
     abiertas: ['enfado', 'celebrar'],
     ojosPorDefecto: { t_triste: 'triste', t_barbilla: 'arriba', t_rendido: 'triste', t_cruzado: 'recelo', t_nolose: 'duda', t_porfavor: 'triste' },
     sinCapas: ['t_duda', 't_frente'],
