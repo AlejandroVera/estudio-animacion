@@ -5,7 +5,8 @@
 
 import { gesticular, type Palabra } from './emocion'
 import { decodeAudio, loadAudio, saveAudio } from '../audio/storage'
-import type { Escena, Tracks } from '../model/types'
+import type { Character, Escena, Part, Tracks } from '../model/types'
+import { DESCRIPCIONES } from '../model/characters/chicoRosaExpresivo'
 import { activeCharacter, useStore } from '../store'
 import { animateScenes } from './scenes'
 
@@ -129,6 +130,37 @@ function silabas(al: Alineacion, desplaza: (t: number) => number | null, fps: nu
   return keys
 }
 
+/** Pide a /api/actuar las posturas por palabra y las convierte en claves exactas (0,08 s antes). */
+async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number })[], ch: Character, raiz: Part, pass: string, fps: number) {
+  const porEscena = escenas.map((e) => palabras.filter((w) => w.t >= e.inicio - 0.05 && w.t < e.inicio + e.duracion - 0.05))
+  const posturas = Object.fromEntries(Object.keys(raiz.variants).filter((v) => !v.includes('~') && DESCRIPCIONES[v]).map((v) => [v, DESCRIPCIONES[v]]))
+  const res = await fetch('/api/actuar', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json', 'x-clave-estudio': pass },
+    body: JSON.stringify({
+      posturas,
+      escenas: escenas.map((e, i) => ({ escena: i, emocion: e.expresion, palabras: porEscena[i].map((w) => w.texto) })).filter((e) => e.palabras.length),
+    }),
+  })
+  if (!res.ok) throw new Error('actuar')
+  const { cambios } = (await res.json()) as { cambios: { escena: number; palabra: number; postura: string }[] }
+  const keys: { t: number; v: string; ease: 'salto' }[] = []
+  for (const c of [...cambios].sort((a, b) => a.escena - b.escena || a.palabra - b.palabra)) {
+    const w = porEscena[c.escena]?.[c.palabra]
+    if (!w || !raiz.variants[c.postura]) continue
+    const t = Math.max(0, Math.round((w.t - 0.08) * fps) / fps)
+    const prev = keys[keys.length - 1]
+    if (prev && prev.v === c.postura) continue
+    if (prev && t - prev.t < 0.9) {
+      keys[keys.length - 1] = { t: prev.t, v: c.postura, ease: 'salto' } // dos cambios casi juntos: gana el último
+      continue
+    }
+    keys.push({ t, v: c.postura, ease: 'salto' })
+  }
+  void ch
+  return keys.length ? keys : null
+}
+
 function wav(buf: AudioBuffer): Blob {
   const data = buf.getChannelData(0)
   const sr = buf.sampleRate
@@ -181,9 +213,13 @@ export async function voiceScript(escenas: Escena[], texto: string, voz: Voz, pa
     const hasta = sig !== null ? Math.max(finT[b - 1], ini[sig] - 0.06) : Math.min(buf.duration, finT[b - 1] + 0.25)
     tramoAudio.set(i, [desde, hasta])
   })
+  // Sin huecos: cada escena dura exactamente su tramo de audio (el respiro inicial solo en la primera
+  // y el final solo en la última), así la voz suena seguida como la leyó ElevenLabs
+  const fps0 = useStore.getState().project.fps
   const ajustadas = escenas.map((e, i) => {
     const tr = tramoAudio.get(i)
-    return tr ? { ...e, duracion: Math.round((tr[1] - tr[0] + LEAD + (i === escenas.length - 1 ? TAIL : 0.05)) * 100) / 100 } : e
+    const extra = (i === 0 ? LEAD : 0) + (i === escenas.length - 1 ? TAIL : 0)
+    return tr ? { ...e, duracion: Math.round((tr[1] - tr[0] + extra) * fps0) / fps0 } : e
   })
 
   onProgress('Montando la animación…')
@@ -194,15 +230,31 @@ export async function voiceScript(escenas: Escena[], texto: string, voz: Voz, pa
   const sr = 44100
   const ctx = new OfflineAudioContext(1, Math.ceil((m.duration + 0.5) * sr), sr)
   const sitio = new Map<number, number>() // desplazamiento: tiempo del audio -> tiempo del vídeo
+  // Las escenas seguidas con texto suenan como UN solo trozo continuo (sin cortes entre escenas)
+  type Tramo = { pos: number; desde: number; hasta: number; escenas: number[] }
+  const tramos: Tramo[] = []
+  let tramo: Tramo | null = null as Tramo | null
   m.escenas.forEach((e, i) => {
     const tr = tramoAudio.get(i)
-    if (!tr) return
+    if (!tr) {
+      tramo = null
+      return
+    }
+    if (tramo && Math.abs(tramo.hasta - tr[0]) < 1e-3) {
+      tramo.hasta = tr[1]
+      tramo.escenas.push(i)
+    } else {
+      tramo = { pos: e.inicio + (i === 0 ? LEAD : 0), desde: tr[0], hasta: tr[1], escenas: [i] }
+      tramos.push(tramo)
+    }
+  })
+  for (const tr of tramos) {
     const node = ctx.createBufferSource()
     node.buffer = buf
     node.connect(ctx.destination)
-    node.start(e.inicio + LEAD, tr[0], tr[1] - tr[0])
-    sitio.set(i, e.inicio + LEAD - tr[0])
-  })
+    node.start(tr.pos, tr.desde, tr.hasta - tr.desde)
+    for (const i of tr.escenas) sitio.set(i, tr.pos - tr.desde)
+  }
   const mezcla = await ctx.startRendering()
   const audioId = `voces-${Date.now()}`
   await saveAudio(audioId, wav(mezcla))
@@ -261,6 +313,12 @@ export async function voiceScript(escenas: Escena[], texto: string, voz: Voz, pa
       if (t0 !== null && t1 !== null) palabras.push({ t: t0, fin: t1, texto: al.characters.slice(i, j + 1).join(''), punt, pregunta: enPregunta })
       if (punt === '?') enPregunta = false
     }
+  }
+  // Expresivo: una IA «directora» decide en qué palabra cambia de postura y a cuál, según lo que dice
+  if (ch.expresivo && raiz && palabras.length) {
+    onProgress('Dirigiendo los gestos según el guion…')
+    const dir = await dirigir(palabras, m.escenas, ch, raiz, pass, st.project.fps).catch(() => null)
+    if (dir) tracks[`part:${raiz.id}:v`] = dir
   }
   const conGestos = gesticular(tracks, palabras, ch, m.escenas)
 

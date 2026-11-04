@@ -85,7 +85,13 @@ cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y
 - Boca del expresivo (`silabas` en `voices.ts`): se abre al empezar cada vocal y se cierra al acabarla
   (mínimo 2 fotogramas), no por letras. Cada cambio de postura se pega al inicio de la palabra más
   cercana (0,08 s antes). Comprobado: la boca va a 0 fotogramas de la voz (correlación boca/energía).
-- `animateScenes`: postura por trozo de frase (≥4 palabras, ≤8): «?» → encogerse/pensar, números →
+- DIRECTOR IA (`api/actuar.ts`, lo llama `dirigir` en `voices.ts` al generar voces): recibe las palabras
+  de cada escena, la emoción y el catálogo `DESCRIPCIONES` (qué expresa cada postura) y devuelve en qué
+  palabra cambia y a qué postura según lo que dice; las claves caen 0,08 s antes de esa palabra. Si
+  falla, quedan las reglas de abajo.
+- VOZ SEGUIDA: las escenas duran exactamente su tramo de audio y las escenas seguidas con texto suenan
+  como UN trozo continuo (antes se metían 0,2 s de silencio entre escenas y la voz iba a trompicones).
+- `animateScenes` (respaldo sin IA): postura por trozo de frase (≥4 palabras, ≤8): «?» → encogerse/pensar, números →
   tres/índice, «coment/suscr» → señalar, «hola» → saludar, «!» → susto/para; si no, de la lista de la
   emoción de la escena. Los gestos del guion son una postura y ocupan solo 1,2 s.
 

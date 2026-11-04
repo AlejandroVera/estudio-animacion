@@ -47,6 +47,30 @@ export const NOMBRES_EXPRESIVO: Record<string, string> = {
   saludar: 'Saludar',
 }
 
+/** Qué expresa cada postura (para que la IA directora elija la que pide el texto). */
+export const DESCRIPCIONES: Record<string, string> = {
+  t_reposo: 'tranquilo, mano en el bolsillo, escuchando o frase neutra',
+  t_explica: 'tranquilo explicando, mano abierta con la palma arriba',
+  t_indice: 'tranquilo, índice arriba: el dato clave, «ojo», una idea importante',
+  t_presenta: 'tranquilo presentando algo a un lado: introducir un tema, una opción, «esto es…»',
+  t_pecho: 'mano en el pecho: hablar de sí mismo, «yo», sinceridad, algo que le toca',
+  t_encoge: 'medio encogido con la palma arriba: resignación, «qué le vamos a hacer», obviedad',
+  t_cuenta: 'cuenta con los dedos: enumerar, cifras, «primero/segundo», varias cosas',
+  t_barbilla: 'mano en la barbilla: pensar, plantear una pregunta, duda',
+  t_cadera: 'mano en la cadera: seguro de sí, chulería, conclusión firme',
+  t_triste: 'apenado frotándose la nuca: tristeza suave, apuro, vergüenza',
+  t_saluda: 'saluda con la mano: hola, adiós, presentarse',
+  t_duda: 'se rasca la cabeza: confusión, «no lo entiendo», sorpresa leve',
+  t_abajo: 'señala abajo: comentarios, suscríbete, enlace',
+  reposo: 'de frente neutro',
+  mejillas: 'EXAGERADO susto con las manos en la cara: cifra escandalosa, «¿¡qué!?»',
+  enfado: 'EXAGERADO enfado gritando con puños: indignación, injusticia',
+  llorar: 'EXAGERADO llorando a chorros: drama cómico, desgracia',
+  celebrar: 'EXAGERADO celebrando con los puños arriba: victoria, alegría grande',
+  cruzado: 'EXAGERADO brazos cruzados mirando de reojo: escepticismo, «ya, claro»',
+  stop: 'EXAGERADO palmas delante: «¡para!», «espera», negarse',
+}
+
 export interface ManifestExpresivo {
   lienzo: number[]
   pies: number[]
