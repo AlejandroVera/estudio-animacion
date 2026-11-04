@@ -91,6 +91,23 @@ function useShortcuts() {
   }, [])
 }
 
+/** Botón grande de reproducir/pausar sobre el vídeo (siempre visible, aunque el Guion tape la línea de tiempo). */
+function PlayFab() {
+  const playing = useStore((s) => s.playing)
+  const t = useStore((s) => s.time)
+  const dur = useStore((s) => s.project.duration)
+  const st = useStore.getState()
+  return (
+    <div className="play-fab">
+      <button className="btn icon" onClick={() => { st.setPlaying(false); st.setTime(0) }} title="Al inicio">⏮</button>
+      <button className="btn primary" onClick={() => { if (!playing && t >= dur - 0.05) st.setTime(0); st.setPlaying(!playing) }} title="Reproducir / pausar (barra espaciadora)">
+        {playing ? '⏸ Pausa' : '▶ Reproducir'}
+      </button>
+      <span className="muted small">{t.toFixed(1).replace('.', ',')} / {dur.toFixed(1).replace('.', ',')} s</span>
+    </div>
+  )
+}
+
 export default function App() {
   usePlayback()
   useShortcuts()
@@ -102,6 +119,7 @@ export default function App() {
       {guion && <ScriptPanel onClose={() => setGuion(false)} />}
       <PartsTree />
       <Stage />
+      <PlayFab />
       <Controls />
       <Timeline />
     </div>

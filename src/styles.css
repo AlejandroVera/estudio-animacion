@@ -826,3 +826,27 @@ select {
   margin-top: 0;
   flex: none;
 }
+
+/* Reproducir/pausar flotante, abajo del escenario */
+.play-fab {
+  grid-area: stage;
+  align-self: end;
+  justify-self: center;
+  z-index: 15;
+  margin-bottom: 34px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 6px 10px;
+  background: rgba(20, 22, 28, 0.85);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}
+.play-fab .btn.primary {
+  min-width: 130px;
+}
+.btn.toggle-on {
+  background: var(--accent, #3b82f6);
+  color: #fff;
+  border-color: transparent;
+}

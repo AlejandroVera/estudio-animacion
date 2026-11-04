@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { buildContext } from '../copilot/context'
 import { GESTOS } from '../model/gestures'
 import type { Escena, Plano } from '../model/types'
@@ -39,6 +39,8 @@ export function ScriptPanel({ onClose }: { onClose: () => void }) {
   const project = useStore((s) => s.project)
   const [texto, setTexto] = useState(project.guion?.texto ?? '')
   const [escenas, setEscenas] = useState<Escena[]>(project.guion?.escenas ?? [])
+  const planosPrevios = useRef<Plano[] | null>(null)
+  const todoGeneral = escenas.length > 0 && escenas.every((e) => e.plano === 'general')
   const [busy, setBusy] = useState(false)
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null)
   const [pass, setPass] = useState(readPass)
@@ -209,12 +211,21 @@ export function ScriptPanel({ onClose }: { onClose: () => void }) {
           <div className="script-sum muted small">
             {escenas.length} escenas · {total.toFixed(1).replace('.', ',')} s
             <button
-              className="btn small"
+              className={'btn small' + (todoGeneral ? ' toggle-on' : '')}
               style={{ marginLeft: 8 }}
-              onClick={() => setEscenas((es) => es.map((e) => ({ ...e, plano: 'general' as Plano })))}
-              title="Pone todas las escenas en plano general: cuerpo entero, sin zooms"
+              onClick={() => {
+                if (!todoGeneral) {
+                  planosPrevios.current = escenas.map((e) => e.plano)
+                  setEscenas((es) => es.map((e) => ({ ...e, plano: 'general' as Plano })))
+                } else {
+                  const prev = planosPrevios.current
+                  const ciclo: Plano[] = ['general', 'medio', 'primer', 'medio']
+                  setEscenas((es) => es.map((e, i) => ({ ...e, plano: prev?.[i] && prev[i] !== 'general' ? prev[i] : ciclo[i % ciclo.length] })))
+                }
+              }}
+              title="Encendido: todas las escenas en plano general (cuerpo entero, sin zooms). Apagado: alterna planos."
             >
-              Todo en plano general
+              {todoGeneral ? '🎥 Plano fijo sin zooms: SÍ' : '🎥 Plano fijo sin zooms: NO'}
             </button>
           </div>
           <div className="scene-list">
