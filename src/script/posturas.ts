@@ -223,25 +223,32 @@ export const REVISION = 3
 
 export type PosturaDibujada = { imageId: string; sinOjos: boolean; sinBoca: boolean }
 
-/** Dibuja un gesto nuevo y lo guarda (alineado con las demás posturas por la cabeza). */
-export async function dibujarPostura(ch: Character, descripcion: string): Promise<PosturaDibujada> {
+/** Dibuja un gesto nuevo y lo guarda (alineado con las demás posturas por la cabeza). Con «cara», la
+ *  postura trae su propia expresión exagerada: se queda con sus ojos (las capas solo mueven la boca). */
+export async function dibujarPostura(ch: Character, descripcion: string, cara?: string): Promise<PosturaDibujada> {
   const ex = ch.expresivo
   const raiz = ch.parts.find((p) => !p.parent)
   if (!ex?.base || !ex.original || !ex.lienzo || !raiz) throw new Error('Este personaje no admite gestos a medida.')
   const res = await fetch('/api/postura', {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ descripcion, base: location.origin + ex.base }),
+    body: JSON.stringify({ descripcion, base: location.origin + ex.base, ...(cara ? { cara } : {}) }),
   })
   const d = await res.json().catch(() => ({}))
   if (!res.ok) throw new Error(d.error ?? `Error ${res.status}`)
-  const recorte = await recortarDibujo(ch, d.url)
-  const [, , lw, lh] = ex.lienzo
+  const p = await procesarDibujo(ch, d.url)
+  const imageId = `postura-${Date.now()}-${Math.round(Math.random() * 1e6)}`
+  await saveImage(imageId, p.blob)
+  return { imageId, sinOjos: p.sinOjos || !!cara, sinBoca: p.sinBoca }
+}
+
+/** Un dibujo de la IA (URL) listo como postura: sin fondo ni huecos, cabeza en su sitio y qué capas admite. */
+export async function procesarDibujo(ch: Character, url: string) {
+  const [, , lw, lh] = ch.expresivo!.lienzo!
+  const recorte = await recortarDibujo(ch, url)
   const rev = await revisar(ch, recorte)
   const blob = await alinear(ch, recorte, lw, lh, rev)
-  const imageId = `postura-${Date.now()}-${Math.round(Math.random() * 1e6)}`
-  await saveImage(imageId, blob)
-  return { imageId, sinOjos: rev.sinOjos, sinBoca: rev.sinBoca }
+  return { blob, sinOjos: rev.sinOjos, sinBoca: rev.sinBoca, rev }
 }
 
 /** El dibujo de la IA a tamaño del original, sin fondo blanco y recortado al lienzo común. */
@@ -276,8 +283,10 @@ export function conExtras(p: Project): Project {
   const variants = { ...raiz.variants }
   let cambio = false
   // Se rehacen desde los gestos (si una revisión nueva quita la marca, deja de aplicarse)
-  const sinOjos = extras.filter((e) => e.sinOjos).map((e) => e.nombre).sort()
-  const sinBoca = extras.filter((e) => e.sinBoca).map((e) => e.nombre).sort()
+  // Las del personaje (posturas fijas con su propia cara) se conservan; las de gestos a medida se rehacen
+  const fijas = (l?: string[]) => (l ?? []).filter((n) => !n.startsWith('t_x_'))
+  const sinOjos = [...fijas(ch.expresivo.sinOjos), ...extras.filter((e) => e.sinOjos).map((e) => e.nombre)].sort()
+  const sinBoca = [...fijas(ch.expresivo.sinBoca), ...extras.filter((e) => e.sinBoca).map((e) => e.nombre)].sort()
   if (sinOjos.join() !== (ch.expresivo.sinOjos ?? []).join() || sinBoca.join() !== (ch.expresivo.sinBoca ?? []).join()) cambio = true
   for (const e of extras) {
     const url = mediaUrl(e.imageId)

@@ -46,7 +46,7 @@ export function drawContenido(g: CanvasRenderingContext2D, project: Project, t: 
   const els: Elemento[] = []
   for (const r of project.rotulos ?? []) {
     if (r.vin !== k) continue
-    const alto = r.estilo === 'grande' ? H * 0.17 : r.estilo === 'cartel' ? H * 0.12 : H * 0.09
+    const alto = r.estilo === 'grande' ? H * 0.17 : r.estilo === 'cartel' ? H * 0.12 : H * 0.11
     els.push({ tipo: 'rotulo', r, t: r.t, alto })
   }
   for (const o of project.objetos ?? []) {
@@ -59,7 +59,8 @@ export function drawContenido(g: CanvasRenderingContext2D, project: Project, t: 
   els.sort((a, b) => Number(b.tipo === 'objeto' && b.o.pos === 'pensamiento') - Number(a.tipo === 'objeto' && a.o.pos === 'pensamiento'))
   const hueco = H * 0.025
   const total = els.reduce((s, e) => s + e.alto, 0) + hueco * (els.length - 1)
-  const f = Math.min(1, (y1 - y0) / total)
+  // Con pocos elementos se agrandan (una nota sola no puede quedar diminuta en un lado vacío)
+  const f = Math.min(1.7, (y1 - y0) / total)
   let y = y0 + Math.max(0, (y1 - y0 - total * f) / 2)
   const sitios: { e: Elemento; x: number; y: number; w: number; h: number }[] = []
   for (const e of els) {

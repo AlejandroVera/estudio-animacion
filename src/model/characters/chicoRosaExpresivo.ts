@@ -147,6 +147,9 @@ export function personajeExpresivo(cfg: {
   ojosPorDefecto?: Record<string, string>
   /** Posturas con la mano delante de la cara: sin capas (su propia cara y su boca ~b). */
   sinCapas?: string[]
+  /** Posturas con su propia cara exagerada: conservan sus ojos (las capas solo mueven la boca). */
+  sinOjos?: string[]
+  sinBoca?: string[]
 }): Character {
   const { manifest, ruta } = cfg
   const [lx, ly, lw, lh] = manifest.lienzo
@@ -194,6 +197,8 @@ export function personajeExpresivo(cfg: {
       lienzo: manifest.lienzo,
       ojosPorDefecto: cfg.ojosPorDefecto ?? {},
       sinCapas: cfg.sinCapas ?? [],
+      sinOjos: cfg.sinOjos ?? [],
+      sinBoca: cfg.sinBoca ?? [],
       cabeza: { x: manifest.cabeza[0] - lx, y: manifest.cabeza[1] - ly },
       radio: manifest.cabeza[2],
       cajas: Object.fromEntries(Object.entries(manifest.capas ?? {}).map(([t, c]) => [t, [c.caja[0] - lx, c.caja[1] - ly, c.caja[2], c.caja[3]]])),
