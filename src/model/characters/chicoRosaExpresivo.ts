@@ -78,6 +78,20 @@ export interface ManifestExpresivo {
   poses: string[]
   bocas: string[]
   parpadeo?: string[]
+  /** Capas de cara independientes (ojos y boca) para la familia tranquila t_*: caja y nombres. */
+  capas?: Record<string, { caja: number[]; nombres: string[] }>
+}
+
+/** Qué expresa cada mirada (capa de ojos), para la IA directora. «propios» = los de la postura. */
+export const MIRADAS: Record<string, string> = {
+  propios: 'los ojos que trae la postura (lo normal)',
+  esceptico: 'párpados a media asta, mirada de «ya, claro»: ironía, desconfianza, sarcasmo',
+  recelo: 'un ojo entornado: sospecha, «a ver…»',
+  arriba: 'mira hacia arriba: pensando, recordando, «a ver cómo lo digo»',
+  platos: 'ojos como platos: sorpresa, cifra escandalosa, susto',
+  felices: 'ojos cerrados sonriendo: alegría, ternura, algo bonito',
+  triste: 'cejas tristes: pena, lástima',
+  duda: 'una ceja levantada: duda, extrañeza',
 }
 
 /**
@@ -110,6 +124,21 @@ export function personajeExpresivo(cfg: {
       defaultVariant: variants.t_reposo ? 't_reposo' : 'reposo',
       variants,
     },
+    // Capas de ojos y boca (solo se ven con la familia tranquila t_*, que comparte la misma cabeza)
+    ...Object.entries(manifest.capas ?? {}).map(([tipo, c], i) => {
+      const [x, y, w, h] = c.caja
+      return {
+        id: tipo,
+        name: tipo === 'ojos' ? 'Ojos (capa)' : 'Boca (capa)',
+        parent: 'cuerpo',
+        z: 20 + i,
+        box: { x, y, w, h },
+        pivot: { x: x + w / 2, y: y + h / 2 },
+        image: true,
+        defaultVariant: 'nada',
+        variants: { nada: `${ruta}/capas/vacio.webp`, ...Object.fromEntries(c.nombres.map((n) => [n, `${ruta}/capas/${tipo}_${n}.webp`])) },
+      } as PartDef
+    }),
   ]
   return {
     id: cfg.id,

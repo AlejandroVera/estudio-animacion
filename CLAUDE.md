@@ -85,9 +85,17 @@ cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y
 - Boca del expresivo (`silabas` en `voices.ts`): se abre al empezar cada vocal y se cierra al acabarla
   (mínimo 2 fotogramas), no por letras. Cada cambio de postura se pega al inicio de la palabra más
   cercana (0,08 s antes). Comprobado: la boca va a 0 fotogramas de la voz (correlación boca/energía).
+- Fotogramas reales de la referencia (Drive de Alejandro, 3 tramos de 60): el cuerpo y la cabeza no se
+  mueven NADA; los brazos cambian de golpe (sin intermedio) y los OJOS cambian por su cuenta en otro
+  momento; boca de 3-4 formas cada 2-3 fotogramas. Por eso: CAPAS DE CARA (`herramientas/capas_cara.py`,
+  `manifest.capas`): en la familia t_* (misma cabeza al píxel) hay piezas `ojos` (esceptico, recelo,
+  arriba, platos, felices, triste, duda, cerrados) y `boca` (abierta, o, dientes) recortadas con borde
+  suave y pegadas encima; `nada` = lo de la postura. `poseAt` elige la boca por la vocal (`silabas`
+  da abierta/O/E) y los ojos por el canal `face:brows`; el parpadeo usa `ojos: cerrados`. Las posturas
+  de gag (de frente) siguen con su cara y `~b`.
 - DIRECTOR IA (`api/actuar.ts`, lo llama `dirigir` en `voices.ts` al generar voces): recibe las palabras
   de cada escena, la emoción y el catálogo `DESCRIPCIONES` (qué expresa cada postura) y devuelve en qué
-  palabra cambia y a qué postura según lo que dice; las claves caen 0,08 s antes de esa palabra. Si
+  palabra cambia y a qué postura según lo que dice, y `miradas` (catálogo `MIRADAS`) en otras palabras; las claves caen 0,08 s antes de esa palabra. Si
   falla, quedan las reglas de abajo.
 - VOZ SEGUIDA: las escenas duran exactamente su tramo de audio y las escenas seguidas con texto suenan
   como UN trozo continuo (antes se metían 0,2 s de silencio entre escenas y la voz iba a trompicones).

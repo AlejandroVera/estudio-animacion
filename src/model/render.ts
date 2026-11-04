@@ -137,7 +137,9 @@ export function drawCharacter(
   if (!restPose && character.expresivo && pose.blink > 0.5) {
     const raiz = character.parts.find((p) => !p.parent)
     const v = raiz && (pose.variants[raiz.id] ?? raiz.defaultVariant).split('~')[0]
-    if (raiz && v && raiz.variants[v + '~c']) pose = { ...pose, variants: { ...pose.variants, [raiz.id]: v + '~c' } }
+    const ojos = character.parts.find((p) => p.id === 'ojos')
+    if (raiz && v?.startsWith('t_') && ojos?.variants.cerrados) pose = { ...pose, variants: { ...pose.variants, ojos: 'cerrados' } }
+    else if (raiz && v && raiz.variants[v + '~c']) pose = { ...pose, variants: { ...pose.variants, [raiz.id]: v + '~c' } }
   }
   const placed = layout(character, inst, pose, restPose)
   const byId = new Map(placed.map((p) => [p.part.id, p]))

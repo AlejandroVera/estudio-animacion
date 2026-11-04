@@ -28,7 +28,13 @@ Cómo actúa un buen narrador (síguelo):
   preposiciones. Mantén cada postura entre 4 y 9 palabras (1,5-3,5 s). Nada de cambios cada dos palabras.
 - Varía: no repitas la misma postura en cambios seguidos. Cada escena empieza con una postura en su
   palabra 0 (puede ser la misma que venía si la frase continúa la idea).
-- Usa SOLO nombres de postura del catálogo.`
+- Usa SOLO nombres de postura del catálogo.
+
+MIRADAS (si te dan un catálogo de miradas): los ojos cambian POR SU CUENTA, entre un cambio de brazos y
+el siguiente, como en la referencia (brazos, ojos y boca nunca cambian todos a la vez). Úsalas para dar
+matiz: ironía → escéptico, cifra escandalosa → platos, pensar → arriba, algo bonito → felices… Vuelve
+a «propios» cuando pase el momento. Unas 1-2 miradas por escena como mucho, nunca en la misma palabra
+que un cambio de postura. Solo valen con posturas tranquilas (las que empiezan por t_).`
 
 const SCHEMA = {
   type: 'object',
@@ -44,6 +50,15 @@ const SCHEMA = {
         properties: { escena: { type: 'integer' }, palabra: { type: 'integer' }, postura: { type: 'string' } },
       },
     },
+    miradas: {
+      type: 'array',
+      items: {
+        type: 'object',
+        additionalProperties: false,
+        required: ['escena', 'palabra', 'ojos'],
+        properties: { escena: { type: 'integer' }, palabra: { type: 'integer' }, ojos: { type: 'string' } },
+      },
+    },
   },
 }
 
@@ -51,7 +66,7 @@ export async function POST(request: Request): Promise<Response> {
   const clave = process.env.CLAVE_ESTUDIO
   if (!process.env.ANTHROPIC_API_KEY || !clave) return json({ error: 'Falta configurar las claves en Vercel.' }, 503)
   if (request.headers.get('x-clave-estudio') !== clave) return json({ error: 'clave' }, 401)
-  let body: { escenas?: { escena: number; emocion: string; palabras: string[] }[]; posturas?: Record<string, string> }
+  let body: { escenas?: { escena: number; emocion: string; palabras: string[] }[]; posturas?: Record<string, string>; miradas?: Record<string, string> }
   try {
     body = await request.json()
   } catch {
@@ -72,7 +87,12 @@ export async function POST(request: Request): Promise<Response> {
       ...(CON_RESPALDO.has(model) ? { betas: ['server-side-fallback-2026-07-01'], fallbacks: 'default' as const } : {}),
       output_config: { effort: 'medium', format: { type: 'json_schema', schema: SCHEMA } },
       system: [{ type: 'text', text: GUIA, cache_control: { type: 'ephemeral' } }],
-      messages: [{ role: 'user', content: `Catálogo de posturas:\n${catalogo}\n\nGuion:\n${guion}` }],
+      messages: [
+        {
+          role: 'user',
+          content: `Catálogo de posturas:\n${catalogo}\n\n${body.miradas ? `Catálogo de miradas:\n${Object.entries(body.miradas).map(([k, v]) => `- ${k}: ${v}`).join('\n')}\n\n` : ''}Guion:\n${guion}`,
+        },
+      ],
     })
     if (response.stop_reason !== 'end_turn') return json({ error: 'La IA no terminó la dirección.' }, 422)
     const text = response.content.flatMap((b) => (b.type === 'text' ? [b.text] : [])).join('')

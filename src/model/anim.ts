@@ -124,6 +124,26 @@ export function poseAt(character: Character, tracks: Tracks, t: number): Pose {
       scale: num(evalTrack(tracks[k + 'scale'], t, DEFAULTS.scale)),
     }
   }
+  // Expresivo con capas de cara: en la familia tranquila (t_*) la boca y los ojos van por su cuenta
+  // (como en la referencia: brazos, ojos y boca cambian en momentos distintos)
+  const raizX = character.expresivo ? character.parts.find((p) => !p.parent) : undefined
+  if (raizX) {
+    const cuerpo = (variants[raizX.id] ?? raizX.defaultVariant).split('~')[0]
+    const conCapas = cuerpo.startsWith('t_') && character.parts.some((p) => p.id === 'boca' || p.id === 'ojos')
+    const boca = character.parts.find((p) => p.id === 'boca')
+    const ojos = character.parts.find((p) => p.id === 'ojos')
+    if (conCapas) {
+      variants[raizX.id] = variants[raizX.id] === cuerpo + '~c' ? cuerpo + '~c' : cuerpo
+      const forma = mouth === 'O' ? 'o' : mouth === 'E' ? 'dientes' : ['abierta', 'grito'].includes(mouth) ? 'abierta' : 'nada'
+      if (boca) variants.boca = boca.variants[forma] ? forma : 'nada'
+      const brows = str(evalTrack(tracks['face:brows'], t, 'nada'))
+      if (ojos) variants.ojos = variants[raizX.id].endsWith('~c') ? 'cerrados' : ojos.variants[brows] ? brows : 'nada'
+      if (variants[raizX.id].endsWith('~c')) variants[raizX.id] = cuerpo
+    } else {
+      if (boca) variants.boca = 'nada'
+      if (ojos) variants.ojos = 'nada'
+    }
+  }
   return {
     parts,
     gazeX: num(evalTrack(tracks['face:gazeX'], t, DEFAULTS.gazeX)),

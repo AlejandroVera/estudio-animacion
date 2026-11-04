@@ -6,7 +6,7 @@
 import { gesticular, type Palabra } from './emocion'
 import { decodeAudio, loadAudio, saveAudio } from '../audio/storage'
 import type { Character, Escena, Part, Tracks } from '../model/types'
-import { DESCRIPCIONES } from '../model/characters/chicoRosaExpresivo'
+import { DESCRIPCIONES, MIRADAS } from '../model/characters/chicoRosaExpresivo'
 import { activeCharacter, useStore } from '../store'
 import { animateScenes } from './scenes'
 
@@ -107,23 +107,26 @@ function visemas(al: Alineacion, desplaza: (t: number) => number | null, fps: nu
  * cierra al terminarla, con un mínimo de 2 fotogramas en cada estado (como la animación limitada).
  */
 function silabas(al: Alineacion, desplaza: (t: number) => number | null, fps: number) {
-  const ab: [number, number][] = []
+  const ab: [number, number, string][] = []
   for (let i = 0; i < al.characters.length; i++) {
     if (!/[aeiouáéíóúü]/i.test(al.characters[i])) continue
     let j = i
     while (j + 1 < al.characters.length && /[aeiouáéíóúüy]/i.test(al.characters[j + 1])) j++ // diptongos
     const a = desplaza(al.character_start_times_seconds[i])
     const b = desplaza(al.character_end_times_seconds[j])
-    if (a !== null && b !== null) ab.push([Math.round(a * fps), Math.max(Math.round(a * fps) + 2, Math.round(b * fps))])
+    // Forma según la vocal: a → abierta, e/i → dientes, o/u → «o»
+    const vo = al.characters[i].toLowerCase()
+    const forma = 'oóuú'.includes(vo) ? 'O' : 'eéií'.includes(vo) ? 'E' : 'abierta'
+    if (a !== null && b !== null) ab.push([Math.round(a * fps), Math.max(Math.round(a * fps) + 2, Math.round(b * fps)), forma])
     i = j
   }
   const keys: { t: number; v: string; ease: 'salto' }[] = [{ t: 0, v: 'cerrada', ease: 'salto' }]
   let finAnterior = -10
-  for (const [a, b] of ab) {
+  for (const [a, b, forma] of ab) {
     if (a - finAnterior < 2 && keys.length > 1) {
       // vocal pegada a la anterior: se alarga la apertura en vez de cerrar un instante
       keys.pop()
-    } else keys.push({ t: a / fps, v: 'abierta', ease: 'salto' })
+    } else keys.push({ t: a / fps, v: forma, ease: 'salto' })
     keys.push({ t: b / fps, v: 'cerrada', ease: 'salto' })
     finAnterior = b
   }
@@ -133,6 +136,7 @@ function silabas(al: Alineacion, desplaza: (t: number) => number | null, fps: nu
 /** Pide a /api/actuar las posturas por palabra y las convierte en claves exactas (0,08 s antes). */
 async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number })[], ch: Character, raiz: Part, pass: string, fps: number) {
   const porEscena = escenas.map((e) => palabras.filter((w) => w.t >= e.inicio - 0.05 && w.t < e.inicio + e.duracion - 0.05))
+  const ojosPart = ch.parts.find((p) => p.id === 'ojos')
   const posturas = Object.fromEntries(Object.keys(raiz.variants).filter((v) => !v.includes('~') && DESCRIPCIONES[v]).map((v) => [v, DESCRIPCIONES[v]]))
   const res = await fetch('/api/actuar', {
     method: 'POST',
@@ -140,10 +144,21 @@ async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number 
     body: JSON.stringify({
       posturas,
       escenas: escenas.map((e, i) => ({ escena: i, emocion: e.expresion, palabras: porEscena[i].map((w) => w.texto) })).filter((e) => e.palabras.length),
+      ...(ojosPart ? { miradas: Object.fromEntries(Object.entries(MIRADAS).filter(([k]) => k === 'propios' || ojosPart.variants[k])) } : {}),
     }),
   })
   if (!res.ok) throw new Error('actuar')
-  const { cambios } = (await res.json()) as { cambios: { escena: number; palabra: number; postura: string }[] }
+  const { cambios, miradas } = (await res.json()) as {
+    cambios: { escena: number; palabra: number; postura: string }[]
+    miradas?: { escena: number; palabra: number; ojos: string }[]
+  }
+  const ojos: { t: number; v: string; ease: 'salto' }[] = []
+  for (const mi of [...(miradas ?? [])].sort((a, b) => a.escena - b.escena || a.palabra - b.palabra)) {
+    const w = porEscena[mi.escena]?.[mi.palabra]
+    const v = mi.ojos === 'propios' ? 'nada' : mi.ojos
+    if (!w || !(v === 'nada' || ojosPart?.variants[v])) continue
+    ojos.push({ t: Math.max(0, Math.round((w.t - 0.05) * fps) / fps), v, ease: 'salto' })
+  }
   const keys: { t: number; v: string; ease: 'salto' }[] = []
   for (const c of [...cambios].sort((a, b) => a.escena - b.escena || a.palabra - b.palabra)) {
     const w = porEscena[c.escena]?.[c.palabra]
@@ -157,8 +172,15 @@ async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number 
     }
     keys.push({ t, v: c.postura, ease: 'salto' })
   }
-  void ch
-  return keys.length ? keys : null
+  if (!keys.length) return null
+  // Una mirada dura como mucho hasta el siguiente cambio de postura (la postura nueva trae sus ojos)
+  const ojosFin: typeof ojos = []
+  for (const o of ojos) {
+    ojosFin.push(o)
+    const sig = keys.find((k) => k.t > o.t)
+    if (o.v !== 'nada' && sig && !ojos.some((x) => x.t > o.t && x.t < sig.t)) ojosFin.push({ t: sig.t, v: 'nada', ease: 'salto' })
+  }
+  return { posturas: keys, ojos: ojosFin.length ? [{ t: 0, v: 'nada', ease: 'salto' as const }, ...ojosFin] : [] }
 }
 
 function wav(buf: AudioBuffer): Blob {
@@ -318,7 +340,10 @@ export async function voiceScript(escenas: Escena[], texto: string, voz: Voz, pa
   if (ch.expresivo && raiz && palabras.length) {
     onProgress('Dirigiendo los gestos según el guion…')
     const dir = await dirigir(palabras, m.escenas, ch, raiz, pass, st.project.fps).catch(() => null)
-    if (dir) tracks[`part:${raiz.id}:v`] = dir
+    if (dir) {
+      tracks[`part:${raiz.id}:v`] = dir.posturas
+      if (dir.ojos.length) tracks['face:brows'] = dir.ojos
+    }
   }
   const conGestos = gesticular(tracks, palabras, ch, m.escenas)
 

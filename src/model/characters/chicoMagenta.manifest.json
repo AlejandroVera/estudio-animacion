@@ -72,5 +72,38 @@
   "t_reposo",
   "t_saluda",
   "t_triste"
- ]
+ ],
+ "capas": {
+  "ojos": {
+   "caja": [
+    582,
+    247,
+    663,
+    309
+   ],
+   "nombres": [
+    "arriba",
+    "esceptico",
+    "triste",
+    "duda",
+    "recelo",
+    "platos",
+    "felices",
+    "cerrados"
+   ]
+  },
+  "boca": {
+   "caja": [
+    745,
+    542,
+    371,
+    187
+   ],
+   "nombres": [
+    "abierta",
+    "o",
+    "dientes"
+   ]
+  }
+ }
 }
