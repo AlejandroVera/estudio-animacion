@@ -135,6 +135,12 @@ cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y
   pensamiento (objeto con pos «pensamiento», nube dibujada) y flechas rojas a mano que se dibujan
   (`flecha`). Solo en horizontal; en vertical, los sitios fijos de siempre. Viñeta a un lado sin
   contenido = al centro. Con pocos elementos se agrandan (hasta ×1,7).
+- LETRA A MANO (tras «el texto parece hecho por código»): `src/model/letra.ts` escribe como la referencia:
+  fuente «Coming Soon» engrosada (trazo uniforme, puntas redondas), mayúsculas con la «i» minúscula
+  (`aSuManera`), cada letra torcida y a su altura, colores puros, sin borde blanco (solo un halo suave) y
+  escribiéndose letra a letra (`avanceEscritura`, ≈0,04 s/letra); subrayado que se dibuja después.
+  La usan `contenido.ts` y `drawRotulos`. El LADO del personaje se mantiene mientras siga el mismo fondo
+  (solo cambia con el lugar) y el director pone lugares en la mayoría de viñetas (blanco ≤ 1 de cada 4).
 - REPERTORIO DE CARAS EXAGERADAS `t_e_*` (16: corazones, susto, llora, carcajada, agotado, furioso,
   verguenza, asco, dinero, explota, nervioso, dormido, chulo, suplica, mareado, ilusion): `api/postura.ts`
   con `cara` (expresión exagerada, se permiten lágrimas, sudor, corazones…), procesadas en la web con

@@ -9,6 +9,7 @@ const CODECS = ['avc1.640033', 'avc1.640028', 'avc1.4d0028', 'avc1.42003e']
 export async function exportMp4(project: Project, onProgress: (p: number) => void): Promise<Blob> {
   // La letra de los rótulos tiene que estar cargada antes de dibujar
   await document.fonts.load('700 80px Kalam').catch(() => undefined)
+  await document.fonts.load("400 80px 'Coming Soon'").catch(() => undefined)
   if (typeof VideoEncoder === 'undefined') {
     throw new Error('Este navegador no puede crear vídeo. Usa Google Chrome o Edge actualizados.')
   }

@@ -481,8 +481,22 @@ export async function voiceScript(escenas: Escena[], texto: string, voz: Voz, pa
       /^blanco\b/i.test(v.fondo) && (v.plano === 'lejos' || (ancho && v.plano === 'general')) ? { ...v, plano: 'medio' } : v,
     )
     // Una viñeta a un lado sin nada que mostrar en el otro queda coja: al centro
+    // y el lado NO cambia al azar: se mantiene mientras siga en el mismo lugar (mismo fondo seguido) y
+    // solo cambia al cambiar de lugar. Un tramo sin nada que mostrar va al centro.
     const conContenido = new Set([...(rotulosNuevos ?? []), ...(objetosNuevos ?? [])].map((x) => x.vin))
-    vinetasNuevas = vinetasNuevas.map((v, i) => (conContenido.has(i) ? v : { ...v, lado: 'centro' as const }))
+    {
+      const vs = vinetasNuevas
+      let i = 0
+      while (i < vs.length) {
+        let j = i
+        while (j + 1 < vs.length && vs[j + 1].fondo === vs[i].fondo) j++
+        const idx = Array.from({ length: j - i + 1 }, (_, k) => i + k)
+        const conAlgo = idx.filter((k) => conContenido.has(k))
+        const lado = conAlgo.length ? (conAlgo.map((k) => vs[k].lado).find((l) => l !== 'centro') ?? 'izq') : 'centro'
+        for (const k of idx) vs[k] = { ...vs[k], lado }
+        i = j + 1
+      }
+    }
     // En vertical no hay sitio a los lados: siempre en el centro (el contenido va arriba y a los lados)
     if (st.project.width <= st.project.height * 1.1) vinetasNuevas = vinetasNuevas.map((v) => ({ ...v, lado: 'centro' as const }))
     for (const c of Object.keys(tracks)) if (c.startsWith('cam:') || c === `part:${raiz?.id}:scale` || c === `part:${raiz?.id}:x`) delete tracks[c]

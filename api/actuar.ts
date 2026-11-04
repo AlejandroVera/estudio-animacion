@@ -75,11 +75,12 @@ corte, «fondo» y «tamano», y «idea» (qué cuenta la viñeta, en pocas pala
 - La primera viñeta empieza en la escena 0, palabra 0. Una viñeta nueva al empezar cada frase con una
   idea nueva, en el remate de un chiste o en un giro («pero…», «y entonces…»). Ni más corta de 1,8 s ni
   más larga de 6 s: si una frase es larga, pártela en su coma o en su «y».
-- «fondo»: «blanco» (lo más habitual para ideas abstractas, reflexiones, datos y remates: deja que
-  mande el personaje con sus rótulos) o un LUGAR concreto y cotidiano que ilustre lo que dice en esa
-  viñeta (la cocina cuando habla de cocinar, el sofá cuando habla de no tener fuerzas, el gimnasio
-  cuando dice «entrena»…). Para volver a un lugar ya usado escribe EXACTAMENTE el mismo texto. Como
-  mucho 4-5 lugares distintos en el vídeo (cada uno se dibuja aparte); alterna lugares con blanco.
+- «fondo»: casi siempre un LUGAR concreto y cotidiano que ilustre lo que dice esa viñeta (la cocina cuando
+  habla de cocinar, el sofá cuando no tiene fuerzas, el gimnasio cuando dice «entrena», la consulta del
+  psicólogo cuando dice «terapia», una oficina, el supermercado, la cama…). «blanco» SOLO para remates
+  cortos o una lista de palabras grandes (como mucho 1 de cada 4 viñetas, nunca dos seguidas). Para
+  volver a un lugar ya usado escribe EXACTAMENTE el mismo texto. Entre 3 y 6 lugares distintos en el
+  vídeo; cambia de lugar cuando cambia la idea (es lo que da sensación de que «pasan cosas»).
 - «tamano»: «general» (cuerpo entero, para situar en un lugar), «lejos» (pequeño en un lugar grande:
   soledad, agobio, algo enorme), «medio» (de cintura arriba: explicar, la mayoría de viñetas en blanco)
   o «primer» (la cara: el remate, la ironía, la emoción fuerte; corto). Alterna: nunca el mismo tamaño
@@ -89,8 +90,8 @@ corte, «fondo» y «tamano», y «idea» (qué cuenta la viñeta, en pocas pala
 
 COMPOSICIÓN DE CADA VIÑETA (lo que le da riqueza visual, como «Estoy Tiesa»):
 - «lado» de la viñeta: dónde está el personaje. «izq» o «der»: el personaje grande a un lado y el otro
-  lado LIBRE para el contenido, que se va llenando mientras habla; «centro»: sin contenido o con poco
-  (un primer plano, una reacción). Alterna el lado entre viñetas para que no sea siempre igual.
+  lado LIBRE para el contenido, que se va llenando mientras habla; «centro»: sin contenido. El lado NO
+  cambia mientras siga en el mismo lugar: solo al cambiar de lugar (no lo muevas sin motivo).
 - El contenido de la viñeta APARECE PALABRA A PALABRA y se ACUMULA (no todo a la vez) y se borra de golpe
   al cortar. OBLIGATORIO: toda viñeta con lado «izq» o «der» LLENA su lado libre con 2-5 elementos
   (rótulos y objetos) que aparecen en palabras distintas; si no tienes nada que poner, usa «centro».

@@ -2,6 +2,7 @@ import { poseAt } from './anim'
 import { withFollowThrough, withLife } from './life'
 import { ensureMedia, mediaUrl } from '../audio/storage'
 import { drawContenido } from './contenido'
+import { aSuManera, avanceEscritura, COLORES_MANO, escribirMano, medirMano } from './letra'
 import { evalTrack } from './anim'
 import type { BgLayer, Character, CharacterInstance, Part, Pose, Project, Vec } from './types'
 
@@ -243,7 +244,6 @@ export function drawFrame(g: CanvasRenderingContext2D, project: Project, t: numb
   }
 }
 
-const COLORES: Record<string, string> = { negro: '#262020', rojo: '#D63030', verde: '#28A046', azul: '#285AC8' }
 
 /** Objetos que aparecen junto al personaje (fuera de la cámara, como los rótulos), con un «pop». */
 export function drawObjetos(g: CanvasRenderingContext2D, project: Project, t: number) {
@@ -297,44 +297,33 @@ export function drawRotulos(g: CanvasRenderingContext2D, project: Project, t: nu
   for (const r of project.rotulos ?? []) {
     if (t < r.t || t >= r.fin) continue
     const [x, y, maxW] = sitio[r.pos] ?? sitio.arriba
-    const dt = t - r.t
-    const pop = dt < 0.07 ? 0.7 + (1.12 - 0.7) * (dt / 0.07) : dt < 0.15 ? 1.12 - 0.12 * ((dt - 0.07) / 0.08) : 1
-    let semilla = 0
-    for (const ch of r.id) semilla = (semilla * 31 + ch.charCodeAt(0)) % 997
-    const rot = (((semilla % 11) - 5) * Math.PI) / 180
+    let sem = 0
+    for (const ch of r.id) sem = (sem * 31 + ch.charCodeAt(0)) % 997
+    const texto = aSuManera(r.texto)
+    const palabras = texto.split(/\s+/)
     // Tamaño: grande, pero que quepa en su sitio (hasta 2 líneas)
-    const palabras = r.texto.split(/\s+/)
     let tam = Math.round(Math.min(W, H) * 0.13)
-    let lineas: string[] = [r.texto]
+    let lineas: string[] = [texto]
     for (; tam > 30; tam -= 4) {
-      g.font = `700 ${tam}px Kalam, 'Comic Sans MS', cursive`
-      if (g.measureText(r.texto).width <= maxW) {
-        lineas = [r.texto]
+      if (medirMano(g, texto, tam) <= maxW) {
+        lineas = [texto]
         break
       }
       const mitad = Math.ceil(palabras.length / 2)
-      const a = palabras.slice(0, mitad).join(' ')
-      const b = palabras.slice(mitad).join(' ')
-      if (palabras.length > 1 && Math.max(g.measureText(a).width, g.measureText(b).width) <= maxW) {
-        lineas = [a, b]
+      const dos = [palabras.slice(0, mitad).join(' '), palabras.slice(mitad).join(' ')]
+      if (palabras.length > 1 && Math.max(...dos.map((l) => medirMano(g, l, tam))) <= maxW) {
+        lineas = dos
         break
       }
     }
+    const color = COLORES_MANO[r.color] ?? COLORES_MANO.negro
+    const avance = avanceEscritura(texto, t - r.t)
     g.save()
     g.translate(x, y)
-    g.rotate(rot)
-    g.scale(pop, pop)
-    g.font = `700 ${tam}px Kalam, 'Comic Sans MS', cursive`
-    g.textAlign = 'center'
-    g.textBaseline = 'middle'
-    g.lineJoin = 'round'
+    g.rotate((((sem % 11) - 5) * Math.PI) / 180)
     lineas.forEach((l, i) => {
-      const ly = (i - (lineas.length - 1) / 2) * tam * 1.05
-      g.lineWidth = tam * 0.16
-      g.strokeStyle = '#FFFFFF'
-      g.strokeText(l, 0, ly)
-      g.fillStyle = COLORES[r.color] ?? COLORES.negro
-      g.fillText(l, 0, ly)
+      const parte = Math.max(0, Math.min(1, avance * lineas.length - i))
+      escribirMano(g, l, 0, (i - (lineas.length - 1) / 2) * tam * 1.15, tam, color, parte, sem + i * 17)
     })
     g.restore()
   }

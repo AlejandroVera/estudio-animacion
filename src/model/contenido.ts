@@ -5,9 +5,9 @@
 
 import { mediaUrl } from '../audio/storage'
 import type { Objeto, Project, Rotulo } from './types'
+import { aSuManera, avanceEscritura, COLORES_MANO, escribirMano, medirMano, subrayarMano } from './letra'
 
-const COLORES: Record<string, string> = { negro: '#262020', rojo: '#D63030', verde: '#28A046', azul: '#285AC8' }
-const LETRA = "Kalam, 'Comic Sans MS', cursive"
+const COLORES: Record<string, string> = { negro: '#141414', rojo: '#EE1B24', verde: '#1FC73A', azul: '#1E5BFF' }
 
 type Imagenes = (src: string) => HTMLImageElement
 
@@ -85,30 +85,27 @@ export function drawContenido(g: CanvasRenderingContext2D, project: Project, t: 
       const hasta = { x: s.x + (v.lado === 'izq' ? -1 : 1) * s.w * 0.3, y: s.y }
       dibujarFlecha(g, desde, hasta, Math.min(1, dt / 0.25), H, semilla(s.e.tipo === 'rotulo' ? s.e.r.id : s.e.o.id))
     }
-    if (s.e.tipo === 'rotulo') dibujarRotulo(g, s.e.r, s.x, s.y, s.w, s.h, pop(dt))
+    if (s.e.tipo === 'rotulo') dibujarRotulo(g, s.e.r, s.x, s.y, s.w, s.h, dt)
     else dibujarObjeto(g, s.e.o, s.x, s.y, s.w, s.h, pop(dt), img, s.e.o.pos === 'pensamiento' ? cabeza : null)
   })
   return true
 }
 
-function dibujarRotulo(g: CanvasRenderingContext2D, r: Rotulo, x: number, y: number, maxW: number, h: number, escala: number) {
+function dibujarRotulo(g: CanvasRenderingContext2D, r: Rotulo, x: number, y: number, maxW: number, h: number, dt: number) {
   const estilo = r.estilo ?? 'nota'
-  const color = estilo === 'grande' ? COLORES.negro : COLORES[r.color] ?? COLORES.negro
-  const base = Math.round(h * (estilo === 'grande' ? 0.85 : estilo === 'cartel' ? 0.55 : 0.7))
+  const color = estilo === 'grande' ? COLORES_MANO.negro : COLORES_MANO[r.color] ?? COLORES_MANO.negro
+  const texto = aSuManera(r.texto)
+  const sem = semilla(r.id)
+  const base = Math.round(h * (estilo === 'grande' ? 0.8 : estilo === 'cartel' ? 0.5 : 0.62))
   const maxTexto = estilo === 'cartel' ? maxW * 0.8 : maxW
-  g.save()
   // Tamaño que cabe en una línea y en dos (partiendo por la mitad de las palabras): gana el más grande
   const cabe = (lineas: string[], tope: number) => {
     let t = tope
-    g.font = `700 ${t}px ${LETRA}`
-    while (Math.max(...lineas.map((l) => g.measureText(l).width)) + t * 0.3 > maxTexto && t > 20) {
-      t -= 3
-      g.font = `700 ${t}px ${LETRA}`
-    }
+    while (Math.max(...lineas.map((l) => medirMano(g, l, t))) > maxTexto && t > 20) t -= 3
     return t
   }
-  const palabras = r.texto.split(/\s+/)
-  let lineas = [r.texto]
+  const palabras = texto.split(/\s+/)
+  let lineas = [texto]
   let tam = cabe(lineas, base)
   if (palabras.length > 1) {
     const mitad = Math.ceil(palabras.length / 2)
@@ -119,48 +116,34 @@ function dibujarRotulo(g: CanvasRenderingContext2D, r: Rotulo, x: number, y: num
       tam = tam2
     }
   }
-  g.font = `700 ${tam}px ${LETRA}`
-  const ancho = Math.max(...lineas.map((l) => g.measureText(l).width))
-  const altoTexto = tam * 1.05 * lineas.length
-  const rot = (((semilla(r.id) % 9) - 4) * Math.PI) / 180
+  const ancho = Math.max(...lineas.map((l) => medirMano(g, l, tam)))
+  const alto = tam * 1.15 * lineas.length
+  const avance = avanceEscritura(texto, dt)
+  g.save()
   g.translate(x, y)
-  g.rotate(rot)
-  g.scale(escala, escala)
-  g.textAlign = 'center'
-  g.textBaseline = 'middle'
-  g.lineJoin = 'round'
+  g.rotate((((sem % 7) - 3) * Math.PI) / 180)
   if (estilo === 'cartel') {
-    // Cartelito amarillo pálido con borde a mano
-    const pw = ancho + tam * 0.9, ph = altoTexto + tam * 0.45
-    g.fillStyle = r.color === 'rojo' ? '#FFE9A8' : r.color === 'verde' ? '#FFD84A' : '#FFF3C4'
-    g.strokeStyle = '#262020'
-    g.lineWidth = Math.max(3, tam * 0.07)
-    trazoTorcido(g, -pw / 2, -ph / 2, pw, ph, semilla(r.id))
+    // Cartelito con borde a mano (aparece de golpe y luego se escribe dentro)
+    const k = pop(dt)
+    g.save()
+    g.scale(k, k)
+    const pw = ancho + tam * 0.9, ph = alto + tam * 0.45
+    g.fillStyle = r.color === 'verde' ? '#FFD84A' : '#FFF3C4'
+    g.strokeStyle = '#141414'
+    g.lineWidth = Math.max(3, tam * 0.06)
+    g.lineJoin = 'round'
+    trazoTorcido(g, -pw / 2, -ph / 2, pw, ph, sem)
     g.fill()
     g.stroke()
-    g.fillStyle = '#262020'
-    lineas.forEach((l, i) => g.fillText(l, 0, tam * 0.04 + (i - (lineas.length - 1) / 2) * tam * 1.05))
-  } else {
-    g.lineWidth = tam * 0.14
-    lineas.forEach((l, i) => {
-      const ly = (i - (lineas.length - 1) / 2) * tam * 1.05
-      g.strokeStyle = '#FFFFFF'
-      g.strokeText(l, 0, ly)
-      g.fillStyle = color
-      g.fillText(l, 0, ly)
-    })
-    if (estilo === 'nota') {
-      // Subrayado a mano
-      g.strokeStyle = color
-      g.lineWidth = Math.max(3, tam * 0.07)
-      g.lineCap = 'round'
-      g.beginPath()
-      const yb = altoTexto / 2 + tam * 0.05
-      g.moveTo(-ancho / 2, yb)
-      g.quadraticCurveTo(0, yb + tam * (((semilla(r.id) % 5) - 2) * 0.04 - 0.05), ancho / 2, yb + tam * 0.05)
-      g.stroke()
-    }
+    g.restore()
   }
+  // Cada línea se escribe después de la anterior
+  lineas.forEach((l, i) => {
+    const parte = Math.max(0, Math.min(1, avance * lineas.length - i))
+    const ly = (i - (lineas.length - 1) / 2) * tam * 1.15
+    escribirMano(g, l, 0, ly, tam, estilo === 'cartel' ? COLORES_MANO.negro : color, parte, sem + i * 17)
+  })
+  if (estilo === 'nota') subrayarMano(g, -ancho / 2, ancho / 2, alto / 2 + tam * 0.08, Math.max(3, tam * 0.07), color, (dt - 0.4) / 0.15, sem)
   g.restore()
 }
 

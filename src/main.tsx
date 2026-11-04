@@ -17,3 +17,4 @@ createRoot(document.getElementById('root')!).render(
 
 // Letra de los rótulos
 void document.fonts?.load('700 80px Kalam').catch(() => undefined)
+void document.fonts?.load("400 80px 'Coming Soon'").catch(() => undefined)
