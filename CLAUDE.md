@@ -186,6 +186,11 @@ cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y
   hubiera) y las generales si están vacías; luego «Generar voces y animar» las cumple. El panel guarda un
   BORRADOR (texto, escenas, indicaciones) en localStorage `estudio-animacion:borrador-guion` a cada cambio
   (antes solo se guardaba al animar y se perdía al cerrar o recargar).
+- CONTADO COMO HISTORIA (tras «abuso del texto, no parece una historia»): el director escribe primero
+  `historia` (lo que VIVE el personaje momento a momento) y cada viñeta es un momento de ella (lugar +
+  acción con gesto a medida); `api/indicaciones.ts` sigue la misma idea. Texto escaso: `dirigir` deja como
+  mucho 1 rótulo por viñeta (3 si la escena pide rótulos) y uno cada 5 s; los objetos sueltos (que no van
+  en la mano ni delante) pasan a bocadillo de pensamiento, uno por viñeta.
 - DIRECTOR IA (`api/actuar.ts`, lo llama `dirigir` en `voices.ts` al generar voces): recibe las palabras
   de cada escena, la emoción y el catálogo `DESCRIPCIONES` (qué expresa cada postura) y devuelve en qué
   palabra cambia y a qué postura según lo que dice, y `miradas` (catálogo `MIRADAS`) en otras palabras; las claves caen 0,08 s antes de esa palabra. Si

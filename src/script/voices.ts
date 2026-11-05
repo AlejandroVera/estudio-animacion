@@ -295,6 +295,20 @@ async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number 
     const to = Math.max(e.inicio, Math.round((w.t - 0.08) * fps) / fps)
     objs.push({ flecha: o.flecha, vin: vinDe(to), t: to, fin: finDe(to, o.escena), pos: o.pos, que: o.que, dibujo: o.dibujo.trim() })
   }
+  // Nada flotando sin sentido: lo que no sujeta ni tiene delante va en un bocadillo (algo que imagina),
+  // como mucho uno por viñeta
+  {
+    const conBocadillo = new Set<string>()
+    const quedan = objs.filter((o) => {
+      if (o.pos === 'mano' || o.pos === 'delante') return true
+      const k = String(o.vin ?? o.fin)
+      if (conBocadillo.has(k)) return false
+      conBocadillo.add(k)
+      o.pos = 'pensamiento'
+      return true
+    })
+    objs.splice(0, objs.length, ...quedan)
+  }
   const fondoDe = new Map((fondos ?? []).map((f) => [f.escena, f.fondo.trim()]))
   return {
     posturas: keys,
