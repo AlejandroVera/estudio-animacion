@@ -45,6 +45,63 @@ interface Alineacion {
 }
 
 /** Lee el guion entero de una vez (entonación continua) y devuelve el audio y el tiempo de cada letra. */
+/**
+ * Acorta los silencios largos entre palabras/frases (ElevenLabs deja 0,5-0,8 s en cada punto y, con el
+ * ritmo de estos vídeos, suena a que la voz se corta). Cada pausa queda como mucho en ~0,3 s, con un
+ * fundido mínimo en el corte, y los tiempos de cada letra se mueven a la vez (la boca sigue a la voz).
+ */
+function acortarPausas(buf: AudioBuffer, al: Alineacion, maxPausa = 0.3): { buf: AudioBuffer; al: Alineacion } {
+  const ini = al.character_start_times_seconds
+  const fin = al.character_end_times_seconds
+  const letra = (c: string) => /[\p{L}\p{N}]/u.test(c)
+  const cortes: [number, number][] = []
+  let ultimaFin = -1
+  for (let i = 0; i < al.characters.length; i++) {
+    if (!letra(al.characters[i])) continue
+    if (ultimaFin >= 0) {
+      const hueco = ini[i] - ultimaFin
+      if (hueco > maxPausa + 0.1) {
+        const quitar = hueco - maxPausa
+        const a = ultimaFin + maxPausa / 2
+        cortes.push([a, a + quitar])
+      }
+    }
+    ultimaFin = fin[i]
+  }
+  if (!cortes.length) return { buf, al }
+  const sr = buf.sampleRate
+  const quitado = cortes.reduce((s, [a, b]) => s + (b - a), 0)
+  const nuevo = new AudioBuffer({ length: Math.max(1, Math.round((buf.duration - quitado) * sr)), numberOfChannels: buf.numberOfChannels, sampleRate: sr })
+  const fade = Math.round(0.008 * sr)
+  for (let c = 0; c < buf.numberOfChannels; c++) {
+    const src = buf.getChannelData(c)
+    const dst = nuevo.getChannelData(c)
+    let o = 0
+    let desde = 0
+    for (const [a, b] of [...cortes, [buf.duration, buf.duration] as [number, number]]) {
+      const i0 = Math.round(desde * sr), i1 = Math.min(src.length, Math.round(a * sr))
+      for (let i = i0; i < i1 && o < dst.length; i++, o++) {
+        // fundidos de 8 ms a cada lado del corte (sin chasquidos)
+        const k = Math.min(1, (i - i0) / fade, (i1 - i) / fade)
+        dst[o] = src[i] * (desde === 0 && i - i0 < fade ? 1 : Math.max(0, k))
+      }
+      desde = b
+    }
+  }
+  const mover = (t: number) => {
+    let d = 0
+    for (const [a, b] of cortes) {
+      if (t >= b) d += b - a
+      else if (t > a) d += t - a
+    }
+    return t - d
+  }
+  return {
+    buf: nuevo,
+    al: { ...al, character_start_times_seconds: ini.map(mover), character_end_times_seconds: fin.map(mover) },
+  }
+}
+
 async function lectura(texto: string, voz: string, modelo: Modelo, pass: string): Promise<{ buf: AudioBuffer; al: Alineacion }> {
   const id = `ttsfull-${voz}-${modelo}-${hash(texto)}`
   let alBlob = await loadAudio(id + '-al')
@@ -363,7 +420,9 @@ export async function voiceScript(escenas: Escena[], texto: string, voz: Voz, pa
     completo += d
   }
   onProgress(`Generando la voz (${voz.nombre})…`)
-  const { buf, al } = await lectura(completo, voz.id, modelo, pass)
+  const leida = await lectura(completo, voz.id, modelo, pass)
+  // Las pausas largas entre frases (0,5-0,8 s de silencio total) sonaban a voz entrecortada: se acortan
+  const { buf, al } = acortarPausas(leida.buf, leida.al)
   const ini = al.character_start_times_seconds
   const finT = al.character_end_times_seconds
   // Tramo de audio de cada escena: desde un poco antes de su primera letra hasta antes de la siguiente frase
@@ -504,6 +563,20 @@ export async function voiceScript(escenas: Escena[], texto: string, voz: Voz, pa
       if (dir.ojos.length) tracks['face:brows'] = dir.ojos
       rotulosNuevos = dir.rotulos
       fondosNuevos = dir.fondos
+      // Un bocadillo que repite lo que ya está haciendo (el móvil en la mano y un móvil en el bocadillo) sobra
+      {
+        const extras = useStore.getState().project.posturasExtra ?? []
+        const claves = [...(tracks[`part:${raiz.id}:v`] ?? [])].sort((a, b) => a.t - b.t)
+        const palabras = (x: string) => new Set(x.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').split(/[^a-z]+/).filter((w) => w.length >= 4))
+        dir.objetos = dir.objetos.filter((o) => {
+          if (o.pos !== 'pensamiento') return true
+          const activa = claves.filter((k) => k.t <= o.t + 1e-3).pop()?.v
+          const ex = typeof activa === 'string' ? extras.find((e) => e.nombre === activa) : undefined
+          if (!ex) return true
+          const enGesto = palabras(ex.nombre.replace('t_x_', '') + ' ' + ex.descripcion)
+          return ![...palabras(o.que)].some((w) => [...enGesto].some((g) => g.startsWith(w.slice(0, 5)) || w.startsWith(g.slice(0, 5))))
+        })
+      }
       objetosNuevos = dir.objetos
       if (dir.vinetas.length) vinetasNuevas = dir.vinetas
     }

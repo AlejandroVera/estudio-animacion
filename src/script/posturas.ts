@@ -159,14 +159,24 @@ async function revisar(ch: Character, img: CanvasImageSource) {
 }
 
 /** Mueve el dibujo para que la cabeza quede donde la de las demás posturas y quita los huecos de fondo. */
-async function alinear(ch: Character, img: CanvasImageSource, W: number, H: number, rev: { dx: number; dy: number; k: number; cx: number; cy: number }) {
+async function alinear(
+  ch: Character,
+  img: CanvasImageSource,
+  W: number,
+  H: number,
+  rev: { dx: number; dy: number; k: number; cx: number; cy: number },
+  completo?: { img: CanvasImageSource; x: number; y: number; w: number; h: number },
+) {
   const out = new OffscreenCanvas(W, H)
   const g = out.getContext('2d', { willReadFrequently: true })!
   // p = c + (q - c - d) / k
   g.translate(rev.cx, rev.cy)
   g.scale(1 / rev.k, 1 / rev.k)
   g.translate(-rev.cx - rev.dx, -rev.cy - rev.dy)
-  g.drawImage(img, 0, 0, W, H)
+  // Con el dibujo completo (no solo el lienzo) no se pierde lo que la IA dibujó un poco más arriba o a
+  // un lado: antes la cabeza quedaba con la parte de arriba cortada en plano
+  if (completo) g.drawImage(completo.img, -completo.x, -completo.y, completo.w, completo.h)
+  else g.drawImage(img, 0, 0, W, H)
   g.setTransform(1, 0, 0, 1, 0, 0)
   const d = g.getImageData(0, 0, W, H)
   await quitarHuecos(ch, d)
@@ -322,14 +332,19 @@ async function combinarBoca(ch: Character, base: Blob, alt: Blob): Promise<Blob>
 /** Un dibujo de la IA (URL) listo como postura: sin fondo ni huecos, cabeza en su sitio y qué capas admite. */
 export async function procesarDibujo(ch: Character, url: string) {
   const [, , lw, lh] = ch.expresivo!.lienzo!
-  const recorte = await recortarDibujo(ch, url)
+  const { recorte, completo } = await recortarDibujoCompleto(ch, url)
   const rev = await revisar(ch, recorte)
-  const blob = await alinear(ch, recorte, lw, lh, rev)
+  const blob = await alinear(ch, recorte, lw, lh, rev, completo)
   return { blob, sinOjos: rev.sinOjos, sinBoca: rev.sinBoca, rev }
 }
 
 /** El dibujo de la IA a tamaño del original, sin fondo blanco y recortado al lienzo común. */
 async function recortarDibujo(ch: Character, url: string) {
+  return (await recortarDibujoCompleto(ch, url)).recorte
+}
+
+/** Como recortarDibujo, pero devuelve también el dibujo entero (para alinear sin perder bordes). */
+async function recortarDibujoCompleto(ch: Character, url: string) {
   const [OW, OH] = ch.expresivo!.original!
   const [lx, ly, lw, lh] = ch.expresivo!.lienzo!
   const c = new OffscreenCanvas(OW, OH)
@@ -340,7 +355,7 @@ async function recortarDibujo(ch: Character, url: string) {
   g.putImageData(full, 0, 0)
   const recorte = new OffscreenCanvas(lw, lh)
   recorte.getContext('2d')!.drawImage(c, lx, ly, lw, lh, 0, 0, lw, lh)
-  return recorte
+  return { recorte, completo: { img: c, x: lx, y: ly, w: OW, h: OH } }
 }
 
 /** Para pruebas: revisa un dibujo ya hecho por la IA (URL) sin gastar. */
