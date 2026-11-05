@@ -35,12 +35,33 @@ export function applyScript(escenas: Escena[], texto?: string) {
   return m
 }
 
+// Borrador del panel (guion, escenas y anotaciones): se guarda solo mientras se escribe, para que no se
+// pierda al cerrar el panel o recargar la página antes de «Generar voces y animar»
+const BORRADOR_KEY = 'estudio-animacion:borrador-guion'
+type Borrador = { texto: string; escenas: Escena[]; indicaciones: string }
+function leerBorrador(): Borrador | null {
+  try {
+    const b = JSON.parse(localStorage.getItem(BORRADOR_KEY) ?? 'null') as Borrador | null
+    return b && (b.texto?.trim() || b.escenas?.length) ? b : null
+  } catch {
+    return null
+  }
+}
+
 export function ScriptPanel({ onClose }: { onClose: () => void }) {
   const project = useStore((s) => s.project)
-  const [texto, setTexto] = useState(project.guion?.texto ?? '')
-  const [escenas, setEscenas] = useState<Escena[]>(project.guion?.escenas ?? [])
+  const [guardado] = useState(leerBorrador)
+  const [texto, setTexto] = useState(guardado?.texto ?? project.guion?.texto ?? '')
+  const [escenas, setEscenas] = useState<Escena[]>(guardado?.escenas ?? project.guion?.escenas ?? [])
   const planosPrevios = useRef<Plano[] | null>(null)
-  const [indicaciones, setIndicaciones] = useState(project.guion?.indicaciones ?? '')
+  const [indicaciones, setIndicaciones] = useState(guardado?.indicaciones ?? project.guion?.indicaciones ?? '')
+  useEffect(() => {
+    try {
+      localStorage.setItem(BORRADOR_KEY, JSON.stringify({ texto, escenas, indicaciones }))
+    } catch {
+      // sin almacenamiento: no pasa nada
+    }
+  }, [texto, escenas, indicaciones])
   const todoGeneral = escenas.length > 0 && escenas.every((e) => e.plano === 'general')
   const [busy, setBusy] = useState(false)
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null)
@@ -55,7 +76,13 @@ export function ScriptPanel({ onClose }: { onClose: () => void }) {
     setMsg({ ok: true, text: borrador.mensaje ? `Claude: ${borrador.mensaje}` : 'Claude te ha propuesto este guion. Revísalo y pulsa «Animar escenas».' })
   }, [borrador])
   const montado = useStore((s) => s.project.guion)
+  const primeraVez = useRef(true)
   useEffect(() => {
+    // Al abrir el panel manda el borrador guardado; luego, lo que se monte al animar
+    if (primeraVez.current) {
+      primeraVez.current = false
+      if (guardado) return
+    }
     if (montado?.escenas.length && !borrador) {
       setTexto(montado.texto)
       setEscenas(montado.escenas)
@@ -165,6 +192,38 @@ export function ScriptPanel({ onClose }: { onClose: () => void }) {
     }
   }
 
+  // La IA propone lo que pasa en cada escena (como un animador de «Estoy Tiesa»); el usuario lo retoca
+  const proponer = async () => {
+    if (busy || !escenas.length) return
+    setBusy(true)
+    setMsg({ ok: true, text: 'Pensando lo que pasa en cada escena…' })
+    try {
+      const pr = useStore.getState().project
+      const res = await fetch('/api/indicaciones', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json', 'x-clave-estudio': pass },
+        body: JSON.stringify({
+          escenas: escenas.map((e) => ({ dialogo: e.dialogo, indicaciones: e.indicaciones ?? '' })),
+          indicaciones,
+          formato: pr.width < pr.height ? 'vertical' : 'horizontal',
+        }),
+      })
+      const data = await res.json().catch(() => ({ error: 'El servidor no respondió bien.' }))
+      if (!res.ok) {
+        setMsg({ ok: false, text: data.error ?? `Error ${res.status}` })
+        return
+      }
+      const porEscena = new Map<number, string>((data.escenas ?? []).map((x: { escena: number; indicacion: string }) => [x.escena, x.indicacion]))
+      setEscenas((es) => es.map((e, i) => (porEscena.get(i) ? { ...e, indicaciones: porEscena.get(i) } : e)))
+      if (data.generales && !indicaciones.trim()) setIndicaciones(data.generales)
+      setMsg({ ok: true, text: 'Indicaciones propuestas. Léelas, cambia lo que quieras y pulsa «🎙 Generar voces y animar».' })
+    } catch {
+      setMsg({ ok: false, text: 'No hay conexión con la IA.' })
+    } finally {
+      setBusy(false)
+    }
+  }
+
   const edit = (i: number, patch: Partial<Escena>) => setEscenas((es) => es.map((e, j) => (j === i ? { ...e, ...patch } : e)))
   const total = acc
 
@@ -227,6 +286,15 @@ export function ScriptPanel({ onClose }: { onClose: () => void }) {
               title="Encendido: todas las escenas en plano general (cuerpo entero, sin zooms). Apagado: alterna planos."
             >
               {todoGeneral ? '🎥 Plano fijo sin zooms: SÍ' : '🎥 Plano fijo sin zooms: NO'}
+            </button>
+            <button
+              className="btn small primary"
+              style={{ marginLeft: 8 }}
+              onClick={proponer}
+              disabled={busy}
+              title="La IA rellena «Lo que quieres que haga» de cada escena al estilo de Estoy Tiesa (lo que ya hayas escrito se conserva y se completa)"
+            >
+              ✨ Proponer indicaciones
             </button>
           </div>
           <div className="scene-list">
