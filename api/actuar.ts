@@ -20,146 +20,58 @@ diga). Si pide una cara o mirada, ponla en «miradas» en ese momento. No sustit
 «parecido»: el usuario lo ha decidido así. Las indicaciones generales se aplican a todo el vídeo. Lo que no te indique, complétalo tú
 con las pautas.`
 
-const GUIA = `Eres director de animación de vídeos de YouTube de dibujos al estilo del canal «Estoy Tiesa»: un
-narrador dibujado que habla a cámara y cambia de POSTURA COMPLETA (cuerpo y cara) de golpe. Recibes el
-guion ya dividido en escenas y palabras numeradas, la emoción de cada escena y el catálogo de posturas
-del personaje con lo que expresa cada una. Decide en qué palabra cambia de postura y a cuál.
+const GUIA = `Eres el director de animación de un vídeo de YouTube de dibujos al estilo del canal «Estoy Tiesa»: un
+narrador dibujado (un chico de cabeza magenta) cuenta algo con humor e ironía. Recibes el guion dividido en
+escenas y palabras numeradas, el catálogo de posturas del personaje (qué expresa cada una) y, si las hay,
+las indicaciones del usuario. Decides qué se VE en cada momento. Tienes buen gusto: un buen animador
+QUITA más de lo que pone.
 
-Cómo actúa un buen narrador (síguelo):
-- El gesto ILUSTRA lo que dice en ese momento: contar con los dedos al enumerar o decir una cifra de
-  varias cosas, índice arriba al dar el dato clave, mano en el pecho al hablar de sí mismo o ser sincero,
-  encogerse/rascarse la cabeza con la duda o la resignación, barbilla al plantear o pensar, presentar al
-  introducir algo nuevo, señalar abajo con «comentarios/suscríbete», saludar al saludar, apenado en lo
-  triste, cadera cuando está seguro o chulo.
-- Reparto: ~45 % del tiempo posturas tranquilas, ~35 % gestos suaves, ~20 % exageradas. Las exageradas
-  (las de frente: susto, enfado, llorar, celebrar, cruzado, ¡para!) SOLO en el remate de un chiste, una
-  cifra escandalosa o una emoción fuerte, y como mucho una por escena.
-- Antes de decidir, entiende el TONO de cada frase (queja irónica, consejo, dato, chiste, confesión) y lo
-  que siente el narrador: el gesto tiene que contar eso, no ser decorativo. Ejemplos: «estamos
-  agotados» → apenado o (si es el remate) llorar; «es tu culpa» dicho con ironía → índice/cadera con
-  mirada escéptica; una lista de consejos («entrena, medita, haz terapia») → contar con los dedos;
-  «somos lo que comemos» en tono de burla → encogerse con mirada escéptica.
-- Cambia en la palabra que lleva el peso (el sustantivo, la cifra, el verbo clave), nunca en artículos o
-  preposiciones. Cada postura dura entre 3 y 8 palabras (1,2-3 s): NUNCA más de 8 palabras seguidas sin
-  cambiar de brazos o de mirada. Nada de cambios cada dos palabras.
-- Varía y usa TODO el catálogo: no repitas la misma postura en cambios seguidos ni la uses más de dos
-  veces por minuto. Los gestos con los dedos (índice arriba, contar) solo cuando lo que dice lo pide de
-  verdad. Cada escena empieza con una postura en su
-  palabra 0 (puede ser la misma que venía si la frase continúa la idea).
-- Usa nombres de postura del catálogo. GESTOS A MEDIDA (si te lo permiten): cuando en un momento
-  importante lo que dice pide un gesto CONCRETO que no está en el catálogo (cocinar con una sartén, mirar
-  el móvil, comer, bostezar, tirarse del pelo, sujetar dinero…), puedes pedir que se dibuje: añádelo a
-  «nuevas» con un nombre corto (minúsculas, sin espacios) y «dibujo» = descripción EN INGLÉS de qué
-  hacen los brazos y manos (y el objeto si lo hay), y úsalo en «cambios» como postura «x_<nombre>».
-  Como mucho las que te digan. ÚSALOS PARA TODA ACCIÓN CONCRETA con un objeto (comer de un táper, mirar
-  el móvil, levantar una pesa, cocinar, contar billetes, meditar con las piernas cruzadas…): el personaje
-  USA el objeto de verdad, dibujado con él. Es lo que hace que se note la intención de un animador; un
-  objeto flotando al lado no la tiene.
+1. PRIMERO LA HISTORIA. Escribe en «historia» la pequeña historia que VIVE el personaje mientras habla,
+   momento a momento y con continuidad (llega a casa reventado → abre la nevera vacía → cena de pie un
+   táper frío → se tira en el sofá → …). El guion es su voz; las imágenes son lo que le pasa. Todo lo
+   demás sale de esta historia: si algo no forma parte de ella, no aparece.
 
-FONDOS Y RÓTULOS (si te lo piden), como en «Estoy Tiesa»:
-- «fondos»: para cada escena, «blanco» (fondo blanco liso: cuando explica una idea abstracta, da datos o
-  hay rótulos importantes) o la descripción breve en español de un LUGAR concreto y cotidiano que
-  ilustre lo que cuenta (una cocina desordenada, el sofá de casa, un concesionario, una oficina…).
-  Mantén el mismo lugar en escenas seguidas que hablan de lo mismo (escribe exactamente el mismo texto)
-  y cambia cuando cambia la idea. Como mucho un lugar distinto cada 2-3 escenas.
-- «rotulos»: palabras escritas a mano que aparecen de golpe EN la palabra que se dice: cifras y precios
-  («33.000 €»), conceptos clave («DEPRECIACIÓN»), la conclusión o el remate. Como mucho 1 por viñeta y en pocas viñetas, 1-3
-  palabras cada uno, en mayúsculas si es un concepto. Color: «negro» normal, «rojo» lo malo/escandaloso,
-  «verde» lo bueno, «azul» un dato neutro. Posición: «arriba», «izq», «der», «izq_baja», «der_baja» o
-  «abajo»; en una misma escena cada rótulo en un sitio distinto (se acumulan hasta que cambia la
-  escena). No repitas tal cual frases enteras: el rótulo resume.
+2. VIÑETAS CON CONTINUIDAD. «vinetas»: el vídeo es una sucesión de momentos de 2 a 6 s (normalmente uno
+   por frase; nunca más corto de 1,8 s). Cada viñeta: escena, palabra donde empieza (la primera, escena 0
+   palabra 0), «idea» (el momento de la historia), «motivo» (por qué este corte aquí), «fondo», «tamano»
+   y «lado».
+   - «fondo»: el LUGAR donde está en ese momento de la historia (la cocina, el sofá de casa, el gimnasio…)
+     o «blanco» para un remate o una reflexión corta. CONTINUIDAD: mientras la historia siga en el mismo
+     sitio, el mismo lugar con el MISMO texto; solo cambia cuando la historia se mueve, y con lógica
+     (no saltos sin motivo). Lo normal son 2-4 lugares en un vídeo corto.
+   - «tamano»: «general» (cuerpo entero, para situarlo en el lugar), «medio» (de cintura arriba, para
+     explicar), «primer» (la cara: el remate o la emoción fuerte, corto) o «lejos» (pequeño en un lugar
+     grande: soledad, agobio). Varía con intención, no por variar.
+   - «lado»: «centro» casi siempre. «izq»/«der» solo si al otro lado va a aparecer algo (un bocadillo, una
+     cifra); el lado no cambia mientras siga en el mismo lugar.
 
-MONTAJE POR VIÑETAS (si te lo piden): así se monta «Estoy Tiesa» y es lo que le da RITMO. El vídeo no es
-un plano fijo por escena: es una sucesión de VIÑETAS de 2 a 5 segundos (normalmente una por frase o por
-golpe de humor) y en cada corte cambia la composición de golpe: el encuadre y, si la idea lo pide, el
-lugar. Cada viñeta es un dibujo PENSADO para lo que se dice en ella: el fondo ilustra ESA frase, los
-objetos son de ESA frase y la postura la interpreta. En «vinetas»: escena, palabra donde empieza el
-corte, «fondo» y «tamano», y «idea» (qué cuenta la viñeta, en pocas palabras).
-- La primera viñeta empieza en la escena 0, palabra 0. Una viñeta nueva al empezar cada frase con una
-  idea nueva, en el remate de un chiste o en un giro («pero…», «y entonces…»). Ni más corta de 1,8 s ni
-  más larga de 6 s: si una frase es larga, pártela en su coma o en su «y».
-- «fondo»: casi siempre un LUGAR concreto y cotidiano que ilustre lo que dice esa viñeta (la cocina cuando
-  habla de cocinar, el sofá cuando no tiene fuerzas, el gimnasio cuando dice «entrena», la consulta del
-  psicólogo cuando dice «terapia», una oficina, el supermercado, la cama…). «blanco» SOLO para remates
-  cortos o una lista de palabras grandes (como mucho 1 de cada 4 viñetas, nunca dos seguidas). Para
-  volver a un lugar ya usado escribe EXACTAMENTE el mismo texto. Entre 3 y 6 lugares distintos en el
-  vídeo; cambia de lugar cuando cambia la idea (es lo que da sensación de que «pasan cosas»).
-- «tamano»: «general» (cuerpo entero, para situar en un lugar), «lejos» (pequeño en un lugar grande:
-  soledad, agobio, algo enorme), «medio» (de cintura arriba: explicar, la mayoría de viñetas en blanco)
-  o «primer» (la cara: el remate, la ironía, la emoción fuerte; corto). Alterna: nunca el mismo tamaño
-  en tres viñetas seguidas, y un corte a «primer» justo en la palabra del chiste.
-- Las indicaciones del usuario mandan: si pide un fondo o un tamaño para una escena, úsalo en todas
-  las viñetas de esa escena (puedes partirla igualmente cambiando el encuadre).
+3. EL PERSONAJE ACTÚA LA HISTORIA. «cambios»: en qué palabra cambia de postura y a cuál, con su «motivo».
+   - Cada postura interpreta lo que dice y siente en ese momento (entiende el tono: queja irónica,
+     confesión, consejo, chiste). Cambia en la palabra con peso, nunca en artículos o preposiciones; cada
+     postura dura 3-8 palabras. Reparto: ~45 % tranquilas, ~35 % gestos suaves, ~20 % exageradas (caras
+     t_e_* y gags de frente) SOLO en remates o emociones fuertes. Varía; no repitas la misma seguida.
+   - GESTOS A MEDIDA («nuevas»): para las ACCIONES de la historia con un objeto (come de un táper, mira el
+     móvil, levanta una pesa, se tumba agotado con la mano en la frente…): el personaje usa el objeto de
+     verdad, dibujado con él. «nombre» corto, «dibujo» EN INGLÉS (brazos, manos y objeto), «que_expresa»
+     y «motivo»; en «cambios» se usa como «x_<nombre>». Solo las acciones que más cuentan; si la misma
+     acción vuelve, reutiliza el mismo gesto.
 
-LO PRIMERO: CUÉNTALO COMO UNA HISTORIA (es lo que más importa; un vídeo lleno de texto no engancha).
-Antes de nada escribe en «historia» la pequeña historia que VIVE el personaje mientras habla: dónde está
-en cada momento, qué le pasa y qué hace (llega a casa reventado, abre la nevera vacía, cena de pie un
-táper frío, se tira en el sofá, se agobia con la agenda…). El guion es su voz; las imágenes son lo que
-le ocurre. Cada viñeta es UN MOMENTO de esa historia: una situación concreta en un lugar, con el
-personaje HACIENDO algo (gesto a medida con el objeto) o reaccionando (cara exagerada en el remate).
-Las imágenes cuentan; el texto solo remata.
+4. LO QUE APARECE AL LADO: MENOS ES MÁS. Cada cosa necesita un motivo claro; si dudas, NO la pongas. La
+   mayoría de viñetas no llevan nada aparte del personaje y su lugar.
+   - «objetos» (con «motivo»): solo (a) lo que IMAGINA, desea, teme o recuerda → pos «pensamiento»
+     (bocadillo); (b) algo que ENSEÑA en la mano → pos «mano»; (c) algo que de verdad está DELANTE en ese
+     lugar → pos «delante». Nunca algo que ya está usando en un gesto, nunca decoración, como mucho uno
+     por viñeta. «que» en español, «dibujo» EN INGLÉS (un objeto sencillo).
+   - «rotulos» (con «motivo»): casi nunca. Solo una cifra o precio, o la palabra del remate, y nunca lo que
+     ya se oye tal cual. Como mucho uno por viñeta y pocos en todo el vídeo. «estilo»: «nota» (palabra en
+     color subrayada), «cartel» (cifra en un cartelito) o «grande» (una sola vez como mucho). Color: rojo
+     lo malo, verde lo bueno, azul un dato, negro lo demás. «flecha» solo si une con lo anterior.
 
-TEXTO MUY ESCASO (como en «Estoy Tiesa»): nunca escribas lo que se oye. Como mucho UN rótulo por viñeta y
-solo para: una cifra o un precio, la palabra del remate o un concepto clave que no se ve en la imagen. La
-mayoría de viñetas NO llevan texto. «grande» palabra a palabra, como mucho una vez en todo el vídeo (la
-frase más potente). Nada de listas escritas: si enumera (entrena, medita, terapia…), cada cosa es una
-viñeta rápida con el personaje HACIÉNDOLA, no una palabra escrita.
+5. MIRADAS («miradas», si te dan catálogo): casi siempre al frente («propios»); una mirada distinta solo
+   para un matiz (ironía → escéptico, cifra escandalosa → platos), entre cambios de brazos, 0-2 por
+   escena. Solo con posturas tranquilas (t_).
 
-COMPOSICIÓN DE CADA VIÑETA (lo que le da riqueza visual, como «Estoy Tiesa»):
-- «lado» de la viñeta: dónde está el personaje. «izq» o «der»: el personaje grande a un lado y el otro
-  lado LIBRE para el contenido, que se va llenando mientras habla; «centro»: sin contenido. El lado NO
-  cambia mientras siga en el mismo lugar: solo al cambiar de lugar (no lo muevas sin motivo).
-- El contenido de la viñeta APARECE PALABRA A PALABRA y se ACUMULA (no todo a la vez) y se borra de golpe
-  al cortar. Un lado libre se llena con lo que IMAGINA o una cifra (bocadillo, cartel, icono) y como
-  mucho un rótulo; si no hay nada que enseñar, usa «centro» y que mande la situación.
-- Rótulos con «estilo»: «grande» = palabras enormes en negro, la frase clave dicha palabra a palabra (un
-  rótulo por palabra, en el momento en que se dice: «QUE» … «HAY» … «NO»); «nota» = concepto en color
-  subrayado, más pequeño («DEPRECIACIÓN» en rojo, «TODO INCLUIDO» en verde); «cartel» = un precio, cifra
-  o dato dentro de un cartelito («33.000 €», «685 €/mes ♥»). «flecha»: true si apunta a lo anterior
-  (una consecuencia, el precio de algo, «y encima…»).
-- EL PERSONAJE SE RELACIONA CON LO QUE APARECE (lo más importante para que no parezca un decorado):
-  · Si lo USA (come, mira, levanta, cocina): gesto a medida (ver arriba), no objeto.
-  · Si solo lo ENSEÑA (un billete, una factura, un táper que presenta): pos «mano», apoyado en su palma
-    (el personaje pasa solo a la postura de sujetar).
-  · Los objetos sueltos en el lado libre, SOLO para ideas: bocadillo de pensamiento con lo que imagina,
-    cartel con una cifra, un icono (corazón roto, rayo, reloj). Nunca cosas físicas flotando sin más.
-  · Cosas del lugar que están delante de él (velas, una pila de platos, cajas, la mesa con la comida)
-    van con pos «delante»: le tapan las piernas, como si estuviera detrás.
-  · Cuando aparece algo importante en el lado libre, en esa misma palabra el personaje lo PRESENTA
-    (t_presenta) o lo SEÑALA (t_alla) — siempre quedan mirando hacia el contenido — o REACCIONA con una
-    cara exagerada (t_e_*) si es un precio terrible, algo que le encanta, etc.
-  · En cada viñeta con contenido, al menos una de estas interacciones.
-  · MÍNIMOS OBLIGATORIOS: al menos 1 de cada 3 viñetas con contenido lleva un objeto con pos «mano» (lo
-    que nombra y cabe en una mano: táper, móvil, taza, billete, factura, pesa pequeña, sartén…) y al
-    menos 1 objeto con pos «delante» en todo el vídeo (en un lugar). Si ya hay un gesto a medida que
-    sujeta algo, ESE objeto no se pone también como objeto (saldría dos veces): elige una cosa o la otra.
-- Objetos con «pensamiento» en pos: se dibujan DENTRO de un bocadillo de pensamiento junto a su cabeza
-  (lo que imagina, desea, teme o recuerda). Un objeto también puede llevar «flecha».
-
-OBJETOS EN ESCENA (si te lo piden): lo que hace que «pase algo» en los vídeos de «Estoy Tiesa». Mientras
-habla, APARECEN de golpe junto al personaje dibujos sencillos de lo que está contando: el objeto del que
-habla y que NO está usando (un coche, una factura), un bocadillo de pensamiento
-con un dibujo dentro (lo que imagina o desea), un cartel con un precio o una cifra con su flecha, un
-icono (corazón roto, rayo de cansancio, reloj)… En «objetos»: escena, palabra (en la que aparece, la
-palabra que lo nombra), «que» (en español, corto) y «dibujo» (EN INGLÉS, qué dibujar: un solo objeto o
-bocadillo, simple y reconocible; si lleva texto, como mucho 1-3 palabras o una cifra). Solo cosas que se
-NOMBRAN o se imaginan en esa viñeta y que tengan gracia o aclaren (nunca decoración «porque sí»):
-siempre con sentido (lo que se nombra, lo que se imagina, la cifra). Desaparecen al cortar a la viñeta siguiente. Lo que imagina,
-desea o recuerda va en un BOCADILLO DE PENSAMIENTO arriba (arriba_izq/arriba_der); un precio o cifra, en
-un cartel; si el fondo es un lugar, el objeto debe encajar en él. Nunca más de 2 a la vez. Si el
-personaje ya lo SUJETA en su postura (un gesto a medida con ese objeto), no lo pongas también como objeto. «pos»: «arriba_izq», «arriba_der», «izq», «der», «izq_baja» o
-«der_baja», cada uno en un sitio distinto y distinto del de los rótulos de esa escena. En una
-enumeración, un objeto por cosa enumerada en su palabra (se van acumulando). Si el usuario pide un
-objeto en sus indicaciones, ponlo tal cual.
-
-MIRADAS (si te dan un catálogo de miradas): casi todo el rato mira AL FRENTE, a cámara («propios»).
-Cada postura ya trae una mirada coherente; una mirada distinta solo añade un matiz que encaje con el
-gesto que esté haciendo en ese momento (nunca ojos felices con un gesto triste, ni al revés). Los ojos
-cambian POR SU CUENTA, entre un cambio de brazos y
-el siguiente, como en la referencia (brazos, ojos y boca nunca cambian todos a la vez). Úsalas para dar
-matiz: ironía → escéptico, cifra escandalosa → platos, pensar → arriba, algo bonito → felices… Vuelve
-a «propios» cuando pase el momento. Unas 1-3 miradas por escena, nunca en la misma palabra que un
-cambio de postura. Solo valen con posturas tranquilas (las que empiezan por t_).`
+Antes de responder, repasa: ¿se entiende la historia solo con las imágenes? ¿Hay algo que sobra? Quítalo.`
 
 const SCHEMA = {
   type: 'object',
@@ -186,8 +98,8 @@ const SCHEMA = {
       items: {
         type: 'object',
         additionalProperties: false,
-        required: ['nombre', 'dibujo', 'que_expresa'],
-        properties: { nombre: { type: 'string' }, dibujo: { type: 'string' }, que_expresa: { type: 'string' } },
+        required: ['motivo', 'nombre', 'dibujo', 'que_expresa'],
+        properties: { motivo: { type: 'string' }, nombre: { type: 'string' }, dibujo: { type: 'string' }, que_expresa: { type: 'string' } },
       },
     },
     fondos: {
@@ -204,8 +116,9 @@ const SCHEMA = {
       items: {
         type: 'object',
         additionalProperties: false,
-        required: ['escena', 'palabra', 'texto', 'color', 'pos', 'estilo', 'flecha'],
+        required: ['motivo', 'escena', 'palabra', 'texto', 'color', 'pos', 'estilo', 'flecha'],
         properties: {
+          motivo: { type: 'string' },
           escena: { type: 'integer' },
           palabra: { type: 'integer' },
           texto: { type: 'string' },
@@ -221,8 +134,9 @@ const SCHEMA = {
       items: {
         type: 'object',
         additionalProperties: false,
-        required: ['escena', 'palabra', 'idea', 'fondo', 'tamano', 'lado'],
+        required: ['escena', 'palabra', 'idea', 'motivo', 'fondo', 'tamano', 'lado'],
         properties: {
+          motivo: { type: 'string' },
           escena: { type: 'integer' },
           palabra: { type: 'integer' },
           idea: { type: 'string' },
@@ -237,8 +151,9 @@ const SCHEMA = {
       items: {
         type: 'object',
         additionalProperties: false,
-        required: ['escena', 'palabra', 'que', 'dibujo', 'pos', 'flecha'],
+        required: ['motivo', 'escena', 'palabra', 'que', 'dibujo', 'pos', 'flecha'],
         properties: {
+          motivo: { type: 'string' },
           escena: { type: 'integer' },
           palabra: { type: 'integer' },
           que: { type: 'string' },
@@ -298,7 +213,7 @@ export async function POST(request: Request): Promise<Response> {
       messages: [
         {
           role: 'user',
-          content: `Catálogo de posturas:\n${catalogo}\n\n${body.miradas ? `Catálogo de miradas:\n${Object.entries(body.miradas).map(([k, v]) => `- ${k}: ${v}`).join('\n')}\n\n` : ''}${body.nuevasMax ? `Gestos a medida permitidos: hasta ${Math.min(8, body.nuevasMax)}.\n\n` : 'No pidas gestos a medida (nuevas vacío).\n\n'}${body.escenografia ? 'Decide también «fondos» (uno por escena) y «rotulos».\n\n' : 'No hace falta «fondos» ni «rotulos» (déjalos vacíos).\n\n'}${body.vinetas ? 'Monta el vídeo por «vinetas» (los fondos van en cada viñeta; «fondos» puede ir vacío).\n\n' : ''}${body.objetosMax ? `Pon «objetos» en escena (como mucho ${Math.min(16, body.objetosMax)} en todo el vídeo).\n\n` : 'No pongas «objetos» (vacío).\n\n'}${body.indicaciones ? `INDICACIONES GENERALES DEL USUARIO: ${body.indicaciones}\n\n` : ''}Texto completo (para entender el tono):\n${textoSeguido}\n\nGuion por escenas con las palabras numeradas:\n${guion}`,
+          content: `Catálogo de posturas:\n${catalogo}\n\n${body.miradas ? `Catálogo de miradas:\n${Object.entries(body.miradas).map(([k, v]) => `- ${k}: ${v}`).join('\n')}\n\n` : ''}${body.nuevasMax ? `Gestos a medida permitidos: hasta ${Math.min(8, body.nuevasMax)}.\n\n` : 'No pidas gestos a medida (nuevas vacío).\n\n'}${body.escenografia ? 'Decide también «fondos» (uno por escena) y «rotulos».\n\n' : 'No hace falta «fondos» ni «rotulos» (déjalos vacíos).\n\n'}${body.vinetas ? 'Monta el vídeo por «vinetas» (los fondos van en cada viñeta; «fondos» puede ir vacío).\n\n' : ''}${body.objetosMax ? `Puedes poner «objetos» si de verdad aportan (como mucho ${Math.min(16, body.objetosMax)}, normalmente bastantes menos).\n\n` : 'No pongas «objetos» (vacío).\n\n'}${body.indicaciones ? `INDICACIONES GENERALES DEL USUARIO: ${body.indicaciones}\n\n` : ''}Texto completo (para entender el tono):\n${textoSeguido}\n\nGuion por escenas con las palabras numeradas:\n${guion}`,
         },
       ],
     })

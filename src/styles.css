@@ -872,3 +872,9 @@ textarea.indicaciones {
 }
 
 .check-row { display: flex; align-items: center; gap: 6px; font-size: 13px; margin: 6px 0; cursor: pointer; }
+
+.plan-vista { margin: 8px 0; padding: 10px 12px; border: 1px solid var(--line, #3a3e48); border-radius: 8px; font-size: 13px; line-height: 1.45; max-height: 50vh; overflow: auto; }
+.plan-historia { margin: 0 0 8px; }
+.plan-lista { margin: 0; padding-left: 20px; }
+.plan-lista > li { margin-bottom: 8px; }
+.plan-lista ul { margin: 2px 0 0; padding-left: 16px; list-style: none; }

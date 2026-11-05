@@ -220,6 +220,8 @@ export interface Project {
   objetos?: Objeto[]
   /** Viñetas del montaje (composición de cada corte) */
   vinetas?: VinetaMontaje[]
+  /** Último plan del director (se ve con «Ver el plan» y se reutiliza al generar si el guion no cambió) */
+  planDirector?: { clave: string; plan: unknown }
   /** Gestos a medida dibujados con IA para este proyecto (imagen en IndexedDB). */
   posturasExtra?: { nombre: string; imageId: string; imageIdB?: string; descripcion: string; sinOjos?: boolean; sinBoca?: boolean; revisada?: number }[]
   /** Audio (voz) del vídeo; el archivo se guarda aparte, en el navegador (IndexedDB). */

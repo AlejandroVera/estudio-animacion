@@ -197,37 +197,78 @@ function silabas(al: Alineacion, desplaza: (t: number) => number | null, fps: nu
 export type Vineta = { t: number; escena: number; fondo: string; plano: Plano; lado: 'izq' | 'centro' | 'der' }
 
 /** Pide a /api/actuar las posturas por palabra y las convierte en claves exactas (0,08 s antes). */
-async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number })[], ch: Character, raiz: Part, pass: string, fps: number, onProgress?: (m: string) => void, indicaciones = '') {
-  const porEscena = escenas.map((e) => palabras.filter((w) => w.t >= e.inicio - 0.05 && w.t < e.inicio + e.duracion - 0.05))
+/** Petición al director (la misma para ver el plan antes y para generar después). */
+function cuerpoDirector(ch: Character, raiz: Part, escenas: Escena[], palabrasDe: (i: number) => string[], indicaciones: string) {
   const ojosPart = ch.parts.find((p) => p.id === 'ojos')
   const extras = Object.fromEntries((useStore.getState().project.posturasExtra ?? []).map((e) => [e.nombre, `(a medida) ${e.descripcion}`]))
   const posturas = { ...Object.fromEntries(Object.keys(raiz.variants).filter((v) => !v.includes('~') && DESCRIPCIONES[v]).map((v) => [v, DESCRIPCIONES[v]])), ...extras }
+  return {
+    posturas,
+    indicaciones: indicaciones.trim() || undefined,
+    escenas: escenas
+      .map((e, i) => ({ escena: i, emocion: e.expresion, palabras: palabrasDe(i), indicaciones: e.indicaciones?.trim() || undefined }))
+      .filter((e) => e.palabras.length),
+    nuevasMax: ch.expresivo?.base ? Math.min(8, 5 + escenas.filter((e) => e.indicaciones?.trim()).length) : 0,
+    escenografia: true,
+    objetosMax: Math.min(16, 4 * escenas.length),
+    vinetas: true,
+    ...(ojosPart ? { miradas: Object.fromEntries(Object.entries(MIRADAS).filter(([k]) => k === 'propios' || ojosPart.variants[k])) } : {}),
+  }
+}
+
+/** Clave del plan: el mismo guion (palabras de cada escena) con las mismas indicaciones = el mismo plan. */
+const clavePlan = (cuerpo: { escenas: unknown; indicaciones?: string }) => hash(JSON.stringify({ e: cuerpo.escenas, i: cuerpo.indicaciones ?? '' }))
+
+/** Pide el plan al director, o devuelve el que ya se vio con «Ver el plan» si el guion no ha cambiado. */
+async function planDirector(cuerpo: ReturnType<typeof cuerpoDirector>, pass: string, usarGuardado: boolean) {
+  const clave = clavePlan(cuerpo)
+  const guardado = useStore.getState().project.planDirector
+  if (usarGuardado && guardado?.clave === clave) return guardado.plan as PlanDirector
   const res = await fetch('/api/actuar', {
     method: 'POST',
     headers: { 'content-type': 'application/json', 'x-clave-estudio': pass },
-    body: JSON.stringify({
-      posturas,
-      indicaciones: indicaciones.trim() || undefined,
-      escenas: escenas
-        .map((e, i) => ({ escena: i, emocion: e.expresion, palabras: porEscena[i].map((w) => w.texto), indicaciones: e.indicaciones?.trim() || undefined }))
-        .filter((e) => e.palabras.length),
-      nuevasMax: ch.expresivo?.base ? Math.min(8, 5 + escenas.filter((e) => e.indicaciones?.trim()).length) : 0,
-      escenografia: true,
-      objetosMax: Math.min(16, 4 * escenas.length),
-      vinetas: true,
-      ...(ojosPart ? { miradas: Object.fromEntries(Object.entries(MIRADAS).filter(([k]) => k === 'propios' || ojosPart.variants[k])) } : {}),
-    }),
+    body: JSON.stringify(cuerpo),
   })
   if (!res.ok) throw new Error(((await res.json().catch(() => ({}))) as { error?: string }).error ?? `error ${res.status}`)
-  const { cambios, miradas, nuevas, fondos, rotulos, objetos, vinetas } = (await res.json()) as {
-    vinetas?: { escena: number; palabra: number; fondo: string; tamano: Plano; lado?: Vineta['lado'] }[]
-    objetos?: { escena: number; palabra: number; que: string; dibujo: string; pos: Objeto['pos']; flecha?: boolean }[]
-    fondos?: { escena: number; fondo: string }[]
-    rotulos?: { escena: number; palabra: number; texto: string; color: Rotulo['color']; pos: Rotulo['pos']; estilo?: Rotulo['estilo']; flecha?: boolean }[]
-    cambios: { escena: number; palabra: number; postura: string }[]
-    miradas?: { escena: number; palabra: number; ojos: string }[]
-    nuevas?: { nombre: string; dibujo: string; que_expresa: string }[]
-  }
+  const plan = (await res.json()) as PlanDirector
+  useStore.setState((st) => ({ project: { ...st.project, planDirector: { clave, plan } } }))
+  return plan
+}
+
+export type PlanDirector = {
+  historia?: string
+  vinetas?: { escena: number; palabra: number; idea?: string; motivo?: string; fondo: string; tamano: Plano; lado?: Vineta['lado'] }[]
+  objetos?: { escena: number; palabra: number; que: string; dibujo: string; pos: Objeto['pos']; flecha?: boolean; motivo?: string }[]
+  fondos?: { escena: number; fondo: string }[]
+  rotulos?: { escena: number; palabra: number; texto: string; color: Rotulo['color']; pos: Rotulo['pos']; estilo?: Rotulo['estilo']; flecha?: boolean; motivo?: string }[]
+  cambios: { escena: number; palabra: number; postura: string; motivo?: string }[]
+  miradas?: { escena: number; palabra: number; ojos: string }[]
+  nuevas?: { nombre: string; dibujo: string; que_expresa: string; motivo?: string }[]
+}
+
+/** Palabras de un texto tal y como las cuenta la voz (letras y números seguidos). */
+export const palabrasDeTexto = (t: string) => t.match(/[\p{L}\p{N}]+/gu) ?? []
+
+/**
+ * «Ver el plan»: lo que el director haría con este guion, SIN generar la voz ni dibujar nada (solo una
+ * consulta a la IA de texto). Se guarda y «Generar voces y animar» usa ese mismo plan.
+ */
+export async function verPlan(escenas: Escena[], pass: string, indicaciones = '') {
+  const st = useStore.getState()
+  const ch = activeCharacter(st.project)
+  const raiz = ch.parts.find((p) => !p.parent && Object.keys(p.variants).length > 1)
+  if (!ch.expresivo || !raiz) throw new Error('Este personaje no tiene director.')
+  const cuerpo = cuerpoDirector(ch, raiz, escenas, (i) => palabrasDeTexto(escenas[i].dialogo), indicaciones)
+  const plan = await planDirector(cuerpo, pass, false)
+  return { plan, palabras: escenas.map((e) => palabrasDeTexto(e.dialogo)) }
+}
+
+async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number })[], ch: Character, raiz: Part, pass: string, fps: number, onProgress?: (m: string) => void, indicaciones = '') {
+  const porEscena = escenas.map((e) => palabras.filter((w) => w.t >= e.inicio - 0.05 && w.t < e.inicio + e.duracion - 0.05))
+  const cuerpo = cuerpoDirector(ch, raiz, escenas, (i) => porEscena[i].map((w) => w.texto), indicaciones)
+  const plan = await planDirector(cuerpo, pass, true)
+  const ojosPart = ch.parts.find((p) => p.id === 'ojos')
+  const { cambios, miradas, nuevas, fondos, rotulos, objetos, vinetas } = structuredClone(plan)
   // Gestos a medida: se dibujan con IA (los que ya existan en el proyecto se reutilizan)
   for (const n of (nuevas ?? []).slice(0, 8)) {
     const nombre = 't_x_' + n.nombre.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 20)

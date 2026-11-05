@@ -5,7 +5,8 @@ import type { Escena, Plano } from '../model/types'
 import { animateScenes, estimateDuration, scenesFromText } from '../script/scenes'
 import { activeCharacter, useStore } from '../store'
 import { ScriptStyles } from './ScriptStyles'
-import { listVoices, voiceScript, type Modelo, type Voz } from '../script/voices'
+import { listVoices, verPlan, voiceScript, type Modelo, type PlanDirector, type Voz } from '../script/voices'
+import { PlanVista } from './PlanVista'
 import { generateSceneBackgrounds } from '../script/images'
 
 const PASS_KEY = 'estudio-animacion:clave'
@@ -135,6 +136,27 @@ export function ScriptPanel({ onClose }: { onClose: () => void }) {
     }
   }
   const [deNuevo, setDeNuevo] = useState(false)
+  const [planVisto, setPlanVisto] = useState<{ plan: PlanDirector; palabras: string[][] } | null>(null)
+  // Si se ha marcado «Dibujar todo de nuevo», se limpia ya, para que el plan cuente con ello
+  const limpiarSiDeNuevo = () => {
+    if (!deNuevo) return
+    const st = useStore.getState()
+    st.commit({ ...st.project, posturasExtra: [], objetos: [], fondos: (st.project.fondos ?? []).filter((l) => !l.descripcion) })
+  }
+  const pedirPlan = async () => {
+    if (busy || !escenas.length) return
+    setBusy(true)
+    setMsg({ ok: true, text: 'Preparando el plan (sin dibujar nada)…' })
+    try {
+      limpiarSiDeNuevo()
+      setPlanVisto(await verPlan(escenas, pass, indicaciones))
+      setMsg({ ok: true, text: 'Este es el plan. Léelo antes de generar.' })
+    } catch (e) {
+      setMsg({ ok: false, text: e instanceof Error ? e.message : 'No se pudo preparar el plan.' })
+    } finally {
+      setBusy(false)
+    }
+  }
   const conVoz = async () => {
     if (!voz || busy || !escenas.length) return
     const hay = Object.keys(useStore.getState().project.instances[0].tracks).length > 0
@@ -142,10 +164,7 @@ export function ScriptPanel({ onClose }: { onClose: () => void }) {
     setBusy(true)
     try {
       // «Dibujar todo de nuevo»: sin gestos, fondos automáticos ni dibujos guardados, se hacen de cero
-      if (deNuevo) {
-        const st = useStore.getState()
-        st.commit({ ...st.project, posturasExtra: [], objetos: [], fondos: (st.project.fondos ?? []).filter((l) => !l.descripcion) })
-      }
+      limpiarSiDeNuevo()
       const r = await voiceScript(escenas, texto, voz, pass, (t) => setMsg({ ok: true, text: t }), modelo, indicaciones)
       setEscenas(r.escenas)
       setMsg({ ok: !r.aviso, text: `Listo: ${r.duracion.toFixed(1).replace('.', ',')} s con la voz de ${voz.nombre}. ${r.aviso || 'Gestos dirigidos por la IA según el guion.'}` })
@@ -271,6 +290,7 @@ export function ScriptPanel({ onClose }: { onClose: () => void }) {
         </button>
       </div>
       {msg && <p className={'copilot-reply' + (msg.ok ? '' : ' error')}>{msg.text}</p>}
+      {planVisto && <PlanVista plan={planVisto.plan} palabras={planVisto.palabras} project={useStore.getState().project} />}
 
       {escenas.length > 0 && (
         <>
@@ -301,6 +321,15 @@ export function ScriptPanel({ onClose }: { onClose: () => void }) {
               title="La IA rellena «Lo que quieres que haga» de cada escena al estilo de Estoy Tiesa (lo que ya hayas escrito se conserva y se completa)"
             >
               ✨ Proponer indicaciones
+            </button>
+            <button
+              className="btn small"
+              style={{ marginLeft: 8 }}
+              onClick={pedirPlan}
+              disabled={busy}
+              title="Te enseña en texto lo que va a pasar en cada viñeta, sin dibujar nada ni gastar en fal. Al generar se usa este mismo plan."
+            >
+              🔎 Ver el plan (sin dibujar)
             </button>
           </div>
           <div className="scene-list">
