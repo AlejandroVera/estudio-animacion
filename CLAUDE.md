@@ -146,7 +146,7 @@ cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y
   en render.ts, lo usan drawFrame y Stage) y siempre presenta/señala hacia el contenido. Objetos con pos
   «mano» se apoyan en la palma (`expresivo.palma` = t_presenta, x 116, y 832; `voiceScript` pone esa
   postura 1,5 s) y con pos «delante» van abajo tapándole las piernas. El bocadillo sale de la cabeza real
-  (`PuntosPersonaje`). El director debe hacer al menos una interacción por viñeta con contenido.
+  (`PuntosPersonaje`). El director debe hacer al menos una interacción por viñeta con contenido, con mínimos (1 de cada 3 viñetas con algo en la mano, 1 «delante» por vídeo). Lo de la mano desaparece al dejar la postura de sujetar. Los fondos se piden con `hueco` (la mitad del contenido casi vacía, pocos objetos al otro lado).
 - REPERTORIO DE CARAS EXAGERADAS `t_e_*` (16: corazones, susto, llora, carcajada, agotado, furioso,
   verguenza, asco, dinero, explota, nervioso, dormido, chulo, suplica, mareado, ilusion): `api/postura.ts`
   con `cara` (expresión exagerada, se permiten lágrimas, sudor, corazones…), procesadas en la web con

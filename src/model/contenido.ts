@@ -60,6 +60,8 @@ export function drawContenido(g: CanvasRenderingContext2D, project: Project, t: 
       aparte.push(o)
       continue
     }
+    // Lo que sujetaba en la mano se va con la mano (no salta a un lado cuando cambia de postura)
+    if (o.pos === 'mano' && puntos) continue
     els.push({ tipo: 'objeto', o, t: o.t, alto: o.pos === 'pensamiento' ? H * 0.34 : H * 0.26 })
   }
   for (const o of aparte) {
