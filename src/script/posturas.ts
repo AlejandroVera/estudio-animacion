@@ -290,7 +290,8 @@ async function combinarBoca(ch: Character, base: Blob, alt: Blob): Promise<Blob>
   const a = await leer(base), b = await leer(alt)
   const [bx, by, bw, bh] = ex.cajas?.boca ?? [W * 0.38, H * 0.2, W * 0.27, H * 0.08]
   const X0 = Math.max(0, Math.round(bx - bw * 0.35)), X1 = Math.min(W, Math.round(bx + bw * 1.35))
-  const Y0 = Math.max(0, Math.round(by - bh * 0.1)), Y1 = Math.min(H, Math.round(by + bh * 1.7))
+  // Empieza un poco por debajo del aro de la nariz (la IA a veces lo borra en la versión ~b)
+  const Y0 = Math.max(0, Math.round(by + bh * 0.15)), Y1 = Math.min(H, Math.round(by + bh * 1.7))
   // Máscara de lo que cambia (solo en la zona de la boca), ensanchada y difuminada
   const mask = new OffscreenCanvas(W, H)
   const gm = mask.getContext('2d', { willReadFrequently: true })!
