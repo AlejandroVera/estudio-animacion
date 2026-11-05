@@ -221,7 +221,7 @@ export interface Project {
   /** Viñetas del montaje (composición de cada corte) */
   vinetas?: VinetaMontaje[]
   /** Gestos a medida dibujados con IA para este proyecto (imagen en IndexedDB). */
-  posturasExtra?: { nombre: string; imageId: string; descripcion: string; sinOjos?: boolean; sinBoca?: boolean; revisada?: number }[]
+  posturasExtra?: { nombre: string; imageId: string; imageIdB?: string; descripcion: string; sinOjos?: boolean; sinBoca?: boolean; revisada?: number }[]
   /** Audio (voz) del vídeo; el archivo se guarda aparte, en el navegador (IndexedDB). */
   audio?: { id: string; name: string; start: number; duration: number }
   characters: Record<string, Character>

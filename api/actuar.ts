@@ -51,7 +51,10 @@ Cómo actúa un buen narrador (síguelo):
   el móvil, comer, bostezar, tirarse del pelo, sujetar dinero…), puedes pedir que se dibuje: añádelo a
   «nuevas» con un nombre corto (minúsculas, sin espacios) y «dibujo» = descripción EN INGLÉS de qué
   hacen los brazos y manos (y el objeto si lo hay), y úsalo en «cambios» como postura «x_<nombre>».
-  Como mucho las que te digan; solo si aporta de verdad (lo concreto y visual es lo que hace gracia).
+  Como mucho las que te digan. ÚSALOS PARA TODA ACCIÓN CONCRETA con un objeto (comer de un táper, mirar
+  el móvil, levantar una pesa, cocinar, contar billetes, meditar con las piernas cruzadas…): el personaje
+  USA el objeto de verdad, dibujado con él. Es lo que hace que se note la intención de un animador; un
+  objeto flotando al lado no la tiene.
 
 FONDOS Y RÓTULOS (si te lo piden), como en «Estoy Tiesa»:
 - «fondos»: para cada escena, «blanco» (fondo blanco liso: cuando explica una idea abstracta, da datos o
@@ -103,8 +106,11 @@ COMPOSICIÓN DE CADA VIÑETA (lo que le da riqueza visual, como «Estoy Tiesa»)
   o dato dentro de un cartelito («33.000 €», «685 €/mes ♥»). «flecha»: true si apunta a lo anterior
   (una consecuencia, el precio de algo, «y encima…»).
 - EL PERSONAJE SE RELACIONA CON LO QUE APARECE (lo más importante para que no parezca un decorado):
-  · Lo que nombra y podría tener en la mano (un táper, el móvil, una factura, una pesa pequeña) va con
-    pos «mano»: aparece apoyado en su palma (el personaje pasa solo a la postura de sujetar).
+  · Si lo USA (come, mira, levanta, cocina): gesto a medida (ver arriba), no objeto.
+  · Si solo lo ENSEÑA (un billete, una factura, un táper que presenta): pos «mano», apoyado en su palma
+    (el personaje pasa solo a la postura de sujetar).
+  · Los objetos sueltos en el lado libre, SOLO para ideas: bocadillo de pensamiento con lo que imagina,
+    cartel con una cifra, un icono (corazón roto, rayo, reloj). Nunca cosas físicas flotando sin más.
   · Cosas del lugar que están delante de él (velas, una pila de platos, cajas, la mesa con la comida)
     van con pos «delante»: le tapan las piernas, como si estuviera detrás.
   · Cuando aparece algo importante en el lado libre, en esa misma palabra el personaje lo PRESENTA
@@ -120,7 +126,7 @@ COMPOSICIÓN DE CADA VIÑETA (lo que le da riqueza visual, como «Estoy Tiesa»)
 
 OBJETOS EN ESCENA (si te lo piden): lo que hace que «pase algo» en los vídeos de «Estoy Tiesa». Mientras
 habla, APARECEN de golpe junto al personaje dibujos sencillos de lo que está contando: el objeto del que
-habla (un táper, un coche, una factura, una pesa, un móvil con un podcast), un bocadillo de pensamiento
+habla y que NO está usando (un coche, una factura), un bocadillo de pensamiento
 con un dibujo dentro (lo que imagina o desea), un cartel con un precio o una cifra con su flecha, un
 icono (corazón roto, rayo de cansancio, reloj)… En «objetos»: escena, palabra (en la que aparece, la
 palabra que lo nombra), «que» (en español, corto) y «dibujo» (EN INGLÉS, qué dibujar: un solo objeto o

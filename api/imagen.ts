@@ -22,7 +22,9 @@ export async function POST(request: Request): Promise<Response> {
   const formato = FORMATOS.includes(body.formato ?? '') ? body.formato! : '9:16'
   // La referencia de estilo solo puede ser una imagen de esta misma web
   const propio = new URL(request.url).origin
-  const ref = body.referencia && body.referencia.startsWith(propio + '/') ? body.referencia : null
+  // Referencia: una imagen de esta web o una que acaba de dibujar fal (para editarla, p. ej. la boca)
+  const deFal = (u: string) => /^https:\/\/[a-z0-9.-]+\.fal\.media\//.test(u)
+  const ref = body.referencia && (body.referencia.startsWith(propio + '/') || deFal(body.referencia)) ? body.referencia : null
 
   // Mitad que debe quedar vacía (ahí irá el contenido de la viñeta, el personaje va en la otra)
   const hueco =
@@ -48,7 +50,8 @@ export async function POST(request: Request): Promise<Response> {
 
   let { res, data } = await llamar(!!ref)
   // Si fal no puede usar la referencia (no la descarga, formato…), se hace sin ella: mejor un fondo que un error
-  if (ref && res.status !== 401 && res.status !== 403 && (!res.ok || !data.images?.[0]?.url)) ({ res, data } = await llamar(false))
+  // (Una edición «libre» sin su imagen no tiene sentido: ahí no se reintenta)
+  if (ref && body.tipo !== 'libre' && res.status !== 401 && res.status !== 403 && (!res.ok || !data.images?.[0]?.url)) ({ res, data } = await llamar(false))
   if (!res.ok || !data.images?.[0]?.url) {
     const det = typeof data.detail === 'string' ? data.detail : JSON.stringify(data.detail ?? '')
     if (res.status === 401 || res.status === 403) return json({ error: 'La clave de fal.ai no es válida o no tiene saldo.' }, 502)

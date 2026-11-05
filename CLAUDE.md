@@ -147,6 +147,13 @@ cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y
   «mano» se apoyan en la palma (`expresivo.palma` = t_presenta, x 116, y 832; `voiceScript` pone esa
   postura 1,5 s) y con pos «delante» van abajo tapándole las piernas. El bocadillo sale de la cabeza real
   (`PuntosPersonaje`). El director debe hacer al menos una interacción por viñeta con contenido, con mínimos (1 de cada 3 viñetas con algo en la mano, 1 «delante» por vídeo). Lo de la mano desaparece al dejar la postura de sujetar. Los fondos se piden con `hueco` (la mitad del contenido casi vacía, pocos objetos al otro lado).
+- GESTOS A MEDIDA CON SU CARA (tras «a veces la cara se deforma»: los ojos de capa sobre la cara que dibujó la
+  IA se mezclaban, p. ej. ojeras asomando o un ojo encima de los dedos): `dibujarPostura` pide además su
+  versión ~b (api/imagen «libre» sobre la imagen de fal, que ahora se admite como referencia) y
+  `combinarBoca` copia solo la zona de la boca; `imageIdB` en `posturasExtra`, y esos gestos van en
+  `sinCapas` (su cara y su boca). Los gestos sin ~b conservan sus ojos (todos en `sinOjos`) y solo llevan
+  la boca de capa. El director usa gestos a medida (hasta 5-8) para toda ACCIÓN con un objeto; los objetos
+  sueltos solo para ideas (bocadillo, cifra, icono). Huecos borrados también en t_barriga, t_frente, t_pulgar.
 - REPERTORIO DE CARAS EXAGERADAS `t_e_*` (16: corazones, susto, llora, carcajada, agotado, furioso,
   verguenza, asco, dinero, explota, nervioso, dormido, chulo, suplica, mareado, ilusion): `api/postura.ts`
   con `cara` (expresión exagerada, se permiten lágrimas, sudor, corazones…), procesadas en la web con

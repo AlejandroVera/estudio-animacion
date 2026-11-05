@@ -154,7 +154,7 @@ async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number 
       escenas: escenas
         .map((e, i) => ({ escena: i, emocion: e.expresion, palabras: porEscena[i].map((w) => w.texto), indicaciones: e.indicaciones?.trim() || undefined }))
         .filter((e) => e.palabras.length),
-      nuevasMax: ch.expresivo?.base ? 3 + escenas.filter((e) => e.indicaciones?.trim()).length : 0,
+      nuevasMax: ch.expresivo?.base ? Math.min(8, 5 + escenas.filter((e) => e.indicaciones?.trim()).length) : 0,
       escenografia: true,
       objetosMax: Math.min(16, 4 * escenas.length),
       vinetas: true,

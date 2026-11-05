@@ -231,7 +231,7 @@ async function quitarHuecos(ch: Character, d: ImageData) {
 /** Versión de la revisión: al mejorarla se sube y los gestos guardados se revisan otra vez. */
 export const REVISION = 4
 
-export type PosturaDibujada = { imageId: string; sinOjos: boolean; sinBoca: boolean }
+export type PosturaDibujada = { imageId: string; imageIdB?: string; sinOjos: boolean; sinBoca: boolean }
 
 /** Dibuja un gesto nuevo y lo guarda (alineado con las demás posturas por la cabeza). Con «cara», la
  *  postura trae su propia expresión exagerada: se queda con sus ojos (las capas solo mueven la boca). */
@@ -249,7 +249,73 @@ export async function dibujarPostura(ch: Character, descripcion: string, cara?: 
   const p = await procesarDibujo(ch, d.url)
   const imageId = `postura-${Date.now()}-${Math.round(Math.random() * 1e6)}`
   await saveImage(imageId, p.blob)
-  return { imageId, sinOjos: p.sinOjos || !!cara, sinBoca: p.sinBoca }
+  // Su segunda versión con la boca abierta (de ella solo se copia la boca): así el gesto conserva SU
+  // cara y habla con su propia boca, sin pegarle encima los ojos y la boca de las capas (se mezclaban
+  // dos dibujos y la cara parecía deformada). Si falla, se queda con las capas de siempre.
+  let imageIdB: string | undefined
+  try {
+    const rb = await fetch('/api/imagen', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        tipo: 'libre',
+        formato: '3:4',
+        referencia: d.url,
+        descripcion:
+          'Edit this image. Change ONLY the mouth: make it open as if talking (a simple open cartoon mouth that keeps the same emotion). Keep absolutely everything else identical: same pose, same position and size, same eyes, same hands and objects, same colors and wobbly lines, plain white background.',
+      }),
+    })
+    const db = await rb.json().catch(() => ({}))
+    if (rb.ok && db.url) {
+      const pb = await procesarDibujo(ch, db.url)
+      imageIdB = imageId + '~b'
+      await saveImage(imageIdB, await combinarBoca(ch, p.blob, pb.blob))
+    }
+  } catch {
+    imageIdB = undefined
+  }
+  return { imageId, imageIdB, sinOjos: p.sinOjos || !!cara, sinBoca: p.sinBoca }
+}
+
+/** La postura con la boca de su versión ~b: solo se copia lo que cambia alrededor de la boca. */
+async function combinarBoca(ch: Character, base: Blob, alt: Blob): Promise<Blob> {
+  const ex = ch.expresivo!
+  const [, , W, H] = ex.lienzo!
+  const leer = async (b: Blob) => {
+    const c = new OffscreenCanvas(W, H)
+    const g = c.getContext('2d', { willReadFrequently: true })!
+    g.drawImage(await createImageBitmap(b), 0, 0, W, H)
+    return g.getImageData(0, 0, W, H)
+  }
+  const a = await leer(base), b = await leer(alt)
+  const [bx, by, bw, bh] = ex.cajas?.boca ?? [W * 0.38, H * 0.2, W * 0.27, H * 0.08]
+  const X0 = Math.max(0, Math.round(bx - bw * 0.35)), X1 = Math.min(W, Math.round(bx + bw * 1.35))
+  const Y0 = Math.max(0, Math.round(by - bh * 0.1)), Y1 = Math.min(H, Math.round(by + bh * 1.7))
+  // Máscara de lo que cambia (solo en la zona de la boca), ensanchada y difuminada
+  const mask = new OffscreenCanvas(W, H)
+  const gm = mask.getContext('2d', { willReadFrequently: true })!
+  const md = gm.createImageData(W, H)
+  for (let y = Y0; y < Y1; y++)
+    for (let x = X0; x < X1; x++) {
+      const i = (y * W + x) * 4
+      const dif = Math.abs(a.data[i] - b.data[i]) + Math.abs(a.data[i + 1] - b.data[i + 1]) + Math.abs(a.data[i + 2] - b.data[i + 2]) + Math.abs(a.data[i + 3] - b.data[i + 3])
+      if (dif > 90) md.data[i + 3] = 255
+    }
+  gm.putImageData(md, 0, 0)
+  const ancha = new OffscreenCanvas(W, H)
+  const ga = ancha.getContext('2d', { willReadFrequently: true })!
+  ga.filter = 'blur(10px)'
+  for (let k = 0; k < 3; k++) ga.drawImage(mask, 0, 0)
+  ga.filter = 'none'
+  const k = ga.getImageData(0, 0, W, H).data
+  const out = new ImageData(W, H)
+  for (let i = 0; i < out.data.length; i += 4) {
+    const f = Math.min(1, (k[i + 3] / 255) * 2.2)
+    for (let c = 0; c < 4; c++) out.data[i + c] = Math.round(a.data[i + c] * (1 - f) + b.data[i + c] * f)
+  }
+  const oc = new OffscreenCanvas(W, H)
+  oc.getContext('2d')!.putImageData(out, 0, 0)
+  return oc.convertToBlob({ type: 'image/png' })
 }
 
 /** Un dibujo de la IA (URL) listo como postura: sin fondo ni huecos, cabeza en su sitio y qué capas admite. */
@@ -295,9 +361,27 @@ export function conExtras(p: Project): Project {
   // Se rehacen desde los gestos (si una revisión nueva quita la marca, deja de aplicarse)
   // Las del personaje (posturas fijas con su propia cara) se conservan; las de gestos a medida se rehacen
   const fijas = (l?: string[]) => (l ?? []).filter((n) => !n.startsWith('t_x_'))
-  const sinOjos = [...fijas(ch.expresivo.sinOjos), ...extras.filter((e) => e.sinOjos).map((e) => e.nombre)].sort()
+  // Los ojos de las capas sobre la cara que dibujó la IA (otra expresión) se mezclaban y la cara parecía
+  // deformada: todos los gestos a medida conservan sus ojos
+  const sinOjos = [...fijas(ch.expresivo.sinOjos), ...extras.map((e) => e.nombre)].sort()
   const sinBoca = [...fijas(ch.expresivo.sinBoca), ...extras.filter((e) => e.sinBoca).map((e) => e.nombre)].sort()
-  if (sinOjos.join() !== (ch.expresivo.sinOjos ?? []).join() || sinBoca.join() !== (ch.expresivo.sinBoca ?? []).join()) cambio = true
+  // Los que tienen su versión con la boca abierta usan su propia cara (como las caras exageradas)
+  const conB = extras.filter((e) => e.imageIdB && mediaUrl(e.imageIdB))
+  const sinCapas = [...fijas(ch.expresivo.sinCapas), ...conB.map((e) => e.nombre)].sort()
+  if (
+    sinOjos.join() !== (ch.expresivo.sinOjos ?? []).join() ||
+    sinBoca.join() !== (ch.expresivo.sinBoca ?? []).join() ||
+    sinCapas.join() !== [...(ch.expresivo.sinCapas ?? [])].sort().join()
+  )
+    cambio = true
+  for (const e of conB) {
+    const urlB = mediaUrl(e.imageIdB!)!
+    const aidB = `extra-${e.nombre}~b`
+    if (variants[e.nombre + '~b'] && assets[aidB]?.src === urlB) continue
+    assets[aidB] = { id: aidB, src: urlB, w: base.w, h: base.h }
+    variants[e.nombre + '~b'] = aidB
+    cambio = true
+  }
   for (const e of extras) {
     const url = mediaUrl(e.imageId)
     const aid = `extra-${e.nombre}`
@@ -308,7 +392,7 @@ export function conExtras(p: Project): Project {
   }
   if (!cambio) return p
   const parts = ch.parts.map((x) => (x === raiz ? { ...x, variants } : x))
-  const expresivo = { ...ch.expresivo, sinOjos, sinBoca }
+  const expresivo = { ...ch.expresivo, sinOjos, sinBoca, sinCapas }
   return { ...p, characters: { ...p.characters, [ch.id]: { ...ch, assets, parts, expresivo } } }
 }
 
@@ -316,7 +400,7 @@ export function conExtras(p: Project): Project {
 export async function cargarExtras() {
   const p = useStore.getState().project
   if (!p.posturasExtra?.length) return
-  await ensureMedia(p.posturasExtra.map((e) => e.imageId))
+  await ensureMedia(p.posturasExtra.flatMap((e) => (e.imageIdB ? [e.imageId, e.imageIdB] : [e.imageId])))
   // Las hechas antes de la revisión (cabeza movida, mano delante de la cara): se arreglan una vez
   const ch = activeCharacter(p)
   const pendientes = p.posturasExtra.filter((e) => (e.revisada ?? 0) < REVISION && mediaUrl(e.imageId))
