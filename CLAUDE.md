@@ -200,6 +200,13 @@ cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y
   de cada escena, la emoción y el catálogo `DESCRIPCIONES` (qué expresa cada postura) y devuelve en qué
   palabra cambia y a qué postura según lo que dice, y `miradas` (catálogo `MIRADAS`) en otras palabras; las claves caen 0,08 s antes de esa palabra. Si
   falla, quedan las reglas de abajo.
+- PAUSAS DE LA VOZ (tras «la voz se entrecorta»: ElevenLabs deja 0,5-0,8 s de silencio total en cada punto):
+  `acortarPausas` (voices.ts) deja cada pausa entre letras en ~0,3 s, con fundidos de 8 ms, y mueve los
+  tiempos de la alineación (boca sincronizada). Se aplica cada vez sobre el audio guardado.
+- Gestos a medida: `alinear` recibe el dibujo COMPLETO (no solo el lienzo), si no la cabeza dibujada un
+  poco más arriba quedaba cortada en plano. Un bocadillo que repite el objeto del gesto activo se quita.
+- Si fal.ai responde 401/403 («clave no válida o sin saldo»), no salen fondos, gestos ni objetos: es el
+  saldo de fal de Alejandro (se recarga en fal.ai).
 - VOZ SEGUIDA: las escenas duran exactamente su tramo de audio y las escenas seguidas con texto suenan
   como UN trozo continuo (antes se metían 0,2 s de silencio entre escenas y la voz iba a trompicones).
 - `animateScenes` (respaldo sin IA): postura por trozo de frase (≥4 palabras, ≤8): «?» → encogerse/pensar, números →
