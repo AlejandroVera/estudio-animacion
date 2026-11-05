@@ -141,6 +141,12 @@ cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y
   escribiéndose letra a letra (`avanceEscritura`, ≈0,04 s/letra); subrayado que se dibuja después.
   La usan `contenido.ts` y `drawRotulos`. El LADO del personaje se mantiene mientras siga el mismo fondo
   (solo cambia con el lugar) y el director pone lugares en la mayoría de viñetas (blanco ≤ 1 de cada 4).
+- INTERACCIÓN con lo que aparece: la mano libre de las posturas t_* señala a la IZQUIERDA de la pantalla, así
+  que con el personaje a la izquierda (contenido a la derecha) se dibuja en ESPEJO (`drawPersonajeEscena`
+  en render.ts, lo usan drawFrame y Stage) y siempre presenta/señala hacia el contenido. Objetos con pos
+  «mano» se apoyan en la palma (`expresivo.palma` = t_presenta, x 116, y 832; `voiceScript` pone esa
+  postura 1,5 s) y con pos «delante» van abajo tapándole las piernas. El bocadillo sale de la cabeza real
+  (`PuntosPersonaje`). El director debe hacer al menos una interacción por viñeta con contenido.
 - REPERTORIO DE CARAS EXAGERADAS `t_e_*` (16: corazones, susto, llora, carcajada, agotado, furioso,
   verguenza, asco, dinero, explota, nervioso, dormido, chulo, suplica, mareado, ilusion): `api/postura.ts`
   con `cara` (expresión exagerada, se permiten lágrimas, sudor, corazones…), procesadas en la web con

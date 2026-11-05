@@ -5,6 +5,9 @@
 
 import { mediaUrl } from '../audio/storage'
 import type { Objeto, Project, Rotulo } from './types'
+
+/** Dónde quedan en pantalla la palma de la mano (si sujeta) y la cabeza del personaje. */
+export type PuntosPersonaje = { mano: { x: number; y: number } | null; cabeza: { x: number; y: number } | null }
 import { aSuManera, avanceEscritura, COLORES_MANO, escribirMano, medirMano, subrayarMano } from './letra'
 
 const COLORES: Record<string, string> = { negro: '#141414', rojo: '#EE1B24', verde: '#1FC73A', azul: '#1E5BFF' }
@@ -28,7 +31,7 @@ type Elemento =
   | { tipo: 'objeto'; o: Objeto; t: number; alto: number }
 
 /** Dibuja el contenido (fuera de la cámara). Devuelve true si ha usado la composición por viñetas. */
-export function drawContenido(g: CanvasRenderingContext2D, project: Project, t: number, img: Imagenes) {
+export function drawContenido(g: CanvasRenderingContext2D, project: Project, t: number, img: Imagenes, puntos?: PuntosPersonaje) {
   const W = project.width
   const H = project.height
   const k = (project.vinetas ?? []).findIndex((v) => t >= v.t && t < v.fin)
@@ -40,7 +43,7 @@ export function drawContenido(g: CanvasRenderingContext2D, project: Project, t: 
   const x1 = v.lado === 'izq' ? W * 0.96 : W * 0.53
   const y0 = H * 0.07
   const y1 = H * 0.93
-  const cabeza = { x: v.lado === 'izq' ? W * 0.27 : W * 0.73, y: H * 0.24 }
+  const cabeza = puntos?.cabeza ?? { x: v.lado === 'izq' ? W * 0.27 : W * 0.73, y: H * 0.24 }
 
   // Todo lo de esta viñeta (también lo que aún no ha salido: así nada se mueve al ir apareciendo)
   const els: Elemento[] = []
@@ -49,9 +52,37 @@ export function drawContenido(g: CanvasRenderingContext2D, project: Project, t: 
     const alto = r.estilo === 'grande' ? H * 0.17 : r.estilo === 'cartel' ? H * 0.13 : H * 0.13
     els.push({ tipo: 'rotulo', r, t: r.t, alto })
   }
+  // Lo que va EN LA MANO (si está en la postura de sujetar) o DELANTE del personaje no va en la columna
+  const aparte: Objeto[] = []
   for (const o of project.objetos ?? []) {
     if (o.vin !== k) continue
+    if ((o.pos === 'mano' && puntos?.mano) || o.pos === 'delante') {
+      aparte.push(o)
+      continue
+    }
     els.push({ tipo: 'objeto', o, t: o.t, alto: o.pos === 'pensamiento' ? H * 0.34 : H * 0.26 })
+  }
+  for (const o of aparte) {
+    if (t < o.t) continue
+    const url = mediaUrl(o.imageId)
+    const im = url ? img(url) : null
+    if (!im?.complete || !im.naturalWidth) continue
+    const k2 = pop(t - o.t)
+    g.save()
+    if (o.pos === 'mano' && puntos?.mano) {
+      // Apoyado en la palma: la base del dibujo toca la mano
+      const h = H * 0.15
+      const kk = Math.min((W * 0.11) / o.w, h / o.h) * k2
+      g.translate(puntos.mano.x, puntos.mano.y)
+      g.drawImage(im, (-o.w / 2) * kk, -o.h * kk, o.w * kk, o.h * kk)
+    } else {
+      // Delante del personaje, tapándole las piernas (como las velas de la referencia)
+      const h = H * 0.3
+      const kk = Math.min((W * 0.26) / o.w, h / o.h) * k2
+      g.translate(cabeza.x + (((semilla(o.id) % 5) - 2) * W) / 60, H * 0.98)
+      g.drawImage(im, (-o.w / 2) * kk, -o.h * kk, o.w * kk, o.h * kk)
+    }
+    g.restore()
   }
   if (!els.length) return true
   els.sort((a, b) => a.t - b.t)
@@ -185,9 +216,12 @@ function dibujarObjeto(
     g.fill()
     g.stroke()
     const hacia = { x: (cabeza.x - x) / escala, y: (cabeza.y - y) / escala }
-    for (const [f, r] of [[0.62, bh * 0.07], [0.76, bh * 0.05], [0.88, bh * 0.035]] as const) {
+    // Bolitas en línea desde el borde de la nube hasta la cabeza
+    const largo = Math.hypot(hacia.x, hacia.y) || 1
+    const borde = Math.min(1, (Math.hypot((hacia.x / largo) * bw * 0.5, (hacia.y / largo) * bh * 0.5) * 1.15) / largo)
+    for (const [f, r] of [[borde + (1 - borde) * 0.2, bh * 0.07], [borde + (1 - borde) * 0.45, bh * 0.05], [borde + (1 - borde) * 0.68, bh * 0.035]] as const) {
       g.beginPath()
-      g.ellipse(hacia.x * f, Math.max(bh * 0.45, hacia.y * f + bh * 0.3), r * 1.2, r, 0, 0, Math.PI * 2)
+      g.ellipse(hacia.x * f, hacia.y * f, r * 1.2, r, 0, 0, Math.PI * 2)
       g.fill()
       g.stroke()
     }

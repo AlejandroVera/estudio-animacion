@@ -82,6 +82,8 @@ export interface Character {
     sinBoca?: string[]
     /** Cajas de las capas de cara (en píxeles del lienzo) y radio de la cabeza, para revisar los gestos a medida. */
     cajas?: Record<string, number[]>
+    /** Palma de la mano libre en la postura de sujetar cosas (en píxeles del lienzo) */
+    palma?: { postura: string; x: number; y: number }
     radio?: number
     cabeza: { x: number; y: number }
     gestos: Record<string, string>
@@ -157,7 +159,7 @@ export interface Objeto {
   h: number
   t: number
   fin: number
-  pos: 'arriba_izq' | 'arriba_der' | 'izq' | 'der' | 'izq_baja' | 'der_baja' | 'pensamiento'
+  pos: 'arriba_izq' | 'arriba_der' | 'izq' | 'der' | 'izq_baja' | 'der_baja' | 'pensamiento' | 'mano' | 'delante'
   flecha?: boolean
   vin?: number
   /** Qué es (español) y descripción con la que se dibujó (inglés, para reutilizarlo) */

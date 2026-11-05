@@ -455,6 +455,15 @@ export async function voiceScript(escenas: Escena[], texto: string, voz: Voz, pa
     })
     if (dir) {
       tracks[`part:${raiz.id}:v`] = dir.posturas
+      // Lo que sujeta en la mano: en esa palabra pasa a la postura de sujetar y la mantiene un rato
+      const palma = ch.expresivo?.palma
+      if (palma && raiz.variants[palma.postura]) {
+        for (const o of dir.objetos.filter((x) => x.pos === 'mano')) {
+          const ks = (tracks[`part:${raiz.id}:v`] ?? []).filter((k) => k.t < o.t - 1e-3 || k.t >= o.t + 1.5)
+          ks.push({ t: o.t, v: palma.postura, ease: 'salto' })
+          tracks[`part:${raiz.id}:v`] = ks.sort((a, b) => a.t - b.t)
+        }
+      }
       if (dir.ojos.length) tracks['face:brows'] = dir.ojos
       rotulosNuevos = dir.rotulos
       fondosNuevos = dir.fondos

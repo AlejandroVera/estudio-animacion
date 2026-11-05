@@ -166,6 +166,7 @@ export function personajeExpresivo(cfg: {
   /** Posturas con su propia cara exagerada: conservan sus ojos (las capas solo mueven la boca). */
   sinOjos?: string[]
   sinBoca?: string[]
+  palma?: { postura: string; x: number; y: number }
 }): Character {
   const { manifest, ruta } = cfg
   const [lx, ly, lw, lh] = manifest.lienzo
@@ -214,6 +215,7 @@ export function personajeExpresivo(cfg: {
       ojosPorDefecto: cfg.ojosPorDefecto ?? {},
       sinCapas: cfg.sinCapas ?? [],
       sinOjos: cfg.sinOjos ?? [],
+      palma: cfg.palma,
       sinBoca: cfg.sinBoca ?? [],
       cabeza: { x: manifest.cabeza[0] - lx, y: manifest.cabeza[1] - ly },
       radio: manifest.cabeza[2],

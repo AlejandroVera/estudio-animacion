@@ -1,7 +1,7 @@
 import { poseAt } from './anim'
 import { withFollowThrough, withLife } from './life'
 import { ensureMedia, mediaUrl } from '../audio/storage'
-import { drawContenido } from './contenido'
+import { drawContenido, type PuntosPersonaje } from './contenido'
 import { aSuManera, avanceEscritura, COLORES_MANO, escribirMano, medirMano } from './letra'
 import { evalTrack } from './anim'
 import type { BgLayer, Character, CharacterInstance, Part, Pose, Project, Vec } from './types'
@@ -226,19 +226,66 @@ export function drawLayers(g: CanvasRenderingContext2D, project: Project, t: num
   }
 }
 
+
+/**
+ * Dibuja el personaje de la escena. En la composición a un lado, si está a la IZQUIERDA se dibuja en
+ * espejo: su mano libre (la que presenta y señala) queda hacia el contenido y no hacia fuera.
+ */
+export function drawPersonajeEscena(
+  g: CanvasRenderingContext2D,
+  project: Project,
+  character: Character,
+  inst: CharacterInstance,
+  t: number,
+  cam: DOMMatrix,
+  restPose = false,
+): { placed: Placed[]; puntos: PuntosPersonaje } {
+  const raiz = character.parts.find((p) => !p.parent)
+  const v = (project.vinetas ?? []).find((x) => t >= x.t && t < x.fin)
+  const espejo = !restPose && !!character.expresivo && !!raiz && v?.lado === 'izq' && project.width > project.height * 1.1
+  const pivote = raiz ? inst.x + num(evalTrack(inst.tracks[`part:${raiz.id}:x`], t, 0)) * inst.scale : inst.x
+  g.save()
+  if (espejo) {
+    g.translate(pivote, 0)
+    g.scale(-1, 1)
+    g.translate(-pivote, 0)
+  }
+  const placed = drawCharacter(g, character, inst, t, restPose, project.vida !== false)
+  g.restore()
+  const puntos: PuntosPersonaje = { mano: null, cabeza: null }
+  const pl = raiz && placed.find((x) => x.part.id === raiz.id)
+  const ex = character.expresivo
+  if (pl && ex && ex.lienzo) {
+    const aPantalla = (lx: number, ly: number) => {
+      const w = pl.matrix.transformPoint(new DOMPoint(lx - pl.part.anchor.x, ly - pl.part.anchor.y))
+      const x = espejo ? 2 * pivote - w.x : w.x
+      const s = cam.transformPoint(new DOMPoint(x, w.y))
+      return { x: s.x, y: s.y }
+    }
+    puntos.cabeza = aPantalla(ex.cabeza.x, ex.cabeza.y - (ex.radio ?? 300) * 0.6)
+    const dibujo = Object.entries(raiz!.variants).find(([, a]) => a === pl.assetId)?.[0]?.split('~')[0]
+    if (ex.palma && dibujo === ex.palma.postura) puntos.mano = aPantalla(ex.palma.x, ex.palma.y)
+  }
+  return { placed, puntos }
+}
+
 export function drawFrame(g: CanvasRenderingContext2D, project: Project, t: number) {
   g.save()
   g.fillStyle = project.background
   g.fillRect(0, 0, project.width, project.height)
-  g.setTransform(g.getTransform().multiply(cameraMatrix(project, t)))
+  const cam = cameraMatrix(project, t)
+  g.setTransform(g.getTransform().multiply(cam))
   drawLayers(g, project, t, false)
-  for (const inst of project.instances) {
+  let puntos: PuntosPersonaje | undefined
+  project.instances.forEach((inst, i) => {
     const c = project.characters[inst.characterId]
-    if (c) drawCharacter(g, c, inst, t, false, project.vida !== false)
-  }
+    if (!c) return
+    if (i === 0) puntos = drawPersonajeEscena(g, project, c, inst, t, cam).puntos
+    else drawCharacter(g, c, inst, t, false, project.vida !== false)
+  })
   drawLayers(g, project, t, true)
   g.restore()
-  if (!drawContenido(g, project, t, getImage)) {
+  if (!drawContenido(g, project, t, getImage, puntos)) {
     drawObjetos(g, project, t)
     drawRotulos(g, project, t)
   }

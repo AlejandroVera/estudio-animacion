@@ -102,6 +102,15 @@ COMPOSICIÓN DE CADA VIÑETA (lo que le da riqueza visual, como «Estoy Tiesa»)
   subrayado, más pequeño («DEPRECIACIÓN» en rojo, «TODO INCLUIDO» en verde); «cartel» = un precio, cifra
   o dato dentro de un cartelito («33.000 €», «685 €/mes ♥»). «flecha»: true si apunta a lo anterior
   (una consecuencia, el precio de algo, «y encima…»).
+- EL PERSONAJE SE RELACIONA CON LO QUE APARECE (lo más importante para que no parezca un decorado):
+  · Lo que nombra y podría tener en la mano (un táper, el móvil, una factura, una pesa pequeña) va con
+    pos «mano»: aparece apoyado en su palma (el personaje pasa solo a la postura de sujetar).
+  · Cosas del lugar que están delante de él (velas, una pila de platos, cajas, la mesa con la comida)
+    van con pos «delante»: le tapan las piernas, como si estuviera detrás.
+  · Cuando aparece algo importante en el lado libre, en esa misma palabra el personaje lo PRESENTA
+    (t_presenta) o lo SEÑALA (t_alla) — siempre quedan mirando hacia el contenido — o REACCIONA con una
+    cara exagerada (t_e_*) si es un precio terrible, algo que le encanta, etc.
+  · En cada viñeta con contenido, al menos una de estas interacciones.
 - Objetos con «pensamiento» en pos: se dibujan DENTRO de un bocadillo de pensamiento junto a su cabeza
   (lo que imagina, desea, teme o recuerda). Un objeto también puede llevar «flecha».
 
@@ -211,7 +220,7 @@ const SCHEMA = {
           palabra: { type: 'integer' },
           que: { type: 'string' },
           dibujo: { type: 'string' },
-          pos: { type: 'string', enum: ['arriba_izq', 'arriba_der', 'izq', 'der', 'izq_baja', 'der_baja', 'pensamiento'] },
+          pos: { type: 'string', enum: ['arriba_izq', 'arriba_der', 'izq', 'der', 'izq_baja', 'der_baja', 'pensamiento', 'mano', 'delante'] },
           flecha: { type: 'boolean' },
         },
       },
