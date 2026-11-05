@@ -19,11 +19,15 @@ escenas. Para CADA escena escribes, en español y en 2-4 frases cortas, lo que t
 como notas de un animador para su equipo. El usuario las leerá, las retocará y luego un sistema las
 cumplirá al pie de la letra, así que sé concreto.
 
+LO MÁS IMPORTANTE: cuéntalo como una HISTORIA que vive el personaje (llega a casa reventado, abre la nevera
+vacía, cena de pie un táper frío, se tira en el sofá…): cada escena es un momento de esa historia, con el
+personaje en un lugar HACIENDO algo con un objeto o reaccionando. TEXTO MUY ESCASO: nunca escribas lo que
+se oye; como mucho un rótulo en algunas escenas (una cifra, la palabra del remate) y la mayoría sin texto.
+Nada de listas escritas: si enumera cosas, el personaje las HACE una tras otra.
+
 Qué hace que funcione (cómo es «Estoy Tiesa»):
-- Cada frase o golpe es una VIÑETA pensada: el personaje grande a un lado y en el otro lado van apareciendo,
-  en la palabra en que se dicen, palabras escritas a mano (la frase clave palabra a palabra en negro y
-  grande, conceptos en color subrayados), cartelitos con cifras y flechas rojas que los unen, bocadillos
-  de pensamiento con lo que imagina, y dibujitos de lo que nombra.
+- Cada frase o golpe es una VIÑETA pensada: el personaje en una situación, y a veces a su lado un bocadillo
+  de pensamiento con lo que imagina, un cartelito con una cifra o UNA palabra escrita a mano en el remate.
 - El personaje ACTÚA lo que dice: si habla de comer, come de un táper; si dice «entrena», levanta una pesa;
   si habla del móvil, lo mira. Cuando enseña algo, lo sujeta en la mano. A veces hay cosas delante de él
   (velas, platos, cajas). Reacciona con caras exageradas SOLO en los remates (ojos de corazón, susto, llorar
@@ -38,8 +42,8 @@ Qué hace que funcione (cómo es «Estoy Tiesa»):
 - Ritmo: algo nuevo cada 2-4 segundos; nada decorativo «porque sí»: todo ilustra lo que dice.
 
 Formato de cada indicación (sigue este estilo, sin listas ni viñetas, todo en una línea o dos):
-«Fondo: una cocina pequeña. Explica con calma, cuerpo entero. En "agotados" se deja caer rendido con cara
-de agotado. Rótulo AGOTADOS en rojo, subrayado, en esa palabra.»
+«Fondo: la cocina de noche. Cuerpo entero, de pie junto a la encimera comiendo de un táper frío con
+cara de resignación. En "agotados" se deja caer con cara de agotado.» (sin rótulo: la imagen lo cuenta)
 Usa «Fondo: …» al principio (o «Fondo blanco.»), nombra las palabras exactas entre comillas cuando algo
 pasa en una palabra, y escribe los rótulos con su texto EXACTO en mayúsculas, su color (negro, rojo, verde
 o azul) y si es palabra grande, nota subrayada o cartel con cifra. Si sujeta algo, di «sujeta X en la

@@ -63,7 +63,7 @@ FONDOS Y RÓTULOS (si te lo piden), como en «Estoy Tiesa»:
   Mantén el mismo lugar en escenas seguidas que hablan de lo mismo (escribe exactamente el mismo texto)
   y cambia cuando cambia la idea. Como mucho un lugar distinto cada 2-3 escenas.
 - «rotulos»: palabras escritas a mano que aparecen de golpe EN la palabra que se dice: cifras y precios
-  («33.000 €»), conceptos clave («DEPRECIACIÓN»), la conclusión o el remate. Hasta 5 por viñeta, 1-3
+  («33.000 €»), conceptos clave («DEPRECIACIÓN»), la conclusión o el remate. Como mucho 1 por viñeta y en pocas viñetas, 1-3
   palabras cada uno, en mayúsculas si es un concepto. Color: «negro» normal, «rojo» lo malo/escandaloso,
   «verde» lo bueno, «azul» un dato neutro. Posición: «arriba», «izq», «der», «izq_baja», «der_baja» o
   «abajo»; en una misma escena cada rótulo en un sitio distinto (se acumulan hasta que cambia la
@@ -91,15 +91,27 @@ corte, «fondo» y «tamano», y «idea» (qué cuenta la viñeta, en pocas pala
 - Las indicaciones del usuario mandan: si pide un fondo o un tamaño para una escena, úsalo en todas
   las viñetas de esa escena (puedes partirla igualmente cambiando el encuadre).
 
+LO PRIMERO: CUÉNTALO COMO UNA HISTORIA (es lo que más importa; un vídeo lleno de texto no engancha).
+Antes de nada escribe en «historia» la pequeña historia que VIVE el personaje mientras habla: dónde está
+en cada momento, qué le pasa y qué hace (llega a casa reventado, abre la nevera vacía, cena de pie un
+táper frío, se tira en el sofá, se agobia con la agenda…). El guion es su voz; las imágenes son lo que
+le ocurre. Cada viñeta es UN MOMENTO de esa historia: una situación concreta en un lugar, con el
+personaje HACIENDO algo (gesto a medida con el objeto) o reaccionando (cara exagerada en el remate).
+Las imágenes cuentan; el texto solo remata.
+
+TEXTO MUY ESCASO (como en «Estoy Tiesa»): nunca escribas lo que se oye. Como mucho UN rótulo por viñeta y
+solo para: una cifra o un precio, la palabra del remate o un concepto clave que no se ve en la imagen. La
+mayoría de viñetas NO llevan texto. «grande» palabra a palabra, como mucho una vez en todo el vídeo (la
+frase más potente). Nada de listas escritas: si enumera (entrena, medita, terapia…), cada cosa es una
+viñeta rápida con el personaje HACIÉNDOLA, no una palabra escrita.
+
 COMPOSICIÓN DE CADA VIÑETA (lo que le da riqueza visual, como «Estoy Tiesa»):
 - «lado» de la viñeta: dónde está el personaje. «izq» o «der»: el personaje grande a un lado y el otro
   lado LIBRE para el contenido, que se va llenando mientras habla; «centro»: sin contenido. El lado NO
   cambia mientras siga en el mismo lugar: solo al cambiar de lugar (no lo muevas sin motivo).
 - El contenido de la viñeta APARECE PALABRA A PALABRA y se ACUMULA (no todo a la vez) y se borra de golpe
-  al cortar. OBLIGATORIO: toda viñeta con lado «izq» o «der» LLENA su lado libre con 2-5 elementos
-  (rótulos y objetos) que aparecen en palabras distintas; si no tienes nada que poner, usa «centro».
-  Al menos la mitad de las viñetas deben ir a un lado con contenido. Escribe las palabras clave tal
-  cual se dicen (en mayúsculas), dibuja lo que se nombra y lo que se imagina: es lo que da riqueza.
+  al cortar. Un lado libre se llena con lo que IMAGINA o una cifra (bocadillo, cartel, icono) y como
+  mucho un rótulo; si no hay nada que enseñar, usa «centro» y que mande la situación.
 - Rótulos con «estilo»: «grande» = palabras enormes en negro, la frase clave dicha palabra a palabra (un
   rótulo por palabra, en el momento en que se dice: «QUE» … «HAY» … «NO»); «nota» = concepto en color
   subrayado, más pequeño («DEPRECIACIÓN» en rojo, «TODO INCLUIDO» en verde); «cartel» = un precio, cifra
@@ -152,8 +164,9 @@ cambio de postura. Solo valen con posturas tranquilas (las que empiezan por t_).
 const SCHEMA = {
   type: 'object',
   additionalProperties: false,
-  required: ['cambios'],
+  required: ['historia', 'cambios'],
   properties: {
+    historia: { type: 'string', description: 'La pequeña historia que vive el personaje, momento a momento (se escribe ANTES de decidir lo demás).' },
     cambios: {
       type: 'array',
       items: {

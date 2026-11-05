@@ -263,6 +263,29 @@ async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number 
     const tr = Math.round(w.t * fps) / fps
     rots.push({ id: `r${r.escena}-${r.palabra}-${rots.length}`, t: tr, fin: Math.max(finDe(tr, r.escena), Math.min(tr + 1.6, e.inicio + e.duracion + 1)), texto: r.texto.trim().slice(0, 40), color: r.color, pos: r.pos, estilo: r.estilo, flecha: r.flecha, vin: vinDe(tr) })
   }
+  // Texto escaso (como «Estoy Tiesa»): como mucho 1 rótulo por viñeta (3 si el usuario pide rótulos en esa
+  // escena) y uno cada 5 s en total; los que pide el usuario van primero
+  {
+    const pedido = (r: Rotulo) => {
+      const e = escenas.find((x) => r.t >= x.inicio - 0.05 && r.t < x.inicio + x.duracion)
+      return /r[óo]tulo/i.test(e?.indicaciones ?? '')
+    }
+    const porVin = new Map<string, Rotulo[]>()
+    for (const r of rots) {
+      const k = String(r.vin ?? r.fin)
+      porVin.set(k, [...(porVin.get(k) ?? []), r])
+    }
+    const prioridad = (r: Rotulo) => (pedido(r) ? 0 : r.estilo === 'cartel' ? 1 : r.estilo === 'nota' ? 2 : 3)
+    let quedan: Rotulo[] = []
+    for (const lista of porVin.values()) {
+      const max = lista.some(pedido) ? 3 : 1
+      quedan.push(...[...lista].sort((a, b) => prioridad(a) - prioridad(b) || b.t - a.t).slice(0, max))
+    }
+    const tope = Math.max(2, Math.ceil(fin / 5))
+    if (quedan.length > tope) quedan = [...quedan].sort((a, b) => prioridad(a) - prioridad(b)).slice(0, tope)
+    const ids = new Set(quedan.map((r) => r.id))
+    rots.splice(0, rots.length, ...rots.filter((r) => ids.has(r.id)))
+  }
   // Objetos: aparecen en su palabra (un pelín antes) y se quedan hasta el final de la escena
   const objs: ObjetoPedido[] = []
   for (const o of objetos ?? []) {
