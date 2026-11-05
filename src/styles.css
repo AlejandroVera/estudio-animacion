@@ -870,3 +870,5 @@ textarea.indicaciones {
 @media (max-width: 1450px) {
   .brand-text { display: none; }
 }
+
+.check-row { display: flex; align-items: center; gap: 6px; font-size: 13px; margin: 6px 0; cursor: pointer; }

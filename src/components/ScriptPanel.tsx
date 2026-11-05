@@ -134,12 +134,18 @@ export function ScriptPanel({ onClose }: { onClose: () => void }) {
       setMsg({ ok: false, text: /contraseña|clave|401/i.test(t) ? 'Escribe la contraseña del estudio (arriba, debajo del cuadro del guion) y vuelve a pulsar «Elegir voz…».' : t })
     }
   }
+  const [deNuevo, setDeNuevo] = useState(false)
   const conVoz = async () => {
     if (!voz || busy || !escenas.length) return
     const hay = Object.keys(useStore.getState().project.instances[0].tracks).length > 0
     if (hay && !confirm('Esto sustituye la animación actual por la de las escenas, con voz. Se puede deshacer con Ctrl+Z. ¿Seguir?')) return
     setBusy(true)
     try {
+      // «Dibujar todo de nuevo»: sin gestos, fondos automáticos ni dibujos guardados, se hacen de cero
+      if (deNuevo) {
+        const st = useStore.getState()
+        st.commit({ ...st.project, posturasExtra: [], objetos: [], fondos: (st.project.fondos ?? []).filter((l) => !l.descripcion) })
+      }
       const r = await voiceScript(escenas, texto, voz, pass, (t) => setMsg({ ok: true, text: t }), modelo, indicaciones)
       setEscenas(r.escenas)
       setMsg({ ok: !r.aviso, text: `Listo: ${r.duracion.toFixed(1).replace('.', ',')} s con la voz de ${voz.nombre}. ${r.aviso || 'Gestos dirigidos por la IA según el guion.'}` })
@@ -408,6 +414,9 @@ export function ScriptPanel({ onClose }: { onClose: () => void }) {
               <option value="eleven_multilingual_v2">Estable (Multilingual v2)</option>
               <option value="eleven_v3">Expresiva (ElevenLabs v3)</option>
             </select>
+            <label className="check-row" title="Olvida los gestos a medida, los fondos y los dibujos guardados de este proyecto y los hace de cero con la versión actual (se pagan otra vez). La voz guardada sí se reutiliza.">
+              <input type="checkbox" checked={deNuevo} onChange={(e) => setDeNuevo(e.target.checked)} /> 🧹 Dibujar todo de nuevo (gestos, fondos y dibujos)
+            </label>
             <button className="btn primary full" disabled={!voz || busy} onClick={conVoz}>
               {busy ? 'Trabajando…' : '🎙 Generar voces y animar'}
             </button>

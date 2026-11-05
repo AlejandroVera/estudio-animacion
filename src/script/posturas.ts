@@ -375,6 +375,13 @@ export function conExtras(p: Project): Project {
     sinCapas.join() !== [...(ch.expresivo.sinCapas ?? [])].sort().join()
   )
     cambio = true
+  // Un gesto rehecho sin versión ~b no puede quedarse con la ~b de uno anterior con el mismo nombre
+  for (const e of extras) {
+    if (!e.imageIdB && variants[e.nombre + '~b']) {
+      delete variants[e.nombre + '~b']
+      cambio = true
+    }
+  }
   for (const e of conB) {
     const urlB = mediaUrl(e.imageIdB!)!
     const aidB = `extra-${e.nombre}~b`
