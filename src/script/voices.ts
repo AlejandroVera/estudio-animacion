@@ -7,7 +7,7 @@ import { gesticular, type Palabra } from './emocion'
 import { decodeAudio, loadAudio, saveAudio } from '../audio/storage'
 import type { Character, Escena, Objeto, Part, Plano, Rotulo, Tracks } from '../model/types'
 import { fondosPorVinetas, generateSceneBackgrounds } from './images'
-import { encuadre, fondoDeIndicaciones, planoDeIndicaciones } from './scenes'
+import { encuadre, escalaPlano, fondoDeIndicaciones, planoDeIndicaciones, scenesFromText } from './scenes'
 import { DESCRIPCIONES, MIRADAS } from '../model/characters/chicoRosaExpresivo'
 import { cargarExtras, dibujarPostura, REVISION } from './posturas'
 import { ponerObjetos, type ObjetoPedido } from './objetos'
@@ -117,6 +117,131 @@ async function lectura(texto: string, voz: string, modelo: Modelo, pass: string)
   const buf = await decodeAudio(id)
   if (!buf) throw new Error('No se pudo leer el audio generado.')
   return { buf, al: JSON.parse(await alBlob.text()) }
+}
+
+/** Voz propia: el audio que sube el usuario, guardado en el navegador. */
+export type VozPropia = { audioId: string; nombre: string }
+
+/**
+ * Transcribe la voz propia con ElevenLabs y la convierte en la misma «alineación» (cada letra con su
+ * instante) que da la voz generada; así todo lo demás (boca, director, viñetas) funciona igual. Se manda
+ * a 16 kHz mono en trozos de 100 s (límite de tamaño del servidor) y se guarda: no se paga dos veces.
+ */
+async function lecturaPropia(propia: VozPropia, pass: string, onProgress: (m: string) => void): Promise<{ buf: AudioBuffer; al: Alineacion }> {
+  const buf = await decodeAudio(propia.audioId)
+  if (!buf) throw new Error('No encuentro tu audio en este navegador: vuelve a subirlo.')
+  const idAl = `stt-${propia.audioId}`
+  const guardada = await loadAudio(idAl)
+  if (guardada) return { buf, al: JSON.parse(await guardada.text()) }
+  const sr = 16000
+  const off = new OfflineAudioContext(1, Math.ceil(buf.duration * sr), sr)
+  const src = off.createBufferSource()
+  src.buffer = buf
+  src.connect(off.destination)
+  src.start()
+  const mono = await off.startRendering()
+  const al: Alineacion = { characters: [], character_start_times_seconds: [], character_end_times_seconds: [] }
+  const TROZO = 100
+  const nTrozos = Math.ceil(mono.duration / TROZO)
+  for (let k = 0; k < nTrozos; k++) {
+    onProgress(nTrozos > 1 ? `Escuchando tu voz (${k + 1} de ${nTrozos})…` : 'Escuchando tu voz…')
+    const a = Math.round(k * TROZO * sr), b = Math.min(mono.length, Math.round((k + 1) * TROZO * sr))
+    const parte = new AudioBuffer({ length: b - a, numberOfChannels: 1, sampleRate: sr })
+    parte.copyToChannel(mono.getChannelData(0).slice(a, b), 0)
+    const res = await fetch('/api/transcribir', { method: 'POST', headers: { 'content-type': 'audio/wav', 'x-clave-estudio': pass }, body: wav(parte) })
+    const d = await res.json().catch(() => ({}))
+    if (!res.ok) throw new Error(res.status === 401 ? 'La contraseña del estudio no es correcta.' : d.error ?? `Error ${res.status}`)
+    const t0 = k * TROZO
+    if (al.characters.length) {
+      al.characters.push(' ')
+      al.character_start_times_seconds.push(t0)
+      al.character_end_times_seconds.push(t0)
+    }
+    for (const w of d.palabras as { texto: string; inicio: number; fin: number; tipo: string }[]) {
+      const letras = [...(w.tipo === 'spacing' ? ' ' : w.texto)]
+      const dur = Math.max(0, w.fin - w.inicio) / Math.max(1, letras.length)
+      letras.forEach((c, i) => {
+        al.characters.push(c)
+        al.character_start_times_seconds.push(t0 + w.inicio + i * dur)
+        al.character_end_times_seconds.push(t0 + w.inicio + (i + 1) * dur)
+      })
+    }
+  }
+  if (!al.characters.some((c) => /\p{L}/u.test(c))) throw new Error('No se entiende ninguna palabra en tu audio (¿es solo voz, sin música?).')
+  await saveAudio(idAl, new Blob([JSON.stringify(al)], { type: 'application/json' }))
+  return { buf, al }
+}
+
+const normal = (w: string) => w.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
+
+/** Palabras de la alineación con el índice de su primera y última letra. */
+function palabrasDeAlineacion(al: Alineacion) {
+  const out: { texto: string; a: number; b: number }[] = []
+  for (let i = 0; i < al.characters.length; i++) {
+    if (!/[\p{L}\p{N}]/u.test(al.characters[i]) || (i > 0 && /[\p{L}\p{N}]/u.test(al.characters[i - 1]))) continue
+    let j = i
+    while (j + 1 < al.characters.length && /[\p{L}\p{N}]/u.test(al.characters[j + 1])) j++
+    out.push({ texto: al.characters.slice(i, j + 1).join(''), a: i, b: j + 1 })
+  }
+  return out
+}
+
+/**
+ * Dónde cae cada escena en la voz propia: se empareja el texto de las escenas con lo que se oye (aunque
+ * no sea idéntico: palabras de más o de menos) y cada escena va desde su primera palabra reconocida hasta
+ * la siguiente escena. Devuelve el rango de letras de cada escena en la alineación.
+ */
+function rangosEnVozPropia(al: Alineacion, conTexto: { i: number; d: string }[]) {
+  const oidas = palabrasDeAlineacion(al)
+  const guion: { esc: number; w: string }[] = conTexto.flatMap(({ i, d }) => palabrasDeTexto(d).map((w) => ({ esc: i, w: normal(w) })))
+  const A = oidas.map((o) => normal(o.texto)), B = guion.map((g) => g.w)
+  const n = A.length, m = B.length
+  // Emparejamiento por la subsecuencia común más larga
+  const L = Array.from({ length: n + 1 }, () => new Uint16Array(m + 1))
+  for (let x = n - 1; x >= 0; x--) for (let y = m - 1; y >= 0; y--) L[x][y] = A[x] === B[y] ? L[x + 1][y + 1] + 1 : Math.max(L[x + 1][y], L[x][y + 1])
+  const parejas: { x: number; esc: number }[] = []
+  for (let x = 0, y = 0; x < n && y < m; ) {
+    if (A[x] === B[y]) {
+      parejas.push({ x, esc: guion[y].esc })
+      x++
+      y++
+    } else if (L[x + 1][y] >= L[x][y + 1]) x++
+    else y++
+  }
+  // Una escena cuenta como dicha si se reconoce una parte razonable de sus palabras (si no, coincidencias
+  // sueltas de «la», «no», «en»… le daban un trozo de audio que no era suyo)
+  const primera = new Map<number, number>() // escena -> índice de la primera palabra oída que le corresponde
+  for (const { i } of conTexto) {
+    const total = guion.filter((g) => g.esc === i).length
+    const suyas = parejas.filter((p) => p.esc === i)
+    const largas = suyas.filter((p) => A[p.x].length >= 4).length
+    if (suyas.length >= Math.max(2, total * 0.4) && largas >= 1) primera.set(i, suyas[0].x)
+  }
+  const rangos = new Map<number, [number, number]>()
+  const orden = conTexto.map((c) => c.i).filter((i) => primera.has(i))
+  orden.forEach((i, k) => {
+    const desde = k === 0 ? 0 : primera.get(i)!
+    const hasta = k + 1 < orden.length ? primera.get(orden[k + 1])! : oidas.length
+    if (hasta <= desde) return
+    rangos.set(i, [oidas[desde].a, oidas[hasta - 1].b])
+  })
+  return rangos
+}
+
+/** Si no hay guion escrito, las escenas salen de lo que se oye (una o dos frases cada una). */
+export function escenasDeVoz(al: Alineacion): Escena[] {
+  const texto = al.characters.join('').replace(/\s+/g, ' ').trim()
+  const frases = texto.match(/[^.!?…]+[.!?…]*/g)?.map((f) => f.trim()).filter(Boolean) ?? [texto]
+  const trozos: string[] = []
+  let actual = ''
+  for (const f of frases) {
+    if (actual && (actual + ' ' + f).split(' ').length > 22) {
+      trozos.push(actual)
+      actual = f
+    } else actual = actual ? actual + ' ' + f : f
+  }
+  if (actual) trozos.push(actual)
+  return scenesFromText(trozos.join('\n')).map((e) => ({ ...e, gestos: [] }))
 }
 
 /** Boca por letras: cada vocal abre la boca en su instante; m/b/p la cierran; en las pausas, cerrada. */
@@ -373,9 +498,20 @@ async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number 
   const vins: Vineta[] = []
   for (const v of [...(vinetas ?? [])].sort((a, b) => a.escena - b.escena || a.palabra - b.palabra)) {
     const e = escenas[v.escena]
-    const w = porEscena[v.escena]?.[v.palabra]
+    // El corte cae al EMPEZAR la frase o el inciso (tras un punto o una coma), no a mitad: si la palabra
+    // que dio el director está a 1-3 palabras de un comienzo de frase, se corta ahí (antes cortaba en
+    // «y el camarero >me< mira…» y la imagen parecía ir a destiempo de la voz)
+    const ws = porEscena[v.escena] ?? []
+    let ip = v.palabra
+    const empieza = (j: number) => j === 0 || /[,.;:?!…]/.test(ws[j - 1]?.punt ?? '')
+    if (ws[ip] && !empieza(ip)) {
+      const atras = [1, 2, 3].map((k) => ip - k).find((j) => j >= 0 && empieza(j))
+      const delante = [1, 2].map((k) => ip + k).find((j) => j < ws.length && empieza(j))
+      ip = atras ?? delante ?? ip
+    }
+    const w = ws[ip]
     if (!e) continue
-    let t = v.palabra === 0 || !w ? e.inicio : Math.max(e.inicio, Math.round((w.t - 0.08) * fps) / fps)
+    let t = ip === 0 || !w ? e.inicio : Math.max(e.inicio, Math.round((w.t - 0.08) * fps) / fps)
     if (!vins.length) t = 0
     // Cortes demasiado seguidos: se queda el último
     if (vins.length && t - vins[vins.length - 1].t < 1.2) vins.pop()
@@ -402,7 +538,8 @@ async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number 
     const w = porEscena[r.escena]?.[r.palabra]
     const e = escenas[r.escena]
     if (!w || !e || !r.texto.trim()) continue
-    const tr = Math.round(w.t * fps) / fps
+    // Un pelín antes de la palabra: si sale justo a la vez o después, se percibe tarde
+    const tr = Math.max(e.inicio, Math.round((w.t - 0.12) * fps) / fps)
     rots.push({ id: `r${r.escena}-${r.palabra}-${rots.length}`, t: tr, fin: Math.max(finDe(tr, r.escena), Math.min(tr + 1.6, e.inicio + e.duracion + 1)), texto: r.texto.trim().slice(0, 40), color: r.color, pos: r.pos, estilo: r.estilo, flecha: r.flecha, vin: vinDe(tr) })
   }
   // Texto escaso (como «Estoy Tiesa»): como mucho 1 rótulo por viñeta (3 si el usuario pide rótulos en esa
@@ -431,10 +568,11 @@ async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number 
   // Objetos: aparecen en su palabra (un pelín antes) y se quedan hasta el final de la escena
   const objs: ObjetoPedido[] = []
   for (const o of objetos ?? []) {
-    const w = conPeso(o.escena, o.palabra)
+    // En la palabra EXACTA en que lo nombra (antes se pasaba a la siguiente «con peso» y salía tarde)
+    const w = porEscena[o.escena]?.[o.palabra] ?? conPeso(o.escena, o.palabra)
     const e = escenas[o.escena]
     if (!w || !e || !o.dibujo.trim()) continue
-    const to = Math.max(e.inicio, Math.round((w.t - 0.08) * fps) / fps)
+    const to = Math.max(e.inicio, Math.round((w.t - 0.12) * fps) / fps)
     objs.push({ flecha: o.flecha, vin: vinDe(to), t: to, fin: finDe(to, o.escena), pos: o.pos, que: o.que, dibujo: o.dibujo.trim() })
   }
   // Nada flotando sin sentido: lo que no sujeta ni tiene delante va en un bocadillo (algo que imagina),
@@ -490,24 +628,60 @@ const TAIL = 0.6 // respiro al final del vídeo
  * Voz del guion: se lee entero de una vez con ElevenLabs, el audio se reparte entre las escenas según
  * cuándo empieza cada frase, las escenas duran lo que su frase y la boca sigue las letras.
  */
-export async function voiceScript(escenas: Escena[], texto: string, voz: Voz, pass: string, onProgress: (msg: string) => void, modelo: Modelo = 'eleven_multilingual_v2', indicaciones = '') {
+export async function voiceScript(
+  escenasIn: Escena[],
+  texto: string,
+  voz: Voz | null,
+  pass: string,
+  onProgress: (msg: string) => void,
+  modelo: Modelo = 'eleven_multilingual_v2',
+  indicaciones = '',
+  propia?: VozPropia,
+) {
   let aviso = ''
-  const conTexto = escenas.map((e, i) => ({ i, d: e.dialogo.trim() })).filter((x) => x.d)
-  if (!conTexto.length) throw new Error('Ninguna escena tiene diálogo.')
-  // Texto completo y dónde empieza cada frase dentro de él
-  let completo = ''
-  const rangos = new Map<number, [number, number]>()
-  for (const { i, d } of conTexto) {
-    // Texto seguido (un espacio, no párrafos): ElevenLabs lo lee de corrido, sin pausa ni cambio de
-    // entonación en cada escena
-    if (completo) completo += ' '
-    rangos.set(i, [completo.length, completo.length + d.length])
-    completo += d
+  let escenas = escenasIn
+  let conTexto = escenas.map((e, i) => ({ i, d: e.dialogo.trim() })).filter((x) => x.d)
+  if (!conTexto.length && !propia) throw new Error('Ninguna escena tiene diálogo.')
+  if (!voz && !propia) throw new Error('Elige una voz o sube la tuya.')
+  let rangos = new Map<number, [number, number]>()
+  let leida: { buf: AudioBuffer; al: Alineacion }
+  let nombreVoz: string
+  if (propia) {
+    // Voz propia: se escucha (transcribe) y cada escena se busca en lo que se oye
+    leida = await lecturaPropia(propia, pass, onProgress)
+    nombreVoz = propia.nombre
+    if (!conTexto.length) {
+      escenas = escenasDeVoz(leida.al)
+      conTexto = escenas.map((e, i) => ({ i, d: e.dialogo.trim() })).filter((x) => x.d)
+    }
+    rangos = rangosEnVozPropia(leida.al, conTexto)
+    const sinOir = conTexto.filter((c) => !rangos.has(c.i)).length
+    if (!rangos.size) throw new Error('No encuentro el texto de las escenas en tu audio. Escribe en las escenas lo mismo que dices (o déjalas vacías y las hago yo con lo que se oye).')
+    if (sinOir) aviso = `${sinOir} escena(s) no se oyen en tu audio y las he quitado. `
+    // Las escenas con texto que no se dice se quitan (dejarían un silencio en medio de tu locución)
+    const oidas = new Set(conTexto.filter((c) => rangos.has(c.i)).map((c) => c.i))
+    const quedan = escenas.map((e, i) => ({ e, i })).filter(({ e, i }) => !e.dialogo.trim() || oidas.has(i))
+    const nuevoIndice = new Map(quedan.map(({ i }, k) => [i, k]))
+    escenas = quedan.map(({ e }) => e)
+    rangos = new Map([...rangos].map(([i, r]) => [nuevoIndice.get(i)!, r]))
+    conTexto = escenas.map((e, i) => ({ i, d: e.dialogo.trim() })).filter((x) => x.d && rangos.has(x.i))
+  } else {
+    // Texto completo y dónde empieza cada frase dentro de él
+    let completo = ''
+    for (const { i, d } of conTexto) {
+      // Texto seguido (un espacio, no párrafos): ElevenLabs lo lee de corrido, sin pausa ni cambio de
+      // entonación en cada escena
+      if (completo) completo += ' '
+      rangos.set(i, [completo.length, completo.length + d.length])
+      completo += d
+    }
+    onProgress(`Generando la voz (${voz!.nombre})…`)
+    leida = await lectura(completo, voz!.id, modelo, pass)
+    nombreVoz = voz!.nombre
   }
-  onProgress(`Generando la voz (${voz.nombre})…`)
-  const leida = await lectura(completo, voz.id, modelo, pass)
   // Las pausas largas entre frases (0,5-0,8 s de silencio total) sonaban a voz entrecortada: se acortan
-  const { buf, al } = acortarPausas(leida.buf, leida.al)
+  // (en la voz propia solo los silencios largos de verdad: sus pausas son parte de cómo habla)
+  const { buf, al } = acortarPausas(leida.buf, leida.al, propia ? 0.6 : 0.3)
   const ini = al.character_start_times_seconds
   const finT = al.character_end_times_seconds
   // Tramo de audio de cada escena: desde un poco antes de su primera letra hasta antes de la siguiente frase
@@ -705,16 +879,23 @@ export async function voiceScript(escenas: Escena[], texto: string, voz: Voz, pa
     // En vertical no hay sitio a los lados: siempre en el centro (el contenido va arriba y a los lados)
     if (st.project.width <= st.project.height * 1.1) vinetasNuevas = vinetasNuevas.map((v) => ({ ...v, lado: 'centro' as const }))
     for (const c of Object.keys(tracks)) if (c.startsWith('cam:') || c === `part:${raiz?.id}:scale` || c === `part:${raiz?.id}:x`) delete tracks[c]
+    const lugares = [...new Set(vinetasNuevas.map((v) => v.fondo).filter((f) => !/^blanco\b/i.test(f)))]
     for (const v of vinetasNuevas) {
       const s0 = encuadre(v.plano, st.project, ch)
       for (const [canal, val] of [['cam:zoom', s0.zoom], ['cam:x', s0.x], ['cam:y', s0.y]] as const)
         tracks[canal] = [...(tracks[canal] ?? []), { t: v.t, v: Math.round(val * 1000) / 1000, ease: 'salto' }]
-      if (raiz) tracks[`part:${raiz.id}:scale`] = [...(tracks[`part:${raiz.id}:scale`] ?? []), { t: v.t, v: v.plano === 'lejos' ? 0.7 : 1, ease: 'salto' }]
+      if (raiz) tracks[`part:${raiz.id}:scale`] = [...(tracks[`part:${raiz.id}:scale`] ?? []), { t: v.t, v: escalaPlano(v.plano), ease: 'salto' }]
       // A un lado (como «Estoy Tiesa»): el personaje se desplaza y el otro lado queda para el contenido
       if (raiz) {
         const W = st.project.width
         const inst0 = st.project.instances[0]
-        const objetivo = v.lado === 'izq' ? W * 0.27 : v.lado === 'der' ? W * 0.73 : W / 2
+        // En vertical, a cuerpo entero, cada lugar con el personaje en un sitio algo distinto (centro, a la
+        // derecha con hueco a la izquierda, adonde señala su mano, o un poco a la izquierda): antes
+        // siempre estaba plantado en el centro y todos los planos se parecían
+        const vertical = W <= st.project.height * 1.1
+        const nLugar = lugares.indexOf(v.fondo)
+        const desvio = vertical && (v.plano === 'general' || v.plano === 'lejos') && !/^blanco\b/i.test(v.fondo) ? [0, 0.16, -0.12][nLugar % 3] : 0
+        const objetivo = v.lado === 'izq' ? W * 0.27 : v.lado === 'der' ? W * 0.73 : W * (0.5 + desvio)
         const dx = (objetivo - W / 2) / s0.zoom / inst0.scale
         tracks[`part:${raiz.id}:x`] = [...(tracks[`part:${raiz.id}:x`] ?? []), { t: v.t, v: Math.round(dx), ease: 'salto' }]
       }
@@ -732,8 +913,8 @@ export async function voiceScript(escenas: Escena[], texto: string, voz: Voz, pa
   st.commit({
     ...actual,
     duration: m.duration,
-    audio: { id: audioId, name: `Voces (${voz.nombre})`, start: 0, duration: mezcla.duration },
-    guion: { texto, escenas: m.escenas.map(({ inicio: _i, ...e }, i) => ({ ...e, fondo: fondosNuevos?.[i] || e.fondo })), voz, indicaciones },
+    audio: { id: audioId, name: `Voces (${nombreVoz})`, start: 0, duration: mezcla.duration },
+    guion: { texto, escenas: m.escenas.map(({ inicio: _i, ...e }, i) => ({ ...e, fondo: fondosNuevos?.[i] || e.fondo })), voz: voz ?? undefined, indicaciones },
     instances: [{ ...inst, tracks: conGestos }, ...rest],
     ...(rotulosNuevos ? { rotulos: rotulosNuevos } : {}),
     vinetas: vinetasNuevas ? vinetasNuevas.map((v, i) => ({ t: v.t, fin: vinetasNuevas![i + 1]?.t ?? m.duration, lado: v.lado })) : undefined,

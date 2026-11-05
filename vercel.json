@@ -17,6 +17,9 @@
     },
     "api/indicaciones.ts": {
       "maxDuration": 300
+    },
+    "api/transcribir.ts": {
+      "maxDuration": 120
     }
   }
 }

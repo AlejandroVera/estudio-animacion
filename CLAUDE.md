@@ -221,6 +221,23 @@ cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y
   ni se salen del borde (`colocarSinTapar` en render.ts, con `PuntosPersonaje.circulo`). 5) `~b` rotas
   (restos de dientes) en t_e_dinero, t_e_carcajada y t_e_ilusion repintadas a mano; taza suelta borrada
   de t_e_agotado.
+- VOZ PROPIA («🎤 Subir mi audio…» en el panel Guion, también sin escenas): el audio se guarda en IndexedDB
+  (`VozPropia` {audioId, nombre}, en localStorage `estudio-animacion:voz-propia`); `lecturaPropia`
+  (voices.ts) lo manda a 16 kHz mono en trozos de 100 s a `api/transcribir.ts` (ElevenLabs Scribe,
+  scribe_v2 y si no scribe_v1; la clave necesita el permiso «Speech to Text») y lo convierte en la misma
+  alineación por letras que la voz generada (se guarda `stt-<audioId>`: no se paga dos veces). Las
+  escenas escritas se buscan en lo oído (`rangosEnVozPropia`, subsecuencia común; una escena cuenta si se
+  reconoce ≥40 % de sus palabras, si no se quita); sin escenas, `escenasDeVoz` las saca de las frases.
+  Sus pausas se respetan (solo se acortan las de más de 0,6 s). Probado con el audio de un vídeo real.
+- SINCRONÍA IMAGEN-VOZ (tras «no va a tiempo»; la boca SÍ iba al fotograma, lo que fallaba eran los cortes
+  a mitad de frase): cada corte de viñeta se lleva al comienzo de la frase o inciso (tras punto o coma)
+  si está a 1-3 palabras; rótulos y objetos salen 0,12 s ANTES de su palabra exacta (antes los objetos se
+  pasaban a la siguiente «con peso» y salían tarde). La GUIA lo pide también.
+- TAMAÑO Y VARIEDAD (tras «le veo muy grande», «escenarios y encuadre muy similares»): `escalaPlano`
+  (scenes.ts): lejos 0,55, general 0,8 (se ve el lugar alrededor), medio/primer 1 con zoom. En vertical,
+  a cuerpo entero, cada lugar pone al personaje en un sitio (centro, +16 % a la derecha, −12 %). Cada
+  lugar del vídeo se pide a fal con `variante` (api/imagen.ts): su paleta dominante (8) y su encuadre (4:
+  pared de frente, esquina, exterior con cielo, desde abajo); sin variante, el estilo de antes.
 - DIRECTOR IA (`api/actuar.ts`, lo llama `dirigir` en `voices.ts` al generar voces): recibe las palabras
   de cada escena, la emoción y el catálogo `DESCRIPCIONES` (qué expresa cada postura) y devuelve en qué
   palabra cambia y a qué postura según lo que dice, y `miradas` (catálogo `MIRADAS`) en otras palabras; las claves caen 0,08 s antes de esa palabra. Si

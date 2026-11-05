@@ -5,7 +5,8 @@ import type { Escena, Plano } from '../model/types'
 import { animateScenes, estimateDuration, scenesFromText } from '../script/scenes'
 import { activeCharacter, useStore } from '../store'
 import { ScriptStyles } from './ScriptStyles'
-import { listVoices, verPlan, voiceScript, type Modelo, type PlanDirector, type Voz } from '../script/voices'
+import { listVoices, verPlan, voiceScript, type Modelo, type PlanDirector, type Voz, type VozPropia } from '../script/voices'
+import { decodeAudio, saveAudio } from '../audio/storage'
 import { PlanVista } from './PlanVista'
 import { generateSceneBackgrounds } from '../script/images'
 
@@ -101,6 +102,39 @@ export function ScriptPanel({ onClose }: { onClose: () => void }) {
     }
   })
   const [vozManual, setVozManual] = useState('')
+  // Voz propia (grabada por el usuario): el audio se guarda en el navegador y aquí solo su id y nombre
+  const PROPIA_KEY = 'estudio-animacion:voz-propia'
+  const [propia, setPropiaState] = useState<VozPropia | null>(() => {
+    try {
+      return JSON.parse(localStorage.getItem(PROPIA_KEY) ?? 'null')
+    } catch {
+      return null
+    }
+  })
+  const setPropia = (p: VozPropia | null) => {
+    setPropiaState(p)
+    try {
+      if (p) localStorage.setItem(PROPIA_KEY, JSON.stringify(p))
+      else localStorage.removeItem(PROPIA_KEY)
+    } catch {
+      // sin almacenamiento: solo dura esta sesión
+    }
+  }
+  const archivoVoz = useRef<HTMLInputElement>(null)
+  const subirVoz = async (f: File) => {
+    const id = `voz-propia-${Date.now()}`
+    await saveAudio(id, f)
+    const buf = await decodeAudio(id)
+    if (!buf) {
+      setMsg({ ok: false, text: 'No se ha podido leer ese audio (prueba con MP3, WAV o M4A).' })
+      return
+    }
+    setPropia({ audioId: id, nombre: f.name })
+    setMsg({
+      ok: true,
+      text: `Tu voz: ${f.name} (${buf.duration.toFixed(1).replace('.', ',')} s). Escribe en las escenas lo mismo que dices (o déjalas vacías y las saco de lo que se oye) y pulsa «🎙 Animar con mi voz».`,
+    })
+  }
   const MODELO_KEY = 'estudio-animacion:modelo-voz'
   const [modelo, setModeloState] = useState<Modelo>(() => {
     try {
@@ -158,16 +192,16 @@ export function ScriptPanel({ onClose }: { onClose: () => void }) {
     }
   }
   const conVoz = async () => {
-    if (!voz || busy || !escenas.length) return
+    if ((!voz && !propia) || busy || (!escenas.length && !propia)) return
     const hay = Object.keys(useStore.getState().project.instances[0].tracks).length > 0
     if (hay && !confirm('Esto sustituye la animación actual por la de las escenas, con voz. Se puede deshacer con Ctrl+Z. ¿Seguir?')) return
     setBusy(true)
     try {
       // «Dibujar todo de nuevo»: sin gestos, fondos automáticos ni dibujos guardados, se hacen de cero
       limpiarSiDeNuevo()
-      const r = await voiceScript(escenas, texto, voz, pass, (t) => setMsg({ ok: true, text: t }), modelo, indicaciones)
+      const r = await voiceScript(escenas, texto, propia ? null : voz, pass, (t) => setMsg({ ok: true, text: t }), modelo, indicaciones, propia ?? undefined)
       setEscenas(r.escenas)
-      setMsg({ ok: !r.aviso, text: `Listo: ${r.duracion.toFixed(1).replace('.', ',')} s con la voz de ${voz.nombre}. ${r.aviso || 'Gestos dirigidos por la IA según el guion.'}` })
+      setMsg({ ok: !r.aviso, text: `Listo: ${r.duracion.toFixed(1).replace('.', ',')} s con ${propia ? 'tu voz' : `la voz de ${voz!.nombre}`}. ${r.aviso || 'Gestos dirigidos por la IA según el guion.'}` })
     } catch (e) {
       const t = e instanceof Error ? e.message : String(e)
       if (/contraseña|clave|401/i.test(t)) setNeedPass(true)
@@ -290,8 +324,43 @@ export function ScriptPanel({ onClose }: { onClose: () => void }) {
         </button>
       </div>
       {msg && <p className={'copilot-reply' + (msg.ok ? '' : ' error')}>{msg.text}</p>}
+      <input
+        ref={archivoVoz}
+        type="file"
+        accept="audio/*,video/mp4"
+        hidden
+        onChange={(e) => {
+          const f = e.target.files?.[0]
+          e.target.value = ''
+          if (f) void subirVoz(f)
+        }}
+      />
       {planVisto && <PlanVista plan={planVisto.plan} palabras={planVisto.palabras} project={useStore.getState().project} escenas={escenas} />}
 
+      {escenas.length === 0 && (
+        <div className="voice-pick">
+          <div className="sublabel">🎤 ¿Ya tienes tu locución grabada?</div>
+          {propia ? (
+            <>
+              <div className="voice-row">
+                <span className="voice-name" title={propia.nombre}>
+                  🎤 {propia.nombre}
+                </span>
+                <button className="btn small" onClick={() => setPropia(null)}>
+                  Quitar
+                </button>
+              </div>
+              <button className="btn primary full" disabled={busy} onClick={conVoz}>
+                {busy ? 'Trabajando…' : '🎙 Animar con mi voz (saco las escenas de lo que dices)'}
+              </button>
+            </>
+          ) : (
+            <button className="btn small" onClick={() => archivoVoz.current?.click()}>
+              Subir mi audio…
+            </button>
+          )}
+        </div>
+      )}
       {escenas.length > 0 && (
         <>
           <div className="script-sum muted small">
@@ -446,8 +515,23 @@ export function ScriptPanel({ onClose }: { onClose: () => void }) {
             <label className="check-row" title="Olvida los gestos a medida, los fondos y los dibujos guardados de este proyecto y los hace de cero con la versión actual (se pagan otra vez). La voz guardada sí se reutiliza.">
               <input type="checkbox" checked={deNuevo} onChange={(e) => setDeNuevo(e.target.checked)} /> 🧹 Dibujar todo de nuevo (gestos, fondos y dibujos)
             </label>
-            <button className="btn primary full" disabled={!voz || busy} onClick={conVoz}>
-              {busy ? 'Trabajando…' : '🎙 Generar voces y animar'}
+            <div className="sublabel">🎤 O tu propia voz (grabada)</div>
+            {propia ? (
+              <div className="voice-row">
+                <span className="voice-name" title={propia.nombre}>
+                  🎤 {propia.nombre}
+                </span>
+                <button className="btn small" onClick={() => setPropia(null)} title="Volver a la voz de ElevenLabs">
+                  Quitar
+                </button>
+              </div>
+            ) : (
+              <button className="btn small" onClick={() => archivoVoz.current?.click()} title="Sube tu locución (solo voz, sin música). Se transcribe para mover la boca, cortar las viñetas y dirigir los gestos al ritmo de lo que dices.">
+                Subir mi audio…
+              </button>
+            )}
+            <button className="btn primary full" disabled={(!voz && !propia) || busy} onClick={conVoz}>
+              {busy ? 'Trabajando…' : propia ? '🎙 Animar con mi voz' : '🎙 Generar voces y animar'}
             </button>
           </div>
           <button

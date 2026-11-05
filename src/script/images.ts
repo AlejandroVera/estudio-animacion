@@ -22,7 +22,7 @@ export function formatoDe(p: Project) {
 }
 
 /** Genera un fondo y lo guarda; devuelve la capa (sin añadirla al proyecto). */
-export async function generateBackground(descripcion: string, project: Project, hueco?: 'izq' | 'der'): Promise<BgLayer> {
+export async function generateBackground(descripcion: string, project: Project, hueco?: 'izq' | 'der', variante?: number): Promise<BgLayer> {
   const ch = activeCharacter(project)
   // Fondo blanco liso: no hace falta IA
   if (/^blanco\b/i.test(descripcion.trim())) {
@@ -43,6 +43,7 @@ export async function generateBackground(descripcion: string, project: Project, 
       referencia: ch.referencia ? location.origin + ch.referencia : undefined,
       formato: formatoDe(project),
       ...(hueco ? { hueco } : {}),
+      ...(variante !== undefined ? { variante } : {}),
     }),
   })
   const d = await res.json().catch(() => ({}))
@@ -194,7 +195,8 @@ export async function fondosPorVinetas(vinetas: { t: number; fondo: string; lado
       // El lado libre (contrario al personaje) se pide casi vacío, para el contenido
       const lado = vinetas.find((v) => v.fondo === d && v.lado && v.lado !== 'centro')?.lado
       const hueco = lado === 'izq' ? 'der' : lado === 'der' ? 'izq' : undefined
-      capaDe.set(d, previa ?? { ...(await generateBackground(d, pr, hueco)), descripcion: d })
+      // Cada lugar del vídeo con su paleta y su encuadre (antes todos eran «pared gris de frente»)
+      capaDe.set(d, previa ?? { ...(await generateBackground(d, pr, hueco, unicos.filter((u) => !/^blanco\b/i.test(u)).indexOf(d))), descripcion: d })
     } catch (e) {
       fallos.push(`«${d}»: ${e instanceof Error ? e.message : e}`)
     }

@@ -79,6 +79,13 @@ export function textMouthKeys(text: string, t0: number, t1: number, fps: number)
 }
 
 /** Encuadre de cada plano: zoom y desplazamiento de cámara hacia la cabeza del personaje. */
+/**
+ * Tamaño del personaje (escala de la raíz, desde los pies) en cada plano. En «general» no ocupa toda la
+ * altura: se ve el lugar alrededor (a cuerpo entero llenaba el vídeo y se veía demasiado grande).
+ * «medio» y «primer» van a tamaño normal con el zoom de cámara de `encuadre`.
+ */
+export const escalaPlano = (p: Plano | undefined) => (p === 'lejos' ? 0.55 : p === 'general' || !p ? 0.8 : 1)
+
 export function encuadre(plano: Plano, project: Project, character: Character) {
   if (plano === 'general' || plano === 'lejos') return { zoom: 1, x: 0, y: 0 }
   const inst = project.instances[0]
@@ -136,7 +143,7 @@ export function animateScenes(escenas: Escena[], project: Project, character: Ch
     // «Lejos»: el personaje más pequeño (desde los pies) con el fondo igual
     const raizP = character.parts.find((p) => !p.parent)
     if (raizP && character.expresivo)
-      result.claves.push({ canal: `part:${raizP.id}:scale`, t: inicio, valor: e.plano === 'lejos' ? '0.7' : '1', transicion: 'salto' })
+      result.claves.push({ canal: `part:${raizP.id}:scale`, t: inicio, valor: String(escalaPlano(e.plano)), transicion: 'salto' })
     // Expresión (cejas) y gestos
     const ex = expr[e.expresion] ?? expr.Neutral
     if (ex) result.claves.push({ canal: 'face:brows', t: inicio, valor: ex.brows, transicion: 'salto' })

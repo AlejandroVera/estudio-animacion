@@ -11,7 +11,7 @@ const FORMATOS = ['9:16', '16:9', '1:1', '4:5', '3:4']
 export async function POST(request: Request): Promise<Response> {
   if (!process.env.FAL_KEY) return json({ error: 'Falta FAL_KEY en Vercel.' }, 503)
   if (!claveOk(request)) return json({ error: 'clave' }, 401)
-  let body: { descripcion?: string; referencia?: string; formato?: string; tipo?: 'fondo' | 'libre' | 'objeto'; hueco?: 'izq' | 'der' }
+  let body: { descripcion?: string; referencia?: string; formato?: string; tipo?: 'fondo' | 'libre' | 'objeto'; hueco?: 'izq' | 'der'; variante?: number }
   try {
     body = await request.json()
   } catch {
@@ -31,13 +31,37 @@ export async function POST(request: Request): Promise<Response> {
     body.hueco === 'izq' || body.hueco === 'der'
       ? `The ${body.hueco === 'izq' ? 'LEFT' : 'RIGHT'} half of the picture must be almost EMPTY: plain wall and floor only, nothing on it. Put the few objects of the place in the ${body.hueco === 'izq' ? 'right' : 'left'} half and near the edges. `
       : ''
+  // Variedad entre los lugares de un mismo vídeo: cada uno con su color dominante y su encuadre
+  // (antes todos salían iguales: pared gris lila de frente con dos muebles)
+  const PALETAS = [
+    'warm mustard yellow and terracotta',
+    'mint green and soft pink',
+    'deep navy blue night with warm yellow lamp light',
+    'faded teal and orange',
+    'dusty pink and burgundy',
+    'sky blue and grass green',
+    'lilac and lemon yellow',
+    'brick red and cream',
+  ]
+  const ENCUADRES = [
+    'flat frontal view of a wall close behind the character, floor as a plain band at the bottom',
+    'a corner of the room seen slightly from the side, two walls meeting, a bit of depth',
+    'if it is an outdoor place, a wide open view with a big sky and a low horizon; if indoors, a wide room with the far wall and a window or door showing outside',
+    'seen from a bit lower than usual, with tall things rising around and a ceiling or sky at the top',
+  ]
+  const v = Number.isInteger(body.variante) && body.variante! >= 0 ? body.variante! : -1
+  const variedad =
+    v >= 0
+      ? `For THIS place use a dominant color palette of ${PALETAS[v % PALETAS.length]} (still flat and slightly washed-out) and this framing: ${ENCUADRES[Math.floor(v / 2) % ENCUADRES.length]}. If the place is outdoors (street, park, beach, terrace…) show it outdoors with sky, never as an indoor wall. `
+      : ''
+  const camara = v >= 0 ? 'Simple flat cartoon backdrop with very little perspective. ' : 'Camera looks STRAIGHT at a wall that is close behind the character: flat frontal view, almost no perspective, no depth, no vanishing point; the floor is just a plain band at the bottom. '
   const llamar = async (conRef: boolean) => {
     const prompt =
       body.tipo === 'libre'
         ? descripcion
         : body.tipo === 'objeto'
           ? `One single isolated drawing for a 2D cartoon video: ${descripcion}. ${conRef ? 'Match the line style of the reference image but do NOT draw the character from it. ' : ''}Style: crude amateur doodle drawn fast in a basic paint app by a YouTuber, thick shaky black outlines, flat paint-bucket colors with no shading, slightly lopsided, simple and instantly recognizable. Isolated on a plain pure white background, centered, filling most of the square canvas, nothing else around it: no shadow, no frame, no other objects, no people, and no text unless the description explicitly includes words or a number.`
-          : `Background illustration for a 2D animated video. ${conRef ? 'Use the reference image ONLY to match the line style. Do NOT draw the character from the reference or any other person. Style: crude amateur doodle drawn fast with a finger or mouse in a basic paint app by a YouTuber, NOT a professional illustration. Camera looks STRAIGHT at a wall that is close behind the character: flat frontal view, almost no perspective, no depth, no vanishing point; the floor is just a plain band at the bottom. Thick shaky black outlines, wobbly and uneven, crooked straight lines drawn without a ruler, lines that overshoot or do not quite close at corners. Paint-bucket flat fills with no shading, no gradients, no texture, colors slightly spilling or not reaching the lines. Only 2 to 4 big simple lopsided objects that are TYPICAL OF THIS PLACE (nothing generic), drawn in a childish way with no white outline around them; most of the picture is EMPTY plain wall (it is only a backdrop: text and drawings will be added on top). Muted slightly washed-out colors (greyish lilac, dusty blue, beige, faded green). ' : 'Style: crude amateur doodle drawn fast with a finger or mouse in a basic paint app by a YouTuber, NOT a professional illustration. Camera looks STRAIGHT at a wall that is close behind the character: flat frontal view, almost no perspective, no depth, no vanishing point; the floor is just a plain band at the bottom. Thick shaky black outlines, wobbly and uneven, crooked straight lines drawn without a ruler, lines that overshoot or do not quite close at corners. Paint-bucket flat fills with no shading, no gradients, no texture, colors slightly spilling or not reaching the lines. Only 2 to 4 big simple lopsided objects that are TYPICAL OF THIS PLACE (nothing generic), drawn in a childish way with no white outline around them; most of the picture is EMPTY plain wall (it is only a backdrop: text and drawings will be added on top). Muted slightly washed-out colors (greyish lilac, dusty blue, beige, faded green). '}Scene: ${descripcion}. ${hueco}Empty location with no people, no characters, no animals unless asked, no text, no letters, no watermark. Keep the lower middle as plain empty floor (a character will be added later; do NOT draw any box, mark, shadow or placeholder there). The drawing must fill the WHOLE ${formato} canvas edge to edge (${formato === '9:16' ? 'tall vertical scene: show the floor in the lower part and the wall or sky up to the top' : 'wide scene'}): no white bands, no borders, no margins, no frame.`
+          : `Background illustration for a 2D animated video. ${conRef ? 'Use the reference image ONLY to match the line style. Do NOT draw the character from the reference or any other person. Style: crude amateur doodle drawn fast with a finger or mouse in a basic paint app by a YouTuber, NOT a professional illustration. ' + camara + 'Thick shaky black outlines, wobbly and uneven, crooked straight lines drawn without a ruler, lines that overshoot or do not quite close at corners. Paint-bucket flat fills with no shading, no gradients, no texture, colors slightly spilling or not reaching the lines. Only 2 to 4 big simple lopsided objects that are TYPICAL OF THIS PLACE (nothing generic), drawn in a childish way with no white outline around them; most of the picture is EMPTY plain wall (it is only a backdrop: text and drawings will be added on top). Muted slightly washed-out colors' + (variedad ? '. ' : ' (greyish lilac, dusty blue, beige, faded green). ') : 'Style: crude amateur doodle drawn fast with a finger or mouse in a basic paint app by a YouTuber, NOT a professional illustration. ' + camara + 'Thick shaky black outlines, wobbly and uneven, crooked straight lines drawn without a ruler, lines that overshoot or do not quite close at corners. Paint-bucket flat fills with no shading, no gradients, no texture, colors slightly spilling or not reaching the lines. Only 2 to 4 big simple lopsided objects that are TYPICAL OF THIS PLACE (nothing generic), drawn in a childish way with no white outline around them; most of the picture is EMPTY plain wall (it is only a backdrop: text and drawings will be added on top). Muted slightly washed-out colors' + (variedad ? '. ' : ' (greyish lilac, dusty blue, beige, faded green). ')}Scene: ${descripcion}. ${variedad}${hueco}Empty location with no people, no characters, no animals unless asked, no text, no letters, no watermark. Keep the lower middle as plain empty floor (a character will be added later; do NOT draw any box, mark, shadow or placeholder there). The drawing must fill the WHOLE ${formato} canvas edge to edge (${formato === '9:16' ? 'tall vertical scene: show the floor in the lower part and the wall or sky up to the top' : 'wide scene'}): no white bands, no borders, no margins, no frame.`
     const model = conRef ? 'fal-ai/nano-banana/edit' : 'fal-ai/nano-banana'
     const res = await fetch(`https://fal.run/${model}`, {
       method: 'POST',

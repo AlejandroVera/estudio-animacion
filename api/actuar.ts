@@ -33,7 +33,8 @@ QUITA más de lo que pone.
 
 2. VIÑETAS CON CONTINUIDAD. «vinetas»: el vídeo es una sucesión de momentos de 2 a 6 s (normalmente uno
    por frase; nunca más corto de 1,8 s). Cada viñeta: escena, palabra donde empieza (la primera, escena 0
-   palabra 0), «idea» (el momento de la historia), «motivo» (por qué este corte aquí), «fondo», «tamano»
+   palabra 0; las demás, SIEMPRE la primera palabra de una frase o de un inciso tras una coma: un corte a
+   mitad de frase se nota a destiempo de la voz), «idea» (el momento de la historia), «motivo» (por qué este corte aquí), «fondo», «tamano»
    y «lado».
    - «fondo»: el LUGAR donde está en ese momento de la historia (la cocina, el sofá de casa, el gimnasio…)
      o «blanco» para un remate o una reflexión corta. CONTINUIDAD: mientras la historia siga en el mismo
@@ -65,6 +66,9 @@ QUITA más de lo que pone.
      (bocadillo); (b) algo que ENSEÑA en la mano → pos «mano»; (c) algo que de verdad está DELANTE en ese
      lugar → pos «delante». Nunca algo que ya está usando en un gesto, nunca decoración, como mucho uno
      por viñeta. «que» en español, «dibujo» EN INGLÉS (un objeto sencillo).
+   - SIMULTANEIDAD: un objeto o un rótulo sale en la palabra EXACTA en que se nombra («7 euros» → en «7»;
+     el bocadillo de la boda → en «boda»), nunca antes ni después; y el gesto que lo interpreta, en esa
+     misma palabra o justo antes.
    - NADA REPETIDO: una misma idea se cuenta UNA vez y de UNA forma. Si el lugar ya tiene un reloj, no
      pongas además un bocadillo con un reloj ni un rótulo con la hora; si dice «7 €» y ya lo pone un
      cartel, no hace falta también el billete. Elige lo más claro y quita el resto.
