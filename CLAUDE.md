@@ -180,6 +180,12 @@ cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y
   (`guion.indicaciones`). `api/actuar.ts` las trata como ÓRDENES por encima de todo (gesto → a medida
   si no existe, fondo, rótulos, cara). Para corregir: cambiar la indicación y volver a «Generar voces y
   animar» (la voz está en caché y los fondos con la misma descripción se reutilizan: no se repaga).
+- PROPONER INDICACIONES (tras perder Alejandro su guion anotado y pedir «yo pongo el guion y la IA anota cada
+  escena como Estoy Tiesa»): botón «✨ Proponer indicaciones» del panel Guion → `api/indicaciones.ts`
+  (Sonnet, guía de animador de Estoy Tiesa) rellena `Escena.indicaciones` (conserva y completa lo que ya
+  hubiera) y las generales si están vacías; luego «Generar voces y animar» las cumple. El panel guarda un
+  BORRADOR (texto, escenas, indicaciones) en localStorage `estudio-animacion:borrador-guion` a cada cambio
+  (antes solo se guardaba al animar y se perdía al cerrar o recargar).
 - DIRECTOR IA (`api/actuar.ts`, lo llama `dirigir` en `voices.ts` al generar voces): recibe las palabras
   de cada escena, la emoción y el catálogo `DESCRIPCIONES` (qué expresa cada postura) y devuelve en qué
   palabra cambia y a qué postura según lo que dice, y `miradas` (catálogo `MIRADAS`) en otras palabras; las claves caen 0,08 s antes de esa palabra. Si
