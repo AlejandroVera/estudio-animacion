@@ -111,6 +111,10 @@ COMPOSICIÓN DE CADA VIÑETA (lo que le da riqueza visual, como «Estoy Tiesa»)
     (t_presenta) o lo SEÑALA (t_alla) — siempre quedan mirando hacia el contenido — o REACCIONA con una
     cara exagerada (t_e_*) si es un precio terrible, algo que le encanta, etc.
   · En cada viñeta con contenido, al menos una de estas interacciones.
+  · MÍNIMOS OBLIGATORIOS: al menos 1 de cada 3 viñetas con contenido lleva un objeto con pos «mano» (lo
+    que nombra y cabe en una mano: táper, móvil, taza, billete, factura, pesa pequeña, sartén…) y al
+    menos 1 objeto con pos «delante» en todo el vídeo (en un lugar). Si ya hay un gesto a medida que
+    sujeta algo, ESE objeto no se pone también como objeto (saldría dos veces): elige una cosa o la otra.
 - Objetos con «pensamiento» en pos: se dibujan DENTRO de un bocadillo de pensamiento junto a su cabeza
   (lo que imagina, desea, teme o recuerda). Un objeto también puede llevar «flecha».
 
