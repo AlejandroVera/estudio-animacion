@@ -196,6 +196,17 @@ cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y
   que todo se dibuje con la versión actual (si no, se reutilizaba lo de versiones viejas por el mismo
   nombre/descripción). La voz guardada sí se reutiliza. `conExtras` quita la ~b de un gesto anterior si el
   rehecho no tiene.
+- CRITERIO DEL DIRECTOR (tras «necesita sentido, buen gusto, coherencia, no meter cosas por meterlas»): la GUIA
+  de `api/actuar.ts` se reescribió entera (las instrucciones acumuladas se contradecían; había MÍNIMOS de
+  objetos en la mano/delante que obligaban a meter cosas): 1) historia primero, 2) viñetas con continuidad
+  (mismo lugar con el mismo texto mientras la historia siga allí, 2-4 lugares), 3) el personaje actúa la
+  historia (gestos a medida solo para las acciones que más cuentan), 4) lo que aparece al lado: menos es
+  más, todo con `motivo` (objetos, rótulos, viñetas y gestos lo llevan en el esquema), 5) miradas.
+- «🔎 VER EL PLAN (sin dibujar)» (panel Guion, `PlanVista.tsx`): `verPlan` (voices.ts) pide el plan al director
+  con las palabras del texto (las mismas que dará la voz, `palabrasDeTexto`), sin voz ni fal, y lo guarda en
+  `project.planDirector` {clave, plan}; `dirigir` lo reutiliza si la clave (palabras de cada escena +
+  indicaciones) coincide, así se genera EXACTAMENTE lo visto. Muestra la historia, cada viñeta con lugar,
+  tamaño, posturas, objetos y rótulos con su porqué, y cuántas imágenes se dibujarían en fal.
 - DIRECTOR IA (`api/actuar.ts`, lo llama `dirigir` en `voices.ts` al generar voces): recibe las palabras
   de cada escena, la emoción y el catálogo `DESCRIPCIONES` (qué expresa cada postura) y devuelve en qué
   palabra cambia y a qué postura según lo que dice, y `miradas` (catálogo `MIRADAS`) en otras palabras; las claves caen 0,08 s antes de esa palabra. Si
