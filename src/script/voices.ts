@@ -263,6 +263,50 @@ export async function verPlan(escenas: Escena[], pass: string, indicaciones = ''
   return { plan, palabras: escenas.map((e) => palabrasDeTexto(e.dialogo)) }
 }
 
+/** Palabras con peso de un lugar («el sofá del salón» → sofa, salon), sin tildes. */
+function clavesLugar(f: string) {
+  const vacias = new Set(['casa', 'mismo', 'misma', 'noche', 'tarde', 'dia', 'manana', 'otra', 'otro', 'lado', 'donde', 'desde', 'hacia', 'entre', 'sobre', 'blanco', 'fondo', 'lleno', 'llena', 'vacio', 'vacia', 'grande', 'pequeno', 'pequena', 'viejo', 'vieja'])
+  return f
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .split(/[^a-z]+/)
+    .filter((w) => w.length >= 4 && !vacias.has(w))
+}
+
+/**
+ * Continuidad de lugares (en un vídeo de un minuto salían 15 sitios distintos, y «el sofá» se dibujaba
+ * tres veces distinto): 1) un lugar que nombra lo mismo que uno anterior (sofá, cafetería…) usa su
+ * MISMO texto, así se reutiliza el mismo dibujo; 2) como mucho un lugar por cada ~10 s: se quedan los
+ * que más tiempo ocupan y los demás siguen en el lugar de antes. Los que pide el usuario no se tocan.
+ */
+export function unificarLugares<T extends { t: number; fondo: string }>(vs: T[], duracion: number, delUsuario: (v: T) => boolean): T[] {
+  const out = vs.map((v) => ({ ...v }))
+  const vistos: { texto: string; claves: string[] }[] = []
+  for (const v of out) {
+    if (/^blanco\b/i.test(v.fondo.trim()) || delUsuario(v)) continue
+    const k = clavesLugar(v.fondo)
+    const igual = vistos.find((l) => l.texto === v.fondo || l.claves.some((c) => k.some((w) => w.slice(0, 5) === c.slice(0, 5))))
+    if (igual) v.fondo = igual.texto
+    else vistos.push({ texto: v.fondo, claves: k })
+  }
+  const max = Math.max(2, Math.round(duracion / 10))
+  const tiempo = new Map<string, number>()
+  out.forEach((v, i) => {
+    if (/^blanco\b/i.test(v.fondo.trim())) return
+    tiempo.set(v.fondo, (tiempo.get(v.fondo) ?? 0) + ((out[i + 1]?.t ?? duracion) - v.t))
+  })
+  const fijos = new Set(out.filter(delUsuario).map((v) => v.fondo))
+  const quedan = new Set([...fijos, ...[...tiempo.keys()].filter((f) => !fijos.has(f)).sort((a, b) => tiempo.get(b)! - tiempo.get(a)!).slice(0, Math.max(0, max - fijos.size))])
+  let anterior = ''
+  for (const v of out) {
+    if (/^blanco\b/i.test(v.fondo.trim())) continue
+    if (!quedan.has(v.fondo)) v.fondo = anterior || out.find((x) => quedan.has(x.fondo))?.fondo || v.fondo
+    anterior = v.fondo
+  }
+  return out
+}
+
 async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number })[], ch: Character, raiz: Part, pass: string, fps: number, onProgress?: (m: string) => void, indicaciones = '') {
   const porEscena = escenas.map((e) => palabras.filter((w) => w.t >= e.inicio - 0.05 && w.t < e.inicio + e.duracion - 0.05))
   const cuerpo = cuerpoDirector(ch, raiz, escenas, (i) => porEscena[i].map((w) => w.texto), indicaciones)
@@ -634,6 +678,7 @@ export async function voiceScript(escenas: Escena[], texto: string, voz: Voz, pa
         plano: planoDeIndicaciones(e.indicaciones) || (fijo ? 'general' : v.plano),
       }
     })
+    vinetasNuevas = unificarLugares(vinetasNuevas, m.duration, (v) => !!fondoDeIndicaciones(m.escenas[v.escena]?.indicaciones))
     // «Pequeño» solo tiene sentido en un lugar; en blanco queda un muñequito perdido (y en horizontal,
     // el cuerpo entero sobre blanco también)
     const ancho = st.project.width > st.project.height

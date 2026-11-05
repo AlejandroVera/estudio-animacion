@@ -263,6 +263,9 @@ export function drawPersonajeEscena(
       return { x: s.x, y: s.y }
     }
     puntos.cabeza = aPantalla(ex.cabeza.x, ex.cabeza.y - (ex.radio ?? 300) * 0.6)
+    const c = aPantalla(ex.cabeza.x, ex.cabeza.y)
+    const borde = aPantalla(ex.cabeza.x, ex.cabeza.y - (ex.radio ?? 300))
+    puntos.circulo = { x: c.x, y: c.y, r: Math.hypot(borde.x - c.x, borde.y - c.y) }
     const dibujo = Object.entries(raiz!.variants).find(([, a]) => a === pl.assetId)?.[0]?.split('~')[0]
     if (ex.palma && dibujo === ex.palma.postura) puntos.mano = aPantalla(ex.palma.x, ex.palma.y)
   }
@@ -286,14 +289,51 @@ export function drawFrame(g: CanvasRenderingContext2D, project: Project, t: numb
   drawLayers(g, project, t, true)
   g.restore()
   if (!drawContenido(g, project, t, getImage, puntos)) {
-    drawObjetos(g, project, t)
-    drawRotulos(g, project, t)
+    drawObjetos(g, project, t, puntos)
+    drawRotulos(g, project, t, puntos)
   }
 }
 
 
 /** Objetos que aparecen junto al personaje (fuera de la cámara, como los rótulos), con un «pop». */
-export function drawObjetos(g: CanvasRenderingContext2D, project: Project, t: number) {
+type Circulo = { x: number; y: number; r: number }
+
+/** ¿Choca la caja (centro y medio ancho/alto) con la cabeza? */
+function tapaCabeza(c: Circulo | null | undefined, x: number, y: number, hw: number, hh: number) {
+  if (!c) return false
+  const nx = Math.max(x - hw, Math.min(c.x, x + hw)), ny = Math.max(y - hh, Math.min(c.y, y + hh))
+  return Math.hypot(nx - c.x, ny - c.y) < c.r * 1.04
+}
+
+/**
+ * Coloca una caja en su sitio sin salirse de la pantalla y, si tapa la cabeza, la aparta hacia fuera
+ * (a su lado de la cabeza, o por encima, o por debajo). Devuelve el centro y cuánto hay que encogerla.
+ */
+function colocarSinTapar(W: number, H: number, c: Circulo | null | undefined, x: number, y: number, hw: number, hh: number) {
+  const m = 14
+  const dentro = (px: number, py: number, k: number) => ({
+    x: Math.max(hw * k + m, Math.min(W - hw * k - m, px)),
+    y: Math.max(hh * k + m, Math.min(H - hh * k - m, py)),
+  })
+  for (const k of [1, 0.85, 0.7, 0.58]) {
+    const lado = c && x < c.x ? -1 : 1
+    const prueba = [
+      dentro(x, y, k),
+      ...(c
+        ? [
+            dentro(c.x + lado * (c.r * 1.06 + hw * k), y, k),
+            dentro(x, c.y - c.r * 1.06 - hh * k, k),
+            dentro(c.x - lado * (c.r * 1.06 + hw * k), y, k),
+            dentro(x, c.y + c.r * 1.06 + hh * k, k),
+          ]
+        : []),
+    ]
+    for (const p of prueba) if (!tapaCabeza(c, p.x, p.y, hw * k, hh * k)) return { ...p, k }
+  }
+  return { ...dentro(x, y, 0.58), k: 0.58 }
+}
+
+export function drawObjetos(g: CanvasRenderingContext2D, project: Project, t: number, puntos?: PuntosPersonaje) {
   const W = project.width
   const H = project.height
   const lado = Math.min(W, H) * (W > H ? 0.36 : 0.3)
@@ -313,10 +353,14 @@ export function drawObjetos(g: CanvasRenderingContext2D, project: Project, t: nu
     if (!url) continue
     const img = getImage(url)
     if (!img.complete || !img.naturalWidth) continue
-    const [x, y] = sitio[o.pos] ?? sitio.arriba_der
+    const [x0, y0] = sitio[o.pos] ?? sitio.arriba_der
     const dt = t - o.t
     const pop = dt < 0.07 ? 0.7 + (1.12 - 0.7) * (dt / 0.07) : dt < 0.15 ? 1.12 - 0.12 * ((dt - 0.07) / 0.08) : 1
-    const k = (lado / Math.max(o.w, o.h)) * pop
+    const k0 = lado / Math.max(o.w, o.h)
+    // Que no tape la cara ni se salga por el borde (girado unos grados: un poco de margen)
+    const sit = colocarSinTapar(W, H, puntos?.circulo, x0, y0, (o.w * k0) / 2 + 8, (o.h * k0) / 2 + 8)
+    const x = sit.x, y = sit.y
+    const k = k0 * sit.k * pop
     let semilla = 0
     for (const ch of o.id) semilla = (semilla * 31 + ch.charCodeAt(0)) % 997
     g.save()
@@ -328,7 +372,7 @@ export function drawObjetos(g: CanvasRenderingContext2D, project: Project, t: nu
 }
 
 /** Rótulos a mano (fuera de la cámara: no hacen zoom). Entran con un «pop» rápido. */
-export function drawRotulos(g: CanvasRenderingContext2D, project: Project, t: number) {
+export function drawRotulos(g: CanvasRenderingContext2D, project: Project, t: number, puntos?: PuntosPersonaje) {
   const W = project.width
   const H = project.height
   const sitio: Record<string, [number, number, number]> = {
@@ -365,8 +409,13 @@ export function drawRotulos(g: CanvasRenderingContext2D, project: Project, t: nu
     }
     const color = COLORES_MANO[r.color] ?? COLORES_MANO.negro
     const avance = avanceEscritura(texto, t - r.t)
+    // Que no se escriba encima de la cabeza (en los planos cercanos sube hasta arriba)
+    const hw = Math.max(...lineas.map((l) => medirMano(g, l, tam))) / 2 + 10
+    const hh = (lineas.length * tam * 1.15) / 2 + 6
+    const sit = colocarSinTapar(W, H, puntos?.circulo, x, y, hw, hh)
+    if (sit.k < 1) tam = Math.round(tam * sit.k)
     g.save()
-    g.translate(x, y)
+    g.translate(sit.x, sit.y)
     g.rotate((((sem % 11) - 5) * Math.PI) / 180)
     lineas.forEach((l, i) => {
       const parte = Math.max(0, Math.min(1, avance * lineas.length - i))
@@ -600,7 +649,44 @@ function feet(character: Character, placed: Placed[]): Vec[] {
 const groundCache = new WeakMap<Character, number>()
 
 /** Sombra suave bajo los pies: el suelo no se mueve si el personaje salta (la sombra se aclara). */
+const pieCache = new Map<string, { y: number; x0: number; x1: number } | null>()
+
+/** Dónde acaban de verdad los pies en un dibujo (la fila opaca más baja y su ancho), en px del dibujo. */
+function pieReal(src: string, w: number, h: number) {
+  if (pieCache.has(src)) return pieCache.get(src)!
+  const img = getImage(src)
+  if (!img.complete || !img.naturalWidth) return null
+  const k = 0.25
+  const cw = Math.max(1, Math.round(w * k)), chh = Math.max(1, Math.round(h * k))
+  const c = document.createElement('canvas')
+  c.width = cw
+  c.height = chh
+  const g = c.getContext('2d', { willReadFrequently: true })!
+  g.drawImage(img, 0, 0, cw, chh)
+  const d = g.getImageData(0, 0, cw, chh).data
+  let r: { y: number; x0: number; x1: number } | null = null
+  for (let y = chh - 1; y >= 0 && !r; y--) {
+    let x0 = -1, x1 = -1
+    for (let x = 0; x < cw; x++) if (d[(y * cw + x) * 4 + 3] > 60) (x0 < 0 && (x0 = x), (x1 = x))
+    if (x0 >= 0) r = { y: (y + 1) / k, x0: x0 / k, x1: (x1 + 1) / k }
+  }
+  pieCache.set(src, r)
+  return r
+}
+
 function drawShadow(g: CanvasRenderingContext2D, character: Character, inst: CharacterInstance, placed: Placed[]) {
+  // Personaje expresivo: cada postura es un dibujo entero y los pies no siempre caen en el mismo sitio
+  // (gestos a medida, caras exageradas, sentado): la sombra va bajo los pies de ESE dibujo, no flotando
+  const root = character.expresivo ? placed.find((p) => !p.part.parent) : undefined
+  const a = root && character.assets[root.assetId]
+  const pie = root && a ? pieReal(a.src, a.w, a.h) : null
+  if (root && pie) {
+    const p0 = root.matrix.transformPoint(new DOMPoint(pie.x0 - root.part.anchor.x, pie.y - root.part.anchor.y))
+    const p1 = root.matrix.transformPoint(new DOMPoint(pie.x1 - root.part.anchor.x, pie.y - root.part.anchor.y))
+    const w = Math.abs(p1.x - p0.x) / 2 + 60 * inst.scale
+    sombra(g, (p0.x + p1.x) / 2, Math.max(p0.y, p1.y) - 8 * inst.scale, w, 0.22)
+    return
+  }
   const now = feet(character, placed)
   if (!now.length) return
   let ground = groundCache.get(character)
@@ -616,6 +702,10 @@ function drawShadow(g: CanvasRenderingContext2D, character: Character, inst: Cha
   const lift = Math.max(0, gy - Math.max(...now.map((p) => p.y)))
   const w = (Math.max(...xs) - Math.min(...xs)) / 2 + 150 * inst.scale
   const alpha = 0.22 * Math.max(0.25, 1 - lift / (300 * inst.scale))
+  sombra(g, cx, gy, w, alpha)
+}
+
+function sombra(g: CanvasRenderingContext2D, cx: number, gy: number, w: number, alpha: number) {
   g.save()
   g.translate(cx, gy)
   g.scale(1, 0.16)

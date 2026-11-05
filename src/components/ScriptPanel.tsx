@@ -290,7 +290,7 @@ export function ScriptPanel({ onClose }: { onClose: () => void }) {
         </button>
       </div>
       {msg && <p className={'copilot-reply' + (msg.ok ? '' : ' error')}>{msg.text}</p>}
-      {planVisto && <PlanVista plan={planVisto.plan} palabras={planVisto.palabras} project={useStore.getState().project} />}
+      {planVisto && <PlanVista plan={planVisto.plan} palabras={planVisto.palabras} project={useStore.getState().project} escenas={escenas} />}
 
       {escenas.length > 0 && (
         <>

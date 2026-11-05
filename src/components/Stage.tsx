@@ -85,8 +85,8 @@ export function Stage() {
     // Objetos y rótulos (fuera de la cámara, como en el vídeo)
     g.setTransform(g.getTransform().multiply(cam.inverse()))
     if (!drawContenido(g, project, time, getImage, puntos)) {
-      drawObjetos(g, project, time)
-      drawRotulos(g, project, time)
+      drawObjetos(g, project, time, puntos)
+      drawRotulos(g, project, time, puntos)
     }
     g.restore()
     g.save()

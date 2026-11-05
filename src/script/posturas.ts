@@ -180,8 +180,52 @@ async function alinear(
   g.setTransform(1, 0, 0, 1, 0, 0)
   const d = g.getImageData(0, 0, W, H)
   await quitarHuecos(ch, d)
+  await completarCabeza(ch, d)
   g.putImageData(d, 0, 0)
   return out.convertToBlob({ type: 'image/png' })
+}
+
+/**
+ * Si la IA dibujó la cabeza pegada al borde de arriba de su imagen, llega cortada en plano (una línea
+ * recta). La cabeza es la misma que la de reposo y ya está alineada con ella: se rellena lo que falta
+ * por encima del corte con la de reposo.
+ */
+export async function completarCabeza(ch: Character, d: ImageData) {
+  const ex = ch.expresivo
+  const raiz = ch.parts.find((p) => !p.parent)
+  if (!ex || !raiz) return
+  const { width: W, height: H, data } = d
+  const r = ex.radio ?? 300
+  const cx = ex.cabeza.x, cy = ex.cabeza.y
+  // Primera fila opaca de cada columna del centro de la cabeza
+  const xs: number[] = []
+  for (let x = Math.round(cx - r * 0.6); x <= cx + r * 0.6; x += 2) if (x >= 0 && x < W) xs.push(x)
+  const tops = xs.map((x) => {
+    for (let y = 0; y < H; y++) if (data[(y * W + x) * 4 + 3] > 100) return y
+    return H
+  })
+  const ordenados = [...tops].sort((a, b) => a - b)
+  const corte = ordenados[Math.floor(ordenados.length / 2)]
+  const enLinea = tops.filter((t) => Math.abs(t - corte) <= 2).length / tops.length
+  // Una cabeza redonda no tiene media parte de arriba en la misma fila; y el corte tiene que estar
+  // claramente por debajo de donde empieza la cabeza de reposo
+  if (enLinea < 0.35 || corte < cy - r + 12 || corte > cy) return
+  const c = new OffscreenCanvas(W, H)
+  const g = c.getContext('2d', { willReadFrequently: true })!
+  g.drawImage(await cargar(ch.assets[raiz.variants[raiz.defaultVariant]].src), 0, 0, W, H)
+  const ref = g.getImageData(0, 0, W, H).data
+  const hasta = Math.min(H, corte + 3)
+  for (let y = 0; y < hasta; y++)
+    for (let x = Math.max(0, Math.round(cx - r * 1.1)); x < Math.min(W, cx + r * 1.1); x++) {
+      if (Math.hypot(x - cx, y - cy) > r * 1.08) continue
+      const i = (y * W + x) * 4
+      if (data[i + 3] > 200) continue
+      const a = ref[i + 3] / 255, b = data[i + 3] / 255
+      const o = b + a * (1 - b)
+      if (o <= 0) continue
+      for (let k = 0; k < 3; k++) data[i + k] = Math.round((data[i + k] * b + ref[i + k] * a * (1 - b)) / o)
+      data[i + 3] = Math.round(o * 255)
+    }
 }
 
 /**
@@ -239,7 +283,7 @@ async function quitarHuecos(ch: Character, d: ImageData) {
 }
 
 /** Versión de la revisión: al mejorarla se sube y los gestos guardados se revisan otra vez. */
-export const REVISION = 4
+export const REVISION = 5
 
 export type PosturaDibujada = { imageId: string; imageIdB?: string; sinOjos: boolean; sinBoca: boolean }
 

@@ -207,6 +207,20 @@ cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y
   `project.planDirector` {clave, plan}; `dirigir` lo reutiliza si la clave (palabras de cada escena +
   indicaciones) coincide, así se genera EXACTAMENTE lo visto. Muestra la historia, cada viñeta con lugar,
   tamaño, posturas, objetos y rótulos con su porqué, y cuántas imágenes se dibujarían en fal.
+- REVISIÓN DEL VÍDEO LARGO (1 min, vertical): 1) LUGARES: salían ~15 sitios distintos y el mismo sofá
+  dibujado tres veces → `unificarLugares` (voices.ts, también en «Ver el plan»): un lugar que nombra lo
+  mismo que uno anterior (sofá, cafetería…) usa su mismo texto (= mismo dibujo) y como mucho un lugar
+  por cada ~10 s (se quedan los que más tiempo ocupan; los demás siguen en el de antes; los que pide el
+  usuario no se tocan); la GUIA lo pide también y prohíbe repetir la misma idea (reloj del fondo +
+  bocadillo de reloj + rótulo con la hora). 2) SOMBRA: las caras t_e_* y los gestos a medida tienen los
+  pies más arriba que t_reposo (se alinean por la cabeza) y quedaban flotando sobre la sombra → en el
+  expresivo la sombra va bajo la fila opaca más baja del dibujo actual (`pieReal` en render.ts).
+  3) CABEZA CORTADA en plano en gestos a medida (la IA la dibujó pegada al borde de su imagen) →
+  `completarCabeza` (posturas.ts) rellena lo que falta por encima del corte con la cabeza de reposo;
+  REVISION 5 lo aplica a los gestos guardados. 4) Rótulos y objetos en VERTICAL ya no tapan la cabeza
+  ni se salen del borde (`colocarSinTapar` en render.ts, con `PuntosPersonaje.circulo`). 5) `~b` rotas
+  (restos de dientes) en t_e_dinero, t_e_carcajada y t_e_ilusion repintadas a mano; taza suelta borrada
+  de t_e_agotado.
 - DIRECTOR IA (`api/actuar.ts`, lo llama `dirigir` en `voices.ts` al generar voces): recibe las palabras
   de cada escena, la emoción y el catálogo `DESCRIPCIONES` (qué expresa cada postura) y devuelve en qué
   palabra cambia y a qué postura según lo que dice, y `miradas` (catálogo `MIRADAS`) en otras palabras; las claves caen 0,08 s antes de esa palabra. Si

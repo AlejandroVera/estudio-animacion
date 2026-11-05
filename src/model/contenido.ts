@@ -7,7 +7,12 @@ import { mediaUrl } from '../audio/storage'
 import type { Objeto, Project, Rotulo } from './types'
 
 /** Dónde quedan en pantalla la palma de la mano (si sujeta) y la cabeza del personaje. */
-export type PuntosPersonaje = { mano: { x: number; y: number } | null; cabeza: { x: number; y: number } | null }
+export type PuntosPersonaje = {
+  mano: { x: number; y: number } | null
+  cabeza: { x: number; y: number } | null
+  /** La cabeza entera en pantalla (centro y radio): lo que aparece alrededor no debe taparla */
+  circulo?: { x: number; y: number; r: number } | null
+}
 import { aSuManera, avanceEscritura, COLORES_MANO, escribirMano, medirMano, subrayarMano } from './letra'
 
 const COLORES: Record<string, string> = { negro: '#141414', rojo: '#EE1B24', verde: '#1FC73A', azul: '#1E5BFF' }

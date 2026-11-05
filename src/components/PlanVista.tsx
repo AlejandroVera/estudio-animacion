@@ -3,7 +3,8 @@
 
 import { DESCRIPCIONES } from '../model/characters/chicoRosaExpresivo'
 import type { Project } from '../model/types'
-import type { PlanDirector } from '../script/voices'
+import { unificarLugares, type PlanDirector } from '../script/voices'
+import { fondoDeIndicaciones } from '../script/scenes'
 
 const TAMANOS: Record<string, string> = { general: 'cuerpo entero', medio: 'de cintura arriba', primer: 'primer plano', lejos: 'pequeño, lejos' }
 const SITIO: Record<string, string> = { pensamiento: '💭 imagina', mano: '✋ sujeta en la mano', delante: '⬇️ delante de él' }
@@ -11,7 +12,7 @@ const SITIO: Record<string, string> = { pensamiento: '💭 imagina', mano: '✋ 
 type Pos = { escena: number; palabra: number }
 const antes = (a: Pos, b: Pos) => a.escena < b.escena || (a.escena === b.escena && a.palabra < b.palabra)
 
-export function PlanVista({ plan, palabras, project }: { plan: PlanDirector; palabras: string[][]; project: Project }) {
+export function PlanVista({ plan, palabras, project, escenas = [] }: { plan: PlanDirector; palabras: string[][]; project: Project; escenas?: { indicaciones?: string }[] }) {
   const palabra = (p: Pos) => palabras[p.escena]?.[p.palabra] ?? '…'
   const nuevas = new Map((plan.nuevas ?? []).map((n) => ['x_' + n.nombre, n]))
   const extras = new Map((project.posturasExtra ?? []).map((e) => [e.nombre, e.descripcion]))
@@ -21,7 +22,14 @@ export function PlanVista({ plan, palabras, project }: { plan: PlanDirector; pal
     if (extras.has(p)) return `gesto a medida: ${extras.get(p)}`
     return (DESCRIPCIONES[p] ?? p).replace(/^EXAGERADO\s*/, '¡exagerado! ')
   }
-  const vins = [...(plan.vinetas ?? [])].sort((a, b) => (antes(a, b) ? -1 : 1))
+  // Tiempo aproximado de cada palabra (unas 2,6 por segundo), para unificar lugares como al generar
+  const previas = palabras.map((_, i) => palabras.slice(0, i).reduce((n, p) => n + p.length, 0))
+  const total = palabras.reduce((n, p) => n + p.length, 0) / 2.6
+  const vins = unificarLugares(
+    [...(plan.vinetas ?? [])].sort((a, b) => (antes(a, b) ? -1 : 1)).map((v) => ({ ...v, t: ((previas[v.escena] ?? 0) + v.palabra) / 2.6 })),
+    total,
+    (v) => !!fondoDeIndicaciones(escenas[v.escena]?.indicaciones),
+  )
   const enVineta = (p: Pos, i: number) => !antes(p, vins[i]) && (i + 1 >= vins.length || antes(p, vins[i + 1]))
 
   // Lo que se pagaría en fal (lo que ya existe con el mismo nombre se reutiliza)

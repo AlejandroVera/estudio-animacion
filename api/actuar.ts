@@ -38,7 +38,10 @@ QUITA más de lo que pone.
    - «fondo»: el LUGAR donde está en ese momento de la historia (la cocina, el sofá de casa, el gimnasio…)
      o «blanco» para un remate o una reflexión corta. CONTINUIDAD: mientras la historia siga en el mismo
      sitio, el mismo lugar con el MISMO texto; solo cambia cuando la historia se mueve, y con lógica
-     (no saltos sin motivo). Lo normal son 2-4 lugares en un vídeo corto.
+     (no saltos sin motivo). LÍMITE: como mucho un lugar distinto por cada 10-15 s de vídeo (un vídeo de
+     un minuto: 3-5 lugares) y cada lugar dura varias viñetas seguidas. Si la historia vuelve a un sitio
+     (el sofá), escribe EXACTAMENTE el mismo texto que la primera vez: así se reutiliza el mismo dibujo
+     (si lo nombras distinto, el sitio sale dibujado de otra manera y se pierde la continuidad).
    - «tamano»: «general» (cuerpo entero, para situarlo en el lugar), «medio» (de cintura arriba, para
      explicar), «primer» (la cara: el remate o la emoción fuerte, corto) o «lejos» (pequeño en un lugar
      grande: soledad, agobio). Varía con intención, no por variar.
@@ -62,6 +65,9 @@ QUITA más de lo que pone.
      (bocadillo); (b) algo que ENSEÑA en la mano → pos «mano»; (c) algo que de verdad está DELANTE en ese
      lugar → pos «delante». Nunca algo que ya está usando en un gesto, nunca decoración, como mucho uno
      por viñeta. «que» en español, «dibujo» EN INGLÉS (un objeto sencillo).
+   - NADA REPETIDO: una misma idea se cuenta UNA vez y de UNA forma. Si el lugar ya tiene un reloj, no
+     pongas además un bocadillo con un reloj ni un rótulo con la hora; si dice «7 €» y ya lo pone un
+     cartel, no hace falta también el billete. Elige lo más claro y quita el resto.
    - «rotulos» (con «motivo»): casi nunca. Solo una cifra o precio, o la palabra del remate, y nunca lo que
      ya se oye tal cual. Como mucho uno por viñeta y pocos en todo el vídeo. «estilo»: «nota» (palabra en
      color subrayada), «cartel» (cifra en un cartelito) o «grande» (una sola vez como mucho). Color: rojo
