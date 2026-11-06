@@ -40,7 +40,12 @@ export async function POST(request: Request): Promise<Response> {
   })
   const data = (await res.json().catch(() => ({}))) as { images?: { url: string }[]; detail?: unknown }
   if (!res.ok || !data.images?.[0]?.url) {
-    if (res.status === 401 || res.status === 403) return json({ error: 'La clave de fal.ai no es válida o no tiene saldo.' }, 502)
+    if (res.status === 401 || res.status === 403) {
+      // El motivo exacto que da fal (saldo agotado, clave no válida, cuenta bloqueada…), para no adivinar
+      const motivo = typeof data.detail === 'string' ? data.detail : JSON.stringify(data.detail ?? '')
+      const sinSaldo = /balance|saldo|credit|exhausted|insufficient|locked/i.test(motivo)
+      return json({ error: `${sinSaldo ? 'fal.ai dice que no queda saldo' : 'fal.ai rechaza la clave'} (${res.status}): ${motivo || 'sin más detalle'}`.slice(0, 300) }, 502)
+    }
     return json({ error: `fal.ai no ha podido dibujar el gesto (${res.status}).` }, 502)
   }
   return json({ url: data.images[0].url })
