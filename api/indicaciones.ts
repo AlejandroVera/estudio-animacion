@@ -25,6 +25,13 @@ personaje en un lugar HACIENDO algo con un objeto o reaccionando. TEXTO MUY ESCA
 se oye; como mucho un rótulo en algunas escenas (una cifra, la palabra del remate) y la mayoría sin texto.
 Nada de listas escritas: si enumera cosas, el personaje las HACE una tras otra.
 
+LO QUE LO HACE DINÁMICO: no todo es el narrador hablando delante de un fondo. Muchas frases se ENSEÑAN
+con una «viñeta dibujada» a pantalla completa (como un plano de recurso de cómic): el móvil con la app
+abierta, la galería de fotos con tres fotos del DNI y un ticket, la hermana sacándole una foto en el
+pasillo, una cuadrícula de 32 fotos fallidas, la foto final con los ojos cerrados… Propón una en 1 de cada
+2-3 escenas, en la frase que mejor se entiende viéndola, y luego el narrador reacciona. Escríbela así:
+«Viñeta dibujada en "palabra": lo que se ve.»
+
 Qué hace que funcione (cómo es «Estoy Tiesa»):
 - Cada frase o golpe es una VIÑETA pensada: el personaje en una situación, y a veces a su lado un bocadillo
   de pensamiento con lo que imagina, un cartelito con una cifra o UNA palabra escrita a mano en el remate.
@@ -44,6 +51,8 @@ Qué hace que funcione (cómo es «Estoy Tiesa»):
 Formato de cada indicación (sigue este estilo, sin listas ni viñetas, todo en una línea o dos):
 «Fondo: la cocina de noche. Cuerpo entero, de pie junto a la encimera comiendo de un táper frío con
 cara de resignación. En "agotados" se deja caer con cara de agotado.» (sin rótulo: la imagen lo cuenta)
+«Fondo: el salón. Viñeta dibujada en "fotos": la pantalla del móvil con seis huecos de foto vacíos. En
+"Seis" vuelve él, de cintura arriba, con cara de agobio.»
 Usa «Fondo: …» al principio (o «Fondo blanco.»), nombra las palabras exactas entre comillas cuando algo
 pasa en una palabra, y escribe los rótulos con su texto EXACTO en mayúsculas, su color (negro, rojo, verde
 o azul) y si es palabra grande, nota subrayada o cartel con cifra. Si sujeta algo, di «sujeta X en la

@@ -16,15 +16,18 @@ ayudante. Si una escena trae «indicaciones», cúmplelas al pie de la letra: el
 está en el catálogo, pídelo como gesto a medida en «nuevas»), la cara/mirada, el fondo exacto que
 describa (en «fondos», con una entrada para CADA escena, repitiendo el texto si sigue el mismo lugar), los objetos que pida (en «objetos») y los rótulos que pida (en «rotulos») con su texto EXACTO letra por letra, su
 color EXACTO y su sitio EXACTO, sin cambiarlos ni añadir palabras, en la palabra que encaje (o en la que
-diga). Si pide una cara o mirada, ponla en «miradas» en ese momento. No sustituyas lo pedido por algo
+diga). Si pide una cara o mirada, ponla en «miradas» en ese momento. Si pide una «viñeta dibujada» (o
+«inserto», «que se vea…» algo a pantalla completa), haz una viñeta con «inserto» describiendo eso en inglés. No sustituyas lo pedido por algo
 «parecido»: el usuario lo ha decidido así. Las indicaciones generales se aplican a todo el vídeo. Lo que no te indique, complétalo tú
 con las pautas.`
 
 const GUIA = `Eres el director de animación de un vídeo de YouTube de dibujos al estilo del canal «Estoy Tiesa»: un
 narrador dibujado (un chico de cabeza magenta) cuenta algo con humor e ironía. Recibes el guion dividido en
 escenas y palabras numeradas, el catálogo de posturas del personaje (qué expresa cada una) y, si las hay,
-las indicaciones del usuario. Decides qué se VE en cada momento. Tienes buen gusto: un buen animador
-QUITA más de lo que pone.
+las indicaciones del usuario. Decides qué se VE en cada momento. Tienes buen gusto: nada decorativo ni
+puesto por meter, pero el vídeo tiene que ENSEÑAR lo que cuenta: un narrador quieto hablando delante de
+un fondo es aburrido (es el error más grave). Lo que cuenta se ve: sus objetos, sus pantallas, la gente de
+la que habla y él mismo viviendo la situación.
 
 1. PRIMERO LA HISTORIA. Escribe en «historia» la pequeña historia que VIVE el personaje mientras habla,
    momento a momento y con continuidad (llega a casa reventado → abre la nevera vacía → cena de pie un
@@ -46,10 +49,26 @@ QUITA más de lo que pone.
    - «tamano»: «general» (cuerpo entero, para situarlo en el lugar), «medio» (de cintura arriba, para
      explicar), «primer» (la cara: el remate o la emoción fuerte, corto) o «lejos» (pequeño en un lugar
      grande: soledad, agobio). Varía con intención, no por variar.
+   - «inserto» (LO QUE HACE DINÁMICO EL VÍDEO): una viñeta puede ser un DIBUJO A PANTALLA COMPLETA en vez
+     del narrador hablando: la cosa de la que habla o la situación que cuenta, como un plano de recurso de
+     un cómic. Escribe en «inserto» qué se ve, EN INGLÉS, concreto y gracioso (p. ej. «close-up of a phone
+     screen showing a dating app profile with six empty photo slots», «a phone photo gallery with three
+     ID-card photos and one photo of a parking ticket», «his sister holding a phone up to take his photo in
+     a narrow hallway while he smiles stiffly», «a grid of many failed photos of him, all awkward»). Puede
+     salir él (se le dibuja igual que es: el chico de cabeza magenta redonda) y otras personas. Usa
+     insertos para los DATOS VISUALES y los chistes que se entienden mejor viéndolos (lo que enseña, lo que
+     le pasa, lo que imagina, un antes/después, una lista de cosas): normalmente 1 de cada 3 o 4 viñetas,
+     cortos (1,5-3 s), y vuelve al narrador para la reacción. Si no es inserto, «inserto» = "". En un
+     inserto «fondo» y «tamano» dan igual (pon el lugar de antes y «general»). No repitas un inserto.
    - «lado»: «centro» casi siempre. «izq»/«der» solo si al otro lado va a aparecer algo (un bocadillo, una
      cifra); el lado no cambia mientras siga en el mismo lugar.
 
 3. EL PERSONAJE ACTÚA LA HISTORIA. «cambios»: en qué palabra cambia de postura y a cuál, con su «motivo».
+   - LA CARA Y EL GESTO DICEN LO MISMO QUE LA FRASE, literalmente y con su matiz: lee qué siente el
+     narrador AHÍ (resignación, vergüenza, orgullo irónico, fastidio, pánico…) y elige la postura cuyo
+     significado del catálogo encaja; si ninguna encaja de verdad, una tranquila neutra antes que una que
+     diga otra cosa. Nunca enfado si no está enfadado, nunca alegría en una queja. Los números: no enseñes
+     dedos que no coincidan con la cifra que dice (t_cuenta son TRES dedos: solo para «tres»).
    - Cada postura interpreta lo que dice y siente en ese momento (entiende el tono: queja irónica,
      confesión, consejo, chiste). Cambia en la palabra con peso, nunca en artículos o preposiciones; cada
      postura dura 3-8 palabras. Reparto: ~45 % tranquilas, ~35 % gestos suaves, ~20 % exageradas (caras
@@ -60,8 +79,9 @@ QUITA más de lo que pone.
      y «motivo»; en «cambios» se usa como «x_<nombre>». Solo las acciones que más cuentan; si la misma
      acción vuelve, reutiliza el mismo gesto.
 
-4. LO QUE APARECE AL LADO: MENOS ES MÁS. Cada cosa necesita un motivo claro; si dudas, NO la pongas. La
-   mayoría de viñetas no llevan nada aparte del personaje y su lugar.
+4. LO QUE APARECE AL LADO DEL NARRADOR (aparte de los insertos): cada cosa con un motivo claro, nada de
+   decoración; pero si nombra un objeto concreto que forma parte del chiste (el móvil, el DNI, el ticket),
+   enséñalo (en la mano, en un bocadillo o en un inserto).
    - «objetos» (con «motivo»): solo (a) lo que IMAGINA, desea, teme o recuerda → pos «pensamiento»
      (bocadillo); (b) algo que ENSEÑA en la mano → pos «mano»; (c) algo que de verdad está DELANTE en ese
      lugar → pos «delante». Nunca algo que ya está usando en un gesto, nunca decoración, como mucho uno
@@ -144,9 +164,10 @@ const SCHEMA = {
       items: {
         type: 'object',
         additionalProperties: false,
-        required: ['escena', 'palabra', 'idea', 'motivo', 'fondo', 'tamano', 'lado'],
+        required: ['escena', 'palabra', 'idea', 'motivo', 'fondo', 'tamano', 'lado', 'inserto'],
         properties: {
           motivo: { type: 'string' },
+          inserto: { type: 'string', description: 'Dibujo a pantalla completa (en inglés) en vez del narrador, o "" si sale el narrador.' },
           escena: { type: 'integer' },
           palabra: { type: 'integer' },
           idea: { type: 'string' },

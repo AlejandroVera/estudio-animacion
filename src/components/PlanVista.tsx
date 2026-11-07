@@ -34,11 +34,12 @@ export function PlanVista({ plan, palabras, project, escenas = [] }: { plan: Pla
 
   // Lo que se pagaría en fal (lo que ya existe con el mismo nombre se reutiliza)
   const ratio = project.width / project.height
-  const lugares = [...new Set(vins.map((v) => v.fondo.trim()).filter((f) => f && !/^blanco/i.test(f)))]
+  const lugares = [...new Set(vins.filter((v) => !v.inserto).map((v) => v.fondo.trim()).filter((f) => f && !/^blanco/i.test(f)))]
   const lugaresNuevos = lugares.filter((f) => !(project.fondos ?? []).some((l) => l.descripcion === f && Math.abs(l.w / l.h - ratio) < 0.15))
   const gestosNuevos = (plan.nuevas ?? []).filter((n) => !(project.posturasExtra ?? []).some((e) => e.nombre === 't_x_' + n.nombre.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 20)))
   const dibujos = [...new Set((plan.objetos ?? []).map((o) => o.dibujo))].filter((d) => !(project.objetos ?? []).some((o) => o.dibujo === d))
-  const coste = lugaresNuevos.length + gestosNuevos.length * 2 + dibujos.length
+  const insertos = [...new Set(vins.map((v) => v.inserto?.trim()).filter(Boolean))].filter((d) => !(project.fondos ?? []).some((l) => l.descripcion === 'inserto: ' + d))
+  const coste = lugaresNuevos.length + gestosNuevos.length * 2 + dibujos.length + insertos.length
 
   return (
     <div className="plan-vista">
@@ -51,7 +52,14 @@ export function PlanVista({ plan, palabras, project, escenas = [] }: { plan: Pla
         {vins.map((v, i) => (
           <li key={i}>
             <div>
-              <b>«{palabra(v)}»</b> · {v.fondo === 'blanco' ? 'fondo blanco' : v.fondo} · {TAMANOS[v.tamano] ?? v.tamano}
+              <b>«{palabra(v)}»</b> ·{' '}
+              {v.inserto ? (
+                <>🖼 viñeta dibujada: {v.inserto}</>
+              ) : (
+                <>
+                  {v.fondo === 'blanco' ? 'fondo blanco' : v.fondo} · {TAMANOS[v.tamano] ?? v.tamano}
+                </>
+              )}
               {v.idea && <> — {v.idea}</>}
             </div>
             {v.motivo && <div className="muted small">Por qué: {v.motivo}</div>}
@@ -83,7 +91,7 @@ export function PlanVista({ plan, palabras, project, escenas = [] }: { plan: Pla
         ))}
       </ol>
       <p className="small">
-        <b>Para generarlo se dibujarían en fal {coste} imágenes</b> ({lugaresNuevos.length} lugares nuevos, {gestosNuevos.length} gestos nuevos ×2 y {dibujos.length} dibujos). Si
+        <b>Para generarlo se dibujarían en fal {coste} imágenes</b> ({lugaresNuevos.length} lugares nuevos, {insertos.length} viñetas dibujadas, {gestosNuevos.length} gestos nuevos ×2 y {dibujos.length} dibujos). Si
         te convence, pulsa «🎙 Generar voces y animar» y se usará este mismo plan. Si no, cambia las indicaciones y vuelve a pedirlo (no gasta en fal).
       </p>
     </div>

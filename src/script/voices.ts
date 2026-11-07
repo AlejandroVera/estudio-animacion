@@ -319,7 +319,7 @@ function silabas(al: Alineacion, desplaza: (t: number) => number | null, fps: nu
   return keys
 }
 
-export type Vineta = { t: number; escena: number; fondo: string; plano: Plano; lado: 'izq' | 'centro' | 'der' }
+export type Vineta = { t: number; escena: number; fondo: string; plano: Plano; lado: 'izq' | 'centro' | 'der'; inserto?: string }
 
 /** Pide a /api/actuar las posturas por palabra y las convierte en claves exactas (0,08 s antes). */
 /** Petición al director (la misma para ver el plan antes y para generar después). */
@@ -362,7 +362,7 @@ async function planDirector(cuerpo: ReturnType<typeof cuerpoDirector>, pass: str
 
 export type PlanDirector = {
   historia?: string
-  vinetas?: { escena: number; palabra: number; idea?: string; motivo?: string; fondo: string; tamano: Plano; lado?: Vineta['lado'] }[]
+  vinetas?: { escena: number; palabra: number; idea?: string; motivo?: string; fondo: string; tamano: Plano; lado?: Vineta['lado']; inserto?: string }[]
   objetos?: { escena: number; palabra: number; que: string; dibujo: string; pos: Objeto['pos']; flecha?: boolean; motivo?: string }[]
   fondos?: { escena: number; fondo: string }[]
   rotulos?: { escena: number; palabra: number; texto: string; color: Rotulo['color']; pos: Rotulo['pos']; estilo?: Rotulo['estilo']; flecha?: boolean; motivo?: string }[]
@@ -516,7 +516,9 @@ async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number 
     // Cortes demasiado seguidos: se queda el último
     if (vins.length && t - vins[vins.length - 1].t < 1.2) vins.pop()
     if (!vins.length) t = 0
-    vins.push({ t, escena: v.escena, fondo: v.fondo.trim() || 'blanco', plano: v.tamano, lado: v.lado ?? 'centro' })
+    // Inserto: dibujo a pantalla completa en vez del narrador (cámara general, él detrás no se ve)
+    const inserto = v.inserto?.trim() || undefined
+    vins.push({ t, escena: v.escena, fondo: v.fondo.trim() || 'blanco', plano: inserto ? 'general' : v.tamano, lado: inserto ? 'centro' : v.lado ?? 'centro', inserto })
   }
   // Lo que aparece en escena se va al cortar a la viñeta siguiente (o al acabar su escena si no hay viñetas)
   const finDe = (t: number, esc: number) => {
@@ -575,6 +577,8 @@ async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number 
     const to = Math.max(e.inicio, Math.round((w.t - 0.12) * fps) / fps)
     objs.push({ flecha: o.flecha, vin: vinDe(to), t: to, fin: finDe(to, o.escena), pos: o.pos, que: o.que, dibujo: o.dibujo.trim() })
   }
+  // En un inserto no se ve al narrador: nada en su mano, delante ni en su bocadillo
+  for (let i = objs.length - 1; i >= 0; i--) if (objs[i].vin !== undefined && vins[objs[i].vin!]?.inserto) objs.splice(i, 1)
   // Nada flotando sin sentido: lo que no sujeta ni tiene delante va en un bocadillo (algo que imagina),
   // como mucho uno por viñeta
   {
@@ -849,7 +853,7 @@ export async function voiceScript(
       return {
         ...v,
         fondo: fondoDeIndicaciones(e.indicaciones) || v.fondo,
-        plano: planoDeIndicaciones(e.indicaciones) || (fijo ? 'general' : v.plano),
+        plano: v.inserto ? 'general' : planoDeIndicaciones(e.indicaciones) || (fijo ? 'general' : v.plano),
       }
     })
     vinetasNuevas = unificarLugares(vinetasNuevas, m.duration, (v) => !!fondoDeIndicaciones(m.escenas[v.escena]?.indicaciones))
@@ -876,6 +880,8 @@ export async function voiceScript(
         i = j + 1
       }
     }
+    // Los insertos (dibujo a pantalla completa) no llevan lado
+    vinetasNuevas = vinetasNuevas.map((v) => (v.inserto ? { ...v, lado: 'centro' as const } : v))
     // En vertical no hay sitio a los lados: siempre en el centro (el contenido va arriba y a los lados)
     if (st.project.width <= st.project.height * 1.1) vinetasNuevas = vinetasNuevas.map((v) => ({ ...v, lado: 'centro' as const }))
     for (const c of Object.keys(tracks)) if (c.startsWith('cam:') || c === `part:${raiz?.id}:scale` || c === `part:${raiz?.id}:x`) delete tracks[c]

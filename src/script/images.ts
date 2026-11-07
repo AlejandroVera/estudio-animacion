@@ -22,7 +22,7 @@ export function formatoDe(p: Project) {
 }
 
 /** Genera un fondo y lo guarda; devuelve la capa (sin añadirla al proyecto). */
-export async function generateBackground(descripcion: string, project: Project, hueco?: 'izq' | 'der', variante?: number): Promise<BgLayer> {
+export async function generateBackground(descripcion: string, project: Project, hueco?: 'izq' | 'der', variante?: number, tipo?: 'inserto'): Promise<BgLayer> {
   const ch = activeCharacter(project)
   // Fondo blanco liso: no hace falta IA
   if (/^blanco\b/i.test(descripcion.trim())) {
@@ -44,6 +44,7 @@ export async function generateBackground(descripcion: string, project: Project, 
       formato: formatoDe(project),
       ...(hueco ? { hueco } : {}),
       ...(variante !== undefined ? { variante } : {}),
+      ...(tipo ? { tipo } : {}),
     }),
   })
   const d = await res.json().catch(() => ({}))
@@ -181,7 +182,12 @@ export async function generateSceneBackgrounds(escenas: Escena[], onProgress: (m
  * Fondos del montaje por viñetas: un dibujo por lugar distinto (los ya hechos con la misma descripción y
  * forma se reutilizan) y cada uno visible solo en sus viñetas, con corte seco.
  */
-export async function fondosPorVinetas(vinetas: { t: number; fondo: string; lado?: 'izq' | 'centro' | 'der' }[], onProgress: (m: string) => void) {
+/** Clave de la capa de una viñeta: su lugar, o su inserto (dibujo a pantalla completa delante del narrador). */
+const claveCapa = (v: { fondo: string; inserto?: string }) => (v.inserto ? INSERTO + v.inserto : v.fondo)
+const INSERTO = 'inserto: '
+
+export async function fondosPorVinetas(vinetasIn: { t: number; fondo: string; lado?: 'izq' | 'centro' | 'der'; inserto?: string }[], onProgress: (m: string) => void) {
+  const vinetas = vinetasIn.map((v) => ({ ...v, fondo: claveCapa(v) }))
   const unicos = [...new Set(vinetas.map((v) => v.fondo))]
   const capaDe = new Map<string, BgLayer>()
   const fallos: string[] = []
@@ -190,13 +196,19 @@ export async function fondosPorVinetas(vinetas: { t: number; fondo: string; lado
     const pr = useStore.getState().project
     const previa = pr.fondos?.find((l) => l.descripcion === d && Math.abs(l.w / l.h - pr.width / pr.height) < 0.15)
     n++
-    onProgress(previa ? `Reutilizando fondo: ${d}` : `Generando fondo ${n} de ${unicos.length}: ${d}`)
+    const esInserto = d.startsWith(INSERTO)
+    onProgress(previa ? `Reutilizando: ${d}` : esInserto ? `Dibujando viñeta ${n} de ${unicos.length}: ${d.slice(INSERTO.length)}` : `Generando fondo ${n} de ${unicos.length}: ${d}`)
     try {
+      if (esInserto) {
+        // Inserto: dibujo a pantalla completa DELANTE del narrador (él no se ve en esa viñeta)
+        capaDe.set(d, previa ?? { ...(await generateBackground(d.slice(INSERTO.length), pr, undefined, undefined, 'inserto')), descripcion: d, delante: true })
+        continue
+      }
       // El lado libre (contrario al personaje) se pide casi vacío, para el contenido
       const lado = vinetas.find((v) => v.fondo === d && v.lado && v.lado !== 'centro')?.lado
       const hueco = lado === 'izq' ? 'der' : lado === 'der' ? 'izq' : undefined
       // Cada lugar del vídeo con su paleta y su encuadre (antes todos eran «pared gris de frente»)
-      capaDe.set(d, previa ?? { ...(await generateBackground(d, pr, hueco, unicos.filter((u) => !/^blanco\b/i.test(u)).indexOf(d))), descripcion: d })
+      capaDe.set(d, previa ?? { ...(await generateBackground(d, pr, hueco, unicos.filter((u) => !/^blanco\b/i.test(u) && !u.startsWith(INSERTO)).indexOf(d))), descripcion: d })
     } catch (e) {
       fallos.push(`«${d}»: ${e instanceof Error ? e.message : e}`)
     }
