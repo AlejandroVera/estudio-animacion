@@ -58,9 +58,10 @@ la que habla y él mismo viviendo la situación.
      salir él (se le dibuja igual que es: el chico de cabeza magenta redonda) y otras personas. El dibujo
      NO lleva textos ni etiquetas: describe lo que se ve, nunca palabras escritas (si hay una cifra clave,
      va como rótulo encima). Usa
-     insertos para los DATOS VISUALES y los chistes que se entienden mejor viéndolos (lo que enseña, lo que
-     le pasa, lo que imagina, un antes/después, una lista de cosas): normalmente 1 de cada 3 o 4 viñetas,
-     cortos (1,5-3 s), y vuelve al narrador para la reacción. Si no es inserto, «inserto» = "". En un
+     insertos SOLO para un plano de detalle que no se puede contar con los personajes animados (la
+     pantalla del móvil de cerca, un recuerdo, un antes/después): son imágenes quietas, así que como mucho
+     1 o 2 por vídeo, cortos (1,5-2,5 s). Lo que HACE alguien (quitarle el móvil, hacerle una foto, reírse
+     de él) NO es un inserto: pasa en escena con los personajes animados (ver REPARTO). Si no es inserto, «inserto» = "". En un
      inserto «fondo» y «tamano» dan igual (pon el lugar de antes y «general»). No repitas un inserto.
    - «movimiento» y «hacia»: el personaje solo se mueve cuando LA HISTORIA lo pide, nunca de adorno.
      «entra» = llega caminando a un lugar (solo en la primera viñeta de ese lugar y solo si la historia
@@ -106,9 +107,10 @@ la que habla y él mismo viviendo la situación.
      color subrayada), «cartel» (cifra en un cartelito) o «grande» (una sola vez como mucho). Color: rojo
      lo malo, verde lo bueno, azul un dato, negro lo demás. «flecha» solo si une con lo anterior.
 
-6. REPARTO («secundarios», si te dan reparto): son personajes animados que pueden estar EN LA MISMA
-   ESCENA que el narrador, como en un capítulo de dibujos (no en un inserto). Úsalos cuando la historia
-   los nombra y HACEN algo: la hermana le quita el móvil, le hace una foto, se ríe de él. Cada entrada es
+6. REPARTO («secundarios», si te dan reparto) — LO MÁS IMPORTANTE PARA QUE PAREZCA UN CAPÍTULO DE DIBUJOS:
+   son personajes animados que están EN LA MISMA ESCENA que el narrador. Si la historia nombra a alguien
+   del reparto, TIENE que salir en escena haciendo lo que se cuenta, en el momento en que se cuenta
+   (nunca lo sustituyas por un inserto): la hermana le quita el móvil, le hace una foto, se ríe de él. Cada entrada es
    un momento: «quien» (su id), «escena», «palabra» (cuando empieza), «postura» (de SU catálogo, o
    «fuera» cuando ya no está), «lado» (izq o der: dónde está ella; el narrador se pone al otro lado,
    mirándose el uno al otro) y «movimiento» (entra caminando / sale caminando / ninguno). Mientras está,

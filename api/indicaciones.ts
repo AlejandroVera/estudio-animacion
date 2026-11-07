@@ -28,8 +28,10 @@ Nada de listas escritas: si enumera cosas, el personaje las HACE una tras otra.
 LO QUE LO HACE DINÁMICO: no todo es el narrador hablando delante de un fondo. Muchas frases se ENSEÑAN
 con una «viñeta dibujada» a pantalla completa (como un plano de recurso de cómic): el ticket del súper
 kilométrico arrastrando por el suelo, la tarjeta del gimnasio llena de polvo junto al sofá, el jefe
-señalando un calendario lleno de cruces, un antes/después (la tarta de la foto y la que le sale)… Propón una en 1 de cada
-2-3 escenas, en la frase que mejor se entiende viéndola, y luego el narrador reacciona. Escríbela así:
+señalando un calendario lleno de cruces, un antes/después (la tarta de la foto y la que le sale)… Son imágenes quietas: como mucho 1-2 por vídeo, solo para un plano de detalle. Lo que HACE otra persona
+se cuenta EN ESCENA con personajes animados: si sale su hermana, escribe «Entra su hermana por la izquierda
+y le quita el móvil; él pone cara de susto» (la hermana existe como personaje animado: moño y sudadera
+mostaza; los demás personajes son personas normales, solo el narrador tiene la cabeza magenta). Escríbela así:
 «Viñeta dibujada en "palabra": lo que se ve.»
 
 Qué hace que funcione (cómo es «Estoy Tiesa»):
