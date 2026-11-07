@@ -456,6 +456,25 @@ function moverPersonaje(tracks: Tracks, vinetas: Vineta[], dur: number, raiz: Pa
   const poner = (canal: string, t: number, v: number | string, ease: 'salto' | 'lineal' | 'suave') => {
     tracks[canal] = [...(tracks[canal] ?? []).filter((k) => Math.abs(k.t - t) > 1e-4), { t, v, ease }].sort((a, b) => a.t - b.t)
   }
+  // Moverse solo cuando tiene sentido en un capítulo (si no, «se mueve raro, sin sentido»): entra solo en
+  // la PRIMERA viñeta de un lugar, sale solo en la ÚLTIMA, cambiar de sitio como mucho una vez por vídeo, el
+  // respingo solo con una cara exagerada, y en total como mucho un movimiento cada ~8 s
+  const conCuerpo = vinetas.filter((x) => !x.inserto)
+  let cambios = 0, ultimoMov = -99
+  for (const v of vinetas) {
+    if (!v.movimiento || v.inserto) continue
+    const k = conCuerpo.indexOf(v)
+    const primeraDelLugar = k === 0 || conCuerpo[k - 1].fondo !== v.fondo
+    const ultimaDelLugar = k === conCuerpo.length - 1 || conCuerpo[k + 1].fondo !== v.fondo
+    const postura = String(valor(V, v.t + 0.3) ?? '')
+    const ok =
+      (v.movimiento === 'entra' && primeraDelLugar) ||
+      (v.movimiento === 'sale' && ultimaDelLugar && k < conCuerpo.length - 1) ||
+      (v.movimiento === 'se_mueve' && cambios++ < 1) ||
+      (v.movimiento === 'salta' && /^t_e_|^(enfado|llorar|celebrar|mejillas|stop)$/.test(postura))
+    if (!ok || v.t - ultimoMov < 8) v.movimiento = undefined
+    else ultimoMov = v.t
+  }
   // Donde se quedó tras moverse: en las viñetas siguientes del mismo lugar sigue ahí (no salta de sitio)
   let ultimo: { fondo: string; frac: number } | null = null
   vinetas.forEach((v, i) => {
@@ -491,11 +510,17 @@ function moverPersonaje(tracks: Tracks, vinetas: Vineta[], dur: number, raiz: Pa
       hasta = sitio[hacia]
       if (Math.abs(hasta - desde) < 0.08) return
     }
-    const paseo = Math.min(1.5, Math.max(0.55, Math.abs(hasta - desde) / 0.6))
+    // Pasos de verdad: cada paso avanza lo que mide la zancada del dibujo (~560 px del personaje), así
+    // los pies no patinan; pocos pasos largos y con decisión (0,22 s cada uno)
+    const zancada = 560 * project.instances[0].scale * escalaPlano(v.plano) * zoom
+    const distancia = Math.abs(hasta - desde) * W
+    const PASO = 0.22
+    const pasos = Math.max(2, Math.round(distancia / zancada))
+    const paseo = pasos * PASO
     let a = r(t0 + 0.05)
     if (v.movimiento === 'sale') a = r(Math.max(t0 + 0.3, t1 - paseo - 0.1))
     const b = r(Math.min(t1 - 0.05, a + paseo))
-    if (b - a < 0.3) return
+    if (b - a < 0.4) return
     const vuelve = valor(V, b) ?? raiz.defaultVariant
     const despues = valor(V, t1) ?? raiz.defaultVariant // la postura de la viñeta siguiente (tras salir)
     // Posición: se desliza de un sitio a otro
@@ -507,10 +532,11 @@ function moverPersonaje(tracks: Tracks, vinetas: Vineta[], dur: number, raiz: Pa
     quitar(V, a, b)
     quitar(Y, a, b)
     let k = 0
-    for (let t = a; t < b - 0.05; t = r(t + 0.16), k++) {
+    const paso = (b - a) / pasos
+    for (let t = a; t < b - 0.05; t = r(t + paso), k++) {
       poner(V, t, k % 2 ? 't_andar_b' : 't_andar_a', 'salto')
       poner(Y, t, 0, 'suave')
-      poner(Y, r(t + 0.08), -14, 'suave')
+      poner(Y, r(t + paso / 2), -10, 'suave')
     }
     poner(Y, b, 0, 'salto')
     if (v.movimiento !== 'sale') poner(V, b, vuelve, 'salto')

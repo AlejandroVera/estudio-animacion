@@ -62,15 +62,13 @@ la que habla y él mismo viviendo la situación.
      le pasa, lo que imagina, un antes/después, una lista de cosas): normalmente 1 de cada 3 o 4 viñetas,
      cortos (1,5-3 s), y vuelve al narrador para la reacción. Si no es inserto, «inserto» = "". En un
      inserto «fondo» y «tamano» dan igual (pon el lugar de antes y «general»). No repitas un inserto.
-   - «movimiento» y «hacia» (ES UN CAPÍTULO DE DIBUJOS, NO UN BUSTO PARLANTE: el personaje vive en el
-     sitio, no está clavado): «entra» = llega caminando desde fuera de cuadro hasta «hacia» (al llegar a
-     un lugar nuevo, al empezar una situación); «se_mueve» = camina dentro del cuadro hasta «hacia» (va
-     hacia algo, se aparta, cambia de sitio para el siguiente golpe); «sale» = se va caminando por el lado
-     «hacia» al final de la viñeta (se marcha, huye, deja la escena vacía como remate); «salta» = respingo
-     de susto o alegría; «ninguno» = quieto. Que se mueva en 1 de cada 2-3 viñetas en las que se le ve
-     entero, siempre con un motivo de la historia (no por moverse), nunca en un inserto. Al entrar o
-     moverse cambia de posición en el cuadro: varía izq/centro/der para que cada viñeta se vea distinta.
-     Si no se mueve, «hacia» = «centro».
+   - «movimiento» y «hacia»: el personaje solo se mueve cuando LA HISTORIA lo pide, nunca de adorno.
+     «entra» = llega caminando a un lugar (solo en la primera viñeta de ese lugar y solo si la historia
+     dice que llega o va allí; si está sentado, cenando o ya estaba, NO entra); «sale» = se marcha o huye
+     (como remate, en la última viñeta de un lugar); «se_mueve» = se acerca o se aparta de algo concreto
+     que está pasando (como mucho una vez); «salta» = respingo con una cara exagerada de susto o alegría.
+     En la duda, «ninguno». Lo normal en un vídeo de 30 s: 1 o 2 movimientos en total. Si no se mueve,
+     «hacia» = «centro». Nunca en un inserto.
    - «lado»: «centro» casi siempre. «izq»/«der» solo si al otro lado va a aparecer algo (un bocadillo, una
      cifra); el lado no cambia mientras siga en el mismo lugar.
 
