@@ -60,6 +60,15 @@ la que habla y él mismo viviendo la situación.
      le pasa, lo que imagina, un antes/después, una lista de cosas): normalmente 1 de cada 3 o 4 viñetas,
      cortos (1,5-3 s), y vuelve al narrador para la reacción. Si no es inserto, «inserto» = "". En un
      inserto «fondo» y «tamano» dan igual (pon el lugar de antes y «general»). No repitas un inserto.
+   - «movimiento» y «hacia» (ES UN CAPÍTULO DE DIBUJOS, NO UN BUSTO PARLANTE: el personaje vive en el
+     sitio, no está clavado): «entra» = llega caminando desde fuera de cuadro hasta «hacia» (al llegar a
+     un lugar nuevo, al empezar una situación); «se_mueve» = camina dentro del cuadro hasta «hacia» (va
+     hacia algo, se aparta, cambia de sitio para el siguiente golpe); «sale» = se va caminando por el lado
+     «hacia» al final de la viñeta (se marcha, huye, deja la escena vacía como remate); «salta» = respingo
+     de susto o alegría; «ninguno» = quieto. Que se mueva en 1 de cada 2-3 viñetas en las que se le ve
+     entero, siempre con un motivo de la historia (no por moverse), nunca en un inserto. Al entrar o
+     moverse cambia de posición en el cuadro: varía izq/centro/der para que cada viñeta se vea distinta.
+     Si no se mueve, «hacia» = «centro».
    - «lado»: «centro» casi siempre. «izq»/«der» solo si al otro lado va a aparecer algo (un bocadillo, una
      cifra); el lado no cambia mientras siga en el mismo lugar.
 
@@ -164,10 +173,12 @@ const SCHEMA = {
       items: {
         type: 'object',
         additionalProperties: false,
-        required: ['escena', 'palabra', 'idea', 'motivo', 'fondo', 'tamano', 'lado', 'inserto'],
+        required: ['escena', 'palabra', 'idea', 'motivo', 'fondo', 'tamano', 'lado', 'inserto', 'movimiento', 'hacia'],
         properties: {
           motivo: { type: 'string' },
           inserto: { type: 'string', description: 'Dibujo a pantalla completa (en inglés) en vez del narrador, o "" si sale el narrador.' },
+          movimiento: { type: 'string', enum: ['ninguno', 'entra', 'sale', 'se_mueve', 'salta'] },
+          hacia: { type: 'string', enum: ['izq', 'centro', 'der'] },
           escena: { type: 'integer' },
           palabra: { type: 'integer' },
           idea: { type: 'string' },

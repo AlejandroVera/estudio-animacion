@@ -242,7 +242,10 @@ export function drawPersonajeEscena(
 ): { placed: Placed[]; puntos: PuntosPersonaje } {
   const raiz = character.parts.find((p) => !p.parent)
   const v = (project.vinetas ?? []).find((x) => t >= x.t && t < x.fin)
-  const espejo = !restPose && !!character.expresivo && !!raiz && v?.lado === 'izq' && project.width > project.height * 1.1
+  const espejoLado = !restPose && !!character.expresivo && !!raiz && v?.lado === 'izq' && project.width > project.height * 1.1
+  // Canal `pj:espejo`: al caminar hacia la derecha (los dibujos de andar van hacia la izquierda)
+  const espejoPista = !restPose && num(evalTrack(inst.tracks['pj:espejo'], t, 0)) > 0.5
+  const espejo = espejoLado !== espejoPista
   const pivote = raiz ? inst.x + num(evalTrack(inst.tracks[`part:${raiz.id}:x`], t, 0)) * inst.scale : inst.x
   g.save()
   if (espejo) {

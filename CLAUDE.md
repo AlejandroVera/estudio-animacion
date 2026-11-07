@@ -249,6 +249,16 @@ cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y
   «tres»). «Proponer indicaciones» sugiere «Viñeta dibujada en "palabra": …» y el director la cumple.
   «Ver el plan» las muestra (🖼) y las cuenta en el coste. Probado con el director real: 5 insertos
   coherentes en el guion de Tinder (los ejemplos de la GUIA son de otros temas para que no los copie).
+- EL PERSONAJE SE MUEVE (tras «tiene que ser como un capítulo de dibujos: se mueve, interactúa, cambia de
+  posición»): dos dibujos de paso `t_andar_a/b` (fal «libre» sobre base_gestos.jpg, procesados con
+  `procesarDibujo`, en `sinCapas`, sin DESCRIPCIONES: el director no los elige como postura). Cada viñeta
+  lleva `movimiento` (ninguno/entra/se_mueve/sale/salta) y `hacia` (izq/centro/der); `moverPersonaje`
+  (voices.ts, después de `gesticular`) desliza `part:<raíz>:x` en lineal, alterna los dos pasos cada
+  0,16 s con bote en `part:<raíz>:y`, y al ir hacia la derecha pone el canal `pj:espejo` (los dibujos
+  andan hacia la izquierda; `drawPersonajeEscena` lo combina con el espejo del lado). Entra por el borde
+  más cercano a su destino; «sale» deja el cuadro vacío hasta la viñeta siguiente; «salta» = respingo de
+  0,35 s. Se queda donde llegó en las viñetas siguientes del mismo lugar. Con movimiento, medio/primer pasa
+  a general (tiene que verse entero). La GUIA pide moverse en 1 de cada 2-3 viñetas con motivo.
 - DIRECTOR IA (`api/actuar.ts`, lo llama `dirigir` en `voices.ts` al generar voces): recibe las palabras
   de cada escena, la emoción y el catálogo `DESCRIPCIONES` (qué expresa cada postura) y devuelve en qué
   palabra cambia y a qué postura según lo que dice, y `miradas` (catálogo `MIRADAS`) en otras palabras; las claves caen 0,08 s antes de esa palabra. Si

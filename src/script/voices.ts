@@ -319,7 +319,8 @@ function silabas(al: Alineacion, desplaza: (t: number) => number | null, fps: nu
   return keys
 }
 
-export type Vineta = { t: number; escena: number; fondo: string; plano: Plano; lado: 'izq' | 'centro' | 'der'; inserto?: string }
+export type Movimiento = 'ninguno' | 'entra' | 'sale' | 'se_mueve' | 'salta'
+export type Vineta = { t: number; escena: number; fondo: string; plano: Plano; lado: 'izq' | 'centro' | 'der'; inserto?: string; movimiento?: Movimiento; hacia?: 'izq' | 'centro' | 'der' }
 
 /** Pide a /api/actuar las posturas por palabra y las convierte en claves exactas (0,08 s antes). */
 /** Petición al director (la misma para ver el plan antes y para generar después). */
@@ -362,7 +363,7 @@ async function planDirector(cuerpo: ReturnType<typeof cuerpoDirector>, pass: str
 
 export type PlanDirector = {
   historia?: string
-  vinetas?: { escena: number; palabra: number; idea?: string; motivo?: string; fondo: string; tamano: Plano; lado?: Vineta['lado']; inserto?: string }[]
+  vinetas?: { escena: number; palabra: number; idea?: string; motivo?: string; fondo: string; tamano: Plano; lado?: Vineta['lado']; inserto?: string; movimiento?: Movimiento; hacia?: Vineta['lado'] }[]
   objetos?: { escena: number; palabra: number; que: string; dibujo: string; pos: Objeto['pos']; flecha?: boolean; motivo?: string }[]
   fondos?: { escena: number; fondo: string }[]
   rotulos?: { escena: number; palabra: number; texto: string; color: Rotulo['color']; pos: Rotulo['pos']; estilo?: Rotulo['estilo']; flecha?: boolean; motivo?: string }[]
@@ -430,6 +431,97 @@ export function unificarLugares<T extends { t: number; fondo: string }>(vs: T[],
     anterior = v.fondo
   }
   return out
+}
+
+/**
+ * EL PERSONAJE SE MUEVE (como en un capítulo de dibujos, no un busto parlante): entra en escena caminando,
+ * va a otro sitio, sale o salta. Caminar = los dos dibujos de paso (t_andar_a/b) alternándose cada 0,16 s
+ * con un bote, deslizándose por la pantalla; los dibujos caminan hacia la izquierda, así que hacia la
+ * derecha se dibuja en espejo (canal `pj:espejo`). Al llegar vuelve a la postura que tocaba.
+ */
+function moverPersonaje(tracks: Tracks, vinetas: Vineta[], dur: number, raiz: Part, project: { width: number; height: number; fps: number; instances: { scale: number }[] }, ch: Character) {
+  if (!raiz.variants.t_andar_a || !raiz.variants.t_andar_b) return
+  const R = raiz.id
+  const X = `part:${R}:x`, Y = `part:${R}:y`, V = `part:${R}:v`, E = 'pj:espejo'
+  const W = project.width
+  const vertical = W <= project.height * 1.1
+  const fps = project.fps
+  const r = (t: number) => Math.round(t * fps) / fps
+  const sitio = { izq: vertical ? 0.3 : 0.27, centro: 0.5, der: vertical ? 0.7 : 0.73 }
+  const valor = (canal: string, t: number) => {
+    const ks = (tracks[canal] ?? []).filter((k) => k.t <= t + 1e-4)
+    return ks.length ? ks[ks.length - 1].v : undefined
+  }
+  const quitar = (canal: string, a: number, b: number) => (tracks[canal] = (tracks[canal] ?? []).filter((k) => k.t < a - 1e-4 || k.t > b + 1e-4))
+  const poner = (canal: string, t: number, v: number | string, ease: 'salto' | 'lineal' | 'suave') => {
+    tracks[canal] = [...(tracks[canal] ?? []).filter((k) => Math.abs(k.t - t) > 1e-4), { t, v, ease }].sort((a, b) => a.t - b.t)
+  }
+  // Donde se quedó tras moverse: en las viñetas siguientes del mismo lugar sigue ahí (no salta de sitio)
+  let ultimo: { fondo: string; frac: number } | null = null
+  vinetas.forEach((v, i) => {
+    const t0 = v.t, t1 = vinetas[i + 1]?.t ?? dur
+    const zoom = encuadre(v.plano, project as never, ch).zoom
+    const dxDe = (frac: number) => Math.round(((frac - 0.5) * W) / zoom / project.instances[0].scale)
+    if (v.inserto) return
+    if (ultimo && ultimo.fondo !== v.fondo) ultimo = null
+    if (!v.movimiento || v.movimiento === 'salta') {
+      if (ultimo && (v.plano === 'general' || v.plano === 'lejos')) poner(X, r(t0), dxDe(ultimo.frac), 'salto')
+    }
+    if (!v.movimiento) return
+    if (v.movimiento === 'salta') {
+      // Respingo: sube y baja en 0,35 s
+      const a = r(t0 + 0.04)
+      poner(Y, a, 0, 'suave')
+      poner(Y, r(a + 0.14), -160, 'suave')
+      poner(Y, r(a + 0.32), 0, 'salto')
+      return
+    }
+    const aqui = Number(valor(X, t0) ?? 0)
+    const fracAqui = ultimo ? ultimo.frac : 0.5 + (aqui * zoom * project.instances[0].scale) / W
+    const hacia = v.hacia ?? (v.movimiento === 'sale' ? 'izq' : 'centro')
+    let desde: number, hasta: number
+    if (v.movimiento === 'entra') {
+      hasta = sitio[hacia]
+      desde = hacia === 'izq' ? -0.25 : 1.25 // entra por el borde más cercano (al centro, por la derecha)
+    } else if (v.movimiento === 'sale') {
+      desde = fracAqui
+      hasta = hacia === 'der' ? 1.3 : -0.3
+    } else {
+      desde = fracAqui
+      hasta = sitio[hacia]
+      if (Math.abs(hasta - desde) < 0.08) return
+    }
+    const paseo = Math.min(1.5, Math.max(0.55, Math.abs(hasta - desde) / 0.6))
+    let a = r(t0 + 0.05)
+    if (v.movimiento === 'sale') a = r(Math.max(t0 + 0.3, t1 - paseo - 0.1))
+    const b = r(Math.min(t1 - 0.05, a + paseo))
+    if (b - a < 0.3) return
+    const vuelve = valor(V, b) ?? raiz.defaultVariant
+    const despues = valor(V, t1) ?? raiz.defaultVariant // la postura de la viñeta siguiente (tras salir)
+    // Posición: se desliza de un sitio a otro
+    quitar(X, a, b)
+    poner(X, r(t0), dxDe(desde), 'salto') // desde el principio de la viñeta, donde empieza a andar
+    poner(X, a, dxDe(desde), 'lineal')
+    poner(X, b, dxDe(hasta), 'salto')
+    // Pasos con bote
+    quitar(V, a, b)
+    quitar(Y, a, b)
+    let k = 0
+    for (let t = a; t < b - 0.05; t = r(t + 0.16), k++) {
+      poner(V, t, k % 2 ? 't_andar_b' : 't_andar_a', 'salto')
+      poner(Y, t, 0, 'suave')
+      poner(Y, r(t + 0.08), -14, 'suave')
+    }
+    poner(Y, b, 0, 'salto')
+    if (v.movimiento !== 'sale') poner(V, b, vuelve, 'salto')
+    else if (t1 < dur - 1e-3) poner(V, r(t1), despues, 'salto')
+    ultimo = v.movimiento === 'sale' ? null : { fondo: v.fondo, frac: hasta }
+    // Hacia la derecha, en espejo; al llegar mira otra vez como siempre
+    if (hasta > desde) {
+      poner(E, a, 1, 'salto')
+      poner(E, b, 0, 'salto')
+    }
+  })
 }
 
 async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number })[], ch: Character, raiz: Part, pass: string, fps: number, onProgress?: (m: string) => void, indicaciones = '') {
@@ -518,7 +610,10 @@ async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number 
     if (!vins.length) t = 0
     // Inserto: dibujo a pantalla completa en vez del narrador (cámara general, él detrás no se ve)
     const inserto = v.inserto?.trim() || undefined
-    vins.push({ t, escena: v.escena, fondo: v.fondo.trim() || 'blanco', plano: inserto ? 'general' : v.tamano, lado: inserto ? 'centro' : v.lado ?? 'centro', inserto })
+    // Moverse por la escena (entrar, ir a otro sitio, salir, saltar): solo con el cuerpo entero a la vista
+    const mov = !inserto && v.movimiento && v.movimiento !== 'ninguno' ? v.movimiento : undefined
+    const plano: Plano = inserto ? 'general' : mov && mov !== 'salta' && (v.tamano === 'medio' || v.tamano === 'primer') ? 'general' : v.tamano
+    vins.push({ t, escena: v.escena, fondo: v.fondo.trim() || 'blanco', plano, lado: inserto ? 'centro' : v.lado ?? 'centro', inserto, movimiento: mov, hacia: v.hacia })
   }
   // Lo que aparece en escena se va al cortar a la viñeta siguiente (o al acabar su escena si no hay viñetas)
   const finDe = (t: number, esc: number) => {
@@ -912,6 +1007,8 @@ export async function voiceScript(
   const pedidos = m.escenas.map((e) => fondoDeIndicaciones(e.indicaciones))
   if (!vinetasNuevas && pedidos.some(Boolean)) fondosNuevos = m.escenas.map((e, i) => pedidos[i] || fondosNuevos?.[i] || e.fondo || '')
   const conGestos = gesticular(tracks, palabras, ch, m.escenas)
+  // Se mueve por la escena donde lo pidió el director (entrar, ir a otro sitio, salir, saltar)
+  if (vinetasNuevas && raiz && ch.expresivo) moverPersonaje(conGestos, vinetasNuevas, m.duration, activeCharacter(useStore.getState().project).parts.find((p) => !p.parent) ?? raiz, st.project, ch)
 
   const [inst, ...rest] = useStore.getState().project.instances
   // Proyecto actual (puede traer gestos a medida recién dibujados)
