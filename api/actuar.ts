@@ -127,7 +127,7 @@ Antes de responder, repasa: ¿se entiende la historia solo con las imágenes? ¿
 const SCHEMA = {
   type: 'object',
   additionalProperties: false,
-  required: ['historia', 'cambios'],
+  required: ['historia', 'secundarios', 'cambios', 'nuevas', 'fondos', 'rotulos', 'vinetas', 'objetos', 'miradas'],
   properties: {
     secundarios: {
       type: 'array',
