@@ -238,6 +238,17 @@ cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y
   a cuerpo entero, cada lugar pone al personaje en un sitio (centro, +16 % a la derecha, −12 %). Cada
   lugar del vídeo se pide a fal con `variante` (api/imagen.ts): su paleta dominante (8) y su encuadre (4:
   pared de frente, esquina, exterior con cielo, desde abajo); sin variante, el estilo de antes.
+- VIÑETAS DIBUJADAS / INSERTOS (tras «no es dinámico, solo van cambiando los fondos»; vídeo de Tinder: el
+  narrador siempre de pie hablando, no se veía NADA de lo que contaba): cada viñeta del director lleva
+  `inserto` (en inglés, "" si sale el narrador): un dibujo a pantalla completa de lo que cuenta (el móvil
+  con la app, la galería con fotos del DNI, la hermana haciéndole la foto…; puede salir él, dibujado con
+  `Character.referencia`, y otra gente). `fondosPorVinetas` lo dibuja con api/imagen tipo «inserto» y lo
+  pone como capa `delante` (tapa al narrador) solo en esa viñeta (descripción «inserto: …», se reutiliza);
+  los objetos de esa viñeta se quitan; los rótulos se ven encima. La GUIA pide ~1 de cada 3-4 viñetas,
+  1,5-3 s, y que la cara/gesto digan lo mismo que la frase (nada de enfado sin enfado; t_cuenta solo para
+  «tres»). «Proponer indicaciones» sugiere «Viñeta dibujada en "palabra": …» y el director la cumple.
+  «Ver el plan» las muestra (🖼) y las cuenta en el coste. Probado con el director real: 5 insertos
+  coherentes en el guion de Tinder (los ejemplos de la GUIA son de otros temas para que no los copie).
 - DIRECTOR IA (`api/actuar.ts`, lo llama `dirigir` en `voices.ts` al generar voces): recibe las palabras
   de cada escena, la emoción y el catálogo `DESCRIPCIONES` (qué expresa cada postura) y devuelve en qué
   palabra cambia y a qué postura según lo que dice, y `miradas` (catálogo `MIRADAS`) en otras palabras; las claves caen 0,08 s antes de esa palabra. Si
