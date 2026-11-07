@@ -55,7 +55,9 @@ la que habla y él mismo viviendo la situación.
      supermarket receipt that is absurdly long, curling on the floor», «a gym membership card covered in
      dust next to a sofa full of crisps», «his boss pointing at a calendar full of red crosses», «a split
      panel: expectation, a perfect cake; reality, a burnt lump»). Puede
-     salir él (se le dibuja igual que es: el chico de cabeza magenta redonda) y otras personas. Usa
+     salir él (se le dibuja igual que es: el chico de cabeza magenta redonda) y otras personas. El dibujo
+     NO lleva textos ni etiquetas: describe lo que se ve, nunca palabras escritas (si hay una cifra clave,
+     va como rótulo encima). Usa
      insertos para los DATOS VISUALES y los chistes que se entienden mejor viéndolos (lo que enseña, lo que
      le pasa, lo que imagina, un antes/después, una lista de cosas): normalmente 1 de cada 3 o 4 viñetas,
      cortos (1,5-3 s), y vuelve al narrador para la reacción. Si no es inserto, «inserto» = "". En un
