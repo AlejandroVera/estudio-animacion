@@ -259,6 +259,21 @@ cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y
   más cercano a su destino; «sale» deja el cuadro vacío hasta la viñeta siguiente; «salta» = respingo de
   0,35 s. Se queda donde llegó en las viñetas siguientes del mismo lugar. Con movimiento, medio/primer pasa
   a general (tiene que verse entero). La GUIA pide moverse en 1 de cada 2-3 viñetas con motivo.
+- REPARTO / PERSONAJES SECUNDARIOS (tras «solo pone imágenes estáticas; quiero un capítulo de dibujos» y
+  elegir la opción de personajes animados en escena): solo el protagonista tiene cabeza magenta, los demás
+  son PERSONAS NORMALES con el mismo trazo (petición expresa). `src/model/reparto.ts` (`REPARTO`): la
+  hermana (`characters/hermana.ts`, `public/personajes/hermana/`, moño y sudadera mostaza): posturas
+  reposo, habla, movil, foto, quita, cruzado, risa, senala, jarras, ilusion y t_andar_a/b, hechas con fal
+  editando su dibujo base y preparadas con `herramientas/preparar_secundario.py` (sin fondo, alineadas por
+  la cabeza, lienzo común; los pasos se estiraron de la cadera para abajo para que los pies caigan igual).
+  En LIBRARY con `secundario: true` (no sale en el selector). El director recibe `reparto` y devuelve
+  `secundarios` (quien, escena, palabra, postura o «fuera», lado izq/der, movimiento entra/sale/ninguno);
+  `presencias` (voices.ts) saca los tramos en escena (hasta «fuera», «sale» o cambio de lugar) y
+  `ponerReparto` crea una instancia por secundario: visible con el canal `pj:visible`, en su lado y mirando
+  al narrador (espejo), entrando/saliendo con sus pasos, mismo tamaño relativo (`altura`); el narrador se
+  aparta dos pasos al otro lado mirándola y vuelve en el siguiente corte. Con alguien en escena las viñetas
+  son generales. `drawFrame` y Stage dibujan el reparto detrás del protagonista (`drawPersonajeEscena` con
+  `principal=false`). Probado en el navegador: entra, le quita algo, él se asusta, ella se ríe y se va.
 - DIRECTOR IA (`api/actuar.ts`, lo llama `dirigir` en `voices.ts` al generar voces): recibe las palabras
   de cada escena, la emoción y el catálogo `DESCRIPCIONES` (qué expresa cada postura) y devuelve en qué
   palabra cambia y a qué postura según lo que dice, y `miradas` (catálogo `MIRADAS`) en otras palabras; las claves caen 0,08 s antes de esa palabra. Si

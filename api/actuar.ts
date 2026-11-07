@@ -106,6 +106,16 @@ la que habla y él mismo viviendo la situación.
      color subrayada), «cartel» (cifra en un cartelito) o «grande» (una sola vez como mucho). Color: rojo
      lo malo, verde lo bueno, azul un dato, negro lo demás. «flecha» solo si une con lo anterior.
 
+6. REPARTO («secundarios», si te dan reparto): son personajes animados que pueden estar EN LA MISMA
+   ESCENA que el narrador, como en un capítulo de dibujos (no en un inserto). Úsalos cuando la historia
+   los nombra y HACEN algo: la hermana le quita el móvil, le hace una foto, se ríe de él. Cada entrada es
+   un momento: «quien» (su id), «escena», «palabra» (cuando empieza), «postura» (de SU catálogo, o
+   «fuera» cuando ya no está), «lado» (izq o der: dónde está ella; el narrador se pone al otro lado,
+   mirándose el uno al otro) y «movimiento» (entra caminando / sale caminando / ninguno). Mientras está,
+   las viñetas son generales (se ven los dos enteros) y el narrador reacciona a lo que ella hace con su
+   postura. Lo que hace ella y la frase van a la vez. Cuando cambia el lugar, desaparece salvo que la
+   vuelvas a poner. Si el reparto sale en escena, no hace falta un inserto de lo mismo.
+
 5. MIRADAS («miradas», si te dan catálogo): casi siempre al frente («propios»); una mirada distinta solo
    para un matiz (ironía → escéptico, cifra escandalosa → platos), entre cambios de brazos, 0-2 por
    escena. Solo con posturas tranquilas (t_).
@@ -117,6 +127,23 @@ const SCHEMA = {
   additionalProperties: false,
   required: ['historia', 'cambios'],
   properties: {
+    secundarios: {
+      type: 'array',
+      items: {
+        type: 'object',
+        additionalProperties: false,
+        required: ['quien', 'escena', 'palabra', 'postura', 'lado', 'movimiento', 'motivo'],
+        properties: {
+          quien: { type: 'string' },
+          escena: { type: 'integer' },
+          palabra: { type: 'integer' },
+          postura: { type: 'string', description: 'Postura de su catálogo, o «fuera» cuando deja la escena' },
+          lado: { type: 'string', enum: ['izq', 'der'] },
+          movimiento: { type: 'string', enum: ['ninguno', 'entra', 'sale'] },
+          motivo: { type: 'string' },
+        },
+      },
+    },
     historia: { type: 'string', description: 'La pequeña historia que vive el personaje, momento a momento (se escribe ANTES de decidir lo demás).' },
     cambios: {
       type: 'array',
@@ -225,7 +252,7 @@ const SCHEMA = {
 export async function POST(request: Request): Promise<Response> {
   if (!process.env.ANTHROPIC_API_KEY) return json({ error: 'Falta configurar las claves en Vercel.' }, 503)
   if (!claveOk(request)) return json({ error: 'clave' }, 401)
-  let body: { indicaciones?: string; escenas?: { escena: number; emocion: string; palabras: string[]; indicaciones?: string }[]; posturas?: Record<string, string>; miradas?: Record<string, string>; nuevasMax?: number; escenografia?: boolean; objetosMax?: number; vinetas?: boolean }
+  let body: { indicaciones?: string; escenas?: { escena: number; emocion: string; palabras: string[]; indicaciones?: string }[]; posturas?: Record<string, string>; reparto?: Record<string, { quien: string; posturas: Record<string, string> }>; miradas?: Record<string, string>; nuevasMax?: number; escenografia?: boolean; objetosMax?: number; vinetas?: boolean }
   try {
     body = await request.json()
   } catch {
@@ -255,7 +282,7 @@ export async function POST(request: Request): Promise<Response> {
       messages: [
         {
           role: 'user',
-          content: `Catálogo de posturas:\n${catalogo}\n\n${body.miradas ? `Catálogo de miradas:\n${Object.entries(body.miradas).map(([k, v]) => `- ${k}: ${v}`).join('\n')}\n\n` : ''}${body.nuevasMax ? `Gestos a medida permitidos: hasta ${Math.min(8, body.nuevasMax)}.\n\n` : 'No pidas gestos a medida (nuevas vacío).\n\n'}${body.escenografia ? 'Decide también «fondos» (uno por escena) y «rotulos».\n\n' : 'No hace falta «fondos» ni «rotulos» (déjalos vacíos).\n\n'}${body.vinetas ? 'Monta el vídeo por «vinetas» (los fondos van en cada viñeta; «fondos» puede ir vacío).\n\n' : ''}${body.objetosMax ? `Puedes poner «objetos» si de verdad aportan (como mucho ${Math.min(16, body.objetosMax)}, normalmente bastantes menos).\n\n` : 'No pongas «objetos» (vacío).\n\n'}${body.indicaciones ? `INDICACIONES GENERALES DEL USUARIO: ${body.indicaciones}\n\n` : ''}Texto completo (para entender el tono):\n${textoSeguido}\n\nGuion por escenas con las palabras numeradas:\n${guion}`,
+          content: `Catálogo de posturas:\n${catalogo}\n\n${body.reparto && Object.keys(body.reparto).length ? `Reparto (personajes que pueden salir en escena; solo si la historia los nombra):\n${Object.entries(body.reparto).map(([id, r]) => `- «${id}»: ${r.quien}. Posturas: ${Object.entries(r.posturas).map(([k, v]) => `${k} (${v})`).join('; ')}`).join('\n')}\n\n` : 'No hay reparto («secundarios» vacío).\n\n'}${body.miradas ? `Catálogo de miradas:\n${Object.entries(body.miradas).map(([k, v]) => `- ${k}: ${v}`).join('\n')}\n\n` : ''}${body.nuevasMax ? `Gestos a medida permitidos: hasta ${Math.min(8, body.nuevasMax)}.\n\n` : 'No pidas gestos a medida (nuevas vacío).\n\n'}${body.escenografia ? 'Decide también «fondos» (uno por escena) y «rotulos».\n\n' : 'No hace falta «fondos» ni «rotulos» (déjalos vacíos).\n\n'}${body.vinetas ? 'Monta el vídeo por «vinetas» (los fondos van en cada viñeta; «fondos» puede ir vacío).\n\n' : ''}${body.objetosMax ? `Puedes poner «objetos» si de verdad aportan (como mucho ${Math.min(16, body.objetosMax)}, normalmente bastantes menos).\n\n` : 'No pongas «objetos» (vacío).\n\n'}${body.indicaciones ? `INDICACIONES GENERALES DEL USUARIO: ${body.indicaciones}\n\n` : ''}Texto completo (para entender el tono):\n${textoSeguido}\n\nGuion por escenas con las palabras numeradas:\n${guion}`,
         },
       ],
     })

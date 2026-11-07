@@ -1,0 +1,36 @@
+{
+  "lienzo": [
+    0,
+    18,
+    743,
+    1166
+  ],
+  "pies": [
+    391.5,
+    1157.0
+  ],
+  "cabeza": [
+    409.0,
+    165.0,
+    157.0
+  ],
+  "poses": [
+    "reposo",
+    "habla",
+    "movil",
+    "foto",
+    "quita",
+    "cruzado",
+    "risa",
+    "senala",
+    "jarras",
+    "ilusion",
+    "t_andar_a",
+    "t_andar_b"
+  ],
+  "bocas": [],
+  "original": [
+    864,
+    1184
+  ]
+}

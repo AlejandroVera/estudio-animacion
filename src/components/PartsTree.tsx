@@ -32,7 +32,7 @@ export function PartsTree() {
       <h3>Personaje</h3>
       <select className="char-select" value={LIBRARY.some((e) => e.id === ch.id) ? ch.id : ''} onChange={(e) => setCharacter(e.target.value)}>
         {!LIBRARY.some((e) => e.id === ch.id) && <option value="">{ch.name}</option>}
-        {LIBRARY.map((e) => (
+        {LIBRARY.filter((e) => !e.secundario).map((e) => (
           <option key={e.id} value={e.id}>
             {e.name}
           </option>

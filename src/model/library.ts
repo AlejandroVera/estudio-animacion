@@ -6,6 +6,7 @@ import { chicoRosaPosesCharacter } from './characters/chicoRosaPoses'
 import { chicoRosaExpresivoCharacter } from './characters/chicoRosaExpresivo'
 import { chicoMagentaCharacter } from './characters/chicoMagenta'
 import { sampleCharacter } from './sample'
+import { hermanaCharacter } from './characters/hermana'
 import type { Character, Project } from './types'
 
 export interface LibraryEntry {
@@ -15,6 +16,8 @@ export interface LibraryEntry {
   /** Colocación por defecto en un vídeo vertical 1080×1920. */
   place: { x: number; y: number; scale: number }
   background: string
+  /** Personaje secundario del reparto (no sale en el selector de protagonista) */
+  secundario?: boolean
 }
 
 export const LIBRARY: LibraryEntry[] = [
@@ -35,6 +38,7 @@ export const LIBRARY: LibraryEntry[] = [
     background: '#CE544E',
   },
   { id: 'pepe', name: 'Pepe (dibujo simple)', make: sampleCharacter, place: { x: 540, y: 1250, scale: 1.6 }, background: '#F4EFE6' },
+  { id: 'hermana', name: 'Hermana', make: hermanaCharacter, place: { x: 540, y: 1700, scale: 1.13 }, background: '#BDF2D2', secundario: true },
 ]
 
 /** Personajes que se han sustituido por una versión nueva: id antiguo -> id nuevo. */

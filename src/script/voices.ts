@@ -12,6 +12,7 @@ import { DESCRIPCIONES, MIRADAS } from '../model/characters/chicoRosaExpresivo'
 import { cargarExtras, dibujarPostura, REVISION } from './posturas'
 import { ponerObjetos, type ObjetoPedido } from './objetos'
 import { activeCharacter, useStore } from '../store'
+import { REPARTO } from '../model/reparto'
 import { animateScenes } from './scenes'
 
 export interface Voz {
@@ -338,6 +339,7 @@ function cuerpoDirector(ch: Character, raiz: Part, escenas: Escena[], palabrasDe
     escenografia: true,
     objetosMax: Math.min(16, 4 * escenas.length),
     vinetas: true,
+    reparto: Object.fromEntries(REPARTO.map((r) => [r.id, { quien: r.quien, posturas: r.posturas }])),
     ...(ojosPart ? { miradas: Object.fromEntries(Object.entries(MIRADAS).filter(([k]) => k === 'propios' || ojosPart.variants[k])) } : {}),
   }
 }
@@ -370,6 +372,7 @@ export type PlanDirector = {
   cambios: { escena: number; palabra: number; postura: string; motivo?: string }[]
   miradas?: { escena: number; palabra: number; ojos: string }[]
   nuevas?: { nombre: string; dibujo: string; que_expresa: string; motivo?: string }[]
+  secundarios?: { quien: string; escena: number; palabra: number; postura: string; lado: 'izq' | 'der'; movimiento: 'ninguno' | 'entra' | 'sale'; motivo?: string }[]
 }
 
 /** Palabras de un texto tal y como las cuenta la voz (letras y números seguidos). */
@@ -550,6 +553,134 @@ function moverPersonaje(tracks: Tracks, vinetas: Vineta[], dur: number, raiz: Pa
   })
 }
 
+export type SecundarioEnEscena = { t: number; quien: string; postura: string; lado: 'izq' | 'der'; movimiento: 'ninguno' | 'entra' | 'sale' }
+type Presencia = { quien: string; s: number; e: number; lado: 'izq' | 'der'; entra: boolean; sale: boolean; posturas: { t: number; v: string }[] }
+
+/** Tramos en los que cada secundario está en escena (hasta «fuera», «sale» o un cambio de lugar). */
+function presencias(sec: SecundarioEnEscena[], vinetas: Vineta[], dur: number): Presencia[] {
+  const out: Presencia[] = []
+  const cambioDeLugar = (t: number) => {
+    const v0 = [...vinetas].reverse().find((v) => v.t <= t + 1e-3)
+    const sig = vinetas.find((v) => v.t > t + 1e-3 && !v.inserto && v0 && v.fondo !== v0.fondo)
+    return sig ? sig.t : dur
+  }
+  for (const quien of [...new Set(sec.map((x) => x.quien))]) {
+    let abierta: Presencia | null = null
+    for (const x of sec.filter((y) => y.quien === quien)) {
+      if (abierta && x.t >= abierta.e) abierta = null
+      if (x.postura === 'fuera' || x.movimiento === 'sale') {
+        if (abierta) {
+          abierta.e = x.t + (x.movimiento === 'sale' ? 1.2 : 0)
+          abierta.sale = x.movimiento === 'sale'
+          if (x.postura !== 'fuera') abierta.posturas.push({ t: x.t, v: x.postura })
+          abierta = null
+        }
+        continue
+      }
+      if (!abierta) {
+        abierta = { quien, s: x.t, e: cambioDeLugar(x.t), lado: x.lado, entra: x.movimiento === 'entra', sale: false, posturas: [] }
+        out.push(abierta)
+      }
+      abierta.posturas.push({ t: x.t, v: x.postura })
+    }
+  }
+  return out.map((p) => ({ ...p, e: Math.min(p.e, dur) })).filter((p) => p.e - p.s > 0.5)
+}
+
+/**
+ * EL REPARTO EN ESCENA: cada secundario es otra instancia animada (sus posturas, caminando al entrar o
+ * salir), en su lado del cuadro y mirando al narrador, que se pone al otro lado mirándola a ella. Fuera
+ * de sus tramos no se ve (canal `pj:visible`).
+ */
+function ponerReparto(narr: Tracks, pres: Presencia[], vinetas: Vineta[], project: { width: number; height: number; fps: number; instances: { x: number; y: number; scale: number }[] }, ch: Character, raizN: Part, dur: number) {
+  const fps = project.fps
+  const r = (t: number) => Math.round(t * fps) / fps
+  const W = project.width
+  const vertical = W <= project.height * 1.1
+  const inst0 = project.instances[0]
+  const poner = (tr: Tracks, canal: string, t: number, v: number | string, ease: 'salto' | 'lineal' | 'suave') => {
+    tr[canal] = [...(tr[canal] ?? []).filter((k) => Math.abs(k.t - t) > 1e-4), { t: r(t), v, ease }].sort((a, b) => a.t - b.t)
+  }
+  const valor = (tr: Tracks, canal: string, t: number) => [...(tr[canal] ?? [])].filter((k) => k.t <= t + 1e-4).pop()?.v
+  const instancias: { characterId: string; x: number; y: number; scale: number; tracks: Tracks }[] = []
+  const personajes: Record<string, Character> = {}
+  const RN = raizN.id
+  for (const sec of REPARTO) {
+    const mias = pres.filter((p) => p.quien === sec.id)
+    if (!mias.length) continue
+    const c = sec.make()
+    const raiz = c.parts.find((p) => !p.parent)!
+    const escala = inst0.scale * (raizN.anchor.y / raiz.anchor.y) * sec.altura
+    const tr: Tracks = { 'pj:visible': [{ t: 0, v: 0, ease: 'salto' }] }
+    const R = raiz.id
+    const dx = (frac: number) => Math.round(((frac - 0.5) * W) / escala)
+    const dxN = (frac: number) => Math.round(((frac - 0.5) * W) / inst0.scale)
+    // Tamaño: el mismo que el narrador en cada momento (lejos/general)
+    tr[`part:${R}:scale`] = (narr[`part:${RN}:scale`] ?? []).map((k) => ({ ...k }))
+    for (const p of mias) {
+      const suFrac = p.lado === 'izq' ? (vertical ? 0.28 : 0.3) : vertical ? 0.72 : 0.7
+      const narrFrac = p.lado === 'izq' ? (vertical ? 0.7 : 0.66) : vertical ? 0.3 : 0.34
+      const fuera = p.lado === 'izq' ? -0.3 : 1.3
+      const mira = p.lado === 'izq' ? 1 : 0 // sus dibujos miran a la izquierda: en el lado izquierdo, espejo
+      poner(tr, 'pj:visible', p.s, 1, 'salto')
+      poner(tr, 'pj:visible', p.e, 0, 'salto')
+      // Entra / sale caminando desde su borde
+      const paseo = (desde: number, hasta: number, a: number) => {
+        const pasos = Math.max(2, Math.round((Math.abs(hasta - desde) * W) / (560 * 0.5)))
+        const b = a + pasos * 0.22
+        poner(tr, `part:${R}:x`, a, dx(desde), 'lineal')
+        poner(tr, `part:${R}:x`, b, dx(hasta), 'salto')
+        poner(tr, 'pj:espejo', a, hasta > desde ? 1 : 0, 'salto')
+        for (let k = 0; k < pasos; k++) {
+          const t = a + k * 0.22
+          poner(tr, `part:${R}:v`, t, k % 2 ? 't_andar_b' : 't_andar_a', 'salto')
+          poner(tr, `part:${R}:y`, t, 0, 'suave')
+          poner(tr, `part:${R}:y`, t + 0.11, -10, 'suave')
+        }
+        poner(tr, `part:${R}:y`, b, 0, 'salto')
+        return b
+      }
+      let listo = p.s
+      if (p.entra) listo = paseo(fuera, suFrac, p.s)
+      else poner(tr, `part:${R}:x`, p.s, dx(suFrac), 'salto')
+      poner(tr, 'pj:espejo', listo, mira, 'salto')
+      // Sus posturas (la primera, al llegar)
+      p.posturas.forEach((x, i) => poner(tr, `part:${R}:v`, Math.max(x.t, i === 0 ? listo : x.t), x.v, 'salto'))
+      if (p.sale) paseo(suFrac, fuera, Math.max(listo + 0.3, p.e - 1.1))
+      // El narrador se aparta al otro lado dando dos pasos y la mira (sus posturas miran a la izquierda: si
+      // ella está a la derecha, en espejo). Vuelve a su sitio en el siguiente corte de viñeta tras irse ella.
+      const antesX = Number(valor(narr, `part:${RN}:x`, p.s) ?? 0)
+      const antesE = valor(narr, 'pj:espejo', p.s) ?? 0
+      const vuelta = vinetas.find((v) => v.t >= p.e - 1e-3)?.t ?? dur
+      const fin = Math.min(dur, vuelta)
+      const destino = dxN(narrFrac)
+      narr[`part:${RN}:x`] = (narr[`part:${RN}:x`] ?? []).filter((k) => k.t < p.s - 1e-4 || k.t > fin + 1e-4)
+      narr['pj:espejo'] = (narr['pj:espejo'] ?? []).filter((k) => k.t < p.s - 1e-4 || k.t > fin + 1e-4)
+      const yaEsta = Math.abs(destino - antesX) < 40
+      const llega = yaEsta ? p.s : p.s + 0.44
+      if (!yaEsta && raizN.variants.t_andar_a) {
+        const postura = valor(narr, `part:${RN}:v`, llega) ?? raizN.defaultVariant
+        narr[`part:${RN}:v`] = (narr[`part:${RN}:v`] ?? []).filter((k) => k.t < p.s - 1e-4 || k.t > llega + 1e-4)
+        poner(narr, `part:${RN}:x`, p.s, antesX, 'lineal')
+        poner(narr, 'pj:espejo', p.s, destino > antesX ? 1 : 0, 'salto')
+        poner(narr, `part:${RN}:v`, p.s, 't_andar_a', 'salto')
+        poner(narr, `part:${RN}:v`, p.s + 0.22, 't_andar_b', 'salto')
+        poner(narr, `part:${RN}:v`, llega, postura, 'salto')
+      }
+      poner(narr, `part:${RN}:x`, llega, destino, 'salto')
+      poner(narr, 'pj:espejo', llega, p.lado === 'der' ? 1 : 0, 'salto')
+      if (fin < dur - 1e-3) {
+        poner(narr, `part:${RN}:x`, fin, antesX, 'salto')
+        poner(narr, 'pj:espejo', fin, antesE, 'salto')
+      }
+    }
+    instancias.push({ characterId: c.id, x: inst0.x, y: inst0.y, scale: escala, tracks: tr })
+    personajes[c.id] = c
+  }
+  void ch
+  return { instancias, personajes }
+}
+
 async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number })[], ch: Character, raiz: Part, pass: string, fps: number, onProgress?: (m: string) => void, indicaciones = '') {
   const porEscena = escenas.map((e) => palabras.filter((w) => w.t >= e.inicio - 0.05 && w.t < e.inicio + e.duracion - 0.05))
   const cuerpo = cuerpoDirector(ch, raiz, escenas, (i) => porEscena[i].map((w) => w.texto), indicaciones)
@@ -715,7 +846,17 @@ async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number 
     objs.splice(0, objs.length, ...quedan)
   }
   const fondoDe = new Map((fondos ?? []).map((f) => [f.escena, f.fondo.trim()]))
+  // Reparto: cada momento de un secundario en el instante de su palabra
+  const secundarios: SecundarioEnEscena[] = []
+  for (const x of plan.secundarios ?? []) {
+    const r = REPARTO.find((y) => y.id === x.quien)
+    const w = porEscena[x.escena]?.[x.palabra]
+    if (!r || !w || (x.postura !== 'fuera' && !r.posturas[x.postura])) continue
+    secundarios.push({ t: Math.max(0, Math.round((w.t - 0.08) * fps) / fps), quien: x.quien, postura: x.postura, lado: x.lado === 'der' ? 'der' : 'izq', movimiento: x.movimiento })
+  }
+  secundarios.sort((a, b) => a.t - b.t)
   return {
+    secundarios,
     posturas: keys,
     ojos: ojosFin.length ? [{ t: 0, v: 'nada', ease: 'salto' as const }, ...ojosFin] : [],
     rotulos: rots,
@@ -926,6 +1067,8 @@ export async function voiceScript(
   let fondosNuevos: string[] | null = null
   let objetosNuevos: ObjetoPedido[] | null = null
   let vinetasNuevas: Vineta[] | null = null
+  let secundariosNuevos: SecundarioEnEscena[] = []
+  let presReparto: Presencia[] = []
   // Expresivo: una IA «directora» decide en qué palabra cambia de postura y a cuál, según lo que dice
   if (ch.expresivo && raiz && palabras.length) {
     onProgress('Dirigiendo los gestos según el guion…')
@@ -934,6 +1077,7 @@ export async function voiceScript(
       return null
     })
     if (dir) {
+      secundariosNuevos = dir.secundarios
       tracks[`part:${raiz.id}:v`] = dir.posturas
       // Lo que sujeta en la mano: en esa palabra pasa a la postura de sujetar y la mantiene un rato
       const palma = ch.expresivo?.palma
@@ -1005,6 +1149,13 @@ export async function voiceScript(
     vinetasNuevas = vinetasNuevas.map((v) => (v.inserto ? { ...v, lado: 'centro' as const } : v))
     // En vertical no hay sitio a los lados: siempre en el centro (el contenido va arriba y a los lados)
     if (st.project.width <= st.project.height * 1.1) vinetasNuevas = vinetasNuevas.map((v) => ({ ...v, lado: 'centro' as const }))
+    // Mientras hay alguien del reparto en escena, plano general (se ven los dos enteros)
+    presReparto = presencias(secundariosNuevos, vinetasNuevas, m.duration)
+    vinetasNuevas = vinetasNuevas.map((v, i, all) => {
+      const fin = all[i + 1]?.t ?? m.duration
+      const conAlguien = presReparto.some((p) => p.s < fin - 0.2 && p.e > v.t + 0.2)
+      return conAlguien && !v.inserto ? { ...v, plano: v.plano === 'lejos' ? 'lejos' : 'general', lado: 'centro' } : v
+    })
     for (const c of Object.keys(tracks)) if (c.startsWith('cam:') || c === `part:${raiz?.id}:scale` || c === `part:${raiz?.id}:x`) delete tracks[c]
     const lugares = [...new Set(vinetasNuevas.map((v) => v.fondo).filter((f) => !/^blanco\b/i.test(f)))]
     for (const v of vinetasNuevas) {
@@ -1034,7 +1185,10 @@ export async function voiceScript(
   if (!vinetasNuevas && pedidos.some(Boolean)) fondosNuevos = m.escenas.map((e, i) => pedidos[i] || fondosNuevos?.[i] || e.fondo || '')
   const conGestos = gesticular(tracks, palabras, ch, m.escenas)
   // Se mueve por la escena donde lo pidió el director (entrar, ir a otro sitio, salir, saltar)
-  if (vinetasNuevas && raiz && ch.expresivo) moverPersonaje(conGestos, vinetasNuevas, m.duration, activeCharacter(useStore.getState().project).parts.find((p) => !p.parent) ?? raiz, st.project, ch)
+  const raizAhora = activeCharacter(useStore.getState().project).parts.find((p) => !p.parent) ?? raiz
+  if (vinetasNuevas && raiz && ch.expresivo) moverPersonaje(conGestos, vinetasNuevas, m.duration, raizAhora!, st.project, ch)
+  // El reparto (la hermana…) en escena con el narrador
+  const reparto = presReparto.length && raizAhora ? ponerReparto(conGestos, presReparto, vinetasNuevas ?? [], st.project, ch, raizAhora, m.duration) : null
 
   const [inst, ...rest] = useStore.getState().project.instances
   // Proyecto actual (puede traer gestos a medida recién dibujados)
@@ -1044,7 +1198,9 @@ export async function voiceScript(
     duration: m.duration,
     audio: { id: audioId, name: `Voces (${nombreVoz})`, start: 0, duration: mezcla.duration },
     guion: { texto, escenas: m.escenas.map(({ inicio: _i, ...e }, i) => ({ ...e, fondo: fondosNuevos?.[i] || e.fondo })), voz: voz ?? undefined, indicaciones },
-    instances: [{ ...inst, tracks: conGestos }, ...rest],
+    // Los secundarios de antes se sustituyen por los de esta animación
+    instances: [{ ...inst, tracks: conGestos }, ...rest.filter((i) => !REPARTO.some((r) => r.id === i.characterId)), ...(reparto?.instancias ?? [])],
+    characters: { ...actual.characters, ...(reparto?.personajes ?? {}) },
     ...(rotulosNuevos ? { rotulos: rotulosNuevos } : {}),
     vinetas: vinetasNuevas ? vinetasNuevas.map((v, i) => ({ t: v.t, fin: vinetasNuevas![i + 1]?.t ?? m.duration, lado: v.lado })) : undefined,
   })

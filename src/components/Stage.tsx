@@ -79,6 +79,11 @@ export function Stage() {
     camRef.current = cam
     g.setTransform(g.getTransform().multiply(cam))
     drawLayers(g, project, time, false)
+    // El reparto (secundarios) se dibuja detrás del protagonista
+    project.instances.slice(1).forEach((o) => {
+      const c2 = project.characters[o.characterId]
+      if (c2?.expresivo && !rest) drawPersonajeEscena(g, project, c2, o, time, cam, false, false)
+    })
     const { placed, puntos } = drawPersonajeEscena(g, project, ch, inst, time, cam, rest)
     placedRef.current = placed
     drawLayers(g, project, time, true)

@@ -239,10 +239,13 @@ export function drawPersonajeEscena(
   t: number,
   cam: DOMMatrix,
   restPose = false,
+  principal = true,
 ): { placed: Placed[]; puntos: PuntosPersonaje } {
   const raiz = character.parts.find((p) => !p.parent)
+  // Canal `pj:visible`: un secundario solo se ve mientras está en la escena
+  if (!restPose && num(evalTrack(inst.tracks['pj:visible'], t, 1)) < 0.5) return { placed: [], puntos: { mano: null, cabeza: null } }
   const v = (project.vinetas ?? []).find((x) => t >= x.t && t < x.fin)
-  const espejoLado = !restPose && !!character.expresivo && !!raiz && v?.lado === 'izq' && project.width > project.height * 1.1
+  const espejoLado = principal && !restPose && !!character.expresivo && !!raiz && v?.lado === 'izq' && project.width > project.height * 1.1
   // Canal `pj:espejo`: al caminar hacia la derecha (los dibujos de andar van hacia la izquierda)
   const espejoPista = !restPose && num(evalTrack(inst.tracks['pj:espejo'], t, 0)) > 0.5
   const espejo = espejoLado !== espejoPista
@@ -283,12 +286,15 @@ export function drawFrame(g: CanvasRenderingContext2D, project: Project, t: numb
   g.setTransform(g.getTransform().multiply(cam))
   drawLayers(g, project, t, false)
   let puntos: PuntosPersonaje | undefined
-  project.instances.forEach((inst, i) => {
+  // El reparto (secundarios) primero, detrás del protagonista
+  project.instances.slice(1).forEach((inst) => {
     const c = project.characters[inst.characterId]
     if (!c) return
-    if (i === 0) puntos = drawPersonajeEscena(g, project, c, inst, t, cam).puntos
+    if (c.expresivo) drawPersonajeEscena(g, project, c, inst, t, cam, false, false)
     else drawCharacter(g, c, inst, t, false, project.vida !== false)
   })
+  const c0 = project.characters[project.instances[0]?.characterId]
+  if (c0) puntos = drawPersonajeEscena(g, project, c0, project.instances[0], t, cam).puntos
   drawLayers(g, project, t, true)
   g.restore()
   if (!drawContenido(g, project, t, getImage, puntos)) {

@@ -79,6 +79,15 @@ export function PlanVista({ plan, palabras, project, escenas = [] }: { plan: Pla
                     {SITIO[o.pos] ?? '💭 imagina'}: {o.que} en «{palabra(o)}»{o.motivo && <span className="muted"> ({o.motivo})</span>}
                   </li>
                 ))}
+              {(plan.secundarios ?? [])
+                .filter((x) => enVineta(x, i))
+                .map((x, k) => (
+                  <li key={'s' + k}>
+                    👥 {x.quien} en «{palabra(x)}»: {x.postura === 'fuera' ? 'se va' : x.postura}
+                    {x.movimiento !== 'ninguno' ? ` (${x.movimiento === 'entra' ? 'entra caminando' : 'sale caminando'})` : ''}
+                    {x.motivo && <span className="muted"> ({x.motivo})</span>}
+                  </li>
+                ))}
               {(plan.rotulos ?? [])
                 .filter((r) => enVineta(r, i))
                 .map((r, k) => (
