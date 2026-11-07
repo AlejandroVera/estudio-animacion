@@ -51,10 +51,10 @@ la que habla y él mismo viviendo la situación.
      grande: soledad, agobio). Varía con intención, no por variar.
    - «inserto» (LO QUE HACE DINÁMICO EL VÍDEO): una viñeta puede ser un DIBUJO A PANTALLA COMPLETA en vez
      del narrador hablando: la cosa de la que habla o la situación que cuenta, como un plano de recurso de
-     un cómic. Escribe en «inserto» qué se ve, EN INGLÉS, concreto y gracioso (p. ej. «close-up of a phone
-     screen showing a dating app profile with six empty photo slots», «a phone photo gallery with three
-     ID-card photos and one photo of a parking ticket», «his sister holding a phone up to take his photo in
-     a narrow hallway while he smiles stiffly», «a grid of many failed photos of him, all awkward»). Puede
+     un cómic. Escribe en «inserto» qué se ve, EN INGLÉS, concreto y gracioso (p. ej. «close-up of a
+     supermarket receipt that is absurdly long, curling on the floor», «a gym membership card covered in
+     dust next to a sofa full of crisps», «his boss pointing at a calendar full of red crosses», «a split
+     panel: expectation, a perfect cake; reality, a burnt lump»). Puede
      salir él (se le dibuja igual que es: el chico de cabeza magenta redonda) y otras personas. Usa
      insertos para los DATOS VISUALES y los chistes que se entienden mejor viéndolos (lo que enseña, lo que
      le pasa, lo que imagina, un antes/después, una lista de cosas): normalmente 1 de cada 3 o 4 viñetas,
@@ -80,7 +80,7 @@ la que habla y él mismo viviendo la situación.
      acción vuelve, reutiliza el mismo gesto.
 
 4. LO QUE APARECE AL LADO DEL NARRADOR (aparte de los insertos): cada cosa con un motivo claro, nada de
-   decoración; pero si nombra un objeto concreto que forma parte del chiste (el móvil, el DNI, el ticket),
+   decoración; pero si nombra un objeto concreto que forma parte del chiste (el ticket, el táper, la tarjeta),
    enséñalo (en la mano, en un bocadillo o en un inserto).
    - «objetos» (con «motivo»): solo (a) lo que IMAGINA, desea, teme o recuerda → pos «pensamiento»
      (bocadillo); (b) algo que ENSEÑA en la mano → pos «mano»; (c) algo que de verdad está DELANTE en ese
