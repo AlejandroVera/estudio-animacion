@@ -21,6 +21,28 @@ diga). Si pide una cara o mirada, ponla en «miradas» en ese momento. Si pide u
 «parecido»: el usuario lo ha decidido así. Las indicaciones generales se aplican a todo el vídeo. Lo que no te indique, complétalo tú
 con las pautas.`
 
+const MODO_ESCENAS = `MODO ESCENAS (MANDA SOBRE TODO LO ANTERIOR SOBRE INSERTOS, REPARTO Y MOVIMIENTO) — así monta de verdad
+«Estoy Tiesa»: CADA PLANO ES UN DIBUJO NUEVO DE LA SITUACIÓN CON EL NARRADOR DENTRO, quieto en una postura que
+cuenta lo que pasa (solo le moveremos la boca por encima). Ejemplos reales de ese canal: ella pegada al
+cristal del concesionario con ojos de corazón; meditando en su cuarto con velas y un bocadillo; sentada
+dentro de su coche viejo mientras el inspector de la ITV da vueltas con cara seria; conduciendo enfadada; en
+la mesa con una calculadora; junto a una pizarra; en el metro con gafas de sol.
+- Casi TODAS las viñetas llevan «inserto» = la escena entera, EN INGLÉS, describiendo: el lugar concreto, al
+  narrador («the magenta round-headed boy») con su postura, lo que hace y su EXPRESIÓN DE OJOS Y CEJAS (la boca
+  SIEMPRE «with a small closed mouth»), y a las demás personas haciendo lo suyo (personas normales, mismo
+  trazo; su hermana: «his sister, a young woman with a messy dark bun and a mustard hoodie»). Él bien visible,
+  grande (cabeza al menos una octava parte del ancho), de frente o tres cuartos, sin nada delante de la cara.
+- Un plano nuevo en cada idea o chiste: normalmente cada 3-6 s, más rápido (1-2 s) en un remate. Cada plano
+  con un ENCUADRE distinto al anterior (cerca / de cuerpo entero / pequeño en el sitio / detalle) y muchos
+  lugares (cada situación de la historia, su sitio; 6-10 en un minuto).
+- Literaliza las metáforas y exagera: «parezco un rehén» → él con cara de rehén sujetando un periódico; «33
+  intentos» → él rodeado de fotos fallidas.
+- Algún plano corto sin él (un detalle: la pantalla del móvil, una calculadora con «NO SALE»), y algún plano
+  sobre fondo blanco solo con él (inserto "" y fondo «blanco») para explicar.
+- Encima de los planos van «rotulos» (cifras, la palabra del remate, a mano) en la palabra exacta, y si
+  ayuda «objetos» en bocadillo de pensamiento. «secundarios» vacío y «movimiento» «ninguno»: las otras
+  personas y las acciones van DIBUJADAS en la escena. «cambios» solo importa en los planos sin inserto.`
+
 const GUIA = `Eres el director de animación de un vídeo de YouTube de dibujos al estilo del canal «Estoy Tiesa»: un
 narrador dibujado (un chico de cabeza magenta) cuenta algo con humor e ironía. Recibes el guion dividido en
 escenas y palabras numeradas, el catálogo de posturas del personaje (qué expresa cada una) y, si las hay,
@@ -254,7 +276,7 @@ const SCHEMA = {
 export async function POST(request: Request): Promise<Response> {
   if (!process.env.ANTHROPIC_API_KEY) return json({ error: 'Falta configurar las claves en Vercel.' }, 503)
   if (!claveOk(request)) return json({ error: 'clave' }, 401)
-  let body: { indicaciones?: string; escenas?: { escena: number; emocion: string; palabras: string[]; indicaciones?: string }[]; posturas?: Record<string, string>; reparto?: Record<string, { quien: string; posturas: Record<string, string> }>; miradas?: Record<string, string>; nuevasMax?: number; escenografia?: boolean; objetosMax?: number; vinetas?: boolean }
+  let body: { indicaciones?: string; escenas?: { escena: number; emocion: string; palabras: string[]; indicaciones?: string }[]; posturas?: Record<string, string>; reparto?: Record<string, { quien: string; posturas: Record<string, string> }>; miradas?: Record<string, string>; nuevasMax?: number; escenografia?: boolean; objetosMax?: number; vinetas?: boolean; modo?: string }
   try {
     body = await request.json()
   } catch {
@@ -280,7 +302,7 @@ export async function POST(request: Request): Promise<Response> {
       max_tokens: 16000,
       ...(CON_RESPALDO.has(model) ? { betas: ['server-side-fallback-2026-07-01'], fallbacks: 'default' as const } : {}),
       output_config: { effort: 'medium', format: { type: 'json_schema', schema: SCHEMA } },
-      system: [{ type: 'text', text: GUIA + '\n\n' + ORDENES, cache_control: { type: 'ephemeral' } }],
+      system: [{ type: 'text', text: GUIA + '\n\n' + (body.modo === 'escenas' ? MODO_ESCENAS + '\n\n' : '') + ORDENES, cache_control: { type: 'ephemeral' } }],
       messages: [
         {
           role: 'user',

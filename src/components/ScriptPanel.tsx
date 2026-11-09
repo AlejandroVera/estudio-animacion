@@ -5,7 +5,7 @@ import type { Escena, Plano } from '../model/types'
 import { animateScenes, estimateDuration, scenesFromText } from '../script/scenes'
 import { activeCharacter, useStore } from '../store'
 import { ScriptStyles } from './ScriptStyles'
-import { listVoices, verPlan, voiceScript, type Modelo, type PlanDirector, type Voz, type VozPropia } from '../script/voices'
+import { listVoices, MODO_KEY, modoVideo, verPlan, voiceScript, type Modelo, type ModoVideo, type PlanDirector, type Voz, type VozPropia } from '../script/voices'
 import { decodeAudio, saveAudio } from '../audio/storage'
 import { PlanVista } from './PlanVista'
 import { generateSceneBackgrounds } from '../script/images'
@@ -102,6 +102,15 @@ export function ScriptPanel({ onClose }: { onClose: () => void }) {
     }
   })
   const [vozManual, setVozManual] = useState('')
+  const [modo, setModoState] = useState<ModoVideo>(modoVideo)
+  const setModo = (m: ModoVideo) => {
+    setModoState(m)
+    try {
+      localStorage.setItem(MODO_KEY, m)
+    } catch {
+      // sin almacenamiento: solo esta sesión
+    }
+  }
   // Voz propia (grabada por el usuario): el audio se guarda en el navegador y aquí solo su id y nombre
   const PROPIA_KEY = 'estudio-animacion:voz-propia'
   const [propia, setPropiaState] = useState<VozPropia | null>(() => {
@@ -480,6 +489,11 @@ export function ScriptPanel({ onClose }: { onClose: () => void }) {
             placeholder="p. ej. «tono irónico, que exagere en los remates, fondos de casa, rótulos en las cifras»"
           />
           <div className="voice-pick">
+            <div className="sublabel">Cómo se monta</div>
+            <select value={modo} onChange={(e) => setModo(e.target.value as ModoVideo)} title="Escenas: cada plano es un dibujo de la situación con él dentro y la boca animada (como Estoy Tiesa). Muñeco: el personaje de posturas delante de fondos.">
+              <option value="escenas">🎬 Escenas dibujadas (como Estoy Tiesa)</option>
+              <option value="muneco">🧍 Muñeco delante de fondos</option>
+            </select>
             <div className="sublabel">Voz (ElevenLabs)</div>
             {voces === null ? (
               <button className="btn small" onClick={cargarVoces}>

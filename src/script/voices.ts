@@ -324,6 +324,20 @@ export type Movimiento = 'ninguno' | 'entra' | 'sale' | 'se_mueve' | 'salta'
 export type Vineta = { t: number; escena: number; fondo: string; plano: Plano; lado: 'izq' | 'centro' | 'der'; inserto?: string; movimiento?: Movimiento; hacia?: 'izq' | 'centro' | 'der' }
 
 /** Pide a /api/actuar las posturas por palabra y las convierte en claves exactas (0,08 s antes). */
+/**
+ * Modo de montaje: «escenas» (como Estoy Tiesa: cada plano es un dibujo de la situación con el protagonista
+ * dentro y su boca animada encima) o «muneco» (el personaje de posturas delante de fondos).
+ */
+export type ModoVideo = 'escenas' | 'muneco'
+export const MODO_KEY = 'estudio-animacion:modo'
+export function modoVideo(): ModoVideo {
+  try {
+    return localStorage.getItem(MODO_KEY) === 'muneco' ? 'muneco' : 'escenas'
+  } catch {
+    return 'escenas'
+  }
+}
+
 /** Petición al director (la misma para ver el plan antes y para generar después). */
 function cuerpoDirector(ch: Character, raiz: Part, escenas: Escena[], palabrasDe: (i: number) => string[], indicaciones: string) {
   const ojosPart = ch.parts.find((p) => p.id === 'ojos')
@@ -335,17 +349,19 @@ function cuerpoDirector(ch: Character, raiz: Part, escenas: Escena[], palabrasDe
     escenas: escenas
       .map((e, i) => ({ escena: i, emocion: e.expresion, palabras: palabrasDe(i), indicaciones: e.indicaciones?.trim() || undefined }))
       .filter((e) => e.palabras.length),
-    nuevasMax: ch.expresivo?.base ? Math.min(8, 5 + escenas.filter((e) => e.indicaciones?.trim()).length) : 0,
+    modo: modoVideo(),
+    // En modo escenas las acciones y la gente van dibujadas en cada plano: sin gestos a medida ni reparto
+    nuevasMax: modoVideo() === 'escenas' ? 0 : ch.expresivo?.base ? Math.min(8, 5 + escenas.filter((e) => e.indicaciones?.trim()).length) : 0,
     escenografia: true,
     objetosMax: Math.min(16, 4 * escenas.length),
     vinetas: true,
-    reparto: Object.fromEntries(REPARTO.map((r) => [r.id, { quien: r.quien, posturas: r.posturas }])),
+    reparto: modoVideo() === 'escenas' ? {} : Object.fromEntries(REPARTO.map((r) => [r.id, { quien: r.quien, posturas: r.posturas }])),
     ...(ojosPart ? { miradas: Object.fromEntries(Object.entries(MIRADAS).filter(([k]) => k === 'propios' || ojosPart.variants[k])) } : {}),
   }
 }
 
 /** Clave del plan: el mismo guion (palabras de cada escena) con las mismas indicaciones = el mismo plan. */
-const clavePlan = (cuerpo: { escenas: unknown; indicaciones?: string }) => hash(JSON.stringify({ e: cuerpo.escenas, i: cuerpo.indicaciones ?? '' }))
+const clavePlan = (cuerpo: { escenas: unknown; indicaciones?: string; modo?: string }) => hash(JSON.stringify({ e: cuerpo.escenas, i: cuerpo.indicaciones ?? '', m: cuerpo.modo ?? '' }))
 
 /** Pide el plan al director, o devuelve el que ya se vio con «Ver el plan» si el guion no ha cambiado. */
 async function planDirector(cuerpo: ReturnType<typeof cuerpoDirector>, pass: string, usarGuardado: boolean) {
@@ -695,7 +711,7 @@ function camaraViva(tracks: Tracks, vinetas: Vineta[], dur: number, raizId: stri
   vinetas.forEach((v, i) => {
     const fin = vinetas[i + 1]?.t ?? dur
     const z = zoomEn(v.t + 1e-3)
-    if (v.inserto) {
+    if (v.inserto && modoVideo() !== 'escenas') {
       nuevos.push({ t: r(v.t), v: z, ease: 'salto' })
       return
     }
@@ -821,7 +837,7 @@ async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number 
     vins.push({ t, escena: v.escena, fondo: v.fondo.trim() || 'blanco', plano, lado: inserto ? 'centro' : v.lado ?? 'centro', inserto, movimiento: mov, hacia: v.hacia })
   }
   // Un inserto es una imagen quieta: como mucho ~2,5 s; después vuelve el narrador (al empezar una palabra)
-  for (let i = 0; i < vins.length; i++) {
+  for (let i = 0; i < vins.length && modoVideo() !== 'escenas'; i++) {
     const v = vins[i]
     const fin = vins[i + 1]?.t ?? (escenas.length ? escenas[escenas.length - 1].inicio + escenas[escenas.length - 1].duracion : v.t)
     if (!v.inserto || fin - v.t <= 3.2) continue
@@ -888,7 +904,8 @@ async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number 
     objs.push({ flecha: o.flecha, vin: vinDe(to), t: to, fin: finDe(to, o.escena), pos: o.pos, que: o.que, dibujo: o.dibujo.trim() })
   }
   // En un inserto no se ve al narrador: nada en su mano, delante ni en su bocadillo
-  for (let i = objs.length - 1; i >= 0; i--) if (objs[i].vin !== undefined && vins[objs[i].vin!]?.inserto) objs.splice(i, 1)
+  for (let i = objs.length - 1; i >= 0; i--)
+    if (objs[i].vin !== undefined && vins[objs[i].vin!]?.inserto && (modoVideo() !== 'escenas' || objs[i].pos === 'mano' || objs[i].pos === 'delante')) objs.splice(i, 1)
   // Nada flotando sin sentido: lo que no sujeta ni tiene delante va en un bocadillo (algo que imagina),
   // como mucho uno por viñeta
   {

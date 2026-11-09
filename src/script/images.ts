@@ -1,3 +1,4 @@
+import { analizarCara, type CaraEscena } from '../model/caraEscena'
 // Fondos generados con IA (fal.ai) en el estilo del personaje, añadidos como capas.
 
 import type { BgLayer, Escena, Project } from '../model/types'
@@ -54,11 +55,22 @@ export async function generateBackground(descripcion: string, project: Project, 
   if (!img.ok) throw new Error('No se pudo descargar la imagen generada.')
   const bmp0 = await createImageBitmap(await img.blob())
   // La IA a veces deja un marco blanco alrededor: se recorta para que el dibujo llegue a los bordes
-  const { blob, bmp } = await sinMarco(bmp0)
+  const marco = await sinMarco(bmp0)
+  let blob = marco.blob
+  const bmp = marco.bmp
+  // Escena con el protagonista dentro: se le borra la boca dibujada (luego habla con una boca animada)
+  let cara: CaraEscena | undefined
+  if (tipo === 'inserto') {
+    const a = await analizarCara(bmp).catch(() => null)
+    if (a) {
+      blob = a.blob
+      cara = a.cara
+    }
+  }
   const id = `fondo-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`
   await saveImage(id, blob)
   const name = descripcion.length > 28 ? descripcion.slice(0, 26) + '…' : descripcion
-  return { id, name, imageId: id, w: bmp.width, h: bmp.height }
+  return { id, name, imageId: id, w: bmp.width, h: bmp.height, ...(cara ? { cara } : {}) }
 }
 
 /** Recorta las bandas casi blancas de los bordes (marco que deja a veces la IA). */

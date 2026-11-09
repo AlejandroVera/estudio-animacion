@@ -177,6 +177,8 @@ export interface BgLayer {
   delante?: boolean
   /** Descripción con la que se generó (para reutilizarlo) */
   descripcion?: string
+  /** Escena dibujada con el protagonista dentro: dónde está su cara (boca y parpadeo animados encima) */
+  cara?: import('./caraEscena').CaraEscena
 }
 
 /** Tamaño del personaje en la escena: lejos (pequeño), general (cuerpo entero), medio (cintura arriba), primer (cara). */

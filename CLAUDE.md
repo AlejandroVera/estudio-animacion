@@ -284,6 +284,21 @@ cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y
   (voices.ts): acercamiento del 3 % muy lento en viñetas de más de 2,5 s y empujón rápido del 10 % en una
   cara exagerada/gag. `actuarSecundario`: quita→movil (1 s), senala→cruzado, ilusion/risa→reposo/jarras, y
   «habla» alterna con «reposo» cada 1,1 s. Pendiente: boca de la hermana y dibujos intermedios.
+- MODO ESCENAS (el método actual por defecto; tras «muy soso, todo en la misma escena, se siente forzado» y
+  analizar con vidIQ un vídeo real de Estoy Tiesa, azJsKlO8aQ8: ~25 planos en 3 min, 9 lugares, CADA PLANO ES
+  UN DIBUJO NUEVO DE LA SITUACIÓN CON ELLA DENTRO en una postura quieta, la gente secundaria dibujada en el
+  plano, rótulos y cosas que aparecen en su palabra, cortes secos): selector «Cómo se monta» del panel Guion
+  (`modoVideo`, localStorage `estudio-animacion:modo`, por defecto «escenas»; «muneco» = el método de antes).
+  En escenas, el director recibe `modo: 'escenas'` (bloque MODO_ESCENAS en api/actuar.ts) y pone casi todas
+  las viñetas como `inserto` con él dentro (postura, expresión, «small closed mouth», resto de gente normal),
+  sin reparto ni gestos a medida (no gasta en ellos). `generateBackground` tipo «inserto» pasa la imagen por
+  `analizarCara` (src/model/caraEscena.ts): busca la mancha magenta más grande (su cabeza: color único),
+  localiza el aro, los ojos (blanco dentro de la cabeza) y borra la boca dibujada con el color de la cabeza;
+  guarda la imagen limpia y `BgLayer.cara`. `drawLayers` pinta encima con `dibujarCara` la boca de la voz
+  (canal `face:mouth` del narrador: cerrada/abierta/O/E) y un parpadeo cada ~3,6 s. En escenas los insertos
+  no se cortan a 2,5 s, la cámara también se acerca despacio en ellos y solo se quitan los objetos en mano/
+  delante. La prueba de boca sobre una escena real salió bien; con bocas muy abiertas el borrado falla, por
+  eso api/imagen pide siempre boca cerrada pequeña y que nada más sea magenta.
 - DIRECTOR IA (`api/actuar.ts`, lo llama `dirigir` en `voices.ts` al generar voces): recibe las palabras
   de cada escena, la emoción y el catálogo `DESCRIPCIONES` (qué expresa cada postura) y devuelve en qué
   palabra cambia y a qué postura según lo que dice, y `miradas` (catálogo `MIRADAS`) en otras palabras; las claves caen 0,08 s antes de esa palabra. Si

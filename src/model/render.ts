@@ -2,6 +2,7 @@ import { poseAt } from './anim'
 import { withFollowThrough, withLife } from './life'
 import { ensureMedia, mediaUrl } from '../audio/storage'
 import { drawContenido, type PuntosPersonaje } from './contenido'
+import { dibujarCara } from './caraEscena'
 import { aSuManera, avanceEscritura, COLORES_MANO, escribirMano, medirMano } from './letra'
 import { evalTrack } from './anim'
 import type { BgLayer, Character, CharacterInstance, Part, Pose, Project, Vec } from './types'
@@ -314,6 +315,14 @@ export function drawLayers(g: CanvasRenderingContext2D, project: Project, t: num
     g.globalAlpha = Math.max(0, Math.min(1, opacity))
     g.setTransform(g.getTransform().multiply(layerMatrix(project, l, t)))
     g.drawImage(img, -l.w / 2, -l.h / 2, l.w, l.h)
+    // Escena con el protagonista dentro: su boca habla con la voz y parpadea de vez en cuando
+    if (l.cara && opacity > 0.5) {
+      const boca = String(evalTrack(tr['face:mouth'], t, 'cerrada'))
+      const fase = (l.id.charCodeAt(l.id.length - 1) % 7) * 0.37
+      const parpadea = (t + fase) % 3.6 < 0.12
+      g.scale(l.w / img.naturalWidth, l.h / img.naturalHeight)
+      dibujarCara(g, l.cara, img.naturalWidth, img.naturalHeight, boca, parpadea)
+    }
     g.restore()
   }
 }
