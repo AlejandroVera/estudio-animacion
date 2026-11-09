@@ -32,7 +32,8 @@ la mesa con una calculadora; junto a una pizarra; en el metro con gafas de sol.
   SIEMPRE «with a small closed mouth»), y a las demás personas haciendo lo suyo (personas normales, mismo
   trazo; su hermana: «his sister, a young woman with a messy dark bun and a mustard hoodie»). Él bien visible,
   grande (cabeza al menos una octava parte del ancho), de frente o tres cuartos, sin nada delante de la cara.
-- Un plano nuevo en cada idea o chiste: normalmente cada 3-6 s, más rápido (1-2 s) en un remate. Cada plano
+- Un plano nuevo en cada idea o chiste: normalmente cada 2-4 s y NUNCA más de 5 s seguidos con el mismo
+  dibujo (contando el «cambio»); en 30 s, 9-12 planos. Más rápido (1-2 s) en un remate. Cada plano
   con un ENCUADRE distinto al anterior (cerca / de cuerpo entero / pequeño en el sitio / detalle) y muchos
   lugares (cada situación de la historia, su sitio; 6-10 en un minuto).
 - Literaliza las metáforas y exagera: «parezco un rehén» → él con cara de rehén sujetando un periódico; «33

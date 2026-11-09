@@ -117,6 +117,8 @@ export async function sinMarco(bmp: ImageBitmap): Promise<{ blob: Blob; bmp: Ima
   if (x0 === 0 && y0 === 0 && x1 === W - 1 && y1 === H - 1) {
     return { blob: await c.convertToBlob({ type: 'image/jpeg', quality: 0.92 }), bmp }
   }
+  // Contenido real (sin el marco blanco), para rellenar luego lo blanco que quede alrededor
+  const cont = { x0, y0, x1, y1 }
   // Se conserva la forma del vídeo: si al quitar el blanco quedara una franja (p. ej. la escena dibujada
   // pequeña en el centro), luego al llenar la pantalla se comían los lados y el personaje salía cortado
   const forma = W / H
@@ -145,7 +147,36 @@ export async function sinMarco(bmp: ImageBitmap): Promise<{ blob: Blob; bmp: Ima
     }
   }
   const out = new OffscreenCanvas(w, h)
-  out.getContext('2d')!.drawImage(c, x0, y0, w, h, 0, 0, w, h)
+  const go = out.getContext('2d')!
+  go.drawImage(c, x0, y0, w, h, 0, 0, w, h)
+  // Lo que queda blanco por arriba/abajo/los lados se pinta con el color del borde del dibujo (la pared
+  // arriba, el suelo abajo): así no se ven franjas blancas ni hay que recortar al personaje
+  const colorDe = (yy0: number, yy1: number, xx0: number, xx1: number) => {
+    let r = 0, gg = 0, b = 0, n = 0
+    for (let yy = Math.max(0, yy0); yy <= Math.min(H - 1, yy1); yy += 2)
+      for (let xx = Math.max(0, xx0); xx <= Math.min(W - 1, xx1); xx += 3) {
+        const p = (yy * W + xx) * 4
+        r += d[p]; gg += d[p + 1]; b += d[p + 2]; n++
+      }
+    return n ? `rgb(${Math.round(r / n)},${Math.round(gg / n)},${Math.round(b / n)})` : '#fff'
+  }
+  const cx0 = cont.x0 - x0, cy0 = cont.y0 - y0, cx1 = cont.x1 - x0, cy1 = cont.y1 - y0
+  if (cy0 > 4) {
+    go.fillStyle = colorDe(cont.y0 + 4, cont.y0 + 14, cont.x0, cont.x1)
+    go.fillRect(0, 0, w, cy0)
+  }
+  if (cy1 < h - 4) {
+    go.fillStyle = colorDe(cont.y1 - 14, cont.y1 - 4, cont.x0, cont.x1)
+    go.fillRect(0, cy1, w, h - cy1)
+  }
+  if (cx0 > 4) {
+    go.fillStyle = colorDe(cont.y0, cont.y1, cont.x0 + 4, cont.x0 + 14)
+    go.fillRect(0, 0, cx0, h)
+  }
+  if (cx1 < w - 4) {
+    go.fillStyle = colorDe(cont.y0, cont.y1, cont.x1 - 14, cont.x1 - 4)
+    go.fillRect(cx1, 0, w - cx1, h)
+  }
   const blob = await out.convertToBlob({ type: 'image/jpeg', quality: 0.92 })
   return { blob, bmp: await createImageBitmap(blob) }
 }
