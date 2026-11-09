@@ -321,7 +321,7 @@ function silabas(al: Alineacion, desplaza: (t: number) => number | null, fps: nu
 }
 
 export type Movimiento = 'ninguno' | 'entra' | 'sale' | 'se_mueve' | 'salta'
-export type Vineta = { t: number; escena: number; fondo: string; plano: Plano; lado: 'izq' | 'centro' | 'der'; inserto?: string; movimiento?: Movimiento; hacia?: 'izq' | 'centro' | 'der' }
+export type Vineta = { t: number; escena: number; fondo: string; plano: Plano; lado: 'izq' | 'centro' | 'der'; inserto?: string; movimiento?: Movimiento; hacia?: 'izq' | 'centro' | 'der'; cambio?: string }
 
 /** Pide a /api/actuar las posturas por palabra y las convierte en claves exactas (0,08 s antes). */
 /**
@@ -381,7 +381,7 @@ async function planDirector(cuerpo: ReturnType<typeof cuerpoDirector>, pass: str
 
 export type PlanDirector = {
   historia?: string
-  vinetas?: { escena: number; palabra: number; idea?: string; motivo?: string; fondo: string; tamano: Plano; lado?: Vineta['lado']; inserto?: string; movimiento?: Movimiento; hacia?: Vineta['lado'] }[]
+  vinetas?: { escena: number; palabra: number; idea?: string; motivo?: string; fondo: string; tamano: Plano; lado?: Vineta['lado']; inserto?: string; movimiento?: Movimiento; hacia?: Vineta['lado']; cambio?: string; palabra_cambio?: number }[]
   objetos?: { escena: number; palabra: number; que: string; dibujo: string; pos: Objeto['pos']; flecha?: boolean; motivo?: string }[]
   fondos?: { escena: number; fondo: string }[]
   rotulos?: { escena: number; palabra: number; texto: string; color: Rotulo['color']; pos: Rotulo['pos']; estilo?: Rotulo['estilo']; flecha?: boolean; motivo?: string }[]
@@ -715,6 +715,12 @@ function camaraViva(tracks: Tracks, vinetas: Vineta[], dur: number, raizId: stri
       nuevos.push({ t: r(v.t), v: z, ease: 'salto' })
       return
     }
+    if (v.cambio) {
+      // Mismo plano con otro dibujo: la cámara sigue donde iba (sin saltos)
+      const sigue = Number(nuevos[nuevos.length - 1]?.v ?? z)
+      nuevos.push({ t: r(v.t), v: sigue, ease: 'lineal' }, { t: r(fin - 0.04), v: Math.round(sigue * 1.02 * 1000) / 1000, ease: 'salto' })
+      return
+    }
     const golpe = fuertes.find((k) => k.t > v.t + 0.2 && k.t < fin - 0.4)
     if (golpe) {
       // Sostiene, y en el golpe se acerca de repente y se queda ahí hasta el corte
@@ -835,6 +841,17 @@ async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number 
     const mov = !inserto && v.movimiento && v.movimiento !== 'ninguno' ? v.movimiento : undefined
     const plano: Plano = inserto ? 'general' : mov && mov !== 'salta' && (v.tamano === 'medio' || v.tamano === 'primer') ? 'general' : v.tamano
     vins.push({ t, escena: v.escena, fondo: v.fondo.trim() || 'blanco', plano, lado: inserto ? 'centro' : v.lado ?? 'centro', inserto, movimiento: mov, hacia: v.hacia })
+  }
+  // Segundo dibujo del mismo plano («cambio»): desde su palabra se ve la versión con la postura cambiada
+  for (const v of vinetas ?? []) {
+    if (!v.inserto?.trim() || !v.cambio?.trim() || (v.palabra_cambio ?? -1) <= v.palabra) continue
+    const w = porEscena[v.escena]?.[v.palabra_cambio!]
+    const k = vins.findIndex((x) => x.inserto === v.inserto!.trim() && !x.cambio)
+    if (!w || k < 0) continue
+    const tB = Math.round((w.t - 0.06) * fps) / fps
+    const fin = vins[k + 1]?.t ?? (escenas.length ? escenas[escenas.length - 1].inicio + escenas[escenas.length - 1].duracion : tB)
+    if (tB - vins[k].t < 0.8 || fin - tB < 0.7) continue
+    vins.splice(k + 1, 0, { ...vins[k], t: tB, cambio: v.cambio.trim() })
   }
   // Un inserto es una imagen quieta: como mucho ~2,5 s; después vuelve el narrador (al empezar una palabra)
   for (let i = 0; i < vins.length && modoVideo() !== 'escenas'; i++) {

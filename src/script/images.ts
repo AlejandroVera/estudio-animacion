@@ -2,7 +2,7 @@ import { analizarCara, type CaraEscena } from '../model/caraEscena'
 // Fondos generados con IA (fal.ai) en el estilo del personaje, añadidos como capas.
 
 import type { BgLayer, Escena, Project } from '../model/types'
-import { saveImage } from '../audio/storage'
+import { saveImage, ensureMedia } from '../audio/storage'
 import { activeCharacter, useStore } from '../store'
 import { backgroundKeys, estimateDuration } from './scenes'
 import { setKey } from '../model/anim'
@@ -23,7 +23,7 @@ export function formatoDe(p: Project) {
 }
 
 /** Genera un fondo y lo guarda; devuelve la capa (sin añadirla al proyecto). */
-export async function generateBackground(descripcion: string, project: Project, hueco?: 'izq' | 'der', variante?: number, tipo?: 'inserto'): Promise<BgLayer> {
+export async function generateBackground(descripcion: string, project: Project, hueco?: 'izq' | 'der', variante?: number, tipo?: 'inserto', editarDe?: string): Promise<BgLayer> {
   const ch = activeCharacter(project)
   // Fondo blanco liso: no hace falta IA
   if (/^blanco\b/i.test(descripcion.trim())) {
@@ -39,13 +39,21 @@ export async function generateBackground(descripcion: string, project: Project, 
   const res = await fetch('/api/imagen', {
     method: 'POST',
     headers: { 'content-type': 'application/json', 'x-clave-estudio': readPass() },
-    body: JSON.stringify({
+    body: JSON.stringify(editarDe ? {
+      // Segundo dibujo del mismo plano: se edita el primero y solo cambia lo que se pide
+      tipo: 'libre',
+      formato: formatoDe(project),
+      referencia: editarDe,
+      descripcion: `Edit this image. Keep EVERYTHING identical: same framing, same background, same characters in the same places, same style, colors and line work. Change ONLY this: ${descripcion}. The magenta round-headed boy keeps a small closed mouth (a short simple line) and his magenta skin. No text.`,
+    } : {
       descripcion,
       referencia: ch.referencia ? location.origin + ch.referencia : undefined,
       formato: formatoDe(project),
       ...(hueco ? { hueco } : {}),
       ...(variante !== undefined ? { variante } : {}),
       ...(tipo ? { tipo } : {}),
+      // Si sale la hermana, su dibujo como segunda referencia (así sale siempre igual)
+      ...(tipo === 'inserto' && /\bsister\b/i.test(descripcion) ? { referencias: [location.origin + '/personajes/hermana/referencia.jpg'] } : {}),
     }),
   })
   const d = await res.json().catch(() => ({}))
@@ -60,7 +68,10 @@ export async function generateBackground(descripcion: string, project: Project, 
   const bmp = marco.bmp
   // Escena con el protagonista dentro: se le borra la boca dibujada (luego habla con una boca animada)
   let cara: CaraEscena | undefined
-  if (tipo === 'inserto') {
+  const original = blob
+  // Una foto suya dentro de un móvil o un cuadro no habla
+  const esFoto = /\b(photo|picture|portrait|screen|poster|frame)\b/i.test(descripcion) && /\b(of (the|him)|showing)\b/i.test(descripcion)
+  if (tipo === 'inserto' && !esFoto) {
     const a = await analizarCara(bmp).catch(() => null)
     if (a) {
       blob = a.blob
@@ -69,8 +80,10 @@ export async function generateBackground(descripcion: string, project: Project, 
   }
   const id = `fondo-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`
   await saveImage(id, blob)
+  if (cara) await saveImage(id + '-orig', original)
+  await ensureMedia(cara ? [id, id + '-orig'] : [id])
   const name = descripcion.length > 28 ? descripcion.slice(0, 26) + '…' : descripcion
-  return { id, name, imageId: id, w: bmp.width, h: bmp.height, ...(cara ? { cara } : {}) }
+  return { id, name, imageId: id, w: bmp.width, h: bmp.height, urlFal: d.url, ...(cara ? { cara, imageIdOrig: id + '-orig' } : {}) }
 }
 
 /** Recorta las bandas casi blancas de los bordes (marco que deja a veces la IA). */
@@ -104,7 +117,33 @@ export async function sinMarco(bmp: ImageBitmap): Promise<{ blob: Blob; bmp: Ima
   if (x0 === 0 && y0 === 0 && x1 === W - 1 && y1 === H - 1) {
     return { blob: await c.convertToBlob({ type: 'image/jpeg', quality: 0.92 }), bmp }
   }
-  const w = x1 - x0 + 1, h = y1 - y0 + 1
+  // Se conserva la forma del vídeo: si al quitar el blanco quedara una franja (p. ej. la escena dibujada
+  // pequeña en el centro), luego al llenar la pantalla se comían los lados y el personaje salía cortado
+  const forma = W / H
+  let w = x1 - x0 + 1, h = y1 - y0 + 1
+  if (Math.abs(w / h - forma) / forma > 0.06) {
+    if (w / h > forma) {
+      const nh = Math.min(H, Math.round(w / forma))
+      const cy = (y0 + y1) / 2
+      y0 = Math.max(0, Math.min(H - nh, Math.round(cy - nh / 2)))
+      h = nh
+      if (h < w / forma) {
+        const nw = Math.round(h * forma)
+        x0 = Math.max(0, Math.round((x0 + x1) / 2 - nw / 2))
+        w = Math.min(nw, W - x0)
+      }
+    } else {
+      const nw = Math.min(W, Math.round(h * forma))
+      const cx = (x0 + x1) / 2
+      x0 = Math.max(0, Math.min(W - nw, Math.round(cx - nw / 2)))
+      w = nw
+      if (w < h * forma) {
+        const nh = Math.round(w / forma)
+        y0 = Math.max(0, Math.round((y0 + y1) / 2 - nh / 2))
+        h = Math.min(nh, H - y0)
+      }
+    }
+  }
   const out = new OffscreenCanvas(w, h)
   out.getContext('2d')!.drawImage(c, x0, y0, w, h, 0, 0, w, h)
   const blob = await out.convertToBlob({ type: 'image/jpeg', quality: 0.92 })
@@ -195,10 +234,11 @@ export async function generateSceneBackgrounds(escenas: Escena[], onProgress: (m
  * forma se reutilizan) y cada uno visible solo en sus viñetas, con corte seco.
  */
 /** Clave de la capa de una viñeta: su lugar, o su inserto (dibujo a pantalla completa delante del narrador). */
-const claveCapa = (v: { fondo: string; inserto?: string }) => (v.inserto ? INSERTO + v.inserto : v.fondo)
+const claveCapa = (v: { fondo: string; inserto?: string; cambio?: string }) => (v.inserto ? INSERTO + v.inserto + (v.cambio ? CAMBIO + v.cambio : '') : v.fondo)
+const CAMBIO = ' ⟶ '
 const INSERTO = 'inserto: '
 
-export async function fondosPorVinetas(vinetasIn: { t: number; fondo: string; lado?: 'izq' | 'centro' | 'der'; inserto?: string }[], onProgress: (m: string) => void) {
+export async function fondosPorVinetas(vinetasIn: { t: number; fondo: string; lado?: 'izq' | 'centro' | 'der'; inserto?: string; cambio?: string }[], onProgress: (m: string) => void) {
   const vinetas = vinetasIn.map((v) => ({ ...v, fondo: claveCapa(v) }))
   const unicos = [...new Set(vinetas.map((v) => v.fondo))]
   const capaDe = new Map<string, BgLayer>()
@@ -212,8 +252,12 @@ export async function fondosPorVinetas(vinetasIn: { t: number; fondo: string; la
     onProgress(previa ? `Reutilizando: ${d}` : esInserto ? `Dibujando viñeta ${n} de ${unicos.length}: ${d.slice(INSERTO.length)}` : `Generando fondo ${n} de ${unicos.length}: ${d}`)
     try {
       if (esInserto) {
-        // Inserto: dibujo a pantalla completa DELANTE del narrador (él no se ve en esa viñeta)
-        capaDe.set(d, previa ?? { ...(await generateBackground(d.slice(INSERTO.length), pr, undefined, undefined, 'inserto')), descripcion: d, delante: true })
+        // Inserto: dibujo a pantalla completa DELANTE del narrador (él no se ve en esa viñeta). Si es el
+        // segundo dibujo de un plano («cambio»), se hace editando el primero: mismo encuadre y misma gente
+        const [texto, cambio] = d.slice(INSERTO.length).split(CAMBIO)
+        const primero = cambio ? capaDe.get(INSERTO + texto) : undefined
+        if (cambio && !previa && !primero?.urlFal) continue
+        capaDe.set(d, previa ?? { ...(await generateBackground(cambio ? cambio : texto, pr, undefined, undefined, 'inserto', primero?.urlFal)), descripcion: d, delante: true })
         continue
       }
       // El lado libre (contrario al personaje) se pide casi vacío, para el contenido
@@ -235,7 +279,8 @@ export async function fondosPorVinetas(vinetasIn: { t: number; fondo: string; la
   // Tramos de cada capa (juntando viñetas seguidas con el mismo fondo)
   const tramos: { id: string; desde: number; hasta: number }[] = []
   vinetas.forEach((v, i) => {
-    const capa = capaDe.get(v.fondo)
+    // Si el segundo dibujo de un plano no salió, sigue el primero
+    const capa = capaDe.get(v.fondo) ?? (v.cambio && v.inserto ? capaDe.get(INSERTO + v.inserto) : undefined)
     const hasta = vinetas[i + 1]?.t ?? total
     const last = tramos[tramos.length - 1]
     if (!capa) return

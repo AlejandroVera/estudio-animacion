@@ -38,7 +38,7 @@ export function PlanVista({ plan, palabras, project, escenas = [] }: { plan: Pla
   const lugaresNuevos = lugares.filter((f) => !(project.fondos ?? []).some((l) => l.descripcion === f && Math.abs(l.w / l.h - ratio) < 0.15))
   const gestosNuevos = (plan.nuevas ?? []).filter((n) => !(project.posturasExtra ?? []).some((e) => e.nombre === 't_x_' + n.nombre.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 20)))
   const dibujos = [...new Set((plan.objetos ?? []).map((o) => o.dibujo))].filter((d) => !(project.objetos ?? []).some((o) => o.dibujo === d))
-  const insertos = [...new Set(vins.map((v) => v.inserto?.trim()).filter(Boolean))].filter((d) => !(project.fondos ?? []).some((l) => l.descripcion === 'inserto: ' + d))
+  const insertos = [...new Set(vins.flatMap((v) => [v.inserto?.trim(), v.inserto && v.cambio ? v.inserto + '|' + v.cambio : undefined]).filter(Boolean))].filter((d) => !(project.fondos ?? []).some((l) => l.descripcion === 'inserto: ' + d))
   const coste = lugaresNuevos.length + gestosNuevos.length * 2 + dibujos.length + insertos.length
 
   return (
@@ -54,7 +54,10 @@ export function PlanVista({ plan, palabras, project, escenas = [] }: { plan: Pla
             <div>
               <b>«{palabra(v)}»</b> ·{' '}
               {v.inserto ? (
-                <>🖼 viñeta dibujada: {v.inserto}</>
+                <>
+                  🖼 escena dibujada: {v.inserto}
+                  {v.cambio && (v.palabra_cambio ?? -1) >= 0 && <> · ✏️ en «{palabras[v.escena]?.[v.palabra_cambio!] ?? '…'}» cambia: {v.cambio}</>}
+                </>
               ) : (
                 <>
                   {v.fondo === 'blanco' ? 'fondo blanco' : v.fondo} · {TAMANOS[v.tamano] ?? v.tamano}

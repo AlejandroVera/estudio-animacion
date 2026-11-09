@@ -151,6 +151,11 @@ export function dibujarCara(g: CanvasRenderingContext2D, cara: CaraEscena, w: nu
       g.quadraticCurveTo(o.x + o.w / 2, o.y + o.h * 0.8, o.x + o.w * 1.05, o.y + o.h * 0.55)
       g.stroke()
     }
+  // Boca cerrada: se ve la que dibujó la IA (la imagen original), aquí no se pinta nada
+  if (boca === 'nada') {
+    g.restore()
+    return
+  }
   g.strokeStyle = tinta
   g.lineWidth = grosor
   const abierta = boca === 'abierta' || boca === 'A' || boca === 'dientes'

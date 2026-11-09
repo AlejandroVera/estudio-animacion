@@ -179,6 +179,10 @@ export interface BgLayer {
   descripcion?: string
   /** Escena dibujada con el protagonista dentro: dónde está su cara (boca y parpadeo animados encima) */
   cara?: import('./caraEscena').CaraEscena
+  /** La escena tal cual la dibujó la IA (con su boca), para cuando no habla */
+  imageIdOrig?: string
+  /** Dirección de la imagen en fal (para editarla y hacer el segundo dibujo del mismo plano) */
+  urlFal?: string
 }
 
 /** Tamaño del personaje en la escena: lejos (pequeño), general (cuerpo entero), medio (cintura arriba), primer (cara). */

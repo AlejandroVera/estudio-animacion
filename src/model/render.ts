@@ -25,9 +25,10 @@ export function getImage(src: string): HTMLImageElement {
 
 export async function ensureImages(project: Project): Promise<void> {
   const all: Promise<void>[] = []
-  await ensureMedia([...(project.fondos ?? []), ...(project.objetos ?? [])].map((l) => l.imageId))
-  for (const l of [...(project.fondos ?? []), ...(project.objetos ?? [])]) {
-    const url = mediaUrl(l.imageId)
+  const ids = [...(project.fondos ?? []), ...(project.objetos ?? [])].flatMap((l) => ('imageIdOrig' in l && l.imageIdOrig ? [l.imageId, l.imageIdOrig] : [l.imageId]))
+  await ensureMedia(ids)
+  for (const id of ids) {
+    const url = mediaUrl(id)
     if (url) {
       const img = getImage(url)
       if (!img.complete) all.push(img.decode().catch(() => undefined))
@@ -314,14 +315,18 @@ export function drawLayers(g: CanvasRenderingContext2D, project: Project, t: num
     g.save()
     g.globalAlpha = Math.max(0, Math.min(1, opacity))
     g.setTransform(g.getTransform().multiply(layerMatrix(project, l, t)))
-    g.drawImage(img, -l.w / 2, -l.h / 2, l.w, l.h)
-    // Escena con el protagonista dentro: su boca habla con la voz y parpadea de vez en cuando
+    // Escena con el protagonista dentro: con la boca cerrada se ve su boca dibujada (va con su expresión);
+    // al hablar, la imagen sin boca con la boca animada encima
+    const boca = String(evalTrack(tr['face:mouth'], t, 'cerrada'))
+    const hablando = !!l.cara && ['abierta', 'A', 'O', 'o', 'E', 'dientes'].includes(boca)
+    const orig = l.cara && !hablando && l.imageIdOrig ? mediaUrl(l.imageIdOrig) : undefined
+    const imgOrig = orig ? getImage(orig) : null
+    g.drawImage(imgOrig?.complete && imgOrig.naturalWidth ? imgOrig : img, -l.w / 2, -l.h / 2, l.w, l.h)
     if (l.cara && opacity > 0.5) {
-      const boca = String(evalTrack(tr['face:mouth'], t, 'cerrada'))
       const fase = (l.id.charCodeAt(l.id.length - 1) % 7) * 0.37
       const parpadea = (t + fase) % 3.6 < 0.12
       g.scale(l.w / img.naturalWidth, l.h / img.naturalHeight)
-      dibujarCara(g, l.cara, img.naturalWidth, img.naturalHeight, boca, parpadea)
+      dibujarCara(g, l.cara, img.naturalWidth, img.naturalHeight, hablando ? boca : 'nada', parpadea)
     }
     g.restore()
   }

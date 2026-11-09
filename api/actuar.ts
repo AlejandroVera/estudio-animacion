@@ -39,6 +39,15 @@ la mesa con una calculadora; junto a una pizarra; en el metro con gafas de sol.
   intentos» → él rodeado de fotos fallidas.
 - Algún plano corto sin él (un detalle: la pantalla del móvil, una calculadora con «NO SALE»), y algún plano
   sobre fondo blanco solo con él (inserto "" y fondo «blanco») para explicar.
+- ANIMACIÓN DENTRO DEL PLANO: «cambio» = un segundo dibujo del MISMO plano (mismo encuadre, fondo y gente)
+  en el que solo cambia la postura o la cara de alguien, y «palabra_cambio» = la palabra (de la misma escena,
+  después del inicio del plano) en la que se ve. Es lo que hace que no parezcan estampas: la hermana pasa de
+  teclear a enseñarle el móvil con una sonrisa; él pasa de mirar el móvil a poner cara de horror; ella le
+  baja el móvil y pone los brazos en jarras. Úsalo en los planos con otra persona (casi siempre) y en muchos
+  de los demás, en la palabra exacta de la acción. En inglés y solo lo que cambia («the sister now holds the
+  phone up to his face, grinning; he leans back horrified, eyes wide»). Si no hay, "" y -1.
+- LA CARA DICE LO QUE SUENA: la expresión de ojos y cejas de cada dibujo es la emoción de la frase que se
+  oye mientras se ve; si la emoción cambia, otro plano o un «cambio».
 - Encima de los planos van «rotulos» (cifras, la palabra del remate, a mano) en la palabra exacta, y si
   ayuda «objetos» en bocadillo de pensamiento. «secundarios» vacío y «movimiento» «ninguno»: las otras
   personas y las acciones van DIBUJADAS en la escena. «cambios» solo importa en los planos sin inserto.`
@@ -224,11 +233,13 @@ const SCHEMA = {
       items: {
         type: 'object',
         additionalProperties: false,
-        required: ['escena', 'palabra', 'idea', 'motivo', 'fondo', 'tamano', 'lado', 'inserto', 'movimiento', 'hacia'],
+        required: ['escena', 'palabra', 'idea', 'motivo', 'fondo', 'tamano', 'lado', 'inserto', 'movimiento', 'hacia', 'cambio', 'palabra_cambio'],
         properties: {
           motivo: { type: 'string' },
           inserto: { type: 'string', description: 'Dibujo a pantalla completa (en inglés) en vez del narrador, o "" si sale el narrador.' },
           movimiento: { type: 'string', enum: ['ninguno', 'entra', 'sale', 'se_mueve', 'salta'] },
+          cambio: { type: 'string', description: 'Solo con inserto: qué cambia en un segundo dibujo del MISMO plano (en inglés), o "".' },
+          palabra_cambio: { type: 'integer', description: 'Palabra de la misma escena en la que se ve el segundo dibujo, o -1.' },
           hacia: { type: 'string', enum: ['izq', 'centro', 'der'] },
           escena: { type: 'integer' },
           palabra: { type: 'integer' },
