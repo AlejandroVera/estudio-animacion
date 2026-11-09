@@ -57,11 +57,26 @@ export async function analizarCara(bmp: ImageBitmap): Promise<{ blob: Blob; cara
       if (!mejor || n > mejor.n) mejor = { n, x0, x1, y0, y1 }
     }
   if (!mejor || mejor.n < 1500) return null
-  const cx = (mejor.x0 + mejor.x1) / 2, cy = (mejor.y0 + mejor.y1) / 2
-  const r = (mejor.x1 - mejor.x0 + (mejor.y1 - mejor.y0)) / 4
-  // Una cabeza es casi redonda: si la mancha es muy alargada, no es su cabeza
-  const ancho = mejor.x1 - mejor.x0, alto = mejor.y1 - mejor.y0
-  if (ancho / alto > 1.6 || alto / ancho > 1.6) return null
+  // La cabeza es lo redondo de ARRIBA de la mancha (a veces el cuello y los brazos magenta van pegados):
+  // se baja fila a fila desde arriba; la cabeza acaba donde, pasado lo más ancho, se estrecha (el cuello)
+  const anchoFila = (y: number) => {
+    let a = -1, b = -1
+    for (let x = mejor!.x0; x <= mejor!.x1; x++) if (mag[y * W + x]) (a < 0 && (a = x), (b = x))
+    return a < 0 ? { w: 0, a: 0, b: 0 } : { w: b - a + 1, a, b }
+  }
+  let maxW = 0, maxY = mejor.y0, fondo = mejor.y1, ma = 0, mb = 0
+  for (let y = mejor.y0; y <= mejor.y1; y++) {
+    const f = anchoFila(y)
+    if (f.w > maxW) {
+      maxW = f.w; maxY = y; ma = f.a; mb = f.b
+    } else if (maxW > 40 && y > maxY + maxW * 0.25 && f.w < maxW * 0.45) {
+      fondo = y
+      break
+    }
+  }
+  const r = Math.max(maxW / 2, (fondo - mejor.y0) / 2.05)
+  const cx = (ma + mb) / 2, cy = mejor.y0 + r
+  if (r < 20) return null
   // Color de la cabeza (media de lo magenta de dentro)
   let sr = 0, sg = 0, sb = 0, sn = 0
   for (let y = Math.round(cy - r * 0.8); y < cy + r * 0.8; y += 3)

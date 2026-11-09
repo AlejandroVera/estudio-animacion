@@ -299,6 +299,18 @@ cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y
   no se cortan a 2,5 s, la cámara también se acerca despacio en ellos y solo se quitan los objetos en mano/
   delante. La prueba de boca sobre una escena real salió bien; con bocas muy abiertas el borrado falla, por
   eso api/imagen pide siempre boca cerrada pequeña y que nada más sea magenta.
+- ESCENAS, REVISIÓN 1 (tras «el muñeco se corta, las caras no van con la locución, la hermana es un pegote, un
+  dedo color carne»): `sinMarco` conserva la forma del vídeo y rellena lo blanco con el color del borde; si
+  la escena salió en franja (`bandas`), `generateBackground` pide a fal ampliarla (edición «extend… fill the
+  whole canvas») y la usa si ya no tiene franjas. Con la boca CERRADA se pinta la imagen original
+  (`imageIdOrig`, su boca va con su expresión); la boca animada solo al hablar. Fotos suyas (photo/screen…
+  of him) no hablan. La hermana sale igual en todas: `public/personajes/hermana/referencia.jpg` como segunda
+  referencia (`referencias` en api/imagen) cuando la descripción dice «sister». Manos de él magenta, un solo
+  chico magenta, sin gente de relleno. «cambio»/«palabra_cambio» del director: SEGUNDO DIBUJO DEL MISMO
+  PLANO (edición de fal del primero, `urlFal`) que se ve desde esa palabra (animación dentro del plano; si
+  falla, sigue el primero). Planos de 5 s como mucho. Rótulos evitan también la cara de la escena
+  (`carasDeEscena`). `analizarCara` mide la cabeza por lo redondo de arriba (los brazos pegados al cuello la
+  confundían).
 - DIRECTOR IA (`api/actuar.ts`, lo llama `dirigir` en `voices.ts` al generar voces): recibe las palabras
   de cada escena, la emoción y el catálogo `DESCRIPCIONES` (qué expresa cada postura) y devuelve en qué
   palabra cambia y a qué postura según lo que dice, y `miradas` (catálogo `MIRADAS`) en otras palabras; las claves caen 0,08 s antes de esa palabra. Si
