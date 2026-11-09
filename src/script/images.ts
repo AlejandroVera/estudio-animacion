@@ -96,7 +96,8 @@ export async function generateBackground(descripcion: string, project: Project, 
   let cara: CaraEscena | undefined
   const original = blob
   // Una foto suya dentro de un móvil o un cuadro no habla
-  const esFoto = /\b(photo|picture|portrait|screen|poster|frame)\b/i.test(descripcion) && /\b(of (the|him)|showing)\b/i.test(descripcion)
+  // (solo cuando el plano ES la foto o la pantalla, no cuando él mira una pantalla)
+  const esFoto = /^\s*(an? |the )?((extreme )?close-?up (shot )?of )?(an? |the |his |her )?(\w+ )?(phone|smartphone|tablet|photo|picture|portrait|screen|poster|frame|polaroid)\b/i.test(descripcion)
   if (tipo === 'inserto' && !esFoto) {
     const a = await analizarCara(bmp).catch(() => null)
     if (a) {
