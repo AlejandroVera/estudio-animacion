@@ -274,6 +274,16 @@ cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y
   aparta dos pasos al otro lado mirándola y vuelve en el siguiente corte. Con alguien en escena las viñetas
   son generales. `drawFrame` y Stage dibujan el reparto detrás del protagonista (`drawPersonajeEscena` con
   `principal=false`). Probado en el navegador: entra, le quita algo, él se asusta, ella se ríe y se va.
+- ANIMACIÓN LIMITADA (opción A elegida por Alejandro tras «sigue sin ser una animación coherente, la hermana
+  aparece estática»; descartó el vídeo generativo): `drawExpresivoVivo` (render.ts, para todo expresivo con
+  vida) pinta la postura en dos pasadas: el cuerpo sin la cabeza y la cabeza (óvalo por encima del cuello,
+  desde `expresivo.cabeza`/`radio`) girando alrededor del cuello, con las capas de cara encima moviéndose
+  con ella. La cabeza se balancea siempre (~2°), da un bote al hablar (boca abierta en `face:mouth`) y un
+  cabeceo amortiguado al cambiar de postura; el cuerpo respira (escala Y desde los pies ±0,7 %) y hace un
+  squash del 3 % al cambiar. Comprobado: a ±5° el recorte queda limpio en los dos personajes. `camaraViva`
+  (voices.ts): acercamiento del 3 % muy lento en viñetas de más de 2,5 s y empujón rápido del 10 % en una
+  cara exagerada/gag. `actuarSecundario`: quita→movil (1 s), senala→cruzado, ilusion/risa→reposo/jarras, y
+  «habla» alterna con «reposo» cada 1,1 s. Pendiente: boca de la hermana y dibujos intermedios.
 - DIRECTOR IA (`api/actuar.ts`, lo llama `dirigir` en `voices.ts` al generar voces): recibe las palabras
   de cada escena, la emoción y el catálogo `DESCRIPCIONES` (qué expresa cada postura) y devuelve en qué
   palabra cambia y a qué postura según lo que dice, y `miradas` (catálogo `MIRADAS`) en otras palabras; las claves caen 0,08 s antes de esa palabra. Si

@@ -148,6 +148,11 @@ export function drawCharacter(
   const placed = layout(character, inst, pose, restPose)
   const byId = new Map(placed.map((p) => [p.part.id, p]))
   if (!restPose) drawShadow(g, character, inst, placed)
+  // Expresivo con vida (animación limitada de dibujos): respira, la cabeza se mueve sola y acentúa
+  if (character.expresivo && life && !restPose) {
+    drawExpresivoVivo(g, character, inst, t, placed)
+    return placed
+  }
   for (const pl of placed) {
     const asset = character.assets[pl.assetId]
     if (!asset) continue
@@ -170,6 +175,93 @@ export function drawCharacter(
     g.restore()
   }
   return placed
+}
+
+/** Instante del último cambio de postura (para el acento) */
+function ultimoCambio(tracks: CharacterInstance['tracks'], canal: string, t: number) {
+  const ks = tracks[canal] ?? []
+  let u = -99
+  for (let i = 0; i < ks.length; i++) if (ks[i].t <= t + 1e-4 && (i === 0 || ks[i].v !== ks[i - 1].v)) u = ks[i].t
+  return u
+}
+
+const BOCA_ABIERTA = new Set(['abierta', 'O', 'E', 'o', 'dientes'])
+
+/**
+ * ANIMACIÓN LIMITADA (como un capítulo de dibujos, no estampas fijas): el dibujo de la postura se pinta en
+ * dos pasadas, el cuerpo y la cabeza aparte (recortada por su círculo y girando alrededor del cuello), y
+ * encima las capas de cara (ojos, boca) que van con la cabeza. La cabeza se balancea un poco siempre,
+ * da un pequeño bote al hablar (cuando la boca se abre) y un cabeceo al cambiar de postura; el cuerpo
+ * respira (se estira un pelo desde los pies) y hace un pequeño «squash» al cambiar de postura.
+ */
+function drawExpresivoVivo(g: CanvasRenderingContext2D, character: Character, inst: CharacterInstance, t: number, placed: Placed[]) {
+  const ex = character.expresivo!
+  const root = placed.find((p) => !p.part.parent)
+  if (!root) return
+  const fase = (inst.x * 0.013 + inst.scale * 7) % 6.28 // cada personaje a su ritmo
+  // Acento al cambiar de postura
+  const dt = t - ultimoCambio(inst.tracks, `part:${root.part.id}:v`, t)
+  const acento = dt >= 0 && dt < 0.5 ? Math.exp(-dt * 9) : 0
+  // Respiración + squash del cambio, desde los pies (inst.y es el suelo)
+  const sy = 1 + 0.007 * Math.sin(t * 1.6 + fase) - 0.035 * acento * Math.cos(dt * 22)
+  const sx = 1 + 0.02 * acento * Math.cos(dt * 22)
+  // Cabeza: balanceo suave + bote al hablar + cabeceo al cambiar
+  const boca = String(evalTrack(inst.tracks['face:mouth'], t, 'cerrada'))
+  const bocaAntes = String(evalTrack(inst.tracks['face:mouth'], t - 0.05, 'cerrada'))
+  const habla = (BOCA_ABIERTA.has(boca) ? 0.6 : 0) + (BOCA_ABIERTA.has(bocaAntes) ? 0.4 : 0)
+  const R = ex.radio ?? 300
+  const rot = 1.4 * Math.sin(t * 1.5 + fase) + 0.7 * Math.sin(t * 3.7 + fase * 2) + 5 * acento * Math.sin(dt * 16)
+  const dy = -R * 0.03 * habla + R * 0.05 * acento * Math.sin(dt * 14)
+  // Región de la cabeza en coordenadas del dibujo (respecto a la articulación de la raíz)
+  const cx = ex.cabeza.x - root.part.anchor.x
+  const cy = ex.cabeza.y - root.part.anchor.y
+  const cuello = cy + R * 0.97
+  // Óvalo de la cabeza (con algo de margen para el pelo) cortado por la línea del cuello
+  const ecy = cy - R * 0.12, rx = R * 1.28, ry = R * 1.32
+  const tn = Math.asin(Math.max(-1, Math.min(1, (cuello - ecy) / ry)))
+  const region = (c: CanvasRenderingContext2D) => {
+    c.ellipse(cx, ecy, rx, ry, 0, tn, Math.PI - tn, true) // por arriba
+    c.closePath() // la línea del cuello
+  }
+  const asset = character.assets[root.assetId]
+  const img = asset && getImage(asset.src)
+  if (!asset || !img?.complete || !img.naturalWidth) return
+  g.save()
+  // Respirar y squash desde el suelo
+  const pie = root.matrix.transformPoint(new DOMPoint(0, 0))
+  g.translate(pie.x, pie.y)
+  g.scale(sx, sy)
+  g.translate(-pie.x, -pie.y)
+  const base = g.getTransform()
+  // 1) Cuerpo: todo menos la cabeza (por encima del cuello)
+  g.setTransform(base.multiply(root.matrix))
+  g.save()
+  g.beginPath()
+  g.rect(-root.part.anchor.x - 10, -root.part.anchor.y - 10, asset.w + 20, asset.h + 20)
+  region(g)
+  g.clip('evenodd')
+  g.drawImage(img, -root.part.anchor.x, -root.part.anchor.y, asset.w, asset.h)
+  g.restore()
+  // 2) Cabeza: la región por encima del cuello, girando alrededor del cuello
+  const H = new DOMMatrix().translate(cx, cuello + dy).rotate(rot).translate(-cx, -cuello)
+  g.setTransform(base.multiply(root.matrix).multiply(H))
+  g.save()
+  g.beginPath()
+  region(g)
+  g.clip()
+  g.drawImage(img, -root.part.anchor.x, -root.part.anchor.y, asset.w, asset.h)
+  g.restore()
+  // 3) Capas de cara (hijas de la raíz): con la cabeza
+  const Mh = root.matrix.multiply(H).multiply(root.matrix.inverse())
+  for (const pl of placed) {
+    if (pl === root) continue
+    const a = character.assets[pl.assetId]
+    const im = a && getImage(a.src)
+    if (!a || !im?.complete || !im.naturalWidth) continue
+    g.setTransform(base.multiply(Mh).multiply(pl.matrix))
+    g.drawImage(im, -pl.part.anchor.x, -pl.part.anchor.y, a.w, a.h)
+  }
+  g.restore()
 }
 
 /** Dibuja el fotograma completo del proyecto en el instante t (sin ayudas de edición). */

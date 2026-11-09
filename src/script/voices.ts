@@ -674,11 +674,59 @@ function ponerReparto(narr: Tracks, pres: Presencia[], vinetas: Vineta[], projec
         poner(narr, 'pj:espejo', fin, antesE, 'salto')
       }
     }
+    actuarSecundario(tr, `part:${R}:v`, dur, fps)
     instancias.push({ characterId: c.id, x: inst0.x, y: inst0.y, scale: escala, tracks: tr })
     personajes[c.id] = c
   }
   void ch
   return { instancias, personajes }
+}
+
+/**
+ * Cámara viva (animación limitada): en cada viñeta de más de 2,5 s la cámara se acerca un 3 % muy despacio
+ * (el plano nunca está muerto) y, cuando el personaje cambia a una cara exagerada o un gag, da un empujón
+ * rápido del 10 % hacia él (el golpe del chiste). Los insertos no se tocan.
+ */
+function camaraViva(tracks: Tracks, vinetas: Vineta[], dur: number, raizId: string, fps: number) {
+  const r = (t: number) => Math.round(t * fps) / fps
+  const zoomEn = (t: number) => Number([...(tracks['cam:zoom'] ?? [])].filter((k) => k.t <= t + 1e-4).pop()?.v ?? 1)
+  const nuevos: { t: number; v: number; ease: 'salto' | 'lineal' | 'suave' }[] = []
+  const fuertes = (tracks[`part:${raizId}:v`] ?? []).filter((k) => /^t_e_|^(enfado|llorar|celebrar|mejillas|stop)$/.test(String(k.v)))
+  vinetas.forEach((v, i) => {
+    const fin = vinetas[i + 1]?.t ?? dur
+    const z = zoomEn(v.t + 1e-3)
+    if (v.inserto) {
+      nuevos.push({ t: r(v.t), v: z, ease: 'salto' })
+      return
+    }
+    const golpe = fuertes.find((k) => k.t > v.t + 0.2 && k.t < fin - 0.4)
+    if (golpe) {
+      // Sostiene, y en el golpe se acerca de repente y se queda ahí hasta el corte
+      nuevos.push({ t: r(v.t), v: z, ease: 'salto' }, { t: r(golpe.t - 0.02), v: z, ease: 'suave' }, { t: r(golpe.t + 0.2), v: Math.round(z * 1.1 * 1000) / 1000, ease: 'salto' })
+    } else if (fin - v.t > 2.5) {
+      nuevos.push({ t: r(v.t), v: z, ease: 'lineal' }, { t: r(fin - 0.04), v: Math.round(z * 1.03 * 1000) / 1000, ease: 'salto' })
+    } else nuevos.push({ t: r(v.t), v: z, ease: 'salto' })
+  })
+  tracks['cam:zoom'] = nuevos.sort((a, b) => a.t - b.t)
+}
+
+/**
+ * Actuación automática del reparto (que no se quede tiesa en una postura): los gestos de un momento pasan
+ * solos a una postura de después (quitar → mirar el móvil, señalar → brazos cruzados, ilusión → reposo) y,
+ * si «habla» mucho rato, alterna «habla» y «reposo» como quien gesticula al hablar.
+ */
+function actuarSecundario(tr: Tracks, canal: string, dur: number, fps: number) {
+  const r = (t: number) => Math.round(t * fps) / fps
+  const DESPUES: Record<string, [number, string]> = { quita: [1.0, 'movil'], senala: [1.4, 'cruzado'], ilusion: [1.8, 'reposo'], risa: [2.2, 'jarras'] }
+  const ks = [...(tr[canal] ?? [])].sort((a, b) => a.t - b.t)
+  const extra: typeof ks = []
+  ks.forEach((k, i) => {
+    const sig = ks[i + 1]?.t ?? dur
+    const d = DESPUES[String(k.v)]
+    if (d && sig - k.t > d[0] + 0.6) extra.push({ t: r(k.t + d[0]), v: d[1], ease: 'salto' })
+    if (k.v === 'habla') for (let t = k.t + 1.1, n = 0; t < sig - 0.5; t += 1.1, n++) extra.push({ t: r(t), v: n % 2 ? 'habla' : 'reposo', ease: 'salto' })
+  })
+  tr[canal] = [...ks, ...extra].sort((a, b) => a.t - b.t)
 }
 
 async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number })[], ch: Character, raiz: Part, pass: string, fps: number, onProgress?: (m: string) => void, indicaciones = '') {
@@ -1187,6 +1235,8 @@ export async function voiceScript(
   // Se mueve por la escena donde lo pidió el director (entrar, ir a otro sitio, salir, saltar)
   const raizAhora = activeCharacter(useStore.getState().project).parts.find((p) => !p.parent) ?? raiz
   if (vinetasNuevas && raiz && ch.expresivo) moverPersonaje(conGestos, vinetasNuevas, m.duration, raizAhora!, st.project, ch)
+  // CÁMARA VIVA: acercamiento lentísimo en cada viñeta larga y un empujón rápido en los momentos fuertes
+  if (vinetasNuevas?.length && raizAhora) camaraViva(conGestos, vinetasNuevas, m.duration, raizAhora.id, st.project.fps)
   // El reparto (la hermana…) en escena con el narrador
   const reparto = presReparto.length && raizAhora ? ponerReparto(conGestos, presReparto, vinetasNuevas ?? [], st.project, ch, raizAhora, m.duration) : null
 
