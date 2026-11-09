@@ -80,11 +80,17 @@ export function Stage() {
     g.setTransform(g.getTransform().multiply(cam))
     drawLayers(g, project, time, false)
     // El reparto (secundarios) se dibuja detrás del protagonista
+    const otras: { x: number; y: number; r: number }[] = []
     project.instances.slice(1).forEach((o) => {
       const c2 = project.characters[o.characterId]
-      if (c2?.expresivo && !rest) drawPersonajeEscena(g, project, c2, o, time, cam, false, false)
+      if (c2?.expresivo && !rest) {
+        const cir = drawPersonajeEscena(g, project, c2, o, time, cam, false, false).puntos.circulo
+        if (cir) otras.push(cir)
+      }
     })
-    const { placed, puntos } = drawPersonajeEscena(g, project, ch, inst, time, cam, rest)
+    const dibujado = drawPersonajeEscena(g, project, ch, inst, time, cam, rest)
+    const placed = dibujado.placed
+    const puntos = { ...dibujado.puntos, otras }
     placedRef.current = placed
     drawLayers(g, project, time, true)
     // Objetos y rótulos (fuera de la cámara, como en el vídeo)

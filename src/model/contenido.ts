@@ -12,6 +12,8 @@ export type PuntosPersonaje = {
   cabeza: { x: number; y: number } | null
   /** La cabeza entera en pantalla (centro y radio): lo que aparece alrededor no debe taparla */
   circulo?: { x: number; y: number; r: number } | null
+  /** Cabezas del reparto (lo que aparece tampoco debe taparlas) */
+  otras?: { x: number; y: number; r: number }[]
 }
 import { aSuManera, avanceEscritura, COLORES_MANO, escribirMano, medirMano, subrayarMano } from './letra'
 

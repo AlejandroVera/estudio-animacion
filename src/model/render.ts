@@ -379,14 +379,17 @@ export function drawFrame(g: CanvasRenderingContext2D, project: Project, t: numb
   drawLayers(g, project, t, false)
   let puntos: PuntosPersonaje | undefined
   // El reparto (secundarios) primero, detrás del protagonista
+  const otras: Circulo[] = []
   project.instances.slice(1).forEach((inst) => {
     const c = project.characters[inst.characterId]
     if (!c) return
-    if (c.expresivo) drawPersonajeEscena(g, project, c, inst, t, cam, false, false)
-    else drawCharacter(g, c, inst, t, false, project.vida !== false)
+    if (c.expresivo) {
+      const cir = drawPersonajeEscena(g, project, c, inst, t, cam, false, false).puntos.circulo
+      if (cir) otras.push(cir)
+    } else drawCharacter(g, c, inst, t, false, project.vida !== false)
   })
   const c0 = project.characters[project.instances[0]?.characterId]
-  if (c0) puntos = drawPersonajeEscena(g, project, c0, project.instances[0], t, cam).puntos
+  if (c0) puntos = { ...drawPersonajeEscena(g, project, c0, project.instances[0], t, cam).puntos, otras }
   drawLayers(g, project, t, true)
   g.restore()
   if (!drawContenido(g, project, t, getImage, puntos)) {
@@ -400,7 +403,8 @@ export function drawFrame(g: CanvasRenderingContext2D, project: Project, t: numb
 type Circulo = { x: number; y: number; r: number }
 
 /** ¿Choca la caja (centro y medio ancho/alto) con la cabeza? */
-function tapaCabeza(c: Circulo | null | undefined, x: number, y: number, hw: number, hh: number) {
+function tapaCabeza(c: Circulo | null | undefined, x: number, y: number, hw: number, hh: number, otras: Circulo[] = []): boolean {
+  if (otras.some((o) => tapaCabeza(o, x, y, hw, hh))) return true
   if (!c) return false
   const nx = Math.max(x - hw, Math.min(c.x, x + hw)), ny = Math.max(y - hh, Math.min(c.y, y + hh))
   return Math.hypot(nx - c.x, ny - c.y) < c.r * 1.04
@@ -410,7 +414,7 @@ function tapaCabeza(c: Circulo | null | undefined, x: number, y: number, hw: num
  * Coloca una caja en su sitio sin salirse de la pantalla y, si tapa la cabeza, la aparta hacia fuera
  * (a su lado de la cabeza, o por encima, o por debajo). Devuelve el centro y cuánto hay que encogerla.
  */
-function colocarSinTapar(W: number, H: number, c: Circulo | null | undefined, x: number, y: number, hw: number, hh: number) {
+function colocarSinTapar(W: number, H: number, c: Circulo | null | undefined, x: number, y: number, hw: number, hh: number, otras: Circulo[] = []) {
   const m = 14
   const dentro = (px: number, py: number, k: number) => ({
     x: Math.max(hw * k + m, Math.min(W - hw * k - m, px)),
@@ -429,7 +433,9 @@ function colocarSinTapar(W: number, H: number, c: Circulo | null | undefined, x:
           ]
         : []),
     ]
-    for (const p of prueba) if (!tapaCabeza(c, p.x, p.y, hw * k, hh * k)) return { ...p, k }
+    // También a la izquierda/derecha del todo y arriba del todo, si las demás cabezas lo tapan
+    prueba.push(dentro(W - hw * k - 14, y, k), dentro(hw * k + 14, y, k), dentro(x, hh * k + 14, k))
+    for (const p of prueba) if (!tapaCabeza(c, p.x, p.y, hw * k, hh * k, otras)) return { ...p, k }
   }
   return { ...dentro(x, y, 0.58), k: 0.58 }
 }
@@ -459,7 +465,7 @@ export function drawObjetos(g: CanvasRenderingContext2D, project: Project, t: nu
     const pop = dt < 0.07 ? 0.7 + (1.12 - 0.7) * (dt / 0.07) : dt < 0.15 ? 1.12 - 0.12 * ((dt - 0.07) / 0.08) : 1
     const k0 = lado / Math.max(o.w, o.h)
     // Que no tape la cara ni se salga por el borde (girado unos grados: un poco de margen)
-    const sit = colocarSinTapar(W, H, puntos?.circulo, x0, y0, (o.w * k0) / 2 + 8, (o.h * k0) / 2 + 8)
+    const sit = colocarSinTapar(W, H, puntos?.circulo, x0, y0, (o.w * k0) / 2 + 8, (o.h * k0) / 2 + 8, puntos?.otras)
     const x = sit.x, y = sit.y
     const k = k0 * sit.k * pop
     let semilla = 0
@@ -513,7 +519,7 @@ export function drawRotulos(g: CanvasRenderingContext2D, project: Project, t: nu
     // Que no se escriba encima de la cabeza (en los planos cercanos sube hasta arriba)
     const hw = Math.max(...lineas.map((l) => medirMano(g, l, tam))) / 2 + 10
     const hh = (lineas.length * tam * 1.15) / 2 + 6
-    const sit = colocarSinTapar(W, H, puntos?.circulo, x, y, hw, hh)
+    const sit = colocarSinTapar(W, H, puntos?.circulo, x, y, hw, hh, puntos?.otras)
     if (sit.k < 1) tam = Math.round(tam * sit.k)
     g.save()
     g.translate(sit.x, sit.y)
