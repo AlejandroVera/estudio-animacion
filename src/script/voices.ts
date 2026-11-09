@@ -820,6 +820,16 @@ async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number 
     const plano: Plano = inserto ? 'general' : mov && mov !== 'salta' && (v.tamano === 'medio' || v.tamano === 'primer') ? 'general' : v.tamano
     vins.push({ t, escena: v.escena, fondo: v.fondo.trim() || 'blanco', plano, lado: inserto ? 'centro' : v.lado ?? 'centro', inserto, movimiento: mov, hacia: v.hacia })
   }
+  // Un inserto es una imagen quieta: como mucho ~2,5 s; después vuelve el narrador (al empezar una palabra)
+  for (let i = 0; i < vins.length; i++) {
+    const v = vins[i]
+    const fin = vins[i + 1]?.t ?? (escenas.length ? escenas[escenas.length - 1].inicio + escenas[escenas.length - 1].duracion : v.t)
+    if (!v.inserto || fin - v.t <= 3.2) continue
+    const w = palabras.find((p) => p.t >= v.t + 2.2 && p.t <= v.t + 3)
+    const t = Math.round(((w?.t ?? v.t + 2.5) - 0.08) * fps) / fps
+    const anterior = [...vins.slice(0, i)].reverse().find((x) => !x.inserto)
+    vins.splice(i + 1, 0, { t, escena: v.escena, fondo: v.fondo, plano: anterior?.plano === 'primer' ? 'medio' : anterior?.plano ?? 'medio', lado: 'centro' })
+  }
   // Lo que aparece en escena se va al cortar a la viñeta siguiente (o al acabar su escena si no hay viñetas)
   const finDe = (t: number, esc: number) => {
     const sig = vins.find((v) => v.t > t + 1e-3)
