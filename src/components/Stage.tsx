@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { poseAt } from '../model/anim'
 import { drawContenido } from '../model/contenido'
-import { cameraMatrix, drawPersonajeEscena, drawLayers, drawObjetos, drawRotulos, getImage, ensureImages, hitLayer, hitTest, layerMatrix, pivotOf, type Placed } from '../model/render'
+import { cameraMatrix, drawPersonajeEscena, drawLayers, drawObjetos, drawRotulos, getImage, ensureImages, hitLayer, hitTest, layerMatrix, pivotOf, type Placed , carasDeEscena } from '../model/render'
 import { evalTrack } from '../model/anim'
 import type { Vec } from '../model/types'
 import { activeCharacter, useStore } from '../store'
@@ -88,6 +88,7 @@ export function Stage() {
         if (cir) otras.push(cir)
       }
     })
+    if (!rest) otras.push(...carasDeEscena(project, time, cam))
     const dibujado = drawPersonajeEscena(g, project, ch, inst, time, cam, rest)
     const placed = dibujado.placed
     const puntos = { ...dibujado.puntos, otras }

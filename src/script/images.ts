@@ -105,10 +105,11 @@ export async function sinMarco(bmp: ImageBitmap): Promise<{ blob: Blob; bmp: Ima
     return n / Math.ceil(H / 4) > 0.97
   }
   let y0 = 0, y1 = H - 1, x0 = 0, x1 = W - 1
-  while (y0 < H * 0.2 && blancaFila(y0)) y0++
-  while (y1 > H * 0.8 && blancaFila(y1)) y1--
-  while (x0 < W * 0.2 && blancaCol(x0)) x0++
-  while (x1 > W * 0.8 && blancaCol(x1)) x1--
+  // Hasta un 42 % por lado: a veces la IA dibuja la escena pequeña con grandes franjas blancas
+  while (y0 < H * 0.42 && blancaFila(y0)) y0++
+  while (y1 > H * 0.58 && blancaFila(y1)) y1--
+  while (x0 < W * 0.42 && blancaCol(x0)) x0++
+  while (x1 > W * 0.58 && blancaCol(x1)) x1--
   // Un poco más hacia dentro para quitar también la línea del borde del marco
   if (y0 > 0) y0 += 6
   if (y1 < H - 1) y1 -= 6

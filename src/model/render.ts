@@ -303,6 +303,19 @@ export function hitLayer(project: Project, t: number, pt: Vec, delante: boolean)
 }
 
 /** Dibuja las capas de imagen de un lado (detrás o delante del personaje). */
+/** Caras del protagonista dentro de las escenas dibujadas que se ven ahora (en pantalla), para no taparlas. */
+export function carasDeEscena(project: Project, t: number, cam: DOMMatrix): { x: number; y: number; r: number }[] {
+  const tr = project.instances[0]?.tracks ?? {}
+  const out: { x: number; y: number; r: number }[] = []
+  for (const l of project.fondos ?? []) {
+    if (!l.cara || num(evalTrack(tr[`bg:${l.id}:opacity`], t, 1)) < 0.5) continue
+    const m = cam.multiply(layerMatrix(project, l, t))
+    const p = m.transformPoint(new DOMPoint(l.cara.cx - l.w / 2, l.cara.cy - l.h / 2))
+    out.push({ x: p.x, y: p.y, r: l.cara.r * Math.hypot(m.a, m.b) })
+  }
+  return out
+}
+
 export function drawLayers(g: CanvasRenderingContext2D, project: Project, t: number, delante: boolean) {
   const tr = project.instances[0]?.tracks ?? {}
   for (const l of project.fondos ?? []) {
@@ -402,6 +415,7 @@ export function drawFrame(g: CanvasRenderingContext2D, project: Project, t: numb
       if (cir) otras.push(cir)
     } else drawCharacter(g, c, inst, t, false, project.vida !== false)
   })
+  otras.push(...carasDeEscena(project, t, cam))
   const c0 = project.characters[project.instances[0]?.characterId]
   if (c0) puntos = { ...drawPersonajeEscena(g, project, c0, project.instances[0], t, cam).puntos, otras }
   drawLayers(g, project, t, true)
