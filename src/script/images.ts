@@ -63,7 +63,33 @@ export async function generateBackground(descripcion: string, project: Project, 
   if (!img.ok) throw new Error('No se pudo descargar la imagen generada.')
   const bmp0 = await createImageBitmap(await img.blob())
   // La IA a veces deja un marco blanco alrededor: se recorta para que el dibujo llegue a los bordes
-  const marco = await sinMarco(bmp0)
+  let marco = await sinMarco(bmp0)
+  let urlFal: string = d.url
+  // Escena dibujada pequeña con franjas: se pide a la IA que la amplíe (más pared arriba, más suelo abajo)
+  if (tipo === 'inserto' && marco.bandas) {
+    const r2 = await fetch('/api/imagen', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', 'x-clave-estudio': readPass() },
+      body: JSON.stringify({
+        tipo: 'libre',
+        formato: formatoDe(project),
+        referencia: d.url,
+        descripcion:
+          'Extend this drawing so the scene fills the WHOLE tall canvas edge to edge: continue the same place upward (wall, ceiling or sky) and downward (floor or ground) and to the sides, in exactly the same crude hand-drawn style and colors. Keep everything that already exists identical and in the same place, just bigger in the frame if needed. Absolutely no white margins, borders or frames. No text.',
+      }),
+    }).catch(() => null)
+    const d2 = r2 && r2.ok ? await r2.json().catch(() => ({})) : {}
+    if (d2.url) {
+      const i2 = await fetch(d2.url).catch(() => null)
+      if (i2?.ok) {
+        const m2 = await sinMarco(await createImageBitmap(await i2.blob()))
+        if (!m2.bandas) {
+          marco = m2
+          urlFal = d2.url
+        }
+      }
+    }
+  }
   let blob = marco.blob
   const bmp = marco.bmp
   // Escena con el protagonista dentro: se le borra la boca dibujada (luego habla con una boca animada)
@@ -83,11 +109,11 @@ export async function generateBackground(descripcion: string, project: Project, 
   if (cara) await saveImage(id + '-orig', original)
   await ensureMedia(cara ? [id, id + '-orig'] : [id])
   const name = descripcion.length > 28 ? descripcion.slice(0, 26) + '…' : descripcion
-  return { id, name, imageId: id, w: bmp.width, h: bmp.height, urlFal: d.url, ...(cara ? { cara, imageIdOrig: id + '-orig' } : {}) }
+  return { id, name, imageId: id, w: bmp.width, h: bmp.height, urlFal, ...(cara ? { cara, imageIdOrig: id + '-orig' } : {}) }
 }
 
 /** Recorta las bandas casi blancas de los bordes (marco que deja a veces la IA). */
-export async function sinMarco(bmp: ImageBitmap): Promise<{ blob: Blob; bmp: ImageBitmap }> {
+export async function sinMarco(bmp: ImageBitmap): Promise<{ blob: Blob; bmp: ImageBitmap; bandas?: boolean }> {
   const W = bmp.width, H = bmp.height
   const c = new OffscreenCanvas(W, H)
   const g = c.getContext('2d', { willReadFrequently: true })!
@@ -179,7 +205,9 @@ export async function sinMarco(bmp: ImageBitmap): Promise<{ blob: Blob; bmp: Ima
     go.fillRect(cx1, 0, w - cx1, h)
   }
   const blob = await out.convertToBlob({ type: 'image/jpeg', quality: 0.92 })
-  return { blob, bmp: await createImageBitmap(blob) }
+  // ¿La escena ocupaba solo una franja? (entonces se ha rellenado y conviene ampliarla de verdad)
+  const bandas = (cont.y1 - cont.y0) / H < 0.8 || (cont.x1 - cont.x0) / W < 0.8
+  return { blob, bmp: await createImageBitmap(blob), bandas }
 }
 
 /** Añade una capa al fondo (detrás de las demás capas de fondo). */

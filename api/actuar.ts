@@ -38,6 +38,8 @@ la mesa con una calculadora; junto a una pizarra; en el metro con gafas de sol.
   lugares (cada situación de la historia, su sitio; 6-10 en un minuto).
 - Literaliza las metáforas y exagera: «parezco un rehén» → él con cara de rehén sujetando un periódico; «33
   intentos» → él rodeado de fotos fallidas.
+- Gente: solo la que nombra el guion (su hermana, el camarero…). Nada de multitudes ni desconocidos de relleno,
+  y él UNA sola vez en cada dibujo (si sale una foto suya, dilo claro: «a photo of him on the phone screen»).
 - Manos: si en un detalle salen manos, di SIEMPRE de quién son: «his magenta hands» (su piel es magenta) o
   «his sister's hands». Nunca «hands holding a phone» sin más (salen manos color carne que parecen suyas).
 - Algún plano corto sin él (un detalle: la pantalla del móvil, una calculadora con «NO SALE»), y algún plano
