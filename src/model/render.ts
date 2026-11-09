@@ -3,6 +3,7 @@ import { withFollowThrough, withLife } from './life'
 import { ensureMedia, mediaUrl } from '../audio/storage'
 import { drawContenido, type PuntosPersonaje } from './contenido'
 import { dibujarCara } from './caraEscena'
+import { ladoObjeto, posicionObjeto } from './movimiento'
 import { aSuManera, avanceEscritura, COLORES_MANO, escribirMano, medirMano } from './letra'
 import { evalTrack } from './anim'
 import type { BgLayer, Character, CharacterInstance, Part, Pose, Project, Vec } from './types'
@@ -490,12 +491,15 @@ export function drawObjetos(g: CanvasRenderingContext2D, project: Project, t: nu
     if (!img.complete || !img.naturalWidth) continue
     const [x0, y0] = sitio[o.pos] ?? sitio.arriba_der
     const dt = t - o.t
-    const pop = dt < 0.07 ? 0.7 + (1.12 - 0.7) * (dt / 0.07) : dt < 0.15 ? 1.12 - 0.12 * ((dt - 0.07) / 0.08) : 1
-    const k0 = lado / Math.max(o.w, o.h)
-    // Que no tape la cara ni se salga por el borde (girado unos grados: un poco de margen)
-    const sit = colocarSinTapar(W, H, puntos?.circulo, x0, y0, (o.w * k0) / 2 + 8, (o.h * k0) / 2 + 8, puntos?.otras)
-    const x = sit.x, y = sit.y
-    const k = k0 * sit.k * pop
+    const movil = !!o.mov && o.mov !== 'aparece'
+    const pop = movil ? 1 : dt < 0.07 ? 0.7 + (1.12 - 0.7) * (dt / 0.07) : dt < 0.15 ? 1.12 - 0.12 * ((dt - 0.07) / 0.08) : 1
+    const ladoO = ladoObjeto(o, W, H, lado)
+    const k0 = ladoO / Math.max(o.w, o.h)
+    // Que no tape la cara ni se salga por el borde (girado unos grados: un poco de margen); lo que cruza, por donde pase
+    const sit = o.mov === 'cruza' ? { x: x0, y: y0, k: 1 } : colocarSinTapar(W, H, puntos?.circulo, x0, y0, (o.w * k0) / 2 + 8, (o.h * k0) / 2 + 8, puntos?.otras)
+    const mv = posicionObjeto(o, t, sit.x, sit.y, W, H, ladoO * sit.k)
+    const x = mv.x, y = mv.y
+    const k = k0 * sit.k * pop * mv.k
     let semilla = 0
     for (const ch of o.id) semilla = (semilla * 31 + ch.charCodeAt(0)) % 997
     g.save()

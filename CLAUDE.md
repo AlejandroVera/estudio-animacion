@@ -311,6 +311,14 @@ cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y
   falla, sigue el primero). Planos de 5 s como mucho. Rótulos evitan también la cara de la escena
   (`carasDeEscena`). `analizarCara` mide la cabeza por lo redondo de arriba (los brazos pegados al cuello la
   confundían).
+- COSAS QUE SE MUEVEN EN LA ESCENA (tras «aparecen coches en el vídeo que te pasé»; medido en los fotogramas
+  reales: el FONDO de Estoy Tiesa es 100 % estático, 0,1-0,4 % de píxeles cambian por fotograma; lo que vive
+  es boca, ojos, brazos que cambian de golpe 1-2 veces por plano y lo que se escribe/dibuja/entra encima):
+  `Objeto.mov` (cruza/entra/cae/tiembla/aparece), `hacia`, `tam`; el director los pide en «objetos» con
+  «movimiento» (2-4 por vídeo de 30 s). `src/model/movimiento.ts` (`posicionObjeto`, `ladoObjeto`): cruza de
+  borde a borde en ~1,4 s con bote, entra con frenada, cae en 0,35 s con rebote, tiembla. Lo usan
+  `drawObjetos` (vertical) y `drawContenido` (horizontal, aparte de la columna). Los móviles no pasan a
+  bocadillo. Probado en el navegador con los tres movimientos.
 - DIRECTOR IA (`api/actuar.ts`, lo llama `dirigir` en `voices.ts` al generar voces): recibe las palabras
   de cada escena, la emoción y el catálogo `DESCRIPCIONES` (qué expresa cada postura) y devuelve en qué
   palabra cambia y a qué postura según lo que dice, y `miradas` (catálogo `MIRADAS`) en otras palabras; las claves caen 0,08 s antes de esa palabra. Si

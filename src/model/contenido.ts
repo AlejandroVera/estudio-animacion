@@ -4,6 +4,7 @@
 // viñetas con lado (vídeo vertical, proyectos antiguos), se usan los sitios fijos de siempre.
 
 import { mediaUrl } from '../audio/storage'
+import { ladoObjeto, posicionObjeto } from './movimiento'
 import type { Objeto, Project, Rotulo } from './types'
 
 /** Dónde quedan en pantalla la palma de la mano (si sujeta) y la cabeza del personaje. */
@@ -61,8 +62,14 @@ export function drawContenido(g: CanvasRenderingContext2D, project: Project, t: 
   }
   // Lo que va EN LA MANO (si está en la postura de sujetar) o DELANTE del personaje no va en la columna
   const aparte: Objeto[] = []
+  const moviles: Objeto[] = []
   for (const o of project.objetos ?? []) {
     if (o.vin !== k) continue
+    // Lo que se mueve por la escena (cruza, entra, cae, tiembla) va aparte, por encima de todo
+    if (o.mov && o.mov !== 'aparece') {
+      moviles.push(o)
+      continue
+    }
     if ((o.pos === 'mano' && puntos?.mano) || o.pos === 'delante') {
       aparte.push(o)
       continue
@@ -70,6 +77,18 @@ export function drawContenido(g: CanvasRenderingContext2D, project: Project, t: 
     // Lo que sujetaba en la mano se va con la mano (no salta a un lado cuando cambia de postura)
     if (o.pos === 'mano' && puntos) continue
     els.push({ tipo: 'objeto', o, t: o.t, alto: o.pos === 'pensamiento' ? H * 0.34 : H * 0.26 })
+  }
+  for (const o of moviles) {
+    if (t < o.t || t >= o.fin) continue
+    const url = mediaUrl(o.imageId)
+    const im = url ? img(url) : null
+    if (!im?.complete || !im.naturalWidth) continue
+    const x0 = /izq/.test(o.pos) ? W * 0.24 : /der/.test(o.pos) ? W * 0.76 : W / 2
+    const y0 = /arriba/.test(o.pos) ? H * 0.24 : /baja|delante/.test(o.pos) ? H * 0.74 : H * 0.5
+    const lado = ladoObjeto(o, W, H, Math.min(W, H) * 0.34)
+    const mv = posicionObjeto(o, t, x0, y0, W, H, lado)
+    const kk = (lado / Math.max(o.w, o.h)) * mv.k
+    g.drawImage(im, mv.x - (o.w * kk) / 2, mv.y - (o.h * kk) / 2, o.w * kk, o.h * kk)
   }
   for (const o of aparte) {
     if (t < o.t) continue

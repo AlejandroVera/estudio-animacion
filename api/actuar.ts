@@ -53,6 +53,14 @@ la mesa con una calculadora; junto a una pizarra; en el metro con gafas de sol.
   phone up to his face, grinning; he leans back horrified, eyes wide»). Si no hay, "" y -1.
 - LA CARA DICE LO QUE SUENA: la expresión de ojos y cejas de cada dibujo es la emoción de la frase que se
   oye mientras se ve; si la emoción cambia, otro plano o un «cambio».
+- COSAS QUE SE MUEVEN POR LA ESCENA (como en ese canal: el Audi que pasa a toda velocidad por delante de ella,
+  el ladrón que se lleva el coche, billetes que caen, corazones): «objetos» con «movimiento»: «cruza» = pasa
+  de un lado al otro y se va («hacia» = a dónde va; un coche, alguien corriendo, un autobús), «entra» = llega
+  desde un lado y se queda, «cae» = cae desde arriba con bote (dinero, una factura, un yunque), «tiembla» =
+  aparece temblando (una alarma, un móvil que vibra), «aparece» = de golpe. «tamano» pequeno/mediano/grande y
+  «pos» la altura (arriba_*, izq/der = en medio, *_baja = abajo). Pon 2-4 de estos en un vídeo de 30 s,
+  justo en la palabra, cuando lo que se dice se pueda ENSEÑAR moviéndose. «dibujo» en inglés, un objeto
+  sencillo de perfil si se mueve de lado.
 - Encima de los planos van «rotulos» (cifras, la palabra del remate, a mano) en la palabra exacta, y si
   ayuda «objetos» en bocadillo de pensamiento. «secundarios» vacío y «movimiento» «ninguno»: las otras
   personas y las acciones van DIBUJADAS en la escena. «cambios» solo importa en los planos sin inserto.`
@@ -260,7 +268,7 @@ const SCHEMA = {
       items: {
         type: 'object',
         additionalProperties: false,
-        required: ['motivo', 'escena', 'palabra', 'que', 'dibujo', 'pos', 'flecha'],
+        required: ['motivo', 'escena', 'palabra', 'que', 'dibujo', 'pos', 'flecha', 'movimiento', 'hacia', 'tamano'],
         properties: {
           motivo: { type: 'string' },
           escena: { type: 'integer' },
@@ -269,6 +277,9 @@ const SCHEMA = {
           dibujo: { type: 'string' },
           pos: { type: 'string', enum: ['arriba_izq', 'arriba_der', 'izq', 'der', 'izq_baja', 'der_baja', 'pensamiento', 'mano', 'delante'] },
           flecha: { type: 'boolean' },
+          movimiento: { type: 'string', enum: ['aparece', 'cruza', 'entra', 'cae', 'tiembla'] },
+          hacia: { type: 'string', enum: ['izq', 'der'] },
+          tamano: { type: 'string', enum: ['pequeno', 'mediano', 'grande'] },
         },
       },
     },

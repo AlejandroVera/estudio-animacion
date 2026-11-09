@@ -165,6 +165,11 @@ export interface Objeto {
   /** Qué es (español) y descripción con la que se dibujó (inglés, para reutilizarlo) */
   que: string
   dibujo: string
+  /** Cómo se mueve por la escena: cruza (pasa de un lado a otro), entra (llega desde un lado y se queda),
+   *  cae (desde arriba, con bote), tiembla, o aparece (de golpe, lo de siempre) */
+  mov?: 'aparece' | 'cruza' | 'entra' | 'cae' | 'tiembla'
+  hacia?: 'izq' | 'der'
+  tam?: 'pequeno' | 'mediano' | 'grande'
 }
 
 export interface BgLayer {

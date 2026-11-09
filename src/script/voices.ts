@@ -382,7 +382,7 @@ async function planDirector(cuerpo: ReturnType<typeof cuerpoDirector>, pass: str
 export type PlanDirector = {
   historia?: string
   vinetas?: { escena: number; palabra: number; idea?: string; motivo?: string; fondo: string; tamano: Plano; lado?: Vineta['lado']; inserto?: string; movimiento?: Movimiento; hacia?: Vineta['lado']; cambio?: string; palabra_cambio?: number }[]
-  objetos?: { escena: number; palabra: number; que: string; dibujo: string; pos: Objeto['pos']; flecha?: boolean; motivo?: string }[]
+  objetos?: { escena: number; palabra: number; que: string; dibujo: string; pos: Objeto['pos']; flecha?: boolean; motivo?: string; movimiento?: Objeto['mov']; hacia?: Objeto['hacia']; tamano?: Objeto['tam'] }[]
   fondos?: { escena: number; fondo: string }[]
   rotulos?: { escena: number; palabra: number; texto: string; color: Rotulo['color']; pos: Rotulo['pos']; estilo?: Rotulo['estilo']; flecha?: boolean; motivo?: string }[]
   cambios: { escena: number; palabra: number; postura: string; motivo?: string }[]
@@ -918,7 +918,10 @@ async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number 
     const e = escenas[o.escena]
     if (!w || !e || !o.dibujo.trim()) continue
     const to = Math.max(e.inicio, Math.round((w.t - 0.12) * fps) / fps)
-    objs.push({ flecha: o.flecha, vin: vinDe(to), t: to, fin: finDe(to, o.escena), pos: o.pos, que: o.que, dibujo: o.dibujo.trim() })
+    const mov = o.movimiento && o.movimiento !== 'aparece' ? o.movimiento : undefined
+    // Lo que cruza la escena pasa y se va en ~1,4 s; lo demás se queda hasta el corte
+    const finO = mov === 'cruza' ? Math.min(finDe(to, o.escena), to + 1.4) : finDe(to, o.escena)
+    objs.push({ flecha: o.flecha, vin: vinDe(to), t: to, fin: finO, pos: o.pos, que: o.que, dibujo: o.dibujo.trim(), mov, hacia: o.hacia, tam: o.tamano })
   }
   // En un inserto no se ve al narrador: nada en su mano, delante ni en su bocadillo
   for (let i = objs.length - 1; i >= 0; i--)
@@ -928,7 +931,7 @@ async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number 
   {
     const conBocadillo = new Set<string>()
     const quedan = objs.filter((o) => {
-      if (o.pos === 'mano' || o.pos === 'delante') return true
+      if (o.pos === 'mano' || o.pos === 'delante' || o.mov) return true
       const k = String(o.vin ?? o.fin)
       if (conBocadillo.has(k)) return false
       conBocadillo.add(k)

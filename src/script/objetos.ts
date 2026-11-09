@@ -8,7 +8,7 @@ import type { Objeto, Project } from '../model/types'
 import { activeCharacter, useStore } from '../store'
 import { quitarFondo } from './posturas'
 
-export type ObjetoPedido = Pick<Objeto, 't' | 'fin' | 'pos' | 'que' | 'dibujo' | 'flecha' | 'vin'>
+export type ObjetoPedido = Pick<Objeto, 't' | 'fin' | 'pos' | 'que' | 'dibujo' | 'flecha' | 'vin' | 'mov' | 'hacia' | 'tam'>
 
 async function dibujar(dibujo: string, project: Project) {
   const ch = activeCharacter(project)
