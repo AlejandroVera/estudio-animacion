@@ -349,7 +349,7 @@ export async function POST(request: Request): Promise<Response> {
     const text = response.content.flatMap((b) => (b.type === 'text' ? [b.text] : [])).join('')
     return json(JSON.parse(text))
   } catch (e) {
-    if (e instanceof Anthropic.APIError) return json({ error: `Error del servicio de IA (${e.status}).` }, 502)
+    if (e instanceof Anthropic.APIError) return json({ error: `Error del servicio de IA (${e.status}): ${String(e.message).slice(0, 300)}` }, 502)
     if (e instanceof SyntaxError) return json({ error: 'La respuesta de la IA no se pudo leer.' }, 502)
     throw e
   }
