@@ -43,8 +43,9 @@ la mesa con una calculadora; junto a una pizarra; en el metro con gafas de sol.
   y él UNA sola vez en cada dibujo (si sale una foto suya, dilo claro: «a photo of him on the phone screen»).
 - Manos: si en un detalle salen manos, di SIEMPRE de quién son: «his magenta hands» (su piel es magenta) o
   «his sister's hands». Nunca «hands holding a phone» sin más (salen manos color carne que parecen suyas).
-- Algún plano corto sin él (un detalle: la pantalla del móvil, una calculadora con «NO SALE»), y algún plano
-  sobre fondo blanco solo con él (inserto "" y fondo «blanco») para explicar.
+- Algún plano corto sin él (un detalle: la pantalla del móvil, una calculadora con «NO SALE»). TODOS los
+  planos llevan «inserto», también el cierre o la pregunta final: él mirando a cámara en el último lugar de la
+  historia, con la cara de esa frase (nunca el muñeco suelto sobre blanco: rompe el estilo del vídeo).
 - ANIMACIÓN DENTRO DEL PLANO (lo que hace que no parezcan estampas): cada plano puede tener hasta DOS cambios
   de dibujo, «cambio» y «cambio2», con su palabra («palabra_cambio» < «palabra_cambio2», de la misma escena
   y posteriores al inicio del plano). En cada uno cambia SOLO la postura o la cara de alguien (mismo encuadre,
@@ -53,9 +54,17 @@ la mesa con una calculadora; junto a una pizarra; en el metro con gafas de sol.
   dura más de 3 s), en la palabra exacta de la acción, y que la otra persona haga algo distinto en cada uno.
   En inglés y solo lo que cambia («the sister now holds the phone up to his face, grinning; he leans back
   horrified, eyes wide»). Si no hay, "" y -1.
-- LA OTRA PERSONA HABLA: cuando el narrador cuenta lo que alguien del plano DICE («me dice que así no»,
-  «mi hermana dice que ya va siendo hora»), pon «otro_habla_desde»/«otro_habla_hasta» con las palabras de esa
-  frase: su boca se moverá mientras se oye. Si nadie más habla, -1 y -1.
+- «otro_habla_desde»/«otro_habla_hasta»: SIEMPRE -1. Solo se oye al narrador, así que solo se mueve SU boca;
+  lo que hacen o dicen los demás se enseña con su postura y su cara en un «cambio».
+- A TIEMPO CON LA VOZ (lo más importante de los cambios): el dibujo enseña cada cosa CUANDO SE DICE, nunca
+  antes. El primer dibujo del plano es la situación de sus primeras palabras, sin adelantar lo que viene (si
+  luego dice «tres del DNI y un ticket», el DNI y el ticket no están desde el principio: salen en su palabra).
+  Cada «cambio» va en la palabra que nombra esa acción o reacción: «sonríe, sonrío» → cambio en «sonrío»: él
+  con una sonrisa forzada; «me dice que así no» → cambio en «dice»: ella niega con la cabeza. Si la frase
+  nombra un gesto suyo (sonrío, me tapo, levanto, miro), ese gesto ES un cambio en esa palabra.
+- En un «cambio» nadie cambia de sitio ni se da la vuelta: misma cámara, cada uno donde estaba y mirando hacia
+  donde miraba; solo cambian brazos, postura y cara. Por eso dibuja desde el principio a la otra persona con
+  la cara visible (de frente o tres cuartos), no de espaldas.
 - LA CARA DICE LO QUE SUENA: la expresión de ojos y cejas de cada dibujo es la emoción de la frase que se
   oye mientras se ve; si la emoción cambia, otro plano o un «cambio».
 - COSAS QUE SE MUEVEN POR LA ESCENA (como en ese canal: el Audi que pasa a toda velocidad por delante de ella,

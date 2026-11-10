@@ -865,9 +865,7 @@ async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number 
       cadena = cadena ? cadena + SEP + cambio.trim() : cambio.trim()
       vins.splice(k + 1, 0, { ...vins[k], t: tB, cambio: cadena })
     }
-    // La otra persona habla: el tramo, en los dibujos que se vean mientras tanto
-    const w0 = porEscena[v.escena]?.[v.otro_habla_desde ?? -1], w1 = porEscena[v.escena]?.[v.otro_habla_hasta ?? -1]
-    if (w0 && w1 && w1.fin > w0.t) for (const x of vins) if (x.inserto === texto) x.otro = [w0.t - 0.05, w1.fin + 0.05]
+    // (La boca de la otra persona ya no se mueve: solo se oye al narrador y parecía que hablaba ella con su voz)
   }
   // Un inserto es una imagen quieta: como mucho ~2,5 s; después vuelve el narrador (al empezar una palabra)
   for (let i = 0; i < vins.length && modoVideo() !== 'escenas'; i++) {
@@ -936,7 +934,8 @@ async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number 
     const to = Math.max(e.inicio, Math.round((w.t - 0.12) * fps) / fps)
     const mov = o.movimiento && o.movimiento !== 'aparece' ? o.movimiento : undefined
     // Lo que cruza la escena pasa y se va en ~1,4 s; lo demás se queda hasta el corte
-    const finO = mov === 'cruza' ? Math.min(finDe(to, o.escena), to + 1.4) : finDe(to, o.escena)
+    // En escenas dibujadas, lo demás tampoco se queda colgado: como mucho 2 s (un flash, un móvil que vibra)
+    const finO = Math.min(finDe(to, o.escena), to + (mov === 'cruza' ? 1.4 : modoVideo() === 'escenas' ? 2 : 1e9))
     objs.push({ flecha: o.flecha, vin: vinDe(to), t: to, fin: finO, pos: o.pos, que: o.que, dibujo: o.dibujo.trim(), mov, hacia: o.hacia, tam: o.tamano })
   }
   // En un inserto no se ve al narrador: nada en su mano, delante ni en su bocadillo

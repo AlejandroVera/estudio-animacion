@@ -52,7 +52,7 @@ type Circulo = { x: number; y: number; r: number }
  * 8 px: cambia si la diferencia media pasa de un umbral; se quitan los bloques sueltos (ruido de la IA) y
  * se ensancha un poco. `dentro` limita a un círculo (la cara); `fuera` lo excluye.
  */
-export function mascaraDeCambio(a: CanvasImageSource, b: CanvasImageSource, W: number, H: number, opc: { dentro?: Circulo; fuera?: Circulo } = {}) {
+export function mascaraDeCambio(a: CanvasImageSource, b: CanvasImageSource, W: number, H: number, opc: { dentro?: Circulo; fuera?: Circulo; desdeY?: number } = {}) {
   const B = 8
   const w = Math.ceil(W / B), h = Math.ceil(H / B)
   const leer = (im: CanvasImageSource) => {
@@ -77,6 +77,7 @@ export function mascaraDeCambio(a: CanvasImageSource, b: CanvasImageSource, W: n
   let m = new Uint8Array(w * h)
   for (let i = 0; i < w * h; i++) {
     const cx = ((i % w) + 0.5) * B, cy = (Math.floor(i / w) + 0.5) * B
+    if (opc.desdeY !== undefined && cy - B / 2 < opc.desdeY) continue
     if (opc.dentro && Math.hypot(cx - opc.dentro.x, cy - opc.dentro.y) > opc.dentro.r) continue
     if (opc.fuera && Math.hypot(cx - opc.fuera.x, cy - opc.fuera.y) < opc.fuera.r) continue
     if (dif[i] > 20) m[i] = 1
@@ -136,7 +137,11 @@ export async function conBocaAbierta(c: Crudo, project: Project): Promise<Offscr
   if (!c.cara) return null
   const ed = await editar(c.url, BOCA, project)
   const zona = { x: c.cara.cx, y: c.cara.cy + c.cara.r * 0.3, r: c.cara.r * 0.8 }
-  const m = mascaraDeCambio(c.fal, ed.bmp, W, H, { dentro: zona })
+  // Solo la boca: por debajo de los ojos (la IA al abrirle la boca le cambiaba también los ojos y, al hablar,
+  // parpadeaban entre dos miradas en cada sílaba)
+  const ojos = c.cara.ojos
+  const desdeY = ojos.length ? Math.max(...ojos.map((o) => o.y + o.h)) + c.cara.r * 0.05 : c.cara.cy + c.cara.r * 0.12
+  const m = mascaraDeCambio(c.fal, ed.bmp, W, H, { dentro: zona, desdeY })
   if (m.fraccion <= 0) return null
   c.boca = { mascara: m.mascara, de: ed.bmp }
   return componer(c.comp, ed.bmp, m.mascara, W, H)
@@ -148,7 +153,7 @@ export async function conBocaAbierta(c: Crudo, project: Project): Promise<Offscr
  */
 export async function conCambio(prev: Crudo, cambio: string, project: Project): Promise<{ crudo: Crudo; abierta: OffscreenCanvas | null }> {
   const W = prev.fal.width, H = prev.fal.height
-  const ed = await editar(prev.url, `${cambio}. The magenta round-headed boy keeps a small closed mouth (a short simple line) and magenta skin`, project)
+  const ed = await editar(prev.url, `${cambio}. Same camera; nobody moves to another spot or turns around: each person stays where they are, facing the same way, and only their arms, pose and face change. The magenta round-headed boy keeps a small closed mouth (a short simple line) and magenta skin`, project)
   const m = mascaraDeCambio(prev.fal, ed.bmp, W, H)
   // Si la IA lo ha redibujado casi todo, no hay nada «estable» que conservar: se usa su dibujo tal cual
   const todo = m.fraccion > 0.6
