@@ -34,7 +34,11 @@ la mesa con una calculadora; junto a una pizarra; en el metro con gafas de sol.
   grande (cabeza al menos una octava parte del ancho), de frente o tres cuartos, sin nada delante de la cara.
 - RITMO (obligatorio): un plano nuevo en cada idea o chiste, cada 2-4 s y NUNCA más de 4 s el mismo plano;
   y dentro del plano NINGÚN dibujo se queda más de ~1,5-2 s sin un «cambio»: el primero llega pronto (en las
-  primeras 4-6 palabras del plano), nunca un arranque de 3 s con el dibujo quieto. En 30 s, 9-12 planos. Más rápido (1-2 s) en un remate. Cada plano
+  primeras 4-6 palabras del plano), nunca un arranque de 3 s con el dibujo quieto. REGLA CONTABLE: las palabras
+  están numeradas; NINGÚN dibujo (plano o cambio) dura más de 7 palabras seguidas. Si una frase es larga y
+  no pasa nada nuevo, pártela con una reacción de alguien a lo que se dice (ella le señala con el tenedor,
+  él pone los ojos en blanco, ella asiente muy convencida). Esto vale sobre todo para el PRIMER plano del
+  vídeo: en las primeras 5 palabras ya ha cambiado algo. En 30 s, 9-12 planos. Más rápido (1-2 s) en un remate. Cada plano
   con un ENCUADRE distinto al anterior (cerca / de cuerpo entero / pequeño en el sitio / detalle) y muchos
   lugares (cada situación de la historia, su sitio; 6-10 en un minuto).
 - Literaliza las metáforas y exagera: «parezco un rehén» → él con cara de rehén sujetando un periódico; «33
