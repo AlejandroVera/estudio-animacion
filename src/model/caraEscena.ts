@@ -21,7 +21,7 @@ export interface CaraEscena {
 const esMagenta = (r: number, g: number, b: number) => r > 165 && g < 125 && b > 125 && r - g > 85
 
 /** Busca la cabeza magenta más grande, borra la boca dibujada y devuelve la imagen limpia y la cara. */
-export async function analizarCara(bmp: ImageBitmap): Promise<{ blob: Blob; cara: CaraEscena } | null> {
+export async function analizarCara(bmp: ImageBitmap): Promise<{ blob: Blob; cara: CaraEscena; repetido: boolean } | null> {
   const W = bmp.width, H = bmp.height
   const c = new OffscreenCanvas(W, H)
   const g = c.getContext('2d', { willReadFrequently: true })!
@@ -32,6 +32,7 @@ export async function analizarCara(bmp: ImageBitmap): Promise<{ blob: Blob; cara
   for (let i = 0; i < W * H; i++) if (esMagenta(d[i * 4], d[i * 4 + 1], d[i * 4 + 2])) mag[i] = 1
   // Mancha magenta más grande (a saltos de 2 px para ir rápido)
   const vista = new Uint8Array(W * H)
+  const tamanos: number[] = []
   let mejor: { n: number; x0: number; x1: number; y0: number; y1: number } | null = null
   for (let y = 0; y < H; y += 2)
     for (let x = 0; x < W; x += 2) {
@@ -54,6 +55,7 @@ export async function analizarCara(bmp: ImageBitmap): Promise<{ blob: Blob; cara
             pila.push(q)
           }
       }
+      tamanos.push(n)
       if (!mejor || n > mejor.n) mejor = { n, x0, x1, y0, y1 }
     }
   if (!mejor || mejor.n < 1500) return null
@@ -137,7 +139,10 @@ export async function analizarCara(bmp: ImageBitmap): Promise<{ blob: Blob; cara
   g.putImageData(img, 0, 0)
   const mx = bn > 40 ? bx / bn : cx
   const my = bn > 40 ? by / bn : desde + r * 0.25
-  return { blob: await c.convertToBlob({ type: 'image/jpeg', quality: 0.92 }), cara: { cx, cy, r, mx, my: Math.min(my, cy + r * 0.62), ojos: ojos.slice(0, 2), color } }
+  return { blob: await c.convertToBlob({ type: 'image/jpeg', quality: 0.92 }), cara: { cx, cy, r, mx, my: Math.min(my, cy + r * 0.62), ojos: ojos.slice(0, 2), color },
+    // ¿Hay otra cabeza magenta de tamaño parecido? (la IA a veces lo dibuja dos veces)
+    repetido: tamanos.filter((t) => t > mejor!.n * 0.4).length > 1,
+  }
 }
 
 /**

@@ -319,6 +319,19 @@ cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y
   borde a borde en ~1,4 s con bote, entra con frenada, cae en 0,35 s con rebote, tiembla. Lo usan
   `drawObjetos` (vertical) y `drawContenido` (horizontal, aparte de la columna). Los móviles no pasan a
   bocadillo. Probado en el navegador con los tres movimientos.
+- ESCENAS, REVISIÓN 2 (opción A tras descartar Alejandro el prototipo articulado `src/rig/` por «articulaciones
+  cutres, no es Estoy Tiesa»; el prototipo sigue en `rig.html` sin integrar): `src/script/planos.ts`: VARIANTES
+  ESTABLES de un plano: se pide a fal el mismo dibujo con un cambio y se copia SOLO lo que cambia
+  (`mascaraDeCambio` por bloques de 8 px + `componer`), así el resto queda idéntico al píxel. 1) BOCA DIBUJADA:
+  `conBocaAbierta` → `BgLayer.imageIdOpen` (el mismo dibujo con su boca abierta; `drawLayers` lo muestra cuando
+  la voz abre la boca; la boca pintada por código queda solo de respaldo y nunca si no se le ven los ojos).
+  2) Hasta DOS cambios de pose por plano («cambio», «cambio2» con su palabra; encadenados con « ⟶ » en
+  `Vineta.cambio`), `conCambio`; si su cabeza no cambia se reutiliza la boca abierta del anterior. 3) LA OTRA
+  PERSONA HABLA: `otro_habla_desde/hasta` → `conBocaDelOtro` → `imageIdOtro` + `otroHabla` (tramos): su boca
+  se abre y cierra a ~7 Hz. Los planos se dibujan de 3 en 3 a la vez. El esquema completo del director daba
+  «compiled grammar is too large»: en escenas se usa `SCHEMA_ESCENAS` (sin secundarios, nuevas, fondos,
+  miradas, motivos…). Él siempre de frente; si sale dos veces (`repetido`), se repite el dibujo una vez.
+  Coste real: ~38 imágenes (≈1,5 €) por 32 s.
 - DIRECTOR IA (`api/actuar.ts`, lo llama `dirigir` en `voices.ts` al generar voces): recibe las palabras
   de cada escena, la emoción y el catálogo `DESCRIPCIONES` (qué expresa cada postura) y devuelve en qué
   palabra cambia y a qué postura según lo que dice, y `miradas` (catálogo `MIRADAS`) en otras palabras; las claves caen 0,08 s antes de esa palabra. Si

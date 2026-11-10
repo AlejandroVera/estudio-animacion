@@ -24,7 +24,7 @@ export function formatoDe(p: Project) {
 }
 
 /** Genera un fondo y lo guarda; devuelve la capa (sin añadirla al proyecto). */
-export async function generateBackground(descripcion: string, project: Project, hueco?: 'izq' | 'der', variante?: number, tipo?: 'inserto', editarDe?: string): Promise<BgLayer> {
+export async function generateBackground(descripcion: string, project: Project, hueco?: 'izq' | 'der', variante?: number, tipo?: 'inserto', editarDe?: string, reintento = false): Promise<BgLayer> {
   const ch = activeCharacter(project)
   // Fondo blanco liso: no hace falta IA
   if (/^blanco\b/i.test(descripcion.trim())) {
@@ -90,6 +90,11 @@ export async function generateBackground(descripcion: string, project: Project, 
         }
       }
     }
+  }
+  // Si la IA lo ha dibujado dos veces en la misma escena, se repite el dibujo una vez
+  if (tipo === 'inserto' && !editarDe && !reintento && !/photo|picture|screen|poster|mirror/i.test(descripcion)) {
+    const rep = await analizarCara(marco.bmp).catch(() => null)
+    if (rep?.repetido) return generateBackground(descripcion, project, hueco, variante, tipo, editarDe, true)
   }
   return { ...(await capaDeMarco(marco, descripcion, tipo)), urlFal }
 }
