@@ -393,6 +393,16 @@ cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y
   (≈50 imágenes por 30 s, medido 53). «Borrador»: sin boca de IA (la pinta el código, `dibujarCara`; al
   hablar se le borra el aro) y sin repetir lo que el revisor rechaza (el revisor sigue dando el reencuadre):
   medido 22 imágenes por 32 s. Para probar guion y ritmo barato y gastar el completo solo al final.
+- BOCAS DE SERIE EN ESCENAS (tras «se desdibuja, se deforma la cabeza por la barbilla al hablar, como si se
+  rompieran las piezas»): la causa era la boca al hablar (una boca abierta de IA distinta por dibujo, pegada
+  con una máscara que se salía del contorno; o, en borrador, un óvalo por código sobre la imagen con la boca
+  borrada, que se llevaba el aro). Ahora `drawLayers` pinta SIEMPRE el dibujo original y encima una de las
+  tres bocas dibujadas del personaje (`capas/boca_abierta|o|dientes.webp`, `bocaSerie` en render.ts): su fondo
+  magenta se pasa al color de esa cabeza, se le quita el aro de arriba y se coloca donde estaba la boca
+  dibujada (`CaraEscena.mx,my`, que ahora se mide solo en la parte baja de la cara: el aro la subía). No se
+  toca el contorno. Ya NO se generan bocas de IA en ningún modo: «completa» ≈ 30 imágenes por 32 s (medido 29,
+  solo por las repeticiones del revisor) y «borrador» ≈ 20. El revisor rechaza también que él salga del tamaño
+  de un niño junto a otro adulto.
 - DIRECTOR IA (`api/actuar.ts`, lo llama `dirigir` en `voices.ts` al generar voces): recibe las palabras
   de cada escena, la emoción y el catálogo `DESCRIPCIONES` (qué expresa cada postura) y devuelve en qué
   palabra cambia y a qué postura según lo que dice, y `miradas` (catálogo `MIRADAS`) en otras palabras; las claves caen 0,08 s antes de esa palabra. Si

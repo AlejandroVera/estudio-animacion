@@ -512,7 +512,7 @@ export function ScriptPanel({ onClose }: { onClose: () => void }) {
                   }}
                   title="Borrador: gasta menos de la mitad de imágenes (la boca se pinta por código y no se repiten los dibujos que salen regular); para probar el guion y el ritmo. Completa: boca dibujada y revisión de cada dibujo; para el vídeo definitivo."
                 >
-                  <option value="completa">✨ Completa (≈50 imágenes por 30 s)</option>
+                  <option value="completa">✨ Completa (≈30 imágenes por 30 s)</option>
                   <option value="borrador">✏️ Borrador barato (≈20 imágenes por 30 s)</option>
                 </select>
               </>

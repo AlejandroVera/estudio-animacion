@@ -422,7 +422,8 @@ export function drawLayers(g: CanvasRenderingContext2D, project: Project, t: num
       // AL HABLAR: su dibujo tal cual y, encima, una de sus tres bocas de serie (abierta, O, dientes) con el
       // color de esta cabeza. Antes: una boca abierta distinta por dibujo (la IA le cambiaba la cara) o un
       // óvalo pintado por código sobre la imagen con la boca borrada (se llevaba el aro): se «desdibujaba».
-      const cual = boca === 'O' || boca === 'o' ? 'o' : boca === 'E' || boca === 'dientes' ? 'dientes' : 'abierta'
+      // (la de dientes apretados solo si se pide expresamente: con cada «e» parecía que gruñía)
+      const cual = boca === 'O' || boca === 'o' ? 'o' : boca === 'dientes' ? 'dientes' : 'abierta'
       const serie = hablando && l.cara ? bocaSerie(project, cual, l.cara.color) : null
       if (serie && l.cara) {
         g.drawImage(orig ?? img, -l.w / 2, -l.h / 2, l.w, l.h)
