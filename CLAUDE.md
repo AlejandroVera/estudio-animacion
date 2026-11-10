@@ -438,6 +438,11 @@ cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y
   brazo anterior. GUIA: qué hace cada mano, una cosa por mano; api/imagen y `editar`: «exactly two arms and
   two hands»; revisor: defecto 12 ANATOMY (brazos o manos de más o de menos). PROPORTION del revisor se suavizó
   (solo desajustes grandes; sentado no cuenta): rechazaba dibujos buenos y gastaba repeticiones.
+  Segunda vuelta de lo mismo: el tercer brazo salía sobre todo al pasar de «brazos cruzados» a «señala» (la IA
+  deja los cruzados y añade otro). GUIA y corrector (punto 9): en cada cambio de brazos, decir qué hacen los
+  DOS y que deja la postura anterior; cada cambio se revisa hasta dos veces; en la zona de la gente la
+  máscara usa umbral 8 (amarillo sobre amarillo no se detectaba). Comprobado: 24 dibujos sin brazos de más.
+  Pendiente: al suavizar PROPORTION él vuelve a salir más alto que ella en el pasillo.
 - DIRECTOR IA (`api/actuar.ts`, lo llama `dirigir` en `voices.ts` al generar voces): recibe las palabras
   de cada escena, la emoción y el catálogo `DESCRIPCIONES` (qué expresa cada postura) y devuelve en qué
   palabra cambia y a qué postura según lo que dice, y `miradas` (catálogo `MIRADAS`) en otras palabras; las claves caen 0,08 s antes de esa palabra. Si
