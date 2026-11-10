@@ -445,7 +445,8 @@ export async function fondosPorVinetas(
             capa.gente = [f((rev.caja[0] * W - rx) / rw), f((rev.caja[1] * H - ry) / rh), f((rev.caja[2] * W - rx) / rw), f((rev.caja[3] * H - ry) / rh)]
           }
         }
-        if (capa.cara && calidad() !== 'borrador') abierta = await conBocaAbierta(crudo, pr).catch(() => null)
+        // (La boca abierta ya no la dibuja la IA: al hablar se le pone una de sus bocas de serie, `bocaSerie`)
+        void conBocaAbierta
       } else {
         // Un cambio de pose: se edita el dibujo anterior del mismo plano y se copia solo lo que cambia
         const claveAnterior = INSERTO + partes.slice(0, -1).join(CAMBIO)

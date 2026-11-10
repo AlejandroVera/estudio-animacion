@@ -129,18 +129,21 @@ export async function analizarCara(bmp: ImageBitmap): Promise<{ blob: Blob; cara
     }
   ojos.sort((a, b) => b.w * b.h - a.w * a.h)
   // Boca dibujada: lo que no es magenta en la parte de abajo de la cara → color de la cabeza
-  let bx = 0, by = 0, bn = 0
+  let bx = 0, by = 0, bn = 0, bx2 = 0, by2 = 0, bn2 = 0
   for (let y = Math.round(desde); y < cy + r * 0.85; y++)
     for (let x = Math.round(cx - r * 0.62); x < cx + r * 0.62; x++) {
       if (x < 0 || y < 0 || x >= W || y >= H || !dentro(x, y, 0.86)) continue
       const p = y * W + x
       if (mag[p]) continue
+      // La boca de verdad está en la parte BAJA de la cara; más arriba lo que hay es el aro de la nariz (que no
+      // siempre sale dorado y antes tiraba del centro de la boca hacia arriba)
+      if (y > cy + r * 0.36) { bx2 += x; by2 += y; bn2++ }
       d[p * 4] = color[0]; d[p * 4 + 1] = color[1]; d[p * 4 + 2] = color[2]
       bx += x; by += y; bn++
     }
   g.putImageData(img, 0, 0)
-  const mx = bn > 40 ? bx / bn : cx
-  const my = bn > 40 ? by / bn : desde + r * 0.25
+  const mx = bn2 > 25 ? bx2 / bn2 : bn > 40 ? bx / bn : cx
+  const my = bn2 > 25 ? by2 / bn2 : cy + r * 0.52
   return { blob: await c.convertToBlob({ type: 'image/jpeg', quality: 0.92 }), cara: { cx, cy, r, mx, my: Math.min(my, cy + r * 0.62), ojos: ojos.slice(0, 2), color, bocaY: desde },
     // ¿Hay otra cabeza magenta de tamaño parecido? (la IA a veces lo dibuja dos veces)
     repetido: tamanos.filter((t) => t > mejor!.n * 0.4).length > 1,

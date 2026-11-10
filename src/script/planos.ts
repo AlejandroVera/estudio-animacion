@@ -244,7 +244,8 @@ export async function conCambio(prev: Crudo, cambio: string, project: Project, s
       abierta = componer(comp, prev.boca.de, prev.boca.mascara, W, H)
     }
   }
-  if (!abierta && calidad() !== 'borrador') abierta = await conBocaAbierta(crudo, project).catch(() => null)
+  // (sin boca abierta de IA: las bocas de serie del personaje se ponen al dibujar)
+  abierta = null
   return { crudo, abierta }
 }
 

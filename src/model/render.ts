@@ -2,7 +2,6 @@ import { poseAt } from './anim'
 import { withFollowThrough, withLife } from './life'
 import { ensureMedia, mediaUrl } from '../audio/storage'
 import { drawContenido, type PuntosPersonaje } from './contenido'
-import { dibujarCara } from './caraEscena'
 import { ladoObjeto, posicionObjeto } from './movimiento'
 import { aSuManera, avanceEscritura, COLORES_MANO, escribirMano, medirMano } from './letra'
 import { evalTrack } from './anim'
@@ -24,8 +23,55 @@ export function getImage(src: string): HTMLImageElement {
   return img
 }
 
+/** BOCAS DE SERIE del personaje (sus tres bocas dibujadas: abierta, O y dientes), para ponérselas al hablar
+ * en las escenas dibujadas: siempre las mismas, como en Estoy Tiesa, en vez de una boca distinta por dibujo. */
+const BOCAS_SERIE = { abierta: 'boca_abierta', o: 'boca_o', dientes: 'boca_dientes' } as const
+function urlBocaSerie(project: Project, cual: keyof typeof BOCAS_SERIE): string | null {
+  const ref = project.characters[project.instances[0]?.characterId]?.referencia
+  return ref ? ref.replace(/[^/]+$/, '') + `capas/${BOCAS_SERIE[cual]}.webp` : null
+}
+const bocasTintadas = new Map<string, HTMLCanvasElement>()
+/** La boca de serie con su fondo magenta pasado al color exacto de la cabeza de este dibujo (sin el aro de arriba). */
+function bocaSerie(project: Project, cual: keyof typeof BOCAS_SERIE, color: [number, number, number]): HTMLCanvasElement | null {
+  const url = urlBocaSerie(project, cual)
+  if (!url) return null
+  const clave = `${url}|${color.join(',')}`
+  const hecha = bocasTintadas.get(clave)
+  if (hecha) return hecha
+  const img = getImage(url)
+  if (!img.complete || !img.naturalWidth) return null
+  const W = img.naturalWidth, H = img.naturalHeight
+  const y0 = Math.round(H * 0.2)
+  const c = document.createElement('canvas')
+  c.width = W
+  c.height = H - y0
+  const g = c.getContext('2d', { willReadFrequently: true })!
+  g.drawImage(img, 0, -y0)
+  const id = g.getImageData(0, 0, c.width, c.height)
+  const d = id.data
+  for (let i = 0; i < d.length; i += 4) {
+    const r = d[i], gg = d[i + 1], b = d[i + 2]
+    // Lo magenta (el trozo de cara de alrededor) → el color de esta cabeza; el borde de arriba, suave
+    if (r > gg + 55 && b > gg + 45 && b > 110) {
+      d[i] = color[0]; d[i + 1] = color[1]; d[i + 2] = color[2]
+    } else if (r > 170 && gg > 120 && b < 120) d[i + 3] = 0 // restos dorados del aro
+    const y = Math.floor(i / 4 / c.width)
+    if (y < 10) d[i + 3] = Math.round((d[i + 3] * y) / 10)
+  }
+  g.putImageData(id, 0, 0)
+  bocasTintadas.set(clave, c)
+  return c
+}
+
 export async function ensureImages(project: Project): Promise<void> {
   const all: Promise<void>[] = []
+  for (const k of Object.keys(BOCAS_SERIE) as (keyof typeof BOCAS_SERIE)[]) {
+    const u = urlBocaSerie(project, k)
+    if (u && (project.fondos ?? []).some((l) => l.cara)) {
+      const img = getImage(u)
+      if (!img.complete) all.push(img.decode().catch(() => undefined))
+    }
+  }
   const ids = [...(project.fondos ?? []), ...(project.objetos ?? [])].flatMap((l) => [l.imageId, ...(['imageIdOrig', 'imageIdOpen', 'imageIdOtro', 'imageIdOtroOpen'] as const).flatMap((k) => (k in l && (l as BgLayer)[k] ? [(l as BgLayer)[k]!] : []))])
   await ensureMedia(ids)
   for (const id of ids) {
@@ -372,13 +418,26 @@ export function drawLayers(g: CanvasRenderingContext2D, project: Project, t: num
     if (otro) g.drawImage(Math.floor(t * 7.5) % 2 ? otro : (orig ?? img), -l.w / 2, -l.h / 2, l.w, l.h)
     else if (otroVivoAbierta) g.drawImage(otroVivoAbierta, -l.w / 2, -l.h / 2, l.w, l.h)
     else if (otroVivo && !hablando) g.drawImage(otroVivo, -l.w / 2, -l.h / 2, l.w, l.h)
-    else if (abierta) g.drawImage(abierta, -l.w / 2, -l.h / 2, l.w, l.h)
-    else g.drawImage(!hablando || l.imageIdOpen || !l.cara?.ojos.length ? (orig ?? img) : img, -l.w / 2, -l.h / 2, l.w, l.h)
-    if (l.cara && opacity > 0.5) {
-      // Sin parpadeo pintado por código: sobre la cara dibujada quedaba como arrugas y le deformaba la cara
-      const parpadea = false && (t + fase) % 3.6 < 0.12
-      g.scale(l.w / img.naturalWidth, l.h / img.naturalHeight)
-      dibujarCara(g, l.cara, img.naturalWidth, img.naturalHeight, hablando && !otro && !l.imageIdOpen && l.cara.ojos.length > 0 ? boca : 'nada', parpadea && l.cara.ojos.length > 0)
+    else {
+      // AL HABLAR: su dibujo tal cual y, encima, una de sus tres bocas de serie (abierta, O, dientes) con el
+      // color de esta cabeza. Antes: una boca abierta distinta por dibujo (la IA le cambiaba la cara) o un
+      // óvalo pintado por código sobre la imagen con la boca borrada (se llevaba el aro): se «desdibujaba».
+      const cual = boca === 'O' || boca === 'o' ? 'o' : boca === 'E' || boca === 'dientes' ? 'dientes' : 'abierta'
+      const serie = hablando && l.cara ? bocaSerie(project, cual, l.cara.color) : null
+      if (serie && l.cara) {
+        g.drawImage(orig ?? img, -l.w / 2, -l.h / 2, l.w, l.h)
+        const c = l.cara
+        g.save()
+        g.scale(l.w / img.naturalWidth, l.h / img.naturalHeight)
+        g.translate(-img.naturalWidth / 2, -img.naturalHeight / 2)
+        // La boca de serie mide ~1 radio de ancho; su centro (a 0,44 de su alto ya recortado) va donde él
+        // tenía la boca dibujada, sin salirse de la parte baja de la cara
+        const w = c.r * 0.98, h = (w * serie.height) / serie.width
+        const my = Math.max(c.cy + c.r * 0.4, Math.min(c.cy + c.r * 0.6, c.my))
+        g.drawImage(serie, c.mx - w / 2, my - h * 0.44, w, h)
+        g.restore()
+      } else if (abierta) g.drawImage(abierta, -l.w / 2, -l.h / 2, l.w, l.h)
+      else g.drawImage(orig ?? img, -l.w / 2, -l.h / 2, l.w, l.h)
     }
     g.restore()
   }
