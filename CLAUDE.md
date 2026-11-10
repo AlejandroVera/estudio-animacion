@@ -360,6 +360,21 @@ cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y
   que no se diga. Un plano con franjas o con él diminuto se repite una vez. Coste: ~39 imágenes por 32 s.
   Pendiente: los «close-up» pedidos como cambio no cambian de encuadre (deberían ser plano nuevo); el
   último plano a veces no llena el cuadro.
+- ESCENAS, REVISIÓN 6 (tras «sigue teniendo fallos»; revisado dibujo a dibujo): 1) MISMO LUGAR = MISMO DECORADO:
+  el primer plano de cada lugar (`fondo` del director, nombre corto idéntico: «el sofá de casa») es el maestro
+  y los demás planos de ese lugar se dibujan EDITÁNDOLO (`generateBackground(…, lugarDe)`; antes salían tres
+  salones y dos pasillos distintos y la hermana cambiaba de tamaño). Los maestros se dibujan primero.
+  2) REVISOR (`api/revisar.ts`, Sonnet con visión; `revisarDibujo` en planos.ts): mira cada dibujo y lo rechaza
+  si la cara de él está tapada o cortada, alguien le tapa o queda detrás, hay dos protagonistas, franjas,
+  texto o no es lo pedido; se repite con la corrección escrita (hasta 2 veces; los cambios, 1). Si el revisor
+  falla, se da por bueno. 3) REENCUADRE: el revisor devuelve `caja` (dónde está la gente); si salen pequeños se
+  usa solo ese trozo (`BgLayer.recorte`, `reencuadre`/`recortado` en images.ts; las variantes y cambios usan
+  el mismo recorte). `BgLayer.gente` = esa caja: los rótulos no tapan a nadie (`carasDeEscena`). 4) Boca
+  abierta: solo la mancha de cambio más cercana a la boca dibujada (`semilla` en `mascaraDeCambio`); antes le
+  cambiaba los ojos. 5) Planos de DETALLE (descripción sin «boy»: pantalla del móvil, objeto): sin cara ni
+  boca animada, no parten del maestro del lugar, y ni el dibujo ni sus cambios llevan la referencia de él
+  (la IA lo añadía detrás o le ponía una cabecita). 6) GUIA: lado a lado con hueco, nada delante de su cara,
+  móvil a la altura del pecho, nunca contar con los dedos. Coste: ~40-45 imágenes + ~20 revisiones por 32 s.
 - DIRECTOR IA (`api/actuar.ts`, lo llama `dirigir` en `voices.ts` al generar voces): recibe las palabras
   de cada escena, la emoción y el catálogo `DESCRIPCIONES` (qué expresa cada postura) y devuelve en qué
   palabra cambia y a qué postura según lo que dice, y `miradas` (catálogo `MIRADAS`) en otras palabras; las claves caen 0,08 s antes de esa palabra. Si
