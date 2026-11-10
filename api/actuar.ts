@@ -96,7 +96,10 @@ la mesa con una calculadora; junto a una pizarra; en el metro con gafas de sol.
 - QUIÉN HACE QUÉ, PALABRA A PALABRA: mira el sujeto de cada verbo y dale su cambio en ESA palabra, aunque
   vayan seguidas: «Sonríe. Sonrío.» → en «Sonríe» ELLA sonríe enseñando los dientes y se señala la boca (él
   aún serio); en «Sonrío» ÉL pone la sonrisa enorme y forzada. Nunca los dos gestos en el mismo cambio ni el
-  de él adelantado a la palabra de ella.
+  de él adelantado a la palabra de ella. Cada acción va en SU palabra exacta, ni una antes ni una
+  después: si en un plano no caben los tres cambios que necesitas, corta a un PLANO NUEVO en esa palabra
+  (mismo lugar, otro encuadre) en vez de juntar dos acciones o retrasar una. Las viñetas van en orden de
+  tiempo y cada «palabra_cambio» es posterior a la «palabra» de su plano.
 - COSAS QUE APARECEN EN LA ESCENA (como en ese canal: lo que nombra aparece dibujado a su lado en esa palabra):
   al menos uno de cada dos planos tiene un cambio que AÑADE al dibujo, grande y junto a los personajes (sin
   tapar caras), lo que la frase nombra: el icono de una llama enorme saliendo del móvil al decir «Tinder»,
