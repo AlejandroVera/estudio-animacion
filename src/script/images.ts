@@ -1,5 +1,5 @@
 import { analizarCara, type CaraEscena } from '../model/caraEscena'
-import { conBocaAbierta, conBocaDelOtro, revisarDibujo, conCambio, crudoDeUrl, type Crudo } from './planos'
+import { conBocaAbierta, conBocaDelOtro, revisarDibujo, calidad, conCambio, crudoDeUrl, type Crudo } from './planos'
 // Fondos generados con IA (fal.ai) en el estilo del personaje, añadidos como capas.
 
 import type { BgLayer, Escena, Project } from '../model/types'
@@ -416,7 +416,8 @@ export async function fondosPorVinetas(
         let extra = ''
         let ultima: Awaited<ReturnType<typeof revisarDibujo>> | undefined
         capa = { ...(await generateBackground(partes[0] + soloObjeto + extra, pr, undefined, undefined, 'inserto', undefined, false, urlLugar)), descripcion: d, delante: true }
-        for (let k = 0; k < 2 && capa.urlFal; k++) {
+        // (en borrador no se repite: se usa el primer dibujo tal cual)
+        for (let k = 0; k < (calidad() === 'borrador' ? 0 : 2) && capa.urlFal; k++) {
           const rev = await revisarDibujo(capa.urlFal, partes[0])
           ultima = rev
           if (rev.ok) break
@@ -444,7 +445,7 @@ export async function fondosPorVinetas(
             capa.gente = [f((rev.caja[0] * W - rx) / rw), f((rev.caja[1] * H - ry) / rh), f((rev.caja[2] * W - rx) / rw), f((rev.caja[3] * H - ry) / rh)]
           }
         }
-        if (capa.cara) abierta = await conBocaAbierta(crudo, pr).catch(() => null)
+        if (capa.cara && calidad() !== 'borrador') abierta = await conBocaAbierta(crudo, pr).catch(() => null)
       } else {
         // Un cambio de pose: se edita el dibujo anterior del mismo plano y se copia solo lo que cambia
         const claveAnterior = INSERTO + partes.slice(0, -1).join(CAMBIO)
@@ -453,7 +454,7 @@ export async function fondosPorVinetas(
         const sinEl = !/\bboy\b/i.test(partes[0])
         let r = await conCambio(anterior, partes[partes.length - 1], pr, sinEl)
         // El cambio también se revisa (una vez): que al moverse nadie le tape la cara
-        const rev = await revisarDibujo(r.crudo.url, `${partes[0]} — NOW: ${partes[partes.length - 1]}`)
+        const rev = calidad() === 'borrador' ? { ok: true, fallos: [] as string[] } : await revisarDibujo(r.crudo.url, `${partes[0]} — NOW: ${partes[partes.length - 1]}`)
         if (!rev.ok) r = await conCambio(anterior, `${partes[partes.length - 1]}. IMPORTANT: ${rev.fallos.join(' ')}`, pr, sinEl).catch(() => r)
         crudo = r.crudo
         abierta = r.abierta

@@ -7,6 +7,18 @@ import { formatoDe } from './images'
 import { analizarCara, type CaraEscena } from '../model/caraEscena'
 import type { Project } from '../model/types'
 
+/** CALIDAD de las escenas: «borrador» gasta menos de la mitad de imágenes (sin boca dibujada por la IA —se
+ * pinta por código— y sin repetir los dibujos que el revisor rechaza); «completa», todo. */
+export type Calidad = 'completa' | 'borrador'
+export const CALIDAD_KEY = 'estudio-animacion:calidad'
+export function calidad(): Calidad {
+  try {
+    return localStorage.getItem(CALIDAD_KEY) === 'borrador' ? 'borrador' : 'completa'
+  } catch {
+    return 'completa'
+  }
+}
+
 /** Un dibujo en su tamaño original: la respuesta de fal (para compararla con sus ediciones) y el compuesto estable. */
 export interface Crudo {
   url: string
@@ -232,7 +244,7 @@ export async function conCambio(prev: Crudo, cambio: string, project: Project, s
       abierta = componer(comp, prev.boca.de, prev.boca.mascara, W, H)
     }
   }
-  if (!abierta) abierta = await conBocaAbierta(crudo, project).catch(() => null)
+  if (!abierta && calidad() !== 'borrador') abierta = await conBocaAbierta(crudo, project).catch(() => null)
   return { crudo, abierta }
 }
 

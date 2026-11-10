@@ -5,6 +5,7 @@ import type { Escena, Plano } from '../model/types'
 import { animateScenes, estimateDuration, scenesFromText } from '../script/scenes'
 import { activeCharacter, useStore } from '../store'
 import { ScriptStyles } from './ScriptStyles'
+import { calidad, CALIDAD_KEY, type Calidad } from '../script/planos'
 import { listVoices, MODO_KEY, modoVideo, verPlan, voiceScript, type Modelo, type ModoVideo, type PlanDirector, type Voz, type VozPropia } from '../script/voices'
 import { decodeAudio, saveAudio } from '../audio/storage'
 import { PlanVista } from './PlanVista'
@@ -103,6 +104,7 @@ export function ScriptPanel({ onClose }: { onClose: () => void }) {
   })
   const [vozManual, setVozManual] = useState('')
   const [modo, setModoState] = useState<ModoVideo>(modoVideo)
+  const [cal, setCal] = useState<Calidad>(calidad)
   const setModo = (m: ModoVideo) => {
     setModoState(m)
     try {
@@ -494,6 +496,27 @@ export function ScriptPanel({ onClose }: { onClose: () => void }) {
               <option value="escenas">🎬 Escenas dibujadas (como Estoy Tiesa)</option>
               <option value="muneco">🧍 Muñeco delante de fondos</option>
             </select>
+            {modo === 'escenas' && (
+              <>
+                <div className="sublabel">Calidad de los dibujos</div>
+                <select
+                  value={cal}
+                  onChange={(e) => {
+                    const c = e.target.value as Calidad
+                    setCal(c)
+                    try {
+                      localStorage.setItem(CALIDAD_KEY, c)
+                    } catch {
+                      // sin almacenamiento: vale para esta vez
+                    }
+                  }}
+                  title="Borrador: gasta menos de la mitad de imágenes (la boca se pinta por código y no se repiten los dibujos que salen regular); para probar el guion y el ritmo. Completa: boca dibujada y revisión de cada dibujo; para el vídeo definitivo."
+                >
+                  <option value="completa">✨ Completa (≈50 imágenes por 30 s)</option>
+                  <option value="borrador">✏️ Borrador barato (≈20 imágenes por 30 s)</option>
+                </select>
+              </>
+            )}
             <div className="sublabel">Voz (ElevenLabs)</div>
             {voces === null ? (
               <button className="btn small" onClick={cargarVoces}>

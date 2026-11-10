@@ -387,6 +387,12 @@ cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y
   planos y dibujos según la duración. 5) SEGUNDA PASADA del director (`rellenarQuietos` en api/actuar.ts):
   detecta los dibujos de más de 8 palabras y pide un cambio intermedio (una reacción) para cada uno.
   La prueba se quedó a medias: fal bloqueó la cuenta por saldo («User is locked», 403) a mitad del vídeo.
+- CALIDAD DE LOS DIBUJOS (tras «¿no puedes generar las imágenes que consuma menos?»): selector «Calidad de los
+  dibujos» del panel Guion (solo en escenas; `calidad()` en planos.ts, localStorage `estudio-animacion:calidad`).
+  «Completa» (por defecto): boca abierta dibujada por la IA para cada dibujo + revisor que repite los malos
+  (≈50 imágenes por 30 s, medido 53). «Borrador»: sin boca de IA (la pinta el código, `dibujarCara`; al
+  hablar se le borra el aro) y sin repetir lo que el revisor rechaza (el revisor sigue dando el reencuadre):
+  medido 22 imágenes por 32 s. Para probar guion y ritmo barato y gastar el completo solo al final.
 - DIRECTOR IA (`api/actuar.ts`, lo llama `dirigir` en `voices.ts` al generar voces): recibe las palabras
   de cada escena, la emoción y el catálogo `DESCRIPCIONES` (qué expresa cada postura) y devuelve en qué
   palabra cambia y a qué postura según lo que dice, y `miradas` (catálogo `MIRADAS`) en otras palabras; las claves caen 0,08 s antes de esa palabra. Si
