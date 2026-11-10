@@ -345,11 +345,11 @@ export function drawLayers(g: CanvasRenderingContext2D, project: Project, t: num
     const fase = (l.id.charCodeAt(l.id.length - 1) % 7) * 0.37
     if (otro) g.drawImage(Math.floor(t * 7.5) % 2 ? otro : (orig ?? img), -l.w / 2, -l.h / 2, l.w, l.h)
     else if (abierta) g.drawImage(abierta, -l.w / 2, -l.h / 2, l.w, l.h)
-    else g.drawImage(!hablando || l.imageIdOpen ? (orig ?? img) : img, -l.w / 2, -l.h / 2, l.w, l.h)
+    else g.drawImage(!hablando || l.imageIdOpen || !l.cara?.ojos.length ? (orig ?? img) : img, -l.w / 2, -l.h / 2, l.w, l.h)
     if (l.cara && opacity > 0.5) {
       const parpadea = (t + fase) % 3.6 < 0.12
       g.scale(l.w / img.naturalWidth, l.h / img.naturalHeight)
-      dibujarCara(g, l.cara, img.naturalWidth, img.naturalHeight, hablando && !otro && !l.imageIdOpen ? boca : 'nada', parpadea)
+      dibujarCara(g, l.cara, img.naturalWidth, img.naturalHeight, hablando && !otro && !l.imageIdOpen && l.cara.ojos.length > 0 ? boca : 'nada', parpadea && l.cara.ojos.length > 0)
     }
     g.restore()
   }
