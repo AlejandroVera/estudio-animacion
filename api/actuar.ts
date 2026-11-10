@@ -308,6 +308,24 @@ const SCHEMA = {
   },
 }
 
+/** En modo escenas el esquema completo era demasiado grande para la salida estructurada: sin lo que no se usa. */
+const SCHEMA_ESCENAS = (() => {
+  const s = structuredClone(SCHEMA) as { required: string[]; properties: Record<string, { items?: { required: string[]; properties: Record<string, unknown> } }> }
+  for (const k of ['secundarios', 'nuevas', 'fondos', 'miradas']) delete s.properties[k]
+  s.required = s.required.filter((k) => k in s.properties)
+  const quitar = (lista: string, campos: string[]) => {
+    const it = s.properties[lista]?.items
+    if (!it) return
+    for (const c of campos) delete it.properties[c]
+    it.required = it.required.filter((c) => c in it.properties)
+  }
+  quitar('vinetas', ['movimiento', 'hacia', 'lado', 'motivo'])
+  quitar('objetos', ['flecha', 'motivo'])
+  quitar('rotulos', ['flecha', 'motivo'])
+  quitar('cambios', ['motivo'])
+  return s
+})()
+
 export async function POST(request: Request): Promise<Response> {
   if (!process.env.ANTHROPIC_API_KEY) return json({ error: 'Falta configurar las claves en Vercel.' }, 503)
   if (!claveOk(request)) return json({ error: 'clave' }, 401)
@@ -336,7 +354,7 @@ export async function POST(request: Request): Promise<Response> {
       model,
       max_tokens: 16000,
       ...(CON_RESPALDO.has(model) ? { betas: ['server-side-fallback-2026-07-01'], fallbacks: 'default' as const } : {}),
-      output_config: { effort: 'medium', format: { type: 'json_schema', schema: SCHEMA } },
+      output_config: { effort: 'medium', format: { type: 'json_schema', schema: body.modo === 'escenas' ? SCHEMA_ESCENAS : SCHEMA } },
       system: [{ type: 'text', text: GUIA + '\n\n' + (body.modo === 'escenas' ? MODO_ESCENAS + '\n\n' : '') + ORDENES, cache_control: { type: 'ephemeral' } }],
       messages: [
         {
