@@ -435,6 +435,8 @@ export async function fondosPorVinetas(
         // Personajes pequeños en un plano abierto: se acerca el encuadre a ellos (la caja la da el revisor)
         {
           const rev = ultima ?? (await revisarDibujo(capa.urlFal!, partes[0]))
+          // (la caja de la gente también se usa en los cambios para no borrar el decorado)
+          if (rev.caja) crudo.gente = rev.caja
           const rec = reencuadre(rev.caja, crudo.fal.width, crudo.fal.height)
           if (rec) {
             const m = await sinMarco(await recortado(crudo.fal, rec))

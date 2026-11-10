@@ -27,6 +27,9 @@ export interface Crudo {
   cara?: CaraEscena | null
   /** La boca abierta de este dibujo (máscara y de dónde se copia), para reutilizarla si la cabeza no cambia */
   boca?: { mascara: OffscreenCanvas; de: ImageBitmap }
+  /** El PRIMER dibujo del plano (para saber qué es decorado original) y la caja de la gente [x0,y0,x1,y1] en fracciones */
+  base?: ImageBitmap
+  gente?: [number, number, number, number]
 }
 
 export async function crudoDeUrl(url: string): Promise<Crudo> {
@@ -68,7 +71,7 @@ type Circulo = { x: number; y: number; r: number }
  * 8 px: cambia si la diferencia media pasa de un umbral; se quitan los bloques sueltos (ruido de la IA) y
  * se ensancha un poco. `dentro` limita a un círculo (la cara); `fuera` lo excluye.
  */
-export function mascaraDeCambio(a: CanvasImageSource, b: CanvasImageSource, W: number, H: number, opc: { dentro?: Circulo; fuera?: Circulo; desdeY?: number; semilla?: { x: number; y: number } } = {}) {
+export function mascaraDeCambio(a: CanvasImageSource, b: CanvasImageSource, W: number, H: number, opc: { dentro?: Circulo; fuera?: Circulo; desdeY?: number; semilla?: { x: number; y: number }; proteger?: { base: CanvasImageSource; zona: [number, number, number, number] } } = {}) {
   const B = 8
   const w = Math.ceil(W / B), h = Math.ceil(H / B)
   const leer = (im: CanvasImageSource) => {
@@ -97,6 +100,41 @@ export function mascaraDeCambio(a: CanvasImageSource, b: CanvasImageSource, W: n
     if (opc.dentro && Math.hypot(cx - opc.dentro.x, cy - opc.dentro.y) > opc.dentro.r) continue
     if (opc.fuera && Math.hypot(cx - opc.fuera.x, cy - opc.fuera.y) < opc.fuera.r) continue
     if (dif[i] > 20) m[i] = 1
+  }
+  // EL DECORADO NO SE BORRA: fuera de la zona de la gente, un bloque que en el dibujo nuevo queda liso donde
+  // antes había dibujo (la IA, al editar, se ha comido un cuadro, un mueble, parte de la ventana) no se copia…
+  // salvo que quede como en el PRIMER dibujo del plano (así sí se puede quitar algo que añadió un cambio
+  // anterior: la llama, un panel flotante).
+  if (opc.proteger) {
+    const dc = leer(opc.proteger.base)
+    const [zx0, zy0, zx1, zy1] = opc.proteger.zona
+    const stats = (d: Uint8ClampedArray, bx: number, by: number) => {
+      let s = 0, s2 = 0, n = 0
+      for (let y = by * B; y < Math.min(H, by * B + B); y += 2)
+        for (let x = bx * B; x < Math.min(W, bx * B + B); x += 2) {
+          const i = (y * W + x) * 4
+          const l = (d[i] + d[i + 1] + d[i + 2]) / 3
+          s += l; s2 += l * l; n++
+        }
+      return Math.sqrt(Math.max(0, s2 / n - (s / n) ** 2))
+    }
+    for (let i = 0; i < w * h; i++) {
+      if (!m[i]) continue
+      const bx = i % w, by = Math.floor(i / w)
+      const cx = (bx + 0.5) * B, cy = (by + 0.5) * B
+      if (cx > zx0 && cx < zx1 && cy > zy0 && cy < zy1) continue
+      const viejo = stats(da, bx, by), nuevo = stats(db, bx, by)
+      if (viejo < 10 || nuevo > viejo * 0.5) continue
+      // ¿Queda como en el primer dibujo? Entonces es quitar algo añadido: vale
+      let s = 0, n = 0
+      for (let y = by * B; y < Math.min(H, by * B + B); y += 2)
+        for (let x = bx * B; x < Math.min(W, bx * B + B); x += 2) {
+          const k = (y * W + x) * 4
+          s += Math.abs(dc[k] - db[k]) + Math.abs(dc[k + 1] - db[k + 1]) + Math.abs(dc[k + 2] - db[k + 2])
+          n++
+        }
+      if (s / (n * 3) > 20) m[i] = 0
+    }
   }
   // Fuera los bloques sueltos; luego se ensancha dos veces
   const vecinos = (src: Uint8Array, i: number) => {
@@ -199,7 +237,9 @@ export async function conBocaAbierta(c: Crudo, project: Project): Promise<Offscr
 export async function conCambio(prev: Crudo, cambio: string, project: Project, sinEl = false): Promise<{ crudo: Crudo; abierta: OffscreenCanvas | null }> {
   const W = prev.fal.width, H = prev.fal.height
   const ed = await editar(prev.url, sinEl ? `${cambio}. It is still a close-up of the object and the magenta hands only: do NOT add any head, face, body or person` : `${cambio}. Same camera; nobody moves to another spot or turns around: each person stays where they are, facing the same way, and only their arms, pose and face change. The magenta round-headed boy keeps a small closed mouth (a short simple line) and magenta skin`, project, sinEl)
-  const m = mascaraDeCambio(prev.fal, ed.bmp, W, H)
+  const base = prev.base ?? prev.fal
+  const zg = prev.gente
+  const m = mascaraDeCambio(prev.fal, ed.bmp, W, H, zg ? { proteger: { base, zona: [(zg[0] - 0.12) * W, (zg[1] - 0.1) * H, (zg[2] + 0.12) * W, (zg[3] + 0.06) * H] } } : {})
   if (prev.cara === undefined) prev.cara = (await analizarCara(prev.fal).catch(() => null))?.cara ?? null
   // LA CABEZA NO CAMBIA DE FORMA: si en el dibujo nuevo sigue en el mismo sitio y con el mismo tamaño, se
   // conserva el contorno de la cabeza del dibujo anterior y del nuevo solo se toma la cara de dentro (ojos,
@@ -209,12 +249,24 @@ export async function conCambio(prev: Crudo, cambio: string, project: Project, s
     esc.getContext('2d')!.drawImage(ed.bmp, 0, 0, W, H)
     const nueva = (await analizarCara(await createImageBitmap(esc)).catch(() => null))?.cara
     const c = prev.cara
-    if (nueva && Math.hypot(nueva.cx - c.cx, nueva.cy - c.cy) < c.r * 0.12 && Math.abs(nueva.r - c.r) < c.r * 0.12) {
+    // … pero solo si nada toca la cabeza por fuera (brazos detrás de la nuca, una mano en la frente): si algo
+    // cambia justo alrededor, cortar por el contorno dejaba trozos sueltos (codos flotando, un ojo partido)
+    let fuera = 0, total = 0
+    for (let i = 0; i < m.w * m.h; i++) {
+      const dd = Math.hypot(((i % m.w) + 0.5) * m.B - c.cx, (Math.floor(i / m.w) + 0.5) * m.B - c.cy)
+      if (dd < c.r * 1.08 || dd > c.r * 1.3) continue
+      // (el cuello queda fuera de la cuenta)
+      if ((Math.floor(i / m.w) + 0.5) * m.B > c.cy + c.r * 0.75) continue
+      total++
+      if (m.bloques[i]) fuera++
+    }
+    if (nueva && total && fuera / total < 0.04 && Math.hypot(nueva.cx - c.cx, nueva.cy - c.cy) < c.r * 0.08 && Math.abs(nueva.r - c.r) < c.r * 0.08) {
       const g = m.mascara.getContext('2d')!
       g.save()
       g.globalCompositeOperation = 'destination-out'
       g.filter = `blur(${Math.max(2, Math.round(c.r * 0.03))}px)`
-      g.lineWidth = c.r * 0.36
+      // Anillo fino: solo la línea del contorno (antes era tan ancho que se comía los ojos cercanos al borde)
+      g.lineWidth = c.r * 0.16
       g.beginPath()
       // Todo el contorno menos el trozo de abajo (el cuello)
       g.arc(c.cx, c.cy, c.r * 1.0, (115 * Math.PI) / 180, (65 * Math.PI) / 180)
@@ -226,7 +278,7 @@ export async function conCambio(prev: Crudo, cambio: string, project: Project, s
   const todo = m.fraccion > 0.6
   const comp = todo ? (() => { const o = new OffscreenCanvas(W, H); o.getContext('2d')!.drawImage(ed.bmp, 0, 0, W, H); return o })() : componer(prev.comp, ed.bmp, m.mascara, W, H)
   const fal = ed.bmp.width === W && ed.bmp.height === H ? ed.bmp : await createImageBitmap(comp)
-  const crudo: Crudo = { url: ed.url, fal, comp }
+  const crudo: Crudo = { url: ed.url, fal, comp, base, gente: prev.gente }
   // ¿Ha cambiado su cabeza? (bloques cambiados dentro del círculo de la cara)
   if (prev.cara === undefined) prev.cara = (await analizarCara(prev.fal).catch(() => null))?.cara ?? null
   let abierta: OffscreenCanvas | null = null
