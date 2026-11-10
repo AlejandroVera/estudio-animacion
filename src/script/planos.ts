@@ -206,7 +206,7 @@ export async function conGestoDelOtro(c: Crudo, project: Project): Promise<{ ges
   if (c.cara === undefined) c.cara = (await analizarCara(c.fal).catch(() => null))?.cara ?? null
   const ed = await editar(
     c.url,
-    'the OTHER person (not the magenta boy) a moment later, like the next drawing of an animation of what she or he is doing: same place and same action, but the arms and hands clearly moved (a different hand gesture), the head slightly tilted the other way and the facial expression a bit changed (eyebrows, mouth). The magenta boy and everything else stay exactly the same',
+    'the OTHER person (not the magenta boy) a moment later, like the next drawing of an animation of what she or he is doing: same place, same action, standing or sitting in exactly the same spot and FACING THE SAME WAY (never turned around, never from behind), but the arms and hands clearly moved (a different hand gesture), the head slightly tilted the other way and the facial expression a bit changed (eyebrows, mouth). The magenta boy and everything else stay exactly the same',
     project,
   )
   const m = mascaraDeCambio(c.fal, ed.bmp, W, H, c.cara ? { fuera: { x: c.cara.cx, y: c.cara.cy, r: c.cara.r * 1.1 } } : {})

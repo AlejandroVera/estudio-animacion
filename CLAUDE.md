@@ -342,6 +342,15 @@ cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y
   posturas del muñeco (todo son dibujos) el plan ya no se descarta (`dirigir` devolvía null y salía el muñeco
   solo sobre el fondo). 5) Objetos que no cruzan: como mucho 2 s. Pendiente: rótulos que tapan la cara cuando
   la cabeza ocupa medio cuadro, objetos sueltos poco afortunados (pedir menos).
+- ESCENAS, REVISIÓN 4 (tras «el muñeco tiembla y se desdibuja, la hermana está muy quieta»; no importa generar
+  más): 1) CÁMARA QUIETA en escenas (`camaraViva` no hace nada: el acercamiento lento remuestreaba el plano en
+  cada fotograma y el trazo temblaba). 2) La boca abierta se copia solo por debajo del aro (`CaraEscena.bocaY`)
+  y con corte limpio por arriba (el borde suave emborronaba ojos y aro). 3) En cada edición (`editar`) va el
+  dibujo de referencia de él como segunda imagen y se exige «on model» (antes cada cambio de pose le deformaba
+  la cara). 4) LA OTRA PERSONA GESTICULA: `conGestoDelOtro` (planos.ts) pide de cada dibujo con más gente el
+  mismo dibujo «un instante después» (otro gesto de brazos y cara, sin girarse) → `imageIdOtro` (+
+  `imageIdOtroOpen` con la boca de él) y `otroVive`; `drawLayers` los alterna a golpes de 0,45-1 s. Coste:
+  ~47 imágenes por 32 s. Pendiente: algún plano sale mal encuadrado (él diminuto, franjas) y no se detecta.
 - DIRECTOR IA (`api/actuar.ts`, lo llama `dirigir` en `voices.ts` al generar voces): recibe las palabras
   de cada escena, la emoción y el catálogo `DESCRIPCIONES` (qué expresa cada postura) y devuelve en qué
   palabra cambia y a qué postura según lo que dice, y `miradas` (catálogo `MIRADAS`) en otras palabras; las claves caen 0,08 s antes de esa palabra. Si
