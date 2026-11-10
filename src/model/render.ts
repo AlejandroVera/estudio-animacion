@@ -517,6 +517,12 @@ export function drawFrame(g: CanvasRenderingContext2D, project: Project, t: numb
   otras.push(...carasDeEscena(project, t, cam))
   const c0 = project.characters[project.instances[0]?.characterId]
   if (c0) puntos = { ...drawPersonajeEscena(g, project, c0, project.instances[0], t, cam).puntos, otras }
+  // Con una escena dibujada delante, el muñeco de detrás no se ve: su cabeza (en el centro) no cuenta para
+  // colocar rótulos (ocupaba el mejor sitio libre y los rótulos acababan encima de alguien)
+  if (puntos) {
+    const tr0 = project.instances[0]?.tracks ?? {}
+    if ((project.fondos ?? []).some((l) => l.delante && num(evalTrack(tr0[`bg:${l.id}:opacity`], t, 1)) > 0.5)) puntos.circulo = undefined
+  }
   drawLayers(g, project, t, true)
   g.restore()
   if (!drawContenido(g, project, t, getImage, puntos)) {
