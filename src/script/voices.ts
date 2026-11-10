@@ -381,7 +381,7 @@ async function planDirector(cuerpo: ReturnType<typeof cuerpoDirector>, pass: str
 
 export type PlanDirector = {
   historia?: string
-  vinetas?: { escena: number; palabra: number; idea?: string; motivo?: string; fondo: string; tamano: Plano; lado?: Vineta['lado']; inserto?: string; movimiento?: Movimiento; hacia?: Vineta['lado']; cambio?: string; palabra_cambio?: number; cambio2?: string; palabra_cambio2?: number; cambio3?: string; palabra_cambio3?: number }[]
+  vinetas?: { escena: number; palabra: number; idea?: string; motivo?: string; fondo: string; tamano: Plano; lado?: Vineta['lado']; inserto?: string; movimiento?: Movimiento; hacia?: Vineta['lado']; cambio?: string; palabra_cambio?: number; cambio2?: string; palabra_cambio2?: number; cambio3?: string; palabra_cambio3?: number; cambio4?: string; palabra_cambio4?: number }[]
   objetos?: { escena: number; palabra: number; que: string; dibujo: string; pos: Objeto['pos']; flecha?: boolean; motivo?: string; movimiento?: Objeto['mov']; hacia?: Objeto['hacia']; tamano?: Objeto['tam'] }[]
   fondos?: { escena: number; fondo: string }[]
   rotulos?: { escena: number; palabra: number; texto: string; color: Rotulo['color']; pos: Rotulo['pos']; estilo?: Rotulo['estilo']; flecha?: boolean; motivo?: string }[]
@@ -859,7 +859,7 @@ async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number 
     const texto = v.inserto?.trim()
     if (!texto) continue
     let cadena = ''
-    for (const [cambio, pal] of [[v.cambio, v.palabra_cambio], [v.cambio2, v.palabra_cambio2], [v.cambio3, v.palabra_cambio3]] as const) {
+    for (const [cambio, pal] of [[v.cambio, v.palabra_cambio], [v.cambio2, v.palabra_cambio2], [v.cambio3, v.palabra_cambio3], [v.cambio4, v.palabra_cambio4]] as const) {
       if (!cambio?.trim() || (pal ?? -1) <= v.palabra) continue
       const w = porEscena[v.escena]?.[pal!]
       // El último dibujo de este plano que ya está puesto

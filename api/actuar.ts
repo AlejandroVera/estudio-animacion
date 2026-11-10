@@ -369,14 +369,14 @@ const SCHEMA_ESCENAS = (() => {
   return s
 })()
 
-type VinetaPlan = { escena: number; palabra: number; inserto: string; cambio: string; palabra_cambio: number; cambio2: string; palabra_cambio2: number; cambio3: string; palabra_cambio3: number }
+type VinetaPlan = { escena: number; palabra: number; inserto: string; cambio: string; palabra_cambio: number; cambio2: string; palabra_cambio2: number; cambio3: string; palabra_cambio3: number; cambio4?: string; palabra_cambio4?: number }
 
 /** Busca los dibujos que duran demasiadas palabras y pide a la IA un cambio intermedio para cada uno. */
 async function rellenarQuietos(client: Anthropic, model: string, vinetas: VinetaPlan[], escenas: { escena: number; palabras: string[] }[]) {
   const MAX = 8
   const orden = [...vinetas].sort((a, b) => a.escena - b.escena || a.palabra - b.palabra)
   const cambiosDe = (v: VinetaPlan, fin: number) =>
-    ([[v.cambio, v.palabra_cambio], [v.cambio2, v.palabra_cambio2], [v.cambio3, v.palabra_cambio3]] as [string, number][])
+    ([[v.cambio, v.palabra_cambio], [v.cambio2, v.palabra_cambio2], [v.cambio3, v.palabra_cambio3], [v.cambio4 ?? '', v.palabra_cambio4 ?? -1]] as [string, number][])
       .filter(([c, p]) => c?.trim() && p > v.palabra && p < fin)
       .sort((a, b) => a[1] - b[1])
   const huecos: { v: VinetaPlan; fin: number; desde: number; hasta: number; antes: string; palabras: string }[] = []
@@ -386,7 +386,7 @@ async function rellenarQuietos(client: Anthropic, model: string, vinetas: Vineta
     const sig = orden[i + 1]
     const fin = sig && sig.escena === v.escena ? sig.palabra : ws.length
     const cs = cambiosDe(v, fin)
-    if (cs.length >= 3) return
+    if (cs.length >= 4) return
     const cortes = [v.palabra, ...cs.map((c) => c[1]), fin]
     // El tramo quieto más largo de este plano
     let k = -1
@@ -428,31 +428,32 @@ async function rellenarQuietos(client: Anthropic, model: string, vinetas: Vineta
   for (const c of out.cambios ?? []) {
     const h = huecos[c.hueco]
     if (!h || !c.cambio?.trim() || !(c.palabra > h.desde + 1 && c.palabra < h.hasta - 1)) continue
-    const todos = [...cambiosDe(h.v, h.fin), [c.cambio.trim(), c.palabra] as [string, number]].sort((a, b) => a[1] - b[1]).slice(0, 3)
+    const todos = [...cambiosDe(h.v, h.fin), [c.cambio.trim(), c.palabra] as [string, number]].sort((a, b) => a[1] - b[1]).slice(0, 4)
     ;[h.v.cambio, h.v.palabra_cambio] = todos[0] ?? ['', -1]
     ;[h.v.cambio2, h.v.palabra_cambio2] = todos[1] ?? ['', -1]
     ;[h.v.cambio3, h.v.palabra_cambio3] = todos[2] ?? ['', -1]
+    ;[h.v.cambio4, h.v.palabra_cambio4] = todos[3] ?? ['', -1]
   }
 }
 
 /** CORRECTOR del plan: compara cada dibujo con lo que se oye mientras se ve y devuelve solo las correcciones. */
 async function afinarPlan(client: Anthropic, model: string, vinetas: VinetaPlan[], escenas: { escena: number; palabras: string[] }[]) {
   const orden = [...vinetas].sort((a, b) => a.escena - b.escena || a.palabra - b.palabra)
-  type Tramo = { v: VinetaPlan; campo: 'inserto' | 'cambio' | 'cambio2' | 'cambio3'; desde: number; hasta: number; min: number; max: number; texto: string }
+  type Tramo = { v: VinetaPlan; campo: 'inserto' | 'cambio' | 'cambio2' | 'cambio3' | 'cambio4'; desde: number; hasta: number; min: number; max: number; texto: string }
   const tramos: Tramo[] = []
   orden.forEach((v, i) => {
     if (!v.inserto?.trim()) return
     const ws = escenas.find((e) => e.escena === v.escena)?.palabras ?? []
     const sig = orden[i + 1]
     const fin = sig && sig.escena === v.escena ? sig.palabra : ws.length
-    const cs = ([['cambio', v.cambio, v.palabra_cambio], ['cambio2', v.cambio2, v.palabra_cambio2], ['cambio3', v.cambio3, v.palabra_cambio3]] as ['cambio' | 'cambio2' | 'cambio3', string, number][])
+    const cs = ([['cambio', v.cambio, v.palabra_cambio], ['cambio2', v.cambio2, v.palabra_cambio2], ['cambio3', v.cambio3, v.palabra_cambio3], ['cambio4', v.cambio4 ?? '', v.palabra_cambio4 ?? -1]] as ['cambio' | 'cambio2' | 'cambio3' | 'cambio4', string, number][])
       .filter(([, c, p]) => c?.trim() && p > v.palabra && p < fin)
       .sort((a, b) => a[2] - b[2])
     const cortes = [v.palabra, ...cs.map((c) => c[2]), fin]
     tramos.push({ v, campo: 'inserto', desde: cortes[0], hasta: cortes[1], min: v.palabra, max: v.palabra, texto: v.inserto })
     cs.forEach((c, k) => tramos.push({ v, campo: c[0], desde: cortes[k + 1], hasta: cortes[k + 2], min: cortes[k] + 1, max: cortes[k + 2] - 1, texto: c[1] }))
   })
-  if (!tramos.length) return
+  if (!tramos.length) return [] as string[]
   const palabrasDe = (t: Tramo) => (escenas.find((e) => e.escena === t.v.escena)?.palabras ?? []).slice(t.desde, t.hasta).map((w, j) => `${t.desde + j}:${w}`).join(' ')
   const r = await client.beta.messages.create({
     model,
@@ -501,17 +502,20 @@ Mantén el estilo de las descripciones: en inglés, él «with a small closed mo
     ],
   })
   const out = JSON.parse(r.content.flatMap((b) => (b.type === 'text' ? [b.text] : [])).join('')) as { correcciones: { tramo: number; palabra: number; dibujo: string }[] }
+  const hechas: string[] = []
   for (const c of out.correcciones ?? []) {
     const t = tramos[c.tramo]
     if (!t) continue
+    hechas.push(`${t.v.escena}:${t.desde} ${(c as { fallo?: string }).fallo ?? ''}`)
     const texto = c.dibujo?.trim()
     if (t.campo === 'inserto') {
       if (texto) t.v.inserto = texto
       continue
     }
     if (texto) t.v[t.campo] = texto
-    if (c.palabra >= t.min && c.palabra <= t.max) t.v[`palabra_${t.campo}` as 'palabra_cambio' | 'palabra_cambio2' | 'palabra_cambio3'] = c.palabra
+    if (c.palabra >= t.min && c.palabra <= t.max) t.v[`palabra_${t.campo}` as 'palabra_cambio' | 'palabra_cambio2' | 'palabra_cambio3' | 'palabra_cambio4'] = c.palabra
   }
+  return hechas
 }
 
 export async function POST(request: Request): Promise<Response> {
@@ -559,7 +563,7 @@ export async function POST(request: Request): Promise<Response> {
     if (body.modo === 'escenas' && Array.isArray(plan.vinetas)) await rellenarQuietos(client, model, plan.vinetas, body.escenas).catch(() => {})
     // TERCERA PASADA (escenas): un CORRECTOR repasa cada dibujo contra las palabras que se oyen mientras se ve
     // (cara que no cuadra, cosas adelantadas, cantidades, interfaces dibujadas como objetos) y lo afina.
-    if (body.modo === 'escenas' && Array.isArray(plan.vinetas)) await afinarPlan(client, model, plan.vinetas, body.escenas).catch(() => {})
+    if (body.modo === 'escenas' && Array.isArray(plan.vinetas)) plan.afinado = await afinarPlan(client, model, plan.vinetas, body.escenas).catch((e) => `error: ${String(e?.message ?? e).slice(0, 200)}`)
     return json(plan)
   } catch (e) {
     if (e instanceof Anthropic.APIError) return json({ error: `Error del servicio de IA (${e.status}): ${String(e.message).slice(0, 300)}` }, 502)
