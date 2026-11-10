@@ -188,6 +188,9 @@ export interface BgLayer {
   imageIdOrig?: string
   /** Dirección de la imagen en fal (para editarla y hacer el segundo dibujo del mismo plano) */
   urlFal?: string
+  /** REENCUADRE: trozo [x, y, w, h] (píxeles del dibujo de fal) que se usa de verdad, cuando la IA dibujó a
+   * los personajes pequeños y se acerca el plano a ellos */
+  recorte?: [number, number, number, number]
   /** El mismo dibujo con la boca del protagonista abierta (dibujada por la IA; solo cambia la boca) */
   imageIdOpen?: string
   /** El mismo dibujo con la boca de la otra persona abierta, y los tramos (s) en los que «habla» */

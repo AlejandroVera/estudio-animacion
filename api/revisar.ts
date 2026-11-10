@@ -27,8 +27,7 @@ Check ONLY these defects (be strict with 1-4, they ruin the animation):
 5. BANDS: big empty flat bands (more than about a sixth of the picture) at the top/bottom/sides because the
    drawing does not fill the frame. A thin outline or border, or a plain wall or floor, is NOT a defect.
 6. TEXT: readable words or letters drawn in the picture (numbers and simple icons are fine).
-7. TINY: he is in the shot but tiny (head narrower than about one tenth of the picture width). A normal
-   full-body shot is fine.
+7. (Small characters are NOT a defect: the shot will be reframed with "caja".)
 8. BACK: he is seen from behind or his face is not visible at all although he is in the shot.
 9. WRONG: the drawing clearly does not show the requested moment (main action missing or contradicted), or
    adds a prominent element with its own meaning that was not requested (a skull, a random symbol).
@@ -40,13 +39,21 @@ Minor style differences, small imperfections or missing tiny details are NOT def
 Answer with "ok" (true if none of the defects) and "fallos": for each defect found, one short imperative
 instruction IN ENGLISH for the illustrator to fix it in a new attempt (e.g. "Nothing may cover his face: the
 phone is held low, at chest height, away from his head", "Put the sister clearly to his right, side by side,
-with a gap, not in front of him"). Empty list if ok.`
+with a gap, not in front of him"). Empty list if ok.
+
+Also give "caja": the tight box [x0, y0, x1, y1] (fractions 0-1 of the picture, origin top-left) that contains
+all the characters completely and the objects they use. If the shot is an object close-up, the box of the object
+and hands. It is used to reframe shots where the characters were drawn too small.`
 
 const SCHEMA = {
   type: 'object',
   additionalProperties: false,
-  required: ['ok', 'fallos'],
-  properties: { ok: { type: 'boolean' }, fallos: { type: 'array', items: { type: 'string' } } },
+  required: ['ok', 'fallos', 'caja'],
+  properties: {
+    ok: { type: 'boolean' },
+    fallos: { type: 'array', items: { type: 'string' } },
+    caja: { type: 'array', items: { type: 'number' }, description: '[x0, y0, x1, y1] as fractions 0-1 of the picture: the tight box that contains ALL the characters completely (heads to feet as drawn) and the objects of the action.' },
+  },
 }
 
 export async function POST(request: Request): Promise<Response> {
@@ -74,8 +81,9 @@ export async function POST(request: Request): Promise<Response> {
       ],
     })
     const text = response.content.flatMap((b) => (b.type === 'text' ? [b.text] : [])).join('')
-    const r = JSON.parse(text) as { ok: boolean; fallos: string[] }
-    return json({ ok: !!r.ok || !r.fallos?.length, fallos: (r.fallos ?? []).slice(0, 4) })
+    const r = JSON.parse(text) as { ok: boolean; fallos: string[]; caja?: number[] }
+    const caja = Array.isArray(r.caja) && r.caja.length === 4 && r.caja.every((v) => typeof v === 'number' && v >= 0 && v <= 1) && r.caja[2] > r.caja[0] && r.caja[3] > r.caja[1] ? r.caja : undefined
+    return json({ ok: !!r.ok || !r.fallos?.length, fallos: (r.fallos ?? []).slice(0, 4), caja })
   } catch {
     // El revisor no puede frenar el vídeo: si falla, el dibujo se da por bueno
     return json({ ok: true, fallos: [] })

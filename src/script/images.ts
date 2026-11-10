@@ -121,7 +121,8 @@ async function capaDeMarco(marco: { blob: Blob; bmp: ImageBitmap }, descripcion:
   // Una foto suya dentro de un móvil o un cuadro no habla
   // (solo cuando el plano ES la foto o la pantalla, no cuando él mira una pantalla)
   const esFoto = /^\s*(an? |the )?((extreme )?close-?up (shot )?of )?(an? |the |his |her )?(\w+ )?(phone|smartphone|tablet|photo|picture|portrait|screen|poster|frame|polaroid)\b/i.test(descripcion)
-  if (tipo === 'inserto' && !esFoto) {
+  // … ni un detalle en el que no sale él (solo sus manos magenta: se les pintaba una boca)
+  if (tipo === 'inserto' && !esFoto && /\bboy\b/i.test(descripcion)) {
     const a = await analizarCara(bmp).catch(() => null)
     if (a) {
       blob = a.blob
@@ -234,6 +235,31 @@ export async function sinMarco(bmp: ImageBitmap): Promise<{ blob: Blob; bmp: Ima
   return { blob, bmp: await createImageBitmap(blob), bandas }
 }
 
+/** Recorta un dibujo a su reencuadre (si lo tiene). */
+async function recortado(src: ImageBitmap | OffscreenCanvas, r?: [number, number, number, number]): Promise<ImageBitmap> {
+  if (!r) return src instanceof ImageBitmap ? src : createImageBitmap(src)
+  const c = new OffscreenCanvas(r[2], r[3])
+  c.getContext('2d')!.drawImage(src, r[0], r[1], r[2], r[3], 0, 0, r[2], r[3])
+  return createImageBitmap(c)
+}
+
+/**
+ * REENCUADRE: de la caja de los personajes (fracciones, la da el revisor) al trozo del dibujo, con la forma
+ * del cuadro, que los deja grandes. undefined si ya ocupan bastante.
+ */
+function reencuadre(caja: [number, number, number, number] | undefined, W: number, H: number): [number, number, number, number] | undefined {
+  if (!caja) return undefined
+  const [x0, y0, x1, y1] = caja
+  // Lado (en fracción del dibujo) del trozo con la misma forma que el cuadro que contiene la caja con margen
+  const k = Math.max((x1 - x0) * 1.22, (y1 - y0) * 1.18, 0.42)
+  if (k > 0.82) return undefined
+  const w = Math.round(W * k), h = Math.round(H * k)
+  const x = Math.max(0, Math.min(W - w, Math.round(((x0 + x1) / 2) * W - w / 2)))
+  // Un poco más de aire por arriba que por abajo (las cabezas)
+  const y = Math.max(0, Math.min(H - h, Math.round(((y0 + y1) / 2) * H - h * 0.52)))
+  return [x, y, w, h]
+}
+
 /** Añade una capa al fondo (detrás de las demás capas de fondo). */
 export function addLayer(layer: BgLayer) {
   const st = useStore.getState()
@@ -338,7 +364,7 @@ export async function fondosPorVinetas(
   const lugares = unicos.filter((u) => !/^blanco\b/i.test(u) && !u.startsWith(INSERTO))
   /** Guarda una variante (boca abierta…) con el mismo recorte que su capa; devuelve su id si encaja. */
   const guardarVariante = async (capa: BgLayer, lienzo: OffscreenCanvas, sufijo: string) => {
-    const m = await sinMarco(await createImageBitmap(lienzo))
+    const m = await sinMarco(await recortado(lienzo, capa.recorte))
     if (m.bmp.width !== capa.w || m.bmp.height !== capa.h) return undefined
     const id = capa.id + sufijo
     await saveImage(id, m.blob)
@@ -384,10 +410,13 @@ export async function fondosPorVinetas(
         // Cada dibujo pasa por el REVISOR; si tiene fallos (cara tapada, alguien delante, cortado…) se repite
         // diciéndole qué corregir, hasta dos veces
         let extra = ''
+        let ultima: Awaited<ReturnType<typeof revisarDibujo>> | undefined
         capa = { ...(await generateBackground(partes[0] + extra, pr, undefined, undefined, 'inserto', undefined, false, urlLugar)), descripcion: d, delante: true }
         for (let k = 0; k < 2 && capa.urlFal; k++) {
           const rev = await revisarDibujo(capa.urlFal, partes[0])
+          ultima = rev
           if (rev.ok) break
+          ultima = undefined
           onProgress(`Repitiendo un plano que no había salido bien (${rev.fallos[0] ?? ''})…`.slice(0, 110))
           extra = ` IMPORTANT, the previous attempt was rejected. Fix this: ${rev.fallos.join(' ')}`
           const otra = await generateBackground(partes[0] + extra, pr, undefined, undefined, 'inserto', undefined, false, urlLugar).catch(() => null)
@@ -395,6 +424,15 @@ export async function fondosPorVinetas(
           capa = { ...otra, descripcion: d, delante: true }
         }
         crudo = await crudoDeUrl(capa.urlFal!)
+        // Personajes pequeños en un plano abierto: se acerca el encuadre a ellos (la caja la da el revisor)
+        {
+          const rev = ultima ?? (await revisarDibujo(capa.urlFal!, partes[0]))
+          const rec = reencuadre(rev.caja, crudo.fal.width, crudo.fal.height)
+          if (rec) {
+            const m = await sinMarco(await recortado(crudo.fal, rec))
+            capa = { ...(await capaDeMarco(m, partes[0], 'inserto')), descripcion: d, delante: true, urlFal: capa.urlFal, recorte: rec }
+          }
+        }
         if (capa.cara) abierta = await conBocaAbierta(crudo, pr).catch(() => null)
       } else {
         // Un cambio de pose: se edita el dibujo anterior del mismo plano y se copia solo lo que cambia
@@ -407,7 +445,9 @@ export async function fondosPorVinetas(
         if (!rev.ok) r = await conCambio(anterior, `${partes[partes.length - 1]}. IMPORTANT: ${rev.fallos.join(' ')}`, pr).catch(() => r)
         crudo = r.crudo
         abierta = r.abierta
-        capa = { ...(await capaDeMarco(await sinMarco(await createImageBitmap(crudo.comp)), partes[0], 'inserto')), descripcion: d, delante: true, urlFal: crudo.url }
+        // Mismo reencuadre que el dibujo del que viene
+        const rec = capaDe.get(claveAnterior)?.recorte
+        capa = { ...(await capaDeMarco(await sinMarco(await recortado(crudo.comp, rec)), partes[0], 'inserto')), descripcion: d, delante: true, urlFal: crudo.url, recorte: rec }
       }
       crudos.set(d, crudo)
       if (abierta && capa.cara) capa.imageIdOpen = await guardarVariante(capa, abierta, '-boca')
