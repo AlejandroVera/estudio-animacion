@@ -450,10 +450,11 @@ export async function fondosPorVinetas(
         const claveAnterior = INSERTO + partes.slice(0, -1).join(CAMBIO)
         const anterior = await crudoDe(claveAnterior)
         if (!anterior) return
-        let r = await conCambio(anterior, partes[partes.length - 1], pr)
+        const sinEl = !/\bboy\b/i.test(partes[0])
+        let r = await conCambio(anterior, partes[partes.length - 1], pr, sinEl)
         // El cambio también se revisa (una vez): que al moverse nadie le tape la cara
         const rev = await revisarDibujo(r.crudo.url, `${partes[0]} — NOW: ${partes[partes.length - 1]}`)
-        if (!rev.ok) r = await conCambio(anterior, `${partes[partes.length - 1]}. IMPORTANT: ${rev.fallos.join(' ')}`, pr).catch(() => r)
+        if (!rev.ok) r = await conCambio(anterior, `${partes[partes.length - 1]}. IMPORTANT: ${rev.fallos.join(' ')}`, pr, sinEl).catch(() => r)
         crudo = r.crudo
         abierta = r.abierta
         // Mismo reencuadre que el dibujo del que viene

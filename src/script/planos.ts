@@ -27,8 +27,9 @@ export async function crudoDeUrl(url: string): Promise<Crudo> {
 }
 
 /** Pide a fal una edición del dibujo. */
-export async function editar(url: string, cambio: string, project: Project): Promise<{ url: string; bmp: ImageBitmap }> {
-  const ref = project.characters[project.instances[0]?.characterId]?.referencia
+export async function editar(url: string, cambio: string, project: Project, sinEl = false): Promise<{ url: string; bmp: ImageBitmap }> {
+  // En un detalle sin él no va su dibujo de referencia (si no, la IA lo añadía al plano)
+  const ref = sinEl ? undefined : project.characters[project.instances[0]?.characterId]?.referencia
   const res = await fetch('/api/imagen', {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
@@ -183,9 +184,9 @@ export async function conBocaAbierta(c: Crudo, project: Project): Promise<Offscr
  * Un cambio de pose del mismo plano: devuelve el dibujo nuevo (estable: solo cambia lo que cambia) y, si la
  * cabeza del protagonista no se ha tocado, su versión con la boca abierta reutilizando la del anterior.
  */
-export async function conCambio(prev: Crudo, cambio: string, project: Project): Promise<{ crudo: Crudo; abierta: OffscreenCanvas | null }> {
+export async function conCambio(prev: Crudo, cambio: string, project: Project, sinEl = false): Promise<{ crudo: Crudo; abierta: OffscreenCanvas | null }> {
   const W = prev.fal.width, H = prev.fal.height
-  const ed = await editar(prev.url, `${cambio}. Same camera; nobody moves to another spot or turns around: each person stays where they are, facing the same way, and only their arms, pose and face change. The magenta round-headed boy keeps a small closed mouth (a short simple line) and magenta skin`, project)
+  const ed = await editar(prev.url, sinEl ? `${cambio}. It is still a close-up of the object and the magenta hands only: do NOT add any head, face, body or person` : `${cambio}. Same camera; nobody moves to another spot or turns around: each person stays where they are, facing the same way, and only their arms, pose and face change. The magenta round-headed boy keeps a small closed mouth (a short simple line) and magenta skin`, project, sinEl)
   const m = mascaraDeCambio(prev.fal, ed.bmp, W, H)
   // Si la IA lo ha redibujado casi todo, no hay nada «estable» que conservar: se usa su dibujo tal cual
   const todo = m.fraccion > 0.6
