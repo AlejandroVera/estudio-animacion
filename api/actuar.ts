@@ -61,6 +61,11 @@ la mesa con una calculadora; junto a una pizarra; en el metro con gafas de sol.
 - NUNCA contar con los dedos (la IA dibuja mal los dedos: «cuatro fotos» salía con seis dedos): las cifras van
   en un rótulo. «fondo» = el NOMBRE CORTO del lugar, idéntico en todos los planos del mismo sitio («el sofá de
   casa»): con él se mantiene el mismo decorado de un plano a otro.
+- COMPOSICIÓN: di siempre dónde está cada uno: él a un lado y la otra persona al otro, LADO A LADO y con
+  hueco entre los dos («he stands on the left, his sister on the right, side by side»), nunca uno delante o
+  detrás del otro. Nada delante de su cara: si alguien le enseña o le apunta con un móvil, lo sujeta bajo, a
+  la altura del pecho y a un lado. Si él sujeta algo, a la altura del pecho. En un detalle (pantalla de
+  móvil, objeto) NO sale él: solo el objeto y sus manos magenta.
 - NADA QUE NO SE DIGA: en el dibujo solo sale lo que nombra la locución o lo que hace falta para entender
   la situación. Nada de adornos con significado propio (calaveras, signos de victoria, carteles, iconos).
   Las caras, SENCILLAS: describe la emoción con ojos y cejas («eyes wide», «eyebrows sloped»), sin «tense»,

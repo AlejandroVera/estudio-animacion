@@ -240,3 +240,14 @@ export async function conGestoDelOtro(c: Crudo, project: Project): Promise<{ ges
   const gesto = componer(c.comp, ed.bmp, m.mascara, W, H)
   return { gesto, abierta: c.boca ? componer(gesto, c.boca.de, c.boca.mascara, W, H) : null }
 }
+
+/** REVISOR: ¿tiene el dibujo fallos de composición (cara tapada o cortada, alguien delante de él, franjas…)? */
+export async function revisarDibujo(url: string, descripcion: string): Promise<{ ok: boolean; fallos: string[] }> {
+  try {
+    const res = await fetch('/api/revisar', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ url, descripcion }) })
+    const d = await res.json()
+    return res.ok && d && d.ok === false && Array.isArray(d.fallos) ? { ok: false, fallos: d.fallos } : { ok: true, fallos: [] }
+  } catch {
+    return { ok: true, fallos: [] }
+  }
+}

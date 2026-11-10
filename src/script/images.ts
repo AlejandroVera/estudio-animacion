@@ -1,5 +1,5 @@
 import { analizarCara, type CaraEscena } from '../model/caraEscena'
-import { conBocaAbierta, conBocaDelOtro, conCambio, crudoDeUrl, type Crudo } from './planos'
+import { conBocaAbierta, conBocaDelOtro, revisarDibujo, conCambio, crudoDeUrl, type Crudo } from './planos'
 // Fondos generados con IA (fal.ai) en el estilo del personaje, añadidos como capas.
 
 import type { BgLayer, Escena, Project } from '../model/types'
@@ -381,7 +381,19 @@ export async function fondosPorVinetas(
         // El dibujo del plano
         const maestro = maestroDe.get(d)
         const urlLugar = maestro ? capaDe.get(maestro)?.urlFal : undefined
-        capa = { ...(await generateBackground(partes[0], pr, undefined, undefined, 'inserto', undefined, false, urlLugar)), descripcion: d, delante: true }
+        // Cada dibujo pasa por el REVISOR; si tiene fallos (cara tapada, alguien delante, cortado…) se repite
+        // diciéndole qué corregir, hasta dos veces
+        let extra = ''
+        capa = { ...(await generateBackground(partes[0] + extra, pr, undefined, undefined, 'inserto', undefined, false, urlLugar)), descripcion: d, delante: true }
+        for (let k = 0; k < 2 && capa.urlFal; k++) {
+          const rev = await revisarDibujo(capa.urlFal, partes[0])
+          if (rev.ok) break
+          onProgress(`Repitiendo un plano que no había salido bien (${rev.fallos[0] ?? ''})…`.slice(0, 110))
+          extra = ` IMPORTANT, the previous attempt was rejected. Fix this: ${rev.fallos.join(' ')}`
+          const otra = await generateBackground(partes[0] + extra, pr, undefined, undefined, 'inserto', undefined, false, urlLugar).catch(() => null)
+          if (!otra) break
+          capa = { ...otra, descripcion: d, delante: true }
+        }
         crudo = await crudoDeUrl(capa.urlFal!)
         if (capa.cara) abierta = await conBocaAbierta(crudo, pr).catch(() => null)
       } else {
@@ -389,7 +401,10 @@ export async function fondosPorVinetas(
         const claveAnterior = INSERTO + partes.slice(0, -1).join(CAMBIO)
         const anterior = await crudoDe(claveAnterior)
         if (!anterior) return
-        const r = await conCambio(anterior, partes[partes.length - 1], pr)
+        let r = await conCambio(anterior, partes[partes.length - 1], pr)
+        // El cambio también se revisa (una vez): que al moverse nadie le tape la cara
+        const rev = await revisarDibujo(r.crudo.url, `${partes[0]} — NOW: ${partes[partes.length - 1]}`)
+        if (!rev.ok) r = await conCambio(anterior, `${partes[partes.length - 1]}. IMPORTANT: ${rev.fallos.join(' ')}`, pr).catch(() => r)
         crudo = r.crudo
         abierta = r.abierta
         capa = { ...(await capaDeMarco(await sinMarco(await createImageBitmap(crudo.comp)), partes[0], 'inserto')), descripcion: d, delante: true, urlFal: crudo.url }

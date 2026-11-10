@@ -20,6 +20,9 @@
     },
     "api/transcribir.ts": {
       "maxDuration": 120
+    },
+    "api/revisar.ts": {
+      "maxDuration": 60
     }
   }
 }
