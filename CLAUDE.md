@@ -425,6 +425,14 @@ cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y
   imagen» y el plano se quedaba sin esos cambios (14-15 por vídeo). `sinMarco` trata también las franjas
   NEGRAS de «cine» (las rellena con el color del techo/suelo y pide ampliar). Al probar, mirar siempre
   cuántas peticiones a /api/imagen no dieron 200. Medido: 46 imágenes por 32 s con todos los cambios.
+- CAPAS QUE SE PISAN (tras «se superponen capas y se borran partes del fondo»): dos causas en `conCambio`
+  (planos.ts). 1) El anillo que conserva el contorno de la cabeza era tan ancho que partía ojos cercanos al
+  borde y dejaba codos sueltos cuando un brazo tocaba la cabeza: ahora es fino (0,16 r) y solo se aplica si
+  nada cambia alrededor de la cabeza. 2) Al editar, la IA se comía cuadros, muebles o trozos de ventana y la
+  máscara copiaba ese «borrado»: `mascaraDeCambio(..., { proteger: { base, zona } })` descarta, fuera de la
+  caja de la gente (`Crudo.gente`, del revisor), los bloques que quedan lisos donde había dibujo, salvo que
+  queden como en el PRIMER dibujo del plano (`Crudo.base`: así sí se quita lo que añadió un cambio anterior).
+  Comprobado dibujo a dibujo: el decorado se mantiene idéntico entre cambios.
 - DIRECTOR IA (`api/actuar.ts`, lo llama `dirigir` en `voices.ts` al generar voces): recibe las palabras
   de cada escena, la emoción y el catálogo `DESCRIPCIONES` (qué expresa cada postura) y devuelve en qué
   palabra cambia y a qué postura según lo que dice, y `miradas` (catálogo `MIRADAS`) en otras palabras; las claves caen 0,08 s antes de esa palabra. Si
