@@ -240,18 +240,52 @@ export async function conBocaAbierta(c: Crudo, project: Project): Promise<Offscr
  */
 export async function conCambio(prev: Crudo, cambio: string, project: Project, sinEl = false): Promise<{ crudo: Crudo; abierta: OffscreenCanvas | null }> {
   const W = prev.fal.width, H = prev.fal.height
-  const ed = await editar(prev.url, sinEl ? `${cambio}. It is still a close-up of the object and the magenta hands only: do NOT add any head, face, body or person` : `${cambio}. Same camera; nobody moves to another spot or turns around: each person stays where they are, facing the same way, and only their arms, pose and face change. The magenta round-headed boy keeps a small closed mouth (a short simple line) and magenta skin`, project, sinEl)
+  const ed0 = await editar(prev.url, sinEl ? `${cambio}. It is still a close-up of the object and the magenta hands only: do NOT add any head, face, body or person` : `${cambio}. Same camera; nobody moves to another spot or turns around: each person stays where they are, facing the same way, and only their arms, pose and face change. The magenta round-headed boy keeps a small closed mouth (a short simple line) and magenta skin`, project, sinEl)
+  if (prev.cara === undefined) prev.cara = (await analizarCara(prev.fal).catch(() => null))?.cara ?? null
+  const caraDe = async (bmp: ImageBitmap) => {
+    const esc = new OffscreenCanvas(W, H)
+    esc.getContext('2d')!.drawImage(bmp, 0, 0, W, H)
+    return (await analizarCara(await createImageBitmap(esc)).catch(() => null))?.cara ?? null
+  }
+  let ed = ed0
+  let nueva = prev.cara && !sinEl ? await caraDe(ed.bmp) : null
+  // MISMO TAMAÑO SIEMPRE: si en el dibujo nuevo su cabeza ha crecido o encogido (más de un 8 %), se repite el
+  // cambio (hasta dos veces) exigiendo el mismo tamaño, y se queda el que menos se desvíe. Antes, dentro del
+  // mismo plano, él cambiaba de tamaño respecto a la otra persona de un gesto al siguiente.
+  if (prev.cara && nueva) {
+    const desv = (c: { r: number } | null) => (c ? Math.abs(c.r / prev.cara!.r - 1) : 1)
+    for (let k = 0; k < 2 && desv(nueva) > 0.08; k++) {
+      const pct = Math.round(((prev.cara.r * 2) / W) * 100)
+      const otro = await editar(prev.url, `${cambio}. Same camera; nobody moves to another spot: only arms, pose and face change. VERY IMPORTANT: the magenta boy's head must keep EXACTLY the same size as in this image (its width is ${pct}% of the picture width) and the same position; the other person also keeps exactly the same size. He keeps a small closed mouth`, project, sinEl).catch(() => null)
+      if (!otro) break
+      const c2 = await caraDe(otro.bmp)
+      if (desv(c2) < desv(nueva)) { ed = otro; nueva = c2 }
+    }
+  }
   const base = prev.base ?? prev.fal
   const zg = prev.gente
   const m = mascaraDeCambio(prev.fal, ed.bmp, W, H, zg ? { proteger: { base, zona: [(zg[0] - 0.12) * W, (zg[1] - 0.1) * H, (zg[2] + 0.12) * W, (zg[3] + 0.06) * H] } } : {})
-  if (prev.cara === undefined) prev.cara = (await analizarCara(prev.fal).catch(() => null))?.cara ?? null
+  // LA CARA, ENTERA DE UN SOLO DIBUJO: si en la cabeza cambia algo, todo el interior de la cabeza se toma del
+  // dibujo nuevo (antes se copiaba por trozos y podían mezclarse los ojos viejos con los nuevos: dos pupilas);
+  // y si la cabeza se ha movido, también se sustituye entera la zona donde estaba la vieja.
+  if (prev.cara && nueva && !sinEl) {
+    const c = prev.cara
+    const movida = Math.hypot(nueva.cx - c.cx, nueva.cy - c.cy) > c.r * 0.08 || Math.abs(nueva.r - c.r) > c.r * 0.08
+    const g = m.mascara.getContext('2d')!
+    g.save()
+    g.fillStyle = '#000'
+    g.filter = `blur(${Math.max(2, Math.round(c.r * 0.02))}px)`
+    for (const [x, y, r] of movida ? [[c.cx, c.cy, c.r * 1.14], [nueva.cx, nueva.cy, nueva.r * 1.14]] : [[c.cx, c.cy, c.r * 0.9]]) {
+      g.beginPath()
+      g.arc(x, y, r, 0, Math.PI * 2)
+      g.fill()
+    }
+    g.restore()
+  }
   // LA CABEZA NO CAMBIA DE FORMA: si en el dibujo nuevo sigue en el mismo sitio y con el mismo tamaño, se
   // conserva el contorno de la cabeza del dibujo anterior y del nuevo solo se toma la cara de dentro (ojos,
   // cejas, boca). Antes cada cambio de cara le redibujaba la cabeza un poco aplastada o más grande.
   if (prev.cara && !sinEl && m.fraccion <= 0.6) {
-    const esc = new OffscreenCanvas(W, H)
-    esc.getContext('2d')!.drawImage(ed.bmp, 0, 0, W, H)
-    const nueva = (await analizarCara(await createImageBitmap(esc)).catch(() => null))?.cara
     const c = prev.cara
     // … pero solo si nada toca la cabeza por fuera (brazos detrás de la nuca, una mano en la frente): si algo
     // cambia justo alrededor, cortar por el contorno dejaba trozos sueltos (codos flotando, un ojo partido)

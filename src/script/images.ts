@@ -432,12 +432,38 @@ export async function fondosPorVinetas(
           capa = { ...otra, descripcion: d, delante: true }
         }
         crudo = await crudoDeUrl(capa.urlFal!)
+        // MISMO TAMAÑO EN TODO EL LUGAR: en un plano hecho a partir del dibujo del lugar, su cabeza mide lo mismo
+        // que en aquel (±12 %); si no, se repite una vez pidiéndolo y se queda el más parecido
+        let recMaestro: [number, number, number, number] | undefined
+        if (urlLugar && maestro) {
+          const cm = await crudoDe(maestro)
+          if (cm && cm.cara === undefined) cm.cara = (await analizarCara(cm.fal).catch(() => null))?.cara ?? null
+          recMaestro = capaDe.get(maestro)?.recorte
+          const mia = (await analizarCara(crudo.fal).catch(() => null))?.cara
+          const desv = (c?: { r: number } | null) => (c && cm?.cara ? Math.abs(c.r / crudo.fal.width / (cm.cara.r / cm.fal.width) - 1) : 0)
+          if (cm?.cara && mia && desv(mia) > 0.12) {
+            const pct = Math.round(((cm.cara.r * 2) / cm.fal.width) * 100)
+            const otra = await generateBackground(`${partes[0]}${soloObjeto} IMPORTANT: same camera distance as the first image: the magenta boy's head is exactly ${pct}% of the picture width, like in the first image, and the other people keep the same size as there.`, pr, undefined, undefined, 'inserto', undefined, false, urlLugar).catch(() => null)
+            if (otra?.urlFal) {
+              const c2 = await crudoDeUrl(otra.urlFal)
+              const cara2 = (await analizarCara(c2.fal).catch(() => null))?.cara
+              if (cara2 && desv(cara2) < desv(mia)) {
+                capa = { ...otra, descripcion: d, delante: true }
+                crudo = c2
+                ultima = undefined
+              }
+            }
+          }
+        }
         // Personajes pequeños en un plano abierto: se acerca el encuadre a ellos (la caja la da el revisor)
         {
           const rev = ultima ?? (await revisarDibujo(capa.urlFal!, partes[0]))
           // (la caja de la gente también se usa en los cambios para no borrar el decorado)
           if (rev.caja) crudo.gente = rev.caja
-          const rec = reencuadre(rev.caja, crudo.fal.width, crudo.fal.height)
+          // Mismo encuadre que el dibujo del lugar si la gente cabe en él (si cada plano se acercara por su
+          // cuenta, cambiaría el tamaño con que se les ve)
+          const cabe = (r?: [number, number, number, number]) => !!r && !!rev.caja && rev.caja[0] * crudo.fal.width >= r[0] && rev.caja[2] * crudo.fal.width <= r[0] + r[2] && rev.caja[1] * crudo.fal.height >= r[1] && rev.caja[3] * crudo.fal.height <= r[1] + r[3]
+          const rec = urlLugar && maestro ? (cabe(recMaestro) ? recMaestro : !recMaestro ? undefined : reencuadre(rev.caja, crudo.fal.width, crudo.fal.height)) : reencuadre(rev.caja, crudo.fal.width, crudo.fal.height)
           if (rec) {
             const m = await sinMarco(await recortado(crudo.fal, rec))
             capa = { ...(await capaDeMarco(m, partes[0], 'inserto')), descripcion: d, delante: true, urlFal: capa.urlFal, recorte: rec }
