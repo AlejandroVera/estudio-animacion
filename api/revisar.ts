@@ -28,6 +28,8 @@ Check ONLY these defects (be strict with 1-4, they ruin the animation):
    drawing does not fill the frame. A thin outline or border, or a plain wall or floor, is NOT a defect.
 6. TEXT: readable words or letters drawn in the picture (numbers and simple icons are fine).
 7. (Small characters are NOT a defect: the shot will be reframed with "caja".)
+10. PROPORTION: he is drawn much smaller than the other adult next to him (like a child, his head below her
+   shoulders) or much bigger; he is an adult, about as tall as the others, with his usual big head.
 8. BACK: he is seen from behind or his face is not visible at all although he is in the shot.
 9. WRONG: the drawing clearly does not show the requested moment (main action missing or contradicted), or
    adds a prominent element with its own meaning that was not requested (a skull, a random symbol).
