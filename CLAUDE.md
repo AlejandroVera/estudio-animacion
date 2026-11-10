@@ -375,6 +375,18 @@ cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y
   boca animada, no parten del maestro del lugar, y ni el dibujo ni sus cambios llevan la referencia de él
   (la IA lo añadía detrás o le ponía una cabecita). 6) GUIA: lado a lado con hueco, nada delante de su cara,
   móvil a la altura del pecho, nunca contar con los dedos. Coste: ~40-45 imágenes + ~20 revisiones por 32 s.
+- ESCENAS, REVISIÓN 7 (tras «el primer plano es muy estático, al cambiar la cara pierde la forma, la expresión
+  no cuadra, en "sonrío" no sonríe y va tarde, ya no aparecen elementos como en Estoy Tiesa»): 1) LA CABEZA
+  CONSERVA SU CONTORNO en los cambios (`conCambio`: si la cabeza nueva está en el mismo sitio y tamaño, se
+  quita de la máscara el anillo del contorno y del dibujo nuevo solo entra la cara de dentro). 2) Sin
+  parpadeo pintado por código en escenas (parecían arrugas). 3) La boca abierta se pide «en el mismo ánimo»
+  (sonrisa abierta si sonreía). 4) GUIA: ningún dibujo dura más de 7 palabras; el sujeto de cada verbo tiene
+  su cambio en ESA palabra («Sonríe» = ella sonríe y se señala la boca; «Sonrío» = él); sorpresa = ojos muy
+  abiertos; COSAS QUE APARECEN dibujadas en la escena en su palabra (la llama de Tinder saliendo del móvil,
+  seis marcos vacíos, flash, lluvia de fotos, interrogación) en al menos uno de cada dos planos; mínimos de
+  planos y dibujos según la duración. 5) SEGUNDA PASADA del director (`rellenarQuietos` en api/actuar.ts):
+  detecta los dibujos de más de 8 palabras y pide un cambio intermedio (una reacción) para cada uno.
+  La prueba se quedó a medias: fal bloqueó la cuenta por saldo («User is locked», 403) a mitad del vídeo.
 - DIRECTOR IA (`api/actuar.ts`, lo llama `dirigir` en `voices.ts` al generar voces): recibe las palabras
   de cada escena, la emoción y el catálogo `DESCRIPCIONES` (qué expresa cada postura) y devuelve en qué
   palabra cambia y a qué postura según lo que dice, y `miradas` (catálogo `MIRADAS`) en otras palabras; las claves caen 0,08 s antes de esa palabra. Si
