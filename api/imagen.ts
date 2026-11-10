@@ -18,7 +18,7 @@ export async function POST(request: Request): Promise<Response> {
     return json({ error: 'Petición no válida.' }, 400)
   }
   const descripcion = (body.descripcion ?? '').trim()
-  if (!descripcion || descripcion.length > 1500) return json({ error: 'Describe la imagen.' }, 400)
+  if (!descripcion || descripcion.length > 5000) return json({ error: descripcion ? 'La descripción de la imagen es demasiado larga.' : 'Describe la imagen.' }, 400)
   const formato = FORMATOS.includes(body.formato ?? '') ? body.formato! : '9:16'
   // La referencia de estilo solo puede ser una imagen de esta misma web
   const propio = new URL(request.url).origin
