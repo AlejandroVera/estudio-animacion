@@ -418,6 +418,13 @@ cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y
   cuenta (`puntos.circulo = undefined` en drawFrame: su cabeza en el centro ocupaba el sitio libre) y
   `drawRotulos` los pone en una franja libre: arriba, por encima de la caja de la gente (`BgLayer.gente`), o
   abajo del todo si no cabe; a izquierda/derecha/centro según `pos`. Probado con cajas sintéticas.
+- MÁS AFINADO: corrector con «NADA ATRASADO» (la imagen de una metáfora o remate va en su palabra: el periódico
+  de «parezco un rehén» salía una frase tarde) y «los demás reaccionan a lo que se oye» (en la pregunta final
+  miran a cámara). Rótulos sin letras ni cifras («¿?») se descartan. `api/imagen.ts` admite descripciones de
+  hasta 5000 caracteres: con 1500, los cambios corregidos (más largos) fallaban en silencio con «Describe la
+  imagen» y el plano se quedaba sin esos cambios (14-15 por vídeo). `sinMarco` trata también las franjas
+  NEGRAS de «cine» (las rellena con el color del techo/suelo y pide ampliar). Al probar, mirar siempre
+  cuántas peticiones a /api/imagen no dieron 200. Medido: 46 imágenes por 32 s con todos los cambios.
 - DIRECTOR IA (`api/actuar.ts`, lo llama `dirigir` en `voices.ts` al generar voces): recibe las palabras
   de cada escena, la emoción y el catálogo `DESCRIPCIONES` (qué expresa cada postura) y devuelve en qué
   palabra cambia y a qué postura según lo que dice, y `miradas` (catálogo `MIRADAS`) en otras palabras; las claves caen 0,08 s antes de esa palabra. Si

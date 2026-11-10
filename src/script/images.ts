@@ -146,14 +146,16 @@ export async function sinMarco(bmp: ImageBitmap): Promise<{ blob: Blob; bmp: Ima
   g.drawImage(bmp, 0, 0)
   const d = g.getImageData(0, 0, W, H).data
   // Fracción de píxeles casi blancos de una fila o columna
+  // (casi blancos… o casi NEGROS: a veces la IA deja franjas negras de «cine» arriba y abajo)
+  const vacio = (p: number) => Math.min(d[p], d[p + 1], d[p + 2]) > 235 || Math.max(d[p], d[p + 1], d[p + 2]) < 26
   const blancaFila = (y: number) => {
     let n = 0
-    for (let x = 0; x < W; x += 4) if (Math.min(d[(y * W + x) * 4], d[(y * W + x) * 4 + 1], d[(y * W + x) * 4 + 2]) > 235) n++
+    for (let x = 0; x < W; x += 4) if (vacio((y * W + x) * 4)) n++
     return n / Math.ceil(W / 4) > 0.97
   }
   const blancaCol = (x: number) => {
     let n = 0
-    for (let y = 0; y < H; y += 4) if (Math.min(d[(y * W + x) * 4], d[(y * W + x) * 4 + 1], d[(y * W + x) * 4 + 2]) > 235) n++
+    for (let y = 0; y < H; y += 4) if (vacio((y * W + x) * 4)) n++
     return n / Math.ceil(H / 4) > 0.97
   }
   let y0 = 0, y1 = H - 1, x0 = 0, x1 = W - 1
