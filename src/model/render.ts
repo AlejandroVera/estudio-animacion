@@ -316,10 +316,12 @@ export function carasDeEscena(project: Project, t: number, cam: DOMMatrix): { x:
       const [x0, y0, x1, y1] = l.gente
       const k = Math.hypot(m.a, m.b)
       const r = Math.min(((x1 - x0) * l.w) / 2, (y1 - y0) * l.h * 0.25)
-      for (let x = x0 * l.w + r; x <= x1 * l.w - r + 1; x += Math.max(8, r * 1.4)) {
-        const p = m.transformPoint(new DOMPoint(x - l.w / 2, y0 * l.h + r - l.h / 2))
-        out.push({ x: p.x, y: p.y, r: r * k })
-      }
+      // Toda la caja (cabezas y cuerpos): un rótulo encima del cuerpo de alguien también estorba
+      for (let y = y0 * l.h + r; y <= y1 * l.h - r + 1; y += Math.max(8, r * 1.4))
+        for (let x = x0 * l.w + r; x <= x1 * l.w - r + 1; x += Math.max(8, r * 1.4)) {
+          const p = m.transformPoint(new DOMPoint(x - l.w / 2, y - l.h / 2))
+          out.push({ x: p.x, y: p.y, r: r * k })
+        }
     }
     if (!l.cara) continue
     const p = m.transformPoint(new DOMPoint(l.cara.cx - l.w / 2, l.cara.cy - l.h / 2))
