@@ -1,4 +1,5 @@
 import { analizarCara, type CaraEscena } from '../model/caraEscena'
+import { conBocaAbierta, conBocaDelOtro, conCambio, crudoDeUrl, type Crudo } from './planos'
 // Fondos generados con IA (fal.ai) en el estilo del personaje, añadidos como capas.
 
 import type { BgLayer, Escena, Project } from '../model/types'
@@ -90,9 +91,14 @@ export async function generateBackground(descripcion: string, project: Project, 
       }
     }
   }
+  return { ...(await capaDeMarco(marco, descripcion, tipo)), urlFal }
+}
+
+/** Guarda una imagen ya recortada como capa (con la cara del protagonista localizada si es una escena). */
+async function capaDeMarco(marco: { blob: Blob; bmp: ImageBitmap }, descripcion: string, tipo?: 'inserto'): Promise<BgLayer> {
   let blob = marco.blob
   const bmp = marco.bmp
-  // Escena con el protagonista dentro: se le borra la boca dibujada (luego habla con una boca animada)
+  // Escena con el protagonista dentro: se le borra la boca dibujada (respaldo si no hay boca dibujada por IA)
   let cara: CaraEscena | undefined
   const original = blob
   // Una foto suya dentro de un móvil o un cuadro no habla
@@ -110,7 +116,7 @@ export async function generateBackground(descripcion: string, project: Project, 
   if (cara) await saveImage(id + '-orig', original)
   await ensureMedia(cara ? [id, id + '-orig'] : [id])
   const name = descripcion.length > 28 ? descripcion.slice(0, 26) + '…' : descripcion
-  return { id, name, imageId: id, w: bmp.width, h: bmp.height, urlFal, ...(cara ? { cara, imageIdOrig: id + '-orig' } : {}) }
+  return { id, name, imageId: id, w: bmp.width, h: bmp.height, ...(cara ? { cara, imageIdOrig: id + '-orig' } : {}) }
 }
 
 /** Recorta las bandas casi blancas de los bordes (marco que deja a veces la IA). */
@@ -299,35 +305,109 @@ const claveCapa = (v: { fondo: string; inserto?: string; cambio?: string }) => (
 const CAMBIO = ' ⟶ '
 const INSERTO = 'inserto: '
 
-export async function fondosPorVinetas(vinetasIn: { t: number; fondo: string; lado?: 'izq' | 'centro' | 'der'; inserto?: string; cambio?: string }[], onProgress: (m: string) => void) {
+export async function fondosPorVinetas(
+  vinetasIn: { t: number; fondo: string; lado?: 'izq' | 'centro' | 'der'; inserto?: string; cambio?: string; otro?: [number, number] }[],
+  onProgress: (m: string) => void,
+) {
   const vinetas = vinetasIn.map((v) => ({ ...v, fondo: claveCapa(v) }))
   const unicos = [...new Set(vinetas.map((v) => v.fondo))]
   const capaDe = new Map<string, BgLayer>()
+  const crudos = new Map<string, Crudo>()
   const fallos: string[] = []
   let n = 0
-  for (const d of unicos) {
+  const pr0 = useStore.getState().project
+  const previaDe = (d: string) => pr0.fondos?.find((l) => l.descripcion === d && Math.abs(l.w / l.h - pr0.width / pr0.height) < 0.15)
+  const lugares = unicos.filter((u) => !/^blanco\b/i.test(u) && !u.startsWith(INSERTO))
+  /** Guarda una variante (boca abierta…) con el mismo recorte que su capa; devuelve su id si encaja. */
+  const guardarVariante = async (capa: BgLayer, lienzo: OffscreenCanvas, sufijo: string) => {
+    const m = await sinMarco(await createImageBitmap(lienzo))
+    if (m.bmp.width !== capa.w || m.bmp.height !== capa.h) return undefined
+    const id = capa.id + sufijo
+    await saveImage(id, m.blob)
+    await ensureMedia([id])
+    return id
+  }
+  const crudoDe = async (clave: string) => {
+    let c = crudos.get(clave)
+    const url = capaDe.get(clave)?.urlFal
+    if (!c && url) {
+      c = await crudoDeUrl(url)
+      crudos.set(clave, c)
+    }
+    return c
+  }
+  // Un plano = su dibujo y, encadenados, sus cambios de pose. Cada plano se hace entero (y varios a la vez)
+  const hacer = async (d: string) => {
     const pr = useStore.getState().project
-    const previa = pr.fondos?.find((l) => l.descripcion === d && Math.abs(l.w / l.h - pr.width / pr.height) < 0.15)
-    n++
+    const previa = previaDe(d)
     const esInserto = d.startsWith(INSERTO)
-    onProgress(previa ? `Reutilizando: ${d}` : esInserto ? `Dibujando viñeta ${n} de ${unicos.length}: ${d.slice(INSERTO.length)}` : `Generando fondo ${n} de ${unicos.length}: ${d}`)
+    n++
+    onProgress(previa ? `Reutilizando: ${d.slice(0, 60)}` : esInserto ? `Dibujando el plano ${n} de ${unicos.length}…` : `Generando fondo ${n} de ${unicos.length}: ${d}`)
     try {
-      if (esInserto) {
-        // Inserto: dibujo a pantalla completa DELANTE del narrador (él no se ve en esa viñeta). Si es el
-        // segundo dibujo de un plano («cambio»), se hace editando el primero: mismo encuadre y misma gente
-        const [texto, cambio] = d.slice(INSERTO.length).split(CAMBIO)
-        const primero = cambio ? capaDe.get(INSERTO + texto) : undefined
-        if (cambio && !previa && !primero?.urlFal) continue
-        capaDe.set(d, previa ?? { ...(await generateBackground(cambio ? cambio : texto, pr, undefined, undefined, 'inserto', primero?.urlFal)), descripcion: d, delante: true })
-        continue
+      if (!esInserto) {
+        // El lado libre (contrario al personaje) se pide casi vacío, para el contenido
+        const lado = vinetas.find((v) => v.fondo === d && v.lado && v.lado !== 'centro')?.lado
+        const hueco = lado === 'izq' ? 'der' : lado === 'der' ? 'izq' : undefined
+        capaDe.set(d, previa ?? { ...(await generateBackground(d, pr, hueco, lugares.indexOf(d))), descripcion: d })
+        return
       }
-      // El lado libre (contrario al personaje) se pide casi vacío, para el contenido
-      const lado = vinetas.find((v) => v.fondo === d && v.lado && v.lado !== 'centro')?.lado
-      const hueco = lado === 'izq' ? 'der' : lado === 'der' ? 'izq' : undefined
-      // Cada lugar del vídeo con su paleta y su encuadre (antes todos eran «pared gris de frente»)
-      capaDe.set(d, previa ?? { ...(await generateBackground(d, pr, hueco, unicos.filter((u) => !/^blanco\b/i.test(u) && !u.startsWith(INSERTO)).indexOf(d))), descripcion: d })
+      if (previa) {
+        capaDe.set(d, previa)
+        return
+      }
+      const partes = d.slice(INSERTO.length).split(CAMBIO)
+      let capa: BgLayer
+      let crudo: Crudo
+      let abierta: OffscreenCanvas | null = null
+      if (partes.length === 1) {
+        // El dibujo del plano
+        capa = { ...(await generateBackground(partes[0], pr, undefined, undefined, 'inserto')), descripcion: d, delante: true }
+        crudo = await crudoDeUrl(capa.urlFal!)
+        if (capa.cara) abierta = await conBocaAbierta(crudo, pr).catch(() => null)
+      } else {
+        // Un cambio de pose: se edita el dibujo anterior del mismo plano y se copia solo lo que cambia
+        const claveAnterior = INSERTO + partes.slice(0, -1).join(CAMBIO)
+        const anterior = await crudoDe(claveAnterior)
+        if (!anterior) return
+        const r = await conCambio(anterior, partes[partes.length - 1], pr)
+        crudo = r.crudo
+        abierta = r.abierta
+        capa = { ...(await capaDeMarco(await sinMarco(await createImageBitmap(crudo.comp)), partes[0], 'inserto')), descripcion: d, delante: true, urlFal: crudo.url }
+      }
+      crudos.set(d, crudo)
+      if (abierta && capa.cara) capa.imageIdOpen = await guardarVariante(capa, abierta, '-boca')
+      capaDe.set(d, capa)
     } catch (e) {
-      fallos.push(`«${d}»: ${e instanceof Error ? e.message : e}`)
+      fallos.push(`«${d.slice(0, 50)}»: ${e instanceof Error ? e.message : e}`)
+    }
+  }
+  // Cadenas: cada dibujo base con sus cambios, en orden; hasta 3 cadenas a la vez
+  const cadenas = new Map<string, string[]>()
+  for (const d of unicos) {
+    const base = d.startsWith(INSERTO) ? INSERTO + d.slice(INSERTO.length).split(CAMBIO)[0] : d
+    cadenas.set(base, [...(cadenas.get(base) ?? []), d])
+  }
+  const cola = [...cadenas.values()]
+  await Promise.all(
+    Array.from({ length: 3 }, async () => {
+      for (let c = cola.shift(); c; c = cola.shift()) for (const d of c) await hacer(d)
+    }),
+  )
+  // La otra persona «habla» (se cuenta lo que dice): su boca abierta en el dibujo que se ve en ese momento
+  for (const capa of capaDe.values()) if (capa.otroHabla) capa.otroHabla = []
+  for (const v of vinetas) {
+    if (!v.otro) continue
+    const capa = capaDe.get(v.fondo)
+    if (!capa || !v.fondo.startsWith(INSERTO)) continue
+    try {
+      if (!capa.imageIdOtro) {
+        const crudo = await crudoDe(v.fondo)
+        const lienzo = crudo ? await conBocaDelOtro(crudo, useStore.getState().project) : null
+        if (lienzo) capa.imageIdOtro = await guardarVariante(capa, lienzo, '-otro')
+      }
+      if (capa.imageIdOtro) capa.otroHabla = [...(capa.otroHabla ?? []), v.otro]
+    } catch {
+      // sin boca del otro: se queda quieto
     }
   }
   const st = useStore.getState()
@@ -341,7 +421,11 @@ export async function fondosPorVinetas(vinetasIn: { t: number; fondo: string; la
   const tramos: { id: string; desde: number; hasta: number }[] = []
   vinetas.forEach((v, i) => {
     // Si el segundo dibujo de un plano no salió, sigue el primero
-    const capa = capaDe.get(v.fondo) ?? (v.cambio && v.inserto ? capaDe.get(INSERTO + v.inserto) : undefined)
+    let capa = capaDe.get(v.fondo)
+    for (let partes = v.fondo.split(CAMBIO); !capa && v.inserto && partes.length > 1; ) {
+      partes = partes.slice(0, -1)
+      capa = capaDe.get(partes.join(CAMBIO))
+    }
     const hasta = vinetas[i + 1]?.t ?? total
     const last = tramos[tramos.length - 1]
     if (!capa) return

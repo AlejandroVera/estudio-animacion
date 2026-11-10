@@ -26,7 +26,7 @@ export function getImage(src: string): HTMLImageElement {
 
 export async function ensureImages(project: Project): Promise<void> {
   const all: Promise<void>[] = []
-  const ids = [...(project.fondos ?? []), ...(project.objetos ?? [])].flatMap((l) => ('imageIdOrig' in l && l.imageIdOrig ? [l.imageId, l.imageIdOrig] : [l.imageId]))
+  const ids = [...(project.fondos ?? []), ...(project.objetos ?? [])].flatMap((l) => [l.imageId, ...(['imageIdOrig', 'imageIdOpen', 'imageIdOtro'] as const).flatMap((k) => (k in l && (l as BgLayer)[k] ? [(l as BgLayer)[k]!] : []))])
   await ensureMedia(ids)
   for (const id of ids) {
     const url = mediaUrl(id)
@@ -329,18 +329,27 @@ export function drawLayers(g: CanvasRenderingContext2D, project: Project, t: num
     g.save()
     g.globalAlpha = Math.max(0, Math.min(1, opacity))
     g.setTransform(g.getTransform().multiply(layerMatrix(project, l, t)))
-    // Escena con el protagonista dentro: con la boca cerrada se ve su boca dibujada (va con su expresión);
-    // al hablar, la imagen sin boca con la boca animada encima
+    // Escena con el protagonista dentro. Si hay bocas dibujadas por la IA: al hablar se ve el mismo dibujo
+    // con su boca abierta; cuando «habla» la otra persona, su boca se abre y se cierra. Si no las hay, el
+    // respaldo: su boca original con la boca cerrada y una boca pintada por código al hablar.
     const boca = String(evalTrack(tr['face:mouth'], t, 'cerrada'))
     const hablando = !!l.cara && ['abierta', 'A', 'O', 'o', 'E', 'dientes'].includes(boca)
-    const orig = l.cara && !hablando && l.imageIdOrig ? mediaUrl(l.imageIdOrig) : undefined
-    const imgOrig = orig ? getImage(orig) : null
-    g.drawImage(imgOrig?.complete && imgOrig.naturalWidth ? imgOrig : img, -l.w / 2, -l.h / 2, l.w, l.h)
+    const cargada = (id?: string) => {
+      const u = id ? mediaUrl(id) : undefined
+      const im = u ? getImage(u) : null
+      return im?.complete && im.naturalWidth ? im : null
+    }
+    const otro = (l.otroHabla ?? []).some(([a, b]) => t >= a && t < b) ? cargada(l.imageIdOtro) : null
+    const abierta = hablando ? cargada(l.imageIdOpen) : null
+    const orig = cargada(l.imageIdOrig)
+    const fase = (l.id.charCodeAt(l.id.length - 1) % 7) * 0.37
+    if (otro) g.drawImage(Math.floor(t * 7.5) % 2 ? otro : (orig ?? img), -l.w / 2, -l.h / 2, l.w, l.h)
+    else if (abierta) g.drawImage(abierta, -l.w / 2, -l.h / 2, l.w, l.h)
+    else g.drawImage(!hablando || l.imageIdOpen ? (orig ?? img) : img, -l.w / 2, -l.h / 2, l.w, l.h)
     if (l.cara && opacity > 0.5) {
-      const fase = (l.id.charCodeAt(l.id.length - 1) % 7) * 0.37
       const parpadea = (t + fase) % 3.6 < 0.12
       g.scale(l.w / img.naturalWidth, l.h / img.naturalHeight)
-      dibujarCara(g, l.cara, img.naturalWidth, img.naturalHeight, hablando ? boca : 'nada', parpadea)
+      dibujarCara(g, l.cara, img.naturalWidth, img.naturalHeight, hablando && !otro && !l.imageIdOpen ? boca : 'nada', parpadea)
     }
     g.restore()
   }

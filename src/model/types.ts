@@ -188,6 +188,11 @@ export interface BgLayer {
   imageIdOrig?: string
   /** Dirección de la imagen en fal (para editarla y hacer el segundo dibujo del mismo plano) */
   urlFal?: string
+  /** El mismo dibujo con la boca del protagonista abierta (dibujada por la IA; solo cambia la boca) */
+  imageIdOpen?: string
+  /** El mismo dibujo con la boca de la otra persona abierta, y los tramos (s) en los que «habla» */
+  imageIdOtro?: string
+  otroHabla?: [number, number][]
 }
 
 /** Tamaño del personaje en la escena: lejos (pequeño), general (cuerpo entero), medio (cintura arriba), primer (cara). */

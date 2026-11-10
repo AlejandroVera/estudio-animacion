@@ -321,7 +321,7 @@ function silabas(al: Alineacion, desplaza: (t: number) => number | null, fps: nu
 }
 
 export type Movimiento = 'ninguno' | 'entra' | 'sale' | 'se_mueve' | 'salta'
-export type Vineta = { t: number; escena: number; fondo: string; plano: Plano; lado: 'izq' | 'centro' | 'der'; inserto?: string; movimiento?: Movimiento; hacia?: 'izq' | 'centro' | 'der'; cambio?: string }
+export type Vineta = { t: number; escena: number; fondo: string; plano: Plano; lado: 'izq' | 'centro' | 'der'; inserto?: string; movimiento?: Movimiento; hacia?: 'izq' | 'centro' | 'der'; cambio?: string; otro?: [number, number] }
 
 /** Pide a /api/actuar las posturas por palabra y las convierte en claves exactas (0,08 s antes). */
 /**
@@ -381,7 +381,7 @@ async function planDirector(cuerpo: ReturnType<typeof cuerpoDirector>, pass: str
 
 export type PlanDirector = {
   historia?: string
-  vinetas?: { escena: number; palabra: number; idea?: string; motivo?: string; fondo: string; tamano: Plano; lado?: Vineta['lado']; inserto?: string; movimiento?: Movimiento; hacia?: Vineta['lado']; cambio?: string; palabra_cambio?: number }[]
+  vinetas?: { escena: number; palabra: number; idea?: string; motivo?: string; fondo: string; tamano: Plano; lado?: Vineta['lado']; inserto?: string; movimiento?: Movimiento; hacia?: Vineta['lado']; cambio?: string; palabra_cambio?: number; cambio2?: string; palabra_cambio2?: number; otro_habla_desde?: number; otro_habla_hasta?: number }[]
   objetos?: { escena: number; palabra: number; que: string; dibujo: string; pos: Objeto['pos']; flecha?: boolean; motivo?: string; movimiento?: Objeto['mov']; hacia?: Objeto['hacia']; tamano?: Objeto['tam'] }[]
   fondos?: { escena: number; fondo: string }[]
   rotulos?: { escena: number; palabra: number; texto: string; color: Rotulo['color']; pos: Rotulo['pos']; estilo?: Rotulo['estilo']; flecha?: boolean; motivo?: string }[]
@@ -842,16 +842,32 @@ async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number 
     const plano: Plano = inserto ? 'general' : mov && mov !== 'salta' && (v.tamano === 'medio' || v.tamano === 'primer') ? 'general' : v.tamano
     vins.push({ t, escena: v.escena, fondo: v.fondo.trim() || 'blanco', plano, lado: inserto ? 'centro' : v.lado ?? 'centro', inserto, movimiento: mov, hacia: v.hacia })
   }
-  // Segundo dibujo del mismo plano («cambio»): desde su palabra se ve la versión con la postura cambiada
+  // Cambios de dibujo dentro del plano («cambio», «cambio2»): desde su palabra se ve el dibujo con la postura
+  // cambiada (encadenados: el segundo parte del primero)
+  const SEP = ' ⟶ '
+  const finTotal = escenas.length ? escenas[escenas.length - 1].inicio + escenas[escenas.length - 1].duracion : 0
   for (const v of vinetas ?? []) {
-    if (!v.inserto?.trim() || !v.cambio?.trim() || (v.palabra_cambio ?? -1) <= v.palabra) continue
-    const w = porEscena[v.escena]?.[v.palabra_cambio!]
-    const k = vins.findIndex((x) => x.inserto === v.inserto!.trim() && !x.cambio)
-    if (!w || k < 0) continue
-    const tB = Math.round((w.t - 0.06) * fps) / fps
-    const fin = vins[k + 1]?.t ?? (escenas.length ? escenas[escenas.length - 1].inicio + escenas[escenas.length - 1].duracion : tB)
-    if (tB - vins[k].t < 0.8 || fin - tB < 0.7) continue
-    vins.splice(k + 1, 0, { ...vins[k], t: tB, cambio: v.cambio.trim() })
+    const texto = v.inserto?.trim()
+    if (!texto) continue
+    let cadena = ''
+    for (const [cambio, pal] of [[v.cambio, v.palabra_cambio], [v.cambio2, v.palabra_cambio2]] as const) {
+      if (!cambio?.trim() || (pal ?? -1) <= v.palabra) continue
+      const w = porEscena[v.escena]?.[pal!]
+      // El último dibujo de este plano que ya está puesto
+      let k = -1
+      vins.forEach((x, i) => {
+        if (x.inserto === texto && (x.cambio ?? '') === cadena) k = i
+      })
+      if (!w || k < 0) break
+      const tB = Math.round((w.t - 0.06) * fps) / fps
+      const fin = vins[k + 1]?.t ?? finTotal
+      if (tB - vins[k].t < 0.7 || fin - tB < 0.6) continue
+      cadena = cadena ? cadena + SEP + cambio.trim() : cambio.trim()
+      vins.splice(k + 1, 0, { ...vins[k], t: tB, cambio: cadena })
+    }
+    // La otra persona habla: el tramo, en los dibujos que se vean mientras tanto
+    const w0 = porEscena[v.escena]?.[v.otro_habla_desde ?? -1], w1 = porEscena[v.escena]?.[v.otro_habla_hasta ?? -1]
+    if (w0 && w1 && w1.fin > w0.t) for (const x of vins) if (x.inserto === texto) x.otro = [w0.t - 0.05, w1.fin + 0.05]
   }
   // Un inserto es una imagen quieta: como mucho ~2,5 s; después vuelve el narrador (al empezar una palabra)
   for (let i = 0; i < vins.length && modoVideo() !== 'escenas'; i++) {
