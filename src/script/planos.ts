@@ -38,7 +38,7 @@ export async function editar(url: string, cambio: string, project: Project): Pro
       referencia: url,
       // Su dibujo de referencia, para que al redibujarle la cara no se le deforme (aro, ojos, cabeza redonda)
       ...(ref ? { referencias: [location.origin + ref] } : {}),
-      descripcion: `Edit the first image. Keep EVERYTHING else identical, pixel for pixel: same framing, same background, same characters in the same places and sizes, same style, colors and clean line work. Change ONLY this: ${cambio}. ${ref ? 'The magenta boy must stay exactly on model, like in the second image: perfectly round flat magenta head of the same size and position, the same simple round eyes with black outline, the small golden septum ring, clean black outlines, no smudges, no extra wrinkles or marks on his face. ' : ''}No text.`,
+      descripcion: `Edit the first image. Keep EVERYTHING else identical, pixel for pixel: same framing, same background, same characters in the same places and sizes, same style, colors and clean line work. Change ONLY this: ${cambio}. ${ref ? 'The magenta boy must stay exactly on model, like in the second image: perfectly round flat magenta head of the same size and position, the same simple round eyes with black outline, the small golden septum ring, clean black outlines, no smudges, NO wrinkles, eye bags, shading or extra lines on his face whatever the emotion (only eyes, two thin eyebrows, ring and mouth). Add nothing that is not asked (no new objects, symbols or icons). ' : ''}No text.`,
     }),
   })
   const d = await res.json().catch(() => ({}))

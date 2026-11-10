@@ -46,16 +46,22 @@ la mesa con una calculadora; junto a una pizarra; en el metro con gafas de sol.
 - Algún plano corto sin él (un detalle: la pantalla del móvil, una calculadora con «NO SALE»). TODOS los
   planos llevan «inserto», también el cierre o la pregunta final: él mirando a cámara en el último lugar de la
   historia, con la cara de esa frase (nunca el muñeco suelto sobre blanco: rompe el estilo del vídeo).
-- ANIMACIÓN DENTRO DEL PLANO (lo que hace que no parezcan estampas): cada plano puede tener hasta DOS cambios
-  de dibujo, «cambio» y «cambio2», con su palabra («palabra_cambio» < «palabra_cambio2», de la misma escena
+- ANIMACIÓN DENTRO DEL PLANO (lo que hace que no parezcan estampas): cada plano puede tener hasta TRES cambios
+  de dibujo, «cambio», «cambio2» y «cambio3», con su palabra (en orden creciente, de la misma escena
   y posteriores al inicio del plano). En cada uno cambia SOLO la postura o la cara de alguien (mismo encuadre,
   fondo y gente): la hermana teclea → le enseña el móvil sonriendo → se cruza de brazos; él mira el móvil →
   levanta la vista horrorizado → se tapa la cara. Úsalos en CASI TODOS los planos (los dos cambios si el plano
   dura más de 3 s), en la palabra exacta de la acción, y que la otra persona haga algo distinto en cada uno.
   En inglés y solo lo que cambia («the sister now holds the phone up to his face, grinning; he leans back
   horrified, eyes wide»). Si no hay, "" y -1.
-- «otro_habla_desde»/«otro_habla_hasta»: SIEMPRE -1. Solo se oye al narrador, así que solo se mueve SU boca;
-  lo que hacen o dicen los demás se enseña con su postura y su cara en un «cambio».
+- Solo se oye al narrador, así que solo se mueve SU boca. LOS DEMÁS ACTÚAN CON LOS «cambio»: cada cosa que la
+  frase dice que hacen o dicen («me ha instalado», «me hace una», «sonríe», «me dice que así no») es un
+  cambio en esa palabra con SU gesto (ella le planta el móvil delante; levanta el móvil para la foto; le
+  hace con la mano el gesto de «sonríe»; niega con el dedo). Nunca gestos que la frase no cuente.
+- NADA QUE NO SE DIGA: en el dibujo solo sale lo que nombra la locución o lo que hace falta para entender
+  la situación. Nada de adornos con significado propio (calaveras, signos de victoria, carteles, iconos).
+  Las caras, SENCILLAS: describe la emoción con ojos y cejas («eyes wide», «eyebrows sloped»), sin «tense»,
+  «wrinkled», «stressed» (salen arrugas y ojeras que le deforman la cara).
 - A TIEMPO CON LA VOZ (lo más importante de los cambios): el dibujo enseña cada cosa CUANDO SE DICE, nunca
   antes. El primer dibujo del plano es la situación de sus primeras palabras, sin adelantar lo que viene (si
   luego dice «tres del DNI y un ticket», el DNI y el ticket no están desde el principio: salen en su palabra).
@@ -70,16 +76,9 @@ la mesa con una calculadora; junto a una pizarra; en el metro con gafas de sol.
   la cara visible (de frente o tres cuartos), no de espaldas.
 - LA CARA DICE LO QUE SUENA: la expresión de ojos y cejas de cada dibujo es la emoción de la frase que se
   oye mientras se ve; si la emoción cambia, otro plano o un «cambio».
-- COSAS QUE SE MUEVEN POR LA ESCENA (como en ese canal: el Audi que pasa a toda velocidad por delante de ella,
-  el ladrón que se lleva el coche, billetes que caen, corazones): «objetos» con «movimiento»: «cruza» = pasa
-  de un lado al otro y se va («hacia» = a dónde va; un coche, alguien corriendo, un autobús), «entra» = llega
-  desde un lado y se queda, «cae» = cae desde arriba con bote (dinero, una factura, un yunque), «tiembla» =
-  aparece temblando (una alarma, un móvil que vibra), «aparece» = de golpe. «tamano» pequeno/mediano/grande y
-  «pos» la altura (arriba_*, izq/der = en medio, *_baja = abajo). Pon 2-4 de estos en un vídeo de 30 s,
-  justo en la palabra, cuando lo que se dice se pueda ENSEÑAR moviéndose. «dibujo» en inglés, un objeto
-  sencillo de perfil si se mueve de lado.
-- Encima de los planos van «rotulos» (cifras, la palabra del remate, a mano) en la palabra exacta, y si
-  ayuda «objetos» en bocadillo de pensamiento. «secundarios» vacío y «movimiento» «ninguno»: las otras
+- «objetos»: VACÍO. Todo lo que se ve va DIBUJADO dentro del plano (en el inserto o en un cambio); las cosas
+  sueltas pegadas encima no casaban con la escena.
+- Encima de los planos van «rotulos» (cifras, la palabra del remate, a mano) en la palabra exacta, . «secundarios» vacío y «movimiento» «ninguno»: las otras
   personas y las acciones van DIBUJADAS en la escena. «cambios» solo importa en los planos sin inserto.`
 
 const GUIA = `Eres el director de animación de un vídeo de YouTube de dibujos al estilo del canal «Estoy Tiesa»: un
@@ -263,7 +262,7 @@ const SCHEMA = {
       items: {
         type: 'object',
         additionalProperties: false,
-        required: ['escena', 'palabra', 'idea', 'motivo', 'fondo', 'tamano', 'lado', 'inserto', 'movimiento', 'hacia', 'cambio', 'palabra_cambio', 'cambio2', 'palabra_cambio2', 'otro_habla_desde', 'otro_habla_hasta'],
+        required: ['escena', 'palabra', 'idea', 'motivo', 'fondo', 'tamano', 'lado', 'inserto', 'movimiento', 'hacia', 'cambio', 'palabra_cambio', 'cambio2', 'palabra_cambio2', 'cambio3', 'palabra_cambio3'],
         properties: {
           motivo: { type: 'string' },
           inserto: { type: 'string', description: 'Dibujo a pantalla completa (en inglés) en vez del narrador, o "" si sale el narrador.' },
@@ -272,8 +271,8 @@ const SCHEMA = {
           palabra_cambio: { type: 'integer', description: 'Palabra de la misma escena en la que se ve el segundo dibujo, o -1.' },
           cambio2: { type: 'string', description: 'Un tercer dibujo del mismo plano (otro cambio después del primero), o "".' },
           palabra_cambio2: { type: 'integer', description: 'Palabra (posterior a palabra_cambio) en la que se ve, o -1.' },
-          otro_habla_desde: { type: 'integer', description: 'Palabra donde empieza lo que DICE la otra persona del plano (su boca se moverá), o -1.' },
-          otro_habla_hasta: { type: 'integer', description: 'Última palabra de lo que dice, o -1.' },
+          cambio3: { type: 'string', description: 'Un cuarto dibujo del mismo plano, o "".' },
+          palabra_cambio3: { type: 'integer', description: 'Palabra (posterior a palabra_cambio2) en la que se ve, o -1.' },
           hacia: { type: 'string', enum: ['izq', 'centro', 'der'] },
           escena: { type: 'integer' },
           palabra: { type: 'integer' },
@@ -372,7 +371,7 @@ export async function POST(request: Request): Promise<Response> {
       messages: [
         {
           role: 'user',
-          content: `Catálogo de posturas:\n${catalogo}\n\n${body.reparto && Object.keys(body.reparto).length ? `Reparto (personajes que pueden salir en escena; solo si la historia los nombra):\n${Object.entries(body.reparto).map(([id, r]) => `- «${id}»: ${r.quien}. Posturas: ${Object.entries(r.posturas).map(([k, v]) => `${k} (${v})`).join('; ')}`).join('\n')}\n\n` : 'No hay reparto («secundarios» vacío).\n\n'}${body.miradas ? `Catálogo de miradas:\n${Object.entries(body.miradas).map(([k, v]) => `- ${k}: ${v}`).join('\n')}\n\n` : ''}${body.nuevasMax ? `Gestos a medida permitidos: hasta ${Math.min(8, body.nuevasMax)}.\n\n` : 'No pidas gestos a medida (nuevas vacío).\n\n'}${body.escenografia ? 'Decide también «fondos» (uno por escena) y «rotulos».\n\n' : 'No hace falta «fondos» ni «rotulos» (déjalos vacíos).\n\n'}${body.vinetas ? 'Monta el vídeo por «vinetas» (los fondos van en cada viñeta; «fondos» puede ir vacío).\n\n' : ''}${body.modo === 'escenas' ? 'Pon 2-4 «objetos» QUE SE MUEVEN por la escena («movimiento» cruza, entra, cae o tiembla) en las palabras que se puedan enseñar así: es lo que da vida a los planos.\n\n' : body.objetosMax ? `Puedes poner «objetos» si de verdad aportan (como mucho ${Math.min(16, body.objetosMax)}, normalmente bastantes menos).\n\n` : 'No pongas «objetos» (vacío).\n\n'}${body.indicaciones ? `INDICACIONES GENERALES DEL USUARIO: ${body.indicaciones}\n\n` : ''}Texto completo (para entender el tono):\n${textoSeguido}\n\nGuion por escenas con las palabras numeradas:\n${guion}`,
+          content: `Catálogo de posturas:\n${catalogo}\n\n${body.reparto && Object.keys(body.reparto).length ? `Reparto (personajes que pueden salir en escena; solo si la historia los nombra):\n${Object.entries(body.reparto).map(([id, r]) => `- «${id}»: ${r.quien}. Posturas: ${Object.entries(r.posturas).map(([k, v]) => `${k} (${v})`).join('; ')}`).join('\n')}\n\n` : 'No hay reparto («secundarios» vacío).\n\n'}${body.miradas ? `Catálogo de miradas:\n${Object.entries(body.miradas).map(([k, v]) => `- ${k}: ${v}`).join('\n')}\n\n` : ''}${body.nuevasMax ? `Gestos a medida permitidos: hasta ${Math.min(8, body.nuevasMax)}.\n\n` : 'No pidas gestos a medida (nuevas vacío).\n\n'}${body.escenografia ? 'Decide también «fondos» (uno por escena) y «rotulos».\n\n' : 'No hace falta «fondos» ni «rotulos» (déjalos vacíos).\n\n'}${body.vinetas ? 'Monta el vídeo por «vinetas» (los fondos van en cada viñeta; «fondos» puede ir vacío).\n\n' : ''}${body.modo === 'escenas' ? 'No pongas «objetos» (vacío): todo va dibujado en los planos.\n\n' : body.objetosMax ? `Puedes poner «objetos» si de verdad aportan (como mucho ${Math.min(16, body.objetosMax)}, normalmente bastantes menos).\n\n` : 'No pongas «objetos» (vacío).\n\n'}${body.indicaciones ? `INDICACIONES GENERALES DEL USUARIO: ${body.indicaciones}\n\n` : ''}Texto completo (para entender el tono):\n${textoSeguido}\n\nGuion por escenas con las palabras numeradas:\n${guion}`,
         },
       ],
     })

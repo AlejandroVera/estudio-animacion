@@ -1,5 +1,5 @@
 import { analizarCara, type CaraEscena } from '../model/caraEscena'
-import { conBocaAbierta, conBocaDelOtro, conGestoDelOtro, conCambio, crudoDeUrl, type Crudo } from './planos'
+import { conBocaAbierta, conBocaDelOtro, conCambio, crudoDeUrl, type Crudo } from './planos'
 // Fondos generados con IA (fal.ai) en el estilo del personaje, añadidos como capas.
 
 import type { BgLayer, Escena, Project } from '../model/types'
@@ -91,9 +91,13 @@ export async function generateBackground(descripcion: string, project: Project, 
       }
     }
   }
+  // Si ni ampliándola llena el cuadro (franjas arriba y abajo), se repite el dibujo una vez
+  if (tipo === 'inserto' && !editarDe && !reintento && marco.bandas) return generateBackground(descripcion, project, hueco, variante, tipo, editarDe, true)
   // Si la IA lo ha dibujado dos veces en la misma escena, se repite el dibujo una vez
   if (tipo === 'inserto' && !editarDe && !reintento && !/photo|picture|screen|poster|mirror/i.test(descripcion)) {
     const rep = await analizarCara(marco.bmp).catch(() => null)
+    // … o si él ha salido diminuto (cabeza de menos de una décima parte del ancho)
+    if (rep && rep.cara.r * 2 < marco.bmp.width * 0.1) return generateBackground(descripcion, project, hueco, variante, tipo, editarDe, true)
     if (rep?.repetido) return generateBackground(descripcion, project, hueco, variante, tipo, editarDe, true)
   }
   return { ...(await capaDeMarco(marco, descripcion, tipo)), urlFal }
@@ -415,31 +419,9 @@ export async function fondosPorVinetas(
       // sin boca del otro: se queda quieto
     }
   }
-  // LA OTRA PERSONA GESTICULA (si no, se queda como una estampa al lado de él): de cada dibujo en el que sale
-  // alguien más se pide un segundo dibujo con ella «un instante después» y se alternan
-  {
-    const conGente = /\b(sister|woman|man|girl|guy|waiter|waitress|friend|mother|father|mom|dad|boss|doctor|neighbou?r|clerk|cashier|person|people|someone|grandma|grandpa|brother|couple|date)\b/i
-    const pend = [...capaDe.entries()].filter(([d, capa]) => d.startsWith(INSERTO) && conGente.test(d) && !capa.imageIdOtro && capa.cara)
-    let k = 0
-    await Promise.all(
-      Array.from({ length: 3 }, async () => {
-        for (let x = pend.shift(); x; x = pend.shift()) {
-          const [d, capa] = x
-          onProgress(`Dando gestos a los demás personajes (${++k})…`)
-          try {
-            const crudo = await crudoDe(d)
-            const r = crudo ? await conGestoDelOtro(crudo, useStore.getState().project) : null
-            if (!r) continue
-            capa.imageIdOtro = await guardarVariante(capa, r.gesto, '-gesto')
-            if (r.abierta) capa.imageIdOtroOpen = await guardarVariante(capa, r.abierta, '-gesto-boca')
-            capa.otroVive = !!capa.imageIdOtro
-          } catch {
-            // sin segundo dibujo: se queda quieta en este
-          }
-        }
-      }),
-    )
-  }
+  // (Se probó a alternar un segundo dibujo «al azar» de la otra persona: hacía gestos que la locución no
+  // contaba. Ahora sus gestos los decide el director en los «cambio», en su palabra.)
+  for (const capa of capaDe.values()) capa.otroVive = false
   const st = useStore.getState()
   const total = st.project.duration
   const fps = st.project.fps
