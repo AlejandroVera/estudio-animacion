@@ -62,6 +62,9 @@ la mesa con una calculadora; junto a una pizarra; en el metro con gafas de sol.
   Cada «cambio» va en la palabra que nombra esa acción o reacción: «sonríe, sonrío» → cambio en «sonrío»: él
   con una sonrisa forzada; «me dice que así no» → cambio en «dice»: ella niega con la cabeza. Si la frase
   nombra un gesto suyo (sonrío, me tapo, levanto, miro), ese gesto ES un cambio en esa palabra.
+- La otra persona NUNCA se queda igual de un dibujo al siguiente: en cada «cambio» hace un gesto grande y
+  distinto con los brazos y otra cara (teclea → le planta el móvil en la cara → se ríe tapándose la boca →
+  se cruza de brazos → levanta el pulgar). Descríbelo siempre, además de lo que hace él.
 - En un «cambio» nadie cambia de sitio ni se da la vuelta: misma cámara, cada uno donde estaba y mirando hacia
   donde miraba; solo cambian brazos, postura y cara. Por eso dibuja desde el principio a la otra persona con
   la cara visible (de frente o tres cuartos), no de espaldas.

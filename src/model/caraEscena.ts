@@ -14,6 +14,8 @@ export interface CaraEscena {
   my: number
   /** Ojos (cajas de lo blanco) */
   ojos: { x: number; y: number; w: number; h: number }[]
+  /** Altura (px) donde empieza la zona de la boca: por debajo del aro de la nariz */
+  bocaY?: number
   /** Color de la cabeza */
   color: [number, number, number]
 }
@@ -139,7 +141,7 @@ export async function analizarCara(bmp: ImageBitmap): Promise<{ blob: Blob; cara
   g.putImageData(img, 0, 0)
   const mx = bn > 40 ? bx / bn : cx
   const my = bn > 40 ? by / bn : desde + r * 0.25
-  return { blob: await c.convertToBlob({ type: 'image/jpeg', quality: 0.92 }), cara: { cx, cy, r, mx, my: Math.min(my, cy + r * 0.62), ojos: ojos.slice(0, 2), color },
+  return { blob: await c.convertToBlob({ type: 'image/jpeg', quality: 0.92 }), cara: { cx, cy, r, mx, my: Math.min(my, cy + r * 0.62), ojos: ojos.slice(0, 2), color, bocaY: desde },
     // ¿Hay otra cabeza magenta de tamaño parecido? (la IA a veces lo dibuja dos veces)
     repetido: tamanos.filter((t) => t > mejor!.n * 0.4).length > 1,
   }

@@ -193,6 +193,10 @@ export interface BgLayer {
   /** El mismo dibujo con la boca de la otra persona abierta, y los tramos (s) en los que «habla» */
   imageIdOtro?: string
   otroHabla?: [number, number][]
+  /** La otra persona del plano GESTICULA: `imageIdOtro` es el mismo dibujo con ella un instante después (otro
+   * gesto de lo que está haciendo) y se alterna con el normal; `imageIdOtroOpen`, lo mismo con la boca de él abierta */
+  otroVive?: boolean
+  imageIdOtroOpen?: string
 }
 
 /** Tamaño del personaje en la escena: lejos (pequeño), general (cuerpo entero), medio (cintura arriba), primer (cara). */

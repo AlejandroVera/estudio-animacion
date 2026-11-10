@@ -28,6 +28,7 @@ export async function crudoDeUrl(url: string): Promise<Crudo> {
 
 /** Pide a fal una edición del dibujo. */
 export async function editar(url: string, cambio: string, project: Project): Promise<{ url: string; bmp: ImageBitmap }> {
+  const ref = project.characters[project.instances[0]?.characterId]?.referencia
   const res = await fetch('/api/imagen', {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
@@ -35,7 +36,9 @@ export async function editar(url: string, cambio: string, project: Project): Pro
       tipo: 'libre',
       formato: formatoDe(project),
       referencia: url,
-      descripcion: `Edit this image. Keep EVERYTHING else identical, pixel for pixel: same framing, same background, same characters in the same places and sizes, same style, colors and line work. Change ONLY this: ${cambio}. No text.`,
+      // Su dibujo de referencia, para que al redibujarle la cara no se le deforme (aro, ojos, cabeza redonda)
+      ...(ref ? { referencias: [location.origin + ref] } : {}),
+      descripcion: `Edit the first image. Keep EVERYTHING else identical, pixel for pixel: same framing, same background, same characters in the same places and sizes, same style, colors and clean line work. Change ONLY this: ${cambio}. ${ref ? 'The magenta boy must stay exactly on model, like in the second image: perfectly round flat magenta head of the same size and position, the same simple round eyes with black outline, the small golden septum ring, clean black outlines, no smudges, no extra wrinkles or marks on his face. ' : ''}No text.`,
     }),
   })
   const d = await res.json().catch(() => ({}))
@@ -140,9 +143,12 @@ export async function conBocaAbierta(c: Crudo, project: Project): Promise<Offscr
   // Solo la boca: por debajo de los ojos (la IA al abrirle la boca le cambiaba también los ojos y, al hablar,
   // parpadeaban entre dos miradas en cada sílaba)
   const ojos = c.cara.ojos
-  const desdeY = ojos.length ? Math.max(...ojos.map((o) => o.y + o.h)) + c.cara.r * 0.05 : c.cara.cy + c.cara.r * 0.12
+  // … y por debajo del aro de la nariz (también cambiaba de un dibujo a otro y «temblaba» al hablar)
+  const desdeY = Math.max(c.cara.bocaY ?? 0, ojos.length ? Math.max(...ojos.map((o) => o.y + o.h)) + c.cara.r * 0.05 : c.cara.cy + c.cara.r * 0.12)
   const m = mascaraDeCambio(c.fal, ed.bmp, W, H, { dentro: zona, desdeY })
   if (m.fraccion <= 0) return null
+  // Corte limpio por arriba: el borde suave de la máscara no mezcla (emborrona) lo que hay encima de la boca
+  m.mascara.getContext('2d')!.clearRect(0, 0, W, Math.floor(desdeY))
   c.boca = { mascara: m.mascara, de: ed.bmp }
   return componer(c.comp, ed.bmp, m.mascara, W, H)
 }
@@ -189,4 +195,22 @@ export async function conBocaDelOtro(c: Crudo, project: Project): Promise<Offscr
   const m = mascaraDeCambio(c.fal, ed.bmp, W, H, c.cara ? { fuera: { x: c.cara.cx, y: c.cara.cy, r: c.cara.r * 1.1 } } : {})
   if (m.fraccion <= 0 || m.fraccion > 0.25) return null
   return componer(c.comp, ed.bmp, m.mascara, W, H)
+}
+
+/**
+ * El mismo dibujo con la OTRA persona un instante después (otro gesto de lo que está haciendo): alternado con
+ * el normal, hace que no se quede congelada. Devuelve también la versión con la boca de él abierta.
+ */
+export async function conGestoDelOtro(c: Crudo, project: Project): Promise<{ gesto: OffscreenCanvas; abierta: OffscreenCanvas | null } | null> {
+  const W = c.fal.width, H = c.fal.height
+  if (c.cara === undefined) c.cara = (await analizarCara(c.fal).catch(() => null))?.cara ?? null
+  const ed = await editar(
+    c.url,
+    'the OTHER person (not the magenta boy) a moment later, like the next drawing of an animation of what she or he is doing: same place and same action, but the arms and hands clearly moved (a different hand gesture), the head slightly tilted the other way and the facial expression a bit changed (eyebrows, mouth). The magenta boy and everything else stay exactly the same',
+    project,
+  )
+  const m = mascaraDeCambio(c.fal, ed.bmp, W, H, c.cara ? { fuera: { x: c.cara.cx, y: c.cara.cy, r: c.cara.r * 1.1 } } : {})
+  if (m.fraccion < 0.004 || m.fraccion > 0.4) return null
+  const gesto = componer(c.comp, ed.bmp, m.mascara, W, H)
+  return { gesto, abierta: c.boca ? componer(gesto, c.boca.de, c.boca.mascara, W, H) : null }
 }

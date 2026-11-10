@@ -706,6 +706,9 @@ function ponerReparto(narr: Tracks, pres: Presencia[], vinetas: Vineta[], projec
 function camaraViva(tracks: Tracks, vinetas: Vineta[], dur: number, raizId: string, fps: number) {
   const r = (t: number) => Math.round(t * fps) / fps
   const zoomEn = (t: number) => Number([...(tracks['cam:zoom'] ?? [])].filter((k) => k.t <= t + 1e-4).pop()?.v ?? 1)
+  // En escenas dibujadas la cámara NO se mueve (como en Estoy Tiesa): el acercamiento lento redibujaba el
+  // plano entero en cada fotograma y el trazo «temblaba»
+  if (modoVideo() === 'escenas') return
   const nuevos: { t: number; v: number; ease: 'salto' | 'lineal' | 'suave' }[] = []
   const fuertes = (tracks[`part:${raizId}:v`] ?? []).filter((k) => /^t_e_|^(enfado|llorar|celebrar|mejillas|stop)$/.test(String(k.v)))
   vinetas.forEach((v, i) => {

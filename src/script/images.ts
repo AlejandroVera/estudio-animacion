@@ -1,5 +1,5 @@
 import { analizarCara, type CaraEscena } from '../model/caraEscena'
-import { conBocaAbierta, conBocaDelOtro, conCambio, crudoDeUrl, type Crudo } from './planos'
+import { conBocaAbierta, conBocaDelOtro, conGestoDelOtro, conCambio, crudoDeUrl, type Crudo } from './planos'
 // Fondos generados con IA (fal.ai) en el estilo del personaje, añadidos como capas.
 
 import type { BgLayer, Escena, Project } from '../model/types'
@@ -414,6 +414,31 @@ export async function fondosPorVinetas(
     } catch {
       // sin boca del otro: se queda quieto
     }
+  }
+  // LA OTRA PERSONA GESTICULA (si no, se queda como una estampa al lado de él): de cada dibujo en el que sale
+  // alguien más se pide un segundo dibujo con ella «un instante después» y se alternan
+  {
+    const conGente = /\b(sister|woman|man|girl|guy|waiter|waitress|friend|mother|father|mom|dad|boss|doctor|neighbou?r|clerk|cashier|person|people|someone|grandma|grandpa|brother|couple|date)\b/i
+    const pend = [...capaDe.entries()].filter(([d, capa]) => d.startsWith(INSERTO) && conGente.test(d) && !capa.imageIdOtro && capa.cara)
+    let k = 0
+    await Promise.all(
+      Array.from({ length: 3 }, async () => {
+        for (let x = pend.shift(); x; x = pend.shift()) {
+          const [d, capa] = x
+          onProgress(`Dando gestos a los demás personajes (${++k})…`)
+          try {
+            const crudo = await crudoDe(d)
+            const r = crudo ? await conGestoDelOtro(crudo, useStore.getState().project) : null
+            if (!r) continue
+            capa.imageIdOtro = await guardarVariante(capa, r.gesto, '-gesto')
+            if (r.abierta) capa.imageIdOtroOpen = await guardarVariante(capa, r.abierta, '-gesto-boca')
+            capa.otroVive = !!capa.imageIdOtro
+          } catch {
+            // sin segundo dibujo: se queda quieta en este
+          }
+        }
+      }),
+    )
   }
   const st = useStore.getState()
   const total = st.project.duration

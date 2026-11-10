@@ -26,7 +26,7 @@ export function getImage(src: string): HTMLImageElement {
 
 export async function ensureImages(project: Project): Promise<void> {
   const all: Promise<void>[] = []
-  const ids = [...(project.fondos ?? []), ...(project.objetos ?? [])].flatMap((l) => [l.imageId, ...(['imageIdOrig', 'imageIdOpen', 'imageIdOtro'] as const).flatMap((k) => (k in l && (l as BgLayer)[k] ? [(l as BgLayer)[k]!] : []))])
+  const ids = [...(project.fondos ?? []), ...(project.objetos ?? [])].flatMap((l) => [l.imageId, ...(['imageIdOrig', 'imageIdOpen', 'imageIdOtro', 'imageIdOtroOpen'] as const).flatMap((k) => (k in l && (l as BgLayer)[k] ? [(l as BgLayer)[k]!] : []))])
   await ensureMedia(ids)
   for (const id of ids) {
     const url = mediaUrl(id)
@@ -343,7 +343,22 @@ export function drawLayers(g: CanvasRenderingContext2D, project: Project, t: num
     const abierta = hablando ? cargada(l.imageIdOpen) : null
     const orig = cargada(l.imageIdOrig)
     const fase = (l.id.charCodeAt(l.id.length - 1) % 7) * 0.37
+    // La otra persona gesticula: su segundo dibujo se alterna con el normal a golpes irregulares (0,45-1 s),
+    // como un ciclo de dos dibujos de animación limitada; la boca de él sigue yendo con la voz
+    let gesto = false
+    if (l.otroVive && l.imageIdOtro) {
+      let acc = 0
+      const tt = (t + fase) % 60
+      for (let k = 0; acc <= tt; k++) {
+        acc += 0.45 + ((Math.sin(k * 12.9898 + fase * 7) * 43758.5453) % 1 + 1) % 1 * 0.55
+        gesto = k % 2 === 1
+      }
+    }
+    const otroVivo = gesto ? cargada(l.imageIdOtro) : null
+    const otroVivoAbierta = gesto && hablando ? cargada(l.imageIdOtroOpen) : null
     if (otro) g.drawImage(Math.floor(t * 7.5) % 2 ? otro : (orig ?? img), -l.w / 2, -l.h / 2, l.w, l.h)
+    else if (otroVivoAbierta) g.drawImage(otroVivoAbierta, -l.w / 2, -l.h / 2, l.w, l.h)
+    else if (otroVivo && !hablando) g.drawImage(otroVivo, -l.w / 2, -l.h / 2, l.w, l.h)
     else if (abierta) g.drawImage(abierta, -l.w / 2, -l.h / 2, l.w, l.h)
     else g.drawImage(!hablando || l.imageIdOpen || !l.cara?.ojos.length ? (orig ?? img) : img, -l.w / 2, -l.h / 2, l.w, l.h)
     if (l.cara && opacity > 0.5) {
