@@ -19,18 +19,22 @@ Check ONLY these defects (be strict with 1-4, they ruin the animation):
 1. FACE COVERED: anything in front of the magenta boy's face (a phone, a hand, an object, another person, a
    speech bubble) hiding his eyes or his mouth area, even partly.
 2. HEAD CUT: his head is cut by the edge of the picture, or is so big that it does not fit.
-3. PEOPLE OVERLAP: another person stands in front of him covering his body or head, or is hidden behind him;
-   they must be side by side with a clear gap.
+3. PEOPLE OVERLAP: another person stands in front of him covering his head or a big part of his body, or is
+   mostly hidden behind him. Sitting or standing next to each other, touching, or an arm reaching towards him
+   is FINE as long as his head and most of his torso stay visible.
 4. TWO BOYS: more than one magenta boy as a character in the scene (a small photo of him on a screen, a
    printed photo or a poster does not count).
-5. BANDS: big empty flat bands at the top/bottom/sides because the drawing does not fill the frame.
+5. BANDS: big empty flat bands (more than about a sixth of the picture) at the top/bottom/sides because the
+   drawing does not fill the frame. A thin outline or border, or a plain wall or floor, is NOT a defect.
 6. TEXT: readable words or letters drawn in the picture (numbers and simple icons are fine).
-7. TINY: he is in the shot but tiny (head narrower than about one tenth of the picture width).
+7. TINY: he is in the shot but tiny (head narrower than about one tenth of the picture width). A normal
+   full-body shot is fine.
 8. BACK: he is seen from behind or his face is not visible at all although he is in the shot.
 9. WRONG: the drawing clearly does not show the requested moment (main action missing or contradicted), or
    adds a prominent element with its own meaning that was not requested (a skull, a random symbol).
 
 If the requested shot is a close-up of an object or screen WITHOUT him as a character, only 5, 6 and 9 apply.
+His expression and an open mouth are never defects; objects that the description asks for are never defects.
 Minor style differences, small imperfections or missing tiny details are NOT defects. When in doubt, pass.
 
 Answer with "ok" (true if none of the defects) and "fallos": for each defect found, one short imperative
