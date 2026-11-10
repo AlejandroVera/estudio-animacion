@@ -351,6 +351,15 @@ cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y
   mismo dibujo «un instante después» (otro gesto de brazos y cara, sin girarse) → `imageIdOtro` (+
   `imageIdOtroOpen` con la boca de él) y `otroVive`; `drawLayers` los alterna a golpes de 0,45-1 s. Coste:
   ~47 imágenes por 32 s. Pendiente: algún plano sale mal encuadrado (él diminuto, franjas) y no se detecta.
+- ESCENAS, REVISIÓN 5 (tras «hay más elementos pero no son coherentes con la locución»): el segundo dibujo «al
+  azar» de la otra persona (revisión 4) se QUITÓ: hacía gestos que nadie contaba (signo de victoria, móvil con
+  calavera, de espaldas). Ahora los gestos de los demás los decide el DIRECTOR: hasta TRES cambios por plano
+  (`cambio`, `cambio2`, `cambio3`, en lugar de `otro_habla_*`), cada uno en la palabra que cuenta esa acción
+  («me dice que así no» → ella niega con el dedo). En escenas NO hay `objetos` sueltos (todo va dibujado en
+  el plano; `voiceScript` los ignora). Caras sencillas sin arrugas ni ojeras (api/imagen y `editar`), nada
+  que no se diga. Un plano con franjas o con él diminuto se repite una vez. Coste: ~39 imágenes por 32 s.
+  Pendiente: los «close-up» pedidos como cambio no cambian de encuadre (deberían ser plano nuevo); el
+  último plano a veces no llena el cuadro.
 - DIRECTOR IA (`api/actuar.ts`, lo llama `dirigir` en `voices.ts` al generar voces): recibe las palabras
   de cada escena, la emoción y el catálogo `DESCRIPCIONES` (qué expresa cada postura) y devuelve en qué
   palabra cambia y a qué postura según lo que dice, y `miradas` (catálogo `MIRADAS`) en otras palabras; las claves caen 0,08 s antes de esa palabra. Si
