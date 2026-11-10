@@ -657,7 +657,15 @@ export function drawRotulos(g: CanvasRenderingContext2D, project: Project, t: nu
     // Que no se escriba encima de la cabeza (en los planos cercanos sube hasta arriba)
     const hw = Math.max(...lineas.map((l) => medirMano(g, l, tam))) / 2 + 10
     const hh = (lineas.length * tam * 1.15) / 2 + 6
-    const sit = colocarSinTapar(W, H, puntos?.circulo, x, y, hw, hh, puntos?.otras)
+    // EN UNA ESCENA DIBUJADA (el muñeco no se ve y hay gente en el dibujo): los rótulos van en una franja libre,
+    // arriba (por encima de las cabezas) o, si no cabe, abajo del todo; a su lado izquierdo/derecho/centro
+    const enEscena = !!puntos && !puntos.circulo && !!puntos.otras?.length
+    let sit: { x: number; y: number; k: number }
+    if (enEscena) {
+      const techo = Math.min(...puntos!.otras!.map((o) => o.y - o.r))
+      const sx = /^izq/.test(r.pos) ? Math.max(hw + 20, W * 0.27) : /^der/.test(r.pos) ? Math.min(W - hw - 20, W * 0.73) : W / 2
+      sit = { x: Math.max(hw + 14, Math.min(W - hw - 14, sx)), y: techo > hh * 2 + 30 ? Math.max(hh + 16, Math.min(H * 0.08, techo - hh - 12)) : H - hh - 24, k: 1 }
+    } else sit = colocarSinTapar(W, H, puntos?.circulo, x, y, hw, hh, puntos?.otras)
     if (sit.k < 1) tam = Math.round(tam * sit.k)
     g.save()
     g.translate(sit.x, sit.y)

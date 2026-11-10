@@ -412,6 +412,12 @@ cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y
   (lista de lo corregido). Hasta CUATRO cambios por plano (`cambio4`, solo lo usan las pasadas automáticas:
   no está en el esquema). El revisor de dibujos CUENTA lo pedido (defecto 11) y rechaza lo que flota tapándole
   la cabeza. Rótulos: más sitios de prueba (esquinas y centro de arriba). Medido: 38 imágenes por 32 s.
+- AFINADO DE COMPOSICIÓN: él a la MISMA ALTURA que los demás adultos (api/imagen, dibujo del lugar, revisor
+  defecto 10: antes salía gigante o como un niño); lo que aparece flotando va en un hueco de la pared y no
+  tapa cabezas (`editar`, corrector, revisor). RÓTULOS EN ESCENAS: con una escena delante el muñeco oculto no
+  cuenta (`puntos.circulo = undefined` en drawFrame: su cabeza en el centro ocupaba el sitio libre) y
+  `drawRotulos` los pone en una franja libre: arriba, por encima de la caja de la gente (`BgLayer.gente`), o
+  abajo del todo si no cabe; a izquierda/derecha/centro según `pos`. Probado con cajas sintéticas.
 - DIRECTOR IA (`api/actuar.ts`, lo llama `dirigir` en `voices.ts` al generar voces): recibe las palabras
   de cada escena, la emoción y el catálogo `DESCRIPCIONES` (qué expresa cada postura) y devuelve en qué
   palabra cambia y a qué postura según lo que dice, y `miradas` (catálogo `MIRADAS`) en otras palabras; las claves caen 0,08 s antes de esa palabra. Si
