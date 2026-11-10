@@ -17,7 +17,8 @@ visible. Other people are normal cartoon people.
 
 Check ONLY these defects (be strict with 1-4, they ruin the animation):
 1. FACE COVERED: anything in front of the magenta boy's face or head (a phone, a hand, an object, another person, a
-   speech bubble) hiding his eyes or his mouth area, even partly.
+   speech bubble, or a floating photo, panel, frame or icon added to the scene) hiding any part of his head,
+   even partly. Floating things must sit in an empty area beside the characters.
 2. HEAD CUT: his head is cut by the edge of the picture, or is so big that it does not fit.
 3. PEOPLE OVERLAP: another person stands in front of him covering his head or a big part of his body, or is
    mostly hidden behind him. Sitting or standing next to each other, touching, or an arm reaching towards him
@@ -28,12 +29,9 @@ Check ONLY these defects (be strict with 1-4, they ruin the animation):
    drawing does not fill the frame. A thin outline or border, or a plain wall or floor, is NOT a defect.
 6. TEXT: readable words or letters drawn in the picture (numbers and simple icons are fine).
 7. (Small characters are NOT a defect: the shot will be reframed with "caja".)
-10. PROPORTION: he is drawn much smaller than the other adult next to him (like a child, his head below her
-   shoulders) or much bigger; he is an adult, about as tall as the others, with his usual big head.
-8. BACK: he is seen from behind or his face is not visible at all although he is in the shot.
-9. WRONG: the drawing clearly does not show the requested moment (main action missing or contradicted), or
-   adds a prominent element with its own meaning that was not requested (a skull, a random symbol).
-
+10. PROPORTION: he and the other adult must be about the SAME HEIGHT (his head is bigger than hers, that is his
+   design, but their shoulders and feet are at a similar level). Defect if he is a giant next to her (she only
+   reaches his chest or shoulder, or his body is much bigger than hers) or if he is child-sized next to her.
 11. COUNT: the description gives exact quantities (three ID cards and one parking ticket, six empty slots) and
    the drawing shows a different number of those things. Count them.
 
