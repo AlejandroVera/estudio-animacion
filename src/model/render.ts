@@ -562,6 +562,8 @@ function colocarSinTapar(W: number, H: number, c: Circulo | null | undefined, x:
     ]
     // También a la izquierda/derecha del todo y arriba del todo, si las demás cabezas lo tapan
     prueba.push(dentro(W - hw * k - 14, y, k), dentro(hw * k + 14, y, k), dentro(x, hh * k + 14, k))
+    // … y las esquinas y el centro de arriba (en una escena con dos personas, los lados suelen estar ocupados)
+    prueba.push(dentro(W - hw * k - 14, hh * k + 14, k), dentro(hw * k + 14, hh * k + 14, k), dentro(W / 2, hh * k + 14, k), dentro(W / 2, H - hh * k - 14, k))
     for (const p of prueba) if (!tapaCabeza(c, p.x, p.y, hw * k, hh * k, otras)) return { ...p, k }
   }
   return { ...dentro(x, y, 0.58), k: 0.58 }

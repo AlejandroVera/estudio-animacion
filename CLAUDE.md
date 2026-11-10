@@ -403,6 +403,15 @@ cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y
   toca el contorno. Ya NO se generan bocas de IA en ningún modo: «completa» ≈ 30 imágenes por 32 s (medido 29,
   solo por las repeticiones del revisor) y «borrador» ≈ 20. El revisor rechaza también que él salga del tamaño
   de un niño junto a otro adulto.
+- CORRECTOR DEL PLAN (tras «los huecos salen como marcos en la pared, del DNI son 3 y salen 2, algún gesto no va
+  con la locución»): TERCERA PASADA en api/actuar.ts (`afinarPlan`, tras `rellenarQuietos`): repasa cada dibujo
+  contra las palabras que se oyen mientras se ve y corrige cara/gesto, cosas adelantadas (el remate en su
+  palabra: «salgo bien» = sonríe con ojos abiertos; «ojos cerrados» = ahí la foto), CANTIDADES exactas
+  («exactly three ID portraits in a row and exactly one parking ticket») y cosas de una app dibujadas como
+  interfaz (seis huecos = rejilla 2x3 de casillas con «+», no marcos de cuadros). Devuelve `plan.afinado`
+  (lista de lo corregido). Hasta CUATRO cambios por plano (`cambio4`, solo lo usan las pasadas automáticas:
+  no está en el esquema). El revisor de dibujos CUENTA lo pedido (defecto 11) y rechaza lo que flota tapándole
+  la cabeza. Rótulos: más sitios de prueba (esquinas y centro de arriba). Medido: 38 imágenes por 32 s.
 - DIRECTOR IA (`api/actuar.ts`, lo llama `dirigir` en `voices.ts` al generar voces): recibe las palabras
   de cada escena, la emoción y el catálogo `DESCRIPCIONES` (qué expresa cada postura) y devuelve en qué
   palabra cambia y a qué postura según lo que dice, y `miradas` (catálogo `MIRADAS`) en otras palabras; las claves caen 0,08 s antes de esa palabra. Si

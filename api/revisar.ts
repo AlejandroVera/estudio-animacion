@@ -16,7 +16,7 @@ t-shirt, jeans. His mouth will be animated later on top of the drawing, so his w
 visible. Other people are normal cartoon people.
 
 Check ONLY these defects (be strict with 1-4, they ruin the animation):
-1. FACE COVERED: anything in front of the magenta boy's face (a phone, a hand, an object, another person, a
+1. FACE COVERED: anything in front of the magenta boy's face or head (a phone, a hand, an object, another person, a
    speech bubble) hiding his eyes or his mouth area, even partly.
 2. HEAD CUT: his head is cut by the edge of the picture, or is so big that it does not fit.
 3. PEOPLE OVERLAP: another person stands in front of him covering his head or a big part of his body, or is
