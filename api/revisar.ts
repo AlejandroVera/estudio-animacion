@@ -32,10 +32,12 @@ Check ONLY these defects (be strict with 1-4, they ruin the animation):
 10. PROPORTION: he and the other adult must be about the SAME HEIGHT (his head is bigger than hers, that is his
    design, but their shoulders and feet are at a similar level). Defect if he is a giant next to her (she only
    reaches his chest or shoulder, or his body is much bigger than hers) or if he is child-sized next to her.
+12. ANATOMY: look at every person's arms and hands one by one. Defect if anyone has three arms or three hands,
+   an extra hand coming from nowhere, two hands on the same arm, a missing arm, or a duplicated limb.
 11. COUNT: the description gives exact quantities (three ID cards and one parking ticket, six empty slots) and
    the drawing shows a different number of those things. Count them.
 
-If the requested shot is a close-up of an object or screen WITHOUT him as a character, only 5, 6, 9 and 11 apply.
+If the requested shot is a close-up of an object or screen WITHOUT him as a character, only 5, 6, 9, 11 and 12 apply.
 His expression and an open mouth are never defects; objects that the description asks for are never defects.
 Minor style differences, small imperfections or missing tiny details are NOT defects. When in doubt, pass.
 

@@ -73,6 +73,9 @@ la mesa con una calculadora; junto a una pizarra; en el metro con gafas de sol.
   detrás del otro. Nada delante de su cara: si alguien le enseña o le apunta con un móvil, lo sujeta bajo, a
   la altura del pecho y a un lado. Si él sujeta algo, a la altura del pecho. En un detalle (pantalla de
   móvil, objeto) NO sale él: solo el objeto y sus manos magenta.
+- DOS MANOS: de cada persona di qué hace con CADA mano y solo una cosa por mano («holds the phone in her left
+  hand and gives a thumbs up with her right hand»); nunca tres acciones a la vez (sujetar el móvil, señalar y
+  levantar el pulgar): la IA le dibuja tres brazos.
 - NADA QUE NO SE DIGA: en el dibujo solo sale lo que nombra la locución o lo que hace falta para entender
   la situación. Nada de adornos con significado propio (calaveras, signos de victoria, carteles, iconos).
   Las caras, SENCILLAS: describe la emoción con ojos y cejas («eyes wide», «eyebrows sloped»), sin «tense»,
