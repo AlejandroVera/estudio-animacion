@@ -443,6 +443,15 @@ cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y
   DOS y que deja la postura anterior; cada cambio se revisa hasta dos veces; en la zona de la gente la
   máscara usa umbral 8 (amarillo sobre amarillo no se detectaba). Comprobado: 24 dibujos sin brazos de más.
   Pendiente: al suavizar PROPORTION él vuelve a salir más alto que ella en el pasillo.
+- TAMAÑO CONSTANTE Y CARA ENTERA (tras «dos pupilas» y «en el pasillo tiene diferentes tamaños respecto a la
+  hermana»): 1) `conCambio` mide la cabeza del dibujo nuevo; si crece o encoge más de un 8 % repite el cambio
+  (hasta 2 veces) exigiendo el mismo tamaño y se queda el más parecido. 2) Un plano hecho a partir del dibujo
+  del lugar se repite una vez si su cabeza difiere más de un 12 % de la del maestro, y usa el MISMO recorte
+  que el maestro si la gente cabe (antes cada plano se reencuadraba por su cuenta). 3) Si la cabeza cambia,
+  todo su interior sale del dibujo nuevo (y si se movió, se sustituyen enteras la zona vieja y la nueva): antes
+  se copiaba por bloques y se mezclaban ojos viejos y nuevos. Comprobado en el pasillo: mismo tamaño en los 9
+  dibujos. Los planos de detalle se piden con fondo claro, nunca magenta (salió un fondo magenta y las manos
+  se perdían). Medido: 45 imágenes.
 - DIRECTOR IA (`api/actuar.ts`, lo llama `dirigir` en `voices.ts` al generar voces): recibe las palabras
   de cada escena, la emoción y el catálogo `DESCRIPCIONES` (qué expresa cada postura) y devuelve en qué
   palabra cambia y a qué postura según lo que dice, y `miradas` (catálogo `MIRADAS`) en otras palabras; las claves caen 0,08 s antes de esa palabra. Si

@@ -413,7 +413,7 @@ export async function fondosPorVinetas(
         // detrás con el objeto tapándole la cara
         const conEl = /\bboy\b/i.test(partes[0])
         const urlLugar = maestro && conEl ? capaDe.get(maestro)?.urlFal : undefined
-        const soloObjeto = conEl ? '' : '. ONLY the object and the magenta hands holding it are in the picture, big, on a plain simple background: no head, no face and no body of the boy, no other people'
+        const soloObjeto = conEl ? '' : '. ONLY the object and the magenta hands holding it are in the picture, big, on a plain simple LIGHT background (pale blue, grey or cream; NEVER magenta, pink or purple, so the magenta hands stand out): no head, no face and no body of the boy, no other people'
         // Cada dibujo pasa por el REVISOR; si tiene fallos (cara tapada, alguien delante, cortado…) se repite
         // diciéndole qué corregir, hasta dos veces
         let extra = ''
