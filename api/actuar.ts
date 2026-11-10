@@ -435,6 +435,85 @@ async function rellenarQuietos(client: Anthropic, model: string, vinetas: Vineta
   }
 }
 
+/** CORRECTOR del plan: compara cada dibujo con lo que se oye mientras se ve y devuelve solo las correcciones. */
+async function afinarPlan(client: Anthropic, model: string, vinetas: VinetaPlan[], escenas: { escena: number; palabras: string[] }[]) {
+  const orden = [...vinetas].sort((a, b) => a.escena - b.escena || a.palabra - b.palabra)
+  type Tramo = { v: VinetaPlan; campo: 'inserto' | 'cambio' | 'cambio2' | 'cambio3'; desde: number; hasta: number; min: number; max: number; texto: string }
+  const tramos: Tramo[] = []
+  orden.forEach((v, i) => {
+    if (!v.inserto?.trim()) return
+    const ws = escenas.find((e) => e.escena === v.escena)?.palabras ?? []
+    const sig = orden[i + 1]
+    const fin = sig && sig.escena === v.escena ? sig.palabra : ws.length
+    const cs = ([['cambio', v.cambio, v.palabra_cambio], ['cambio2', v.cambio2, v.palabra_cambio2], ['cambio3', v.cambio3, v.palabra_cambio3]] as ['cambio' | 'cambio2' | 'cambio3', string, number][])
+      .filter(([, c, p]) => c?.trim() && p > v.palabra && p < fin)
+      .sort((a, b) => a[2] - b[2])
+    const cortes = [v.palabra, ...cs.map((c) => c[2]), fin]
+    tramos.push({ v, campo: 'inserto', desde: cortes[0], hasta: cortes[1], min: v.palabra, max: v.palabra, texto: v.inserto })
+    cs.forEach((c, k) => tramos.push({ v, campo: c[0], desde: cortes[k + 1], hasta: cortes[k + 2], min: cortes[k] + 1, max: cortes[k + 2] - 1, texto: c[1] }))
+  })
+  if (!tramos.length) return
+  const palabrasDe = (t: Tramo) => (escenas.find((e) => e.escena === t.v.escena)?.palabras ?? []).slice(t.desde, t.hasta).map((w, j) => `${t.desde + j}:${w}`).join(' ')
+  const r = await client.beta.messages.create({
+    model,
+    max_tokens: 6000,
+    output_config: {
+      effort: 'medium',
+      format: {
+        type: 'json_schema',
+        schema: {
+          type: 'object',
+          additionalProperties: false,
+          required: ['correcciones'],
+          properties: {
+            correcciones: {
+              type: 'array',
+              items: {
+                type: 'object',
+                additionalProperties: false,
+                required: ['tramo', 'fallo', 'palabra', 'dibujo'],
+                properties: {
+                  tramo: { type: 'integer' },
+                  fallo: { type: 'string', description: 'En español, una frase: qué no cuadraba.' },
+                  palabra: { type: 'integer', description: 'Nueva palabra en la que empieza este dibujo, o -1 para dejarla.' },
+                  dibujo: { type: 'string', description: 'La descripción corregida y completa, en inglés, o "" para dejarla.' },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    messages: [
+      {
+        role: 'user',
+        content:
+          `Eres el supervisor de un vídeo de dibujos narrado al estilo «Estoy Tiesa» (el narrador es «the magenta round-headed boy»; solo se oye su voz). Abajo está el plan: cada TRAMO es un dibujo que se ve mientras se oyen esas palabras (numeradas dentro de su escena). Los tramos «cambio» son el mismo plano que el anterior con lo que cambia. Repasa cada tramo contra LO QUE SE OYE mientras se ve y devuelve SOLO los que hay que corregir (lo normal es que la mayoría estén bien):
+1. LA CARA Y EL GESTO de cada uno son los de esas palabras exactas: ironía, fastidio, susto, vergüenza, orgullo… Si la frase es un chiste de humillación («parezco un rehén») la cara es esa (ojos muy abiertos, cejas caídas), no aburrida. Si no cuadra, corrige la descripción.
+2. NADA ADELANTADO: lo que se nombra en una palabra posterior no puede verse ya en este tramo. El REMATE se ve en SU palabra y antes se ve la expectativa («en el 33 salgo bien» → él sonriendo satisfecho con los ojos ABIERTOS; «pero con los ojos cerrados» → ahí aparece la foto con los ojos cerrados). Si un cambio llega antes o después de la palabra que lo cuenta, corrige su «palabra» (dentro del rango que se indica) y, si hace falta, quita del dibujo anterior lo adelantado.
+3. CANTIDADES: si la locución da números, el dibujo los dice con exactitud y con su disposición («exactly three ID cards in a row and exactly one parking ticket below them, four items in total»); nada de «a few» ni cantidades distintas a las que se oyen.
+4. COSAS DE UNA APP O UNA PANTALLA se dibujan como interfaz, no como objetos de la habitación: «seis huecos» de fotos de un perfil = «six empty photo slots of the app profile, a 2x3 grid of rounded grey squares each with a plus sign, floating big like a phone-screen panel», nunca marcos de cuadros colgados en la pared. Y aparecen en la palabra que los nombra.
+5. Que lo que se ve sea lo que la frase cuenta de verdad (literal o exagerado), no algo genérico.
+Mantén el estilo de las descripciones: en inglés, él «with a small closed mouth» (salvo sonrisa: «a big closed-mouth smile»), cada uno en su sitio lado a lado, nada delante de su cara, sin texto escrito. En un tramo «cambio» describe solo lo que cambia respecto al anterior. No inventes tramos nuevos ni cambies los que están bien.
+
+` + tramos.map((t, i) => `TRAMO ${i} [${t.campo === 'inserto' ? 'PLANO NUEVO, su palabra no se puede mover' : `cambio; su palabra puede ir de ${t.min} a ${t.max}`}] escena ${t.v.escena}\n  Se oye: ${palabrasDe(t) || '(nada)'}\n  Dibujo: ${t.texto}`).join('\n\n'),
+      },
+    ],
+  })
+  const out = JSON.parse(r.content.flatMap((b) => (b.type === 'text' ? [b.text] : [])).join('')) as { correcciones: { tramo: number; palabra: number; dibujo: string }[] }
+  for (const c of out.correcciones ?? []) {
+    const t = tramos[c.tramo]
+    if (!t) continue
+    const texto = c.dibujo?.trim()
+    if (t.campo === 'inserto') {
+      if (texto) t.v.inserto = texto
+      continue
+    }
+    if (texto) t.v[t.campo] = texto
+    if (c.palabra >= t.min && c.palabra <= t.max) t.v[`palabra_${t.campo}` as 'palabra_cambio' | 'palabra_cambio2' | 'palabra_cambio3'] = c.palabra
+  }
+}
+
 export async function POST(request: Request): Promise<Response> {
   if (!process.env.ANTHROPIC_API_KEY) return json({ error: 'Falta configurar las claves en Vercel.' }, 503)
   if (!claveOk(request)) return json({ error: 'clave' }, 401)
@@ -478,6 +557,9 @@ export async function POST(request: Request): Promise<Response> {
     // SEGUNDA PASADA (escenas): ningún dibujo se queda quieto más de ~8 palabras. Donde pase, se pide un cambio
     // intermedio (una reacción a lo que se dice) y se mete en el plano si le queda hueco.
     if (body.modo === 'escenas' && Array.isArray(plan.vinetas)) await rellenarQuietos(client, model, plan.vinetas, body.escenas).catch(() => {})
+    // TERCERA PASADA (escenas): un CORRECTOR repasa cada dibujo contra las palabras que se oyen mientras se ve
+    // (cara que no cuadra, cosas adelantadas, cantidades, interfaces dibujadas como objetos) y lo afina.
+    if (body.modo === 'escenas' && Array.isArray(plan.vinetas)) await afinarPlan(client, model, plan.vinetas, body.escenas).catch(() => {})
     return json(plan)
   } catch (e) {
     if (e instanceof Anthropic.APIError) return json({ error: `Error del servicio de IA (${e.status}): ${String(e.message).slice(0, 300)}` }, 502)

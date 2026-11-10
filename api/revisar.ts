@@ -34,7 +34,10 @@ Check ONLY these defects (be strict with 1-4, they ruin the animation):
 9. WRONG: the drawing clearly does not show the requested moment (main action missing or contradicted), or
    adds a prominent element with its own meaning that was not requested (a skull, a random symbol).
 
-If the requested shot is a close-up of an object or screen WITHOUT him as a character, only 5, 6 and 9 apply.
+11. COUNT: the description gives exact quantities (three ID cards and one parking ticket, six empty slots) and
+   the drawing shows a different number of those things. Count them.
+
+If the requested shot is a close-up of an object or screen WITHOUT him as a character, only 5, 6, 9 and 11 apply.
 His expression and an open mouth are never defects; objects that the description asks for are never defects.
 Minor style differences, small imperfections or missing tiny details are NOT defects. When in doubt, pass.
 
