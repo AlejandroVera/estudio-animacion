@@ -369,6 +369,72 @@ const SCHEMA_ESCENAS = (() => {
   return s
 })()
 
+type VinetaPlan = { escena: number; palabra: number; inserto: string; cambio: string; palabra_cambio: number; cambio2: string; palabra_cambio2: number; cambio3: string; palabra_cambio3: number }
+
+/** Busca los dibujos que duran demasiadas palabras y pide a la IA un cambio intermedio para cada uno. */
+async function rellenarQuietos(client: Anthropic, model: string, vinetas: VinetaPlan[], escenas: { escena: number; palabras: string[] }[]) {
+  const MAX = 8
+  const orden = [...vinetas].sort((a, b) => a.escena - b.escena || a.palabra - b.palabra)
+  const cambiosDe = (v: VinetaPlan, fin: number) =>
+    ([[v.cambio, v.palabra_cambio], [v.cambio2, v.palabra_cambio2], [v.cambio3, v.palabra_cambio3]] as [string, number][])
+      .filter(([c, p]) => c?.trim() && p > v.palabra && p < fin)
+      .sort((a, b) => a[1] - b[1])
+  const huecos: { v: VinetaPlan; fin: number; desde: number; hasta: number; antes: string; palabras: string }[] = []
+  orden.forEach((v, i) => {
+    if (!v.inserto?.trim() || !/\bboy\b/i.test(v.inserto)) return
+    const ws = escenas.find((e) => e.escena === v.escena)?.palabras ?? []
+    const sig = orden[i + 1]
+    const fin = sig && sig.escena === v.escena ? sig.palabra : ws.length
+    const cs = cambiosDe(v, fin)
+    if (cs.length >= 3) return
+    const cortes = [v.palabra, ...cs.map((c) => c[1]), fin]
+    // El tramo quieto más largo de este plano
+    let k = -1
+    for (let j = 0; j < cortes.length - 1; j++) if (cortes[j + 1] - cortes[j] > MAX && (k < 0 || cortes[j + 1] - cortes[j] > cortes[k + 1] - cortes[k])) k = j
+    if (k < 0) return
+    huecos.push({ v, fin, desde: cortes[k], hasta: cortes[k + 1], antes: k === 0 ? v.inserto : `${v.inserto} — and then: ${cs[k - 1][0]}`, palabras: ws.slice(cortes[k], cortes[k + 1]).map((w, j) => `${cortes[k] + j}:${w}`).join(' ') })
+  })
+  if (!huecos.length) return
+  const r = await client.beta.messages.create({
+    model,
+    max_tokens: 3000,
+    output_config: {
+      effort: 'low',
+      format: {
+        type: 'json_schema',
+        schema: {
+          type: 'object',
+          additionalProperties: false,
+          required: ['cambios'],
+          properties: {
+            cambios: {
+              type: 'array',
+              items: { type: 'object', additionalProperties: false, required: ['hueco', 'palabra', 'cambio'], properties: { hueco: { type: 'integer' }, palabra: { type: 'integer' }, cambio: { type: 'string' } } },
+            },
+          },
+        },
+      },
+    },
+    messages: [
+      {
+        role: 'user',
+        content:
+          'Vídeo de dibujos narrado (el narrador es «the magenta round-headed boy»). En estos tramos el dibujo se queda quieto demasiado tiempo mientras se oye la locución. Para CADA tramo da UN cambio de dibujo intermedio: «palabra» = el número de una palabra hacia la mitad del tramo (mejor al empezar una frase o inciso, nunca la primera ni las dos últimas del tramo) y «cambio» = en inglés, solo lo que cambia respecto al dibujo actual: una reacción natural de él o de la otra persona a LO QUE SE DICE en esas palabras (un gesto con los brazos y otra cara: ella asiente muy convencida señalándole, él pone los ojos en blanco, ella se encoge de hombros sonriendo…), sin objetos nuevos, sin cambiar a nadie de sitio, sin tapar la cara de él y él con «a small closed mouth».\n\n' +
+          huecos.map((h, i) => `Tramo ${i}. Dibujo actual: ${h.antes}\n  Palabras que se oyen: ${h.palabras}`).join('\n\n'),
+      },
+    ],
+  })
+  const out = JSON.parse(r.content.flatMap((b) => (b.type === 'text' ? [b.text] : [])).join('')) as { cambios: { hueco: number; palabra: number; cambio: string }[] }
+  for (const c of out.cambios ?? []) {
+    const h = huecos[c.hueco]
+    if (!h || !c.cambio?.trim() || !(c.palabra > h.desde + 1 && c.palabra < h.hasta - 1)) continue
+    const todos = [...cambiosDe(h.v, h.fin), [c.cambio.trim(), c.palabra] as [string, number]].sort((a, b) => a[1] - b[1]).slice(0, 3)
+    ;[h.v.cambio, h.v.palabra_cambio] = todos[0] ?? ['', -1]
+    ;[h.v.cambio2, h.v.palabra_cambio2] = todos[1] ?? ['', -1]
+    ;[h.v.cambio3, h.v.palabra_cambio3] = todos[2] ?? ['', -1]
+  }
+}
+
 export async function POST(request: Request): Promise<Response> {
   if (!process.env.ANTHROPIC_API_KEY) return json({ error: 'Falta configurar las claves en Vercel.' }, 503)
   if (!claveOk(request)) return json({ error: 'clave' }, 401)
@@ -408,7 +474,11 @@ export async function POST(request: Request): Promise<Response> {
     })
     if (response.stop_reason !== 'end_turn') return json({ error: 'La IA no terminó la dirección.' }, 422)
     const text = response.content.flatMap((b) => (b.type === 'text' ? [b.text] : [])).join('')
-    return json(JSON.parse(text))
+    const plan = JSON.parse(text)
+    // SEGUNDA PASADA (escenas): ningún dibujo se queda quieto más de ~8 palabras. Donde pase, se pide un cambio
+    // intermedio (una reacción a lo que se dice) y se mete en el plano si le queda hueco.
+    if (body.modo === 'escenas' && Array.isArray(plan.vinetas)) await rellenarQuietos(client, model, plan.vinetas, body.escenas).catch(() => {})
+    return json(plan)
   } catch (e) {
     if (e instanceof Anthropic.APIError) return json({ error: `Error del servicio de IA (${e.status}): ${String(e.message).slice(0, 300)}` }, 502)
     if (e instanceof SyntaxError) return json({ error: 'La respuesta de la IA no se pudo leer.' }, 502)
