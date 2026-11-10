@@ -191,6 +191,8 @@ export interface BgLayer {
   /** REENCUADRE: trozo [x, y, w, h] (píxeles del dibujo de fal) que se usa de verdad, cuando la IA dibujó a
    * los personajes pequeños y se acerca el plano a ellos */
   recorte?: [number, number, number, number]
+  /** Caja [x0, y0, x1, y1] (fracciones de la capa) donde está la gente del dibujo: los rótulos no la tapan */
+  gente?: [number, number, number, number]
   /** El mismo dibujo con la boca del protagonista abierta (dibujada por la IA; solo cambia la boca) */
   imageIdOpen?: string
   /** El mismo dibujo con la boca de la otra persona abierta, y los tramos (s) en los que «habla» */

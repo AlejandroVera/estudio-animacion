@@ -406,12 +406,16 @@ export async function fondosPorVinetas(
       if (partes.length === 1) {
         // El dibujo del plano
         const maestro = maestroDe.get(d)
-        const urlLugar = maestro ? capaDe.get(maestro)?.urlFal : undefined
+        // Un detalle sin él (la pantalla del móvil, un objeto) no parte del dibujo del lugar: si no, él salía
+        // detrás con el objeto tapándole la cara
+        const conEl = /\bboy\b/i.test(partes[0])
+        const urlLugar = maestro && conEl ? capaDe.get(maestro)?.urlFal : undefined
+        const soloObjeto = conEl ? '' : '. ONLY the object and the magenta hands holding it are in the picture, big, on a plain simple background: no head, no face and no body of the boy, no other people'
         // Cada dibujo pasa por el REVISOR; si tiene fallos (cara tapada, alguien delante, cortado…) se repite
         // diciéndole qué corregir, hasta dos veces
         let extra = ''
         let ultima: Awaited<ReturnType<typeof revisarDibujo>> | undefined
-        capa = { ...(await generateBackground(partes[0] + extra, pr, undefined, undefined, 'inserto', undefined, false, urlLugar)), descripcion: d, delante: true }
+        capa = { ...(await generateBackground(partes[0] + soloObjeto + extra, pr, undefined, undefined, 'inserto', undefined, false, urlLugar)), descripcion: d, delante: true }
         for (let k = 0; k < 2 && capa.urlFal; k++) {
           const rev = await revisarDibujo(capa.urlFal, partes[0])
           ultima = rev
@@ -419,7 +423,7 @@ export async function fondosPorVinetas(
           ultima = undefined
           onProgress(`Repitiendo un plano que no había salido bien (${rev.fallos[0] ?? ''})…`.slice(0, 110))
           extra = ` IMPORTANT, the previous attempt was rejected. Fix this: ${rev.fallos.join(' ')}`
-          const otra = await generateBackground(partes[0] + extra, pr, undefined, undefined, 'inserto', undefined, false, urlLugar).catch(() => null)
+          const otra = await generateBackground(partes[0] + soloObjeto + extra, pr, undefined, undefined, 'inserto', undefined, false, urlLugar).catch(() => null)
           if (!otra) break
           capa = { ...otra, descripcion: d, delante: true }
         }
@@ -431,6 +435,13 @@ export async function fondosPorVinetas(
           if (rec) {
             const m = await sinMarco(await recortado(crudo.fal, rec))
             capa = { ...(await capaDeMarco(m, partes[0], 'inserto')), descripcion: d, delante: true, urlFal: capa.urlFal, recorte: rec }
+          }
+          // Dónde está la gente (para que los rótulos no tapen a nadie), en fracciones de lo que se ve
+          if (rev.caja) {
+            const W = crudo.fal.width, H = crudo.fal.height
+            const [rx, ry, rw, rh] = rec ?? [0, 0, W, H]
+            const f = (v: number) => Math.max(0, Math.min(1, v))
+            capa.gente = [f((rev.caja[0] * W - rx) / rw), f((rev.caja[1] * H - ry) / rh), f((rev.caja[2] * W - rx) / rw), f((rev.caja[3] * H - ry) / rh)]
           }
         }
         if (capa.cara) abierta = await conBocaAbierta(crudo, pr).catch(() => null)
@@ -447,7 +458,7 @@ export async function fondosPorVinetas(
         abierta = r.abierta
         // Mismo reencuadre que el dibujo del que viene
         const rec = capaDe.get(claveAnterior)?.recorte
-        capa = { ...(await capaDeMarco(await sinMarco(await recortado(crudo.comp, rec)), partes[0], 'inserto')), descripcion: d, delante: true, urlFal: crudo.url, recorte: rec }
+        capa = { ...(await capaDeMarco(await sinMarco(await recortado(crudo.comp, rec)), partes[0], 'inserto')), descripcion: d, delante: true, urlFal: crudo.url, recorte: rec, gente: capaDe.get(claveAnterior)?.gente }
       }
       crudos.set(d, crudo)
       if (abierta && capa.cara) capa.imageIdOpen = await guardarVariante(capa, abierta, '-boca')
