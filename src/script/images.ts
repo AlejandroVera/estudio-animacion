@@ -24,7 +24,7 @@ export function formatoDe(p: Project) {
 }
 
 /** Genera un fondo y lo guarda; devuelve la capa (sin añadirla al proyecto). */
-export async function generateBackground(descripcion: string, project: Project, hueco?: 'izq' | 'der', variante?: number, tipo?: 'inserto', editarDe?: string, reintento = false): Promise<BgLayer> {
+export async function generateBackground(descripcion: string, project: Project, hueco?: 'izq' | 'der', variante?: number, tipo?: 'inserto', editarDe?: string, reintento = false, lugarDe?: string): Promise<BgLayer> {
   const ch = activeCharacter(project)
   // Fondo blanco liso: no hace falta IA
   if (/^blanco\b/i.test(descripcion.trim())) {
@@ -46,6 +46,14 @@ export async function generateBackground(descripcion: string, project: Project, 
       formato: formatoDe(project),
       referencia: editarDe,
       descripcion: `Edit this image. Keep EVERYTHING identical: same framing, same background, same characters in the same places, same style, colors and line work. Change ONLY this: ${descripcion}. The magenta round-headed boy keeps a small closed mouth (a short simple line) and his magenta skin. No text.`,
+    } : lugarDe ? {
+      // Otro plano en un lugar que YA se dibujó: se parte de aquel dibujo para que el sitio (sofá, paredes,
+      // colores) y la gente (su tamaño, su ropa) sean los mismos y no parezca otra casa
+      tipo: 'libre',
+      formato: formatoDe(project),
+      referencia: lugarDe,
+      referencias: [...(ch.referencia ? [location.origin + ch.referencia] : []), ...(/\bsister\b/i.test(descripcion) ? [location.origin + '/personajes/hermana/referencia.jpg'] : [])],
+      descripcion: `A NEW shot of the same cartoon, in the SAME PLACE as the first image: keep exactly the same room (same walls and floor colors, the same furniture with the same shapes and colors, the same decoration), the same crude hand-drawn style, and the same characters with the same design, clothes and the same sizes relative to each other and to the furniture. Draw this moment: ${descripcion}. If it is a close-up of an object or a screen, draw that close-up big, in the same style, in front of the same room. The magenta round-headed boy stays exactly on model like in the second image (perfectly round flat magenta head, simple round eyes, two thin eyebrows, small gold nose ring, NO wrinkles or shading on his face), ALWAYS with a SMALL CLOSED MOUTH (a short simple line), magenta hands and arms, seen from the front; only ONE magenta boy; nothing else is magenta. Other people are normal people, seen from the front or three-quarter front (never from behind). The drawing fills the whole canvas edge to edge. ABSOLUTELY NO TEXT.`,
     } : {
       descripcion,
       referencia: ch.referencia ? location.origin + ch.referencia : undefined,
@@ -92,13 +100,13 @@ export async function generateBackground(descripcion: string, project: Project, 
     }
   }
   // Si ni ampliándola llena el cuadro (franjas arriba y abajo), se repite el dibujo una vez
-  if (tipo === 'inserto' && !editarDe && !reintento && marco.bandas) return generateBackground(descripcion, project, hueco, variante, tipo, editarDe, true)
+  if (tipo === 'inserto' && !editarDe && !reintento && marco.bandas) return generateBackground(descripcion, project, hueco, variante, tipo, editarDe, true, lugarDe)
   // Si la IA lo ha dibujado dos veces en la misma escena, se repite el dibujo una vez
   if (tipo === 'inserto' && !editarDe && !reintento && !/photo|picture|screen|poster|mirror/i.test(descripcion)) {
     const rep = await analizarCara(marco.bmp).catch(() => null)
     // … o si él ha salido diminuto (cabeza de menos de una décima parte del ancho)
-    if (rep && rep.cara.r * 2 < marco.bmp.width * 0.1) return generateBackground(descripcion, project, hueco, variante, tipo, editarDe, true)
-    if (rep?.repetido) return generateBackground(descripcion, project, hueco, variante, tipo, editarDe, true)
+    if (rep && rep.cara.r * 2 < marco.bmp.width * 0.1) return generateBackground(descripcion, project, hueco, variante, tipo, editarDe, true, lugarDe)
+    if (rep?.repetido) return generateBackground(descripcion, project, hueco, variante, tipo, editarDe, true, lugarDe)
   }
   return { ...(await capaDeMarco(marco, descripcion, tipo)), urlFal }
 }
@@ -323,6 +331,7 @@ export async function fondosPorVinetas(
   const capaDe = new Map<string, BgLayer>()
   const crudos = new Map<string, Crudo>()
   const fallos: string[] = []
+  const maestroDe = new Map<string, string>()
   let n = 0
   const pr0 = useStore.getState().project
   const previaDe = (d: string) => pr0.fondos?.find((l) => l.descripcion === d && Math.abs(l.w / l.h - pr0.width / pr0.height) < 0.15)
@@ -370,7 +379,9 @@ export async function fondosPorVinetas(
       let abierta: OffscreenCanvas | null = null
       if (partes.length === 1) {
         // El dibujo del plano
-        capa = { ...(await generateBackground(partes[0], pr, undefined, undefined, 'inserto')), descripcion: d, delante: true }
+        const maestro = maestroDe.get(d)
+        const urlLugar = maestro ? capaDe.get(maestro)?.urlFal : undefined
+        capa = { ...(await generateBackground(partes[0], pr, undefined, undefined, 'inserto', undefined, false, urlLugar)), descripcion: d, delante: true }
         crudo = await crudoDeUrl(capa.urlFal!)
         if (capa.cara) abierta = await conBocaAbierta(crudo, pr).catch(() => null)
       } else {
@@ -395,6 +406,27 @@ export async function fondosPorVinetas(
   for (const d of unicos) {
     const base = d.startsWith(INSERTO) ? INSERTO + d.slice(INSERTO.length).split(CAMBIO)[0] : d
     cadenas.set(base, [...(cadenas.get(base) ?? []), d])
+  }
+  // MISMO LUGAR = MISMO DECORADO: el primer plano de cada lugar (el «fondo» que da el director: «el sofá de
+  // casa») es el maestro; los demás planos de ese lugar se dibujan partiendo de él
+  for (const [lugar, bases] of (() => {
+    const g = new Map<string, string[]>()
+    for (const v of vinetasIn) {
+      if (!v.inserto || /^blanco\b/i.test(v.fondo)) continue
+      const base = INSERTO + v.inserto
+      const l = g.get(v.fondo) ?? []
+      if (!l.includes(base)) g.set(v.fondo, [...l, base])
+    }
+    return g
+  })()) {
+    void lugar
+    for (const b of bases.slice(1)) maestroDe.set(b, bases[0])
+  }
+  // Primero los maestros (el primer dibujo de cada lugar); luego todo lo demás
+  {
+    const maestros = [...new Set(maestroDe.values())].filter((b) => cadenas.has(b))
+    await Promise.all(Array.from({ length: 3 }, async () => { for (let b = maestros.shift(); b; b = maestros.shift()) await hacer(b) }))
+    for (const b of new Set(maestroDe.values())) { const c = cadenas.get(b); if (c && capaDe.has(b)) cadenas.set(b, c.slice(1)) }
   }
   const cola = [...cadenas.values()]
   await Promise.all(

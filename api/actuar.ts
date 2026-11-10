@@ -58,6 +58,9 @@ la mesa con una calculadora; junto a una pizarra; en el metro con gafas de sol.
   frase dice que hacen o dicen («me ha instalado», «me hace una», «sonríe», «me dice que así no») es un
   cambio en esa palabra con SU gesto (ella le planta el móvil delante; levanta el móvil para la foto; le
   hace con la mano el gesto de «sonríe»; niega con el dedo). Nunca gestos que la frase no cuente.
+- NUNCA contar con los dedos (la IA dibuja mal los dedos: «cuatro fotos» salía con seis dedos): las cifras van
+  en un rótulo. «fondo» = el NOMBRE CORTO del lugar, idéntico en todos los planos del mismo sitio («el sofá de
+  casa»): con él se mantiene el mismo decorado de un plano a otro.
 - NADA QUE NO SE DIGA: en el dibujo solo sale lo que nombra la locución o lo que hace falta para entender
   la situación. Nada de adornos con significado propio (calaveras, signos de victoria, carteles, iconos).
   Las caras, SENCILLAS: describe la emoción con ojos y cejas («eyes wide», «eyebrows sloped»), sin «tense»,

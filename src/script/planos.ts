@@ -55,7 +55,7 @@ type Circulo = { x: number; y: number; r: number }
  * 8 px: cambia si la diferencia media pasa de un umbral; se quitan los bloques sueltos (ruido de la IA) y
  * se ensancha un poco. `dentro` limita a un círculo (la cara); `fuera` lo excluye.
  */
-export function mascaraDeCambio(a: CanvasImageSource, b: CanvasImageSource, W: number, H: number, opc: { dentro?: Circulo; fuera?: Circulo; desdeY?: number } = {}) {
+export function mascaraDeCambio(a: CanvasImageSource, b: CanvasImageSource, W: number, H: number, opc: { dentro?: Circulo; fuera?: Circulo; desdeY?: number; semilla?: { x: number; y: number } } = {}) {
   const B = 8
   const w = Math.ceil(W / B), h = Math.ceil(H / B)
   const leer = (im: CanvasImageSource) => {
@@ -99,6 +99,31 @@ export function mascaraDeCambio(a: CanvasImageSource, b: CanvasImageSource, W: n
   }
   m = m.map((v, i) => (v && vecinos(m, i) >= 2 ? 1 : 0))
   for (let k = 0; k < 2; k++) m = m.map((v, i) => (v || vecinos(m, i) >= 1 ? 1 : 0))
+  // Solo la mancha de cambio más cercana a un punto (la boca): lo demás que haya cambiado (ojos, cejas) queda
+  // fuera aunque la geometría de la cara esté mal medida
+  if (opc.semilla) {
+    const sx = opc.semilla.x / B, sy = opc.semilla.y / B
+    let mejor = -1, dm = Infinity
+    for (let i = 0; i < w * h; i++) {
+      if (!m[i]) continue
+      const d = Math.hypot((i % w) + 0.5 - sx, Math.floor(i / w) + 0.5 - sy)
+      if (d < dm) { dm = d; mejor = i }
+    }
+    const comp = new Uint8Array(w * h)
+    if (mejor >= 0) {
+      const pila = [mejor]
+      comp[mejor] = 1
+      while (pila.length) {
+        const i = pila.pop()!
+        const x = i % w, y = Math.floor(i / w)
+        for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
+          const xx = x + dx, yy = y + dy, j = yy * w + xx
+          if (xx >= 0 && yy >= 0 && xx < w && yy < h && m[j] && !comp[j]) { comp[j] = 1; pila.push(j) }
+        }
+      }
+    }
+    m = comp
+  }
   let cuenta = 0
   const peq = new OffscreenCanvas(w, h)
   const gp = peq.getContext('2d')!
@@ -139,13 +164,14 @@ export async function conBocaAbierta(c: Crudo, project: Project): Promise<Offscr
   if (c.cara === undefined) c.cara = (await analizarCara(c.fal).catch(() => null))?.cara ?? null
   if (!c.cara) return null
   const ed = await editar(c.url, BOCA, project)
-  const zona = { x: c.cara.cx, y: c.cara.cy + c.cara.r * 0.3, r: c.cara.r * 0.8 }
+  // Zona justa alrededor de la boca que tenía dibujada (no media cara)
+  const zona = { x: c.cara.mx, y: c.cara.my, r: c.cara.r * 0.55 }
   // Solo la boca: por debajo de los ojos (la IA al abrirle la boca le cambiaba también los ojos y, al hablar,
   // parpadeaban entre dos miradas en cada sílaba)
   const ojos = c.cara.ojos
   // … y por debajo del aro de la nariz (también cambiaba de un dibujo a otro y «temblaba» al hablar)
   const desdeY = Math.max(c.cara.bocaY ?? 0, ojos.length ? Math.max(...ojos.map((o) => o.y + o.h)) + c.cara.r * 0.05 : c.cara.cy + c.cara.r * 0.12)
-  const m = mascaraDeCambio(c.fal, ed.bmp, W, H, { dentro: zona, desdeY })
+  const m = mascaraDeCambio(c.fal, ed.bmp, W, H, { dentro: zona, desdeY, semilla: { x: c.cara.mx, y: c.cara.my } })
   if (m.fraccion <= 0) return null
   // Corte limpio por arriba: el borde suave de la máscara no mezcla (emborrona) lo que hay encima de la boca
   m.mascara.getContext('2d')!.clearRect(0, 0, W, Math.floor(desdeY))
