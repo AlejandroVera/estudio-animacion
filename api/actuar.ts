@@ -73,6 +73,9 @@ la mesa con una calculadora; junto a una pizarra; en el metro con gafas de sol.
   detrás del otro. Nada delante de su cara: si alguien le enseña o le apunta con un móvil, lo sujeta bajo, a
   la altura del pecho y a un lado. Si él sujeta algo, a la altura del pecho. En un detalle (pantalla de
   móvil, objeto) NO sale él: solo el objeto y sus manos magenta.
+- En un «cambio» en el que alguien mueve los brazos, di qué hacen sus DOS brazos y que deja la postura
+  anterior: «she uncrosses her arms: her right arm points at his phone, her left hand rests on her knee».
+  Si solo dices «she points», la IA le deja los brazos cruzados y le añade un tercero.
 - DOS MANOS: de cada persona di qué hace con CADA mano y solo una cosa por mano («holds the phone in her left
   hand and gives a thumbs up with her right hand»); nunca tres acciones a la vez (sujetar el móvil, señalar y
   levantar el pulgar): la IA le dibuja tres brazos.
@@ -501,6 +504,7 @@ async function afinarPlan(client: Anthropic, model: string, vinetas: VinetaPlan[
 4. COSAS DE UNA APP O UNA PANTALLA se dibujan como interfaz, no como objetos de la habitación: «seis huecos» de fotos de un perfil = «six empty photo slots of the app profile, a 2x3 grid of rounded grey squares each with a plus sign, floating big like a phone-screen panel», nunca marcos de cuadros colgados en la pared. Y aparecen en la palabra que los nombra.
 5. Que lo que se ve sea lo que la frase cuenta de verdad (literal o exagerado), no algo genérico.
 7. NADA ATRASADO: la imagen de una metáfora o de un remate («parezco un rehén» → el periódico de rehén) tiene que verse en el tramo donde suena esa palabra. Si está en un tramo posterior (por ejemplo en el plano de la frase siguiente), pásala: añádela al tramo donde se dice (o ajusta la palabra del cambio para que caiga en ella) y QUÍTALA del tramo posterior, que debe enseñar lo que cuentan SUS palabras.
+9. BRAZOS: en cada tramo «cambio» donde alguien cambia de gesto con los brazos, la descripción debe decir qué hacen sus DOS brazos y que deja la postura anterior («she uncrosses her arms: her right arm points at the phone, her left hand rests on her knee»). Si no lo dice, corrígela. Nunca tres acciones de manos para una persona.
 8. LOS DEMÁS TAMBIÉN REACCIONAN A LO QUE SE OYE: nadie se queda con un gesto de la frase anterior (ojos cerrados, mano en el pecho) cuando ya se dice otra cosa. En una pregunta final al espectador, los dos miran a cámara con los ojos abiertos.
 6. Lo que APARECE flotando (una foto, un panel, un icono) se coloca «in an empty area of the wall, beside the characters, not covering anyone's head or face»; dilo en la descripción. Y los dos personajes mantienen su tamaño: él es un adulto de la misma altura que ella.
 Mantén el estilo de las descripciones: en inglés, él «with a small closed mouth» (salvo sonrisa: «a big closed-mouth smile»), cada uno en su sitio lado a lado, nada delante de su cara, sin texto escrito. En un tramo «cambio» describe solo lo que cambia respecto al anterior. No inventes tramos nuevos ni cambies los que están bien.

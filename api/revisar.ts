@@ -33,7 +33,9 @@ Check ONLY these defects (be strict with 1-4, they ruin the animation):
    chest) or he is child-sized next to her (his head below her shoulders). His head is bigger than hers by
    design and he may be somewhat taller or shorter: that is fine, and so is any difference while sitting.
 12. ANATOMY: look at every person's arms and hands one by one. Defect if anyone has three arms or three hands,
-   an extra hand coming from nowhere, two hands on the same arm, a missing arm, or a duplicated limb.
+   an extra hand coming from nowhere, two hands on the same arm, a missing arm, or a duplicated limb. Typical
+   case: the arms stay crossed (or holding something) from an earlier pose AND a third arm points or waves.
+   Count the hands and sleeves of each person: more than two = defect.
 11. COUNT: the description gives exact quantities (three ID cards and one parking ticket, six empty slots) and
    the drawing shows a different number of those things. Count them.
 

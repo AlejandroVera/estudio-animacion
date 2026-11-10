@@ -461,7 +461,12 @@ export async function fondosPorVinetas(
         let r = await conCambio(anterior, partes[partes.length - 1], pr, sinEl)
         // El cambio también se revisa (una vez): que al moverse nadie le tape la cara
         const rev = calidad() === 'borrador' ? { ok: true, fallos: [] as string[] } : await revisarDibujo(r.crudo.url, `${partes[0]} — NOW: ${partes[partes.length - 1]}`)
-        if (!rev.ok) r = await conCambio(anterior, `${partes[partes.length - 1]}. IMPORTANT: ${rev.fallos.join(' ')}`, pr, sinEl).catch(() => r)
+        if (!rev.ok) {
+          r = await conCambio(anterior, `${partes[partes.length - 1]}. IMPORTANT: ${rev.fallos.join(' ')}`, pr, sinEl).catch(() => r)
+          // Segunda oportunidad si sigue mal (brazos de más, cara tapada…)
+          const rev2 = await revisarDibujo(r.crudo.url, `${partes[0]} — NOW: ${partes[partes.length - 1]}`)
+          if (!rev2.ok) r = await conCambio(anterior, `${partes[partes.length - 1]}. IMPORTANT: ${rev2.fallos.join(' ')}`, pr, sinEl).catch(() => r)
+        }
         crudo = r.crudo
         abierta = r.abierta
         // Mismo reencuadre que el dibujo del que viene

@@ -99,7 +99,11 @@ export function mascaraDeCambio(a: CanvasImageSource, b: CanvasImageSource, W: n
     if (opc.desdeY !== undefined && cy - B / 2 < opc.desdeY) continue
     if (opc.dentro && Math.hypot(cx - opc.dentro.x, cy - opc.dentro.y) > opc.dentro.r) continue
     if (opc.fuera && Math.hypot(cx - opc.fuera.x, cy - opc.fuera.y) < opc.fuera.r) continue
-    if (dif[i] > 20) m[i] = 1
+    // Dentro de la zona de la gente el umbral es más bajo: un brazo que desaparece sobre la misma sudadera
+    // (amarillo sobre amarillo) apenas cambia el color y se quedaba el brazo viejo → tres brazos
+    const z = opc.proteger?.zona
+    const enGente = !!z && cx > z[0] && cx < z[2] && cy > z[1] && cy < z[3]
+    if (dif[i] > (enGente ? 8 : 20)) m[i] = 1
   }
   // EL DECORADO NO SE BORRA: fuera de la zona de la gente, un bloque que en el dibujo nuevo queda liso donde
   // antes había dibujo (la IA, al editar, se ha comido un cuadro, un mueble, parte de la ventana) no se copia…
