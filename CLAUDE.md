@@ -332,6 +332,16 @@ cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y
   «compiled grammar is too large»: en escenas se usa `SCHEMA_ESCENAS` (sin secundarios, nuevas, fondos,
   miradas, motivos…). Él siempre de frente; si sale dos veces (`repetido`), se repite el dibujo una vez.
   Coste real: ~38 imágenes (≈1,5 €) por 32 s.
+- ESCENAS, REVISIÓN 3 (tras «a veces habla la hermana, los gestos van desacompasados»): 1) SOLO HABLA EL NARRADOR:
+  la boca de la otra persona ya no se mueve (se oía la voz de él y parecía que hablaba ella); `otro_habla_*`
+  siempre -1 y `voiceScript` lo ignora. 2) La boca abierta dibujada por la IA cambiaba también los OJOS y al
+  hablar la mirada parpadeaba en cada sílaba: `conBocaAbierta` solo copia por debajo de los ojos (`desdeY`).
+  3) A TIEMPO: la GUIA exige que cada cosa se vea cuando se dice (nada adelantado), un «cambio» en la palabra
+  que nombra el gesto («sonrío»), nadie se da la vuelta ni cambia de sitio en un cambio, y TODOS los planos
+  con inserto (también el cierre; antes acababa con el muñeco sobre blanco). 4) Si el director no devuelve
+  posturas del muñeco (todo son dibujos) el plan ya no se descarta (`dirigir` devolvía null y salía el muñeco
+  solo sobre el fondo). 5) Objetos que no cruzan: como mucho 2 s. Pendiente: rótulos que tapan la cara cuando
+  la cabeza ocupa medio cuadro, objetos sueltos poco afortunados (pedir menos).
 - DIRECTOR IA (`api/actuar.ts`, lo llama `dirigir` en `voices.ts` al generar voces): recibe las palabras
   de cada escena, la emoción y el catálogo `DESCRIPCIONES` (qué expresa cada postura) y devuelve en qué
   palabra cambia y a qué postura según lo que dice, y `miradas` (catálogo `MIRADAS`) en otras palabras; las claves caen 0,08 s antes de esa palabra. Si

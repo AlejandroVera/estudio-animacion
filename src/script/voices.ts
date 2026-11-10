@@ -804,7 +804,13 @@ async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number 
     }
     keys.push({ t, v: c.postura, ease: 'salto' })
   }
-  if (!keys.length) return null
+  // Sin cambios de postura pero con planos dibujados (en escenas todos los planos son dibujos y el muñeco no
+  // se ve): el plan vale igual; el muñeco se queda en reposo por debajo
+  if (!keys.length) {
+    const reposo = ['t_reposo', 'reposo'].find((x) => raiz.variants[x])
+    if (!vinetas?.some((v) => v.inserto?.trim()) || !reposo) return null
+    keys.push({ t: 0, v: reposo, ease: 'salto' })
+  }
   // Una mirada dura como mucho hasta el siguiente cambio de postura (la postura nueva trae sus ojos)
   const ojosFin: typeof ojos = []
   for (const o of ojos) {
