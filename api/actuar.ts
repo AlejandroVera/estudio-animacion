@@ -42,7 +42,9 @@ la mesa con una calculadora; junto a una pizarra; en el metro con gafas de sol.
   con un ENCUADRE distinto al anterior (cerca / de cuerpo entero / pequeño en el sitio / detalle) y muchos
   lugares (cada situación de la historia, su sitio; 6-10 en un minuto).
 - Literaliza las metáforas y exagera: «parezco un rehén» → él con cara de rehén sujetando un periódico; «33
-  intentos» → él rodeado de fotos fallidas.
+  intentos» → él rodeado de fotos fallidas. La imagen de la metáfora o del remate se ve EN la palabra que lo
+  dice («rehén»), con un cambio en esa palabra; nunca se deja para el plano de la frase siguiente (llega
+  tarde y ya se está hablando de otra cosa).
 - Él siempre de frente o tres cuartos, con la cara visible: nunca de espaldas ni planos «por encima del hombro».
 - Gente: solo la que nombra el guion (su hermana, el camarero…). Nada de multitudes ni desconocidos de relleno,
   y él UNA sola vez en cada dibujo (si sale una foto suya, dilo claro: «a photo of him on the phone screen»).
@@ -495,6 +497,8 @@ async function afinarPlan(client: Anthropic, model: string, vinetas: VinetaPlan[
 3. CANTIDADES: si la locución da números, el dibujo los dice con exactitud y con su disposición («exactly three ID cards in a row and exactly one parking ticket below them, four items in total»); nada de «a few» ni cantidades distintas a las que se oyen.
 4. COSAS DE UNA APP O UNA PANTALLA se dibujan como interfaz, no como objetos de la habitación: «seis huecos» de fotos de un perfil = «six empty photo slots of the app profile, a 2x3 grid of rounded grey squares each with a plus sign, floating big like a phone-screen panel», nunca marcos de cuadros colgados en la pared. Y aparecen en la palabra que los nombra.
 5. Que lo que se ve sea lo que la frase cuenta de verdad (literal o exagerado), no algo genérico.
+7. NADA ATRASADO: la imagen de una metáfora o de un remate («parezco un rehén» → el periódico de rehén) tiene que verse en el tramo donde suena esa palabra. Si está en un tramo posterior (por ejemplo en el plano de la frase siguiente), pásala: añádela al tramo donde se dice (o ajusta la palabra del cambio para que caiga en ella) y QUÍTALA del tramo posterior, que debe enseñar lo que cuentan SUS palabras.
+8. LOS DEMÁS TAMBIÉN REACCIONAN A LO QUE SE OYE: nadie se queda con un gesto de la frase anterior (ojos cerrados, mano en el pecho) cuando ya se dice otra cosa. En una pregunta final al espectador, los dos miran a cámara con los ojos abiertos.
 6. Lo que APARECE flotando (una foto, un panel, un icono) se coloca «in an empty area of the wall, beside the characters, not covering anyone's head or face»; dilo en la descripción. Y los dos personajes mantienen su tamaño: él es un adulto de la misma altura que ella.
 Mantén el estilo de las descripciones: en inglés, él «with a small closed mouth» (salvo sonrisa: «a big closed-mouth smile»), cada uno en su sitio lado a lado, nada delante de su cara, sin texto escrito. En un tramo «cambio» describe solo lo que cambia respecto al anterior. No inventes tramos nuevos ni cambies los que están bien.
 

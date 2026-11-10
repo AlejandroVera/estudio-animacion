@@ -905,7 +905,8 @@ async function dirigir(palabras: Palabra[], escenas: (Escena & { inicio: number 
   for (const r of rotulos ?? []) {
     const w = porEscena[r.escena]?.[r.palabra]
     const e = escenas[r.escena]
-    if (!w || !e || !r.texto.trim()) continue
+    // (un rótulo sin letras ni cifras, «¿?», no dice nada: fuera)
+    if (!w || !e || !/[\p{L}\p{N}]/u.test(r.texto)) continue
     // Un pelín antes de la palabra: si sale justo a la vez o después, se percibe tarde
     const tr = Math.max(e.inicio, Math.round((w.t - 0.12) * fps) / fps)
     rots.push({ id: `r${r.escena}-${r.palabra}-${rots.length}`, t: tr, fin: Math.max(finDe(tr, r.escena), Math.min(tr + 1.6, e.inicio + e.duracion + 1)), texto: r.texto.trim().slice(0, 40), color: r.color, pos: r.pos, estilo: r.estilo, flecha: r.flecha, vin: vinDe(tr) })
