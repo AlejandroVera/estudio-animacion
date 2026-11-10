@@ -157,7 +157,7 @@ export function componer(base: CanvasImageSource, nuevo: CanvasImageSource, masc
 }
 
 const BOCA =
-  "the mouth of the magenta round-headed boy: now OPEN as if he is talking mid-word (a simple open cartoon mouth, dark inside with a bit of tongue, drawn in the same line style), keeping exactly the same eyes, eyebrows and emotion"
+  "the mouth of the magenta round-headed boy: now OPEN as if he is talking mid-word, in the SAME MOOD as his closed mouth (if he was smiling: a big open smile showing teeth; if sad or worried: an open downturned mouth; if neutral: a simple open mouth, dark inside with a bit of tongue), drawn in the same line style, keeping exactly the same eyes, eyebrows and emotion"
 
 /** El mismo dibujo con la boca del protagonista abierta (solo cambia la boca). null si él no sale. */
 export async function conBocaAbierta(c: Crudo, project: Project): Promise<OffscreenCanvas | null> {
@@ -188,6 +188,28 @@ export async function conCambio(prev: Crudo, cambio: string, project: Project, s
   const W = prev.fal.width, H = prev.fal.height
   const ed = await editar(prev.url, sinEl ? `${cambio}. It is still a close-up of the object and the magenta hands only: do NOT add any head, face, body or person` : `${cambio}. Same camera; nobody moves to another spot or turns around: each person stays where they are, facing the same way, and only their arms, pose and face change. The magenta round-headed boy keeps a small closed mouth (a short simple line) and magenta skin`, project, sinEl)
   const m = mascaraDeCambio(prev.fal, ed.bmp, W, H)
+  if (prev.cara === undefined) prev.cara = (await analizarCara(prev.fal).catch(() => null))?.cara ?? null
+  // LA CABEZA NO CAMBIA DE FORMA: si en el dibujo nuevo sigue en el mismo sitio y con el mismo tamaño, se
+  // conserva el contorno de la cabeza del dibujo anterior y del nuevo solo se toma la cara de dentro (ojos,
+  // cejas, boca). Antes cada cambio de cara le redibujaba la cabeza un poco aplastada o más grande.
+  if (prev.cara && !sinEl && m.fraccion <= 0.6) {
+    const esc = new OffscreenCanvas(W, H)
+    esc.getContext('2d')!.drawImage(ed.bmp, 0, 0, W, H)
+    const nueva = (await analizarCara(await createImageBitmap(esc)).catch(() => null))?.cara
+    const c = prev.cara
+    if (nueva && Math.hypot(nueva.cx - c.cx, nueva.cy - c.cy) < c.r * 0.12 && Math.abs(nueva.r - c.r) < c.r * 0.12) {
+      const g = m.mascara.getContext('2d')!
+      g.save()
+      g.globalCompositeOperation = 'destination-out'
+      g.filter = `blur(${Math.max(2, Math.round(c.r * 0.03))}px)`
+      g.lineWidth = c.r * 0.36
+      g.beginPath()
+      // Todo el contorno menos el trozo de abajo (el cuello)
+      g.arc(c.cx, c.cy, c.r * 1.0, (115 * Math.PI) / 180, (65 * Math.PI) / 180)
+      g.stroke()
+      g.restore()
+    }
+  }
   // Si la IA lo ha redibujado casi todo, no hay nada «estable» que conservar: se usa su dibujo tal cual
   const todo = m.fraccion > 0.6
   const comp = todo ? (() => { const o = new OffscreenCanvas(W, H); o.getContext('2d')!.drawImage(ed.bmp, 0, 0, W, H); return o })() : componer(prev.comp, ed.bmp, m.mascara, W, H)

@@ -373,7 +373,8 @@ export function drawLayers(g: CanvasRenderingContext2D, project: Project, t: num
     else if (abierta) g.drawImage(abierta, -l.w / 2, -l.h / 2, l.w, l.h)
     else g.drawImage(!hablando || l.imageIdOpen || !l.cara?.ojos.length ? (orig ?? img) : img, -l.w / 2, -l.h / 2, l.w, l.h)
     if (l.cara && opacity > 0.5) {
-      const parpadea = (t + fase) % 3.6 < 0.12
+      // Sin parpadeo pintado por código: sobre la cara dibujada quedaba como arrugas y le deformaba la cara
+      const parpadea = false && (t + fase) % 3.6 < 0.12
       g.scale(l.w / img.naturalWidth, l.h / img.naturalHeight)
       dibujarCara(g, l.cara, img.naturalWidth, img.naturalHeight, hablando && !otro && !l.imageIdOpen && l.cara.ojos.length > 0 ? boca : 'nada', parpadea && l.cara.ojos.length > 0)
     }

@@ -32,8 +32,9 @@ la mesa con una calculadora; junto a una pizarra; en el metro con gafas de sol.
   SIEMPRE «with a small closed mouth»), y a las demás personas haciendo lo suyo (personas normales, mismo
   trazo; su hermana: «his sister, a young woman with a messy dark bun and a mustard hoodie»). Él bien visible,
   grande (cabeza al menos una octava parte del ancho), de frente o tres cuartos, sin nada delante de la cara.
-- Un plano nuevo en cada idea o chiste: normalmente cada 2-4 s y NUNCA más de 5 s seguidos con el mismo
-  dibujo (contando el «cambio»); en 30 s, 9-12 planos. Más rápido (1-2 s) en un remate. Cada plano
+- RITMO (obligatorio): un plano nuevo en cada idea o chiste, cada 2-4 s y NUNCA más de 4 s el mismo plano;
+  y dentro del plano NINGÚN dibujo se queda más de ~1,5-2 s sin un «cambio»: el primero llega pronto (en las
+  primeras 4-6 palabras del plano), nunca un arranque de 3 s con el dibujo quieto. En 30 s, 9-12 planos. Más rápido (1-2 s) en un remate. Cada plano
   con un ENCUADRE distinto al anterior (cerca / de cuerpo entero / pequeño en el sitio / detalle) y muchos
   lugares (cada situación de la historia, su sitio; 6-10 en un minuto).
 - Literaliza las metáforas y exagera: «parezco un rehén» → él con cara de rehén sujetando un periódico; «33
@@ -82,8 +83,23 @@ la mesa con una calculadora; junto a una pizarra; en el metro con gafas de sol.
 - En un «cambio» nadie cambia de sitio ni se da la vuelta: misma cámara, cada uno donde estaba y mirando hacia
   donde miraba; solo cambian brazos, postura y cara. Por eso dibuja desde el principio a la otra persona con
   la cara visible (de frente o tres cuartos), no de espaldas.
-- LA CARA DICE LO QUE SUENA: la expresión de ojos y cejas de cada dibujo es la emoción de la frase que se
-  oye mientras se ve; si la emoción cambia, otro plano o un «cambio».
+- LA CARA DICE LO QUE SUENA: la expresión de cada dibujo es la emoción de la frase que se oye mientras se ve;
+  si la emoción cambia, otro plano o un «cambio». Algo que le hacen o le pasa por sorpresa («me ha instalado
+  Tinder mientras cenaba») = ojos muy abiertos y cejas arriba, alarma; los ojos medio cerrados (aburrido,
+  resignado) solo cuando la frase es de resignación. Las sonrisas y risas se DIBUJAN y se piden con todas las
+  letras: «a big wide smile showing teeth» (para ellas la boca sí puede ir abierta o sonriendo; para él,
+  «a big closed-mouth smile, curved line from cheek to cheek»).
+- QUIÉN HACE QUÉ, PALABRA A PALABRA: mira el sujeto de cada verbo y dale su cambio en ESA palabra, aunque
+  vayan seguidas: «Sonríe. Sonrío.» → en «Sonríe» ELLA sonríe enseñando los dientes y se señala la boca (él
+  aún serio); en «Sonrío» ÉL pone la sonrisa enorme y forzada. Nunca los dos gestos en el mismo cambio ni el
+  de él adelantado a la palabra de ella.
+- COSAS QUE APARECEN EN LA ESCENA (como en ese canal: lo que nombra aparece dibujado a su lado en esa palabra):
+  al menos uno de cada dos planos tiene un cambio que AÑADE al dibujo, grande y junto a los personajes (sin
+  tapar caras), lo que la frase nombra: el icono de una llama enorme saliendo del móvil al decir «Tinder»,
+  seis marcos vacíos flotando sobre él en «seis huecos», un carné y un ticket gigantes a su lado en «DNI» y
+  «ticket», un flash de cámara en «me hace una», una lluvia de fotos cayendo en «33 intentos», corazones,
+  una X roja, un signo de interrogación. Siempre cosas que la frase dice; se quitan en el cambio siguiente
+  si ya no vienen a cuento («the big flame icon is gone»).
 - «objetos»: VACÍO. Todo lo que se ve va DIBUJADO dentro del plano (en el inserto o en un cambio); las cosas
   sueltas pegadas encima no casaban con la escena.
 - Encima de los planos van «rotulos» (cifras, la palabra del remate, a mano) en la palabra exacta, . «secundarios» vacío y «movimiento» «ninguno»: las otras
@@ -379,7 +395,7 @@ export async function POST(request: Request): Promise<Response> {
       messages: [
         {
           role: 'user',
-          content: `Catálogo de posturas:\n${catalogo}\n\n${body.reparto && Object.keys(body.reparto).length ? `Reparto (personajes que pueden salir en escena; solo si la historia los nombra):\n${Object.entries(body.reparto).map(([id, r]) => `- «${id}»: ${r.quien}. Posturas: ${Object.entries(r.posturas).map(([k, v]) => `${k} (${v})`).join('; ')}`).join('\n')}\n\n` : 'No hay reparto («secundarios» vacío).\n\n'}${body.miradas ? `Catálogo de miradas:\n${Object.entries(body.miradas).map(([k, v]) => `- ${k}: ${v}`).join('\n')}\n\n` : ''}${body.nuevasMax ? `Gestos a medida permitidos: hasta ${Math.min(8, body.nuevasMax)}.\n\n` : 'No pidas gestos a medida (nuevas vacío).\n\n'}${body.escenografia ? 'Decide también «fondos» (uno por escena) y «rotulos».\n\n' : 'No hace falta «fondos» ni «rotulos» (déjalos vacíos).\n\n'}${body.vinetas ? 'Monta el vídeo por «vinetas» (los fondos van en cada viñeta; «fondos» puede ir vacío).\n\n' : ''}${body.modo === 'escenas' ? 'No pongas «objetos» (vacío): todo va dibujado en los planos.\n\n' : body.objetosMax ? `Puedes poner «objetos» si de verdad aportan (como mucho ${Math.min(16, body.objetosMax)}, normalmente bastantes menos).\n\n` : 'No pongas «objetos» (vacío).\n\n'}${body.indicaciones ? `INDICACIONES GENERALES DEL USUARIO: ${body.indicaciones}\n\n` : ''}Texto completo (para entender el tono):\n${textoSeguido}\n\nGuion por escenas con las palabras numeradas:\n${guion}`,
+          content: `Catálogo de posturas:\n${catalogo}\n\n${body.reparto && Object.keys(body.reparto).length ? `Reparto (personajes que pueden salir en escena; solo si la historia los nombra):\n${Object.entries(body.reparto).map(([id, r]) => `- «${id}»: ${r.quien}. Posturas: ${Object.entries(r.posturas).map(([k, v]) => `${k} (${v})`).join('; ')}`).join('\n')}\n\n` : 'No hay reparto («secundarios» vacío).\n\n'}${body.miradas ? `Catálogo de miradas:\n${Object.entries(body.miradas).map(([k, v]) => `- ${k}: ${v}`).join('\n')}\n\n` : ''}${body.nuevasMax ? `Gestos a medida permitidos: hasta ${Math.min(8, body.nuevasMax)}.\n\n` : 'No pidas gestos a medida (nuevas vacío).\n\n'}${body.escenografia ? 'Decide también «fondos» (uno por escena) y «rotulos».\n\n' : 'No hace falta «fondos» ni «rotulos» (déjalos vacíos).\n\n'}${body.vinetas ? 'Monta el vídeo por «vinetas» (los fondos van en cada viñeta; «fondos» puede ir vacío).\n\n' : ''}${body.modo === 'escenas' ? `No pongas «objetos» (vacío): todo va dibujado en los planos. Este vídeo dura unos ${Math.round(textoSeguido.split(/\s+/).length / 2.7)} s: como mínimo ${Math.max(3, Math.ceil(textoSeguido.split(/\s+/).length / 2.7 / 3.4))} planos y ${Math.max(6, Math.ceil(textoSeguido.split(/\s+/).length / 2.7 / 1.8))} dibujos en total (planos + cambios), repartidos por todo el vídeo.\n\n` : body.objetosMax ? `Puedes poner «objetos» si de verdad aportan (como mucho ${Math.min(16, body.objetosMax)}, normalmente bastantes menos).\n\n` : 'No pongas «objetos» (vacío).\n\n'}${body.indicaciones ? `INDICACIONES GENERALES DEL USUARIO: ${body.indicaciones}\n\n` : ''}Texto completo (para entender el tono):\n${textoSeguido}\n\nGuion por escenas con las palabras numeradas:\n${guion}`,
         },
       ],
     })
