@@ -29,9 +29,9 @@ Check ONLY these defects (be strict with 1-4, they ruin the animation):
    drawing does not fill the frame. A thin outline or border, or a plain wall or floor, is NOT a defect.
 6. TEXT: readable words or letters drawn in the picture (numbers and simple icons are fine).
 7. (Small characters are NOT a defect: the shot will be reframed with "caja".)
-10. PROPORTION: he and the other adult must be about the SAME HEIGHT (his head is bigger than hers, that is his
-   design, but their shoulders and feet are at a similar level). Defect if he is a giant next to her (she only
-   reaches his chest or shoulder, or his body is much bigger than hers) or if he is child-sized next to her.
+10. PROPORTION: only a BIG mismatch counts: he is a giant next to the other adult (she reaches only up to his
+   chest) or he is child-sized next to her (his head below her shoulders). His head is bigger than hers by
+   design and he may be somewhat taller or shorter: that is fine, and so is any difference while sitting.
 12. ANATOMY: look at every person's arms and hands one by one. Defect if anyone has three arms or three hands,
    an extra hand coming from nowhere, two hands on the same arm, a missing arm, or a duplicated limb.
 11. COUNT: the description gives exact quantities (three ID cards and one parking ticket, six empty slots) and

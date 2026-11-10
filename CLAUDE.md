@@ -433,6 +433,11 @@ cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y
   caja de la gente (`Crudo.gente`, del revisor), los bloques que quedan lisos donde había dibujo, salvo que
   queden como en el PRIMER dibujo del plano (`Crudo.base`: así sí se quita lo que añadió un cambio anterior).
   Comprobado dibujo a dibujo: el decorado se mantiene idéntico entre cambios.
+- TRES BRAZOS (tras «a la hermana le has puesto tres brazos»): lo dibujaba la IA cuando la descripción pedía
+  tres acciones a una persona (sujetar el móvil, señalar y pulgar arriba) o al cambiar de pose sin quitar el
+  brazo anterior. GUIA: qué hace cada mano, una cosa por mano; api/imagen y `editar`: «exactly two arms and
+  two hands»; revisor: defecto 12 ANATOMY (brazos o manos de más o de menos). PROPORTION del revisor se suavizó
+  (solo desajustes grandes; sentado no cuenta): rechazaba dibujos buenos y gastaba repeticiones.
 - DIRECTOR IA (`api/actuar.ts`, lo llama `dirigir` en `voices.ts` al generar voces): recibe las palabras
   de cada escena, la emoción y el catálogo `DESCRIPCIONES` (qué expresa cada postura) y devuelve en qué
   palabra cambia y a qué postura según lo que dice, y `miradas` (catálogo `MIRADAS`) en otras palabras; las claves caen 0,08 s antes de esa palabra. Si
