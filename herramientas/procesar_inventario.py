@@ -200,6 +200,9 @@ for nom in nombres:
             d = np.isin(lab, [i + 1 for i, t in enumerate(tam) if t >= 60])
         d = ndi.binary_dilation(d, iterations=3)
         d = ndi.binary_fill_holes(d)
+        # lo que no cambió y en la base era fondo blanco (dentro de la aureola, entre corazones…) no va
+        igual = np.abs(a - b).max(2) <= 42
+        d &= ~(igual & (b.min(2) > 225))
         alfa = cv2.GaussianBlur((d * 255).astype(np.uint8), (3, 3), 0)
         alfa[d] = 255
         ys, xs = np.nonzero(alfa > 10)
