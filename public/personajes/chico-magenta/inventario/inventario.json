@@ -1041,6 +1041,22 @@
    "h": 0.6039,
    "desc": "grito de miedo"
   },
+  "b_habla_a": {
+   "tipo": "boca",
+   "x": -0.1771,
+   "y": 0.4133,
+   "w": 0.5126,
+   "h": 0.2979,
+   "desc": "hablando, boca un poco abierta (a)"
+  },
+  "b_habla_e": {
+   "tipo": "boca",
+   "x": -0.2899,
+   "y": 0.4187,
+   "w": 0.7005,
+   "h": 0.3731,
+   "desc": "hablando, boca abierta con dientes (e)"
+  },
   "b_lengua": {
    "tipo": "boca",
    "x": -0.4294,
