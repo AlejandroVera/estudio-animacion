@@ -1645,6 +1645,14 @@
    "h": 2.6993,
    "desc": "nubecita de lluvia (mala suerte)"
   },
+  "a_orejas_burro": {
+   "tipo": "extra",
+   "x": -1.3829,
+   "y": -2.8368,
+   "w": 2.6816,
+   "h": 2.0877,
+   "desc": "orejas de burro"
+  },
   "a_zzz": {
    "tipo": "extra",
    "x": 0.0931,
