@@ -1,0 +1,1333 @@
+{
+ "radioBase": 372.5922704512266,
+ "cuerpos": {
+  "p_agotado": {
+   "w": 368,
+   "h": 1102,
+   "cabeza": [
+    203.0,
+    160.0,
+    151.3
+   ],
+   "pies": 1102,
+   "tipo": "pie",
+   "sinCara": true,
+   "desc": "de pie, hundido y agotado, brazos colgando"
+  },
+  "p_andando": {
+   "w": 374,
+   "h": 1100,
+   "cabeza": [
+    188.0,
+    180.0,
+    168.3
+   ],
+   "pies": 1100,
+   "tipo": "pie",
+   "sinCara": false,
+   "desc": "andando, dando un paso"
+  },
+  "p_aplaude": {
+   "w": 399,
+   "h": 1189,
+   "cabeza": [
+    199.0,
+    192.0,
+    178.8
+   ],
+   "pies": 1189,
+   "tipo": "pie",
+   "sinCara": false,
+   "desc": "aplaudiendo"
+  },
+  "p_bolsillos": {
+   "w": 396,
+   "h": 1187,
+   "cabeza": [
+    197.0,
+    191.0,
+    178.3
+   ],
+   "pies": 1187,
+   "tipo": "pie",
+   "sinCara": false,
+   "desc": "de pie tranquilo, manos en los bolsillos (reposo)"
+  },
+  "p_celebra": {
+   "w": 686,
+   "h": 1139,
+   "cabeza": [
+    345.0,
+    183.0,
+    170.7
+   ],
+   "pies": 1139,
+   "tipo": "pie",
+   "sinCara": false,
+   "desc": "celebrando, los dos puños arriba"
+  },
+  "p_cruzado": {
+   "w": 397,
+   "h": 1190,
+   "cabeza": [
+    199.0,
+    192.0,
+    178.8
+   ],
+   "pies": 1190,
+   "tipo": "pie",
+   "sinCara": false,
+   "desc": "brazos cruzados"
+  },
+  "p_cuclillas": {
+   "w": 619,
+   "h": 1191,
+   "cabeza": [
+    311.0,
+    229.0,
+    213.2
+   ],
+   "pies": 1191,
+   "tipo": "pie",
+   "sinCara": false,
+   "desc": "en cuclillas"
+  },
+  "p_dinero": {
+   "w": 528,
+   "h": 1187,
+   "cabeza": [
+    315.0,
+    191.0,
+    178.3
+   ],
+   "pies": 1187,
+   "tipo": "pie",
+   "sinCara": false,
+   "desc": "enseña un fajo de billetes"
+  },
+  "p_encoge": {
+   "w": 692,
+   "h": 1191,
+   "cabeza": [
+    343.0,
+    190.0,
+    176.4
+   ],
+   "pies": 1191,
+   "tipo": "pie",
+   "sinCara": false,
+   "desc": "se encoge de hombros, palmas arriba (no sé)"
+  },
+  "p_facepalm": {
+   "w": 421,
+   "h": 1188,
+   "cabeza": [
+    205.0,
+    187.0,
+    178.0
+   ],
+   "pies": 1188,
+   "tipo": "pie",
+   "sinCara": true,
+   "desc": "se tapa la cara con la mano (facepalm)"
+  },
+  "p_furioso": {
+   "w": 425,
+   "h": 1179,
+   "cabeza": [
+    214.0,
+    204.0,
+    191.1
+   ],
+   "pies": 1179,
+   "tipo": "pie",
+   "sinCara": false,
+   "desc": "furioso, puños apretados, pisotón"
+  },
+  "p_horror": {
+   "w": 497,
+   "h": 1189,
+   "cabeza": [
+    252.9,
+    187.0,
+    178.0
+   ],
+   "pies": 1189,
+   "tipo": "pie",
+   "sinCara": false,
+   "desc": "manos en las mejillas, horrorizado"
+  },
+  "p_idea": {
+   "w": 471,
+   "h": 1188,
+   "cabeza": [
+    275.0,
+    191.0,
+    178.5
+   ],
+   "pies": 1188,
+   "tipo": "pie",
+   "sinCara": false,
+   "desc": "índice arriba, ¡tengo una idea!"
+  },
+  "p_inocente": {
+   "w": 388,
+   "h": 1167,
+   "cabeza": [
+    194.0,
+    189.0,
+    175.5
+   ],
+   "pies": 1167,
+   "tipo": "pie",
+   "sinCara": false,
+   "desc": "manos a la espalda, inocente"
+  },
+  "p_jarras": {
+   "w": 439,
+   "h": 1187,
+   "cabeza": [
+    221.0,
+    191.0,
+    178.3
+   ],
+   "pies": 1187,
+   "tipo": "pie",
+   "sinCara": false,
+   "desc": "brazos en jarras"
+  },
+  "p_mano_pecho": {
+   "w": 394,
+   "h": 1179,
+   "cabeza": [
+    198.0,
+    189.0,
+    177.3
+   ],
+   "pies": 1179,
+   "tipo": "pie",
+   "sinCara": false,
+   "desc": "mano en el pecho (sincero, emocionado)"
+  },
+  "p_maquina": {
+   "w": 395,
+   "h": 1186,
+   "cabeza": [
+    197.0,
+    191.0,
+    178.4
+   ],
+   "pies": 1186,
+   "tipo": "pie",
+   "sinCara": false,
+   "desc": "se frota las manos maquinando"
+  },
+  "p_movil_ensena": {
+   "w": 487,
+   "h": 1190,
+   "cabeza": [
+    289.0,
+    192.0,
+    179.0
+   ],
+   "pies": 1190,
+   "tipo": "pie",
+   "sinCara": false,
+   "desc": "enseña la pantalla del móvil"
+  },
+  "p_movil_mira": {
+   "w": 381,
+   "h": 1143,
+   "cabeza": [
+    191.0,
+    184.0,
+    171.8
+   ],
+   "pies": 1143,
+   "tipo": "pie",
+   "sinCara": true,
+   "desc": "mira el móvil con las dos manos"
+  },
+  "p_ok": {
+   "w": 466,
+   "h": 1173,
+   "cabeza": [
+    197.0,
+    188.0,
+    175.9
+   ],
+   "pies": 1173,
+   "tipo": "pie",
+   "sinCara": false,
+   "desc": "gesto de OK con la mano"
+  },
+  "p_papel": {
+   "w": 397,
+   "h": 1188,
+   "cabeza": [
+    200.0,
+    191.0,
+    178.5
+   ],
+   "pies": 1188,
+   "tipo": "pie",
+   "sinCara": false,
+   "desc": "sujeta un papel delante"
+  },
+  "p_piensa": {
+   "w": 391,
+   "h": 1169,
+   "cabeza": [
+    204.0,
+    179.0,
+    169.1
+   ],
+   "pies": 1169,
+   "tipo": "pie",
+   "sinCara": false,
+   "desc": "mano en la barbilla, pensando"
+  },
+  "p_pistolas": {
+   "w": 492,
+   "h": 1179,
+   "cabeza": [
+    254.0,
+    189.0,
+    177.1
+   ],
+   "pies": 1179,
+   "tipo": "pie",
+   "sinCara": false,
+   "desc": "señala con las dos manos como pistolas (chulo)"
+  },
+  "p_portatil": {
+   "w": 458,
+   "h": 1181,
+   "cabeza": [
+    196.0,
+    190.0,
+    177.4
+   ],
+   "pies": 1181,
+   "tipo": "pie",
+   "sinCara": false,
+   "desc": "sujeta un portátil abierto"
+  },
+  "p_pulgar": {
+   "w": 469,
+   "h": 1182,
+   "cabeza": [
+    273.0,
+    190.0,
+    177.8
+   ],
+   "pies": 1182,
+   "tipo": "pie",
+   "sinCara": false,
+   "desc": "pulgar arriba"
+  },
+  "p_pulgar_abajo": {
+   "w": 457,
+   "h": 1187,
+   "cabeza": [
+    197.0,
+    192.0,
+    178.7
+   ],
+   "pies": 1187,
+   "tipo": "pie",
+   "sinCara": false,
+   "desc": "pulgar abajo"
+  },
+  "p_rasca": {
+   "w": 454,
+   "h": 1151,
+   "cabeza": [
+    195.0,
+    185.0,
+    173.2
+   ],
+   "pies": 1151,
+   "tipo": "pie",
+   "sinCara": false,
+   "desc": "se rasca la cabeza (duda)"
+  },
+  "p_reloj": {
+   "w": 391,
+   "h": 1174,
+   "cabeza": [
+    196.0,
+    189.0,
+    176.6
+   ],
+   "pies": 1174,
+   "tipo": "pie",
+   "sinCara": false,
+   "desc": "se mira el reloj de la muñeca (prisa)"
+  },
+  "p_rodillas": {
+   "w": 463,
+   "h": 1154,
+   "cabeza": [
+    235.0,
+    220.0,
+    206.3
+   ],
+   "pies": 1154,
+   "tipo": "pie",
+   "sinCara": false,
+   "desc": "de rodillas suplicando, manos juntas"
+  },
+  "p_salta": {
+   "w": 747,
+   "h": 1062,
+   "cabeza": [
+    378.0,
+    174.0,
+    162.2
+   ],
+   "pies": 1062,
+   "tipo": "pie",
+   "sinCara": false,
+   "desc": "salta de alegría"
+  },
+  "p_saluda": {
+   "w": 494,
+   "h": 1153,
+   "cabeza": [
+    194.0,
+    187.0,
+    174.6
+   ],
+   "pies": 1153,
+   "tipo": "pie",
+   "sinCara": false,
+   "desc": "saluda con la mano"
+  },
+  "p_senala_camara": {
+   "w": 413,
+   "h": 1192,
+   "cabeza": [
+    213.0,
+    192.0,
+    179.1
+   ],
+   "pies": 1192,
+   "tipo": "pie",
+   "sinCara": false,
+   "desc": "señala a la cámara (tú)"
+  },
+  "p_senala_lado": {
+   "w": 606,
+   "h": 1189,
+   "cabeza": [
+    407.0,
+    192.0,
+    178.5
+   ],
+   "pies": 1189,
+   "tipo": "pie",
+   "sinCara": false,
+   "desc": "señala a un lado con el brazo estirado"
+  },
+  "p_stop": {
+   "w": 478,
+   "h": 1189,
+   "cabeza": [
+    280.0,
+    192.0,
+    179.0
+   ],
+   "pies": 1189,
+   "tipo": "pie",
+   "sinCara": false,
+   "desc": "palma delante: ¡para!"
+  },
+  "p_suplica": {
+   "w": 395,
+   "h": 1180,
+   "cabeza": [
+    201.0,
+    190.0,
+    177.8
+   ],
+   "pies": 1180,
+   "tipo": "pie",
+   "sinCara": false,
+   "desc": "manos juntas, por favor"
+  },
+  "p_tachan": {
+   "w": 872,
+   "h": 1177,
+   "cabeza": [
+    437.0,
+    189.0,
+    177.3
+   ],
+   "pies": 1177,
+   "tipo": "pie",
+   "sinCara": false,
+   "desc": "¡tachán! los dos brazos arriba abiertos"
+  },
+  "p_tapa_boca": {
+   "w": 431,
+   "h": 1185,
+   "cabeza": [
+    203.8,
+    187.0,
+    178.0
+   ],
+   "pies": 1185,
+   "tipo": "pie",
+   "sinCara": true,
+   "desc": "se tapa la boca (ups)"
+  },
+  "p_tapa_ojos": {
+   "w": 498,
+   "h": 1189,
+   "cabeza": [
+    251.5,
+    187.0,
+    178.0
+   ],
+   "pies": 1189,
+   "tipo": "pie",
+   "sinCara": true,
+   "desc": "se tapa los ojos (no quiero mirar)"
+  },
+  "p_taza": {
+   "w": 518,
+   "h": 1174,
+   "cabeza": [
+    321.0,
+    190.0,
+    176.3
+   ],
+   "pies": 1174,
+   "tipo": "pie",
+   "sinCara": false,
+   "desc": "sujeta una taza"
+  },
+  "p_telefono": {
+   "w": 447,
+   "h": 1188,
+   "cabeza": [
+    250.0,
+    191.0,
+    178.5
+   ],
+   "pies": 1188,
+   "tipo": "pie",
+   "sinCara": false,
+   "desc": "habla por teléfono"
+  },
+  "p_yo": {
+   "w": 503,
+   "h": 1190,
+   "cabeza": [
+    251.0,
+    191.0,
+    178.8
+   ],
+   "pies": 1190,
+   "tipo": "pie",
+   "sinCara": false,
+   "desc": "se señala a sí mismo (¿yo?)"
+  },
+  "s_aburrido": {
+   "w": 471,
+   "h": 1176,
+   "cabeza": [
+    237.0,
+    207.0,
+    197.7
+   ],
+   "pies": 1176,
+   "tipo": "sentado",
+   "sinCara": true,
+   "desc": "sentado, cara apoyada en las manos, aburrido"
+  },
+  "s_celebra": {
+   "w": 697,
+   "h": 1179,
+   "cabeza": [
+    350.0,
+    211.0,
+    197.6
+   ],
+   "pies": 1179,
+   "tipo": "sentado",
+   "sinCara": false,
+   "desc": "sentado celebrando, puños arriba"
+  },
+  "s_come": {
+   "w": 405,
+   "h": 1162,
+   "cabeza": [
+    201.0,
+    192.0,
+    179.0
+   ],
+   "pies": 1162,
+   "tipo": "sentado",
+   "sinCara": false,
+   "desc": "sentado comiendo de un táper"
+  },
+  "s_cruzado": {
+   "w": 396,
+   "h": 1182,
+   "cabeza": [
+    198.0,
+    191.0,
+    178.5
+   ],
+   "pies": 1182,
+   "tipo": "sentado",
+   "sinCara": false,
+   "desc": "sentado con brazos cruzados"
+  },
+  "s_encoge": {
+   "w": 646,
+   "h": 1187,
+   "cabeza": [
+    323.0,
+    191.0,
+    179.2
+   ],
+   "pies": 1187,
+   "tipo": "sentado",
+   "sinCara": false,
+   "desc": "sentado encogiéndose de hombros"
+  },
+  "s_facepalm": {
+   "w": 407,
+   "h": 1190,
+   "cabeza": [
+    210.6,
+    194.0,
+    185.0
+   ],
+   "pies": 1190,
+   "tipo": "sentado",
+   "sinCara": true,
+   "desc": "sentado tapándose la cara"
+  },
+  "s_hundido": {
+   "w": 765,
+   "h": 1175,
+   "cabeza": [
+    255.0,
+    187.0,
+    177.1
+   ],
+   "pies": 1175,
+   "tipo": "sentado",
+   "sinCara": false,
+   "desc": "tirado en el sofá, despatarrado"
+  },
+  "s_mando": {
+   "w": 480,
+   "h": 1189,
+   "cabeza": [
+    235.0,
+    214.0,
+    199.5
+   ],
+   "pies": 1189,
+   "tipo": "sentado",
+   "sinCara": false,
+   "desc": "sentado con el mando de la tele"
+  },
+  "s_mantita": {
+   "w": 519,
+   "h": 1187,
+   "cabeza": [
+    255.0,
+    245.0,
+    228.7
+   ],
+   "pies": 1187,
+   "tipo": "sentado",
+   "sinCara": false,
+   "desc": "sentado con una mantita en las piernas"
+  },
+  "s_movil": {
+   "w": 550,
+   "h": 1171,
+   "cabeza": [
+    272.0,
+    196.0,
+    182.3
+   ],
+   "pies": 1171,
+   "tipo": "sentado",
+   "sinCara": true,
+   "desc": "sentado mirando el móvil"
+  },
+  "s_periodico": {
+   "w": 599,
+   "h": 1185,
+   "cabeza": [
+    294.0,
+    199.0,
+    185.2
+   ],
+   "pies": 1185,
+   "tipo": "sentado",
+   "sinCara": false,
+   "desc": "sentado leyendo el periódico"
+  },
+  "s_portatil": {
+   "w": 523,
+   "h": 1189,
+   "cabeza": [
+    254.0,
+    194.0,
+    180.7
+   ],
+   "pies": 1189,
+   "tipo": "sentado",
+   "sinCara": false,
+   "desc": "sentado con el portátil"
+  },
+  "s_pulgar": {
+   "w": 490,
+   "h": 1192,
+   "cabeza": [
+    280.0,
+    204.0,
+    190.2
+   ],
+   "pies": 1192,
+   "tipo": "sentado",
+   "sinCara": false,
+   "desc": "sentado con el pulgar arriba"
+  },
+  "s_relajado": {
+   "w": 586,
+   "h": 1161,
+   "cabeza": [
+    298.0,
+    199.0,
+    186.5
+   ],
+   "pies": 1161,
+   "tipo": "sentado",
+   "sinCara": false,
+   "desc": "sentado relajado, manos tras la cabeza y pierna cruzada"
+  },
+  "s_reposo": {
+   "w": 508,
+   "h": 1175,
+   "cabeza": [
+    251.0,
+    189.0,
+    176.1
+   ],
+   "pies": 1175,
+   "tipo": "sentado",
+   "sinCara": false,
+   "desc": "sentado tranquilo"
+  },
+  "s_senala": {
+   "w": 473,
+   "h": 1192,
+   "cabeza": [
+    264.0,
+    202.0,
+    187.6
+   ],
+   "pies": 1192,
+   "tipo": "sentado",
+   "sinCara": false,
+   "desc": "sentado señalando a cámara"
+  },
+  "s_taza": {
+   "w": 550,
+   "h": 1091,
+   "cabeza": [
+    270.0,
+    198.0,
+    180.4
+   ],
+   "pies": 1091,
+   "tipo": "sentado",
+   "sinCara": false,
+   "desc": "sentado con una taza"
+  },
+  "t_aburrido": {
+   "w": 1200,
+   "h": 457,
+   "cabeza": [
+    186.0,
+    181.0,
+    170.3
+   ],
+   "pies": 457,
+   "tipo": "tumbado",
+   "sinCara": true,
+   "desc": "tumbado boca arriba aburrido, manos tras la cabeza"
+  },
+  "t_duerme": {
+   "w": 1276,
+   "h": 690,
+   "cabeza": [
+    179.0,
+    176.0,
+    167.5
+   ],
+   "pies": 690,
+   "tipo": "tumbado",
+   "sinCara": true,
+   "desc": "tumbado durmiendo con una manta"
+  },
+  "t_movil": {
+   "w": 1299,
+   "h": 578,
+   "cabeza": [
+    194.0,
+    409.0,
+    158.7
+   ],
+   "pies": 578,
+   "tipo": "tumbado",
+   "sinCara": true,
+   "desc": "tumbado mirando el móvil"
+  },
+  "t_suelo": {
+   "w": 1332,
+   "h": 557,
+   "cabeza": [
+    487.0,
+    275.0,
+    190.2
+   ],
+   "pies": 557,
+   "tipo": "tumbado",
+   "sinCara": true,
+   "desc": "tirado en el suelo boca abajo, derrotado"
+  }
+ },
+ "capas": {
+  "a_aureola": {
+   "tipo": "extra",
+   "x": -0.9072,
+   "y": -1.2749,
+   "w": 1.8063,
+   "h": 0.5529,
+   "desc": "aureola de ángel"
+  },
+  "a_auriculares": {
+   "tipo": "extra",
+   "x": -1.3419,
+   "y": -1.2883,
+   "w": 2.6785,
+   "h": 1.7982,
+   "desc": "auriculares"
+  },
+  "a_birrete": {
+   "tipo": "extra",
+   "x": -1.0145,
+   "y": -1.291,
+   "w": 2.0102,
+   "h": 0.9689,
+   "desc": "birrete de graduado"
+  },
+  "a_corazones": {
+   "tipo": "extra",
+   "x": -1.0065,
+   "y": -1.3124,
+   "w": 2.0049,
+   "h": 0.4831,
+   "desc": "corazones flotando"
+  },
+  "a_corona": {
+   "tipo": "extra",
+   "x": 0.1959,
+   "y": -1.3312,
+   "w": 0.6763,
+   "h": 0.5395,
+   "desc": "corona"
+  },
+  "a_cuernos": {
+   "tipo": "extra",
+   "x": -0.7918,
+   "y": -1.2185,
+   "w": 1.5459,
+   "h": 0.6468,
+   "desc": "cuernos de diablo"
+  },
+  "a_gafas": {
+   "tipo": "extra",
+   "x": -1.197,
+   "y": -0.5368,
+   "w": 2.3484,
+   "h": 0.9098,
+   "desc": "gafas redondas"
+  },
+  "a_gafas_sol": {
+   "tipo": "extra",
+   "x": -1.1407,
+   "y": -0.4428,
+   "w": 2.1552,
+   "h": 0.7354,
+   "desc": "gafas de sol"
+  },
+  "a_gorra": {
+   "tipo": "extra",
+   "x": -1.0655,
+   "y": -1.146,
+   "w": 2.2813,
+   "h": 0.9045,
+   "desc": "gorra roja"
+  },
+  "a_gorro": {
+   "tipo": "extra",
+   "x": -1.1219,
+   "y": -1.3258,
+   "w": 2.2303,
+   "h": 1.1809,
+   "desc": "gorro de lana"
+  },
+  "a_gorro_chef": {
+   "tipo": "extra",
+   "x": -0.7622,
+   "y": -1.3285,
+   "w": 1.4359,
+   "h": 0.8481,
+   "desc": "gorro de cocinero"
+  },
+  "a_gorro_fiesta": {
+   "tipo": "extra",
+   "x": -1.291,
+   "y": -1.3232,
+   "w": 2.5712,
+   "h": 1.2131,
+   "desc": "gorro de fiesta con confeti"
+  },
+  "a_humo": {
+   "tipo": "extra",
+   "x": -1.3768,
+   "y": -0.5502,
+   "w": 2.7483,
+   "h": 1.0816,
+   "desc": "humo por las orejas (furioso)"
+  },
+  "a_mareo": {
+   "tipo": "extra",
+   "x": -1.036,
+   "y": -1.248,
+   "w": 2.0854,
+   "h": 0.6844,
+   "desc": "estrellas y pajaritos (mareado)"
+  },
+  "a_mascarilla": {
+   "tipo": "extra",
+   "x": -1.1246,
+   "y": -0.1288,
+   "w": 2.2491,
+   "h": 1.0923,
+   "desc": "mascarilla"
+  },
+  "a_rubor": {
+   "tipo": "extra",
+   "x": -0.8374,
+   "y": 0.161,
+   "w": 1.7499,
+   "h": 0.4267,
+   "desc": "rubor en las mejillas (vergüenza)"
+  },
+  "a_sudor": {
+   "tipo": "extra",
+   "x": -0.671,
+   "y": -1.1111,
+   "w": 2.0049,
+   "h": 0.7166,
+   "desc": "gotas de sudor (estrés)"
+  },
+  "a_tirita": {
+   "tipo": "extra",
+   "x": -1.0199,
+   "y": -1.0494,
+   "w": 0.8857,
+   "h": 0.6924,
+   "desc": "tirita y chichón"
+  },
+  "a_vena": {
+   "tipo": "extra",
+   "x": 0.263,
+   "y": -0.8696,
+   "w": 0.3918,
+   "h": 0.4106,
+   "desc": "vena de enfado"
+  },
+  "a_bombilla": {
+   "tipo": "extra",
+   "x": -0.8998,
+   "y": -2.9919,
+   "w": 1.7907,
+   "h": 1.773,
+   "desc": "bombilla encendida (idea)"
+  },
+  "a_exclamacion": {
+   "tipo": "extra",
+   "x": 0.8776,
+   "y": -2.5353,
+   "w": 0.8377,
+   "h": 1.609,
+   "desc": "signo de exclamación"
+  },
+  "a_interrogacion": {
+   "tipo": "extra",
+   "x": 0.7579,
+   "y": -2.4556,
+   "w": 0.82,
+   "h": 1.5026,
+   "desc": "signo de interrogación"
+  },
+  "a_nube": {
+   "tipo": "extra",
+   "x": -1.2721,
+   "y": -2.9697,
+   "w": 2.5353,
+   "h": 2.7259,
+   "desc": "nubecita de lluvia (mala suerte)"
+  },
+  "a_zzz": {
+   "tipo": "extra",
+   "x": 0.0798,
+   "y": -2.9919,
+   "w": 2.0611,
+   "h": 1.8395,
+   "desc": "zzz (sueño)"
+  },
+  "b_asco": {
+   "tipo": "boca",
+   "x": -0.4241,
+   "y": 0.3784,
+   "w": 1.036,
+   "h": 0.4026,
+   "desc": "boca de asco"
+  },
+  "b_babea": {
+   "tipo": "boca",
+   "x": -0.161,
+   "y": 0.4106,
+   "w": 0.4885,
+   "h": 0.3435,
+   "desc": "se le cae la baba"
+  },
+  "b_carcajada": {
+   "tipo": "boca",
+   "x": -0.7032,
+   "y": 0.1906,
+   "w": 1.4761,
+   "h": 0.7891,
+   "desc": "carcajada"
+  },
+  "b_enfadada": {
+   "tipo": "boca",
+   "x": -0.5234,
+   "y": 0.3784,
+   "w": 1.1648,
+   "h": 0.5395,
+   "desc": "grita enfadado"
+  },
+  "b_grito": {
+   "tipo": "boca",
+   "x": -0.3113,
+   "y": 0.357,
+   "w": 0.7166,
+   "h": 0.6039,
+   "desc": "grito de miedo"
+  },
+  "b_lengua": {
+   "tipo": "boca",
+   "x": -0.4294,
+   "y": 0.2872,
+   "w": 0.9904,
+   "h": 0.4214,
+   "desc": "saca la lengua"
+  },
+  "b_morritos": {
+   "tipo": "boca",
+   "x": -0.1745,
+   "y": 0.3704,
+   "w": 0.4751,
+   "h": 0.3543,
+   "desc": "morritos (beso)"
+  },
+  "b_mueca": {
+   "tipo": "boca",
+   "x": -0.5529,
+   "y": 0.4053,
+   "w": 1.1863,
+   "h": 0.4267,
+   "desc": "mueca de dientes apretados (incómodo)"
+  },
+  "b_nerviosa": {
+   "tipo": "boca",
+   "x": -0.3892,
+   "y": 0.4241,
+   "w": 0.8723,
+   "h": 0.2469,
+   "desc": "boca nerviosa en zigzag"
+  },
+  "b_o": {
+   "tipo": "boca",
+   "x": -0.1745,
+   "y": 0.3999,
+   "w": 0.4616,
+   "h": 0.3301,
+   "desc": "boca en O (sorpresa)"
+  },
+  "b_picara": {
+   "tipo": "boca",
+   "x": -0.2228,
+   "y": 0.2845,
+   "w": 0.7676,
+   "h": 0.2952,
+   "desc": "sonrisa pícara de lado"
+  },
+  "b_puchero": {
+   "tipo": "boca",
+   "x": -0.4348,
+   "y": 0.4509,
+   "w": 1.0065,
+   "h": 0.3382,
+   "desc": "puchero, a punto de llorar"
+  },
+  "b_silba": {
+   "tipo": "boca",
+   "x": -0.1745,
+   "y": 0.2952,
+   "w": 0.6978,
+   "h": 0.4106,
+   "desc": "silbando"
+  },
+  "b_sonrisa": {
+   "tipo": "boca",
+   "x": -0.3731,
+   "y": 0.3382,
+   "w": 0.8427,
+   "h": 0.2416,
+   "desc": "sonrisa"
+  },
+  "b_sonrisa_dientes": {
+   "tipo": "boca",
+   "x": -0.6602,
+   "y": 0.2201,
+   "w": 1.4171,
+   "h": 0.6871,
+   "desc": "sonrisa grande con dientes"
+  },
+  "b_triste": {
+   "tipo": "boca",
+   "x": -0.408,
+   "y": 0.4214,
+   "w": 0.9206,
+   "h": 0.3865,
+   "desc": "boca triste"
+  },
+  "o_agotado": {
+   "tipo": "ojos",
+   "x": -0.8052,
+   "y": -0.4053,
+   "w": 1.6801,
+   "h": 0.8213,
+   "desc": "ojos agotados con ojeras"
+  },
+  "o_bizco": {
+   "tipo": "ojos",
+   "x": -0.7059,
+   "y": -0.2201,
+   "w": 1.4735,
+   "h": 0.2335,
+   "desc": "bizco"
+  },
+  "o_cerrados": {
+   "tipo": "ojos",
+   "x": -0.8374,
+   "y": -0.4321,
+   "w": 1.7231,
+   "h": 0.7273,
+   "desc": "ojos cerrados tranquilo"
+  },
+  "o_corazones": {
+   "tipo": "ojos",
+   "x": -0.9179,
+   "y": -0.4509,
+   "w": 1.8438,
+   "h": 0.7461,
+   "desc": "ojos de corazón (enamorado)"
+  },
+  "o_en_blanco": {
+   "tipo": "ojos",
+   "x": -0.7059,
+   "y": -0.4053,
+   "w": 1.4735,
+   "h": 0.4187,
+   "desc": "pone los ojos en blanco (hartazgo)"
+  },
+  "o_enfadado": {
+   "tipo": "ojos",
+   "x": -0.8213,
+   "y": -0.4965,
+   "w": 1.6533,
+   "h": 0.5099,
+   "desc": "ojos enfadados"
+  },
+  "o_equis": {
+   "tipo": "ojos",
+   "x": -0.8374,
+   "y": -0.4482,
+   "w": 1.7231,
+   "h": 0.7434,
+   "desc": "ojos en X (K.O.)"
+  },
+  "o_esceptico": {
+   "tipo": "ojos",
+   "x": -0.8374,
+   "y": -0.5556,
+   "w": 1.6855,
+   "h": 0.569,
+   "desc": "escéptico, una ceja arriba"
+  },
+  "o_espirales": {
+   "tipo": "ojos",
+   "x": -0.7193,
+   "y": -0.314,
+   "w": 1.4869,
+   "h": 0.4321,
+   "desc": "ojos en espiral (mareado, hipnotizado)"
+  },
+  "o_estrellas": {
+   "tipo": "ojos",
+   "x": -0.9447,
+   "y": -0.62,
+   "w": 1.919,
+   "h": 1.0306,
+   "desc": "ojos de estrella (alucinado)"
+  },
+  "o_euros": {
+   "tipo": "ojos",
+   "x": -0.7703,
+   "y": -0.357,
+   "w": 1.5379,
+   "h": 0.5153,
+   "desc": "ojos con el símbolo del euro (dinero)"
+  },
+  "o_felices": {
+   "tipo": "ojos",
+   "x": -0.8374,
+   "y": -0.4321,
+   "w": 1.7231,
+   "h": 0.7273,
+   "desc": "ojos cerrados felices ^ ^"
+  },
+  "o_frente": {
+   "tipo": "ojos",
+   "x": -0.7059,
+   "y": -0.2201,
+   "w": 1.4735,
+   "h": 0.2335,
+   "desc": "mira a cámara"
+  },
+  "o_fuego": {
+   "tipo": "ojos",
+   "x": -0.7971,
+   "y": -0.6092,
+   "w": 1.6211,
+   "h": 0.8186,
+   "desc": "ojos en llamas (furioso)"
+  },
+  "o_guino": {
+   "tipo": "ojos",
+   "x": -0.8374,
+   "y": -0.3784,
+   "w": 1.605,
+   "h": 0.6737,
+   "desc": "guiño"
+  },
+  "o_ilusion": {
+   "tipo": "ojos",
+   "x": -0.7515,
+   "y": -0.3757,
+   "w": 1.5674,
+   "h": 0.5126,
+   "desc": "ojos brillantes de ilusión"
+  },
+  "o_lagrimas": {
+   "tipo": "ojos",
+   "x": -0.7703,
+   "y": -0.6441,
+   "w": 1.6103,
+   "h": 0.8884,
+   "desc": "a punto de llorar"
+  },
+  "o_llora": {
+   "tipo": "ojos",
+   "x": -0.8642,
+   "y": -0.5234,
+   "w": 1.7875,
+   "h": 1.758,
+   "desc": "llorando a mares"
+  },
+  "o_mira_abajo": {
+   "tipo": "ojos",
+   "x": -0.7059,
+   "y": -0.2201,
+   "w": 1.4735,
+   "h": 0.4267,
+   "desc": "mira abajo"
+  },
+  "o_mira_arriba": {
+   "tipo": "ojos",
+   "x": -0.7059,
+   "y": -0.3811,
+   "w": 1.4735,
+   "h": 0.3945,
+   "desc": "mira arriba"
+  },
+  "o_mira_lado": {
+   "tipo": "ojos",
+   "x": -0.773,
+   "y": -0.2201,
+   "w": 1.5406,
+   "h": 0.2335,
+   "desc": "mira a un lado"
+  },
+  "o_nervioso": {
+   "tipo": "ojos",
+   "x": -0.7059,
+   "y": -0.8347,
+   "w": 1.5084,
+   "h": 0.8481,
+   "desc": "nervioso, gota de sudor"
+  },
+  "o_recelo": {
+   "tipo": "ojos",
+   "x": -0.8696,
+   "y": -0.4321,
+   "w": 1.7687,
+   "h": 0.7273,
+   "desc": "ojos entornados de recelo"
+  },
+  "o_susto": {
+   "tipo": "ojos",
+   "x": -0.9528,
+   "y": -0.5529,
+   "w": 1.9539,
+   "h": 0.9447,
+   "desc": "ojos de susto"
+  },
+  "o_triste": {
+   "tipo": "ojos",
+   "x": -0.8025,
+   "y": -0.6066,
+   "w": 1.6506,
+   "h": 0.7676,
+   "desc": "ojos tristes"
+  }
+ }
+}

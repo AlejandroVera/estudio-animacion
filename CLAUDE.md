@@ -452,6 +452,19 @@ cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y
   se copiaba por bloques y se mezclaban ojos viejos y nuevos. Comprobado en el pasillo: mismo tamaño en los 9
   dibujos. Los planos de detalle se piden con fondo claro, nunca magenta (salió un fondo magenta y las manos
   se perdían). Medido: 45 imágenes.
+- INVENTARIO DEL PERSONAJE (tras «cada vídeo no me puede salir a 30 €»: casi todo el gasto eran dibujos de él que
+  se repetían): `public/personajes/chico-magenta/inventario/` hecho con los créditos de Magnific de Alejandro
+  (Nano Banana 2.1, editando `referencia.jpg` y una cabeza grande `cabeza_base.webp`). 62 CUERPOS de frente sobre
+  transparente (`p_*` de pie, `s_*` sentado sin silla, `t_*` tumbado) y 65 CAPAS de cabeza: 25 ojos (`o_*`, también
+  emoji: corazones, estrellas, euros, espirales, X, fuego, llanto…), 16 bocas (`b_*`) y 24 complementos (`a_*`: gorra,
+  cuernos, aureola, gafas, corona, sudor, rubor, vena, ¿?, ¡!, zzz, bombilla, nube…). `herramientas/procesar_inventario.py`
+  quita el fondo y los huecos, mide la cabeza (círculo inscrito de la mancha magenta) y, si nada le tapa la cara,
+  le pega la CARA CANÓNICA de la cabeza base: así todas las capas encajan en cualquier cuerpo. Las capas son lo que
+  cambia respecto a la base, con posición y tamaño en radios de cabeza desde su centro. `inventario.json`: por
+  cuerpo `cabeza` [x, y, r], `tipo`, `sinCara` (mano en la cara o tumbado: no lleva capas de ojos) y `desc`; por
+  capa `tipo` (ojos/boca/extra), `x,y,w,h` y `desc` (`herramientas/inventario_desc.json`). Ids de Magnific en
+  `herramientas/inventario_magnific.txt`. Pendiente: «modo inventario» (plano maestro del lugar sin él + estas
+  piezas pegadas: los cambios de postura y cara no gastan) y generar lo que falte bajo demanda.
 - DIRECTOR IA (`api/actuar.ts`, lo llama `dirigir` en `voices.ts` al generar voces): recibe las palabras
   de cada escena, la emoción y el catálogo `DESCRIPCIONES` (qué expresa cada postura) y devuelve en qué
   palabra cambia y a qué postura según lo que dice, y `miradas` (catálogo `MIRADAS`) en otras palabras; las claves caen 0,08 s antes de esa palabra. Si
