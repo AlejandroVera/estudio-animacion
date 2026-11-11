@@ -665,7 +665,7 @@ export function drawRotulos(g: CanvasRenderingContext2D, project: Project, t: nu
     if (enEscena) {
       const techo = Math.min(...puntos!.otras!.map((o) => o.y - o.r))
       const sx = /^izq/.test(r.pos) ? Math.max(hw + 20, W * 0.27) : /^der/.test(r.pos) ? Math.min(W - hw - 20, W * 0.73) : W / 2
-      sit = { x: Math.max(hw + 14, Math.min(W - hw - 14, sx)), y: techo > hh * 2 + 30 ? Math.max(hh + 16, Math.min(H * 0.08, techo - hh - 12)) : H - hh - 24, k: 1 }
+      sit = { x: Math.max(hw + 14, Math.min(W - hw - 14, sx)), y: techo > hh * 2 + 50 ? Math.max(hh + 34, Math.min(H * 0.1, techo - hh - 12)) : H - hh - 34, k: 1 }
     } else sit = colocarSinTapar(W, H, puntos?.circulo, x, y, hw, hh, puntos?.otras)
     if (sit.k < 1) tam = Math.round(tam * sit.k)
     g.save()

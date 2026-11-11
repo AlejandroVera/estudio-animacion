@@ -36,6 +36,7 @@ Check ONLY these defects (be strict with 1-4, they ruin the animation):
    an extra hand coming from nowhere, two hands on the same arm, a missing arm, or a duplicated limb. Typical
    case: the arms stay crossed (or holding something) from an earlier pose AND a third arm points or waves.
    Count the hands and sleeves of each person: more than two = defect.
+13. COLOR: the magenta boy's head and skin are not the bright, saturated magenta of his design (they look dull, dark, burgundy, wine, plum or brownish purple).
 11. COUNT: the description gives exact quantities (three ID cards and one parking ticket, six empty slots) and
    the drawing shows a different number of those things. Count them.
 
