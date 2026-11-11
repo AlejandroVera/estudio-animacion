@@ -11,7 +11,7 @@ const FORMATOS = ['9:16', '16:9', '1:1', '4:5', '3:4']
 export async function POST(request: Request): Promise<Response> {
   if (!process.env.FAL_KEY) return json({ error: 'Falta FAL_KEY en Vercel.' }, 503)
   if (!claveOk(request)) return json({ error: 'clave' }, 401)
-  let body: { descripcion?: string; referencia?: string; formato?: string; tipo?: 'fondo' | 'libre' | 'objeto' | 'inserto'; hueco?: 'izq' | 'der'; variante?: number; referencias?: string[] }
+  let body: { descripcion?: string; referencia?: string; formato?: string; tipo?: 'fondo' | 'libre' | 'objeto' | 'inserto'; hueco?: 'izq' | 'der'; variante?: number; referencias?: string[]; motor?: string }
   try {
     body = await request.json()
   } catch {
@@ -66,11 +66,18 @@ export async function POST(request: Request): Promise<Response> {
         : body.tipo === 'objeto'
           ? `One single isolated drawing for a 2D cartoon video: ${descripcion}. ${conRef ? 'Match the line style of the reference image but do NOT draw the character from it. ' : ''}Style: crude amateur doodle drawn fast in a basic paint app by a YouTuber, thick shaky black outlines, flat paint-bucket colors with no shading, slightly lopsided, simple and instantly recognizable. Isolated on a plain pure white background, centered, filling most of the square canvas, nothing else around it: no shadow, no frame, no other objects, no people, and no text unless the description explicitly includes words or a number.`
           : `Background illustration for a 2D animated video. ${conRef ? 'Use the reference image ONLY to match the line style. Do NOT draw the character from the reference or any other person. Style: crude amateur doodle drawn fast with a finger or mouse in a basic paint app by a YouTuber, NOT a professional illustration. ' + camara + 'Thick shaky black outlines, wobbly and uneven, crooked straight lines drawn without a ruler, lines that overshoot or do not quite close at corners. Paint-bucket flat fills with no shading, no gradients, no texture, colors slightly spilling or not reaching the lines. Only 2 to 4 big simple lopsided objects that are TYPICAL OF THIS PLACE (nothing generic), drawn in a childish way with no white outline around them; most of the picture is EMPTY plain wall (it is only a backdrop: text and drawings will be added on top). Muted slightly washed-out colors' + (variedad ? '. ' : ' (greyish lilac, dusty blue, beige, faded green). ') : 'Style: crude amateur doodle drawn fast with a finger or mouse in a basic paint app by a YouTuber, NOT a professional illustration. ' + camara + 'Thick shaky black outlines, wobbly and uneven, crooked straight lines drawn without a ruler, lines that overshoot or do not quite close at corners. Paint-bucket flat fills with no shading, no gradients, no texture, colors slightly spilling or not reaching the lines. Only 2 to 4 big simple lopsided objects that are TYPICAL OF THIS PLACE (nothing generic), drawn in a childish way with no white outline around them; most of the picture is EMPTY plain wall (it is only a backdrop: text and drawings will be added on top). Muted slightly washed-out colors' + (variedad ? '. ' : ' (greyish lilac, dusty blue, beige, faded green). ')}Scene: ${descripcion}. ${variedad}${hueco}Empty location with no people, no characters, no animals unless asked, no text, no letters, no watermark. Keep the lower middle as plain empty floor (a character will be added later; do NOT draw any box, mark, shadow or placeholder there). The drawing must fill the WHOLE ${formato} canvas edge to edge (${formato === '9:16' ? 'tall vertical scene: show the floor in the lower part and the wall or sky up to the top' : 'wide scene'}): no white bands, no borders, no margins, no frame.`
-    const model = conRef ? 'fal-ai/nano-banana/edit' : 'fal-ai/nano-banana'
+    // MOTOR: Nano Banana (por defecto) o GPT Image 1.5 en calidad baja (más barato; en pruebas)
+    const gpt = body.motor === 'gpt-low' || body.motor === 'gpt-medium'
+    const model = gpt ? (conRef ? 'fal-ai/gpt-image-1.5/edit' : 'fal-ai/gpt-image-1.5') : conRef ? 'fal-ai/nano-banana/edit' : 'fal-ai/nano-banana'
+    const tam = formato === '16:9' ? '1536x1024' : formato === '1:1' ? '1024x1024' : '1024x1536'
     const res = await fetch(`https://fal.run/${model}`, {
       method: 'POST',
       headers: { authorization: `Key ${process.env.FAL_KEY}`, 'content-type': 'application/json' },
-      body: JSON.stringify({ prompt, num_images: 1, aspect_ratio: formato, output_format: 'jpeg', ...(conRef ? { image_urls: [ref, ...otras] } : {}) }),
+      body: JSON.stringify(
+        gpt
+          ? { prompt, num_images: 1, image_size: tam, quality: body.motor === 'gpt-medium' ? 'medium' : 'low', input_fidelity: 'high', output_format: 'jpeg', ...(conRef ? { image_urls: [ref, ...otras] } : {}) }
+          : { prompt, num_images: 1, aspect_ratio: formato, output_format: 'jpeg', ...(conRef ? { image_urls: [ref, ...otras] } : {}) },
+      ),
     })
     const data = (await res.json().catch(() => ({}))) as { images?: { url: string }[]; detail?: unknown }
     return { res, data }
