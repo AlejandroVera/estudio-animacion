@@ -156,6 +156,32 @@ def tapada(a, cx, cy, r):
     return extra.sum() > (r * r) * 0.012
 
 
+def buscar_boca(a, cx, cy, r):
+    """Caja de la raya de la boca (trazo oscuro en la parte baja de la cara) y color de la cabeza.
+    Sirve para borrarla antes de pegar la boca que habla."""
+    y0, y1 = int(cy + 0.36 * r), int(cy + 0.82 * r)
+    x0, x1 = int(cx - 0.5 * r), int(cx + 0.5 * r)
+    zona = a[y0:y1, x0:x1]
+    osc = zona.max(2) < 100
+    lab, n = ndi.label(osc)
+    if n == 0:
+        return None, None
+    mejor, ys, xs = 0, None, None
+    for i in range(1, n + 1):
+        yy, xx = np.nonzero(lab == i)
+        alto, ancho = yy.max() - yy.min() + 1, xx.max() - xx.min() + 1
+        # una raya de boca es ancha y fina (el aro, la nariz o una mano no)
+        if ancho < 0.18 * r or alto > 0.16 * r or yy.min() == 0:
+            continue
+        if len(yy) > mejor:
+            mejor, ys, xs = len(yy), yy, xx
+    if ys is None:
+        return None, None
+    mag = magenta(zona)
+    col = [int(v) for v in np.median(zona[mag], 0)] if mag.sum() > 50 else [221, 60, 190]
+    return [int(x0 + xs.min()), int(y0 + ys.min()), int(x0 + xs.max() + 1), int(y0 + ys.max() + 1)], col
+
+
 def pegar_cara(a, cx, cy, r):
     cara, n = cara_canonica(r)
     x0, y0 = int(round(cx - n / 2)), int(round(cy - n / 2))
@@ -165,7 +191,8 @@ def pegar_cara(a, cx, cy, r):
     a[y0:y0 + n, x0:x0 + n] = (zona * (1 - m) + cara.astype(np.float32) * m).astype(np.int16)
 
 
-manifest = {'radioBase': cb[2], 'cuerpos': {}, 'capas': {}}
+bb, _ = buscar_boca(base, *cb)
+manifest = {'radioBase': cb[2], 'bocaBase': [round((bb[0] - cb[0]) / cb[2], 4), round((bb[1] - cb[1]) / cb[2], 4), round((bb[2] - cb[0]) / cb[2], 4), round((bb[3] - cb[1]) / cb[2], 4)], 'cuerpos': {}, 'capas': {}}
 nombres = sorted(f[:-4] for f in os.listdir(CRUDO) if f.endswith('.png'))
 
 for nom in nombres:
@@ -176,6 +203,7 @@ for nom in nombres:
         sin = nom.startswith('t_') or tapada(a, cx, cy, r)
         if not sin:
             pegar_cara(a, cx, cy, r)
+        bk, colk = buscar_boca(a, cx, cy, r)
         im = np.dstack([np.clip(a, 0, 255).astype(np.uint8), alfa])
         ys, xs = np.nonzero(alfa > 20)
         x0, x1, y0, y1 = xs.min(), xs.max() + 1, ys.min(), ys.max() + 1
@@ -186,6 +214,8 @@ for nom in nombres:
             'pies': int(y1 - y0),
             'tipo': {'p': 'pie', 's': 'sentado', 't': 'tumbado'}[nom[0]],
             'sinCara': bool(sin),
+            'boca': [bk[0] - int(x0), bk[1] - int(y0), bk[2] - int(x0), bk[3] - int(y0)] if bk else None,
+            'colorCabeza': colk,
         }
         print(nom, 'r=%.0f' % r, 'SIN CARA' if sin else '')
     else:

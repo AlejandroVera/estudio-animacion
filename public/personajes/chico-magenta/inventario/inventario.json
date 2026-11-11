@@ -1,5 +1,11 @@
 {
  "radioBase": 372.5922704512266,
+ "bocaBase": [
+  -0.1584,
+  0.4912,
+  0.2711,
+  0.5556
+ ],
  "cuerpos": {
   "p_agotado": {
    "w": 368,
@@ -12,6 +18,17 @@
    "pies": 1102,
    "tipo": "pie",
    "sinCara": true,
+   "boca": [
+    187,
+    250,
+    236,
+    257
+   ],
+   "colorCabeza": [
+    220,
+    47,
+    189
+   ],
    "desc": "de pie, hundido y agotado, brazos colgando"
   },
   "p_andando": {
@@ -25,6 +42,17 @@
    "pies": 1100,
    "tipo": "pie",
    "sinCara": false,
+   "boca": [
+    161,
+    263,
+    233,
+    273
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "andando, dando un paso"
   },
   "p_aplaude": {
@@ -38,6 +66,17 @@
    "pies": 1189,
    "tipo": "pie",
    "sinCara": false,
+   "boca": [
+    171,
+    279,
+    248,
+    291
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "aplaudiendo"
   },
   "p_bolsillos": {
@@ -51,6 +90,17 @@
    "pies": 1187,
    "tipo": "pie",
    "sinCara": false,
+   "boca": [
+    169,
+    278,
+    245,
+    290
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "de pie tranquilo, manos en los bolsillos (reposo)"
   },
   "p_celebra": {
@@ -64,6 +114,17 @@
    "pies": 1139,
    "tipo": "pie",
    "sinCara": false,
+   "boca": [
+    318,
+    266,
+    392,
+    277
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "celebrando, los dos puños arriba"
   },
   "p_cruzado": {
@@ -77,6 +138,17 @@
    "pies": 1190,
    "tipo": "pie",
    "sinCara": false,
+   "boca": [
+    170,
+    280,
+    247,
+    292
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "brazos cruzados"
   },
   "p_cuclillas": {
@@ -90,6 +162,17 @@
    "pies": 1191,
    "tipo": "pie",
    "sinCara": false,
+   "boca": [
+    277,
+    334,
+    369,
+    347
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "en cuclillas"
   },
   "p_dinero": {
@@ -103,6 +186,17 @@
    "pies": 1187,
    "tipo": "pie",
    "sinCara": false,
+   "boca": [
+    287,
+    278,
+    363,
+    290
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "enseña un fajo de billetes"
   },
   "p_encoge": {
@@ -116,6 +210,17 @@
    "pies": 1191,
    "tipo": "pie",
    "sinCara": false,
+   "boca": [
+    315,
+    276,
+    391,
+    288
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "se encoge de hombros, palmas arriba (no sé)"
   },
   "p_facepalm": {
@@ -129,6 +234,17 @@
    "pies": 1188,
    "tipo": "pie",
    "sinCara": true,
+   "boca": [
+    170,
+    280,
+    247,
+    291
+   ],
+   "colorCabeza": [
+    220,
+    49,
+    189
+   ],
    "desc": "se tapa la cara con la mano (facepalm)"
   },
   "p_furioso": {
@@ -142,6 +258,17 @@
    "pies": 1179,
    "tipo": "pie",
    "sinCara": false,
+   "boca": [
+    184,
+    298,
+    266,
+    310
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "furioso, puños apretados, pisotón"
   },
   "p_horror": {
@@ -155,6 +282,17 @@
    "pies": 1189,
    "tipo": "pie",
    "sinCara": false,
+   "boca": [
+    224,
+    274,
+    300,
+    285
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "manos en las mejillas, horrorizado"
   },
   "p_idea": {
@@ -168,6 +306,17 @@
    "pies": 1188,
    "tipo": "pie",
    "sinCara": false,
+   "boca": [
+    247,
+    278,
+    323,
+    290
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "índice arriba, ¡tengo una idea!"
   },
   "p_inocente": {
@@ -181,6 +330,17 @@
    "pies": 1167,
    "tipo": "pie",
    "sinCara": false,
+   "boca": [
+    166,
+    275,
+    241,
+    286
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "manos a la espalda, inocente"
   },
   "p_jarras": {
@@ -194,6 +354,17 @@
    "pies": 1187,
    "tipo": "pie",
    "sinCara": false,
+   "boca": [
+    193,
+    278,
+    269,
+    290
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "brazos en jarras"
   },
   "p_mano_pecho": {
@@ -207,6 +378,17 @@
    "pies": 1179,
    "tipo": "pie",
    "sinCara": false,
+   "boca": [
+    170,
+    276,
+    246,
+    287
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "mano en el pecho (sincero, emocionado)"
   },
   "p_maquina": {
@@ -220,6 +402,17 @@
    "pies": 1186,
    "tipo": "pie",
    "sinCara": false,
+   "boca": [
+    169,
+    278,
+    245,
+    290
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "se frota las manos maquinando"
   },
   "p_movil_ensena": {
@@ -233,6 +426,17 @@
    "pies": 1190,
    "tipo": "pie",
    "sinCara": false,
+   "boca": [
+    260,
+    279,
+    337,
+    291
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "enseña la pantalla del móvil"
   },
   "p_movil_mira": {
@@ -246,6 +450,17 @@
    "pies": 1143,
    "tipo": "pie",
    "sinCara": true,
+   "boca": [
+    176,
+    302,
+    216,
+    308
+   ],
+   "colorCabeza": [
+    219,
+    53,
+    187
+   ],
    "desc": "mira el móvil con las dos manos"
   },
   "p_ok": {
@@ -259,6 +474,17 @@
    "pies": 1173,
    "tipo": "pie",
    "sinCara": false,
+   "boca": [
+    169,
+    275,
+    244,
+    286
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "gesto de OK con la mano"
   },
   "p_papel": {
@@ -272,6 +498,17 @@
    "pies": 1188,
    "tipo": "pie",
    "sinCara": false,
+   "boca": [
+    172,
+    278,
+    248,
+    290
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "sujeta un papel delante"
   },
   "p_piensa": {
@@ -285,6 +522,17 @@
    "pies": 1169,
    "tipo": "pie",
    "sinCara": false,
+   "boca": [
+    177,
+    262,
+    250,
+    273
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "mano en la barbilla, pensando"
   },
   "p_pistolas": {
@@ -298,6 +546,17 @@
    "pies": 1179,
    "tipo": "pie",
    "sinCara": false,
+   "boca": [
+    226,
+    276,
+    302,
+    287
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "señala con las dos manos como pistolas (chulo)"
   },
   "p_portatil": {
@@ -311,6 +570,17 @@
    "pies": 1181,
    "tipo": "pie",
    "sinCara": false,
+   "boca": [
+    168,
+    277,
+    244,
+    288
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "sujeta un portátil abierto"
   },
   "p_pulgar": {
@@ -324,6 +594,17 @@
    "pies": 1182,
    "tipo": "pie",
    "sinCara": false,
+   "boca": [
+    244,
+    278,
+    320,
+    289
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "pulgar arriba"
   },
   "p_pulgar_abajo": {
@@ -337,6 +618,17 @@
    "pies": 1187,
    "tipo": "pie",
    "sinCara": false,
+   "boca": [
+    169,
+    280,
+    246,
+    292
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "pulgar abajo"
   },
   "p_rasca": {
@@ -350,6 +642,17 @@
    "pies": 1151,
    "tipo": "pie",
    "sinCara": false,
+   "boca": [
+    168,
+    270,
+    242,
+    281
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "se rasca la cabeza (duda)"
   },
   "p_reloj": {
@@ -363,6 +666,17 @@
    "pies": 1174,
    "tipo": "pie",
    "sinCara": false,
+   "boca": [
+    168,
+    276,
+    243,
+    288
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "se mira el reloj de la muñeca (prisa)"
   },
   "p_rodillas": {
@@ -376,6 +690,17 @@
    "pies": 1154,
    "tipo": "pie",
    "sinCara": false,
+   "boca": [
+    202,
+    321,
+    291,
+    334
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "de rodillas suplicando, manos juntas"
   },
   "p_salta": {
@@ -389,6 +714,17 @@
    "pies": 1062,
    "tipo": "pie",
    "sinCara": false,
+   "boca": [
+    352,
+    254,
+    422,
+    264
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "salta de alegría"
   },
   "p_saluda": {
@@ -402,6 +738,17 @@
    "pies": 1153,
    "tipo": "pie",
    "sinCara": false,
+   "boca": [
+    166,
+    272,
+    241,
+    283
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "saluda con la mano"
   },
   "p_senala_camara": {
@@ -415,6 +762,17 @@
    "pies": 1192,
    "tipo": "pie",
    "sinCara": false,
+   "boca": [
+    185,
+    280,
+    261,
+    291
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "señala a la cámara (tú)"
   },
   "p_senala_lado": {
@@ -428,6 +786,17 @@
    "pies": 1189,
    "tipo": "pie",
    "sinCara": false,
+   "boca": [
+    378,
+    280,
+    455,
+    292
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "señala a un lado con el brazo estirado"
   },
   "p_stop": {
@@ -441,6 +810,17 @@
    "pies": 1189,
    "tipo": "pie",
    "sinCara": false,
+   "boca": [
+    251,
+    279,
+    328,
+    291
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "palma delante: ¡para!"
   },
   "p_suplica": {
@@ -454,6 +834,17 @@
    "pies": 1180,
    "tipo": "pie",
    "sinCara": false,
+   "boca": [
+    172,
+    277,
+    248,
+    288
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "manos juntas, por favor"
   },
   "p_tachan": {
@@ -467,6 +858,17 @@
    "pies": 1177,
    "tipo": "pie",
    "sinCara": false,
+   "boca": [
+    409,
+    276,
+    485,
+    287
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "¡tachán! los dos brazos arriba abiertos"
   },
   "p_tapa_boca": {
@@ -480,6 +882,8 @@
    "pies": 1185,
    "tipo": "pie",
    "sinCara": true,
+   "boca": null,
+   "colorCabeza": null,
    "desc": "se tapa la boca (ups)"
   },
   "p_tapa_ojos": {
@@ -493,6 +897,17 @@
    "pies": 1189,
    "tipo": "pie",
    "sinCara": true,
+   "boca": [
+    216,
+    280,
+    293,
+    292
+   ],
+   "colorCabeza": [
+    216,
+    57,
+    189
+   ],
    "desc": "se tapa los ojos (no quiero mirar)"
   },
   "p_taza": {
@@ -506,6 +921,17 @@
    "pies": 1174,
    "tipo": "pie",
    "sinCara": false,
+   "boca": [
+    293,
+    276,
+    369,
+    288
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "sujeta una taza"
   },
   "p_telefono": {
@@ -519,6 +945,17 @@
    "pies": 1188,
    "tipo": "pie",
    "sinCara": false,
+   "boca": [
+    222,
+    278,
+    298,
+    290
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "habla por teléfono"
   },
   "p_yo": {
@@ -532,6 +969,17 @@
    "pies": 1190,
    "tipo": "pie",
    "sinCara": false,
+   "boca": [
+    222,
+    279,
+    299,
+    291
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "se señala a sí mismo (¿yo?)"
   },
   "s_aburrido": {
@@ -545,6 +993,17 @@
    "pies": 1176,
    "tipo": "sentado",
    "sinCara": true,
+   "boca": [
+    226,
+    333,
+    287,
+    343
+   ],
+   "colorCabeza": [
+    218,
+    50,
+    189
+   ],
    "desc": "sentado, cara apoyada en las manos, aburrido"
   },
   "s_celebra": {
@@ -558,6 +1017,17 @@
    "pies": 1179,
    "tipo": "sentado",
    "sinCara": false,
+   "boca": [
+    319,
+    308,
+    404,
+    320
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "sentado celebrando, puños arriba"
   },
   "s_come": {
@@ -571,6 +1041,17 @@
    "pies": 1162,
    "tipo": "sentado",
    "sinCara": false,
+   "boca": [
+    172,
+    280,
+    249,
+    292
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "sentado comiendo de un táper"
   },
   "s_cruzado": {
@@ -584,6 +1065,17 @@
    "pies": 1182,
    "tipo": "sentado",
    "sinCara": false,
+   "boca": [
+    170,
+    278,
+    246,
+    290
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "sentado con brazos cruzados"
   },
   "s_encoge": {
@@ -597,6 +1089,17 @@
    "pies": 1187,
    "tipo": "sentado",
    "sinCara": false,
+   "boca": [
+    295,
+    279,
+    371,
+    290
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "sentado encogiéndose de hombros"
   },
   "s_facepalm": {
@@ -610,6 +1113,17 @@
    "pies": 1190,
    "tipo": "sentado",
    "sinCara": true,
+   "boca": [
+    174,
+    284,
+    254,
+    296
+   ],
+   "colorCabeza": [
+    215,
+    58,
+    189
+   ],
    "desc": "sentado tapándose la cara"
   },
   "s_hundido": {
@@ -623,6 +1137,17 @@
    "pies": 1175,
    "tipo": "sentado",
    "sinCara": false,
+   "boca": [
+    227,
+    274,
+    303,
+    285
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "tirado en el sofá, despatarrado"
   },
   "s_mando": {
@@ -636,6 +1161,17 @@
    "pies": 1189,
    "tipo": "sentado",
    "sinCara": false,
+   "boca": [
+    203,
+    312,
+    289,
+    325
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "sentado con el mando de la tele"
   },
   "s_mantita": {
@@ -649,6 +1185,17 @@
    "pies": 1187,
    "tipo": "sentado",
    "sinCara": false,
+   "boca": [
+    218,
+    357,
+    316,
+    371
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "sentado con una mantita en las piernas"
   },
   "s_movil": {
@@ -662,6 +1209,17 @@
    "pies": 1171,
    "tipo": "sentado",
    "sinCara": true,
+   "boca": [
+    254,
+    327,
+    304,
+    333
+   ],
+   "colorCabeza": [
+    219,
+    57,
+    189
+   ],
    "desc": "sentado mirando el móvil"
   },
   "s_periodico": {
@@ -675,6 +1233,17 @@
    "pies": 1185,
    "tipo": "sentado",
    "sinCara": false,
+   "boca": [
+    265,
+    290,
+    344,
+    302
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "sentado leyendo el periódico"
   },
   "s_portatil": {
@@ -688,6 +1257,17 @@
    "pies": 1189,
    "tipo": "sentado",
    "sinCara": false,
+   "boca": [
+    226,
+    282,
+    303,
+    294
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "sentado con el portátil"
   },
   "s_pulgar": {
@@ -701,6 +1281,17 @@
    "pies": 1192,
    "tipo": "sentado",
    "sinCara": false,
+   "boca": [
+    250,
+    297,
+    331,
+    310
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "sentado con el pulgar arriba"
   },
   "s_relajado": {
@@ -714,6 +1305,17 @@
    "pies": 1161,
    "tipo": "sentado",
    "sinCara": false,
+   "boca": [
+    269,
+    290,
+    348,
+    302
+   ],
+   "colorCabeza": [
+    218,
+    64,
+    193
+   ],
    "desc": "sentado relajado, manos tras la cabeza y pierna cruzada"
   },
   "s_reposo": {
@@ -727,6 +1329,17 @@
    "pies": 1175,
    "tipo": "sentado",
    "sinCara": false,
+   "boca": [
+    223,
+    275,
+    299,
+    287
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "sentado tranquilo"
   },
   "s_senala": {
@@ -740,6 +1353,17 @@
    "pies": 1192,
    "tipo": "sentado",
    "sinCara": false,
+   "boca": [
+    234,
+    295,
+    314,
+    307
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "sentado señalando a cámara"
   },
   "s_taza": {
@@ -753,6 +1377,17 @@
    "pies": 1091,
    "tipo": "sentado",
    "sinCara": false,
+   "boca": [
+    242,
+    286,
+    319,
+    298
+   ],
+   "colorCabeza": [
+    217,
+    64,
+    193
+   ],
    "desc": "sentado con una taza"
   },
   "t_aburrido": {
@@ -766,6 +1401,8 @@
    "pies": 457,
    "tipo": "tumbado",
    "sinCara": true,
+   "boca": null,
+   "colorCabeza": null,
    "desc": "tumbado boca arriba aburrido, manos tras la cabeza"
   },
   "t_duerme": {
@@ -779,6 +1416,8 @@
    "pies": 690,
    "tipo": "tumbado",
    "sinCara": true,
+   "boca": null,
+   "colorCabeza": null,
    "desc": "tumbado durmiendo con una manta"
   },
   "t_movil": {
@@ -792,6 +1431,8 @@
    "pies": 578,
    "tipo": "tumbado",
    "sinCara": true,
+   "boca": null,
+   "colorCabeza": null,
    "desc": "tumbado mirando el móvil"
   },
   "t_suelo": {
@@ -805,6 +1446,17 @@
    "pies": 557,
    "tipo": "tumbado",
    "sinCara": true,
+   "boca": [
+    405,
+    397,
+    498,
+    415
+   ],
+   "colorCabeza": [
+    220,
+    47,
+    189
+   ],
    "desc": "tirado en el suelo boca abajo, derrotado"
   }
  },
