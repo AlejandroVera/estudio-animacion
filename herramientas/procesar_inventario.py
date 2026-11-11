@@ -26,7 +26,8 @@ os.makedirs(os.path.join(OUT, 'cuerpos'), exist_ok=True)
 os.makedirs(os.path.join(OUT, 'capas'), exist_ok=True)
 
 # Fondos blancos a respetar (papel, taza, periódico… son blancos de verdad)
-CON_BLANCO = {'p_papel', 's_periodico', 'p_taza', 's_taza', 's_come', 'p_portatil', 's_portatil'}
+PIES_ALTOS = {'p_salta', 's_relajado', 's_hundido', 'p_furioso', 'p_andando'}
+CON_BLANCO = {'p_papel', 's_periodico', 'p_taza', 's_taza', 's_come'}
 
 
 def rgb(p):
@@ -74,7 +75,7 @@ def quitar_fondo(a, nombre):
     borde = set(np.unique(np.concatenate([lab[0], lab[-1], lab[:, 0], lab[:, -1]]))) - {0}
     fondo = np.isin(lab, list(borde))
     fondo0 = fondo.copy()
-    if nombre not in CON_BLANCO:
+    if True:
         # huecos encerrados: blancos grandes que no son ojos (dentro de la cabeza) ni zapatillas
         h = a.shape[0]
         cab = medir(a, nombre)
@@ -88,6 +89,15 @@ def quitar_fondo(a, nombre):
                 continue
             if cy > h * 0.84:
                 continue  # zapatillas
+            if nombre in PIES_ALTOS and cy > h * 0.55:
+                continue  # zapatilla levantada (salto, pierna cruzada…)
+            if nombre in ('p_papel', 's_periodico'):
+                continue
+            if nombre in CON_BLANCO:
+                # taza, papel, táper… son blancos de verdad: solo se borran huecos alargados
+                # (el blanco entre el brazo y el cuerpo)
+                if (ys.max() - ys.min() + 1) < 1.3 * (xs.max() - xs.min() + 1):
+                    continue
             # una zapatilla (o cualquier cosa blanca del dibujo) toca el fondo tras su contorno;
             # un hueco entre brazo y cuerpo está rodeado de dibujo
             comp = lab == i
