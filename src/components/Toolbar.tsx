@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react'
 import { download, exportMp4 } from '../export/exportMp4'
+import { zipDeImagenes } from '../export/imagenes'
 import type { Project } from '../model/types'
 import { useStore } from '../store'
 
@@ -19,6 +20,7 @@ export function Toolbar({ onGuion }: { onGuion: () => void }) {
   const fileRef = useRef<HTMLInputElement>(null)
   const [progress, setProgress] = useState<number | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [zipando, setZipando] = useState(false)
 
   const fileName = (project.name || 'proyecto').trim().replace(/[^\p{L}\p{N}_-]+/gu, '-')
 
@@ -114,6 +116,25 @@ export function Toolbar({ onGuion }: { onGuion: () => void }) {
           title="Descarga una copia del proyecto en tu ordenador"
         >
           Guardar copia
+        </button>
+        <button
+          className="btn"
+          disabled={zipando}
+          onClick={async () => {
+            setZipando(true)
+            try {
+              const { blob, n } = await zipDeImagenes(project)
+              if (!n) alert('Este proyecto todavía no tiene imágenes generadas.')
+              else download(blob, `${fileName}-imagenes.zip`)
+            } catch (e) {
+              alert(`No se pudieron reunir las imágenes: ${e instanceof Error ? e.message : e}`)
+            } finally {
+              setZipando(false)
+            }
+          }}
+          title="Descarga en un ZIP todos los dibujos de este proyecto (escenas, cambios de gesto, fondos, objetos y gestos a medida), en el orden en que salen"
+        >
+          {zipando ? 'Reuniendo…' : '🖼 Descargar imágenes'}
         </button>
         <button
           className="btn"

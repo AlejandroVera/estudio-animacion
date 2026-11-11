@@ -469,6 +469,12 @@ cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y
   tres/índice, «coment/suscr» → señalar, «hola» → saludar, «!» → susto/para; si no, de la lista de la
   emoción de la escena. Los gestos del guion son una postura y ocupan solo 1,2 s.
 
+- «🖼 DESCARGAR IMÁGENES» (barra de arriba, `src/export/imagenes.ts` + `zip.ts`, ZIP sin compresión y sin
+  dependencias): todos los dibujos del proyecto (de cada escena el original de la IA con su boca,
+  `imageIdOrig`; fondos, objetos y gestos a medida) numerados en el orden en que se ven
+  (primera clave de opacidad > 0,5) y con su descripción como nombre. Las imágenes viven en el IndexedDB
+  del navegador: solo están en el ordenador y navegador donde se generaron.
+
 ## Personajes por poses (método anterior, «Chico rosa (poses, anterior)»)
 La marioneta por piezas giradas quedaba robótica y Alejandro la descartó. Ahora el cuerpo entero es
 UNA pieza raíz `cuerpo` con muchos dibujos completos (poses: reposo, hablar_a/b/c, explicar,
