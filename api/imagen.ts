@@ -11,7 +11,7 @@ const FORMATOS = ['9:16', '16:9', '1:1', '4:5', '3:4']
 export async function POST(request: Request): Promise<Response> {
   if (!process.env.FAL_KEY) return json({ error: 'Falta FAL_KEY en Vercel.' }, 503)
   if (!claveOk(request)) return json({ error: 'clave' }, 401)
-  let body: { descripcion?: string; referencia?: string; formato?: string; tipo?: 'fondo' | 'libre' | 'objeto' | 'inserto'; hueco?: 'izq' | 'der'; variante?: number; referencias?: string[]; motor?: string }
+  let body: { descripcion?: string; referencia?: string; formato?: string; tipo?: 'fondo' | 'libre' | 'objeto' | 'inserto'; hueco?: 'izq' | 'der'; variante?: number; referencias?: string[]; motor?: string; mascara?: string }
   try {
     body = await request.json()
   } catch {
@@ -75,7 +75,7 @@ export async function POST(request: Request): Promise<Response> {
       headers: { authorization: `Key ${process.env.FAL_KEY}`, 'content-type': 'application/json' },
       body: JSON.stringify(
         gpt
-          ? { prompt, num_images: 1, image_size: tam, quality: body.motor === 'gpt-medium' ? 'medium' : 'low', input_fidelity: 'high', output_format: 'jpeg', ...(conRef ? { image_urls: [ref, ...otras] } : {}) }
+          ? { prompt, num_images: 1, image_size: tam, quality: body.motor === 'gpt-medium' ? 'medium' : 'low', input_fidelity: 'high', output_format: 'jpeg', ...(conRef && typeof body.mascara === 'string' && /^data:image\/png;base64,[A-Za-z0-9+/=]+$/.test(body.mascara) && body.mascara.length < 400000 ? { mask_image_url: body.mascara } : {}), ...(conRef ? { image_urls: [ref, ...otras] } : {}) }
           : { prompt, num_images: 1, aspect_ratio: formato, output_format: 'jpeg', ...(conRef ? { image_urls: [ref, ...otras] } : {}) },
       ),
     })
