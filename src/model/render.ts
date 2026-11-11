@@ -424,7 +424,8 @@ export function drawLayers(g: CanvasRenderingContext2D, project: Project, t: num
       // óvalo pintado por código sobre la imagen con la boca borrada (se llevaba el aro): se «desdibujaba».
       // (la de dientes apretados solo si se pide expresamente: con cada «e» parecía que gruñía)
       const cual = boca === 'O' || boca === 'o' ? 'o' : boca === 'dientes' ? 'dientes' : 'abierta'
-      const serie = hablando && l.cara ? bocaSerie(project, cual, l.cara.color) : null
+      // (solo si se le han encontrado los ojos: en un detalle de su mano o su rodilla la mancha magenta no es su cara)
+      const serie = hablando && l.cara && l.cara.ojos.length > 0 ? bocaSerie(project, cual, l.cara.color) : null
       if (serie && l.cara) {
         g.drawImage(orig ?? img, -l.w / 2, -l.h / 2, l.w, l.h)
         const c = l.cara
