@@ -1,6 +1,6 @@
 // Voz con ElevenLabs (usa la suscripción de la cuenta de la clave).
 //   GET  -> lista de voces de la cuenta
-//   POST {texto, voz} -> audio MP3
+//   POST {texto, voz, antes?, despues?} -> audio MP3 (antes/despues: contexto para rehacer una frase)
 // Variables en Vercel: ELEVENLABS_API_KEY, CLAVE_ESTUDIO
 
 import { claveOk } from './_clave.js'
@@ -37,7 +37,7 @@ export async function GET(request: Request): Promise<Response> {
 export async function POST(request: Request): Promise<Response> {
   const fallo = comprobar(request)
   if (fallo) return fallo
-  let body: { texto?: string; voz?: string; modelo?: string; tiempos?: boolean }
+  let body: { texto?: string; voz?: string; modelo?: string; tiempos?: boolean; antes?: string; despues?: string }
   try {
     body = await request.json()
   } catch {
@@ -53,7 +53,13 @@ export async function POST(request: Request): Promise<Response> {
   const res = await fetch(`${API}/text-to-speech/${voz}${ruta ? '/' + ruta : ''}?output_format=mp3_44100_128`, {
     method: 'POST',
     headers: { 'xi-api-key': process.env.ELEVENLABS_API_KEY!, 'content-type': 'application/json' },
-    body: JSON.stringify({ text: texto, model_id: modelo }),
+    // antes/despues: el texto que va alrededor, para que una frase rehecha suene con el mismo tono
+    body: JSON.stringify({
+      text: texto,
+      model_id: modelo,
+      ...(body.antes ? { previous_text: body.antes.slice(-1000) } : {}),
+      ...(body.despues ? { next_text: body.despues.slice(0, 1000) } : {}),
+    }),
   })
   if (!res.ok) return json({ error: await errorDe(res) }, 502)
   if (body.tiempos) {
