@@ -50,6 +50,9 @@ Ejemplo completo: `herramientas/shorts/domingo/` (3 shorts del vídeo «domingo�
   aunque `--frames` funcione).
 
 ## Lecciones
+- Revisar CADA rótulo terminado de escribir (fotograma en t0 + letras·0,045 + 0,25 s) y ampliado: en los rótulos
+  `D` la `y` es la parte de ARRIBA del texto, no su centro (el «4» del cartel quedaba en el borde de abajo); y que
+  todo lo que lleva texto dentro del dibujo (las dos pancartas) quepa en el encuadre: bajar el `marco` o mover `cx`.
 - Cada short tiene que entenderse SIN haber visto el largo: el guion del short 3 hablaba de «su banco» y «mis
   cursos» sin presentarlos y acababa en «entrenando algo que no sé hacer» (¿qué?). Se reescribió con un remate
   propio y concreto (él en el mismo banco, sin aguantar dos minutos sin el móvil). Antes de grabar, leer el guion

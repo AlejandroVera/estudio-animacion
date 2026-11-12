@@ -150,10 +150,10 @@
     {
      "t0": 12.37,
      "texto": "4",
-     "x": 580,
-     "y": 60,
+     "x": 588,
+     "y": 42,
      "color": "rojo",
-     "tam": 70,
+     "tam": 62,
      "centro": true,
      "fijo": true,
      "en_dibujo": true
@@ -201,9 +201,9 @@
      "t0": 14.96,
      "texto": "Foto: ActuaLitté (CC BY-SA 2.0)",
      "x": 540,
-     "y": 1860,
+     "y": 1850,
      "color": "blanco",
-     "tam": 26,
+     "tam": 32,
      "centro": true,
      "fijo": true,
      "t1": 16.79
@@ -338,8 +338,8 @@
    "fondo": "../../video/ejemplo_domingo/img/es_ofi_doble.jpg",
    "boca": "../../video/ejemplo_domingo/img/es_ofi_doble_boca.png",
    "boca_o": "../../video/ejemplo_domingo/img/es_ofi_doble_bocao.png",
-   "marco": 1.35,
-   "cx": 0.52,
+   "marco": 1.15,
+   "cx": 0.55,
    "cambios": [
     {
      "t": 34.32,
