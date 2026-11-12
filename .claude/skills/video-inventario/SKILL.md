@@ -324,3 +324,7 @@ Trabaja en una carpeta de proyecto en el scratchpad (`<proyecto>/img`, `<proyect
   cajón, avión). Montaje: `herramientas/video/efectos.py video.mp4 efectos.json salida.mp4` (cada efecto a -27 LUFS,
   unos 7 dB por debajo de la voz, en su segundo exacto; el final a -15 LUFS para YouTube). Ejemplo en
   `ejemplo_domingo/efectos/`.
+- 2026-11-12 «podría haber sonado el teclado cuando escribe, un poquito más, y un whoosh»: efectos a -24 LUFS (no -27);
+  tecleo (teclado o pantalla del móvil) en TODOS los planos donde escribe o aparece texto escribiéndose, recortado a
+  su plano (cuarto valor en efectos.json); whoosh suave (-3 dB, 0,18 s antes del corte) en los cambios de parte y en
+  los saltos grandes de sitio (al mito, a la rueda, a los boxes, a la sobremesa, al plano final), no en todos los cortes.
