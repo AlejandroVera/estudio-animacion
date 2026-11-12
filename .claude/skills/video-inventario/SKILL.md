@@ -299,3 +299,9 @@ Trabaja en una carpeta de proyecto en el scratchpad (`<proyecto>/img`, `<proyect
   Regla: para cada texto `fijo` medir el hueco en el FOTOGRAMA a tamaño real (recorte ampliado del sitio), centrar
   en él (`y` es la parte de ARRIBA del texto: y = centro del hueco − 0,6 × tam) y revisar todos con una hoja de
   recortes ampliados antes de entregar, no con la hoja pequeña de 0,75 s (ahí no se ve).
+- 2026-11-12 trozo 5: mismo método. Notas: listas de ejemplos («la cola del súper: móvil; el microondas: móvil; el
+  semáforo: móvil») = un plano por ejemplo con el gesto repetido en la palabra que se repite (todos sacan el móvil);
+  cifras de estudios con la fuente pequeña abajo («Fuente: Rastreator»); callbacks de imágenes ya hechas (la tarjeta
+  del 62 en la cama) no cuestan nada; para cambios solo de ojos, `variante.py --zona <cabeza> --min 50` (el
+  preparador protege la cabeza y los perdería). Remate final con aire: `"duracion"` mayor que la voz (el montador
+  rellena el audio con silencio) y el último cambio justo después de la última palabra.

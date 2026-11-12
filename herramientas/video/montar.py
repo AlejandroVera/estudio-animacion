@@ -523,7 +523,7 @@ if SOLO:
 n = int(DUR * FPS)
 cmd = ['ffmpeg', '-y', '-loglevel', 'error', '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-s', f'{W}x{H}', '-r', str(FPS),
        '-i', '-', '-i', os.path.join(BASE, plan['audio']), '-map', '0:v', '-map', '1:a', '-c:v', 'libx264', '-preset', 'medium', '-crf', '18',
-       '-pix_fmt', 'yuv420p', '-c:a', 'aac', '-b:a', '192k', '-shortest', OUT]
+       '-pix_fmt', 'yuv420p', '-af', 'apad', '-c:a', 'aac', '-b:a', '192k', '-shortest', OUT]  # apad: silencio al final si el plan dura más que la voz
 pr = subprocess.Popen(cmd, stdin=subprocess.PIPE)
 for i in range(n):
     try:

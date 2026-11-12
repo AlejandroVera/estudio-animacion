@@ -1,0 +1,398 @@
+{
+ "alineacion": "voz/trozo5.json",
+ "audio": "voz/trozo5.mp3",
+ "pantalon": "gris",
+ "sin_recolor": [
+  "es_cama_mini",
+  "es_salon_medita"
+ ],
+ "duracion": 62.4,
+ "planos": [
+  {
+   "t0": 0,
+   "fondo": "img/es_salon_prohibido.jpg",
+   "boca": "img/es_salon_prohibido_boca.png",
+   "boca_o": "img/es_salon_prohibido_bocao.png",
+   "cambios": [
+    {
+     "t": 1.42,
+     "fondo": "img/es_salon_prohibido_b.jpg"
+    }
+   ],
+   "boca_en": [
+    "img/es_salon_prohibido.jpg"
+   ],
+   "rotulos": [
+    {
+     "t0": 0.25,
+     "texto": "3.",
+     "x": 820,
+     "y": 110,
+     "color": "negro",
+     "tam": 120,
+     "centro": true,
+     "fijo": true
+    }
+   ]
+  },
+  {
+   "t0": 2.4,
+   "fondo": "img/es_super_cola.jpg",
+   "boca": "img/es_super_cola_boca.png",
+   "boca_o": "img/es_super_cola_bocao.png",
+   "cambios": [
+    {
+     "t": 3.55,
+     "fondo": "img/es_super_cola_b.jpg"
+    }
+   ],
+   "boca_en": [
+    "img/es_super_cola.jpg"
+   ]
+  },
+  {
+   "t0": 4.4,
+   "fondo": "img/es_cocina_micro.jpg",
+   "boca": "img/es_cocina_micro_boca.png",
+   "boca_o": "img/es_cocina_micro_bocao.png",
+   "cambios": [
+    {
+     "t": 6.45,
+     "fondo": "img/es_cocina_micro_b.jpg"
+    }
+   ],
+   "boca_en": [
+    "img/es_cocina_micro.jpg"
+   ],
+   "rotulos": [
+    {
+     "t0": 5.33,
+     "texto": "1:30",
+     "x": 1506,
+     "y": 562,
+     "color": "verde",
+     "tam": 34,
+     "centro": true,
+     "fijo": true
+    }
+   ]
+  },
+  {
+   "t0": 7.35,
+   "fondo": "img/es_calle_semaforo.jpg",
+   "boca": "img/es_calle_semaforo_boca.png",
+   "boca_o": "img/es_calle_semaforo_bocao.png",
+   "cambios": [
+    {
+     "t": 8.53,
+     "fondo": "img/es_calle_semaforo_b.jpg"
+    }
+   ],
+   "boca_en": [
+    "img/es_calle_semaforo.jpg"
+   ]
+  },
+  {
+   "t0": 9.4,
+   "fondo": "img/es_sofa_movil.jpg",
+   "boca": "img/es_sofa_movil_boca.png",
+   "boca_o": "img/es_sofa_movil_bocao.png",
+   "cambios": [
+    {
+     "t": 12.05,
+     "fondo": "img/es_sofa_movil_b.jpg"
+    }
+   ],
+   "boca_en": [
+    "img/es_sofa_movil.jpg"
+   ],
+   "rotulos": [
+    {
+     "t0": 9.75,
+     "texto": "Fuente: Rastreator",
+     "x": 30,
+     "y": 1020,
+     "color": "negro",
+     "tam": 30,
+     "centro": false,
+     "fijo": true
+    },
+    {
+     "t0": 11.78,
+     "texto": "+4 HORAS AL DÍA",
+     "x": 1450,
+     "y": 140,
+     "color": "rojo",
+     "tam": 80,
+     "centro": true,
+     "fijo": true
+    }
+   ]
+  },
+  {
+   "t0": 13.1,
+   "fondo": "img/es_ofi_movil.jpg",
+   "boca": "img/es_ofi_movil_boca.png",
+   "boca_o": "img/es_ofi_movil_bocao.png",
+   "cambios": [
+    {
+     "t": 14.88,
+     "fondo": "img/es_ofi_movil_b.jpg"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 14.9,
+     "texto": "0 €",
+     "x": 600,
+     "y": 200,
+     "color": "rojo",
+     "tam": 120,
+     "centro": true,
+     "fijo": true
+    }
+   ]
+  },
+  {
+   "t0": 15.55,
+   "fondo": "img/es_balcon_hamaca.jpg",
+   "boca": "img/es_balcon_hamaca_boca.png",
+   "boca_o": "img/es_balcon_hamaca_bocao.png",
+   "cambios": [
+    {
+     "t": 16.88,
+     "fondo": "img/es_balcon_hamaca_b.jpg"
+    }
+   ]
+  },
+  {
+   "t0": 18.1,
+   "fondo": "img/es_balcon_optim.jpg",
+   "boca": "img/es_balcon_optim_boca.png",
+   "boca_o": "img/es_balcon_optim_bocao.png"
+  },
+  {
+   "t0": 19.35,
+   "fondo": "img/es_cama_mini.jpg",
+   "boca": "img/es_cama_mini_boca.png",
+   "boca_o": "img/es_cama_mini_bocao.png",
+   "rotulos": [
+    {
+     "t0": 19.6,
+     "texto": "62",
+     "x": 602,
+     "y": 105,
+     "color": "negro",
+     "tam": 60,
+     "centro": true,
+     "fijo": true
+    }
+   ]
+  },
+  {
+   "t0": 20.75,
+   "fondo": "img/es_salon_medita.jpg",
+   "boca": "img/es_salon_medita_boca.png",
+   "boca_o": "img/es_salon_medita_bocao.png",
+   "cambios": [
+    {
+     "t": 21.55,
+     "fondo": "img/es_salon_medita_b.jpg"
+    }
+   ]
+  },
+  {
+   "t0": 22.05,
+   "fondo": "img/es_ofi_siesta.jpg",
+   "habla": false,
+   "cambios": [
+    {
+     "t": 22.7,
+     "fondo": "img/es_ofi_siesta_b.jpg"
+    }
+   ]
+  },
+  {
+   "t0": 24.15,
+   "fondo": "img/es_boxes.jpg",
+   "boca": "img/es_boxes_boca.png",
+   "boca_o": "img/es_boxes_bocao.png",
+   "cambios": [
+    {
+     "t": 27.22,
+     "fondo": "img/es_boxes_b.jpg"
+    }
+   ],
+   "boca_en": [
+    "img/es_boxes.jpg"
+   ]
+  },
+  {
+   "t0": 27.9,
+   "fondo": "img/br_evolucion.jpg",
+   "habla": false,
+   "alterna": {
+    "imgs": [
+     "img/br_evolucion.jpg",
+     "img/br_evolucion_b.jpg"
+    ],
+    "cada": 0.3
+   },
+   "rotulos": [
+    {
+     "t0": 29.1,
+     "texto": "MULTiTAREA",
+     "x": 700,
+     "y": 90,
+     "color": "negro",
+     "tam": 90,
+     "centro": true,
+     "fijo": true
+    }
+   ]
+  },
+  {
+   "t0": 31.7,
+   "fondo": "img/br_conejo.jpg",
+   "habla": false,
+   "alterna": {
+    "imgs": [
+     "img/br_conejo.jpg",
+     "img/br_conejo_b.jpg"
+    ],
+    "cada": 0.4
+   }
+  },
+  {
+   "t0": 35.95,
+   "fondo": "img/es_sofa_multi.jpg",
+   "boca": "img/es_sofa_multi_boca.png",
+   "boca_o": "img/es_sofa_multi_bocao.png",
+   "cambios": [
+    {
+     "t": 37.45,
+     "fondo": "img/es_sofa_multi_b.jpg"
+    },
+    {
+     "t": 38.05,
+     "fondo": "img/es_sofa_multi_c.jpg"
+    },
+    {
+     "t": 38.78,
+     "fondo": "img/es_sofa_multi_d.jpg"
+    }
+   ]
+  },
+  {
+   "t0": 40.85,
+   "fondo": "img/es_sofa_ardilla.jpg",
+   "boca": "img/es_sofa_ardilla_boca.png",
+   "boca_o": "img/es_sofa_ardilla_bocao.png",
+   "alterna": {
+    "imgs": [
+     "img/es_sofa_ardilla.jpg",
+     "img/es_sofa_ardilla_b.jpg"
+    ],
+    "cada": 0.3,
+    "hasta": 43.8
+   },
+   "cambios": [
+    {
+     "t": 43.8,
+     "fondo": "img/es_sofa_ardilla_c.jpg"
+    }
+   ]
+  },
+  {
+   "t0": 44.4,
+   "fondo": "img/es_bib_nietzsche.jpg",
+   "boca": "img/es_bib_nietzsche_boca.png",
+   "boca_o": "img/es_bib_nietzsche_bocao.png",
+   "zoom": 1.08,
+   "cambios": [
+    {
+     "t": 47.05,
+     "fondo": "img/es_bib_nietzsche_b.jpg"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 45.7,
+     "texto": "NiETZSCHE",
+     "x": 560,
+     "y": 100,
+     "color": "negro",
+     "tam": 80,
+     "centro": true,
+     "fijo": true,
+     "caja": true
+    }
+   ]
+  },
+  {
+   "t0": 47.6,
+   "fondo": "img/es_parque_banco.jpg",
+   "boca": "img/es_parque_banco_boca.png",
+   "boca_o": "img/es_parque_banco_bocao.png",
+   "alterna": {
+    "imgs": [
+     "img/es_parque_banco.jpg",
+     "img/es_parque_banco_b.jpg"
+    ],
+    "cada": 0.25
+   }
+  },
+  {
+   "t0": 50.0,
+   "fondo": "img/br_movil_banco.jpg",
+   "habla": false,
+   "alterna": {
+    "imgs": [
+     "img/br_movil_banco_b.jpg",
+     "img/br_movil_banco.jpg"
+    ],
+    "cada": 0.09,
+    "desde": 50.2,
+    "hasta": 51.2
+   }
+  },
+  {
+   "t0": 51.9,
+   "fondo": "img/es_parque_banco_c.jpg",
+   "boca": "img/es_parque_banco_boca.png",
+   "boca_o": "img/es_parque_banco_bocao.png"
+  },
+  {
+   "t0": 54.6,
+   "fondo": "img/br_abuelo_banco.jpg",
+   "habla": false,
+   "alterna": {
+    "imgs": [
+     "img/br_abuelo_banco.jpg",
+     "img/br_abuelo_banco_b.jpg"
+    ],
+    "cada": 0.6
+   }
+  },
+  {
+   "t0": 57.3,
+   "fondo": "img/es_banco_abuelo.jpg",
+   "boca": "img/es_banco_abuelo_boca.png",
+   "boca_o": "img/es_banco_abuelo_bocao.png",
+   "cambios": [
+    {
+     "t": 58.58,
+     "fondo": "img/es_banco_abuelo_b.jpg"
+    },
+    {
+     "t": 60.62,
+     "fondo": "img/es_banco_abuelo_c.jpg"
+    }
+   ],
+   "boca_en": [
+    "img/es_banco_abuelo.jpg",
+    "img/es_banco_abuelo_b.jpg"
+   ]
+  }
+ ]
+}
