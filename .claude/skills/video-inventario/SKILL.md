@@ -141,4 +141,11 @@ Trabaja en una carpeta de proyecto en el scratchpad (`<proyecto>/img`, `<proyect
   de rendir…): como mucho 2-3 planos seguidos en el mismo sitio. Medidas: calle `x 0.72, pie 1010, alto 680`;
   cocina `x 0.72, pie 1000, alto 640`; gimnasio `x 0.74, pie 1000, alto 700`; biblioteca `zoom 1.08, x 0.74,
   pie 960, alto 700` (el dibujo trae marco blanco). Rótulos que contrasten con la pared (blanco sobre oscuro).
+- 2026-11-12: «no tiene que estar siempre él hablando»: mete PLANOS DE RECURSO (B-roll) con él HACIENDO lo que
+  cuenta, sin hablar (`"habla": false`): leyendo el libro en la biblioteca, con la taza en la cocina, intentando
+  levantar una pesa, corriendo en la cinta sin poder parar. Se dibujan EDITANDO el fondo vacío de ese sitio (primera
+  referencia) con el personaje como segunda referencia («ADD ONLY: the character from the second reference…»), así
+  es el mismo lugar; acércate con `zoom` a donde está él. Si hace una acción repetida (correr, andar), segunda pose
+  con `variante.py --zona` (la zona en fracciones de la imagen: mide dónde está él antes) y `"alterna"` cada
+  ~0,16 s. Uno de cada 4-5 planos, en los verbos de acción.
 

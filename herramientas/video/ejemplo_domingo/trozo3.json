@@ -247,6 +247,36 @@
   },
   {
    "t0": 36.043,
+   "fondo": "img/br_biblioteca_lee.jpg",
+   "habla": false,
+   "zoom": 1.45,
+   "cx": 0.37,
+   "cy": 0.45,
+   "rotulos": [
+    {
+     "t0": 36.344,
+     "texto": "100 PÁGiNAS",
+     "x": 1480,
+     "y": 150,
+     "color": "blanco",
+     "tam": 80,
+     "centro": true,
+     "fijo": true
+    },
+    {
+     "t0": 37.643,
+     "texto": "3 MESES",
+     "x": 1480,
+     "y": 280,
+     "color": "rojo",
+     "tam": 90,
+     "centro": true,
+     "fijo": true
+    }
+   ]
+  },
+  {
+   "t0": 38.843,
    "fondo": "img/sofa.jpg",
    "x": 0.5,
    "pie": 965,
@@ -254,35 +284,11 @@
    "largo": 1050,
    "eventos": [
     {
-     "t": 36.043,
-     "cuerpo": "s_reposo",
-     "ojos": "o_frente"
-    },
-    {
      "t": 38.843,
      "cuerpo": "t_duerme"
     }
    ],
-   "rotulos": [
-    {
-     "t0": 36.344,
-     "texto": "100 PÁGiNAS",
-     "x": 420,
-     "y": 130,
-     "color": "negro",
-     "tam": 80,
-     "centro": true
-    },
-    {
-     "t0": 37.643,
-     "texto": "3 MESES",
-     "x": 420,
-     "y": 250,
-     "color": "rojo",
-     "tam": 90,
-     "centro": true
-    }
-   ],
+   "rotulos": [],
    "objetos": [
     {
      "t0": 39.493,
@@ -470,6 +476,11 @@
   },
   {
    "t0": 61.843,
+   "fondo": "img/br_cocina_taza.jpg",
+   "habla": false
+  },
+  {
+   "t0": 62.85,
    "fondo": "img/taza.jpg",
    "habla": false
   },
@@ -594,13 +605,16 @@
   },
   {
    "t0": 83.443,
+   "fondo": "img/br_gym_pesa.jpg",
+   "habla": false,
+   "zoom": 1.5,
+   "cx": 0.62,
+   "cy": 0.62
+  },
+  {
+   "t0": 86.144,
    "fondo": "img/gimnasio.jpg",
    "eventos": [
-    {
-     "t": 83.443,
-     "cuerpo": "p_encoge",
-     "ojos": "o_esceptico"
-    },
     {
      "t": 86.144,
      "cuerpo": "p_yo",
@@ -647,16 +661,26 @@
      "t": 90.143,
      "cuerpo": "p_stop",
      "ojos": "o_frente"
-    },
-    {
-     "t": 91.643,
-     "cuerpo": "p_andando",
-     "ojos": "o_agotado"
     }
    ],
    "x": 0.74,
    "pie": 1000,
    "alto": 700
+  },
+  {
+   "t0": 91.643,
+   "fondo": "img/br_gym_cinta.jpg",
+   "habla": false,
+   "alterna": {
+    "imgs": [
+     "img/br_gym_cinta.jpg",
+     "img/br_gym_cinta_b.jpg"
+    ],
+    "cada": 0.16
+   },
+   "zoom": 1.5,
+   "cx": 0.3,
+   "cy": 0.5
   },
   {
    "t0": 93.844,
