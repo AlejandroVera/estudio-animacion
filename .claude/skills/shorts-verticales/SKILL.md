@@ -50,6 +50,10 @@ Ejemplo completo: `herramientas/shorts/domingo/` (3 shorts del vídeo «domingo�
   aunque `--frames` funcione).
 
 ## Lecciones
+- Cada short tiene que entenderse SIN haber visto el largo: el guion del short 3 hablaba de «su banco» y «mis
+  cursos» sin presentarlos y acababa en «entrenando algo que no sé hacer» (¿qué?). Se reescribió con un remate
+  propio y concreto (él en el mismo banco, sin aguantar dos minutos sin el móvil). Antes de grabar, leer el guion
+  como si fuera la primera vez.
 - Revisar la ANATOMÍA de cada dibujo reutilizado (brazos y manos): `es_bano_pancarta_b` tiene TRES brazos y se
   coló; en el short 1 se quitó ese cambio. Si hace falta el gesto, redibujarlo pidiendo «exactly two arms».
 - Al ampliar en vertical, si el dibujo corta al personaje, la IA le inventa la parte de abajo (pantalón corto,

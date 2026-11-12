@@ -28,3 +28,5 @@ es_gym_espejo rgeL7fbxtc 2400
 es_gym_senal P3ENAjP42C 2400
 br_abuelo_banco w4hOi1O7EI 2400
 es_banco_abuelo jUXlOH4LD0 2400
+es_parque_banco LwBgXBNswO 2400
+es_ofi_humo ov9t9Sb829 2400
