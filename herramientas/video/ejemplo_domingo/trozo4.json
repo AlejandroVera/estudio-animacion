@@ -1,0 +1,394 @@
+{
+ "alineacion": "voz/trozo4.json",
+ "audio": "voz/trozo4.mp3",
+ "pantalon": "gris",
+ "planos": [
+  {
+   "t0": 0,
+   "fondo": "img/es_ofi_doble.jpg",
+   "boca": "img/es_ofi_doble_boca.png",
+   "boca_o": "img/es_ofi_doble_bocao.png",
+   "cambios": [
+    {
+     "t": 1.48,
+     "fondo": "img/es_ofi_doble_b.jpg"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 0.15,
+     "texto": "2.",
+     "x": 900,
+     "y": 190,
+     "color": "negro",
+     "tam": 110,
+     "centro": true,
+     "fijo": true
+    }
+   ]
+  },
+  {
+   "t0": 3.2,
+   "fondo": "img/es_ofi_jefa.jpg",
+   "boca": "img/es_ofi_jefa_boca.png",
+   "boca_o": "img/es_ofi_jefa_bocao.png",
+   "alterna": {
+    "imgs": [
+     "img/es_ofi_jefa.jpg",
+     "img/es_ofi_jefa_b.jpg"
+    ],
+    "cada": 0.35
+   }
+  },
+  {
+   "t0": 5.95,
+   "fondo": "img/es_ofi_puerta.jpg",
+   "boca": "img/es_ofi_puerta_boca.png",
+   "boca_o": "img/es_ofi_puerta_bocao.png",
+   "cambios": [
+    {
+     "t": 7.3,
+     "fondo": "img/es_ofi_puerta_b.jpg"
+    }
+   ]
+  },
+  {
+   "t0": 8.1,
+   "fondo": "img/es_sofa_mini.jpg",
+   "boca": "img/es_sofa_mini_boca.png",
+   "boca_o": "img/es_sofa_mini_bocao.png",
+   "cambios": [
+    {
+     "t": 8.5,
+     "fondo": "img/es_sofa_mini_b.jpg"
+    },
+    {
+     "t": 9.98,
+     "fondo": "img/es_sofa_mini_c.jpg"
+    }
+   ]
+  },
+  {
+   "t0": 10.85,
+   "fondo": "img/es_cama_mini.jpg",
+   "boca": "img/es_cama_mini_boca.png",
+   "boca_o": "img/es_cama_mini_bocao.png",
+   "cambios": [
+    {
+     "t": 13.05,
+     "fondo": "img/es_cama_mini_b.jpg"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 11.48,
+     "texto": "62",
+     "x": 600,
+     "y": 150,
+     "color": "negro",
+     "tam": 60,
+     "centro": true,
+     "fijo": true,
+     "t1": 13.05
+    },
+    {
+     "t0": 13.08,
+     "texto": "4",
+     "x": 580,
+     "y": 60,
+     "color": "rojo",
+     "tam": 70,
+     "centro": true,
+     "fijo": true
+    }
+   ]
+  },
+  {
+   "t0": 13.9,
+   "fondo": "img/es_cama_mini_c.jpg",
+   "boca": "img/es_cama_mini_boca.png",
+   "boca_o": "img/es_cama_mini_bocao.png",
+   "cambios": [
+    {
+     "t": 15.85,
+     "fondo": "img/es_cama_mini_d.jpg"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 14.55,
+     "texto": "TÓXICO",
+     "x": 1400,
+     "y": 120,
+     "color": "verde",
+     "tam": 110,
+     "centro": true,
+     "fijo": true
+    },
+    {
+     "t0": 13.9,
+     "texto": "4",
+     "x": 600,
+     "y": 120,
+     "color": "rojo",
+     "tam": 70,
+     "centro": true,
+     "fijo": true
+    }
+   ]
+  },
+  {
+   "t0": 16.95,
+   "fondo": "img/es_bib_mito.jpg",
+   "boca": "img/es_bib_mito_boca.png",
+   "boca_o": "img/es_bib_mito_bocao.png",
+   "zoom": 1.08,
+   "cambios": [
+    {
+     "t": 18.8,
+     "fondo": "img/es_bib_mito_b.jpg"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 18.8,
+     "texto": "PROMETEO",
+     "x": 640,
+     "y": 100,
+     "color": "negro",
+     "tam": 100,
+     "centro": true,
+     "fijo": true,
+     "caja": true
+    }
+   ]
+  },
+  {
+   "t0": 20.8,
+   "fondo": "img/br_prometeo.jpg",
+   "habla": false,
+   "cambios": [
+    {
+     "t": 23.08,
+     "fondo": "img/br_prometeo_b.jpg"
+    }
+   ],
+   "alterna": {
+    "imgs": [
+     "img/br_prometeo_b.jpg",
+     "img/br_prometeo_c.jpg"
+    ],
+    "cada": 0.3,
+    "desde": 23.7,
+    "hasta": 25.3
+   }
+  },
+  {
+   "t0": 25.3,
+   "fondo": "img/br_prometeo_noche.jpg",
+   "habla": false,
+   "cambios": [
+    {
+     "t": 27.3,
+     "fondo": "img/br_prometeo_b.jpg"
+    }
+   ],
+   "alterna": {
+    "imgs": [
+     "img/br_prometeo_b.jpg",
+     "img/br_prometeo_c.jpg"
+    ],
+    "cada": 0.3,
+    "desde": 27.9,
+    "hasta": 29.05
+   }
+  },
+  {
+   "t0": 29.05,
+   "fondo": "img/es_ofi_cadena.jpg",
+   "boca": "img/es_ofi_cadena_boca.png",
+   "boca_o": "img/es_ofi_cadena_bocao.png",
+   "alterna": {
+    "imgs": [
+     "img/es_ofi_cadena.jpg",
+     "img/es_ofi_cadena_b.jpg"
+    ],
+    "cada": 0.18
+   }
+  },
+  {
+   "t0": 31.8,
+   "fondo": "img/es_roca_aguila.jpg",
+   "boca": "img/es_roca_aguila_boca.png",
+   "boca_o": "img/es_roca_aguila_bocao.png",
+   "alterna": {
+    "imgs": [
+     "img/es_roca_aguila.jpg",
+     "img/es_roca_aguila_b.jpg"
+    ],
+    "cada": 0.35,
+    "desde": 32.9
+   }
+  },
+  {
+   "t0": 33.95,
+   "fondo": "img/br_prompul.jpg",
+   "habla": false,
+   "alterna": {
+    "imgs": [
+     "img/br_prompul_b.jpg",
+     "img/br_prompul.jpg"
+    ],
+    "cada": 0.09,
+    "desde": 35.36
+   }
+  },
+  {
+   "t0": 36.25,
+   "fondo": "img/br_muneca_b.jpg",
+   "habla": false,
+   "alterna": {
+    "imgs": [
+     "img/br_muneca_b.jpg",
+     "img/br_muneca.jpg"
+    ],
+    "cada": 0.09,
+    "desde": 36.25,
+    "hasta": 37.2
+   },
+   "rotulos": [
+    {
+     "t0": 36.3,
+     "texto": "ENHORABUENA",
+     "x": 960,
+     "y": 70,
+     "color": "negro",
+     "tam": 110,
+     "centro": true,
+     "fijo": true
+    },
+    {
+     "t0": 38.93,
+     "texto": "+12%",
+     "x": 972,
+     "y": 430,
+     "color": "negro",
+     "tam": 42,
+     "centro": true,
+     "fijo": true
+    }
+   ]
+  },
+  {
+   "t0": 40.8,
+   "fondo": "img/es_salon_rueda.jpg",
+   "boca": "img/es_salon_rueda_boca.png",
+   "boca_o": "img/es_salon_rueda_bocao.png",
+   "alterna": {
+    "imgs": [
+     "img/es_salon_rueda.jpg",
+     "img/es_salon_rueda_b.jpg"
+    ],
+    "cada": 0.2,
+    "hasta": 45.7
+   },
+   "cambios": [
+    {
+     "t": 45.7,
+     "fondo": "img/es_salon_rueda_c.jpg"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 41.25,
+     "texto": "EXPLOTACIÓN",
+     "x": 470,
+     "y": 130,
+     "color": "rojo",
+     "tam": 90,
+     "centro": true,
+     "fijo": true
+    },
+    {
+     "t0": 45.7,
+     "texto": "LiBERTAD",
+     "x": 470,
+     "y": 270,
+     "color": "verde",
+     "tam": 100,
+     "centro": true,
+     "fijo": true
+    }
+   ]
+  },
+  {
+   "t0": 46.5,
+   "fondo": "img/es_ofi_doble.jpg",
+   "boca": "img/es_ofi_doble_boca.png",
+   "boca_o": "img/es_ofi_doble_bocao.png",
+   "cambios": [
+    {
+     "t": 47.1,
+     "fondo": "img/es_ofi_doble_b.jpg"
+    },
+    {
+     "t": 47.74,
+     "fondo": "img/es_ofi_doble_c.jpg"
+    },
+    {
+     "t": 49.88,
+     "fondo": "img/es_ofi_doble_d.jpg"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 49.9,
+     "texto": "HUELGA",
+     "x": 425,
+     "y": 140,
+     "color": "negro",
+     "tam": 44,
+     "centro": true,
+     "fijo": true
+    },
+    {
+     "t0": 49.9,
+     "texto": "HUELGA",
+     "x": 1745,
+     "y": 215,
+     "color": "negro",
+     "tam": 44,
+     "centro": true,
+     "fijo": true
+    }
+   ]
+  },
+  {
+   "t0": 50.45,
+   "fondo": "img/es_bano_pancarta.jpg",
+   "boca": "img/es_bano_pancarta_boca.png",
+   "boca_o": "img/es_bano_pancarta_bocao.png",
+   "cambios": [
+    {
+     "t": 52.8,
+     "fondo": "img/es_bano_pancarta_b.jpg"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 50.5,
+     "texto": "HUELGA",
+     "x": 1180,
+     "y": 320,
+     "color": "negro",
+     "tam": 60,
+     "centro": true,
+     "fijo": true
+    }
+   ]
+  }
+ ],
+ "sin_recolor": [
+  "es_cama_mini"
+ ]
+}

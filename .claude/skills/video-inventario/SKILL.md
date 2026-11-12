@@ -220,3 +220,14 @@ Trabaja en una carpeta de proyecto en el scratchpad (`<proyecto>/img`, `<proyect
   «llegas», encogido de hombros mirando a cámara en «quién». Si un dibujo mueve la cabeza (cuerpo entero), su
   propia boca con `"bocas": {"img/X_c.jpg": ["img/X_c_boca.png", "img/X_c_bocao.png"]}`. Si la variante pierde la
   cara nueva (el diff solo copió los brazos), pegar el dibujo editado en una caja alrededor de él con borde suave.
+- 2026-11-12 trozo 4 («ahora está perfecto, sigue esa línea»): plantilla de cómo se plantea un trozo. Cada frase =
+  una escena dibujada con un gag literal o una metáfora visual clara, que sigue el sitio anterior o vuelve a algo ya
+  visto: «jefe y empleado a la vez» = él dos veces en la oficina (uno con corbata); «jefe interior» = un mini-él con
+  corbata en su hombro que le dice que no, que luego le enseña una diana (objetivos), un contador (pasos) y una
+  tarjeta con «62» y un «4» rojo (sueño, nota), echando humo verde en «tóxico»; Prometeo = escenas de mito en el
+  mismo trazo (de día, de noche, el águila picando a golpes); «el águila es él mismo» = él encadenado y el águila con
+  SU cabeza; la pulsera en la muñeca de Prometeo con «+12%» en la pantalla; «explotación vivida como libertad» =
+  rueda de hámster en su salón, al final con los brazos abiertos; «no puedes hacer huelga» = los dos él con
+  pancartas; el espejo con pancarta. Los callbacks (la oficina del principio, la pulsera, el 62) atan el vídeo.
+  `"sin_recolor": ["es_cama_mini"]` en el plan cuando el dibujo tiene cosas azules que no son su pantalón (edredón):
+  si no, el montador las pasa a gris y sale un rectángulo.

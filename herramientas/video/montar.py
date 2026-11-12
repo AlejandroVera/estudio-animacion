@@ -72,7 +72,10 @@ def pantalon_escena(nombre):
 def fondo(nombre, zoom, cx, cy, encima=None):
     """Fondo a 1920x1080 con encuadre (zoom y centro en fracciones). `encima`: capa RGBA del mismo tamaño que
     el dibujo (la boca abierta dibujada de esa escena)."""
-    im = pantalon_escena(nombre) if os.path.basename(nombre).startswith(('es_', 'br_')) else img(nombre).convert('RGB')
+    # «sin_recolor»: dibujos con cosas azules que no son su pantalón (el edredón de la cama)
+    recolor = os.path.basename(nombre).startswith(('es_', 'br_')) and not any(
+        os.path.basename(nombre).startswith(p) for p in plan.get('sin_recolor', []))
+    im = pantalon_escena(nombre) if recolor else img(nombre).convert('RGB')
     if encima:
         im = im.convert('RGBA')
         im.alpha_composite(img(encima).resize(im.size, Image.LANCZOS))
