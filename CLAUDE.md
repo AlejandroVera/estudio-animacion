@@ -465,6 +465,11 @@ cada 1,5-3,5 s en la palabra fuerte; entre medias el cuerpo está 100 % quieto y
   capa `tipo` (ojos/boca/extra), `x,y,w,h` y `desc` (`herramientas/inventario_desc.json`). Ids de Magnific en
   `herramientas/inventario_magnific.txt`. Pendiente: «modo inventario» (plano maestro del lugar sin él + estas
   piezas pegadas: los cambios de postura y cara no gastan) y generar lo que falte bajo demanda.
+- VÍDEOS POR EL MÉTODO INVENTARIO (cómo se hacen ahora los vídeos de Alejandro, fuera de la web): skill
+  `.claude/skills/video-inventario/SKILL.md` (flujo, formato del plan, medidas y LECCIONES APRENDIDAS: cada
+  corrección de Alejandro se apunta ahí) y herramientas en `herramientas/video/` (`montar.py`, `voz.py`,
+  `variante.py`, `reajustar.py`; ejemplo completo en `ejemplo_domingo/`). `api/voz.ts` acepta `antes`/`despues`
+  (contexto para rehacer una frase con el mismo tono).
 - DIRECTOR IA (`api/actuar.ts`, lo llama `dirigir` en `voices.ts` al generar voces): recibe las palabras
   de cada escena, la emoción y el catálogo `DESCRIPCIONES` (qué expresa cada postura) y devuelve en qué
   palabra cambia y a qué postura según lo que dice, y `miradas` (catálogo `MIRADAS`) en otras palabras; las claves caen 0,08 s antes de esa palabra. Si

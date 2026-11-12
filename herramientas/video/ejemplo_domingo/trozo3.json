@@ -1,0 +1,725 @@
+{
+ "alineacion": "voz/trozo3.json",
+ "audio": "voz/trozo3.mp3",
+ "pantalon": "gris",
+ "duracion": 99.9,
+ "planos": [
+  {
+   "t0": 0,
+   "fondo": "img/fabrica.jpg",
+   "habla": false,
+   "rotulos": [
+    {
+     "t0": 0.75,
+     "texto": "40 AÑOS",
+     "x": 1500,
+     "y": 120,
+     "color": "rojo",
+     "tam": 110,
+     "centro": true,
+     "fijo": true
+    }
+   ],
+   "alterna": {
+    "imgs": [
+     "img/fabrica.jpg",
+     "img/fabrica_b.jpg"
+    ],
+    "cada": 0.55
+   }
+  },
+  {
+   "t0": 3.05,
+   "fondo": "img/fabrica_encargado.jpg",
+   "habla": false,
+   "alterna": {
+    "imgs": [
+     "img/fabrica_encargado.jpg",
+     "img/fabrica_encargado_b.jpg"
+    ],
+    "cada": 0.28,
+    "desde": 3.6
+   }
+  },
+  {
+   "t0": 7.35,
+   "fondo": "img/fabrica_sirena.jpg",
+   "habla": false,
+   "rotulos": [
+    {
+     "t0": 7.75,
+     "texto": "18:00",
+     "x": 330,
+     "y": 70,
+     "color": "rojo",
+     "tam": 100,
+     "centro": true,
+     "fijo": true
+    }
+   ],
+   "alterna": {
+    "imgs": [
+     "img/fabrica_sirena.jpg",
+     "img/fabrica_sirena_b.jpg"
+    ],
+    "cada": 0.3,
+    "hasta": 9.6
+   }
+  },
+  {
+   "t0": 10.05,
+   "fondo": "img/abuelo_sofa.jpg",
+   "habla": false,
+   "rotulos": [
+    {
+     "t0": 12.95,
+     "texto": "2 HORAS",
+     "x": 330,
+     "y": 90,
+     "color": "negro",
+     "tam": 100,
+     "centro": true,
+     "fijo": true
+    },
+    {
+     "t0": 13.75,
+     "texto": "sin móvil",
+     "x": 1560,
+     "y": 110,
+     "color": "rojo",
+     "tam": 70,
+     "centro": true,
+     "fijo": true
+    },
+    {
+     "t0": 14.45,
+     "texto": "sin pódcast",
+     "x": 1560,
+     "y": 230,
+     "color": "rojo",
+     "tam": 70,
+     "centro": true,
+     "fijo": true
+    },
+    {
+     "t0": 15.45,
+     "texto": "sin NADA",
+     "x": 1560,
+     "y": 350,
+     "color": "rojo",
+     "tam": 70,
+     "centro": true,
+     "fijo": true
+    }
+   ],
+   "parpadeo": "img/abuelo_sofa_b.jpg"
+  },
+  {
+   "t0": 16.45,
+   "fondo": "img/abuelo_nino.jpg",
+   "habla": false,
+   "objetos": [
+    {
+     "t0": 17.2,
+     "img": "inv:capas/a_interrogacion.webp",
+     "x": 1840,
+     "y": 520,
+     "w": 70
+    }
+   ],
+   "cambios": [
+    {
+     "t": 17.6,
+     "fondo": "img/abuelo_nino_b.jpg"
+    }
+   ]
+  },
+  {
+   "t0": 18.75,
+   "fondo": "img/abuelo_sofa.jpg",
+   "habla": false,
+   "parpadeo": "img/abuelo_sofa_b.jpg"
+  },
+  {
+   "t0": 20.15,
+   "fondo": "img/salon.jpg",
+   "zoom": 1.13,
+   "cx": 0.5,
+   "cy": 0.6,
+   "x": 0.68,
+   "pie": 1000,
+   "alto": 720,
+   "eventos": [
+    {
+     "t": 20.15,
+     "cuerpo": "p_cruzado",
+     "ojos": "o_nervioso",
+     "extras": [
+      "a_sudor"
+     ]
+    },
+    {
+     "t": 22.15,
+     "cuerpo": "p_reloj",
+     "ojos": "o_mira_abajo",
+     "extras": []
+    }
+   ]
+  },
+  {
+   "t0": 24.15,
+   "fondo": "img/salon.jpg",
+   "zoom": 1.75,
+   "cx": 0.68,
+   "cy": 0.5,
+   "x": 0.68,
+   "pie": 1000,
+   "alto": 720,
+   "eventos": [
+    {
+     "t": 24.15,
+     "cuerpo": "p_rasca",
+     "ojos": "o_frente",
+     "extras": [
+      "a_interrogacion"
+     ]
+    }
+   ]
+  },
+  {
+   "t0": 26.55,
+   "fondo": "img/salon.jpg",
+   "zoom": 1.13,
+   "cx": 0.5,
+   "cy": 0.6,
+   "x": 0.72,
+   "pie": 1000,
+   "alto": 720,
+   "eventos": [
+    {
+     "t": 26.55,
+     "cuerpo": "p_idea",
+     "ojos": "o_frente"
+    },
+    {
+     "t": 32.55,
+     "cuerpo": "p_senala_lado",
+     "ojos": "o_mira_lado"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 31.1,
+     "texto": "BYUNG-CHUL HAN",
+     "x": 600,
+     "y": 40,
+     "color": "azul",
+     "tam": 80,
+     "centro": true,
+     "fijo": true
+    },
+    {
+     "t0": 31.1,
+     "t1": 33.2,
+     "texto": "Foto: ActuaLitté (CC BY-SA 2.0)",
+     "x": 560,
+     "y": 1030,
+     "color": "negro",
+     "tam": 22,
+     "centro": true,
+     "fijo": true
+    }
+   ],
+   "objetos": [
+    {
+     "t0": 31.1,
+     "t1": 33.2,
+     "img": "img/foto_han.png",
+     "x": 560,
+     "y": 560,
+     "w": 470
+    },
+    {
+     "t0": 33.25,
+     "img": "img/libro_titulo.png",
+     "x": 620,
+     "y": 600,
+     "w": 300
+    }
+   ]
+  },
+  {
+   "t0": 36.05,
+   "fondo": "img/sofa.jpg",
+   "x": 0.5,
+   "pie": 965,
+   "asiento": 650,
+   "largo": 1050,
+   "eventos": [
+    {
+     "t": 36.05,
+     "cuerpo": "s_reposo",
+     "ojos": "o_frente"
+    },
+    {
+     "t": 38.85,
+     "cuerpo": "t_duerme"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 36.35,
+     "texto": "100 PÁGiNAS",
+     "x": 420,
+     "y": 130,
+     "color": "negro",
+     "tam": 80,
+     "centro": true
+    },
+    {
+     "t0": 37.65,
+     "texto": "3 MESES",
+     "x": 420,
+     "y": 250,
+     "color": "rojo",
+     "tam": 90,
+     "centro": true
+    }
+   ],
+   "objetos": [
+    {
+     "t0": 39.5,
+     "img": "inv:capas/a_zzz.webp",
+     "x": 800,
+     "y": 300,
+     "w": 180
+    }
+   ]
+  },
+  {
+   "t0": 40.55,
+   "fondo": "img/salon.jpg",
+   "zoom": 1.75,
+   "cx": 0.68,
+   "cy": 0.5,
+   "x": 0.68,
+   "pie": 1000,
+   "alto": 720,
+   "eventos": [
+    {
+     "t": 40.55,
+     "cuerpo": "p_stop",
+     "ojos": "o_felices",
+     "boca": "b_sonrisa"
+    }
+   ]
+  },
+  {
+   "t0": 42.95,
+   "fondo": "img/salon.jpg",
+   "zoom": 1.13,
+   "cx": 0.5,
+   "cy": 0.6,
+   "x": 0.68,
+   "pie": 1000,
+   "alto": 720,
+   "eventos": [
+    {
+     "t": 42.95,
+     "cuerpo": "p_mano_pecho",
+     "ojos": "o_frente"
+    },
+    {
+     "t": 45.15,
+     "cuerpo": "p_idea",
+     "ojos": "o_frente"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 45.45,
+     "texto": "3 COSAS",
+     "x": 700,
+     "y": 150,
+     "color": "rojo",
+     "tam": 120,
+     "centro": true
+    }
+   ]
+  },
+  {
+   "t0": 46.35,
+   "fondo": "img/salon.jpg",
+   "zoom": 1.13,
+   "cx": 0.5,
+   "cy": 0.6,
+   "x": 0.68,
+   "pie": 1000,
+   "alto": 720,
+   "eventos": [
+    {
+     "t": 46.35,
+     "cuerpo": "p_ok",
+     "ojos": "o_frente"
+    },
+    {
+     "t": 47.75,
+     "cuerpo": "p_stop",
+     "ojos": "o_enfadado"
+    },
+    {
+     "t": 48.55,
+     "cuerpo": "p_pistolas",
+     "ojos": "o_ilusion",
+     "boca": "b_sonrisa_dientes"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 46.4,
+     "texto": "1.",
+     "x": 140,
+     "y": 80,
+     "color": "negro",
+     "tam": 130,
+     "fijo": true
+    },
+    {
+     "t0": 47.8,
+     "texto": "NO PUEDES",
+     "x": 600,
+     "y": 160,
+     "color": "rojo",
+     "tam": 100,
+     "centro": true,
+     "fijo": true
+    },
+    {
+     "t0": 48.6,
+     "texto": "TÚ PUEDES",
+     "x": 600,
+     "y": 300,
+     "color": "verde",
+     "tam": 100,
+     "centro": true,
+     "fijo": true
+    }
+   ]
+  },
+  {
+   "t0": 49.95,
+   "fondo": "img/fabrica_encargado.jpg",
+   "habla": false,
+   "rotulos": [
+    {
+     "t0": 51.75,
+     "texto": "NO",
+     "x": 760,
+     "y": 110,
+     "color": "rojo",
+     "tam": 150,
+     "centro": true,
+     "fijo": true
+    }
+   ],
+   "alterna": {
+    "imgs": [
+     "img/fabrica_encargado.jpg",
+     "img/fabrica_encargado_b.jpg"
+    ],
+    "cada": 0.28
+   }
+  },
+  {
+   "t0": 52.85,
+   "fondo": "img/oficina.jpg",
+   "x": 0.75,
+   "pie": 1000,
+   "alto": 720,
+   "eventos": [
+    {
+     "t": 52.85,
+     "cuerpo": "p_encoge",
+     "ojos": "o_frente"
+    },
+    {
+     "t": 60.05,
+     "ojos": "o_espirales"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 57.05,
+     "texto": "PUEDES SER LO QUE QUiERAS",
+     "x": 50,
+     "y": 110,
+     "color": "azul",
+     "tam": 48,
+     "fijo": true
+    },
+    {
+     "t0": 58.35,
+     "texto": "SAL DE TU ZONA DE CONFORT",
+     "x": 50,
+     "y": 220,
+     "color": "verde",
+     "tam": 48,
+     "fijo": true
+    },
+    {
+     "t0": 60.05,
+     "texto": "HOY VA A SER UN GRAN DÍA",
+     "x": 50,
+     "y": 330,
+     "color": "rojo",
+     "tam": 48,
+     "fijo": true
+    }
+   ]
+  },
+  {
+   "t0": 61.85,
+   "fondo": "img/taza.jpg",
+   "habla": false
+  },
+  {
+   "t0": 64.35,
+   "fondo": "img/oficina.jpg",
+   "x": 0.8,
+   "pie": 1000,
+   "alto": 720,
+   "eventos": [
+    {
+     "t": 64.35,
+     "cuerpo": "p_senala_lado",
+     "ojos": "o_frente"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 66.05,
+     "texto": "DiSCiPLiNA = NO",
+     "x": 1060,
+     "y": 200,
+     "color": "negro",
+     "tam": 44,
+     "centro": true,
+     "fijo": true
+    },
+    {
+     "t0": 68.65,
+     "texto": "RENDiMiENTO =",
+     "x": 1060,
+     "y": 290,
+     "color": "rojo",
+     "tam": 44,
+     "centro": true,
+     "fijo": true
+    },
+    {
+     "t0": 69.95,
+     "texto": "SÍ, PUEDES",
+     "x": 1060,
+     "y": 355,
+     "color": "rojo",
+     "tam": 44,
+     "centro": true,
+     "fijo": true
+    }
+   ]
+  },
+  {
+   "t0": 71.75,
+   "fondo": "img/salon.jpg",
+   "zoom": 1.13,
+   "cx": 0.5,
+   "cy": 0.6,
+   "x": 0.68,
+   "pie": 1000,
+   "alto": 720,
+   "eventos": [
+    {
+     "t": 71.75,
+     "cuerpo": "p_celebra",
+     "ojos": "o_felices",
+     "boca": "b_sonrisa_dientes"
+    },
+    {
+     "t": 72.85,
+     "cuerpo": "p_idea",
+     "ojos": "o_esceptico",
+     "boca": ""
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 73.35,
+     "texto": "TRAMPA",
+     "x": 700,
+     "y": 200,
+     "color": "rojo",
+     "tam": 120,
+     "centro": true
+    }
+   ]
+  },
+  {
+   "t0": 74.15,
+   "fondo": "img/salon.jpg",
+   "zoom": 1.75,
+   "cx": 0.68,
+   "cy": 0.5,
+   "x": 0.68,
+   "pie": 1000,
+   "alto": 720,
+   "eventos": [
+    {
+     "t": 74.15,
+     "cuerpo": "p_stop",
+     "ojos": "o_frente"
+    }
+   ]
+  },
+  {
+   "t0": 77.25,
+   "fondo": "img/castigo.jpg",
+   "habla": false,
+   "alterna": {
+    "imgs": [
+     "img/castigo.jpg",
+     "img/castigo_b.jpg"
+    ],
+    "cada": 0.35
+   }
+  },
+  {
+   "t0": 81.05,
+   "fondo": "img/castigo_furioso.jpg",
+   "habla": false,
+   "alterna": {
+    "imgs": [
+     "img/castigo_furioso.jpg",
+     "img/castigo_furioso_b.jpg"
+    ],
+    "cada": 0.25
+   }
+  },
+  {
+   "t0": 83.45,
+   "fondo": "img/salon.jpg",
+   "zoom": 1.13,
+   "cx": 0.5,
+   "cy": 0.6,
+   "x": 0.68,
+   "pie": 1000,
+   "alto": 720,
+   "eventos": [
+    {
+     "t": 83.45,
+     "cuerpo": "p_encoge",
+     "ojos": "o_esceptico"
+    },
+    {
+     "t": 86.15,
+     "cuerpo": "p_yo",
+     "ojos": "o_triste"
+    }
+   ]
+  },
+  {
+   "t0": 87.25,
+   "fondo": "img/salon.jpg",
+   "zoom": 1.75,
+   "cx": 0.68,
+   "cy": 0.5,
+   "x": 0.68,
+   "pie": 1000,
+   "alto": 720,
+   "eventos": [
+    {
+     "t": 87.25,
+     "cuerpo": "p_senala_camara",
+     "ojos": "o_enfadado"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 88.95,
+     "texto": "CULPA TUYA",
+     "x": 600,
+     "y": 200,
+     "color": "rojo",
+     "tam": 110,
+     "centro": true
+    }
+   ]
+  },
+  {
+   "t0": 90.15,
+   "fondo": "img/salon.jpg",
+   "zoom": 1.13,
+   "cx": 0.5,
+   "cy": 0.6,
+   "x": 0.68,
+   "pie": 1000,
+   "alto": 720,
+   "eventos": [
+    {
+     "t": 90.15,
+     "cuerpo": "p_stop",
+     "ojos": "o_frente"
+    },
+    {
+     "t": 91.65,
+     "cuerpo": "p_andando",
+     "ojos": "o_agotado"
+    }
+   ]
+  },
+  {
+   "t0": 93.85,
+   "fondo": "img/burro.jpg",
+   "habla": false,
+   "rotulos": [
+    {
+     "t0": 94.25,
+     "texto": "TU MEJOR VERSiÓN",
+     "x": 1400,
+     "y": 170,
+     "color": "rojo",
+     "tam": 70,
+     "centro": true,
+     "fijo": true
+    }
+   ],
+   "alterna": {
+    "imgs": [
+     "img/burro.jpg",
+     "img/burro_b.jpg"
+    ],
+    "cada": 0.3
+   }
+  },
+  {
+   "t0": 97.65,
+   "fondo": "img/salon.jpg",
+   "zoom": 1.75,
+   "cx": 0.68,
+   "cy": 0.45,
+   "x": 0.68,
+   "pie": 1000,
+   "alto": 720,
+   "eventos": [
+    {
+     "t": 97.65,
+     "cuerpo": "p_bolsillos",
+     "ojos": "o_en_blanco",
+     "boca": "b_triste",
+     "extras": [
+      "a_orejas_burro"
+     ]
+    }
+   ]
+  }
+ ]
+}

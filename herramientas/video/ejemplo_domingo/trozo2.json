@@ -1,0 +1,306 @@
+{
+ "alineacion": "voz/trozo2.json",
+ "audio": "voz/trozo2.mp3",
+ "pantalon": "gris",
+ "planos": [
+  {
+   "t0": 0,
+   "fondo": "img/pulsera.jpg",
+   "habla": false,
+   "rotulos": [
+    {
+     "t0": 3.9,
+     "texto": "HORA DE MOVERSE!",
+     "x": 960,
+     "y": 120,
+     "color": "rojo",
+     "tam": 110,
+     "centro": true
+    }
+   ]
+  },
+  {
+   "t0": 5.45,
+   "fondo": "img/sofa.jpg",
+   "x": 0.5,
+   "pie": 965,
+   "asiento": 650,
+   "eventos": [
+    {
+     "t": 5.45,
+     "cuerpo": "s_hundido",
+     "ojos": "o_triste"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 9.0,
+     "texto": "30 €",
+     "x": 1500,
+     "y": 200,
+     "color": "rojo",
+     "tam": 130,
+     "centro": true
+    }
+   ]
+  },
+  {
+   "t0": 10.3,
+   "fondo": "img/pulsera.jpg",
+   "habla": false,
+   "rotulos": [
+    {
+     "t0": 11.95,
+     "texto": "62",
+     "x": 975,
+     "y": 455,
+     "color": "blanco",
+     "tam": 80,
+     "centro": true
+    },
+    {
+     "t0": 12.65,
+     "texto": "CALiDAD DEL SUEÑO",
+     "x": 960,
+     "y": 120,
+     "color": "negro",
+     "tam": 90,
+     "centro": true
+    }
+   ]
+  },
+  {
+   "t0": 15.25,
+   "fondo": "img/sofa.jpg",
+   "zoom": 1.35,
+   "cx": 0.5,
+   "cy": 0.5,
+   "x": 0.5,
+   "pie": 965,
+   "asiento": 650,
+   "sombra": false,
+   "eventos": [
+    {
+     "t": 15.25,
+     "cuerpo": "s_facepalm"
+    },
+    {
+     "t": 16.85,
+     "cuerpo": "s_encoge",
+     "ojos": "o_triste",
+     "boca": "b_triste"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 15.5,
+     "t1": 16.85,
+     "texto": "SUSPENSO",
+     "x": 1500,
+     "y": 150,
+     "color": "rojo",
+     "tam": 120,
+     "centro": true
+    }
+   ]
+  },
+  {
+   "t0": 19.25,
+   "fondo": "img/movil_gym.jpg",
+   "habla": false
+  },
+  {
+   "t0": 21.6,
+   "fondo": "img/sofa.jpg",
+   "x": 0.5,
+   "pie": 965,
+   "asiento": 650,
+   "eventos": [
+    {
+     "t": 21.6,
+     "cuerpo": "s_senala",
+     "ojos": "o_esceptico"
+    },
+    {
+     "t": 22.5,
+     "cuerpo": "s_relajado",
+     "ojos": "o_felices",
+     "boca": "b_sonrisa"
+    }
+   ]
+  },
+  {
+   "t0": 24.78,
+   "fondo": "img/sofa.jpg",
+   "x": 0.5,
+   "pie": 965,
+   "asiento": 650,
+   "eventos": [
+    {
+     "t": 24.78,
+     "cuerpo": "s_portatil",
+     "ojos": "o_mira_abajo"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 27.4,
+     "texto": "EXCEL AVANZADO",
+     "x": 1500,
+     "y": 200,
+     "color": "verde",
+     "tam": 90,
+     "centro": true
+    }
+   ]
+  },
+  {
+   "t0": 28.3,
+   "fondo": "img/sofa.jpg",
+   "zoom": 1.35,
+   "cx": 0.5,
+   "cy": 0.5,
+   "x": 0.5,
+   "pie": 965,
+   "asiento": 650,
+   "sombra": false,
+   "eventos": [
+    {
+     "t": 28.3,
+     "cuerpo": "s_pulgar",
+     "boca": "b_sonrisa"
+    },
+    {
+     "t": 29.12,
+     "cuerpo": "s_encoge",
+     "ojos": "o_esceptico",
+     "boca": ""
+    }
+   ]
+  },
+  {
+   "t0": 30.18,
+   "fondo": "img/portatil_excel.jpg",
+   "habla": false,
+   "rotulos": [
+    {
+     "t0": 32.0,
+     "texto": "COSAS QUE NO VOY A HACER:",
+     "x": 640,
+     "y": 250,
+     "color": "negro",
+     "tam": 46
+    },
+    {
+     "t0": 32.5,
+     "texto": "- ir al gimnasio",
+     "x": 660,
+     "y": 330,
+     "color": "azul",
+     "tam": 44
+    },
+    {
+     "t0": 32.9,
+     "texto": "- leer ese libro",
+     "x": 660,
+     "y": 400,
+     "color": "azul",
+     "tam": 44
+    },
+    {
+     "t0": 33.3,
+     "texto": "- este curso",
+     "x": 660,
+     "y": 470,
+     "color": "azul",
+     "tam": 44
+    }
+   ]
+  },
+  {
+   "t0": 33.9,
+   "fondo": "img/oficina.jpg",
+   "x": 0.72,
+   "pie": 1000,
+   "alto": 720,
+   "eventos": [
+    {
+     "t": 33.9,
+     "cuerpo": "p_agotado"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 34.1,
+     "texto": "LUNES",
+     "x": 1400,
+     "y": 120,
+     "color": "rojo",
+     "tam": 120,
+     "centro": true
+    }
+   ]
+  },
+  {
+   "t0": 36.28,
+   "fondo": "img/oficina.jpg",
+   "x": 0.72,
+   "pie": 1000,
+   "alto": 720,
+   "eventos": [
+    {
+     "t": 36.28,
+     "cuerpo": "p_encoge",
+     "ojos": "o_frente"
+    },
+    {
+     "t": 38.75,
+     "cuerpo": "p_cruzado",
+     "ojos": "o_esceptico"
+    }
+   ]
+  },
+  {
+   "t0": 39.58,
+   "fondo": "img/pulsera.jpg",
+   "habla": false,
+   "rotulos": [
+    {
+     "t0": 39.8,
+     "texto": "¿y si...?",
+     "x": 975,
+     "y": 470,
+     "color": "blanco",
+     "tam": 34,
+     "centro": true
+    },
+    {
+     "t0": 40.7,
+     "texto": "SOLO SUGIERE",
+     "x": 960,
+     "y": 120,
+     "color": "negro",
+     "tam": 100,
+     "centro": true
+    }
+   ]
+  },
+  {
+   "t0": 41.5,
+   "fondo": "img/oficina.jpg",
+   "zoom": 1.75,
+   "cx": 0.72,
+   "cy": 0.5,
+   "x": 0.72,
+   "pie": 1000,
+   "alto": 720,
+   "eventos": [
+    {
+     "t": 41.5,
+     "cuerpo": "p_yo",
+     "ojos": "o_triste"
+    }
+   ]
+  }
+ ]
+}

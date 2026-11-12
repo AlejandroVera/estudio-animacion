@@ -1,0 +1,270 @@
+{
+ "alineacion": "voz/trozo1.json",
+ "audio": "voz/trozo1.mp3",
+ "planos": [
+  {
+   "t0": 0.0,
+   "fondo": "img/salon.jpg",
+   "x": 0.68,
+   "pie": 1000,
+   "alto": 720,
+   "eventos": [
+    {
+     "t": 0.0,
+     "cuerpo": "p_bolsillos"
+    },
+    {
+     "t": 0.863,
+     "cuerpo": "p_idea",
+     "ojos": "o_frente"
+    },
+    {
+     "t": 2.082,
+     "cuerpo": "p_stop",
+     "ojos": "o_enfadado"
+    }
+   ],
+   "zoom": 1.13,
+   "cy": 0.6,
+   "cx": 0.5
+  },
+  {
+   "t0": 3.026,
+   "fondo": "img/salon.jpg",
+   "zoom": 1.75,
+   "cx": 0.68,
+   "cy": 0.5,
+   "x": 0.68,
+   "pie": 1000,
+   "alto": 720,
+   "eventos": [
+    {
+     "t": 3.026,
+     "cuerpo": "p_tachan",
+     "ojos": "o_frente",
+     "boca": ""
+    },
+    {
+     "t": 5.092,
+     "cuerpo": "p_suplica",
+     "ojos": "o_cerrados",
+     "extras": [
+      "a_aureola"
+     ]
+    }
+   ],
+   "objetos": [
+    {
+     "t0": 5.448,
+     "img": "img/tibet_rec.png",
+     "x": 1480,
+     "y": 300,
+     "w": 520
+    }
+   ]
+  },
+  {
+   "t0": 6.226,
+   "fondo": "img/salon.jpg",
+   "x": 0.68,
+   "pie": 1000,
+   "alto": 720,
+   "eventos": [
+    {
+     "t": 6.226,
+     "cuerpo": "p_yo",
+     "ojos": "o_frente"
+    },
+    {
+     "t": 8.789,
+     "cuerpo": "p_ok",
+     "ojos": "o_guino",
+     "boca": "b_picara"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 8.789,
+     "texto": "VENTiLACiÓN",
+     "x": 1290,
+     "y": 170,
+     "color": "azul",
+     "tam": 90,
+     "centro": true
+    }
+   ],
+   "zoom": 1.13,
+   "cy": 0.6,
+   "cx": 0.5
+  },
+  {
+   "t0": 10.28,
+   "fondo": "img/sofa.jpg",
+   "x": 0.5,
+   "pie": 965,
+   "eventos": [
+    {
+     "t": 10.28,
+     "cuerpo": "s_mantita",
+     "ojos": "o_frente"
+    },
+    {
+     "t": 12.009,
+     "cuerpo": "s_cruzado",
+     "ojos": "o_esceptico"
+    },
+    {
+     "t": 13.384,
+     "cuerpo": "s_relajado",
+     "ojos": "o_felices",
+     "boca": "b_sonrisa"
+    }
+   ],
+   "asiento": 650
+  },
+  {
+   "t0": 14.116,
+   "fondo": "img/sofa.jpg",
+   "zoom": 1.5,
+   "cx": 0.5,
+   "cy": 0.52,
+   "x": 0.5,
+   "pie": 965,
+   "eventos": [
+    {
+     "t": 14.116,
+     "cuerpo": "s_reposo",
+     "ojos": "o_mira_arriba"
+    },
+    {
+     "t": 15.29,
+     "cuerpo": "s_aburrido"
+    },
+    {
+     "t": 16.126,
+     "cuerpo": "s_movil"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 14.475,
+     "t1": 16.126,
+     "texto": "10 MiN",
+     "x": 1500,
+     "y": 120,
+     "color": "rojo",
+     "tam": 120,
+     "centro": true
+    }
+   ],
+   "sombra": false,
+   "asiento": 650
+  },
+  {
+   "t0": 18.733,
+   "fondo": "img/movil_hora.jpg",
+   "habla": false
+  },
+  {
+   "t0": 19.591,
+   "fondo": "img/movil_tiempo.jpg",
+   "habla": false,
+   "rotulos": [
+    {
+     "t0": 20.097,
+     "texto": "BiLBAO",
+     "x": 1680,
+     "y": 300,
+     "color": "negro",
+     "tam": 100,
+     "centro": true
+    }
+   ]
+  },
+  {
+   "t0": 22.339,
+   "fondo": "img/movil_vacaciones.jpg",
+   "habla": false
+  },
+  {
+   "t0": 26.193,
+   "fondo": "img/sofa.jpg",
+   "x": 0.5,
+   "pie": 965,
+   "eventos": [
+    {
+     "t": 26.193,
+     "cuerpo": "s_portatil",
+     "ojos": "o_mira_abajo"
+    },
+    {
+     "t": 29.038,
+     "ojos": "o_susto",
+     "boca": "b_mueca"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 29.219,
+     "texto": "DOMiNGO",
+     "x": 960,
+     "y": 90,
+     "color": "rojo",
+     "tam": 130,
+     "centro": true
+    }
+   ],
+   "asiento": 650
+  },
+  {
+   "t0": 30.099,
+   "fondo": "img/portatil.jpg",
+   "habla": false,
+   "rotulos": [
+    {
+     "t0": 30.832,
+     "texto": "Perdona que te escriba",
+     "x": 1000,
+     "y": 470,
+     "color": "negro",
+     "tam": 54,
+     "centro": true
+    },
+    {
+     "t0": 31.725,
+     "texto": "en domingo...",
+     "x": 1000,
+     "y": 545,
+     "color": "negro",
+     "tam": 54,
+     "centro": true
+    }
+   ]
+  },
+  {
+   "t0": 32.383,
+   "fondo": "img/salon.jpg",
+   "zoom": 1.75,
+   "cx": 0.68,
+   "cy": 0.43,
+   "x": 0.68,
+   "pie": 1000,
+   "alto": 720,
+   "eventos": [
+    {
+     "t": 32.383,
+     "cuerpo": "p_yo",
+     "ojos": "o_susto",
+     "extras": [
+      "a_exclamacion"
+     ]
+    },
+    {
+     "t": 34.879,
+     "cuerpo": "p_facepalm"
+    }
+   ]
+  }
+ ],
+ "pantalon": "gris"
+}
