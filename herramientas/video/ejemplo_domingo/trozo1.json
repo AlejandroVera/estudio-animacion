@@ -224,20 +224,20 @@
     {
      "t0": 30.832,
      "texto": "Perdona que te escriba",
-     "x": 1000,
-     "y": 470,
+     "x": 620,
+     "y": 345,
      "color": "negro",
      "tam": 54,
-     "centro": true
+     "fijo": true
     },
     {
      "t0": 31.725,
      "texto": "en domingo...",
-     "x": 1000,
-     "y": 545,
+     "x": 620,
+     "y": 425,
      "color": "negro",
      "tam": 54,
-     "centro": true
+     "fijo": true
     }
    ]
   },

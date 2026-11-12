@@ -5,19 +5,28 @@
  "planos": [
   {
    "t0": 0,
-   "fondo": "img/pulsera.jpg",
+   "fondo": "img/pulsera_quieta.jpg",
    "habla": false,
    "rotulos": [
     {
-     "t0": 3.9,
-     "texto": "HORA DE MOVERSE!",
+     "t0": 3.95,
+     "texto": "HORA DE MOVERSE",
      "x": 960,
      "y": 120,
      "color": "rojo",
      "tam": 110,
      "centro": true
     }
-   ]
+   ],
+   "alterna": {
+    "imgs": [
+     "img/pulsera_vibra.jpg",
+     "img/pulsera.jpg"
+    ],
+    "cada": 0.09,
+    "desde": 2.55,
+    "hasta": 5.45
+   }
   },
   {
    "t0": 5.45,
@@ -46,17 +55,29 @@
   },
   {
    "t0": 10.3,
-   "fondo": "img/pulsera.jpg",
+   "fondo": "img/pulsera_quieta.jpg",
    "habla": false,
    "rotulos": [
     {
-     "t0": 11.95,
+     "t0": 12.05,
      "texto": "62",
-     "x": 975,
-     "y": 455,
+     "x": 988,
+     "y": 480,
      "color": "blanco",
      "tam": 80,
-     "centro": true
+     "centro": true,
+     "fijo": true
+    },
+    {
+     "t0": 14.15,
+     "t1": 14.35,
+     "texto": "62",
+     "x": 988,
+     "y": 480,
+     "color": "rojo",
+     "tam": 80,
+     "centro": true,
+     "fijo": true
     },
     {
      "t0": 12.65,
@@ -67,7 +88,16 @@
      "tam": 90,
      "centro": true
     }
-   ]
+   ],
+   "alterna": {
+    "imgs": [
+     "img/pulsera.jpg",
+     "img/pulsera_quieta.jpg"
+    ],
+    "cada": 0.09,
+    "desde": 11.95,
+    "hasta": 12.6
+   }
   },
   {
    "t0": 15.25,
@@ -186,34 +216,38 @@
     {
      "t0": 32.0,
      "texto": "COSAS QUE NO VOY A HACER:",
-     "x": 640,
-     "y": 250,
-     "color": "negro",
-     "tam": 46
+     "x": 600,
+     "y": 186,
+     "color": "blanco",
+     "tam": 36,
+     "fijo": true
     },
     {
      "t0": 32.5,
      "texto": "- ir al gimnasio",
-     "x": 660,
-     "y": 330,
+     "x": 735,
+     "y": 300,
      "color": "azul",
-     "tam": 44
+     "tam": 44,
+     "fijo": true
     },
     {
      "t0": 32.9,
      "texto": "- leer ese libro",
-     "x": 660,
-     "y": 400,
+     "x": 735,
+     "y": 370,
      "color": "azul",
-     "tam": 44
+     "tam": 44,
+     "fijo": true
     },
     {
      "t0": 33.3,
      "texto": "- este curso",
-     "x": 660,
-     "y": 470,
+     "x": 735,
+     "y": 440,
      "color": "azul",
-     "tam": 44
+     "tam": 44,
+     "fijo": true
     }
    ]
   },
@@ -262,17 +296,28 @@
   },
   {
    "t0": 39.58,
-   "fondo": "img/pulsera.jpg",
+   "fondo": "img/pulsera_quieta.jpg",
    "habla": false,
    "rotulos": [
     {
-     "t0": 39.8,
-     "texto": "¿y si...?",
-     "x": 975,
-     "y": 470,
+     "t0": 39.75,
+     "texto": "¿Y",
+     "x": 988,
+     "y": 455,
      "color": "blanco",
-     "tam": 34,
-     "centro": true
+     "tam": 48,
+     "centro": true,
+     "fijo": true
+    },
+    {
+     "t0": 39.95,
+     "texto": "Si?",
+     "x": 988,
+     "y": 520,
+     "color": "blanco",
+     "tam": 48,
+     "centro": true,
+     "fijo": true
     },
     {
      "t0": 40.7,
@@ -283,7 +328,16 @@
      "tam": 100,
      "centro": true
     }
-   ]
+   ],
+   "alterna": {
+    "imgs": [
+     "img/pulsera.jpg",
+     "img/pulsera_quieta.jpg"
+    ],
+    "cada": 0.09,
+    "desde": 39.7,
+    "hasta": 40.25
+   }
   },
   {
    "t0": 41.5,

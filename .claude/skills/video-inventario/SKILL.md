@@ -198,3 +198,12 @@ Trabaja en una carpeta de proyecto en el scratchpad (`<proyecto>/img`, `<proyect
   apariciones: listar cada rótulo/objeto/cambio con la palabra que suena en ese instante (deben caer en su
   palabra ±0,1 s) y cada plano con la frase que se oye mientras se ve.
 
+- 2026-11-12 «el texto no está bien en la pantalla del ordenador; la pulsera no se anima; los textos no entran en
+  sus espacios»: el montador APARTA los rótulos para no tapar al personaje y a otros rótulos, y eso sacaba de la
+  pantalla los textos que van DENTRO de algo (email del portátil, lista del Excel, pantalla de la pulsera).
+  Todo texto dentro de una pantalla/cartel lleva `"fijo": true`, coordenadas medidas en el dibujo (sin `centro`
+  si es un párrafo alineado a la izquierda) y tamaño que quepa en el hueco (en pantallas estrechas, una palabra
+  por línea). Los primeros planos de un objeto (b-roll) también se animan: la pulsera tiene una versión quieta
+  (sin rayas de vibración) y otra vibrando con la pantalla encendida, alternadas cada 0,09 s desde «vibra» y un
+  zumbido corto cuando aparece la cifra. «¡» y «!» en Coming Soon engrosada parecen una «I»: no usarlos en
+  rótulos. Tras `variante.py` mirar con zoom: pueden quedar restos fantasma de lo borrado.
