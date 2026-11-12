@@ -82,6 +82,26 @@ apoyo; manda esta sección. Ejemplo completo: `ejemplo_domingo/trozo3.json` y `t
 - Revisión antes de entregar: fotogramas sueltos de cada plano (`--frames`), hoja de todo el vídeo cada 0,75 s y
   recortes AMPLIADOS de cada texto `fijo`. Entregar con lo gastado y apuntar aquí cada corrección.
 
+### 5. Sonido: SIN música, con efectos puntuales
+- Alejandro NO quiere música (la de Magnific/Lyria le sonó «demasiado comercial»; no hacer música con Magnific).
+  Sí quiere EFECTOS DE SONIDO, por debajo de la voz y sin saturar.
+- Se generan con ElevenLabs Sound Effects a través de la web: `POST https://estudio-animacion-psi.vercel.app/api/voz`
+  con `{"efecto": "descripción corta en inglés", "duracion": 0.5-22}` → mp3. Máx. 6 peticiones a la vez (si no, 429).
+  Descripciones simples («short smartphone vibration buzz», «books falling onto a wooden floor»); las largas a
+  veces fallan (502): repetir con menos palabras.
+- Dónde: solo donde algo suena en la escena: vibraciones y dings del móvil/pulsera, sirenas, cosas que caen, cadenas,
+  jaulas, despertadores, animales, confeti, silbatos, coches, telas que se rasgan, cajones, aviones…; un golpe
+  dramático en las revelaciones; TECLEO (teclado o pantalla del móvil) en todos los planos donde escribe o aparece
+  texto escribiéndose; WHOOSH suave (-3 dB, 0,18 s antes del corte) en los cambios de parte y en los saltos grandes de
+  sitio, no en todos los cortes.
+- A TIEMPO: cada efecto en el segundo exacto de su gag (el tiempo global = inicio del trozo + tiempo del cambio o del
+  rótulo en su plan). El tecleo empieza con la PRIMERA letra que se escribe y acaba con la última: rótulo `t0` y
+  `t0 + letras × 0,045` del último texto (no al empezar el plano); recortarlo con el cuarto valor para que no pase
+  al plano siguiente.
+- Montaje: `herramientas/video/efectos.py video.mp4 efectos.json salida.mp4`, con `{"nivel": -24, "efectos":
+  [[segundo, "nombre", ganancia_dB, duración_máx], ...]}`; cada efecto a -24 LUFS y el resultado a -15 LUFS (YouTube),
+  sin recodificar el vídeo. Comprobar `max_volume` (por debajo de -1 dB). Ejemplo: `ejemplo_domingo/efectos/`.
+
 ## Piezas (todo en el repositorio)
 - `public/personajes/chico-magenta/inventario/` + `inventario.json`: 62 cuerpos (`p_*` de pie, `s_*` sentado sin
   silla, `t_*` tumbado) y capas de cabeza: ojos `o_*` (también emoji), bocas `b_*` (`b_habla_a`, `b_habla_e`,
@@ -328,3 +348,5 @@ Trabaja en una carpeta de proyecto en el scratchpad (`<proyecto>/img`, `<proyect
   tecleo (teclado o pantalla del móvil) en TODOS los planos donde escribe o aparece texto escribiéndose, recortado a
   su plano (cuarto valor en efectos.json); whoosh suave (-3 dB, 0,18 s antes del corte) en los cambios de parte y en
   los saltos grandes de sitio (al mito, a la rueda, a los boxes, a la sobremesa, al plano final), no en todos los cortes.
+- 2026-11-12 «el segundo teclado no entra a tiempo»: lo había puesto al empezar el plano del Excel, casi 2 s antes de
+  que empezara a escribirse la lista. El tecleo va desde la primera letra hasta la última del texto (ver «5. Sonido»).
