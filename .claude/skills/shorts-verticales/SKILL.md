@@ -50,6 +50,12 @@ Ejemplo completo: `herramientas/shorts/domingo/` (3 shorts del vídeo «domingo�
   aunque `--frames` funcione).
 
 ## Lecciones
+- Cada plano tiene que ILUSTRAR lo que se dice en ese momento, no reutilizar un dibujo «porque sale el personaje»:
+  el short 1 empezaba en la cama con «el jefe más tóxico… soy yo» y no tenía sentido (ahora: él de jefe en la
+  oficina y, en «soy yo», se ve que el empleado también es él). Mirar qué cuenta cada dibujo en el largo.
+- Nada se nombra con «el/la» sin haberlo presentado antes en ESE short (en el largo sí estaba; en el short no):
+  «Prometeo con la pulsera» sin haber salido la pulsera. Se arregla en el guion (`voz.py rehacer` de la frase:
+  «me cuenta los pasos con la pulsera» → se ve la pulsera contando pasos; luego «con MI pulsera»).
 - En recorte, un rótulo arriba le tapa la cabeza: pasar ese plano a marco o poner el rótulo abajo.
 - Los rótulos se escriben letra a letra: en un fotograma suelto parecen cortados; comprobar el ancho con el
   rótulo terminado.
