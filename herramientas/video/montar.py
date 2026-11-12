@@ -38,14 +38,117 @@ def _img(p):
 
 
 @lru_cache(None)
+@lru_cache(None)
+def pantalon_escena(nombre):
+    """En los dibujos de escena con él dentro, pasa a gris el pantalón vaquero (solo por debajo de su cabeza)."""
+    import numpy as np
+    from scipy import ndimage as ndi
+    im = img(nombre).convert('RGB')
+    if PANTALON != 'gris':
+        return im
+    a = np.asarray(im).astype(np.float32)
+    r_, g_, b_ = a[..., 0], a[..., 1], a[..., 2]
+    mag = (r_ > 150) & (g_ < 120) & (b_ > 110) & (r_ - g_ > 80)
+    lab, n = ndi.label(mag)
+    if not n:
+        return im
+    tam = ndi.sum(mag, lab, range(1, n + 1))
+    i = int(np.argmax(tam))
+    if tam[i] < 2000:
+        return im
+    dt = ndi.distance_transform_edt(ndi.binary_fill_holes(lab == i + 1))
+    y, x = np.unravel_index(int(np.argmax(dt)), dt.shape)
+    r = float(dt[y, x])
+    zona = np.zeros(mag.shape, bool)
+    zona[int(y + r * 1.1):, max(0, int(x - 3 * r)):int(x + 3 * r)] = True
+    azul = zona & (b_ > r_ + 25) & (b_ > g_ + 5) & (b_ < 215)
+    lum = 0.3 * r_ + 0.59 * g_ + 0.11 * b_
+    gris = np.clip(lum * 0.95 + 28, 0, 255)
+    for k in range(3):
+        a[..., k] = np.where(azul, gris + (k - 1) * 2, a[..., k])
+    return Image.fromarray(a.astype('uint8'))
+
+
 def fondo(nombre, zoom, cx, cy):
     """Fondo a 1920x1080 con encuadre (zoom y centro en fracciones)."""
-    im = img(nombre).convert('RGB')
+    im = pantalon_escena(nombre) if os.path.basename(nombre).startswith(('es_', 'br_')) else img(nombre).convert('RGB')
     w, h = im.size
     cw, ch = w / zoom, h / zoom
     x0 = min(max(cx * w - cw / 2, 0), w - cw)
     y0 = min(max(cy * h - ch / 2, 0), h - ch)
     return im.crop((int(x0), int(y0), int(x0 + cw), int(y0 + ch))).resize((W, H), Image.LANCZOS)
+
+
+def encuadre(nombre, zoom, cx, cy):
+    """Origen y escala del recorte de `fondo` (para pasar coordenadas del dibujo a la pantalla)."""
+    w, h = img(nombre).size
+    cw, ch = w / zoom, h / zoom
+    x0 = min(max(cx * w - cw / 2, 0), w - cw)
+    y0 = min(max(cy * h - ch / 2, 0), h - ch)
+    return x0, y0, W / cw
+
+
+@lru_cache(None)
+def cara_escena(nombre):
+    """Cara del protagonista dentro de un dibujo de escena: su cabeza es la única mancha magenta grande.
+    Devuelve (cx, cy, r, caja_boca, color) en píxeles del dibujo, o None si no se le ve la boca."""
+    import numpy as np
+    from scipy import ndimage as ndi
+    a = np.asarray(img(nombre).convert('RGB')).astype(int)
+    r_, g_, b_ = a[..., 0], a[..., 1], a[..., 2]
+    mag = (r_ > 150) & (g_ < 120) & (b_ > 110) & (r_ - g_ > 80)
+    lab, n = ndi.label(mag)
+    if not n:
+        return None
+    tam = ndi.sum(mag, lab, range(1, n + 1))
+    for i in np.argsort(tam)[::-1][:3]:
+        if tam[i] < 2000:
+            break
+        m = ndi.binary_fill_holes(lab == i + 1)
+        dt = ndi.distance_transform_edt(m)
+        y, x = np.unravel_index(int(np.argmax(dt)), dt.shape)
+        r = float(dt[y, x])
+        y0, y1, x0, x1 = int(y + 0.3 * r), int(y + 0.85 * r), int(x - 0.55 * r), int(x + 0.55 * r)
+        zona = a[y0:y1, x0:x1]
+        dentro = m[y0:y1, x0:x1]
+        osc = (zona.max(2) < 100) & ndi.binary_dilation(dentro, iterations=3)
+        lb, k = ndi.label(osc)
+        mejor = None
+        for j in range(1, k + 1):
+            yy, xx = np.nonzero(lb == j)
+            alto, ancho = yy.max() - yy.min() + 1, xx.max() - xx.min() + 1
+            if ancho < 0.15 * r or alto > 0.3 * r or ancho > 0.9 * r:
+                continue
+            if mejor is None or len(yy) > mejor[0]:
+                mejor = (len(yy), [x0 + xx.min(), y0 + yy.min(), x0 + xx.max() + 1, y0 + yy.max() + 1])
+        if mejor:
+            col = tuple(int(v) for v in np.median(a[m & mag], 0))
+            return x, y, r, mejor[1], col
+    return None
+
+
+def boca_en_escena(im, nombre, z, cx, cy, forma):
+    """Pega la boca que habla en la cara de un dibujo de escena (borra antes su raya de boca)."""
+    c = cara_escena(nombre)
+    if not c:
+        return
+    hx, hy, r, bk, col = c
+    x0, y0, k = encuadre(nombre, z, cx, cy)
+    rr = r * k
+    caja = [(bk[0] - x0) * k, (bk[1] - y0) * k, (bk[2] - x0) * k, (bk[3] - y0) * k]
+    m = rr * 0.06
+    ImageDraw.Draw(im).rounded_rectangle((caja[0] - m, caja[1] - m, caja[2] + m, caja[3] + m), radius=m * 1.5,
+                                          fill=col + (255,))
+    L = M['capas'][forma]
+    bb = M['bocaBase']
+    # la boca nueva, centrada donde estaba la raya, al tamaño de esa cabeza (un poco menor: la cabeza
+    # de la escena se mide por dentro del contorno)
+    ancho_raya = caja[2] - caja[0]
+    esc = max(rr, ancho_raya / max(bb[2] - bb[0], 0.1)) * 0.95
+    li = capa(forma).resize((max(1, round(L['w'] * esc)), max(1, round(L['h'] * esc))), Image.LANCZOS)
+    bcx, bcy = (bb[0] + bb[2]) / 2, (bb[1] + bb[3]) / 2
+    mx, my = (caja[0] + caja[2]) / 2, (caja[1] + caja[3]) / 2
+    im.alpha_composite(li, (round(mx + (L['x'] - bcx) * esc), round(my + (L['y'] - bcy) * esc)))
 
 
 def capa(nombre):
@@ -268,6 +371,10 @@ def frame(t):
         if o['t0'] <= t < o.get('t1', 99) and o.get('detras'):
             pegar_objeto(im, o, t)
     ev = estado(plano, t)
+    if not ev['cuerpo'] and plano.get('habla', True):
+        forma = boca_en(t)
+        if forma:
+            boca_en_escena(im, nombre, z, plano.get('cx', 0.5), plano.get('cy', 0.5), forma)
     if ev['cuerpo']:
         capas = []
         ojos = ev['ojos']

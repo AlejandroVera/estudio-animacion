@@ -141,68 +141,40 @@
   },
   {
    "t0": 20.15,
-   "fondo": "img/sofa.jpg",
-   "eventos": [
-    {
-     "t": 20.15,
-     "cuerpo": "s_cruzado",
-     "ojos": "o_nervioso",
-     "extras": [
-      "a_sudor"
-     ]
-    },
-    {
-     "t": 22.15,
-     "cuerpo": "s_encoge",
-     "ojos": "o_esceptico",
-     "extras": []
-    }
-   ],
-   "x": 0.5,
-   "pie": 965,
-   "asiento": 650
+   "fondo": "img/es_sofa_nervioso.jpg",
+   "zoom": 1.1,
+   "cx": 0.5,
+   "cy": 0.5
   },
   {
    "t0": 23.958,
-   "fondo": "img/sofa.jpg",
-   "eventos": [
-    {
-     "t": 23.958,
-     "cuerpo": "s_encoge",
-     "ojos": "o_frente",
-     "extras": [
-      "a_interrogacion"
-     ]
-    }
-   ],
-   "x": 0.5,
-   "pie": 965,
-   "asiento": 650,
+   "fondo": "img/es_sofa_foto.jpg",
    "zoom": 1.25,
-   "cx": 0.5,
-   "cy": 0.44,
-   "sombra": false
+   "cx": 0.45,
+   "cy": 0.42
   },
   {
    "t0": 26.543,
-   "fondo": "img/biblioteca.jpg",
-   "eventos": [
+   "fondo": "img/es_bib_escalera.jpg",
+   "zoom": 1.5,
+   "cx": 0.45,
+   "cy": 0.42,
+   "habla": false,
+   "objetos": [
     {
-     "t": 26.543,
-     "cuerpo": "p_idea",
-     "ojos": "o_frente"
-    },
-    {
-     "t": 32.543,
-     "cuerpo": "p_senala_lado",
-     "ojos": "o_mira_lado"
+     "t0": 31.093,
+     "t1": 33.193,
+     "img": "img/foto_han.png",
+     "x": 1500,
+     "y": 560,
+     "w": 430
     }
    ],
    "rotulos": [
     {
      "t0": 31.093,
      "texto": "BYUNG-CHUL HAN",
-     "x": 1350,
+     "x": 1500,
      "y": 50,
      "color": "blanco",
      "tam": 80,
@@ -213,37 +185,30 @@
      "t0": 31.093,
      "t1": 33.193,
      "texto": "Foto: ActuaLitté (CC BY-SA 2.0)",
-     "x": 560,
+     "x": 1500,
      "y": 1030,
      "color": "negro",
      "tam": 22,
      "centro": true,
      "fijo": true
     }
-   ],
+   ]
+  },
+  {
+   "t0": 32.543,
+   "fondo": "img/es_bib_suelo.jpg",
+   "zoom": 1.3,
+   "cx": 0.62,
+   "cy": 0.55,
    "objetos": [
-    {
-     "t0": 31.093,
-     "t1": 33.193,
-     "img": "img/foto_han.png",
-     "x": 560,
-     "y": 560,
-     "w": 470
-    },
     {
      "t0": 33.243,
      "img": "img/libro_titulo.png",
-     "x": 620,
-     "y": 600,
+     "x": 420,
+     "y": 560,
      "w": 300
     }
-   ],
-   "zoom": 1.08,
-   "cx": 0.5,
-   "cy": 0.5,
-   "x": 0.74,
-   "pie": 960,
-   "alto": 700
+   ]
   },
   {
    "t0": 36.043,
@@ -277,131 +242,72 @@
   },
   {
    "t0": 38.843,
-   "fondo": "img/sofa.jpg",
-   "x": 0.5,
-   "pie": 965,
-   "asiento": 650,
-   "largo": 1050,
-   "eventos": [
+   "fondo": "img/es_bib_dormido.jpg",
+   "zoom": 1.45,
+   "cx": 0.37,
+   "cy": 0.45,
+   "habla": false
+  },
+  {
+   "t0": 40.543,
+   "fondo": "img/es_calle_anda.jpg",
+   "zoom": 1.2,
+   "cx": 0.55,
+   "cy": 0.5
+  },
+  {
+   "t0": 42.943,
+   "fondo": "img/es_calle_banco.jpg",
+   "zoom": 1.9,
+   "cx": 0.4,
+   "cy": 0.62,
+   "rotulos": [
     {
-     "t": 38.843,
-     "cuerpo": "t_duerme"
-    }
-   ],
-   "rotulos": [],
-   "objetos": [
-    {
-     "t0": 39.493,
-     "img": "inv:capas/a_zzz.webp",
-     "x": 800,
-     "y": 300,
-     "w": 180
+     "t0": 45.45,
+     "texto": "3 COSAS",
+     "x": 1500,
+     "y": 150,
+     "color": "rojo",
+     "tam": 120,
+     "centro": true,
+     "fijo": true
     }
    ]
   },
   {
-   "t0": 40.543,
-   "fondo": "img/calle.jpg",
-   "eventos": [
-    {
-     "t": 40.543,
-     "cuerpo": "p_stop",
-     "ojos": "o_felices",
-     "boca": "b_sonrisa"
-    }
-   ],
-   "x": 0.72,
-   "pie": 1010,
-   "alto": 680,
-   "zoom": 1.6,
-   "cx": 0.72,
-   "cy": 0.48
-  },
-  {
-   "t0": 42.943,
-   "fondo": "img/calle.jpg",
-   "eventos": [
-    {
-     "t": 42.943,
-     "cuerpo": "p_mano_pecho",
-     "ojos": "o_frente"
-    },
-    {
-     "t": 45.143,
-     "cuerpo": "p_idea",
-     "ojos": "o_frente"
-    }
-   ],
-   "rotulos": [
-    {
-     "t0": 45.444,
-     "texto": "3 COSAS",
-     "x": 700,
-     "y": 150,
-     "color": "rojo",
-     "tam": 120,
-     "centro": true
-    }
-   ],
-   "x": 0.72,
-   "pie": 1010,
-   "alto": 680
-  },
-  {
    "t0": 46.343,
-   "fondo": "img/cocina.jpg",
-   "eventos": [
-    {
-     "t": 46.343,
-     "cuerpo": "p_ok",
-     "ojos": "o_frente"
-    },
-    {
-     "t": 47.743,
-     "cuerpo": "p_stop",
-     "ojos": "o_enfadado"
-    },
-    {
-     "t": 48.543,
-     "cuerpo": "p_pistolas",
-     "ojos": "o_ilusion",
-     "boca": "b_sonrisa_dientes"
-    }
-   ],
+   "fondo": "img/es_cocina_posit.jpg",
    "rotulos": [
     {
-     "t0": 46.393,
+     "t0": 46.4,
      "texto": "1.",
-     "x": 140,
-     "y": 80,
+     "x": 1250,
+     "y": 60,
      "color": "negro",
-     "tam": 130,
+     "tam": 120,
      "fijo": true
     },
     {
-     "t0": 47.793,
+     "t0": 47.8,
      "texto": "NO PUEDES",
-     "x": 600,
-     "y": 160,
+     "x": 1620,
+     "y": 170,
      "color": "rojo",
-     "tam": 100,
+     "tam": 90,
      "centro": true,
      "fijo": true
     },
     {
-     "t0": 48.593,
+     "t0": 48.6,
      "texto": "TÚ PUEDES",
-     "x": 600,
+     "x": 1620,
      "y": 300,
      "color": "verde",
-     "tam": 100,
+     "tam": 90,
      "centro": true,
      "fijo": true
     }
-   ],
-   "x": 0.72,
-   "pie": 1000,
-   "alto": 640
+   ]
   },
   {
    "t0": 49.943,
@@ -429,47 +335,36 @@
   },
   {
    "t0": 52.843,
-   "fondo": "img/oficina.jpg",
-   "x": 0.75,
-   "pie": 1000,
-   "alto": 720,
-   "eventos": [
-    {
-     "t": 52.843,
-     "cuerpo": "p_encoge",
-     "ojos": "o_frente"
-    },
-    {
-     "t": 60.043,
-     "ojos": "o_espirales"
-    }
-   ],
+   "fondo": "img/es_ofi_notis.jpg",
    "rotulos": [
     {
-     "t0": 57.044,
+     "t0": 57.05,
      "texto": "PUEDES SER LO QUE QUiERAS",
-     "x": 50,
-     "y": 110,
+     "x": 1450,
+     "y": 70,
      "color": "azul",
-     "tam": 48,
+     "tam": 46,
+     "centro": true,
      "fijo": true
     },
     {
-     "t0": 58.343,
+     "t0": 58.35,
      "texto": "SAL DE TU ZONA DE CONFORT",
-     "x": 50,
-     "y": 220,
+     "x": 1450,
+     "y": 160,
      "color": "verde",
-     "tam": 48,
+     "tam": 46,
+     "centro": true,
      "fijo": true
     },
     {
-     "t0": 60.043,
+     "t0": 60.05,
      "texto": "HOY VA A SER UN GRAN DÍA",
-     "x": 50,
-     "y": 330,
+     "x": 1450,
+     "y": 250,
      "color": "rojo",
-     "tam": 48,
+     "tam": 46,
+     "centro": true,
      "fijo": true
     }
    ]
@@ -486,45 +381,38 @@
   },
   {
    "t0": 64.343,
-   "fondo": "img/oficina.jpg",
-   "x": 0.8,
-   "pie": 1000,
-   "alto": 720,
-   "eventos": [
-    {
-     "t": 64.343,
-     "cuerpo": "p_senala_lado",
-     "ojos": "o_frente"
-    }
-   ],
+   "fondo": "img/es_ofi_pizarra.jpg",
+   "zoom": 1.5,
+   "cx": 0.55,
+   "cy": 0.4,
    "rotulos": [
     {
-     "t0": 66.044,
+     "t0": 66.05,
      "texto": "DiSCiPLiNA = NO",
-     "x": 1060,
+     "x": 966,
      "y": 200,
      "color": "negro",
-     "tam": 44,
+     "tam": 62,
      "centro": true,
      "fijo": true
     },
     {
-     "t0": 68.643,
+     "t0": 68.65,
      "texto": "RENDiMiENTO =",
-     "x": 1060,
-     "y": 290,
+     "x": 966,
+     "y": 320,
      "color": "rojo",
-     "tam": 44,
+     "tam": 62,
      "centro": true,
      "fijo": true
     },
     {
-     "t0": 69.943,
+     "t0": 69.95,
      "texto": "SÍ, PUEDES",
-     "x": 1060,
-     "y": 355,
+     "x": 966,
+     "y": 410,
      "color": "rojo",
-     "tam": 44,
+     "tam": 62,
      "centro": true,
      "fijo": true
     }
@@ -532,52 +420,38 @@
   },
   {
    "t0": 71.743,
-   "fondo": "img/calle.jpg",
-   "eventos": [
-    {
-     "t": 71.743,
-     "cuerpo": "p_celebra",
-     "ojos": "o_felices",
-     "boca": "b_sonrisa_dientes"
-    },
-    {
-     "t": 72.844,
-     "cuerpo": "p_idea",
-     "ojos": "o_esceptico",
-     "boca": ""
-    }
-   ],
+   "fondo": "img/es_calle_salta.jpg",
+   "zoom": 1.4,
+   "cx": 0.5,
+   "cy": 0.52
+  },
+  {
+   "t0": 72.844,
+   "fondo": "img/es_calle_trampa.jpg",
+   "zoom": 1.15,
+   "cx": 0.6,
+   "cy": 0.55,
+   "habla": false,
    "rotulos": [
     {
-     "t0": 73.343,
+     "t0": 73.35,
      "texto": "TRAMPA",
-     "x": 700,
-     "y": 200,
+     "x": 500,
+     "y": 150,
      "color": "rojo",
      "tam": 120,
-     "centro": true
+     "centro": true,
+     "fijo": true
     }
-   ],
-   "x": 0.72,
-   "pie": 1010,
-   "alto": 680
+   ]
   },
   {
    "t0": 74.143,
-   "fondo": "img/calle.jpg",
-   "eventos": [
-    {
-     "t": 74.143,
-     "cuerpo": "p_stop",
-     "ojos": "o_frente"
-    }
-   ],
-   "x": 0.72,
-   "pie": 1010,
-   "alto": 680,
-   "zoom": 1.6,
-   "cx": 0.72,
-   "cy": 0.48
+   "fondo": "img/es_calle_guardia.jpg",
+   "zoom": 1.55,
+   "cx": 0.3,
+   "cy": 0.66,
+   "habla": false
   },
   {
    "t0": 77.244,
@@ -613,59 +487,26 @@
   },
   {
    "t0": 86.144,
-   "fondo": "img/gimnasio.jpg",
-   "eventos": [
-    {
-     "t": 86.144,
-     "cuerpo": "p_yo",
-     "ojos": "o_triste"
-    }
-   ],
-   "x": 0.74,
-   "pie": 1000,
-   "alto": 700
-  },
-  {
-   "t0": 87.243,
-   "fondo": "img/gimnasio.jpg",
-   "eventos": [
-    {
-     "t": 87.243,
-     "cuerpo": "p_senala_camara",
-     "ojos": "o_enfadado"
-    }
-   ],
+   "fondo": "img/es_gym_espejo.jpg",
+   "zoom": 1.1,
+   "cx": 0.55,
+   "cy": 0.5,
    "rotulos": [
     {
-     "t0": 88.943,
+     "t0": 88.95,
      "texto": "CULPA TUYA",
-     "x": 600,
-     "y": 200,
+     "x": 400,
+     "y": 150,
      "color": "rojo",
      "tam": 110,
-     "centro": true
+     "centro": true,
+     "fijo": true
     }
-   ],
-   "x": 0.74,
-   "pie": 1000,
-   "alto": 700,
-   "zoom": 1.6,
-   "cx": 0.74,
-   "cy": 0.48
+   ]
   },
   {
    "t0": 90.143,
-   "fondo": "img/gimnasio.jpg",
-   "eventos": [
-    {
-     "t": 90.143,
-     "cuerpo": "p_stop",
-     "ojos": "o_frente"
-    }
-   ],
-   "x": 0.74,
-   "pie": 1000,
-   "alto": 700
+   "fondo": "img/es_gym_stop.jpg"
   },
   {
    "t0": 91.643,
@@ -708,24 +549,8 @@
   },
   {
    "t0": 97.644,
-   "fondo": "img/salon.jpg",
-   "zoom": 1.75,
-   "cx": 0.68,
-   "cy": 0.45,
-   "x": 0.68,
-   "pie": 1000,
-   "alto": 720,
-   "eventos": [
-    {
-     "t": 97.644,
-     "cuerpo": "p_bolsillos",
-     "ojos": "o_en_blanco",
-     "boca": "b_triste",
-     "extras": [
-      "a_orejas_burro"
-     ]
-    }
-   ]
+   "fondo": "img/es_burro_el.jpg",
+   "habla": false
   }
  ],
  "duracion": 99.9

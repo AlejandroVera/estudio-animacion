@@ -148,4 +148,19 @@ Trabaja en una carpeta de proyecto en el scratchpad (`<proyecto>/img`, `<proyect
   es el mismo lugar; acércate con `zoom` a donde está él. Si hace una acción repetida (correr, andar), segunda pose
   con `variante.py --zona` (la zona en fracciones de la imagen: mide dónde está él antes) y `"alterna"` cada
   ~0,16 s. Uno de cada 4-5 planos, en los verbos de acción.
+- 2026-11-12 (IMPORTANTE, cambia el método): «el personaje es muy repetitivo, siempre señalando al frente, las mismas
+  caras, no se integra; aunque cambie el escenario hace siempre lo mismo y pierde el sentido». Desde ahora la
+  BASE de cada plano con él es un DIBUJO DE ESCENA NUEVO (`img/es_*.jpg`) donde ACTÚA la frase dentro del sitio:
+  ángulo de tres cuartos o plano medio, interactuando con cosas y gente (mirando una foto del abuelo, subido a una
+  escalera cogiendo el libro, dormido con el libro en la cara, cambiando pósits de la nevera, una ratonera gigante
+  en «la trampa», un guardia que le para en «un no tiene a alguien delante», su reflejo regañándole, el botón de
+  STOP tapado por un pósit, él mismo de burro con la zanahoria). Gags VISUALES literales de la frase. El inventario
+  queda solo de apoyo (planos rápidos de reacción). Gasta más créditos (~1 dibujo por plano) y Alejandro lo aprueba.
+  Cómo: «Use the first image as the location (same …) but a closer camera from a three-quarter angle. The character
+  from the second reference … small closed mouth. … exactly two arms and two hands …» con el fondo vacío del sitio
+  como primera referencia y `cpsx8zt0eP` como segunda.
+  La boca habla sola en esas escenas (`montar.py` busca su cabeza magenta y la raya de la boca y pega las bocas del
+  inventario): revisa con una hoja (cara sin y con boca); si la pone mal (cara pequeña, de lado, ojos raros) pon
+  `"habla": false` en ese plano. El pantalón vaquero de las escenas se pasa a gris solo (`es_*`/`br_*`, debajo de
+  su cabeza). Si sale pequeño en el dibujo, `zoom` hacia él.
 
