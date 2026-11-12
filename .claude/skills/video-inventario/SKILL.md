@@ -130,3 +130,9 @@ Trabaja en una carpeta de proyecto en el scratchpad (`<proyecto>/img`, `<proyect
 - Después de un chiste, aire (pausa y plano que dura); el corte entra en la palabra que lo nombra.
 - Secundarios estáticos «quedan planos» → dibujos alternos a golpes (animación limitada).
 - Para un autor citado, foto real con licencia libre y crédito (Byung-Chul Han: ActuaLitté, CC BY-SA 2.0).
+- 2026-11-12: el abuelo «guiñaba un ojo» al alternar dibujos: la edición de las manos le cambió también un ojo.
+  En `variante.py` usa SIEMPRE `--zona` con solo la parte que debe moverse (manos y brazos: desde debajo de la
+  barbilla) y revisa la cara de la base y la variante lado a lado antes de montar.
+- 2026-11-12: «¿por qué estoy peor que él?» no sonaba a pregunta. Rehacer la frase con contexto, varias tomas, y
+  medir el tono (F0 por autocorrelación) de la última palabra frente a las anteriores: quedarse con la que más
+  sube al final; mandarle además las tomas numeradas por si prefiere otra.
