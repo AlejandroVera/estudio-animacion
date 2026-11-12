@@ -18,7 +18,7 @@ def lleno(P):
         if not p.get('marco'):
             continue
         n = p['fondo'].split('/')[-1][:-4]
-        n = {'es_cama_mini_c': 'es_cama_mini', 'es_ofi_doble_b': 'es_ofi_doble'}.get(n, n)
+        n = {'es_cama_mini_c': 'es_cama_mini', 'es_ofi_doble_b': 'es_ofi_doble', 'es_parque_banco_b': 'es_parque_banco'}.get(n, n)
         if n in hechos:
             p['lleno'] = 'lleno/' + n + '.jpg'
             p['dy'] = (hechos[n] - 1072) // 2

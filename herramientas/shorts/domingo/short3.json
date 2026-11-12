@@ -27,31 +27,19 @@
      "tam": 130,
      "centro": true,
      "fijo": true
-    }
-   ],
-   "lleno": "lleno/fabrica.jpg",
-   "dy": 664
-  },
-  {
-   "t0": 2.12,
-   "fondo": "../../video/ejemplo_domingo/img/abuelo_sofa.jpg",
-   "habla": false,
-   "marco": 1.5,
-   "cx": 0.5,
-   "parpadeo": "../../video/ejemplo_domingo/img/abuelo_sofa_b.jpg",
-   "rotulos": [
+    },
     {
      "t0": 3.38,
      "texto": "NUNCA CANSADO",
      "x": 540,
-     "y": 250,
+     "y": 1700,
      "color": "negro",
      "tam": 100,
      "centro": true,
      "fijo": true
     }
    ],
-   "lleno": "lleno/abuelo_sofa.jpg",
+   "lleno": "lleno/fabrica.jpg",
    "dy": 664
   },
   {
@@ -67,6 +55,15 @@
      "fondo": "../../video/ejemplo_domingo/img/es_ofi_humo_b.jpg"
     }
    ],
+   "objetos": [
+    {
+     "t0": 8.0,
+     "img": "inv:capas/a_interrogacion.webp",
+     "x": 900,
+     "y": 520,
+     "w": 110
+    }
+   ],
    "rotulos": [
     {
      "t0": 5.5,
@@ -76,7 +73,8 @@
      "color": "negro",
      "tam": 95,
      "centro": true,
-     "fijo": true
+     "fijo": true,
+     "t1": 7.88
     },
     {
      "t0": 6.07,
@@ -86,34 +84,11 @@
      "color": "negro",
      "tam": 95,
      "centro": true,
-     "fijo": true
+     "fijo": true,
+     "t1": 7.88
     }
    ],
    "lleno": "lleno/es_ofi_humo.jpg",
-   "dy": 664
-  },
-  {
-   "t0": 7.88,
-   "fondo": "../../video/ejemplo_domingo/img/abuelo_nino.jpg",
-   "habla": false,
-   "marco": 1.5,
-   "cx": 0.85,
-   "cambios": [
-    {
-     "t": 8.13,
-     "fondo": "../../video/ejemplo_domingo/img/abuelo_nino_b.jpg"
-    }
-   ],
-   "objetos": [
-    {
-     "t0": 7.95,
-     "img": "inv:capas/a_interrogacion.webp",
-     "x": 1012,
-     "y": 900,
-     "w": 70
-    }
-   ],
-   "lleno": "lleno/abuelo_nino.jpg",
    "dy": 664
   },
   {
@@ -167,7 +142,7 @@
   },
   {
    "t0": 12.21,
-   "fondo": "../../video/ejemplo_domingo/img/fabrica_sirena.jpg",
+   "fondo": "../../video/ejemplo_domingo/img/fabrica.jpg",
    "habla": false,
    "marco": 1.5,
    "cx": 0.45,
@@ -176,7 +151,8 @@
      "../../video/ejemplo_domingo/img/fabrica_sirena.jpg",
      "../../video/ejemplo_domingo/img/fabrica_sirena_b.jpg"
     ],
-    "cada": 0.3
+    "cada": 0.3,
+    "desde": 15.71
    },
    "rotulos": [
     {
@@ -190,42 +166,29 @@
      "fijo": true
     }
    ],
-   "lleno": "lleno/fabrica_sirena.jpg",
+   "lleno": "lleno/fabrica.jpg",
    "dy": 664
   },
   {
-   "t0": 13.8,
-   "fondo": "../../video/ejemplo_domingo/img/es_fab_no.jpg",
-   "boca": "../../video/ejemplo_domingo/img/es_fab_no_boca.png",
-   "boca_o": "../../video/ejemplo_domingo/img/es_fab_no_bocao.png",
-   "marco": 1.45,
+   "t0": 16.85,
+   "fondo": "../../video/ejemplo_domingo/img/abuelo_sofa.jpg",
+   "habla": false,
+   "marco": 1.5,
    "cx": 0.5,
-   "cambios": [
-    {
-     "t": 15.17,
-     "fondo": "../../video/ejemplo_domingo/img/es_fab_no_b.jpg"
-    },
-    {
-     "t": 16.15,
-     "fondo": "../../video/ejemplo_domingo/img/es_fab_no_c.jpg"
-    }
-   ],
-   "boca_en": [
-    "../../video/ejemplo_domingo/img/es_fab_no.jpg"
-   ],
+   "parpadeo": "../../video/ejemplo_domingo/img/abuelo_sofa_b.jpg",
    "rotulos": [
     {
-     "t0": 14.22,
-     "texto": "NO",
+     "t0": 16.9,
+     "texto": "SE ACABÓ",
      "x": 540,
-     "y": 260,
-     "color": "rojo",
-     "tam": 190,
+     "y": 250,
+     "color": "verde",
+     "tam": 120,
      "centro": true,
      "fijo": true
     }
    ],
-   "lleno": "lleno/es_fab_no.jpg",
+   "lleno": "lleno/abuelo_sofa.jpg",
    "dy": 664
   },
   {
@@ -298,22 +261,24 @@
   },
   {
    "t0": 23.86,
-   "fondo": "../../video/ejemplo_domingo/img/es_gym_senal.jpg",
-   "boca": "../../video/ejemplo_domingo/img/es_gym_senal_boca.png",
-   "boca_o": "../../video/ejemplo_domingo/img/es_gym_senal_bocao.png",
+   "fondo": "../../video/ejemplo_domingo/img/abuelo_sofa.jpg",
+   "habla": false,
    "marco": 1.5,
-   "cx": 0.6,
-   "cambios": [
+   "cx": 0.5,
+   "parpadeo": "../../video/ejemplo_domingo/img/abuelo_sofa_b.jpg",
+   "rotulos": [
     {
-     "t": 25.0,
-     "fondo": "../../video/ejemplo_domingo/img/es_gym_senal_b.jpg"
+     "t0": 25.26,
+     "texto": "PARAR",
+     "x": 540,
+     "y": 250,
+     "color": "verde",
+     "tam": 140,
+     "centro": true,
+     "fijo": true
     }
    ],
-   "boca_en": [
-    "../../video/ejemplo_domingo/img/es_gym_senal.jpg",
-    "../../video/ejemplo_domingo/img/es_gym_senal_b.jpg"
-   ],
-   "lleno": "lleno/es_gym_senal.jpg",
+   "lleno": "lleno/abuelo_sofa.jpg",
    "dy": 664
   },
   {
@@ -335,7 +300,7 @@
      "t0": 27.99,
      "texto": "NUNCA",
      "x": 540,
-     "y": 1720,
+     "y": 1600,
      "color": "rojo",
      "tam": 170,
      "centro": true,
@@ -361,7 +326,7 @@
      "t0": 31.3,
      "texto": "SiN HACER NADA",
      "x": 540,
-     "y": 250,
+     "y": 1660,
      "color": "negro",
      "tam": 100,
      "centro": true,
@@ -373,21 +338,15 @@
   },
   {
    "t0": 32.37,
-   "fondo": "../../video/ejemplo_domingo/img/es_parque_banco.jpg",
-   "boca": "../../video/ejemplo_domingo/img/es_parque_banco_boca.png",
-   "boca_o": "../../video/ejemplo_domingo/img/es_parque_banco_bocao.png",
-   "marco": 1.8,
-   "cx": 0.4,
-   "boca_en": [
-    "../../video/ejemplo_domingo/img/es_parque_banco.jpg",
-    "../../video/ejemplo_domingo/img/es_parque_banco_b.jpg"
-   ],
+   "fondo": "../../video/ejemplo_domingo/img/br_movil_banco.jpg",
+   "habla": false,
+   "cx": 0.28,
    "alterna": {
     "imgs": [
-     "../../video/ejemplo_domingo/img/es_parque_banco.jpg",
-     "../../video/ejemplo_domingo/img/es_parque_banco_b.jpg"
+     "../../video/ejemplo_domingo/img/br_movil_banco_b.jpg",
+     "../../video/ejemplo_domingo/img/br_movil_banco.jpg"
     ],
-    "cada": 0.25,
+    "cada": 0.12,
     "desde": 33.99
    },
    "rotulos": [
@@ -401,6 +360,17 @@
      "centro": true,
      "fijo": true
     }
+   ]
+  },
+  {
+   "t0": 34.9,
+   "fondo": "../../video/ejemplo_domingo/img/es_parque_banco_b.jpg",
+   "boca": "../../video/ejemplo_domingo/img/es_parque_banco_boca.png",
+   "boca_o": "../../video/ejemplo_domingo/img/es_parque_banco_bocao.png",
+   "marco": 1.8,
+   "cx": 0.4,
+   "boca_en": [
+    "../../video/ejemplo_domingo/img/es_parque_banco_b.jpg"
    ],
    "lleno": "lleno/es_parque_banco.jpg",
    "dy": 664

@@ -50,6 +50,9 @@ Ejemplo completo: `herramientas/shorts/domingo/` (3 shorts del vídeo «domingo�
   aunque `--frames` funcione).
 
 ## Lecciones
+- Que se vea QUIÉN hace cada cosa: si la frase habla del abuelo, el plano es del abuelo (en el short 3 salía él con
+  el encargado en «un no tiene final» y él con una señal de STOP en «el no te deja parar»: no se entendía). Nada de
+  personajes sin presentar (él de niño junto al abuelo). Si el remate es «sin mirar el móvil», que se vea el móvil.
 - Revisar CADA rótulo terminado de escribir (fotograma en t0 + letras·0,045 + 0,25 s) y ampliado: en los rótulos
   `D` la `y` es la parte de ARRIBA del texto, no su centro (el «4» del cartel quedaba en el borde de abajo); y que
   todo lo que lleva texto dentro del dibujo (las dos pancartas) quepa en el encuadre: bajar el `marco` o mover `cx`.
