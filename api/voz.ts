@@ -1,6 +1,7 @@
 // Voz con ElevenLabs (usa la suscripción de la cuenta de la clave).
 //   GET  -> lista de voces de la cuenta
 //   POST {texto, voz, antes?, despues?} -> audio MP3 (antes/despues: contexto para rehacer una frase)
+//   POST {efecto, duracion?} -> efecto de sonido MP3 (ElevenLabs Sound Effects)
 // Variables en Vercel: ELEVENLABS_API_KEY, CLAVE_ESTUDIO
 
 import { claveOk } from './_clave.js'
@@ -42,6 +43,19 @@ export async function POST(request: Request): Promise<Response> {
     body = await request.json()
   } catch {
     return json({ error: 'Petición no válida.' }, 400)
+  }
+  // Efecto de sonido (ElevenLabs Sound Effects): {efecto: "descripción en inglés", duracion?: segundos}
+  const efecto = ((body as { efecto?: string }).efecto ?? '').trim()
+  if (efecto) {
+    if (efecto.length > 450) return json({ error: 'Descripción del efecto demasiado larga.' }, 400)
+    const dur = Number((body as { duracion?: number }).duracion)
+    const res = await fetch(`${API}/sound-generation?output_format=mp3_44100_128`, {
+      method: 'POST',
+      headers: { 'xi-api-key': process.env.ELEVENLABS_API_KEY!, 'content-type': 'application/json' },
+      body: JSON.stringify({ text: efecto, ...(dur >= 0.5 && dur <= 22 ? { duration_seconds: dur } : {}), prompt_influence: 0.5 }),
+    })
+    if (!res.ok) return json({ error: await errorDe(res) }, 502)
+    return new Response(await res.arrayBuffer(), { headers: { 'content-type': 'audio/mpeg' } })
   }
   const texto = (body.texto ?? '').trim()
   const voz = (body.voz ?? '').trim()
