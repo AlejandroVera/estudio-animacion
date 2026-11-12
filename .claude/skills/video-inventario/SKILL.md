@@ -1,6 +1,6 @@
 ---
 name: video-inventario
-description: Producir los vídeos de Alejandro al estilo «Estoy Tiesa» con su personaje magenta (Chico rosa) por el MÉTODO INVENTARIO — guion por trozos, voz de Aaron Abad en ElevenLabs, fondos y escenas dibujados con Magnific, el personaje pegado desde el inventario (postura, ojos, boca, complementos), secundarios animados a golpes, rótulos a mano y montaje por código. Úsala siempre que Alejandro pase un guion o un trozo de guion para hacer vídeo, pida corregir un trozo, o pregunte cómo se hacen los vídeos.
+description: Producir los vídeos de Alejandro al estilo «Estoy Tiesa» con su personaje magenta (Chico rosa): guion por trozos, voz de Aaron Abad en ElevenLabs, cada frase como una ESCENA DIBUJADA en Magnific donde él actúa un gag literal (movimientos y bocas por edición), callbacks, rótulos a mano y montaje por código. Úsala siempre que Alejandro pase un guion o un trozo de guion para hacer vídeo, pida corregir un trozo, o pregunte cómo se hacen los vídeos.
 ---
 
 # Vídeos por el método inventario
@@ -18,6 +18,69 @@ pregunta qué cambiaría. **Cada corrección suya es una lección: apúntala al 
 - No automatizar las webs de ChatGPT/Magnific con el navegador (términos de uso): usar el MCP.
 - Fotos reales (p. ej. de una persona citada): solo con **licencia libre** (Wikimedia Commons, CC BY / BY-SA),
   con crédito pequeño en pantalla y pedirle que lo ponga en la descripción del vídeo.
+
+## MÉTODO ACTUAL: escenas dibujadas que actúan el guion (lo que funciona; Alejandro: «ahora la creatividad está mucho mejor»)
+Desde el trozo 3 del domingo los vídeos se hacen así. El inventario de piezas y el «Flujo» de abajo quedan solo de
+apoyo; manda esta sección. Ejemplo completo: `ejemplo_domingo/trozo3.json` y `trozo4.json` (+ `img/es_*`, `img/br_*`).
+
+### 1. Pensar cada frase como un gag (antes de dibujar nada)
+- Lee el trozo con los tiempos de cada palabra y escribe una lista de planos: frase → qué se VE.
+- Cada frase tiene una imagen que la cuenta LITERAL o con una metáfora visual clara e inmediata. Si hay que
+  explicarla, no vale (ratonera con queso, guardia tras una valla de FIN: rechazados). Buenas:
+  - «soy jefe y empleado a la vez» → él dos veces: uno sentado trabajando, otro de pie con corbata vigilando.
+  - «mi jefe interior» → un mini-él con corbata subido a su hombro; luego le enseña una diana (objetivos), un
+    contador (pasos), una tarjeta con la nota (sueño, nota) y echa humo verde («tóxico»).
+  - «el águila es él mismo» → él encadenado en la roca y el águila con SU cabeza magenta.
+  - «explotación que vives como libertad» → corriendo feliz en una rueda de hámster en su salón; en «libertad»
+    abre los brazos. «mira la trampa» → va a por un trofeo bajo una jaula con un palo; le cae encima.
+  - «no te voy a dar la chapa» → tira la torre de libros. «tres cosas» → tres dedos. «ni siquiera puedes hacer
+    huelga» → sus dos copias con pancartas. «el burro eres tú» → él con orejas de burro y la zanahoria.
+- CONTINUIDAD: cada plano sigue en el sitio del anterior o vuelve a algo ya visto. Nunca un sitio «porque sí».
+  Callbacks que atan el vídeo: la oficina del principio, la pulsera y su «62», el reloj de las seis de la fábrica
+  del abuelo, el encargado, la biblioteca donde lee a Han, su sofá con la manta.
+- Mitos, historias o lo que cuenta de otros = escenas en el MISMO trazo con gente normal (Prometeo de día, de
+  noche, el águila picando), como mucho 2 planos seguidos sin que él hable.
+- Él habla a cámara (con boca dibujada) en la mayoría de planos. Un plano nuevo cada 2-5 s, corte en la palabra.
+- Rótulos pocos y cortos (1-2 palabras, cifras): sobre pared libre (nunca sobre su cabeza) o DENTRO de cosas
+  (pizarra, tarjeta, pantalla, pancarta) con `fijo`. Nada de «¡» ni «!».
+
+### 2. Dibujar con Magnific (Nano Banana 2.1, 2k, 16:9; carpeta del estudio)
+- ESCENA NUEVA: primera referencia = el sitio (fondo vacío o una escena anterior del mismo sitio), segunda =
+  `cpsx8zt0eP` (él). «Use the first image as the location (same …) but a closer camera, medium shot from a
+  three-quarter angle. The character from the second reference image (magenta round head, golden nose ring, grey
+  t-shirt with a mountain, grey sweatpants, white sneakers) … [lo que hace, mirando a cámara] … He is big in the
+  frame. Same simple hand-drawn cartoon style, flat colours, small closed mouth, exactly two arms and two hands.
+  No text, no letters.» Pedir `count: 2` y elegir con una hoja de contactos.
+  Sitios guardados: salón `3zqFoCoREY`, sofá `O6ahVmLynm` (o la escena del sofá `SyIkIr9Ub8`), biblioteca
+  `ov46K7F829` (o `5jTfThPKxe`), oficina `xSeXbo0jfW`, gimnasio `SyIhGIxUb8`, fábrica con el encargado
+  `ksMEVu616B`, Prometeo en la roca `KLVFehzkqp`.
+- MOVIMIENTOS (2-4 por escena, en la palabra que los nombra): editar la escena elegida, «Edit this drawing. Keep
+  EVERYTHING exactly the same, pixel for pixel (… his head and face stay identical). Change ONLY …». Si cambia
+  todo el cuerpo o la escena (salto, jaula que cae, de noche), sin «pixel for pixel» y con su referencia.
+- BOCAS de cada escena donde habla: dos ediciones, «Change ONLY the mouth of the [BIG / SEATED / REAL] magenta
+  character: open, talking, like saying "a" (a small open mouth with a dark inside and a bit of tongue)…» y «a
+  small round open O mouth, like saying "o"». Si hay dos cabezas magenta, decir de cuál.
+- Lanzar todo en paralelo (8 por tanda), esperar con `creations_wait` y descargar con un script que lea
+  «nombre url» por línea. Coste: ~60-65 dibujos por minuto de vídeo (~4.000 créditos).
+
+### 3. Preparar las imágenes
+- Nombres: `es_<sitio>_<idea>.png` (él sale), `br_<idea>.png` (no sale); movimientos `_b`, `_c`, `_d`; bocas
+  `_boca`, `_bocao`. Bases en una carpeta, ediciones en `crudo/`.
+- `herramientas/video/preparar_escena.py crudo` (copiarlo y ajustar la ruta de salida/las excepciones): de cada
+  movimiento copia SOLO lo que cambia sobre la base (protegiendo su cabeza, así no tiembla); de cada boca saca una
+  capa RGBA. Cuerpo entero o b-roll → en la lista de excepciones (no se protege la cabeza).
+- Si la variante pierde algo (la cara nueva, la cabeza del águila): pegar la edición en una caja alrededor con
+  borde suave. Para limitar un cambio a una zona: `variante.py base edicion salida --zona x0,y0,x1,y1`.
+- Revisar SIEMPRE: hoja de las variantes y hoja de caras (base / boca a / boca o).
+
+### 4. Plan y montaje
+- Plano con él: `{"t0", "fondo": "img/es_X.jpg", "boca": "img/es_X_boca.png", "boca_o": "img/es_X_bocao.png",
+  "cambios": [{"t": palabra − 0,04, "fondo": "img/es_X_b.jpg"}], "alterna": {"imgs": [...], "cada": 0.2}}`.
+  Si un dibujo mueve la cabeza: `"boca_en": [solo los de la misma cabeza]` y `"bocas": {"img/X_c.jpg":
+  ["img/X_c_boca.png", "img/X_c_bocao.png"]}`. B-roll: `"habla": false` y siempre algo que se mueva.
+- `"sin_recolor": ["es_cama"]` si hay cosas azules que no son su pantalón. `zoom 1.08` en la biblioteca (marco).
+- Revisión antes de entregar: fotogramas sueltos de cada plano (`--frames`), hoja de todo el vídeo cada 0,75 s y
+  recortes AMPLIADOS de cada texto `fijo`. Entregar con lo gastado y apuntar aquí cada corrección.
 
 ## Piezas (todo en el repositorio)
 - `public/personajes/chico-magenta/inventario/` + `inventario.json`: 62 cuerpos (`p_*` de pie, `s_*` sentado sin
