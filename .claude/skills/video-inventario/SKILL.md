@@ -182,4 +182,13 @@ Trabaja en una carpeta de proyecto en el scratchpad (`<proyecto>/img`, `<proyect
   mueva, un `cambio` que cae después del final de su plano (nunca se ve), ojos o caras que cambian al alternar
   dibujos (`variante.py --zona` solo sobre lo que se mueve) y rótulos que no se leen sobre fondos cargados
   (`"caja": true` = cartelito blanco detrás).
+- 2026-11-12: «desde el salto se vuelve menos creativo, habla peor y tiene menos sentido». Causas: tramo largo
+  donde él NO hablaba a cámara (secundarios, recursos y escenas sin boca seguidas) y dibujos que no contaban la
+  frase (guardia lejano, botón de stop). Reglas: él habla a cámara (con boca dibujada) en la mayoría de planos;
+  como mucho 2 planos seguidos sin que hable; cada frase con una imagen que la cuente LITERAL o con un gag
+  claro (barrera de FIN + guardia en «un no tiene final y tiene a alguien delante»; barra altísima con «TÚ
+  PUEDES» en «si puedes y no llegas»; él con una señal de STOP en «el no te para»; él con orejas de burro y la
+  zanahoria hablándote en «el burro eres tú»); callbacks a personajes ya vistos. DOS bocas por escena donde
+  habla: `"boca"` (a/e/i) y `"boca_o"` (o/u, edición «small round open O»). Si un dibujo alterno mueve la
+  cabeza (un salto), `"boca_en": [solo el dibujo base]` para que la boca no se pegue fuera de sitio.
 

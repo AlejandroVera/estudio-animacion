@@ -545,18 +545,22 @@
   },
   {
    "t0": 74.143,
-   "fondo": "img/es_calle_guardia.jpg",
-   "zoom": 1.55,
-   "cx": 0.3,
-   "cy": 0.66,
-   "habla": false,
-   "alterna": {
-    "imgs": [
-     "img/es_calle_guardia.jpg",
-     "img/es_calle_guardia_b.jpg"
-    ],
-    "cada": 0.5
-   }
+   "fondo": "img/es_calle_fin.jpg",
+   "zoom": 1.15,
+   "cx": 0.5,
+   "cy": 0.55,
+   "boca": "img/es_calle_fin_boca.png",
+   "boca_o": "img/es_calle_fin_bocao.png",
+   "cambios": [
+    {
+     "t": 75.944,
+     "fondo": "img/es_calle_fin_b.jpg"
+    }
+   ],
+   "boca_en": [
+    "img/es_calle_fin.jpg",
+    "img/es_calle_fin_b.jpg"
+   ]
   },
   {
    "t0": 77.244,
@@ -568,7 +572,20 @@
      "img/castigo_b.jpg"
     ],
     "cada": 0.35
-   }
+   },
+   "rotulos": [
+    {
+     "t0": 79.763,
+     "texto": "HASTA EL SÁBADO",
+     "x": 960,
+     "y": 50,
+     "color": "negro",
+     "tam": 70,
+     "centro": true,
+     "fijo": true,
+     "caja": true
+    }
+   ]
   },
   {
    "t0": 81.044,
@@ -584,18 +601,25 @@
   },
   {
    "t0": 83.443,
-   "fondo": "img/br_gym_pesa.jpg",
-   "habla": false,
-   "zoom": 1.5,
+   "fondo": "img/es_gym_barra.jpg",
+   "zoom": 1.08,
    "cx": 0.62,
-   "cy": 0.62,
-   "alterna": {
-    "imgs": [
-     "img/br_gym_pesa.jpg",
-     "img/br_gym_pesa_b.jpg"
-    ],
-    "cada": 0.12
-   }
+   "cy": 0.5,
+   "boca": "img/es_gym_barra_boca.png",
+   "boca_o": "img/es_gym_barra_bocao.png",
+   "boca_en": [
+    "img/es_gym_barra.jpg"
+   ],
+   "cambios": [
+    {
+     "t": 84.581,
+     "fondo": "img/es_gym_barra_b.jpg"
+    },
+    {
+     "t": 85.313,
+     "fondo": "img/es_gym_barra.jpg"
+    }
+   ]
   },
   {
    "t0": 86.144,
@@ -626,15 +650,22 @@
   },
   {
    "t0": 90.143,
-   "fondo": "img/es_gym_stop.jpg",
-   "boca": "img/es_gym_stop_boca.png",
-   "alterna": {
-    "imgs": [
-     "img/es_gym_stop.jpg",
-     "img/es_gym_stop_b.jpg"
-    ],
-    "cada": 0.3
-   }
+   "fondo": "img/es_gym_senal.jpg",
+   "zoom": 1.15,
+   "cx": 0.55,
+   "cy": 0.5,
+   "boca": "img/es_gym_senal_boca.png",
+   "boca_o": "img/es_gym_senal_bocao.png",
+   "cambios": [
+    {
+     "t": 91.025,
+     "fondo": "img/es_gym_senal_b.jpg"
+    }
+   ],
+   "boca_en": [
+    "img/es_gym_senal.jpg",
+    "img/es_gym_senal_b.jpg"
+   ]
   },
   {
    "t0": 91.643,
@@ -677,15 +708,20 @@
   },
   {
    "t0": 97.644,
-   "fondo": "img/es_burro_el.jpg",
-   "habla": false,
+   "fondo": "img/es_burro_habla.jpg",
+   "boca": "img/es_burro_habla_boca.png",
+   "boca_o": "img/es_burro_habla_bocao.png",
    "alterna": {
     "imgs": [
-     "img/es_burro_el.jpg",
-     "img/es_burro_el_b.jpg"
+     "img/es_burro_habla.jpg",
+     "img/es_burro_habla_b.jpg"
     ],
-    "cada": 0.3
-   }
+    "cada": 0.45
+   },
+   "boca_en": [
+    "img/es_burro_habla.jpg",
+    "img/es_burro_habla_b.jpg"
+   ]
   }
  ],
  "duracion": 99.9

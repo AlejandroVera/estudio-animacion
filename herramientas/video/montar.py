@@ -380,8 +380,11 @@ def frame(t):
     if plano.get('parpadeo') and parpadea(t + plano['t0'] * 0.37):
         nombre = plano['parpadeo']
     encima = None
-    if plano.get('boca') and plano.get('habla', True) and boca_en(t):
-        encima = plano['boca']  # boca abierta dibujada de la escena (vale para sus dibujos alternos: misma cabeza)
+    forma = boca_en(t) if plano.get('habla', True) else None
+    if plano.get('boca') and forma and nombre in plano.get('boca_en', [nombre]):
+        # boca abierta dibujada de la escena (vale para sus dibujos alternos: misma cabeza); «o/u» con su
+        # propia boca redonda si la hay
+        encima = plano.get('boca_o') if forma == 'b_o' and plano.get('boca_o') else plano['boca']
     im = fondo(nombre, z, plano.get('cx', 0.5), plano.get('cy', 0.5), encima).convert('RGBA')
     for o in plano.get('objetos', []):
         if o['t0'] <= t < o.get('t1', 99) and o.get('detras'):

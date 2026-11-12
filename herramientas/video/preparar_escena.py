@@ -33,9 +33,9 @@ def guardar(img,nombre,rgba=False):
     im=img.resize((1920,1072),Image.LANCZOS)
     if rgba: im.save(os.path.join(E,nombre+'.png'))
     else: im.convert('RGB').save(os.path.join(E,nombre+'.jpg'),quality=90)
-for f in sorted(glob.glob(os.path.join(T,'crudo','*.png'))):
+for f in sorted(glob.glob(os.path.join(T,sys.argv[1] if len(sys.argv)>1 else 'crudo','*.png'))):
     nom=os.path.basename(f)[:-4]
-    boca=nom.endswith('_boca'); base=nom[:-5] if boca else nom[:-2]
+    boca=nom.endswith(('_boca','_bocao')); base=nom.rsplit('_',1)[0]
     A=Image.open(base_de(base)).convert('RGB'); a=np.asarray(A).astype(int)
     b=np.asarray(Image.open(f).convert('RGB').resize(A.size)).astype(int)
     d=np.abs(a-b).max(2)>45
@@ -73,7 +73,7 @@ for f in sorted(glob.glob(os.path.join(T,'crudo','*.png'))):
         guardar(Image.fromarray(rgba,'RGBA'),nom,rgba=True)
     else:
         prot=np.zeros(d.shape,bool)
-        if not base.startswith(('taza','es_calle_guardia','es_bib_dormido','es_gym_espejo')):
+        if not base.startswith(('taza','es_calle_guardia','es_bib_dormido','es_gym_espejo','es_gym_barra','es_calle_salta')):
             for (x,y,r) in heads[:1]: prot|=disco(d.shape,x,y,r*1.08)
         d&=~prot; d=ndi.binary_opening(d,iterations=2)
         lab,n=ndi.label(ndi.binary_dilation(d,iterations=8))
