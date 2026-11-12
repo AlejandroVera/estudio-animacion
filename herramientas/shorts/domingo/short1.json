@@ -1,0 +1,355 @@
+{
+ "alineacion": "voz/short1.json",
+ "audio": "voz/short1.mp3",
+ "pantalon": "gris",
+ "sin_recolor": [
+  "es_cama_mini"
+ ],
+ "duracion": 41.6,
+ "planos": [
+  {
+   "t0": 0,
+   "fondo": "../../video/ejemplo_domingo/img/es_cama_mini_c.jpg",
+   "boca": "../../video/ejemplo_domingo/img/es_cama_mini_boca.png",
+   "boca_o": "../../video/ejemplo_domingo/img/es_cama_mini_bocao.png",
+   "marco": 1.55,
+   "cx": 0.38,
+   "cambios": [
+    {
+     "t": 2.2,
+     "fondo": "../../video/ejemplo_domingo/img/es_cama_mini_d.jpg"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 0.62,
+     "texto": "TÓXICO",
+     "x": 540,
+     "y": 250,
+     "color": "verde",
+     "tam": 140,
+     "centro": true,
+     "fijo": true
+    }
+   ]
+  },
+  {
+   "t0": 3.4,
+   "fondo": "../../video/ejemplo_domingo/img/es_ofi_jefa.jpg",
+   "boca": "../../video/ejemplo_domingo/img/es_ofi_jefa_boca.png",
+   "boca_o": "../../video/ejemplo_domingo/img/es_ofi_jefa_bocao.png",
+   "marco": 1.6,
+   "cx": 0.66,
+   "alterna": {
+    "imgs": [
+     "../../video/ejemplo_domingo/img/es_ofi_jefa.jpg",
+     "../../video/ejemplo_domingo/img/es_ofi_jefa_b.jpg"
+    ],
+    "cada": 0.35
+   }
+  },
+  {
+   "t0": 5.8,
+   "fondo": "../../video/ejemplo_domingo/img/es_ofi_puerta.jpg",
+   "boca": "../../video/ejemplo_domingo/img/es_ofi_puerta_boca.png",
+   "boca_o": "../../video/ejemplo_domingo/img/es_ofi_puerta_bocao.png",
+   "cambios": [
+    {
+     "t": 6.88,
+     "fondo": "../../video/ejemplo_domingo/img/es_ofi_puerta_b.jpg"
+    }
+   ]
+  },
+  {
+   "t0": 7.8,
+   "fondo": "../../video/ejemplo_domingo/img/es_sofa_mini.jpg",
+   "boca": "../../video/ejemplo_domingo/img/es_sofa_mini_boca.png",
+   "boca_o": "../../video/ejemplo_domingo/img/es_sofa_mini_bocao.png",
+   "marco": 1.6,
+   "cx": 0.46,
+   "cambios": [
+    {
+     "t": 8.12,
+     "fondo": "../../video/ejemplo_domingo/img/es_sofa_mini_b.jpg"
+    },
+    {
+     "t": 9.42,
+     "fondo": "../../video/ejemplo_domingo/img/es_sofa_mini_c.jpg"
+    }
+   ]
+  },
+  {
+   "t0": 9.98,
+   "fondo": "../../video/ejemplo_domingo/img/es_cama_mini.jpg",
+   "boca": "../../video/ejemplo_domingo/img/es_cama_mini_boca.png",
+   "boca_o": "../../video/ejemplo_domingo/img/es_cama_mini_bocao.png",
+   "marco": 1.55,
+   "cx": 0.38,
+   "cambios": [
+    {
+     "t": 12.0,
+     "fondo": "../../video/ejemplo_domingo/img/es_cama_mini_b.jpg"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 10.6,
+     "texto": "62",
+     "x": 602,
+     "y": 105,
+     "color": "negro",
+     "tam": 60,
+     "centro": true,
+     "fijo": true,
+     "en_dibujo": true,
+     "t1": 12.0
+    },
+    {
+     "t0": 12.03,
+     "texto": "4",
+     "x": 580,
+     "y": 60,
+     "color": "rojo",
+     "tam": 70,
+     "centro": true,
+     "fijo": true,
+     "en_dibujo": true
+    }
+   ]
+  },
+  {
+   "t0": 12.88,
+   "fondo": "../../video/ejemplo_domingo/img/es_bib_mito.jpg",
+   "boca": "../../video/ejemplo_domingo/img/es_bib_mito_boca.png",
+   "boca_o": "../../video/ejemplo_domingo/img/es_bib_mito_bocao.png",
+   "marco": 1.5,
+   "cx": 0.55,
+   "cambios": [
+    {
+     "t": 15.75,
+     "fondo": "../../video/ejemplo_domingo/img/es_bib_mito_b.jpg"
+    }
+   ],
+   "objetos": [
+    {
+     "t0": 13.95,
+     "t1": 15.78,
+     "img": "../../video/ejemplo_domingo/img/foto_han.png",
+     "x": 540,
+     "y": 300,
+     "w": 300
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 13.95,
+     "texto": "BYUNG-CHUL HAN",
+     "x": 540,
+     "y": 70,
+     "color": "blanco",
+     "tam": 58,
+     "centro": true,
+     "fijo": true,
+     "t1": 15.78
+    },
+    {
+     "t0": 13.95,
+     "texto": "Foto: ActuaLitté (CC BY-SA 2.0)",
+     "x": 540,
+     "y": 1860,
+     "color": "blanco",
+     "tam": 26,
+     "centro": true,
+     "fijo": true,
+     "t1": 15.78
+    },
+    {
+     "t0": 15.8,
+     "texto": "PROMETEO",
+     "x": 540,
+     "y": 230,
+     "color": "blanco",
+     "tam": 110,
+     "centro": true,
+     "fijo": true
+    }
+   ]
+  },
+  {
+   "t0": 16.82,
+   "fondo": "../../video/ejemplo_domingo/img/br_prometeo.jpg",
+   "habla": false,
+   "marco": 1.45,
+   "cx": 0.5,
+   "cambios": [
+    {
+     "t": 18.93,
+     "fondo": "../../video/ejemplo_domingo/img/br_prometeo_b.jpg"
+    }
+   ],
+   "alterna": {
+    "imgs": [
+     "../../video/ejemplo_domingo/img/br_prometeo_b.jpg",
+     "../../video/ejemplo_domingo/img/br_prometeo_c.jpg"
+    ],
+    "cada": 0.3,
+    "desde": 19.55,
+    "hasta": 21.16
+   }
+  },
+  {
+   "t0": 21.16,
+   "fondo": "../../video/ejemplo_domingo/img/es_ofi_cadena.jpg",
+   "boca": "../../video/ejemplo_domingo/img/es_ofi_cadena_boca.png",
+   "boca_o": "../../video/ejemplo_domingo/img/es_ofi_cadena_bocao.png",
+   "alterna": {
+    "imgs": [
+     "../../video/ejemplo_domingo/img/es_ofi_cadena.jpg",
+     "../../video/ejemplo_domingo/img/es_ofi_cadena_b.jpg"
+    ],
+    "cada": 0.18
+   }
+  },
+  {
+   "t0": 24.33,
+   "fondo": "../../video/ejemplo_domingo/img/es_roca_aguila.jpg",
+   "boca": "../../video/ejemplo_domingo/img/es_roca_aguila_boca.png",
+   "boca_o": "../../video/ejemplo_domingo/img/es_roca_aguila_bocao.png",
+   "marco": 1.5,
+   "cx": 0.42,
+   "alterna": {
+    "imgs": [
+     "../../video/ejemplo_domingo/img/es_roca_aguila.jpg",
+     "../../video/ejemplo_domingo/img/es_roca_aguila_b.jpg"
+    ],
+    "cada": 0.35,
+    "desde": 25.2
+   }
+  },
+  {
+   "t0": 26.24,
+   "fondo": "../../video/ejemplo_domingo/img/br_prompul.jpg",
+   "habla": false,
+   "cx": 0.42,
+   "alterna": {
+    "imgs": [
+     "../../video/ejemplo_domingo/img/br_prompul_b.jpg",
+     "../../video/ejemplo_domingo/img/br_prompul.jpg"
+    ],
+    "cada": 0.09,
+    "desde": 27.45
+   }
+  },
+  {
+   "t0": 28.4,
+   "fondo": "../../video/ejemplo_domingo/img/br_muneca_b.jpg",
+   "habla": false,
+   "cx": 0.5,
+   "alterna": {
+    "imgs": [
+     "../../video/ejemplo_domingo/img/br_muneca_b.jpg",
+     "../../video/ejemplo_domingo/img/br_muneca.jpg"
+    ],
+    "cada": 0.09,
+    "desde": 28.4,
+    "hasta": 29.4
+   },
+   "rotulos": [
+    {
+     "t0": 28.45,
+     "texto": "ENHORABUENA",
+     "x": 540,
+     "y": 230,
+     "color": "negro",
+     "tam": 110,
+     "centro": true,
+     "fijo": true
+    },
+    {
+     "t0": 30.96,
+     "texto": "+12%",
+     "x": 995,
+     "y": 500,
+     "color": "negro",
+     "tam": 44,
+     "centro": true,
+     "fijo": true,
+     "en_dibujo": true
+    }
+   ]
+  },
+  {
+   "t0": 32.64,
+   "fondo": "../../video/ejemplo_domingo/img/es_ofi_doble.jpg",
+   "boca": "../../video/ejemplo_domingo/img/es_ofi_doble_boca.png",
+   "boca_o": "../../video/ejemplo_domingo/img/es_ofi_doble_bocao.png",
+   "marco": 1.1,
+   "cx": 0.52,
+   "cambios": [
+    {
+     "t": 33.17,
+     "fondo": "../../video/ejemplo_domingo/img/es_ofi_doble_b.jpg"
+    },
+    {
+     "t": 33.78,
+     "fondo": "../../video/ejemplo_domingo/img/es_ofi_doble_c.jpg"
+    },
+    {
+     "t": 35.9,
+     "fondo": "../../video/ejemplo_domingo/img/es_ofi_doble_d.jpg"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 35.93,
+     "texto": "HUELGA",
+     "x": 417,
+     "y": 140,
+     "color": "negro",
+     "tam": 44,
+     "centro": true,
+     "fijo": true,
+     "en_dibujo": true
+    },
+    {
+     "t0": 35.93,
+     "texto": "HUELGA",
+     "x": 1745,
+     "y": 150,
+     "color": "negro",
+     "tam": 44,
+     "centro": true,
+     "fijo": true,
+     "en_dibujo": true
+    }
+   ]
+  },
+  {
+   "t0": 36.8,
+   "fondo": "../../video/ejemplo_domingo/img/es_bano_pancarta.jpg",
+   "boca": "../../video/ejemplo_domingo/img/es_bano_pancarta_boca.png",
+   "boca_o": "../../video/ejemplo_domingo/img/es_bano_pancarta_bocao.png",
+   "marco": 1.3,
+   "cx": 0.56,
+   "cambios": [
+    {
+     "t": 39.05,
+     "fondo": "../../video/ejemplo_domingo/img/es_bano_pancarta_b.jpg"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 36.9,
+     "texto": "HUELGA",
+     "x": 1180,
+     "y": 320,
+     "color": "negro",
+     "tam": 60,
+     "centro": true,
+     "fijo": true,
+     "en_dibujo": true
+    }
+   ]
+  }
+ ]
+}
