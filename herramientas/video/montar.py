@@ -69,9 +69,14 @@ def pantalon_escena(nombre):
     return Image.fromarray(a.astype('uint8'))
 
 
-def fondo(nombre, zoom, cx, cy):
-    """Fondo a 1920x1080 con encuadre (zoom y centro en fracciones)."""
+def fondo(nombre, zoom, cx, cy, encima=None):
+    """Fondo a 1920x1080 con encuadre (zoom y centro en fracciones). `encima`: capa RGBA del mismo tamaño que
+    el dibujo (la boca abierta dibujada de esa escena)."""
     im = pantalon_escena(nombre) if os.path.basename(nombre).startswith(('es_', 'br_')) else img(nombre).convert('RGB')
+    if encima:
+        im = im.convert('RGBA')
+        im.alpha_composite(img(encima).resize(im.size, Image.LANCZOS))
+        im = im.convert('RGB')
     w, h = im.size
     cw, ch = w / zoom, h / zoom
     x0 = min(max(cx * w - cw / 2, 0), w - cw)
@@ -366,12 +371,15 @@ def frame(t):
         nombre = seq[k % len(seq)] if not alt.get('azar') else seq[rnd.randrange(len(seq))]
     if plano.get('parpadeo') and parpadea(t + plano['t0'] * 0.37):
         nombre = plano['parpadeo']
-    im = fondo(nombre, z, plano.get('cx', 0.5), plano.get('cy', 0.5)).convert('RGBA')
+    encima = None
+    if plano.get('boca') and plano.get('habla', True) and boca_en(t):
+        encima = plano['boca']  # boca abierta dibujada de la escena (vale para sus dibujos alternos: misma cabeza)
+    im = fondo(nombre, z, plano.get('cx', 0.5), plano.get('cy', 0.5), encima).convert('RGBA')
     for o in plano.get('objetos', []):
         if o['t0'] <= t < o.get('t1', 99) and o.get('detras'):
             pegar_objeto(im, o, t)
     ev = estado(plano, t)
-    if not ev['cuerpo'] and plano.get('habla', True):
+    if not ev['cuerpo'] and plano.get('boca_codigo'):
         forma = boca_en(t)
         if forma:
             boca_en_escena(im, nombre, z, plano.get('cx', 0.5), plano.get('cy', 0.5), forma)

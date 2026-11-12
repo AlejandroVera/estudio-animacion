@@ -163,4 +163,17 @@ Trabaja en una carpeta de proyecto en el scratchpad (`<proyecto>/img`, `<proyect
   inventario): revisa con una hoja (cara sin y con boca); si la pone mal (cara pequeña, de lado, ojos raros) pon
   `"habla": false` en ese plano. El pantalón vaquero de las escenas se pasa a gris solo (`es_*`/`br_*`, debajo de
   su cabeza). Si sale pequeño en el dibujo, `zoom` hacia él.
+- 2026-11-12: «la boca está mal animada varias veces, hay planos estáticos de él y eso no puede ser; los B-roll deben
+  estar animados y él no salir». Reglas:
+  1. NUNCA un plano de él quieto: cada escena con él tiene al menos 2 dibujos (edición «pixel for pixel… change ONLY
+     his legs / arm / the sticky note…; the head and face stay identical») alternando (`alterna`: andar 0,32 s,
+     piernas nerviosas 0,22, temblar 0,12, saltar 0,28) o cambiando en su palabra (`cambios`).
+  2. La BOCA en las escenas: NO pegar las bocas del inventario sobre caras dibujadas (quedaba mal). Para cada escena
+     donde habla, una edición «Change ONLY the mouth: open, talking, like saying "a"» → `preparar_escena.py` saca la
+     capa de la boca abierta → `"boca": "img/X_boca.png"`; el montador la pone mientras suena una vocal (vale también
+     para sus dibujos alternos porque la cabeza no cambia). Revisar la hoja de caras (sin/con boca); si sale cortada
+     o cambia un ojo, recortarla a mano con una elipse. Sin boca dibujada → `"habla": false` (cara de lado, tapada,
+     muy pequeña).
+  3. B-ROLL = planos SIN él (la taza, pantallas, el sitio), y también animados (vapor de la taza alternando 0,45 s).
+  4. Los movimientos de cuerpo entero (saltar) se copian enteros, sin proteger la cabeza (si no salen dos cabezas).
 

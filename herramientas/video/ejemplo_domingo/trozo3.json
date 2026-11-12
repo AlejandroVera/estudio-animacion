@@ -144,14 +144,29 @@
    "fondo": "img/es_sofa_nervioso.jpg",
    "zoom": 1.1,
    "cx": 0.5,
-   "cy": 0.5
+   "cy": 0.5,
+   "alterna": {
+    "imgs": [
+     "img/es_sofa_nervioso.jpg",
+     "img/es_sofa_nervioso_b.jpg"
+    ],
+    "cada": 0.22
+   },
+   "habla": false
   },
   {
    "t0": 23.958,
    "fondo": "img/es_sofa_foto.jpg",
    "zoom": 1.25,
    "cx": 0.45,
-   "cy": 0.42
+   "cy": 0.42,
+   "boca": "img/es_sofa_foto_boca.png",
+   "cambios": [
+    {
+     "t": 24.954,
+     "fondo": "img/es_sofa_foto_b.jpg"
+    }
+   ]
   },
   {
    "t0": 26.543,
@@ -192,6 +207,12 @@
      "centro": true,
      "fijo": true
     }
+   ],
+   "cambios": [
+    {
+     "t": 29.0,
+     "fondo": "img/es_bib_escalera_b.jpg"
+    }
    ]
   },
   {
@@ -207,6 +228,13 @@
      "x": 420,
      "y": 560,
      "w": 300
+    }
+   ],
+   "boca": "img/es_bib_suelo_boca.png",
+   "cambios": [
+    {
+     "t": 36.064,
+     "fondo": "img/es_bib_suelo_b.jpg"
     }
    ]
   },
@@ -238,6 +266,12 @@
      "centro": true,
      "fijo": true
     }
+   ],
+   "cambios": [
+    {
+     "t": 37.306,
+     "fondo": "img/br_biblioteca_lee_b.jpg"
+    }
    ]
   },
   {
@@ -246,14 +280,29 @@
    "zoom": 1.45,
    "cx": 0.37,
    "cy": 0.45,
-   "habla": false
+   "habla": false,
+   "alterna": {
+    "imgs": [
+     "img/es_bib_dormido.jpg",
+     "img/es_bib_dormido_b.jpg"
+    ],
+    "cada": 0.7
+   }
   },
   {
    "t0": 40.543,
    "fondo": "img/es_calle_anda.jpg",
    "zoom": 1.2,
    "cx": 0.55,
-   "cy": 0.5
+   "cy": 0.5,
+   "boca": "img/es_calle_anda_boca.png",
+   "alterna": {
+    "imgs": [
+     "img/es_calle_anda.jpg",
+     "img/es_calle_anda_b.jpg"
+    ],
+    "cada": 0.32
+   }
   },
   {
    "t0": 42.943,
@@ -271,6 +320,13 @@
      "tam": 120,
      "centro": true,
      "fijo": true
+    }
+   ],
+   "boca": "img/es_calle_banco_boca.png",
+   "cambios": [
+    {
+     "t": 45.399,
+     "fondo": "img/es_calle_banco_b.jpg"
     }
    ]
   },
@@ -306,6 +362,13 @@
      "tam": 90,
      "centro": true,
      "fijo": true
+    }
+   ],
+   "boca": "img/es_cocina_posit_boca.png",
+   "cambios": [
+    {
+     "t": 48.533,
+     "fondo": "img/es_cocina_posit_b.jpg"
     }
    ]
   },
@@ -367,17 +430,26 @@
      "centro": true,
      "fijo": true
     }
+   ],
+   "boca": "img/es_ofi_notis_boca.png",
+   "cambios": [
+    {
+     "t": 57.009,
+     "fondo": "img/es_ofi_notis_b.jpg"
+    }
    ]
   },
   {
    "t0": 61.843,
-   "fondo": "img/br_cocina_taza.jpg",
-   "habla": false
-  },
-  {
-   "t0": 62.85,
    "fondo": "img/taza.jpg",
-   "habla": false
+   "habla": false,
+   "alterna": {
+    "imgs": [
+     "img/taza.jpg",
+     "img/taza_b.jpg"
+    ],
+    "cada": 0.45
+   }
   },
   {
    "t0": 64.343,
@@ -416,14 +488,30 @@
      "centro": true,
      "fijo": true
     }
-   ]
+   ],
+   "boca": "img/es_ofi_pizarra_boca.png",
+   "alterna": {
+    "imgs": [
+     "img/es_ofi_pizarra.jpg",
+     "img/es_ofi_pizarra_b.jpg"
+    ],
+    "cada": 0.45,
+    "desde": 66.0
+   }
   },
   {
    "t0": 71.743,
    "fondo": "img/es_calle_salta.jpg",
    "zoom": 1.4,
    "cx": 0.5,
-   "cy": 0.52
+   "cy": 0.52,
+   "alterna": {
+    "imgs": [
+     "img/es_calle_salta.jpg",
+     "img/es_calle_salta_b.jpg"
+    ],
+    "cada": 0.28
+   }
   },
   {
    "t0": 72.844,
@@ -443,6 +531,12 @@
      "centro": true,
      "fijo": true
     }
+   ],
+   "cambios": [
+    {
+     "t": 73.55,
+     "fondo": "img/es_calle_trampa_b.jpg"
+    }
    ]
   },
   {
@@ -451,7 +545,14 @@
    "zoom": 1.55,
    "cx": 0.3,
    "cy": 0.66,
-   "habla": false
+   "habla": false,
+   "alterna": {
+    "imgs": [
+     "img/es_calle_guardia.jpg",
+     "img/es_calle_guardia_b.jpg"
+    ],
+    "cada": 0.5
+   }
   },
   {
    "t0": 77.244,
@@ -483,7 +584,14 @@
    "habla": false,
    "zoom": 1.5,
    "cx": 0.62,
-   "cy": 0.62
+   "cy": 0.62,
+   "alterna": {
+    "imgs": [
+     "img/br_gym_pesa.jpg",
+     "img/br_gym_pesa_b.jpg"
+    ],
+    "cada": 0.12
+   }
   },
   {
    "t0": 86.144,
@@ -502,11 +610,27 @@
      "centro": true,
      "fijo": true
     }
-   ]
+   ],
+   "boca": "img/es_gym_espejo_boca.png",
+   "alterna": {
+    "imgs": [
+     "img/es_gym_espejo.jpg",
+     "img/es_gym_espejo_b.jpg"
+    ],
+    "cada": 0.35
+   }
   },
   {
    "t0": 90.143,
-   "fondo": "img/es_gym_stop.jpg"
+   "fondo": "img/es_gym_stop.jpg",
+   "boca": "img/es_gym_stop_boca.png",
+   "alterna": {
+    "imgs": [
+     "img/es_gym_stop.jpg",
+     "img/es_gym_stop_b.jpg"
+    ],
+    "cada": 0.3
+   }
   },
   {
    "t0": 91.643,
@@ -550,7 +674,14 @@
   {
    "t0": 97.644,
    "fondo": "img/es_burro_el.jpg",
-   "habla": false
+   "habla": false,
+   "alterna": {
+    "imgs": [
+     "img/es_burro_el.jpg",
+     "img/es_burro_el_b.jpg"
+    ],
+    "cada": 0.3
+   }
   }
  ],
  "duracion": 99.9
