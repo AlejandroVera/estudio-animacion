@@ -231,3 +231,8 @@ Trabaja en una carpeta de proyecto en el scratchpad (`<proyecto>/img`, `<proyect
   pancartas; el espejo con pancarta. Los callbacks (la oficina del principio, la pulsera, el 62) atan el vídeo.
   `"sin_recolor": ["es_cama_mini"]` en el plan cuando el dibujo tiene cosas azules que no son su pantalón (edredón):
   si no, el montador las pasa a gris y sale un rectángulo.
+- 2026-11-12 «texto que no entra bien donde tiene que entrar» (trozo 4): el número en la pizarra pegado al borde, el
+  «62» fuera de la tarjeta, «+12%» arriba del todo de la pantalla, «HUELGA» saliéndose de la pancarta inclinada.
+  Regla: para cada texto `fijo` medir el hueco en el FOTOGRAMA a tamaño real (recorte ampliado del sitio), centrar
+  en él (`y` es la parte de ARRIBA del texto: y = centro del hueco − 0,6 × tam) y revisar todos con una hoja de
+  recortes ampliados antes de entregar, no con la hoja pequeña de 0,75 s (ahí no se ve).

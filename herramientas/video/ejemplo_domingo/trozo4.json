@@ -18,10 +18,10 @@
     {
      "t0": 0.15,
      "texto": "2.",
-     "x": 900,
-     "y": 190,
+     "x": 1060,
+     "y": 170,
      "color": "negro",
-     "tam": 110,
+     "tam": 130,
      "centro": true,
      "fijo": true
     }
@@ -83,8 +83,8 @@
     {
      "t0": 11.48,
      "texto": "62",
-     "x": 600,
-     "y": 150,
+     "x": 602,
+     "y": 105,
      "color": "negro",
      "tam": 60,
      "centro": true,
@@ -270,10 +270,10 @@
     {
      "t0": 38.93,
      "texto": "+12%",
-     "x": 972,
-     "y": 430,
+     "x": 995,
+     "y": 500,
      "color": "negro",
-     "tam": 42,
+     "tam": 44,
      "centro": true,
      "fijo": true
     }
@@ -344,7 +344,7 @@
     {
      "t0": 49.9,
      "texto": "HUELGA",
-     "x": 425,
+     "x": 417,
      "y": 140,
      "color": "negro",
      "tam": 44,
@@ -355,7 +355,7 @@
      "t0": 49.9,
      "texto": "HUELGA",
      "x": 1745,
-     "y": 215,
+     "y": 150,
      "color": "negro",
      "tam": 44,
      "centro": true,
