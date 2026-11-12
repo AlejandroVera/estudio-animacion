@@ -176,4 +176,10 @@ Trabaja en una carpeta de proyecto en el scratchpad (`<proyecto>/img`, `<proyect
      muy pequeña).
   3. B-ROLL = planos SIN él (la taza, pantallas, el sitio), y también animados (vapor de la taza alternando 0,45 s).
   4. Los movimientos de cuerpo entero (saltar) se copian enteros, sin proteger la cabeza (si no salen dos cabezas).
+- 2026-11-12: REVISIÓN OBLIGATORIA antes de entregar (fallos que se escaparon): sacar un fotograma cada 0,75 s
+  (`ffmpeg -vf fps=4/3,scale=480:270`) en hojas de 30 con el tiempo y mirarlas TODAS buscando: franjas blancas del
+  marco del dibujo en los bordes (al hacer zoom; la biblioteca trae marco), planos de más de ~2 s sin nada que se
+  mueva, un `cambio` que cae después del final de su plano (nunca se ve), ojos o caras que cambian al alternar
+  dibujos (`variante.py --zona` solo sobre lo que se mueve) y rótulos que no se leen sobre fondos cargados
+  (`"caja": true` = cartelito blanco detrás).
 

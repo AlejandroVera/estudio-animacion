@@ -332,6 +332,14 @@ def rotulo(d, r, t):
     anchos = [f.getlength(ch) for ch in texto]
     x, y = sitio_rotulo(r, sum(anchos) * 1.04, tam * 1.25)
     OCUPADO.append((x, y, x + sum(anchos) * 1.04, y + tam * 1.25))
+    if r.get('caja'):
+        # cartelito blanco detrás (para que se lea sobre fondos cargados), crece con lo escrito
+        ancho = sum(anchos[:n]) * 1.04
+        m = tam * 0.25
+        caja = Image.new('RGBA', d.size, (0, 0, 0, 0))
+        ImageDraw.Draw(caja).rounded_rectangle((x - m, y - m * 0.6, x + ancho + m, y + tam * 1.3 + m * 0.3),
+                                               radius=m, fill=(255, 255, 255, 235), outline=(30, 30, 30, 255), width=3)
+        d.alpha_composite(caja)
     for i, ch in enumerate(texto[:n]):
         dy = rnd.uniform(-6, 6)
         ang = rnd.uniform(-7, 7)
