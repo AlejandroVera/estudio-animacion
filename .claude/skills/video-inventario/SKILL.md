@@ -309,3 +309,10 @@ Trabaja en una carpeta de proyecto en el scratchpad (`<proyecto>/img`, `<proyect
   sofá del domingo, la pulsera, el banco del abuelo, el mini-jefe) y acabar con él a cámara en primer plano con el
   remate en el último dibujo y `"duracion"` con 1,5-2 s de aire. Magnific a veces da «TPM quota exhausted»: no es un
   error del pedido, se repite la misma petición al rato (no lanzar más de ~8 a la vez).
+- 2026-11-12 «al muñeco del hombro le salen dos pupilas, el cajón no está cerrado, el texto de la pizarra no sale
+  bien» (trozo 7): 1) al añadir algo pegado a su cabeza (un mini-él en el hombro) NO copiar la edición entera: la IA
+  mueve un poco la cara y al mezclar salen ojos dobles; pedir que lo añadido NO solape la cabeza, copiar con
+  `variante.py --zona` solo esa zona y, si roza un ojo, volver a pegar ese ojo de la base. Mirar la cara ampliada.
+  2) Si la IA no consigue cambiar el estado de un objeto editando (cajón que «cierra» y sigue abierto), dibujar ese
+  estado como plano nuevo y simple (de frente, «completely closed, nothing sticking out») y cortar a él.
+  3) Pizarras: medir el borde de la pizarra en el fotograma y centrar el texto dentro (nunca alineado a ojo).

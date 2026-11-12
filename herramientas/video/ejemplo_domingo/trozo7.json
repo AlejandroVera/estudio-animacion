@@ -121,7 +121,7 @@
    "cambios": [
     {
      "t": 19.2,
-     "fondo": "img/br_cajon_b.jpg"
+     "fondo": "img/br_cajon_cerrado.jpg"
     }
    ]
   },
@@ -153,20 +153,20 @@
     {
      "t0": 20.4,
      "texto": "NO HACER",
-     "x": 890,
-     "y": 130,
+     "x": 1037,
+     "y": 135,
      "color": "negro",
-     "tam": 50,
+     "tam": 64,
      "centro": true,
      "fijo": true
     },
     {
      "t0": 21.0,
      "texto": "NADA",
-     "x": 890,
-     "y": 200,
+     "x": 1037,
+     "y": 225,
      "color": "negro",
-     "tam": 50,
+     "tam": 64,
      "centro": true,
      "fijo": true
     },
