@@ -251,18 +251,77 @@ def vocales(texto):
     return [ch for ch in t if ch in 'aeiou']
 
 
+def _envolvente():
+    """Energía de la voz por fotograma (la boca sigue al SONIDO real, no a un reparto de las palabras)."""
+    import numpy as np
+    sr = 16000
+    raw = subprocess.run(['ffmpeg', '-loglevel', 'error', '-i', os.path.join(BASE, plan['audio']), '-f', 's16le', '-ac', '1',
+                          '-ar', str(sr), '-'], capture_output=True).stdout
+    x = np.frombuffer(raw, np.int16).astype(np.float32)
+    hop = sr // FPS
+    n = len(x) // hop
+    # energía de la banda de la voz (quita graves y siseos), en ventanas de un fotograma
+    rms = np.array([np.sqrt((x[i * hop:(i + 1) * hop] ** 2).mean() + 1e-9) for i in range(n)])
+    db = 20 * np.log10(rms + 1e-9)
+    ref = np.percentile(db[db > db.max() - 60], 95)
+    v = np.clip((db - (ref - 30)) / 30, 0, 1)  # 0 silencio, 1 voz fuerte
+    v = np.convolve(v, [0.25, 0.5, 0.25], mode='same')
+    # boca abierta en el NÚCLEO de cada sílaba: donde la energía está cerca de su máximo local (±3 fotogramas)
+    # y hay voz; así se abre y cierra al ritmo de las sílabas (~4-6 por segundo) en vez de quedarse abierta
+    loc = np.array([v[max(0, i - 3):i + 4].max() for i in range(n)])
+    abierta = (v > 0.38) & (v >= 0.72 * loc)
+    # solo dentro de las palabras (las respiraciones entre frases no mueven la boca)
+    dentro = np.zeros(n, bool)
+    for w in palabras:
+        dentro[max(0, int((w['inicio'] - 0.03) * FPS)):int((w['fin'] + 0.03) * FPS) + 1] = True
+    abierta &= dentro[:n] if len(dentro) >= n else np.pad(dentro, (0, n - len(dentro)))
+    # tramos abiertos de más de 5 fotogramas: se cierra uno en el valle más hondo
+    i = 0
+    while i < n:
+        if abierta[i]:
+            j = i
+            while j < n and abierta[j]:
+                j += 1
+            if j - i > 5:
+                k = i + 2 + int(np.argmin(v[i + 2:j - 2]))
+                abierta[k] = False
+            i = j
+        else:
+            i += 1
+    for i in range(1, n - 1):
+        if abierta[i] and not abierta[i - 1] and not abierta[i + 1] and v[i] < 0.6:
+            abierta[i] = False
+    return abierta
+
+
+try:
+    ABIERTA = _envolvente()
+except Exception as e:  # sin audio legible: reparto por palabras
+    print('aviso: boca sin audio', e)
+    ABIERTA = None
+
+
+def vocal_en(t):
+    """Vocal que suena en t según la alineación (solo para elegir la FORMA de la boca)."""
+    for w in palabras:
+        if w['inicio'] - 0.04 <= t < w['fin'] + 0.04:
+            vs = vocales(w['texto']) or ['a']
+            d = max(w['fin'] - w['inicio'], 0.01) / len(vs)
+            i = min(max(int((t - w['inicio']) / d), 0), len(vs) - 1)
+            return vs[i]
+    return 'a'
+
+
 def boca_en(t):
     """Forma de boca al hablar en el instante t (None = cerrada)."""
+    if ABIERTA is not None:
+        i = int(round(t * FPS))
+        if i >= len(ABIERTA) or not ABIERTA[i]:
+            return None
+        return {'a': 'b_habla_e', 'e': 'b_habla_a', 'i': 'b_habla_a', 'o': 'b_o', 'u': 'b_o'}[vocal_en(t)]
     for w in palabras:
         if w['inicio'] - 0.02 <= t < w['fin']:
-            vs = vocales(w['texto']) or ['a']
-            d = (w['fin'] - w['inicio']) / len(vs)
-            i = min(int((t - w['inicio']) / d), len(vs) - 1)
-            fr = (t - w['inicio'] - i * d) / d
-            if fr > 0.7 and d > 0.12:
-                return None
-            v = vs[i]
-            return {'a': 'b_habla_e', 'e': 'b_habla_a', 'i': 'b_habla_a', 'o': 'b_o', 'u': 'b_o'}[v]
+            return {'a': 'b_habla_e', 'e': 'b_habla_a', 'i': 'b_habla_a', 'o': 'b_o', 'u': 'b_o'}[vocal_en(t)]
     return None
 
 

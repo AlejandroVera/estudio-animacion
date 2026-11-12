@@ -191,4 +191,10 @@ Trabaja en una carpeta de proyecto en el scratchpad (`<proyecto>/img`, `<proyect
   zanahoria hablándote en «el burro eres tú»); callbacks a personajes ya vistos. DOS bocas por escena donde
   habla: `"boca"` (a/e/i) y `"boca_o"` (o/u, edición «small round open O»). Si un dibujo alterno mueve la
   cabeza (un salto), `"boca_en": [solo el dibujo base]` para que la boca no se pegue fuera de sitio.
+- 2026-11-12: «no se sincroniza del todo la voz y la boca». La boca se abría por un reparto uniforme de las vocales
+  dentro de cada palabra (se adelantaba o retrasaba). Ahora `montar.py` mide la ENERGÍA REAL del audio por
+  fotograma y abre la boca solo en el núcleo de cada sílaba (cerca del máximo local, dentro de las palabras,
+  nunca más de 5 fotogramas seguida); la alineación solo decide la FORMA (a/e/i o «o/u»). Para comprobar las
+  apariciones: listar cada rótulo/objeto/cambio con la palabra que suena en ese instante (deben caer en su
+  palabra ±0,1 s) y cada plano con la frase que se oye mientras se ve.
 
