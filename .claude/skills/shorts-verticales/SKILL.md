@@ -50,6 +50,11 @@ Ejemplo completo: `herramientas/shorts/domingo/` (3 shorts del vídeo «domingo�
   aunque `--frames` funcione).
 
 ## Lecciones
+- Revisar la ANATOMÍA de cada dibujo reutilizado (brazos y manos): `es_bano_pancarta_b` tiene TRES brazos y se
+  coló; en el short 1 se quitó ese cambio. Si hace falta el gesto, redibujarlo pidiendo «exactly two arms».
+- Al ampliar en vertical, si el dibujo corta al personaje, la IA le inventa la parte de abajo (pantalón corto,
+  piernas o pies descalzos magenta). En el `prompt` describir su ropa: «his LONG grey sweatpants continue down to
+  his ankles and he wears white sneakers… no shorts, no bare legs».
 - Cada plano tiene que ILUSTRAR lo que se dice en ese momento, no reutilizar un dibujo «porque sale el personaje»:
   el short 1 empezaba en la cama con «el jefe más tóxico… soy yo» y no tenía sentido (ahora: él de jefe en la
   oficina y, en «soy yo», se ve que el empleado también es él). Mirar qué cuenta cada dibujo en el largo.

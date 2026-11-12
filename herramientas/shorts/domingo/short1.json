@@ -167,9 +167,8 @@
    "fondo": "../../video/ejemplo_domingo/img/es_bib_mito.jpg",
    "boca": "../../video/ejemplo_domingo/img/es_bib_mito_boca.png",
    "boca_o": "../../video/ejemplo_domingo/img/es_bib_mito_bocao.png",
-   "marco": 1.75,
-   "cx": 0.66,
-   "ly": -0.07,
+   "marco": 1.6,
+   "cx": 0.62,
    "cambios": [
     {
      "t": 16.75,
@@ -389,12 +388,6 @@
    "boca_o": "../../video/ejemplo_domingo/img/es_bano_pancarta_bocao.png",
    "marco": 1.45,
    "cx": 0.56,
-   "cambios": [
-    {
-     "t": 40.06,
-     "fondo": "../../video/ejemplo_domingo/img/es_bano_pancarta_b.jpg"
-    }
-   ],
    "rotulos": [
     {
      "t0": 38.0,
