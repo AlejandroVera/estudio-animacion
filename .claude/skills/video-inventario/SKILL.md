@@ -316,3 +316,12 @@ Trabaja en una carpeta de proyecto en el scratchpad (`<proyecto>/img`, `<proyect
   2) Si la IA no consigue cambiar el estado de un objeto editando (cajón que «cierra» y sigue abierto), dibujar ese
   estado como plano nuevo y simple (de frente, «completely closed, nothing sticking out») y cortar a él.
   3) Pizarras: medir el borde de la pizarra en el fotograma y centrar el texto dentro (nunca alineado a ojo).
+- 2026-11-12 MÚSICA («cambios de música que acompañen los tramos, para la antihabituación»): una pista distinta por
+  parte del vídeo, hecha con Magnific `audio_music_generate` modelo `google-lyria-3-pro` (160 créditos por pista de
+  ~2-3 min; ElevenLabs cuesta 1.200 por minuto), prompt «Instrumental only, no vocals… sparse so a narrator can talk
+  over it» + el ánimo del tramo (domingo vago: ukelele; productividad: marimba con tic-tac; abuelo: piano antiguo;
+  filosofía: pizzicato; mito/jefe: épico de broma; móviles: sintes nerviosos; reflexión: piano melancólico;
+  sobremesa: guitarra cálida; final: silbido optimista). Comprobar que no tienen voz con `voz.py comprobar`.
+  Mezcla: `herramientas/video/musica.py video.mp4 tramos.json salida.mp4` (normaliza cada pista a -27 LUFS, corta
+  justo en el cambio de parte con fundido de 0,4 s y la agacha cuando habla). Al final, `loudnorm=I=-15` para YouTube.
+  Ejemplo en `ejemplo_domingo/musica/tramos.json`.
