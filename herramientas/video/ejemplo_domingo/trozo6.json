@@ -1,0 +1,247 @@
+{
+ "alineacion": "voz/trozo6.json",
+ "audio": "voz/trozo6.mp3",
+ "pantalon": "gris",
+ "sin_recolor": [
+  "es_cama_cansado",
+  "es_medico"
+ ],
+ "duracion": 54.4,
+ "planos": [
+  {
+   "t0": 0,
+   "fondo": "img/es_sofa_serio.jpg",
+   "boca": "img/es_sofa_serio_boca.png",
+   "boca_o": "img/es_sofa_serio_bocao.png"
+  },
+  {
+   "t0": 2.5,
+   "fondo": "img/es_casa_detective.jpg",
+   "boca": "img/es_casa_detective_boca.png",
+   "boca_o": "img/es_casa_detective_bocao.png",
+   "cambios": [
+    {
+     "t": 5.15,
+     "fondo": "img/es_casa_detective_b.jpg"
+    },
+    {
+     "t": 5.92,
+     "fondo": "img/es_casa_detective_c.jpg"
+    },
+    {
+     "t": 6.6,
+     "fondo": "img/es_casa_detective_d.jpg"
+    },
+    {
+     "t": 8.52,
+     "fondo": "img/es_casa_detective_e.jpg"
+    }
+   ],
+   "boca_en": [
+    "img/es_casa_detective.jpg",
+    "img/es_casa_detective_b.jpg",
+    "img/es_casa_detective_c.jpg",
+    "img/es_casa_detective_d.jpg"
+   ]
+  },
+  {
+   "t0": 9.3,
+   "fondo": "img/br_fabrica_huelga.jpg",
+   "habla": false,
+   "alterna": {
+    "imgs": [
+     "img/br_fabrica_huelga.jpg",
+     "img/br_fabrica_huelga_b.jpg"
+    ],
+    "cada": 0.35
+   }
+  },
+  {
+   "t0": 13.35,
+   "fondo": "img/es_gym_chandal.jpg",
+   "boca": "img/es_gym_chandal_boca.png",
+   "boca_o": "img/es_gym_chandal_bocao.png",
+   "cambios": [
+    {
+     "t": 15.1,
+     "fondo": "img/es_gym_chandal_b.jpg"
+    }
+   ],
+   "boca_en": [
+    "img/es_gym_chandal.jpg"
+   ]
+  },
+  {
+   "t0": 15.95,
+   "fondo": "img/es_cama_cansado.jpg",
+   "boca": "img/es_cama_cansado_boca.png",
+   "boca_o": "img/es_cama_cansado_bocao.png"
+  },
+  {
+   "t0": 18.3,
+   "fondo": "img/es_calle_carga.jpg",
+   "boca": "img/es_calle_carga_boca.png",
+   "boca_o": "img/es_calle_carga_bocao.png",
+   "cambios": [
+    {
+     "t": 20.64,
+     "fondo": "img/es_calle_carga_b.jpg"
+    }
+   ]
+  },
+  {
+   "t0": 21.75,
+   "fondo": "img/es_medico.jpg",
+   "boca": "img/es_medico_boca.png",
+   "boca_o": "img/es_medico_bocao.png",
+   "cambios": [
+    {
+     "t": 24.7,
+     "fondo": "img/es_medico_b.jpg"
+    },
+    {
+     "t": 25.52,
+     "fondo": "img/es_medico_c.jpg"
+    }
+   ]
+  },
+  {
+   "t0": 26.4,
+   "fondo": "img/es_ofi_humo.jpg",
+   "boca": "img/es_ofi_humo_boca.png",
+   "boca_o": "img/es_ofi_humo_bocao.png",
+   "cambios": [
+    {
+     "t": 27.37,
+     "fondo": "img/es_ofi_humo_b.jpg"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 26.55,
+     "texto": "BURNOUT",
+     "x": 1600,
+     "y": 230,
+     "color": "rojo",
+     "tam": 90,
+     "centro": true,
+     "fijo": true
+    },
+    {
+     "t0": 27.35,
+     "texto": "DEPRESIÓN",
+     "x": 1600,
+     "y": 350,
+     "color": "azul",
+     "tam": 80,
+     "centro": true,
+     "fijo": true
+    }
+   ]
+  },
+  {
+   "t0": 28.4,
+   "fondo": "img/es_gym_banner.jpg",
+   "boca": "img/es_gym_banner_boca.png",
+   "boca_o": "img/es_gym_banner_bocao.png",
+   "zoom": 1.15,
+   "cx": 0.5,
+   "cy": 0.45,
+   "cambios": [
+    {
+     "t": 30.28,
+     "fondo": "img/es_gym_caido.jpg"
+    }
+   ],
+   "boca_en": [
+    "img/es_gym_banner.jpg"
+   ],
+   "bocas": {
+    "img/es_gym_caido.jpg": [
+     "img/es_gym_caido_boca.png",
+     "img/es_gym_caido_bocao.png"
+    ]
+   }
+  },
+  {
+   "t0": 32.7,
+   "fondo": "img/es_calle_quemados.jpg",
+   "boca": "img/es_calle_quemados_boca.png",
+   "boca_o": "img/es_calle_quemados_bocao.png",
+   "zoom": 1.25,
+   "cx": 0.55,
+   "cy": 0.6,
+   "alterna": {
+    "imgs": [
+     "img/es_calle_quemados.jpg",
+     "img/es_calle_quemados_b.jpg"
+    ],
+    "cada": 0.5
+   }
+  },
+  {
+   "t0": 35.3,
+   "fondo": "img/es_ofi_ojeras.jpg",
+   "boca": "img/es_ofi_ojeras_boca.png",
+   "boca_o": "img/es_ofi_ojeras_bocao.png",
+   "cambios": [
+    {
+     "t": 39.78,
+     "fondo": "img/es_ofi_ojeras_b.jpg"
+    }
+   ],
+   "boca_en": [
+    "img/es_ofi_ojeras.jpg"
+   ]
+  },
+  {
+   "t0": 40.7,
+   "fondo": "img/es_sobremesa.jpg",
+   "boca": "img/es_sobremesa_boca.png",
+   "boca_o": "img/es_sobremesa_bocao.png",
+   "zoom": 1.25,
+   "cx": 0.5,
+   "cy": 0.45
+  },
+  {
+   "t0": 45.9,
+   "fondo": "img/br_cesta.jpg",
+   "habla": false,
+   "alterna": {
+    "imgs": [
+     "img/br_cesta.jpg",
+     "img/br_cesta_b.jpg"
+    ],
+    "cada": 0.12,
+    "desde": 46.0
+   }
+  },
+  {
+   "t0": 47.3,
+   "fondo": "img/es_sobremesa_b.jpg",
+   "boca": "img/es_sobremesa_boca.png",
+   "boca_o": "img/es_sobremesa_bocao.png",
+   "zoom": 1.25,
+   "cx": 0.5,
+   "cy": 0.45
+  },
+  {
+   "t0": 49.5,
+   "fondo": "img/es_sobremesa.jpg",
+   "boca": "img/es_sobremesa_boca.png",
+   "boca_o": "img/es_sobremesa_bocao.png",
+   "zoom": 1.9,
+   "cx": 0.5,
+   "cy": 0.38,
+   "cambios": [
+    {
+     "t": 52.62,
+     "fondo": "img/es_sobremesa_c.jpg"
+    }
+   ],
+   "boca_en": [
+    "img/es_sobremesa.jpg"
+   ]
+  }
+ ]
+}
