@@ -141,17 +141,11 @@
   },
   {
    "t0": 20.15,
-   "fondo": "img/salon.jpg",
-   "zoom": 1.13,
-   "cx": 0.5,
-   "cy": 0.6,
-   "x": 0.68,
-   "pie": 1000,
-   "alto": 720,
+   "fondo": "img/sofa.jpg",
    "eventos": [
     {
      "t": 20.15,
-     "cuerpo": "p_cruzado",
+     "cuerpo": "s_cruzado",
      "ojos": "o_nervioso",
      "extras": [
       "a_sudor"
@@ -159,41 +153,39 @@
     },
     {
      "t": 22.15,
-     "cuerpo": "p_reloj",
-     "ojos": "o_mira_abajo",
+     "cuerpo": "s_encoge",
+     "ojos": "o_esceptico",
      "extras": []
     }
-   ]
+   ],
+   "x": 0.5,
+   "pie": 965,
+   "asiento": 650
   },
   {
    "t0": 23.958,
-   "fondo": "img/salon.jpg",
-   "zoom": 1.75,
-   "cx": 0.68,
-   "cy": 0.5,
-   "x": 0.68,
-   "pie": 1000,
-   "alto": 720,
+   "fondo": "img/sofa.jpg",
    "eventos": [
     {
      "t": 23.958,
-     "cuerpo": "p_rasca",
+     "cuerpo": "s_encoge",
      "ojos": "o_frente",
      "extras": [
       "a_interrogacion"
      ]
     }
-   ]
+   ],
+   "x": 0.5,
+   "pie": 965,
+   "asiento": 650,
+   "zoom": 1.25,
+   "cx": 0.5,
+   "cy": 0.44,
+   "sombra": false
   },
   {
    "t0": 26.543,
-   "fondo": "img/salon.jpg",
-   "zoom": 1.13,
-   "cx": 0.5,
-   "cy": 0.6,
-   "x": 0.72,
-   "pie": 1000,
-   "alto": 720,
+   "fondo": "img/biblioteca.jpg",
    "eventos": [
     {
      "t": 26.543,
@@ -210,9 +202,9 @@
     {
      "t0": 31.093,
      "texto": "BYUNG-CHUL HAN",
-     "x": 600,
-     "y": 40,
-     "color": "azul",
+     "x": 1350,
+     "y": 50,
+     "color": "blanco",
      "tam": 80,
      "centro": true,
      "fijo": true
@@ -245,7 +237,13 @@
      "y": 600,
      "w": 300
     }
-   ]
+   ],
+   "zoom": 1.08,
+   "cx": 0.5,
+   "cy": 0.5,
+   "x": 0.74,
+   "pie": 960,
+   "alto": 700
   },
   {
    "t0": 36.043,
@@ -297,13 +295,7 @@
   },
   {
    "t0": 40.543,
-   "fondo": "img/salon.jpg",
-   "zoom": 1.75,
-   "cx": 0.68,
-   "cy": 0.5,
-   "x": 0.68,
-   "pie": 1000,
-   "alto": 720,
+   "fondo": "img/calle.jpg",
    "eventos": [
     {
      "t": 40.543,
@@ -311,17 +303,17 @@
      "ojos": "o_felices",
      "boca": "b_sonrisa"
     }
-   ]
+   ],
+   "x": 0.72,
+   "pie": 1010,
+   "alto": 680,
+   "zoom": 1.6,
+   "cx": 0.72,
+   "cy": 0.48
   },
   {
    "t0": 42.943,
-   "fondo": "img/salon.jpg",
-   "zoom": 1.13,
-   "cx": 0.5,
-   "cy": 0.6,
-   "x": 0.68,
-   "pie": 1000,
-   "alto": 720,
+   "fondo": "img/calle.jpg",
    "eventos": [
     {
      "t": 42.943,
@@ -344,17 +336,14 @@
      "tam": 120,
      "centro": true
     }
-   ]
+   ],
+   "x": 0.72,
+   "pie": 1010,
+   "alto": 680
   },
   {
    "t0": 46.343,
-   "fondo": "img/salon.jpg",
-   "zoom": 1.13,
-   "cx": 0.5,
-   "cy": 0.6,
-   "x": 0.68,
-   "pie": 1000,
-   "alto": 720,
+   "fondo": "img/cocina.jpg",
    "eventos": [
     {
      "t": 46.343,
@@ -403,7 +392,10 @@
      "centro": true,
      "fijo": true
     }
-   ]
+   ],
+   "x": 0.72,
+   "pie": 1000,
+   "alto": 640
   },
   {
    "t0": 49.943,
@@ -529,13 +521,7 @@
   },
   {
    "t0": 71.743,
-   "fondo": "img/salon.jpg",
-   "zoom": 1.13,
-   "cx": 0.5,
-   "cy": 0.6,
-   "x": 0.68,
-   "pie": 1000,
-   "alto": 720,
+   "fondo": "img/calle.jpg",
    "eventos": [
     {
      "t": 71.743,
@@ -560,24 +546,27 @@
      "tam": 120,
      "centro": true
     }
-   ]
+   ],
+   "x": 0.72,
+   "pie": 1010,
+   "alto": 680
   },
   {
    "t0": 74.143,
-   "fondo": "img/salon.jpg",
-   "zoom": 1.75,
-   "cx": 0.68,
-   "cy": 0.5,
-   "x": 0.68,
-   "pie": 1000,
-   "alto": 720,
+   "fondo": "img/calle.jpg",
    "eventos": [
     {
      "t": 74.143,
      "cuerpo": "p_stop",
      "ojos": "o_frente"
     }
-   ]
+   ],
+   "x": 0.72,
+   "pie": 1010,
+   "alto": 680,
+   "zoom": 1.6,
+   "cx": 0.72,
+   "cy": 0.48
   },
   {
    "t0": 77.244,
@@ -605,13 +594,7 @@
   },
   {
    "t0": 83.443,
-   "fondo": "img/salon.jpg",
-   "zoom": 1.13,
-   "cx": 0.5,
-   "cy": 0.6,
-   "x": 0.68,
-   "pie": 1000,
-   "alto": 720,
+   "fondo": "img/gimnasio.jpg",
    "eventos": [
     {
      "t": 83.443,
@@ -623,17 +606,14 @@
      "cuerpo": "p_yo",
      "ojos": "o_triste"
     }
-   ]
+   ],
+   "x": 0.74,
+   "pie": 1000,
+   "alto": 700
   },
   {
    "t0": 87.243,
-   "fondo": "img/salon.jpg",
-   "zoom": 1.75,
-   "cx": 0.68,
-   "cy": 0.5,
-   "x": 0.68,
-   "pie": 1000,
-   "alto": 720,
+   "fondo": "img/gimnasio.jpg",
    "eventos": [
     {
      "t": 87.243,
@@ -651,17 +631,17 @@
      "tam": 110,
      "centro": true
     }
-   ]
+   ],
+   "x": 0.74,
+   "pie": 1000,
+   "alto": 700,
+   "zoom": 1.6,
+   "cx": 0.74,
+   "cy": 0.48
   },
   {
    "t0": 90.143,
-   "fondo": "img/salon.jpg",
-   "zoom": 1.13,
-   "cx": 0.5,
-   "cy": 0.6,
-   "x": 0.68,
-   "pie": 1000,
-   "alto": 720,
+   "fondo": "img/gimnasio.jpg",
    "eventos": [
     {
      "t": 90.143,
@@ -673,7 +653,10 @@
      "cuerpo": "p_andando",
      "ojos": "o_agotado"
     }
-   ]
+   ],
+   "x": 0.74,
+   "pie": 1000,
+   "alto": 700
   },
   {
    "t0": 93.844,

@@ -136,3 +136,9 @@ Trabaja en una carpeta de proyecto en el scratchpad (`<proyecto>/img`, `<proyect
 - 2026-11-12: «¿por qué estoy peor que él?» no sonaba a pregunta. Rehacer la frase con contexto, varias tomas, y
   medir el tono (F0 por autocorrelación) de la última palabra frente a las anteriores: quedarse con la que más
   sube al final; mandarle además las tomas numeradas por si prefiere otra.
+- 2026-11-12: «siempre en el mismo plano, en el cuarto, se hace repetitivo». Reparte cada trozo en VARIOS
+  escenarios ligados a lo que cuenta (sofá, biblioteca al citar un libro, calle, cocina, gimnasio cuando habla
+  de rendir…): como mucho 2-3 planos seguidos en el mismo sitio. Medidas: calle `x 0.72, pie 1010, alto 680`;
+  cocina `x 0.72, pie 1000, alto 640`; gimnasio `x 0.74, pie 1000, alto 700`; biblioteca `zoom 1.08, x 0.74,
+  pie 960, alto 700` (el dibujo trae marco blanco). Rótulos que contrasten con la pared (blanco sobre oscuro).
+
