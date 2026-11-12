@@ -1,0 +1,214 @@
+{
+ "alineacion": "voz/trozo7.json",
+ "audio": "voz/trozo7.mp3",
+ "pantalon": "gris",
+ "duracion": 38.2,
+ "planos": [
+  {
+   "t0": 0,
+   "fondo": "img/es_bib_libros.jpg",
+   "boca": "img/es_bib_libros_boca.png",
+   "boca_o": "img/es_bib_libros_bocao.png",
+   "zoom": 1.08
+  },
+  {
+   "t0": 1.4,
+   "fondo": "img/es_salon_no.jpg",
+   "boca": "img/es_salon_no_boca.png",
+   "boca_o": "img/es_salon_no_bocao.png",
+   "cambios": [
+    {
+     "t": 3.32,
+     "fondo": "img/es_salon_no_b.jpg"
+    },
+    {
+     "t": 4.0,
+     "fondo": "img/es_salon_no_c.jpg"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 3.35,
+     "texto": "NO",
+     "x": 1630,
+     "y": 150,
+     "color": "rojo",
+     "tam": 150,
+     "centro": true,
+     "fijo": true
+    }
+   ]
+  },
+  {
+   "t0": 5.05,
+   "fondo": "img/br_agenda.jpg",
+   "habla": false,
+   "alterna": {
+    "imgs": [
+     "img/br_agenda.jpg",
+     "img/br_agenda_b.jpg"
+    ],
+    "cada": 0.35
+   }
+  },
+  {
+   "t0": 7.1,
+   "fondo": "img/br_jardin.jpg",
+   "habla": false,
+   "alterna": {
+    "imgs": [
+     "img/br_jardin.jpg",
+     "img/br_jardin_b.jpg"
+    ],
+    "cada": 0.5
+   }
+  },
+  {
+   "t0": 10.2,
+   "fondo": "img/es_bib_jardin.jpg",
+   "boca": "img/es_bib_jardin_boca.png",
+   "boca_o": "img/es_bib_jardin_bocao.png",
+   "zoom": 1.08,
+   "rotulos": [
+    {
+     "t0": 11.1,
+     "texto": "LOA A LA TiERRA",
+     "x": 560,
+     "y": 100,
+     "color": "negro",
+     "tam": 60,
+     "centro": true,
+     "fijo": true,
+     "caja": true
+    }
+   ]
+  },
+  {
+   "t0": 14.35,
+   "fondo": "img/es_sofa_decidido.jpg",
+   "boca": "img/es_sofa_decidido_boca.png",
+   "boca_o": "img/es_sofa_decidido_bocao.png",
+   "rotulos": [
+    {
+     "t0": 14.55,
+     "texto": "DOMiNGO",
+     "x": 1660,
+     "y": 150,
+     "color": "rojo",
+     "tam": 90,
+     "centro": true,
+     "fijo": true
+    }
+   ]
+  },
+  {
+   "t0": 16.25,
+   "fondo": "img/br_movilsolo.jpg",
+   "habla": false,
+   "alterna": {
+    "imgs": [
+     "img/br_movilsolo_b.jpg",
+     "img/br_movilsolo.jpg"
+    ],
+    "cada": 0.1,
+    "desde": 16.5
+   }
+  },
+  {
+   "t0": 18.15,
+   "fondo": "img/br_cajon.jpg",
+   "habla": false,
+   "cambios": [
+    {
+     "t": 19.2,
+     "fondo": "img/br_cajon_b.jpg"
+    }
+   ]
+  },
+  {
+   "t0": 20.15,
+   "fondo": "img/es_curso.jpg",
+   "boca": "img/es_curso_boca.png",
+   "boca_o": "img/es_curso_bocao.png",
+   "cambios": [
+    {
+     "t": 23.15,
+     "fondo": "img/es_curso_b.jpg"
+    },
+    {
+     "t": 25.38,
+     "fondo": "img/es_curso_c.jpg"
+    },
+    {
+     "t": 26.25,
+     "fondo": "img/es_curso_d.jpg"
+    }
+   ],
+   "boca_en": [
+    "img/es_curso.jpg",
+    "img/es_curso_b.jpg",
+    "img/es_curso_c.jpg"
+   ],
+   "rotulos": [
+    {
+     "t0": 20.4,
+     "texto": "NO HACER",
+     "x": 890,
+     "y": 130,
+     "color": "negro",
+     "tam": 50,
+     "centro": true,
+     "fijo": true
+    },
+    {
+     "t0": 21.0,
+     "texto": "NADA",
+     "x": 890,
+     "y": 200,
+     "color": "negro",
+     "tam": 50,
+     "centro": true,
+     "fijo": true
+    },
+    {
+     "t0": 23.88,
+     "texto": "8 SEMANAS",
+     "x": 1520,
+     "y": 50,
+     "color": "rojo",
+     "tam": 70,
+     "centro": true,
+     "fijo": true,
+     "caja": true
+    }
+   ]
+  },
+  {
+   "t0": 27.3,
+   "fondo": "img/es_parque_banco_c.jpg",
+   "boca": "img/es_parque_banco_boca.png",
+   "boca_o": "img/es_parque_banco_bocao.png",
+   "cambios": [
+    {
+     "t": 31.18,
+     "fondo": "img/es_parque_banco_d.jpg"
+    }
+   ]
+  },
+  {
+   "t0": 31.95,
+   "fondo": "img/es_final.jpg",
+   "boca": "img/es_final_boca.png",
+   "boca_o": "img/es_final_bocao.png",
+   "cambios": [
+    {
+     "t": 35.75,
+     "fondo": "img/es_final_b.jpg"
+    }
+   ],
+   "boca_en": [
+    "img/es_final.jpg"
+   ]
+  }
+ ]
+}

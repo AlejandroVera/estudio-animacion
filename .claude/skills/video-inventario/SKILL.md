@@ -305,3 +305,7 @@ Trabaja en una carpeta de proyecto en el scratchpad (`<proyecto>/img`, `<proyect
   del 62 en la cama) no cuestan nada; para cambios solo de ojos, `variante.py --zona <cabeza> --min 50` (el
   preparador protege la cabeza y los perdería). Remate final con aire: `"duracion"` mayor que la voz (el montador
   rellena el audio con silencio) y el último cambio justo después de la última palabra.
+- 2026-11-12 trozos 6 y 7 (final del domingo): igual que los anteriores; para el cierre conviene volver a lo visto (el
+  sofá del domingo, la pulsera, el banco del abuelo, el mini-jefe) y acabar con él a cámara en primer plano con el
+  remate en el último dibujo y `"duracion"` con 1,5-2 s de aire. Magnific a veces da «TPM quota exhausted»: no es un
+  error del pedido, se repite la misma petición al rato (no lanzar más de ~8 a la vez).
