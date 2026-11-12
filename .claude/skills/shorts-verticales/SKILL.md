@@ -26,13 +26,24 @@ Ejemplo completo: `herramientas/shorts/domingo/` (3 shorts del vídeo «domingo�
 6. Entregar los MP4 a Alejandro (no se suben al repositorio: `.gitignore`).
 
 ## Encuadre vertical (1080×1920) desde dibujos 16:9
-- **marco** (lo normal en escenas anchas): `marco` 1.3-1.6 = escala sobre el ancho, `cx` = qué parte del dibujo
-  queda centrada; detrás el mismo dibujo difuminado y oscurecido. Arriba y abajo queda una franja limpia: ahí
-  van los rótulos de pantalla (y≈230-370 arriba, y≈1650-1720 abajo).
+- **TODO A PANTALLA COMPLETA** (lo pidió Alejandro: nada de franjas difuminadas). Cada dibujo ancho se AMPLÍA por
+  arriba y abajo con Magnific `images_expand` (130 créditos): subir el dibujo base (`creations_request_upload` +
+  PUT + `creations_finalize_upload`), `customWidth` 1920, `customHeight` ≥ 1920/marco·16/9 (2400 vale para
+  marco ≥ 1.35; más alto para marcos menores), `imageX` 0, `imageY` = (alto−1072)/2 y un `prompt` del tipo
+  «continue the same flat cartoon drawing seamlessly: <techo/pared/cielo> above, <suelo> below, no new
+  characters, no text». Se guarda en `lleno/<familia>.jpg` y se apunta en `lleno/hechos.txt` («nombre id alto»);
+  `lleno(P)` de `comun.py` lo pone solo en cada plano con `marco`. Solo se amplía el dibujo BASE: el montador pega
+  encima el dibujo real del instante (cambios, alternas, bocas) en su sitio, así las variantes encajan.
+- Revisar cada ampliación: a veces REPITE la escena en viñetas o la fila de figuras (evolución). Fondo liso →
+  rellenar por código con su color; dibujo con marco blanco propio → recortarlo, ampliar el recorte y pegar
+  solo esas filas (`pegar_y`). A veces prolonga el cuerpo de él (piernas): subir el marco y `ly` negativo
+  (desplaza el encuadre hacia arriba, en fracciones del alto del dibujo) para que no se vea.
+- `marco` 1.35-1.8 = escala sobre el ancho; `cx` = qué parte queda centrada. Los rótulos de pantalla van sobre
+  el techo/cielo (y≈230-370) o el suelo (y≈1650-1720).
 - **recorte** (sin `marco`): altura completa; `cx`/`cy` 'auto' centran la cabeza magenta (cabeza al 33 %).
   Solo cuando el personaje es lo único importante; si lo que cambia (portátil, tele, zorro…) queda fuera del
   recorte, usar marco.
-- Si la cabeza se sale por el borde con marco grande, bajar la escala (incluso 1.0 para una tira ancha).
+- Si la cabeza se sale por el borde con marco grande, bajar la escala o mover `cx`.
 - Rótulo `R(...)` = coordenadas de pantalla; `D(...)` = coordenadas del dibujo 1920×1080 (pantallas, carteles,
   pancartas del dibujo), se convierten solas con el encuadre.
 - Un plano sin `_bocao.png` necesita `boca_o` apuntando a la `_boca.png` (si no, falla al renderizar entero

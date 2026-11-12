@@ -31,7 +31,9 @@
      "centro": true,
      "fijo": true
     }
-   ]
+   ],
+   "lleno": "lleno/es_cama_mini.jpg",
+   "dy": 664
   },
   {
    "t0": 3.4,
@@ -46,7 +48,9 @@
      "../../video/ejemplo_domingo/img/es_ofi_jefa_b.jpg"
     ],
     "cada": 0.35
-   }
+   },
+   "lleno": "lleno/es_ofi_jefa.jpg",
+   "dy": 664
   },
   {
    "t0": 5.8,
@@ -76,7 +80,9 @@
      "t": 9.42,
      "fondo": "../../video/ejemplo_domingo/img/es_sofa_mini_c.jpg"
     }
-   ]
+   ],
+   "lleno": "lleno/es_sofa_mini.jpg",
+   "dy": 664
   },
   {
    "t0": 9.98,
@@ -115,15 +121,18 @@
      "fijo": true,
      "en_dibujo": true
     }
-   ]
+   ],
+   "lleno": "lleno/es_cama_mini.jpg",
+   "dy": 664
   },
   {
    "t0": 12.88,
    "fondo": "../../video/ejemplo_domingo/img/es_bib_mito.jpg",
    "boca": "../../video/ejemplo_domingo/img/es_bib_mito_boca.png",
    "boca_o": "../../video/ejemplo_domingo/img/es_bib_mito_bocao.png",
-   "marco": 1.5,
-   "cx": 0.55,
+   "marco": 1.75,
+   "cx": 0.66,
+   "ly": -0.07,
    "cambios": [
     {
      "t": 15.75,
@@ -173,6 +182,12 @@
      "centro": true,
      "fijo": true
     }
+   ],
+   "lleno": "lleno/es_bib_mito.jpg",
+   "dy": 664,
+   "pegar_y": [
+    50,
+    1022
    ]
   },
   {
@@ -195,7 +210,9 @@
     "cada": 0.3,
     "desde": 19.55,
     "hasta": 21.16
-   }
+   },
+   "lleno": "lleno/br_prometeo.jpg",
+   "dy": 664
   },
   {
    "t0": 21.16,
@@ -224,7 +241,9 @@
     ],
     "cada": 0.35,
     "desde": 25.2
-   }
+   },
+   "lleno": "lleno/es_roca_aguila.jpg",
+   "dy": 664
   },
   {
    "t0": 26.24,
@@ -283,7 +302,7 @@
    "fondo": "../../video/ejemplo_domingo/img/es_ofi_doble.jpg",
    "boca": "../../video/ejemplo_domingo/img/es_ofi_doble_boca.png",
    "boca_o": "../../video/ejemplo_domingo/img/es_ofi_doble_bocao.png",
-   "marco": 1.1,
+   "marco": 1.35,
    "cx": 0.52,
    "cambios": [
     {
@@ -322,14 +341,16 @@
      "fijo": true,
      "en_dibujo": true
     }
-   ]
+   ],
+   "lleno": "lleno/es_ofi_doble.jpg",
+   "dy": 1024
   },
   {
    "t0": 36.8,
    "fondo": "../../video/ejemplo_domingo/img/es_bano_pancarta.jpg",
    "boca": "../../video/ejemplo_domingo/img/es_bano_pancarta_boca.png",
    "boca_o": "../../video/ejemplo_domingo/img/es_bano_pancarta_bocao.png",
-   "marco": 1.3,
+   "marco": 1.45,
    "cx": 0.56,
    "cambios": [
     {
@@ -349,7 +370,9 @@
      "fijo": true,
      "en_dibujo": true
     }
-   ]
+   ],
+   "lleno": "lleno/es_bano_pancarta.jpg",
+   "dy": 788
   }
  ]
 }

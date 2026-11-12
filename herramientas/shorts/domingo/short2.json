@@ -34,7 +34,9 @@
      "centro": true,
      "fijo": true
     }
-   ]
+   ],
+   "lleno": "lleno/es_salon_prohibido.jpg",
+   "dy": 664
   },
   {
    "t0": 2.29,
@@ -63,7 +65,9 @@
      "centro": true,
      "fijo": true
     }
-   ]
+   ],
+   "lleno": "lleno/es_super_cola.jpg",
+   "dy": 652
   },
   {
    "t0": 4.41,
@@ -103,7 +107,9 @@
      "centro": true,
      "fijo": true
     }
-   ]
+   ],
+   "lleno": "lleno/es_cocina_micro.jpg",
+   "dy": 664
   },
   {
    "t0": 7.3,
@@ -132,7 +138,9 @@
      "centro": true,
      "fijo": true
     }
-   ]
+   ],
+   "lleno": "lleno/es_calle_semaforo.jpg",
+   "dy": 664
   },
   {
    "t0": 9.58,
@@ -181,7 +189,9 @@
      "centro": true,
      "fijo": true
     }
-   ]
+   ],
+   "lleno": "lleno/es_sofa_movil.jpg",
+   "dy": 664
   },
   {
    "t0": 12.33,
@@ -208,7 +218,9 @@
      "centro": true,
      "fijo": true
     }
-   ]
+   ],
+   "lleno": "lleno/es_balcon_hamaca.jpg",
+   "dy": 664
   },
   {
    "t0": 15.19,
@@ -229,7 +241,9 @@
      "fijo": true,
      "en_dibujo": true
     }
-   ]
+   ],
+   "lleno": "lleno/es_cama_mini.jpg",
+   "dy": 664
   },
   {
    "t0": 16.64,
@@ -256,7 +270,9 @@
      "centro": true,
      "fijo": true
     }
-   ]
+   ],
+   "lleno": "lleno/es_salon_medita.jpg",
+   "dy": 664
   },
   {
    "t0": 18.25,
@@ -269,7 +285,9 @@
      "t": 18.96,
      "fondo": "../../video/ejemplo_domingo/img/es_ofi_siesta_b.jpg"
     }
-   ]
+   ],
+   "lleno": "lleno/es_ofi_siesta.jpg",
+   "dy": 664
   },
   {
    "t0": 19.97,
@@ -326,7 +344,9 @@
      "centro": true,
      "fijo": true
     }
-   ]
+   ],
+   "lleno": "lleno/br_evolucion.jpg",
+   "dy": 1180
   },
   {
    "t0": 24.23,
@@ -352,7 +372,9 @@
      "centro": true,
      "fijo": true
     }
-   ]
+   ],
+   "lleno": "lleno/br_conejo.jpg",
+   "dy": 788
   },
   {
    "t0": 28.69,
@@ -377,7 +399,9 @@
    ],
    "boca_en": [
     "../../video/ejemplo_domingo/img/es_sofa_multi.jpg"
-   ]
+   ],
+   "lleno": "lleno/es_sofa_multi.jpg",
+   "dy": 664
   },
   {
    "t0": 33.81,

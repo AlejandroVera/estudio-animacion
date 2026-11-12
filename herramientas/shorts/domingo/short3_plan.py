@@ -19,8 +19,9 @@ P = [
  esc('es_gym_espejo', 20.07, marco=1.5, cx=0.6, boca_o=I+'es_gym_espejo_boca.png', alterna=alt('es_gym_espejo', 'es_gym_espejo_b', 0.35), rotulos=[R(21.06, 'A Ti', 540, 260, 'rojo', 170)]),
  esc('es_gym_senal', 22.14, marco=1.5, cx=0.6, cambios=[ch(23.08, 'es_gym_senal_b')], **be('es_gym_senal', 'es_gym_senal_b')),
  br('br_gym_cinta', 23.78, zoom=1.5, cx=0.3, cy=0.5, alterna=alt('br_gym_cinta', 'br_gym_cinta_b', 0.16), rotulos=[R(25.38, 'NUNCA', 540, 1720, 'rojo', 170)]),
- br('br_abuelo_banco', 26.3, marco=1.5, cx=0.45, alterna=alt('br_abuelo_banco', 'br_abuelo_banco_b', 0.6)),
- esc('es_banco_abuelo', 29.08, marco=1.5, cx=0.45, cambios=[ch(30.74, 'es_banco_abuelo_b'), ch(32.5, 'es_banco_abuelo_c')], **be('es_banco_abuelo', 'es_banco_abuelo_b')),
+ br('br_abuelo_banco', 26.3, marco=1.8, cx=0.45, alterna=alt('br_abuelo_banco', 'br_abuelo_banco_b', 0.6)),
+ esc('es_banco_abuelo', 29.08, marco=1.6, cx=0.5, cambios=[ch(30.74, 'es_banco_abuelo_b'), ch(32.5, 'es_banco_abuelo_c')], **be('es_banco_abuelo', 'es_banco_abuelo_b')),
 ]
+P = lleno(P)
 json.dump({'alineacion': 'voz/short3.json', 'audio': 'voz/short3.mp3', 'pantalon': 'gris', 'duracion': 34.6, 'planos': P},
           open('short3.json', 'w'), indent=1, ensure_ascii=False)

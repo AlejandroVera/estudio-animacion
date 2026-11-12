@@ -27,5 +27,6 @@ P = [
  esc('es_sofa_ardilla', 33.81, cx='auto', alterna=alt('es_sofa_ardilla', 'es_sofa_ardilla_b', 0.3, hasta=36.6),
      cambios=[ch(36.6, 'es_sofa_ardilla_c')], **be('es_sofa_ardilla')),
 ]
+P = lleno(P)
 json.dump({'alineacion': 'voz/short2.json', 'audio': 'voz/short2.mp3', 'pantalon': 'gris', 'sin_recolor': ['es_cama_mini'], 'duracion': 39.1, 'planos': P},
           open('short2.json', 'w'), indent=1, ensure_ascii=False)

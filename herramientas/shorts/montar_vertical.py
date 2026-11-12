@@ -474,6 +474,24 @@ def encuadrar(nombre, plano, encima=None):
     w, h = full.size
     s = plano.get('marco')
     cab = centro_cabeza(nombre)
+    if s and plano.get('lleno'):
+        # dibujo ampliado por arriba y abajo (Magnific expand): pantalla completa, sin franjas difuminadas
+        lien = img(plano['lleno']).convert('RGB')
+        lien = lien.resize((w, round(lien.height * w / lien.width)), Image.LANCZOS)
+        dy = plano['dy']
+        y1, y2 = plano.get('pegar_y', (0, h))  # solo esas filas del dibujo (p. ej. sin su marco blanco)
+        lien.paste(full.crop((0, y1, w, y2)), (0, dy + y1))
+        cx = plano.get('cx', 'auto' if cab else 0.5)
+        if cx == 'auto':
+            cx = cab[0] if cab else 0.5
+        cw = w / s
+        ch = cw * H / W
+        x0 = min(max(cx * w - cw / 2, 0), w - cw)
+        yc = dy + h / 2 + plano.get('ly', 0) * h
+        y0 = min(max(yc - ch / 2, 0), lien.height - ch)
+        e = W / cw
+        GEOM.update(esc=e * w / 1920, ox=-x0 * e, oy=(dy - y0) * e)
+        return lien.crop((int(x0), int(y0), int(x0 + cw), int(y0 + ch))).resize((W, H), Image.LANCZOS)
     cx = plano.get('cx', 'auto' if cab else 0.5)
     if cx == 'auto':
         cx = cab[0] if cab else 0.5
