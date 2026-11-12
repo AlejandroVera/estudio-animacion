@@ -207,3 +207,16 @@ Trabaja en una carpeta de proyecto en el scratchpad (`<proyecto>/img`, `<proyect
   (sin rayas de vibración) y otra vibrando con la pantalla encendida, alternadas cada 0,09 s desde «vibra» y un
   zumbido corto cuando aparece la cifra. «¡» y «!» en Coming Soon engrosada parecen una «I»: no usarlos en
   rótulos. Tras `variante.py` mirar con zoom: pueden quedar restos fantasma de lo borrado.
+- 2026-11-12 «no me convencen las escenas de la calle ni lo del gym; hazlo bien de una vez». Diagnóstico: la calle no
+  salía en el guion (él paseando y en un banco diminuto mientras habla de un filósofo) y las metáforas eran
+  ambiguas (ratonera con queso, guardia tras una valla de FIN); en el gym salía pequeño y la barra no se entendía.
+  Regla: cada plano sale de la FRASE y CONTINÚA el sitio del plano anterior o un callback; nunca un sitio «porque
+  sí». Rehecho: «no te voy a dar la chapa» = en la biblioteca (viene de leer a Han) tira la torre de libros en
+  «chapa»; «se entiende con mi domingo… tres cosas» = en SU sofá con la manta, tres dedos en «tres»; «suena a
+  liberación» = en la oficina (viene de la pizarra) salta rompiendo cadenas; «mira la trampa» = va a por un trofeo
+  bajo una jaula sujeta con un palo y la jaula le cae en «trampa»; «un no tiene final y tiene a alguien delante» =
+  en la fábrica del abuelo junto al MISMO encargado: el reloj suena a las seis en «final» y le señala con el pulgar
+  en «alguien»; gym: barra con «TÚ PUEDES» (rótulo a mano encima de una pancarta en blanco), salta y no llega en
+  «llegas», encogido de hombros mirando a cámara en «quién». Si un dibujo mueve la cabeza (cuerpo entero), su
+  propia boca con `"bocas": {"img/X_c.jpg": ["img/X_c_boca.png", "img/X_c_bocao.png"]}`. Si la variante pierde la
+  cara nueva (el diff solo copió los brazos), pegar el dibujo editado en una caja alrededor de él con borde suave.

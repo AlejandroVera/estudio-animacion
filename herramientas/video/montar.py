@@ -444,6 +444,10 @@ def frame(t):
         # boca abierta dibujada de la escena (vale para sus dibujos alternos: misma cabeza); «o/u» con su
         # propia boca redonda si la hay
         encima = plano.get('boca_o') if forma == 'b_o' and plano.get('boca_o') else plano['boca']
+    if forma and nombre in plano.get('bocas', {}):
+        # dibujo con la cabeza en otro sitio (se ha movido entero): su propia boca [a/e/i, o/u]
+        b = plano['bocas'][nombre]
+        encima = b[1] if forma == 'b_o' and len(b) > 1 else b[0]
     im = fondo(nombre, z, plano.get('cx', 0.5), plano.get('cy', 0.5), encima).convert('RGBA')
     for o in plano.get('objetos', []):
         if o['t0'] <= t < o.get('t1', 99) and o.get('detras'):
