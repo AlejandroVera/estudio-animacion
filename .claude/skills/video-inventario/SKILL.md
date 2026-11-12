@@ -316,12 +316,11 @@ Trabaja en una carpeta de proyecto en el scratchpad (`<proyecto>/img`, `<proyect
   2) Si la IA no consigue cambiar el estado de un objeto editando (cajón que «cierra» y sigue abierto), dibujar ese
   estado como plano nuevo y simple (de frente, «completely closed, nothing sticking out») y cortar a él.
   3) Pizarras: medir el borde de la pizarra en el fotograma y centrar el texto dentro (nunca alineado a ojo).
-- 2026-11-12 MÚSICA («cambios de música que acompañen los tramos, para la antihabituación»): una pista distinta por
-  parte del vídeo, hecha con Magnific `audio_music_generate` modelo `google-lyria-3-pro` (160 créditos por pista de
-  ~2-3 min; ElevenLabs cuesta 1.200 por minuto), prompt «Instrumental only, no vocals… sparse so a narrator can talk
-  over it» + el ánimo del tramo (domingo vago: ukelele; productividad: marimba con tic-tac; abuelo: piano antiguo;
-  filosofía: pizzicato; mito/jefe: épico de broma; móviles: sintes nerviosos; reflexión: piano melancólico;
-  sobremesa: guitarra cálida; final: silbido optimista). Comprobar que no tienen voz con `voz.py comprobar`.
-  Mezcla: `herramientas/video/musica.py video.mp4 tramos.json salida.mp4` (normaliza cada pista a -27 LUFS, corta
-  justo en el cambio de parte con fundido de 0,4 s y la agacha cuando habla). Al final, `loudnorm=I=-15` para YouTube.
-  Ejemplo en `ejemplo_domingo/musica/tramos.json`.
+- 2026-11-12 SONIDO: Alejandro descartó la música (la de Magnific/Lyria le sonaba «demasiado comercial»; NO hacer
+  música con Magnific) y pidió solo EFECTOS DE SONIDO sin saturar. Se hacen con ElevenLabs Sound Effects a través de
+  la web: `POST api/voz {"efecto": "descripción en inglés", "duracion": 0.5-22}` → mp3 (máx. 6 peticiones a la vez).
+  Pocos y solo en los gags que suenan (vibración de la pulsera, ding del móvil, sirena de la fábrica, libros que caen,
+  cadenas, jaula, despertador, águila, confeti, polilla, silbato, coche que pasa, golpe dramático, tela que se rasga,
+  cajón, avión). Montaje: `herramientas/video/efectos.py video.mp4 efectos.json salida.mp4` (cada efecto a -27 LUFS,
+  unos 7 dB por debajo de la voz, en su segundo exacto; el final a -15 LUFS para YouTube). Ejemplo en
+  `ejemplo_domingo/efectos/`.
