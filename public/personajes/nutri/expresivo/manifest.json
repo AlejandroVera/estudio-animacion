@@ -1,0 +1,50 @@
+{
+  "lienzo": [
+    237,
+    22,
+    1491,
+    2355
+  ],
+  "pies": [
+    906.0,
+    2365.0
+  ],
+  "cabeza": [
+    910.0,
+    313.5,
+    365.0
+  ],
+  "poses": [
+    "reposo",
+    "reposo~b",
+    "habla",
+    "habla~b",
+    "senala",
+    "senala~b",
+    "presenta",
+    "presenta~b",
+    "pulgar",
+    "pulgar~b",
+    "cruzado",
+    "cruzado~b",
+    "jarras",
+    "jarras~b",
+    "niega",
+    "niega~b",
+    "piensa",
+    "piensa~b",
+    "sorpresa",
+    "sorpresa~b",
+    "enfado",
+    "enfado~b",
+    "risa",
+    "risa~b",
+    "agotada",
+    "agotada~b"
+  ],
+  "bocas": [],
+  "original": [
+    1792,
+    2400
+  ]
+}
