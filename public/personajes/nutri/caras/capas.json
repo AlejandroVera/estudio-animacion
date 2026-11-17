@@ -1,0 +1,253 @@
+{
+ "cabeza": [
+  1030,
+  1130,
+  354
+ ],
+ "nota": "x,y,w,h en radios de cabeza desde el centro de la cara; base 2048 = caras/crudo/base1.png",
+ "capas": {
+  "a_aureola": {
+   "tipo": "extra",
+   "x": -1.008,
+   "y": -2.785,
+   "w": 2.003,
+   "h": 0.692,
+   "desc": "aureola de santa (inocente)"
+  },
+  "a_auriculares": {
+   "tipo": "extra",
+   "x": -1.593,
+   "y": -1.72,
+   "w": 3.5,
+   "h": 2.314,
+   "desc": "auriculares con notas"
+  },
+  "a_bombilla": {
+   "tipo": "extra",
+   "x": -0.483,
+   "y": -3.099,
+   "w": 0.96,
+   "h": 0.986,
+   "desc": "bombilla encendida (idea)"
+  },
+  "a_brillos": {
+   "tipo": "extra",
+   "x": -1.977,
+   "y": -2.523,
+   "w": 3.904,
+   "h": 2.805,
+   "desc": "brillos (orgullo, limpio, perfecto)"
+  },
+  "a_corazones": {
+   "tipo": "extra",
+   "x": -2.147,
+   "y": -2.268,
+   "w": 4.124,
+   "h": 1.805,
+   "desc": "corazones alrededor (amor)"
+  },
+  "a_corona": {
+   "tipo": "extra",
+   "x": 0.076,
+   "y": -1.958,
+   "w": 1.127,
+   "h": 0.966,
+   "desc": "corona (reina)"
+  },
+  "a_cuernos": {
+   "tipo": "extra",
+   "x": -1.203,
+   "y": -1.655,
+   "w": 2.376,
+   "h": 0.828,
+   "desc": "cuernos de diablilla"
+  },
+  "a_euros": {
+   "tipo": "extra",
+   "x": -2.588,
+   "y": -2.619,
+   "w": 4.895,
+   "h": 2.881,
+   "desc": "billetes y monedas de euro (dinero)"
+  },
+  "a_exclamacion": {
+   "tipo": "extra",
+   "x": 1.359,
+   "y": -2.548,
+   "w": 0.746,
+   "h": 1.802,
+   "desc": "exclamación (idea, alerta)"
+  },
+  "a_gorro_chef": {
+   "tipo": "extra",
+   "x": -1.494,
+   "y": -2.932,
+   "w": 3.0,
+   "h": 2.048,
+   "desc": "gorro de cocinera"
+  },
+  "a_humo": {
+   "tipo": "extra",
+   "x": -2.63,
+   "y": -0.548,
+   "w": 5.302,
+   "h": 1.486,
+   "desc": "humo por las orejas (enfado)"
+  },
+  "a_interrogacion": {
+   "tipo": "extra",
+   "x": 1.257,
+   "y": -2.537,
+   "w": 0.853,
+   "h": 1.669,
+   "desc": "interrogación (duda)"
+  },
+  "a_lagrimas": {
+   "tipo": "extra",
+   "x": -0.814,
+   "y": 0.172,
+   "w": 1.624,
+   "h": 1.22,
+   "desc": "lágrimas cayendo"
+  },
+  "a_mareo": {
+   "tipo": "extra",
+   "x": -1.664,
+   "y": -2.534,
+   "w": 3.489,
+   "h": 1.576,
+   "desc": "estrellas y pajaritos girando (mareo, golpe)"
+  },
+  "a_nube": {
+   "tipo": "extra",
+   "x": -1.006,
+   "y": -3.025,
+   "w": 2.076,
+   "h": 1.802,
+   "desc": "nube negra con lluvia (mal día)"
+  },
+  "a_rubor": {
+   "tipo": "extra",
+   "x": -0.879,
+   "y": 0.37,
+   "w": 1.732,
+   "h": 0.401,
+   "desc": "mejillas sonrojadas"
+  },
+  "a_sudor": {
+   "tipo": "extra",
+   "x": -2.331,
+   "y": -1.153,
+   "w": 4.571,
+   "h": 1.754,
+   "desc": "gotas de sudor a los lados"
+  },
+  "a_susto": {
+   "tipo": "extra",
+   "x": -2.102,
+   "y": -2.65,
+   "w": 4.209,
+   "h": 4.285,
+   "desc": "rayitas de susto alrededor"
+  },
+  "a_vena": {
+   "tipo": "extra",
+   "x": 0.65,
+   "y": -1.438,
+   "w": 0.782,
+   "h": 0.819,
+   "desc": "vena de enfado"
+  },
+  "a_zzz": {
+   "tipo": "extra",
+   "x": 1.121,
+   "y": -2.407,
+   "w": 1.46,
+   "h": 1.472,
+   "desc": "zzz (sueño, aburrimiento)"
+  }
+ },
+ "primeros_planos": {
+  "e_corazones": {
+   "desc": "enamorada, ojos de corazón",
+   "boca_abierta": false,
+   "b": "e_corazones~b.webp"
+  },
+  "e_susto": {
+   "desc": "grito de susto",
+   "boca_abierta": true,
+   "b": "e_susto~b.webp"
+  },
+  "e_llora": {
+   "desc": "llorando a mares",
+   "boca_abierta": true,
+   "b": "e_llora~b.webp"
+  },
+  "e_carcajada": {
+   "desc": "carcajada",
+   "boca_abierta": true,
+   "b": "e_carcajada~b.webp"
+  },
+  "e_furiosa": {
+   "desc": "furiosa echando humo",
+   "boca_abierta": true,
+   "b": "e_furiosa~b.webp"
+  },
+  "e_asco": {
+   "desc": "asco (cara verde, lengua fuera)",
+   "boca_abierta": true,
+   "b": "e_asco~b.webp"
+  },
+  "e_verguenza": {
+   "desc": "vergüenza, sonrojada",
+   "boca_abierta": false,
+   "b": "e_verguenza~b.webp"
+  },
+  "e_dinero": {
+   "desc": "ojos de euro (dinero)",
+   "boca_abierta": true,
+   "b": "e_dinero~b.webp"
+  },
+  "e_dormida": {
+   "desc": "dormida con babilla",
+   "boca_abierta": true,
+   "b": "e_dormida~b.webp"
+  },
+  "e_chula": {
+   "desc": "chula, ceja levantada",
+   "boca_abierta": false,
+   "b": "e_chula~b.webp"
+  },
+  "e_suplica": {
+   "desc": "súplica, ojos de cachorro",
+   "boca_abierta": false,
+   "b": "e_suplica~b.webp"
+  },
+  "e_mareada": {
+   "desc": "mareada, ojos de espiral",
+   "boca_abierta": false,
+   "b": "e_mareada~b.webp"
+  },
+  "e_ilusion": {
+   "desc": "ilusión, ojos de estrella",
+   "boca_abierta": true,
+   "b": "e_ilusion~b.webp"
+  },
+  "e_agotada": {
+   "desc": "agotada",
+   "boca_abierta": true,
+   "b": "e_agotada~b.webp"
+  },
+  "e_nerviosa": {
+   "desc": "nerviosa, sonrisa forzada",
+   "boca_abierta": true,
+   "b": "e_nerviosa~b.webp"
+  },
+  "e_explota": {
+   "desc": "explota de rabia (roja con llamas)",
+   "boca_abierta": true,
+   "b": "e_explota~b.webp"
+  }
+ },
+ "nota_primeros_planos": "expresiones/<n>.webp y <n>~b.webp (boca al revés: solo cambia la zona de la boca). Fondo transparente, 2048x2048, misma cabeza y sitio que base1. boca_abierta = la original tiene la boca abierta."
+}

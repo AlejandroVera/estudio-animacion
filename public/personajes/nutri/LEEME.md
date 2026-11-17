@@ -16,3 +16,13 @@
   cada una con su `~b` (boca al revés) salvo las de boca tapada u ocupada. Medidas en `inventario/inventario.json`
   (cara, pies, tipo). Se hace con `herramientas/inventario_secundario.py` (fondo, huecos, recorte) y
   `herramientas/bocas_secundario.py` (bocas). Ids de Magnific en `inventario/ids.txt` e `ids_bocas.txt`.
+- PRIMEROS PLANOS DE CARA (`caras/`): cabeza grande de frente `caras/base.webp` (Magnific `SymVwTfUb8`).
+  - 20 COMPLEMENTOS sueltos en `caras/capas/` (sudor, rubor, vena, lágrimas, ¿?, ¡!, bombilla, corazones, zzz, mareo,
+    nube negra, humo, brillos, rayitas de susto, aureola, cuernos, corona, gorro de chef, auriculares, euros), sacados
+    por diferencia con la base (`herramientas/capas_nutri.py`). Posición y tamaño en `caras/capas.json`, en radios de
+    cabeza desde el centro de la cara (`cabeza` = [x, y, r] en la base de 2048): sirven encima de cualquier dibujo suyo.
+  - 16 CARAS EXAGERADAS en `caras/expresiones/` con su `~b` (corazones, susto, llora, carcajada, furiosa, asco,
+    vergüenza, dinero, dormida, chula, súplica, mareada, ilusión, agotada, nerviosa, explota), sin fondo, misma
+    cabeza y sitio que la base. Hechas con `herramientas/caras_nutri.py` (copia solo la boca de la ~b y quita fondo
+    y huecos del pelo). Lista en `capas.json` → `primeros_planos`. Hojas: `repertorio_caras.jpg`, `repertorio_complementos.jpg`.
+    Ids de Magnific en `caras/ids.txt`.
