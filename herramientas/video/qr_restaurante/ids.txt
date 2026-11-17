@@ -60,3 +60,18 @@ es_barra_c ksp4zO916B
 es_barra_boca O6CWBW2ynm
 es_barra_bocao xSX6WRujfW
 br_memoria_b tC317lemZJ
+# sin planta detrás de la cabeza
+sp_es_llega vQ2l0hua47
+sp_es_escanea Ebnwp54uuO
+sp_es_cubiertos ksp6myx16B
+sp_es_serio fHGSMgcCDY
+sp_es_zum 0eSE9F6TfW
+sp_es_camarero jUBZfc2LD0
+sp_es_seguro xSXRaVajfW
+sp_es_camarero_c tC3jWiDmZJ
+sp_es_camarero_d lJIGQiogv9
+es_lee_1 lJIGQGvgv9
+es_lee_2 N2HeLd56D9
+es_lee_boca 6AqdUcFiJO
+es_lee_bocao nVLvNtPYQD
+es_camarero_b_sp 6Aqd4aLiJO

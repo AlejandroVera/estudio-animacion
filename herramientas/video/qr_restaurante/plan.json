@@ -107,6 +107,46 @@
      "tam": 110,
      "centro": true,
      "fijo": true
+    }
+   ]
+  },
+  {
+   "t0": 14.6,
+   "fondo": "img/es_lee.jpg",
+   "boca": "img/es_lee_boca.png",
+   "boca_o": "img/es_lee_bocao.png",
+   "zoom": 1.45,
+   "rotulos": [
+    {
+     "t0": 15.0,
+     "texto": "MEJOR EXPERiENCiA",
+     "x": 540,
+     "y": 150,
+     "color": "negro",
+     "tam": 85,
+     "centro": true,
+     "fijo": true,
+     "caja": true
+    }
+   ]
+  },
+  {
+   "t0": 16.2,
+   "fondo": "img/br_form.jpg",
+   "habla": false,
+   "zoom": 1.35,
+   "cx": 0.498,
+   "cy": 0.38,
+   "rotulos": [
+    {
+     "t0": 15.6,
+     "texto": "REGÍSTRATE",
+     "x": 540,
+     "y": 110,
+     "color": "negro",
+     "tam": 110,
+     "centro": true,
+     "fijo": true
     },
     {
      "t0": 16.25,
@@ -261,11 +301,11 @@
   },
   {
    "t0": 29.05,
-   "fondo": "img/br_pdf.jpg",
+   "fondo": "img/br_pdf_postres.jpg",
    "habla": false,
-   "zoom": 3.0,
-   "cx": 0.494,
-   "cy": 0.466,
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
    "rotulos": [
     {
      "t0": 29.09,
@@ -290,11 +330,11 @@
   },
   {
    "t0": 31.7,
-   "fondo": "img/br_pdf.jpg",
+   "fondo": "img/br_pdf_legal.jpg",
    "habla": false,
-   "zoom": 4.0,
+   "zoom": 1.0,
    "cx": 0.5,
-   "cy": 0.56,
+   "cy": 0.5,
    "rotulos": [
     {
      "t0": 31.74,
@@ -531,7 +571,14 @@
    "habla": false,
    "zoom": 1.2,
    "cx": 0.55,
-   "cy": 0.5
+   "cy": 0.5,
+   "alterna": {
+    "imgs": [
+     "img/es_barra_c.jpg",
+     "img/es_barra_c_b.jpg"
+    ],
+    "cada": 0.5
+   }
   }
  ]
 }

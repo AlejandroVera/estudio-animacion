@@ -6,15 +6,19 @@ import numpy as np
 from PIL import Image, ImageFilter
 from scipy import ndimage as ndi
 
-BASES = {'es_llega': 'es_llega_1', 'es_escanea': 'es_escanea_2', 'es_cubiertos': 'es_cubiertos_1', 'es_zum': 'es_zum_2',
-         'es_camarero': 'es_camarero_1', 'es_serio': 'es_serio_1', 'es_seguro': 'es_seguro_2', 'es_barra': 'es_barra_2',
+# bases sin la planta que salía detrás de su cabeza (sp_*); ANTES = el dibujo original del que salen sus variantes
+BASES = {'es_llega': 'sp_es_llega', 'es_escanea': 'sp_es_escanea', 'es_cubiertos': 'sp_es_cubiertos', 'es_zum': 'sp_es_zum',
+         'es_camarero': 'sp_es_camarero', 'es_serio': 'sp_es_serio', 'es_seguro': 'sp_es_seguro', 'es_barra': 'es_barra_2', 'es_lee': 'es_lee_2',
+         'es_camarero_c': 'sp_es_camarero_c', 'es_camarero_d': 'sp_es_camarero_d',
          'br_qr': 'qr_1', 'br_memoria': 'br_memoria_2', 'br_movil': 'movil_1'}
-TAL_CUAL = ['br_qr_ketchup', 'br_cookies', 'br_acepto', 'br_form', 'br_codigo', 'br_pdf', 'br_propina', 'br_seguro',
-            'br_cuenta', 'br_cuenta_b', 'es_camarero_c', 'es_camarero_d', 'es_barra_b', 'es_barra_c']
+TAL_CUAL = ['br_qr_ketchup', 'br_cookies', 'br_acepto', 'br_form', 'br_codigo', 'br_propina', 'br_seguro',
+            'br_cuenta', 'br_cuenta_b', 'es_barra_b', 'es_barra_c']
 VARIANTES = {'es_llega_b': 'es_llega', 'es_escanea_b': 'es_escanea', 'es_cubiertos_b': 'es_cubiertos', 'es_zum_b': 'es_zum',
              'es_camarero_b': 'es_camarero', 'es_seguro_b': 'es_seguro', 'br_cerrada': 'br_codigo'}
 SIN_PROTEGER = {'es_seguro_b', 'br_cerrada'}
-BOCAS = [b + s for b in ['es_llega', 'es_escanea', 'es_cubiertos', 'es_serio', 'es_zum', 'es_camarero', 'es_seguro', 'es_barra']
+ANTES = {'es_llega': 'es_llega_1', 'es_escanea': 'es_escanea_2', 'es_cubiertos': 'es_cubiertos_1', 'es_zum': 'es_zum_2',
+         'es_seguro': 'es_seguro_2'}
+BOCAS = [b + s for b in ['es_llega', 'es_escanea', 'es_cubiertos', 'es_serio', 'es_zum', 'es_camarero', 'es_seguro', 'es_barra', 'es_lee']
          for s in ('_boca', '_bocao')]
 os.makedirs('img', exist_ok=True)
 
@@ -59,6 +63,9 @@ for nom, base in VARIANTES.items():
     if nom not in SIN_PROTEGER:
         for (x, y, r) in cabezas(a):
             prot |= disco(d.shape, x, y, r * 1.08)
+    if base in ANTES:  # donde se borró la planta, la variante no debe volver a pintarla
+        o = np.asarray(Image.open(f'crudo/{ANTES[base]}.png').convert('RGB').resize(A.size)).astype(int)
+        prot |= ndi.binary_dilation(np.abs(o - a).max(2) > 30, iterations=6)
     d &= ~prot
     d = ndi.binary_opening(d, iterations=2)
     lab, n = ndi.label(ndi.binary_dilation(d, iterations=8))

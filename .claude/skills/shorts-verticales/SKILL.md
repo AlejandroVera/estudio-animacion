@@ -77,3 +77,19 @@ Ejemplo completo: `herramientas/shorts/domingo/` (3 shorts del vídeo «domingo�
 - Rótulos cortos y gordos (1-2 palabras, tam 110-190); repetir el mismo rótulo como estribillo funciona
   («MÓVIL» tres veces). Nada de «¡ !» (la fuente los hace parecer «I»); «i» minúscula en mayúsculas (SiN, OPTiMiZAMOS).
 - El remate final se sostiene ~2 s después de la última palabra (`duracion` = voz + 1,6-2 s).
+
+## Vídeos verticales NUEVOS (no sacados de un largo): ejemplo `herramientas/video/qr_restaurante/`
+- Se dibuja directamente en 9:16 (Magnific `aspectRatio: 9:16`), mismo método de escenas con gags del largo (voz,
+  movimientos, dos bocas, efectos). Un solo sitio que se repite (el restaurante) con el mismo secundario (camarero)
+  da continuidad. Montaje con `herramientas/shorts/montar_vertical.py` en modo recorte (`zoom` 1,2-1,45 para
+  acercarse a él: la imagen de 2k tiene resolución de sobra; móviles con `zoom` 1,35 centrado en la pantalla).
+  Textos dentro de pantallas con `D(...)` en unidades de 1920 de ancho (medir la pantalla en píxeles × 1920/ancho).
+- Lecciones de la revisión (2026-11-17, «revisa el vídeo completo porque tiene fallos»):
+  1. Mirar qué hay DETRÁS de su cabeza: una planta en la pared parecía que le salían hojas. Quitarla con una
+     edición «REMOVE ONLY the plant…» de cada base; las variantes ya hechas se reaprovechan protegiendo la zona
+     que cambió (si no, la vuelven a pintar) y, si un brazo cruzaba esa zona, rehacer esa variante desde la base limpia.
+  2. La IA escribe palabras falsas (en inglés) en cartas, PDFs y pantallas aunque se pida «no text»: al acercarse se
+     leen. Pasar las líneas de texto a rayas grises por código (`pdf_limpio.py`) y hacer los «zoom» como página
+     limpia recortada (no con `zoom` 4 sobre el móvil: asomaban el borde y la mano).
+  3. Ningún plano de más de ~3 s casi quieto: el formulario de 5,5 s se partió con un plano de él con la ceja
+     levantada en «para una mejor experiencia». El final quieto se anima con un segundo dibujo (la nubecita sube).
