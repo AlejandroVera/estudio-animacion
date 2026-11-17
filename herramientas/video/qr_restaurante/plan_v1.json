@@ -1,0 +1,604 @@
+{
+ "alineacion": "voz/qr_v1.json",
+ "audio": "voz/qr_v1.mp3",
+ "pantalon": "gris",
+ "sin_recolor": [
+  "br_"
+ ],
+ "vel_letra": 0.03,
+ "subtitulos": {
+  "y": 250,
+  "tam": 62
+ },
+ "duracion": 61.4,
+ "planos": [
+  {
+   "t0": 0,
+   "fondo": "img/es_llega.jpg",
+   "boca": "img/es_llega_boca.png",
+   "boca_o": "img/es_llega_bocao.png",
+   "zoom": 1.45,
+   "cambios": [
+    {
+     "t": 3.16,
+     "fondo": "img/es_llega_b.jpg"
+    }
+   ],
+   "boca_en": [
+    "img/es_llega.jpg",
+    "img/es_llega_b.jpg"
+   ]
+  },
+  {
+   "t0": 3.85,
+   "fondo": "img/br_qr.jpg",
+   "habla": false,
+   "zoom": 1.02,
+   "cx": 0.5,
+   "cy": 0.5,
+   "cambios": [
+    {
+     "t": 5.17,
+     "fondo": "img/br_qr_ketchup.jpg"
+    }
+   ]
+  },
+  {
+   "t0": 6.56,
+   "fondo": "img/es_escanea.jpg",
+   "boca": "img/es_escanea_boca.png",
+   "boca_o": "img/es_escanea_bocao.png",
+   "zoom": 1.45
+  },
+  {
+   "t0": 7.74,
+   "fondo": "img/br_cookies.jpg",
+   "habla": false,
+   "zoom": 1.35,
+   "cx": 0.498,
+   "cy": 0.38,
+   "rotulos": [
+    {
+     "t0": 8.85,
+     "texto": "COOKiES",
+     "x": 540,
+     "y": 120,
+     "color": "negro",
+     "tam": 120,
+     "centro": true,
+     "fijo": true
+    }
+   ]
+  },
+  {
+   "t0": 9.95,
+   "fondo": "img/es_cubiertos.jpg",
+   "boca": "img/es_cubiertos_boca.png",
+   "boca_o": "img/es_cubiertos_bocao.png",
+   "zoom": 1.45,
+   "cambios": [
+    {
+     "t": 11.44,
+     "fondo": "img/es_cubiertos_b.jpg"
+    }
+   ],
+   "boca_en": [
+    "img/es_cubiertos.jpg",
+    "img/es_cubiertos_b.jpg"
+   ]
+  },
+  {
+   "t0": 12.25,
+   "fondo": "img/br_acepto.jpg",
+   "habla": false,
+   "zoom": 1.35,
+   "cx": 0.498,
+   "cy": 0.38
+  },
+  {
+   "t0": 13.33,
+   "fondo": "img/br_form.jpg",
+   "habla": false,
+   "zoom": 1.35,
+   "cx": 0.498,
+   "cy": 0.38,
+   "rotulos": [
+    {
+     "t0": 13.85,
+     "texto": "REGÍSTRATE",
+     "x": 540,
+     "y": 110,
+     "color": "negro",
+     "tam": 110,
+     "centro": true,
+     "fijo": true
+    }
+   ]
+  },
+  {
+   "t0": 14.85,
+   "fondo": "img/es_lee.jpg",
+   "boca": "img/es_lee_boca.png",
+   "boca_o": "img/es_lee_bocao.png",
+   "zoom": 1.45,
+   "rotulos": [
+    {
+     "t0": 14.95,
+     "texto": "MEJOR EXPERiENCiA",
+     "x": 540,
+     "y": 150,
+     "color": "negro",
+     "tam": 85,
+     "centro": true,
+     "fijo": true,
+     "caja": true
+    }
+   ]
+  },
+  {
+   "t0": 16.25,
+   "fondo": "img/br_form.jpg",
+   "habla": false,
+   "zoom": 1.35,
+   "cx": 0.498,
+   "cy": 0.38,
+   "rotulos": [
+    {
+     "t0": 15.6,
+     "texto": "REGÍSTRATE",
+     "x": 540,
+     "y": 110,
+     "color": "negro",
+     "tam": 110,
+     "centro": true,
+     "fijo": true
+    },
+    {
+     "t0": 16.25,
+     "texto": "NOMBRE",
+     "x": 960,
+     "y": 1067.0,
+     "color": "negro",
+     "tam": 95,
+     "centro": true,
+     "fijo": true,
+     "en_dibujo": true
+    },
+    {
+     "t0": 16.81,
+     "texto": "CORREO",
+     "x": 960,
+     "y": 1299.0,
+     "color": "negro",
+     "tam": 95,
+     "centro": true,
+     "fijo": true,
+     "en_dibujo": true
+    },
+    {
+     "t0": 17.6,
+     "texto": "FECHA",
+     "x": 960,
+     "y": 1524.0,
+     "color": "negro",
+     "tam": 95,
+     "centro": true,
+     "fijo": true,
+     "en_dibujo": true
+    }
+   ]
+  },
+  {
+   "t0": 18.88,
+   "fondo": "img/es_serio.jpg",
+   "boca": "img/es_serio_boca.png",
+   "boca_o": "img/es_serio_bocao.png",
+   "zoom": 1.45
+  },
+  {
+   "t0": 20.09,
+   "fondo": "img/br_codigo.jpg",
+   "habla": false,
+   "zoom": 1.35,
+   "cx": 0.498,
+   "cy": 0.38,
+   "cambios": [
+    {
+     "t": 22.15,
+     "fondo": "img/br_cerrada.jpg"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 20.56,
+     "texto": "4",
+     "x": 716,
+     "y": 1286.0,
+     "color": "negro",
+     "tam": 85,
+     "centro": true,
+     "fijo": true,
+     "en_dibujo": true,
+     "t1": 22.15
+    },
+    {
+     "t0": 20.68,
+     "texto": "8",
+     "x": 880,
+     "y": 1286.0,
+     "color": "negro",
+     "tam": 85,
+     "centro": true,
+     "fijo": true,
+     "en_dibujo": true,
+     "t1": 22.15
+    },
+    {
+     "t0": 20.799999999999997,
+     "texto": "1",
+     "x": 1045,
+     "y": 1286.0,
+     "color": "negro",
+     "tam": 85,
+     "centro": true,
+     "fijo": true,
+     "en_dibujo": true,
+     "t1": 22.15
+    },
+    {
+     "t0": 20.919999999999998,
+     "texto": "5",
+     "x": 1201,
+     "y": 1286.0,
+     "color": "negro",
+     "tam": 85,
+     "centro": true,
+     "fijo": true,
+     "en_dibujo": true,
+     "t1": 22.15
+    }
+   ]
+  },
+  {
+   "t0": 22.72,
+   "fondo": "img/es_escanea.jpg",
+   "boca": "img/es_escanea_boca.png",
+   "boca_o": "img/es_escanea_bocao.png",
+   "zoom": 1.45,
+   "cambios": [
+    {
+     "t": 24.6,
+     "fondo": "img/es_escanea_b.jpg"
+    }
+   ],
+   "boca_en": [
+    "img/es_escanea.jpg",
+    "img/es_escanea_b.jpg"
+   ]
+  },
+  {
+   "t0": 25.22,
+   "fondo": "img/br_pdf.jpg",
+   "habla": false,
+   "zoom": 1.35,
+   "cx": 0.498,
+   "cy": 0.38,
+   "rotulos": [
+    {
+     "t0": 26.86,
+     "texto": "PDF",
+     "x": 540,
+     "y": 110,
+     "color": "rojo",
+     "tam": 160,
+     "centro": true,
+     "fijo": true
+    }
+   ]
+  },
+  {
+   "t0": 27.9,
+   "fondo": "img/es_zum.jpg",
+   "boca": "img/es_zum_boca.png",
+   "boca_o": "img/es_zum_bocao.png",
+   "zoom": 1.45,
+   "habla": false
+  },
+  {
+   "t0": 29.05,
+   "fondo": "img/br_pdf_postres.jpg",
+   "habla": false,
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "rotulos": [
+    {
+     "t0": 28.99,
+     "texto": "POSTRES",
+     "x": 540,
+     "y": 140,
+     "color": "rojo",
+     "tam": 130,
+     "centro": true,
+     "fijo": true,
+     "caja": true
+    }
+   ]
+  },
+  {
+   "t0": 30.13,
+   "fondo": "img/es_zum_b.jpg",
+   "boca": "img/es_zum_b_boca.png",
+   "boca_o": "img/es_zum_b_bocao.png",
+   "zoom": 1.45,
+   "habla": false
+  },
+  {
+   "t0": 31.7,
+   "fondo": "img/br_pdf_legal.jpg",
+   "habla": false,
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "rotulos": [
+    {
+     "t0": 31.64,
+     "texto": "AViSO LEGAL",
+     "x": 540,
+     "y": 140,
+     "color": "rojo",
+     "tam": 120,
+     "centro": true,
+     "fijo": true,
+     "caja": true
+    }
+   ]
+  },
+  {
+   "t0": 32.87,
+   "fondo": "img/es_camarero.jpg",
+   "boca": "img/es_camarero_boca.png",
+   "boca_o": "img/es_camarero_bocao.png",
+   "zoom": 1.25,
+   "cx": 0.55,
+   "cambios": [
+    {
+     "t": 36.18,
+     "fondo": "img/es_camarero_b.jpg"
+    }
+   ],
+   "boca_en": [
+    "img/es_camarero.jpg",
+    "img/es_camarero_b.jpg"
+   ],
+   "rotulos": [
+    {
+     "t0": 37.2,
+     "texto": "QR",
+     "x": 540,
+     "y": 130,
+     "color": "negro",
+     "tam": 140,
+     "centro": true,
+     "fijo": true
+    }
+   ]
+  },
+  {
+   "t0": 38.1,
+   "fondo": "img/br_memoria.jpg",
+   "habla": false,
+   "zoom": 1.05,
+   "cx": 0.5,
+   "cy": 0.5,
+   "sub_y": 1700,
+   "alterna": {
+    "imgs": [
+     "img/br_memoria.jpg",
+     "img/br_memoria_b.jpg"
+    ],
+    "cada": 0.35
+   }
+  },
+  {
+   "t0": 39.84,
+   "fondo": "img/es_camarero_c.jpg",
+   "habla": false,
+   "zoom": 1.25,
+   "cx": 0.55,
+   "cy": 0.5,
+   "cambios": [
+    {
+     "t": 41.04,
+     "fondo": "img/es_camarero_d.jpg"
+    }
+   ]
+  },
+  {
+   "t0": 41.69,
+   "fondo": "img/br_cuenta.jpg",
+   "habla": false,
+   "zoom": 1.05,
+   "cx": 0.5,
+   "cy": 0.5,
+   "alterna": {
+    "imgs": [
+     "img/br_cuenta.jpg",
+     "img/br_cuenta_b.jpg"
+    ],
+    "cada": 0.3
+   },
+   "rotulos": [
+    {
+     "t0": 42.7,
+     "texto": "OTRO QR",
+     "x": 540,
+     "y": 120,
+     "color": "negro",
+     "tam": 120,
+     "centro": true,
+     "fijo": true
+    }
+   ]
+  },
+  {
+   "t0": 43.75,
+   "fondo": "img/br_propina.jpg",
+   "habla": false,
+   "zoom": 1.35,
+   "cx": 0.498,
+   "cy": 0.38,
+   "rotulos": [
+    {
+     "t0": 44.3,
+     "texto": "¿PROPiNA?",
+     "x": 540,
+     "y": 110,
+     "color": "negro",
+     "tam": 110,
+     "centro": true,
+     "fijo": true,
+     "t1": 47.4
+    },
+    {
+     "t0": 45.12,
+     "texto": "10%",
+     "x": 960,
+     "y": 1171.0,
+     "color": "negro",
+     "tam": 95,
+     "centro": true,
+     "fijo": true,
+     "en_dibujo": true
+    },
+    {
+     "t0": 45.55,
+     "texto": "15%",
+     "x": 960,
+     "y": 1409.0,
+     "color": "negro",
+     "tam": 95,
+     "centro": true,
+     "fijo": true,
+     "en_dibujo": true
+    },
+    {
+     "t0": 46.19,
+     "texto": "20%",
+     "x": 960,
+     "y": 1677.0,
+     "color": "negro",
+     "tam": 95,
+     "centro": true,
+     "fijo": true,
+     "en_dibujo": true
+    },
+    {
+     "t0": 47.46,
+     "texto": "0%",
+     "x": 540,
+     "y": 100,
+     "color": "rojo",
+     "tam": 170,
+     "centro": true,
+     "fijo": true
+    }
+   ]
+  },
+  {
+   "t0": 48.3,
+   "fondo": "img/br_seguro.jpg",
+   "habla": false,
+   "zoom": 1.35,
+   "cx": 0.498,
+   "cy": 0.38,
+   "rotulos": [
+    {
+     "t0": 48.85,
+     "texto": "¿SEGURO?",
+     "x": 540,
+     "y": 110,
+     "color": "rojo",
+     "tam": 120,
+     "centro": true,
+     "fijo": true
+    }
+   ]
+  },
+  {
+   "t0": 49.98,
+   "fondo": "img/es_seguro.jpg",
+   "boca": "img/es_seguro_boca.png",
+   "boca_o": "img/es_seguro_bocao.png",
+   "zoom": 1.45,
+   "cambios": [
+    {
+     "t": 52.1,
+     "fondo": "img/es_seguro_b.jpg"
+    }
+   ],
+   "boca_en": [
+    "img/es_seguro.jpg",
+    "img/es_seguro_b.jpg"
+   ]
+  },
+  {
+   "t0": 53.66,
+   "fondo": "img/es_barra.jpg",
+   "boca": "img/es_barra_boca.png",
+   "boca_o": "img/es_barra_bocao.png",
+   "zoom": 1.2,
+   "cx": 0.5,
+   "rotulos": [
+    {
+     "t0": 55.0,
+     "texto": "EN EFECTiVO",
+     "x": 540,
+     "y": 120,
+     "color": "negro",
+     "tam": 110,
+     "centro": true,
+     "fijo": true,
+     "caja": true
+    }
+   ]
+  },
+  {
+   "t0": 56.13,
+   "fondo": "img/es_barra_b.jpg",
+   "habla": false,
+   "zoom": 1.2,
+   "cx": 0.55,
+   "cy": 0.5,
+   "rotulos": [
+    {
+     "t0": 55.0,
+     "texto": "EN EFECTiVO",
+     "x": 540,
+     "y": 120,
+     "color": "negro",
+     "tam": 110,
+     "centro": true,
+     "fijo": true,
+     "caja": true,
+     "t1": 56.9
+    }
+   ]
+  },
+  {
+   "t0": 57.91,
+   "fondo": "img/es_barra_c.jpg",
+   "habla": false,
+   "zoom": 1.2,
+   "cx": 0.55,
+   "cy": 0.5,
+   "alterna": {
+    "imgs": [
+     "img/es_barra_c.jpg",
+     "img/es_barra_c_b.jpg"
+    ],
+    "cada": 0.5
+   }
+  }
+ ]
+}

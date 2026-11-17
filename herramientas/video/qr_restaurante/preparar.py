@@ -16,7 +16,7 @@ TAL_CUAL = ['br_qr_ketchup', 'br_cookies', 'br_acepto', 'br_form', 'br_codigo', 
 VARIANTES = {'es_llega_b': 'es_llega', 'es_escanea_b': 'es_escanea', 'es_cubiertos_b': 'es_cubiertos', 'es_zum_b': 'es_zum',
              'es_camarero_b': 'es_camarero', 'es_seguro_b': 'es_seguro', 'br_cerrada': 'br_codigo'}
 SIN_PROTEGER = {'es_seguro_b', 'br_cerrada'}
-ANTES = {'es_llega': 'es_llega_1', 'es_escanea': 'es_escanea_2', 'es_cubiertos': 'es_cubiertos_1', 'es_zum': 'es_zum_2',
+ANTES = {'es_escanea': 'es_escanea_2', 'es_cubiertos': 'es_cubiertos_1', 'es_zum': 'es_zum_2',
          'es_seguro': 'es_seguro_2'}
 BOCAS = [b + s for b in ['es_llega', 'es_escanea', 'es_cubiertos', 'es_serio', 'es_zum', 'es_camarero', 'es_seguro', 'es_barra', 'es_lee']
          for s in ('_boca', '_bocao')]

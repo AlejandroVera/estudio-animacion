@@ -400,7 +400,7 @@ def sitio_rotulo(r, w, h):
 def rotulo(d, r, t):
     """Texto a mano escribiéndose letra a letra, cada letra algo torcida."""
     texto = r['texto']
-    n = min(len(texto), int((t - r['t0']) / 0.045) + 1)
+    n = min(len(texto), int((t - r['t0']) / plan.get('vel_letra', 0.045)) + 1)
     tam = r.get('tam', 110)
     f = ImageFont.truetype(FUENTE, tam)
     col = COLORES.get(r.get('color', 'negro'))
@@ -610,10 +610,62 @@ def frame(t):
     for o in plano.get('objetos', []):
         if o['t0'] <= t < o.get('t1', 99) and not o.get('detras'):
             pegar_objeto(im, o, t)
+    grande = False
     for r in plano.get('rotulos', []):
         if r['t0'] <= t < r.get('t1', 99):
             rotulo(im, r, t)
+            grande |= not r.get('en_dibujo')
+    if SUBS and not grande and not plano.get('sin_subtitulos'):
+        subtitulo(im, t, plano.get('sub_y', plan['subtitulos'].get('y', 250)))
     return im.convert('RGB')
+
+
+def _trozos_subtitulos():
+    """Subtítulos: grupos de hasta 5 palabras, cortados en la puntuación o en las pausas."""
+    out, cur = [], []
+    for k, w in enumerate(palabras):
+        cur.append(w)
+        sig = palabras[k + 1] if k + 1 < len(palabras) else None
+        fin_frase = w['texto'][-1:] in '.,?!:;…»'
+        if len(cur) >= 5 or fin_frase or sig is None or sig['inicio'] - w['fin'] > 0.35:
+            out.append(cur); cur = []
+    trozos = []
+    for i, g in enumerate(out):
+        ini = g[0]['inicio']
+        fin = g[-1]['fin'] + 0.45
+        if i + 1 < len(out):
+            fin = min(fin, out[i + 1][0]['inicio'])
+        texto = ' '.join(w['texto'] for w in g).replace('«', '').replace('»', '')
+        trozos.append((ini, fin, texto))
+    return trozos
+
+
+SUBS = _trozos_subtitulos() if plan.get('subtitulos') else []
+
+
+def subtitulo(im, t, y):
+    for ini, fin, texto in SUBS:
+        if ini <= t < fin:
+            break
+    else:
+        return
+    tam = plan['subtitulos'].get('tam', 64)
+    f = ImageFont.truetype(FUENTE, tam)
+    d = ImageDraw.Draw(im)
+    palabras_t, lineas, linea = texto.split(), [], ''
+    for p in palabras_t:
+        prueba = (linea + ' ' + p).strip()
+        if f.getlength(prueba) > 940 and linea:
+            lineas.append(linea); linea = p
+        else:
+            linea = prueba
+    lineas.append(linea)
+    for i, l in enumerate(lineas):
+        w = f.getlength(l)
+        pos = ((W - w) / 2, y + i * tam * 1.2)
+        # contorno negro grueso y letra blanca engordada (la Coming Soon es fina)
+        d.text(pos, l, font=f, fill=(20, 20, 20, 255), stroke_width=max(8, tam // 6), stroke_fill=(20, 20, 20, 255))
+        d.text(pos, l, font=f, fill=(255, 255, 255, 255), stroke_width=max(2, tam // 28), stroke_fill=(255, 255, 255, 255))
 
 
 def pegar_objeto(im, o, t):

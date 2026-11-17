@@ -93,3 +93,17 @@ Ejemplo completo: `herramientas/shorts/domingo/` (3 shorts del vídeo «domingo�
      limpia recortada (no con `zoom` 4 sobre el móvil: asomaban el borde y la mano).
   3. Ningún plano de más de ~3 s casi quieto: el formulario de 5,5 s se partió con un plano de él con la ceja
      levantada en «para una mejor experiencia». El final quieto se anima con un segundo dibujo (la nubecita sube).
+- Segunda revisión (2026-11-17: «al principio no se entiende lo que dice; al señalar el QR el brazo se vuelve
+  translúcido; al final el texto se corta; hay que poner subtítulos»):
+  1. Escuchar (transcribir) el arranque: la voz metió un «allí» y se trababa. La primera frase no se puede rehacer
+     con `voz.py rehacer` (no hay silencio delante): `empalme_inicio.py` la graba aparte con el resto como contexto
+     y la empalma; luego `reajustar.py` lleva plan y efectos a la voz nueva.
+  2. Una variante hecha sobre la base vieja deja «fantasmas» (brazo medio transparente) si la base cambia: rehacer la
+     variante editando la base nueva.
+  3. Ningún rótulo debe cortarse a medio escribir o recién escrito: `vel_letra` 0,03 en el plan, rótulos 0,1 s antes
+     de su palabra y, si cae en el cambio de plano, repetirlo en el plano siguiente (con `t1`). Comprobar con un
+     listado «tiempo que se ve completo» (≥ 0,9 s).
+  4. SUBTÍTULOS siempre en los verticales: `"subtitulos": {"y": 230, "tam": 76}` en el plan (letra blanca gruesa con
+     contorno negro, grupos de ≤5 palabras cortados en la puntuación). Se ocultan solos mientras hay un rótulo grande
+     de pantalla (los de dentro del dibujo, `D`, no los ocultan). Si tapan algo del dibujo, `"sub_y"` en ese plano
+     (p. ej. 1700 = abajo) o `"sin_subtitulos": true`.

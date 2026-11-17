@@ -5,7 +5,11 @@
  "sin_recolor": [
   "br_"
  ],
- "duracion": 61.4,
+ "vel_letra": 0.03,
+ "subtitulos": {
+  "y": 230,
+  "tam": 76
+ },
  "planos": [
   {
    "t0": 0,
@@ -15,7 +19,7 @@
    "zoom": 1.45,
    "cambios": [
     {
-     "t": 3.16,
+     "t": 3.044,
      "fondo": "img/es_llega_b.jpg"
     }
    ],
@@ -25,7 +29,7 @@
    ]
   },
   {
-   "t0": 3.85,
+   "t0": 4.39,
    "fondo": "img/br_qr.jpg",
    "habla": false,
    "zoom": 1.02,
@@ -33,20 +37,20 @@
    "cy": 0.5,
    "cambios": [
     {
-     "t": 5.17,
+     "t": 5.71,
      "fondo": "img/br_qr_ketchup.jpg"
     }
    ]
   },
   {
-   "t0": 6.56,
+   "t0": 7.1,
    "fondo": "img/es_escanea.jpg",
    "boca": "img/es_escanea_boca.png",
    "boca_o": "img/es_escanea_bocao.png",
    "zoom": 1.45
   },
   {
-   "t0": 7.74,
+   "t0": 8.28,
    "fondo": "img/br_cookies.jpg",
    "habla": false,
    "zoom": 1.35,
@@ -54,7 +58,7 @@
    "cy": 0.38,
    "rotulos": [
     {
-     "t0": 8.95,
+     "t0": 9.39,
      "texto": "COOKiES",
      "x": 540,
      "y": 120,
@@ -66,14 +70,14 @@
    ]
   },
   {
-   "t0": 9.85,
+   "t0": 10.49,
    "fondo": "img/es_cubiertos.jpg",
    "boca": "img/es_cubiertos_boca.png",
    "boca_o": "img/es_cubiertos_bocao.png",
    "zoom": 1.45,
    "cambios": [
     {
-     "t": 11.44,
+     "t": 11.98,
      "fondo": "img/es_cubiertos_b.jpg"
     }
    ],
@@ -83,7 +87,7 @@
    ]
   },
   {
-   "t0": 12.25,
+   "t0": 12.79,
    "fondo": "img/br_acepto.jpg",
    "habla": false,
    "zoom": 1.35,
@@ -91,7 +95,7 @@
    "cy": 0.38
   },
   {
-   "t0": 13.33,
+   "t0": 13.87,
    "fondo": "img/br_form.jpg",
    "habla": false,
    "zoom": 1.35,
@@ -99,7 +103,7 @@
    "cy": 0.38,
    "rotulos": [
     {
-     "t0": 13.94,
+     "t0": 14.39,
      "texto": "REGÍSTRATE",
      "x": 540,
      "y": 110,
@@ -111,14 +115,14 @@
    ]
   },
   {
-   "t0": 14.6,
+   "t0": 15.39,
    "fondo": "img/es_lee.jpg",
    "boca": "img/es_lee_boca.png",
    "boca_o": "img/es_lee_bocao.png",
    "zoom": 1.45,
    "rotulos": [
     {
-     "t0": 15.0,
+     "t0": 15.49,
      "texto": "MEJOR EXPERiENCiA",
      "x": 540,
      "y": 150,
@@ -131,7 +135,7 @@
    ]
   },
   {
-   "t0": 16.2,
+   "t0": 16.79,
    "fondo": "img/br_form.jpg",
    "habla": false,
    "zoom": 1.35,
@@ -139,7 +143,7 @@
    "cy": 0.38,
    "rotulos": [
     {
-     "t0": 15.6,
+     "t0": 16.14,
      "texto": "REGÍSTRATE",
      "x": 540,
      "y": 110,
@@ -149,7 +153,7 @@
      "fijo": true
     },
     {
-     "t0": 16.25,
+     "t0": 16.79,
      "texto": "NOMBRE",
      "x": 960,
      "y": 1067.0,
@@ -160,7 +164,7 @@
      "en_dibujo": true
     },
     {
-     "t0": 16.81,
+     "t0": 17.35,
      "texto": "CORREO",
      "x": 960,
      "y": 1299.0,
@@ -171,7 +175,7 @@
      "en_dibujo": true
     },
     {
-     "t0": 17.6,
+     "t0": 18.14,
      "texto": "FECHA",
      "x": 960,
      "y": 1524.0,
@@ -184,14 +188,14 @@
    ]
   },
   {
-   "t0": 18.88,
+   "t0": 19.42,
    "fondo": "img/es_serio.jpg",
    "boca": "img/es_serio_boca.png",
    "boca_o": "img/es_serio_bocao.png",
    "zoom": 1.45
   },
   {
-   "t0": 20.09,
+   "t0": 20.63,
    "fondo": "img/br_codigo.jpg",
    "habla": false,
    "zoom": 1.35,
@@ -199,13 +203,13 @@
    "cy": 0.38,
    "cambios": [
     {
-     "t": 22.15,
+     "t": 22.69,
      "fondo": "img/br_cerrada.jpg"
     }
    ],
    "rotulos": [
     {
-     "t0": 20.56,
+     "t0": 21.1,
      "texto": "4",
      "x": 716,
      "y": 1286.0,
@@ -214,10 +218,10 @@
      "centro": true,
      "fijo": true,
      "en_dibujo": true,
-     "t1": 22.15
+     "t1": 22.69
     },
     {
-     "t0": 20.68,
+     "t0": 21.22,
      "texto": "8",
      "x": 880,
      "y": 1286.0,
@@ -226,10 +230,10 @@
      "centro": true,
      "fijo": true,
      "en_dibujo": true,
-     "t1": 22.15
+     "t1": 22.69
     },
     {
-     "t0": 20.799999999999997,
+     "t0": 21.34,
      "texto": "1",
      "x": 1045,
      "y": 1286.0,
@@ -238,10 +242,10 @@
      "centro": true,
      "fijo": true,
      "en_dibujo": true,
-     "t1": 22.15
+     "t1": 22.69
     },
     {
-     "t0": 20.919999999999998,
+     "t0": 21.46,
      "texto": "5",
      "x": 1201,
      "y": 1286.0,
@@ -250,19 +254,19 @@
      "centro": true,
      "fijo": true,
      "en_dibujo": true,
-     "t1": 22.15
+     "t1": 22.69
     }
    ]
   },
   {
-   "t0": 22.72,
+   "t0": 23.26,
    "fondo": "img/es_escanea.jpg",
    "boca": "img/es_escanea_boca.png",
    "boca_o": "img/es_escanea_bocao.png",
    "zoom": 1.45,
    "cambios": [
     {
-     "t": 24.6,
+     "t": 25.14,
      "fondo": "img/es_escanea_b.jpg"
     }
    ],
@@ -272,7 +276,7 @@
    ]
   },
   {
-   "t0": 25.22,
+   "t0": 25.76,
    "fondo": "img/br_pdf.jpg",
    "habla": false,
    "zoom": 1.35,
@@ -280,7 +284,7 @@
    "cy": 0.38,
    "rotulos": [
     {
-     "t0": 26.96,
+     "t0": 27.4,
      "texto": "PDF",
      "x": 540,
      "y": 110,
@@ -292,7 +296,7 @@
    ]
   },
   {
-   "t0": 27.71,
+   "t0": 28.44,
    "fondo": "img/es_zum.jpg",
    "boca": "img/es_zum_boca.png",
    "boca_o": "img/es_zum_bocao.png",
@@ -300,7 +304,7 @@
    "habla": false
   },
   {
-   "t0": 29.05,
+   "t0": 29.59,
    "fondo": "img/br_pdf_postres.jpg",
    "habla": false,
    "zoom": 1.0,
@@ -308,7 +312,7 @@
    "cy": 0.5,
    "rotulos": [
     {
-     "t0": 29.09,
+     "t0": 29.53,
      "texto": "POSTRES",
      "x": 540,
      "y": 140,
@@ -321,7 +325,7 @@
    ]
   },
   {
-   "t0": 30.13,
+   "t0": 30.67,
    "fondo": "img/es_zum_b.jpg",
    "boca": "img/es_zum_b_boca.png",
    "boca_o": "img/es_zum_b_bocao.png",
@@ -329,7 +333,7 @@
    "habla": false
   },
   {
-   "t0": 31.7,
+   "t0": 32.24,
    "fondo": "img/br_pdf_legal.jpg",
    "habla": false,
    "zoom": 1.0,
@@ -337,7 +341,7 @@
    "cy": 0.5,
    "rotulos": [
     {
-     "t0": 31.74,
+     "t0": 32.18,
      "texto": "AViSO LEGAL",
      "x": 540,
      "y": 140,
@@ -350,7 +354,7 @@
    ]
   },
   {
-   "t0": 32.87,
+   "t0": 33.41,
    "fondo": "img/es_camarero.jpg",
    "boca": "img/es_camarero_boca.png",
    "boca_o": "img/es_camarero_bocao.png",
@@ -358,7 +362,7 @@
    "cx": 0.55,
    "cambios": [
     {
-     "t": 36.18,
+     "t": 36.72,
      "fondo": "img/es_camarero_b.jpg"
     }
    ],
@@ -368,7 +372,7 @@
    ],
    "rotulos": [
     {
-     "t0": 37.2,
+     "t0": 37.74,
      "texto": "QR",
      "x": 540,
      "y": 130,
@@ -380,12 +384,13 @@
    ]
   },
   {
-   "t0": 38.1,
+   "t0": 38.64,
    "fondo": "img/br_memoria.jpg",
    "habla": false,
    "zoom": 1.05,
    "cx": 0.5,
    "cy": 0.5,
+   "sub_y": 1700,
    "alterna": {
     "imgs": [
      "img/br_memoria.jpg",
@@ -395,7 +400,7 @@
    }
   },
   {
-   "t0": 39.84,
+   "t0": 40.38,
    "fondo": "img/es_camarero_c.jpg",
    "habla": false,
    "zoom": 1.25,
@@ -403,13 +408,13 @@
    "cy": 0.5,
    "cambios": [
     {
-     "t": 41.04,
+     "t": 41.58,
      "fondo": "img/es_camarero_d.jpg"
     }
    ]
   },
   {
-   "t0": 41.69,
+   "t0": 42.23,
    "fondo": "img/br_cuenta.jpg",
    "habla": false,
    "zoom": 1.05,
@@ -424,7 +429,7 @@
    },
    "rotulos": [
     {
-     "t0": 42.76,
+     "t0": 43.24,
      "texto": "OTRO QR",
      "x": 540,
      "y": 120,
@@ -436,7 +441,7 @@
    ]
   },
   {
-   "t0": 43.66,
+   "t0": 44.29,
    "fondo": "img/br_propina.jpg",
    "habla": false,
    "zoom": 1.35,
@@ -444,7 +449,7 @@
    "cy": 0.38,
    "rotulos": [
     {
-     "t0": 44.3,
+     "t0": 44.84,
      "texto": "¿PROPiNA?",
      "x": 540,
      "y": 110,
@@ -452,10 +457,10 @@
      "tam": 110,
      "centro": true,
      "fijo": true,
-     "t1": 47.4
+     "t1": 47.94
     },
     {
-     "t0": 45.12,
+     "t0": 45.66,
      "texto": "10%",
      "x": 960,
      "y": 1171.0,
@@ -466,7 +471,7 @@
      "en_dibujo": true
     },
     {
-     "t0": 45.55,
+     "t0": 46.09,
      "texto": "15%",
      "x": 960,
      "y": 1409.0,
@@ -477,7 +482,7 @@
      "en_dibujo": true
     },
     {
-     "t0": 46.19,
+     "t0": 46.73,
      "texto": "20%",
      "x": 960,
      "y": 1677.0,
@@ -488,7 +493,7 @@
      "en_dibujo": true
     },
     {
-     "t0": 47.46,
+     "t0": 48.0,
      "texto": "0%",
      "x": 540,
      "y": 100,
@@ -500,7 +505,7 @@
    ]
   },
   {
-   "t0": 48.22,
+   "t0": 48.84,
    "fondo": "img/br_seguro.jpg",
    "habla": false,
    "zoom": 1.35,
@@ -508,7 +513,7 @@
    "cy": 0.38,
    "rotulos": [
     {
-     "t0": 48.95,
+     "t0": 49.39,
      "texto": "¿SEGURO?",
      "x": 540,
      "y": 110,
@@ -520,14 +525,14 @@
    ]
   },
   {
-   "t0": 49.98,
+   "t0": 50.52,
    "fondo": "img/es_seguro.jpg",
    "boca": "img/es_seguro_boca.png",
    "boca_o": "img/es_seguro_bocao.png",
    "zoom": 1.45,
    "cambios": [
     {
-     "t": 52.1,
+     "t": 52.64,
      "fondo": "img/es_seguro_b.jpg"
     }
    ],
@@ -537,7 +542,7 @@
    ]
   },
   {
-   "t0": 53.66,
+   "t0": 54.2,
    "fondo": "img/es_barra.jpg",
    "boca": "img/es_barra_boca.png",
    "boca_o": "img/es_barra_bocao.png",
@@ -545,7 +550,7 @@
    "cx": 0.5,
    "rotulos": [
     {
-     "t0": 55.07,
+     "t0": 55.54,
      "texto": "EN EFECTiVO",
      "x": 540,
      "y": 120,
@@ -558,15 +563,29 @@
    ]
   },
   {
-   "t0": 56.13,
+   "t0": 56.67,
    "fondo": "img/es_barra_b.jpg",
    "habla": false,
    "zoom": 1.2,
    "cx": 0.55,
-   "cy": 0.5
+   "cy": 0.5,
+   "rotulos": [
+    {
+     "t0": 55.54,
+     "texto": "EN EFECTiVO",
+     "x": 540,
+     "y": 120,
+     "color": "negro",
+     "tam": 110,
+     "centro": true,
+     "fijo": true,
+     "caja": true,
+     "t1": 57.44
+    }
+   ]
   },
   {
-   "t0": 57.91,
+   "t0": 58.45,
    "fondo": "img/es_barra_c.jpg",
    "habla": false,
    "zoom": 1.2,
@@ -580,5 +599,6 @@
     "cada": 0.5
    }
   }
- ]
+ ],
+ "duracion": 61.95
 }

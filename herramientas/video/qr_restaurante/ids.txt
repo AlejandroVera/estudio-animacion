@@ -75,3 +75,4 @@ es_lee_2 N2HeLd56D9
 es_lee_boca 6AqdUcFiJO
 es_lee_bocao nVLvNtPYQD
 es_camarero_b_sp 6Aqd4aLiJO
+es_llega_b_sp 0eSusDOTfW
