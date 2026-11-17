@@ -11,4 +11,8 @@
   pose and expression…»), bocas con `herramientas/bocas_secundario.py`, fondo y alineación con
   `herramientas/preparar_secundario.py`, huecos con `herramientas/huecos_secundario.py`. Prueba rápida hablando:
   `herramientas/prueba_secundario.py`.
-- PENDIENTE (pedido por Alejandro): un repertorio tan amplio como el del Chico rosa (inventario de cuerpos y caras).
+- INVENTARIO (como el del Chico rosa): `inventario/cuerpos/` con 50 posturas más (p_ de pie, s_ sentada sin silla,
+  t_ tumbada, y de nutricionista: manzana, ensalada, báscula, cinta, batido, aguacate, dónut, zanahoria, carrito),
+  cada una con su `~b` (boca al revés) salvo las de boca tapada u ocupada. Medidas en `inventario/inventario.json`
+  (cara, pies, tipo). Se hace con `herramientas/inventario_secundario.py` (fondo, huecos, recorte) y
+  `herramientas/bocas_secundario.py` (bocas). Ids de Magnific en `inventario/ids.txt` e `ids_bocas.txt`.

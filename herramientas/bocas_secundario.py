@@ -14,10 +14,11 @@ from scipy import ndimage as ndi
 carp, edic, nombres = sys.argv[1], sys.argv[2], sys.argv[3:]
 
 
-def cara(a):
+def cara(a, tumbada=False):
     r, g, b = a[..., 0].astype(int), a[..., 1].astype(int), a[..., 2].astype(int)
     piel = (r > 200) & (g > 140) & (g < 215) & (b > 100) & (b < 190) & (r - b > 40)
-    piel[int(a.shape[0] * 0.38):] = False
+    if not tumbada:
+        piel[int(a.shape[0] * 0.38):] = False
     lab, n = ndi.label(piel)
     if not n:
         raise SystemExit('no encuentro la cara')
@@ -47,7 +48,7 @@ for n in nombres:
     base = Image.open(f'{carp}/{n}.jpg').convert('RGB')
     ed = Image.open(f'{edic}/{n}.jpg').convert('RGB').resize(base.size, Image.LANCZOS)
     a, b = np.asarray(base), np.asarray(ed)
-    x0, y0, x1, y1 = cara(a)
+    x0, y0, x1, y1 = cara(a, n.startswith('t_'))
     dx, dy = desplazamiento(a, b, (x0, y0, x1, y1))
     b = np.roll(np.roll(b, -dy, 0), -dx, 1)
     h = y1 - y0
