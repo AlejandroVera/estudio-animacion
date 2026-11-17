@@ -46,5 +46,10 @@
   "original": [
     1792,
     2400
-  ]
+  ],
+  "voz": {
+    "nombre": "Lulú – Voz española cálida y natural",
+    "id": "OvG3ld31AQ6IRXW4ojTa",
+    "modelo": "eleven_multilingual_v2"
+  }
 }
