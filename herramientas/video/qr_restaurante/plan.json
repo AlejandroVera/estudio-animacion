@@ -1,6 +1,6 @@
 {
  "alineacion": "voz/qr.json",
- "audio": "voz/qr.mp3",
+ "audio": "voz/qr_final.mp3",
  "pantalon": "gris",
  "sin_recolor": [
   "br_"
@@ -8,7 +8,10 @@
  "vel_letra": 0.03,
  "subtitulos": {
   "y": 230,
-  "tam": 76
+  "tam": 76,
+  "cambiar": {
+   "zum": "zoom"
+  }
  },
  "planos": [
   {

@@ -10,7 +10,7 @@ python3 herramientas/video/montar.py <proyecto>/plan.json <salida.mp4> [--frames
 Las rutas del plan son relativas a la carpeta del plan; «inv:capas/x.webp» = una pieza del inventario.
 Formato del plan: ver .claude/skills/video-inventario/SKILL.md.
 """
-import json, sys, os, math, random, subprocess, unicodedata
+import json, sys, os, math, random, re, subprocess, unicodedata
 from functools import lru_cache
 from PIL import Image, ImageDraw, ImageFont
 
@@ -614,7 +614,10 @@ def frame(t):
     for r in plano.get('rotulos', []):
         if r['t0'] <= t < r.get('t1', 99):
             rotulo(im, r, t)
-            grande |= not r.get('en_dibujo')
+            grande = True
+
+    # no empezar un subtítulo que un rótulo grande (de este plano o del siguiente) va a pisar enseguida
+    grande |= any(0 < t0 - t < 0.35 for t0 in INICIOS_ROTULOS)
     if SUBS and not grande and not plano.get('sin_subtitulos'):
         subtitulo(im, t, plano.get('sub_y', plan['subtitulos'].get('y', 250)))
     return im.convert('RGB')
@@ -635,12 +638,16 @@ def _trozos_subtitulos():
         fin = g[-1]['fin'] + 0.45
         if i + 1 < len(out):
             fin = min(fin, out[i + 1][0]['inicio'])
+        cambiar = plan['subtitulos'].get('cambiar', {})  # palabras escritas para la voz («zum») -> bien escritas («zoom»)
         texto = ' '.join(w['texto'] for w in g).replace('«', '').replace('»', '')
+        for a, b in cambiar.items():
+            texto = re.sub(r'\b%s\b' % re.escape(a), b, texto)
         trozos.append((ini, fin, texto))
     return trozos
 
 
 SUBS = _trozos_subtitulos() if plan.get('subtitulos') else []
+INICIOS_ROTULOS = [r['t0'] for p in plan['planos'] for r in p.get('rotulos', []) if not r.get('en_dibujo')]
 
 
 def subtitulo(im, t, y):

@@ -107,3 +107,9 @@ Ejemplo completo: `herramientas/shorts/domingo/` (3 shorts del vídeo «domingo�
      contorno negro, grupos de ≤5 palabras cortados en la puntuación). Se ocultan solos mientras hay un rótulo grande
      de pantalla (los de dentro del dibujo, `D`, no los ocultan). Si tapan algo del dibujo, `"sub_y"` en ese plano
      (p. ej. 1700 = abajo) o `"sin_subtitulos": true`.
+- Tercera revisión (2026-11-17): 1) al final de la voz había un resoplido («pff») tras la última palabra: medir la
+  energía del audio y cortar la voz justo después de la última palabra (`atrim` + fundido de 0,08 s). 2) Subtítulos y
+  rótulos coincidían: ahora el subtítulo se oculta mientras hay CUALQUIER rótulo (también los de dentro del dibujo) y
+  0,35 s antes de que aparezca uno grande, aunque sea del plano siguiente. Revisar con una hoja de la franja de arriba
+  cada 0,2 s. 3) Lo que se escribe raro para que la voz lo pronuncie («zum») se corrige en los subtítulos con
+  `"subtitulos": {"cambiar": {"zum": "zoom"}}`.

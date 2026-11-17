@@ -56,5 +56,5 @@ json.dump({'alineacion': 'voz/qr_v1.json', 'audio': 'voz/qr_v1.mp3', 'pantalon':
 import subprocess
 subprocess.run(['python3', '../reajustar.py', 'plan_v1.json', 'voz/qr_v1.json', 'voz/qr.json', 'plan.json', '--audio', 'voz/qr.mp3'], check=True)
 p = json.load(open('plan.json'))
-p.update(duracion=61.95, vel_letra=0.03, subtitulos={'y': 230, 'tam': 76}, sin_recolor=['br_'], pantalon='gris')
+p.update(duracion=61.95, vel_letra=0.03, subtitulos={'y': 230, 'tam': 76, 'cambiar': {'zum': 'zoom'}}, audio='voz/qr_final.mp3', sin_recolor=['br_'], pantalon='gris')
 json.dump(p, open('plan.json', 'w'), indent=1, ensure_ascii=False)
