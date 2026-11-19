@@ -4,7 +4,9 @@
   aro en la oreja izquierda, camiseta negra, vaqueros y zapatillas blancas. Referencia: `referencia.jpg`
   (Magnific `jUo6IA6LD0`). La foto original está solo en Magnific (`gOmZhb4SXO`), no en el repositorio.
   Propuestas descartadas en `propuestas/`.
-- Voz: pendiente de elegir.
+- **Voz: Daniel - Podcast** (ElevenLabs `JraADuNecyqRJZ5XGhgO`, multilingual v2), elegida por Alejandro. Está también en
+  `expresivo/manifest.json` e `inventario/inventario.json` (`voz`). Pruebas en `voz_pruebas/`.
+  Con voz.py: `--voz JraADuNecyqRJZ5XGhgO`.
 - POSTURAS (13, cada una con su `~b` = boca al revés): reposo, habla, senala, presenta, pulgar, cruzado, jarras,
   niega, piensa, sorpresa, enfado, risa, agotada. Originales en `posturas/`, listas para animar en `expresivo/`
   con `manifest.json`. Huecos con `herramientas/huecos_bajo_cabeza.py` (sus ojos son tan grandes que

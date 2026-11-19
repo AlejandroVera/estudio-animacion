@@ -1,50 +1,55 @@
 {
-  "lienzo": [
-    91,
-    74,
-    1429,
-    2663
-  ],
-  "pies": [
-    800.5,
-    2725.0
-  ],
-  "cabeza": [
-    754.5,
-    403.5,
-    417.5
-  ],
-  "poses": [
-    "reposo",
-    "reposo~b",
-    "habla",
-    "habla~b",
-    "senala",
-    "senala~b",
-    "presenta",
-    "presenta~b",
-    "pulgar",
-    "pulgar~b",
-    "cruzado",
-    "cruzado~b",
-    "jarras",
-    "jarras~b",
-    "niega",
-    "niega~b",
-    "piensa",
-    "piensa~b",
-    "sorpresa",
-    "sorpresa~b",
-    "enfado",
-    "enfado~b",
-    "risa",
-    "risa~b",
-    "agotada",
-    "agotada~b"
-  ],
-  "bocas": [],
-  "original": [
-    1536,
-    2752
-  ]
+ "lienzo": [
+  91,
+  74,
+  1429,
+  2663
+ ],
+ "pies": [
+  800.5,
+  2725.0
+ ],
+ "cabeza": [
+  754.5,
+  403.5,
+  417.5
+ ],
+ "poses": [
+  "reposo",
+  "reposo~b",
+  "habla",
+  "habla~b",
+  "senala",
+  "senala~b",
+  "presenta",
+  "presenta~b",
+  "pulgar",
+  "pulgar~b",
+  "cruzado",
+  "cruzado~b",
+  "jarras",
+  "jarras~b",
+  "niega",
+  "niega~b",
+  "piensa",
+  "piensa~b",
+  "sorpresa",
+  "sorpresa~b",
+  "enfado",
+  "enfado~b",
+  "risa",
+  "risa~b",
+  "agotada",
+  "agotada~b"
+ ],
+ "bocas": [],
+ "original": [
+  1536,
+  2752
+ ],
+ "voz": {
+  "nombre": "Daniel - Podcast",
+  "id": "JraADuNecyqRJZ5XGhgO",
+  "modelo": "eleven_multilingual_v2"
+ }
 }

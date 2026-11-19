@@ -1649,5 +1649,10 @@
    ],
    "tipo": "tumbada"
   }
+ },
+ "voz": {
+  "nombre": "Daniel - Podcast",
+  "id": "JraADuNecyqRJZ5XGhgO",
+  "modelo": "eleven_multilingual_v2"
  }
 }
