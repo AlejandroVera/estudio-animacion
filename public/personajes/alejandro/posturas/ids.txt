@@ -1,0 +1,28 @@
+# nombre id (Magnific). reposo = referencia (jUo6IA6LD0)
+reposo jUo6IA6LD0
+habla tCRkYMhmZJ
+senala vQAx0XBa47
+presenta bxMJoQ35Y2
+pulgar Xm9H2X4Bfo
+cruzado UPvAH4Awny
+jarras Syh2FNBUb8
+niega rgX9vP5xtc
+piensa yiuWklyPW9
+sorpresa rgX9vKoxtc
+enfado 8ai5n8eIrU
+risa ov6bnmV829
+agotada vQAxVqHa47
+# bocas (~b)
+reposo~b aFGjp11fSh
+habla~b BhNqYk4oQR
+senala~b s7I3FY2l8e
+presenta~b lJtRHDCgv9
+pulgar~b mEZ1VNyhJQ
+cruzado~b ov6bWNL829
+jarras~b vQAxDz2a47
+niega~b vQAxDcna47
+piensa~b KLpyaPxkqp
+sorpresa~b lJtRqGXgv9
+enfado~b ksePfZx16B
+risa~b CqnsX44EEy
+agotada~b CqnsX66EEy
