@@ -113,3 +113,6 @@ Ejemplo completo: `herramientas/shorts/domingo/` (3 shorts del vídeo «domingo�
   0,35 s antes de que aparezca uno grande, aunque sea del plano siguiente. Revisar con una hoja de la franja de arriba
   cada 0,2 s. 3) Lo que se escribe raro para que la voz lo pronuncie («zum») se corrige en los subtítulos con
   `"subtitulos": {"cambiar": {"zum": "zoom"}}`.
+- Portadas (2026-11-19, «no se ve bien el texto» en la de la pasta de dientes): sobre un fondo cargado (estanterías,
+  pasillos llenos de colores) el halo blanco no basta. Poner el título en CARTELES blancos con borde negro grueso,
+  sombra y un poco girados (`herramientas/video/pasta_dientes/portada.py`), letra más grande y el remate en rojo.
