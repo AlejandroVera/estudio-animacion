@@ -1,11 +1,13 @@
-"""Capas de complementos de la nutri: diferencia de cada edición con caras/crudo/base1.png.
-Uso: python3 herramientas/capas_nutri.py  (desde la raíz del repo)"""
+"""Capas de complementos de un personaje: diferencia de cada edición (caras/crudo/a_*.png) con caras/crudo/base1.png.
+Uso: python3 herramientas/capas_nutri.py [carpeta_personaje cx cy r]   (por defecto la nutri)
+  cx, cy, r: centro de la cara y medio ancho de la piel en la base de 2048."""
 from PIL import Image, ImageFilter
 import numpy as np, glob, json, os
 from scipy import ndimage as nd
-D='public/personajes/nutri/caras'
+import sys
+D=(sys.argv[1] if len(sys.argv)>1 else 'public/personajes/nutri')+'/caras'
 b=np.asarray(Image.open(f'{D}/crudo/base1.png').convert('RGB')).astype(int)
-CX,CY,R=1030,1130,354   # centro de la cara y medio ancho (piel)
+CX,CY,R=(int(sys.argv[2]),int(sys.argv[3]),int(sys.argv[4])) if len(sys.argv)>4 else (1030,1130,354)
 # complementos macizos: lo blanco encerrado por su trazo es parte del dibujo
 MACIZOS={'a_gorro_chef','a_nube','a_sudor','a_lagrimas','a_euros','a_corazones','a_bombilla',
          'a_exclamacion','a_humo','a_corona','a_cuernos','a_auriculares','a_vena'}

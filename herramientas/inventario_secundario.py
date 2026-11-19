@@ -13,6 +13,7 @@ from PIL import Image
 from scipy import ndimage as ndi
 
 D = sys.argv[1]
+CABEZON = '--cabezon' in sys.argv  # ojos enormes (Alejandro): no se borra ningún blanco a la altura de la cabeza
 CON_BLANCO = {'p_libreta', 's_consulta', 'p_taza', 'p_ensalada', 's_come', 'p_movil_ensena'}
 
 
@@ -55,6 +56,14 @@ for f in sorted(glob.glob(f'{D}/crudo/*.jpg')):
             xc, yc, cw, chh = (x0 + x1) / 2, (y0 + y1) / 2, cx1 - cx0, cy1 - cy0
             # la piel de la cara queda partida por las gafas: su caja suele ser solo la mitad de abajo, y los ojos
             # quedan justo encima; las manchas junto a las orejas (fuera de esa franja horizontal) sí se borran
+            if CABEZON and yc < cy1 + 0.7 * chh:
+                # a la altura de la cabeza solo se quedan los blancos redondos (los ojos); los huecos entre brazo
+                # y cabeza son irregulares
+                w_, h_ = x1 - x0, y1 - y0
+                if area / (0.785 * w_ * h_) > 0.8 and 0.6 < w_ / h_ < 1.6:
+                    continue
+                if x0 >= cx0 - 0.03 * cw and x1 <= cx1 + 0.03 * cw and yc > cy0:
+                    continue  # dientes, ojos con brillos: dentro del ancho de la cara
             if cx0 + 0.08 * cw < xc < cx1 - 0.08 * cw and cy0 - 0.9 * chh < yc < cy0 + 0.45 * chh and area < 30000:
                 continue  # blanco de los ojos (dentro de las gafas); el blanco junto a las orejas sí se borra
             op = a[..., 3] > 40
