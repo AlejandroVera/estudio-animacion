@@ -48,7 +48,7 @@ d = ndi.binary_opening(d, iterations=2)
 ys, xs = np.nonzero(d)
 ax, ay = int(np.median(xs)), int(np.median(ys))
 print('chico', rx, ry, int(rr), 'boca agente', ax, ay)
-cab_agente = (np.abs(xx - ax) < 0.085 * W) & (yy > ay - 0.11 * H) & (yy < ay + 0.035 * H)
+cab_agente = ((xx - ax) / (0.068 * W)) ** 2 + ((yy - (ay - 0.035 * H)) / (0.072 * H)) ** 2 <= 1   # óvalo de la cara (un rectángulo cortaba el hombro al levantar el brazo)
 cab_chico = (xx - rx) ** 2 + (yy - ry) ** 2 <= (rr * 1.02) ** 2
 lado_chico = xx > (rx - 1.9 * rr)           # zona del chico (su mano al señalar el techo llega lejos)
 lado_agente = xx < (rx - 0.9 * rr)          # zona del agente (su mano al señalar al chico)

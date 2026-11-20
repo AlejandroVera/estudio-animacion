@@ -689,7 +689,7 @@ def _trozos_subtitulos():
     trozos = []
     for i, g in enumerate(out):
         ini = g[0]['inicio']
-        fin = g[-1]['fin'] + 0.45
+        fin = g[-1]['fin'] + plan['subtitulos'].get('cola', 0.45)
         if i + 1 < len(out):
             fin = min(fin, out[i + 1][0]['inicio'])
         cambiar = plan['subtitulos'].get('cambiar', {})  # palabras escritas para la voz («zum») -> bien escritas («zoom»)

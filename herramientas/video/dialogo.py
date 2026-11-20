@@ -19,6 +19,8 @@ VOCES = {'ROSA': 't9LRTh3y1ioN00e9wsNh',      # Aaron Abad (Chico rosa)
          'AGENTE': 'Zb72NBThGN2Rv3y1RSTT'}    # Rafa N – Confident Sales Agent
 
 hueco = float(opcion('--hueco', '0.28'))
+# velocidad por personaje (atempo de ffmpeg: no cambia el tono), p. ej. --tempo AGENTE=1.15
+TEMPO = {k: float(v) for k, v in (x.split('=') for x in (opcion('--tempo', '') or '').split(',') if x)}
 rehacer = opcion('--rehacer')
 rehacer = {int(x) for x in rehacer.split(',')} if rehacer else set()
 guion, salida = sys.argv[1], sys.argv[2]
@@ -53,6 +55,13 @@ for i, (quien, texto) in enumerate(frases):
         print('generada', i, quien, texto)
     x = decodificar(open(f + '.mp3', 'rb').read())
     pal = json.load(open(f + '.json'))['palabras']
+    tp = TEMPO.get(quien, 1.0)
+    if tp != 1.0:
+        raw = subprocess.run(['ffmpeg', '-loglevel', 'error', '-f', 's16le', '-ar', str(SR), '-ac', '1', '-i', '-',
+                              '-af', f'atempo={tp}', '-f', 's16le', '-'], input=x.astype(np.int16).tobytes(),
+                             capture_output=True).stdout
+        x = np.frombuffer(raw, np.int16).astype(np.float32)
+        pal = [{**p, 'inicio': p['inicio'] / tp, 'fin': p['fin'] / tp} for p in pal]
     a = max(0.0, pal[0]['inicio'] - 0.06)
     b = min(len(x) / SR, pal[-1]['fin'] + 0.12)
     seg = x[int(a * SR):int(b * SR)].copy()

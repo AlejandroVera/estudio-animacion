@@ -3,868 +3,868 @@
 {
 "texto": "Pues",
 "inicio": 0.0,
-"fin": 0.244,
+"fin": 0.212,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "este",
-"inicio": 0.313,
-"fin": 0.511,
+"inicio": 0.272,
+"fin": 0.444,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "es",
-"inicio": 0.534,
-"fin": 0.592,
+"inicio": 0.464,
+"fin": 0.515,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "el",
-"inicio": 0.639,
-"fin": 0.708,
+"inicio": 0.556,
+"fin": 0.616,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "piso.",
-"inicio": 0.778,
-"fin": 1.196,
+"inicio": 0.677,
+"fin": 1.04,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "Bienvenido",
-"inicio": 1.521,
-"fin": 2.067,
+"inicio": 1.323,
+"fin": 1.797,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "a",
-"inicio": 2.101,
-"fin": 2.125,
+"inicio": 1.827,
+"fin": 1.848,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "tu",
-"inicio": 2.159,
-"fin": 2.252,
+"inicio": 1.877,
+"fin": 1.958,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "nuevo",
-"inicio": 2.299,
-"fin": 2.531,
+"inicio": 1.999,
+"fin": 2.201,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "hogar.",
-"inicio": 2.554,
-"fin": 3.39,
+"inicio": 2.221,
+"fin": 2.948,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "¿Por",
-"inicio": 3.67,
-"fin": 3.914,
+"inicio": 3.11,
+"fin": 3.354,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
 "texto": "qué",
-"inicio": 3.972,
-"fin": 4.042,
+"inicio": 3.412,
+"fin": 3.482,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
 "texto": "tengo",
-"inicio": 4.076,
-"fin": 4.274,
+"inicio": 3.516,
+"fin": 3.714,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
 "texto": "que",
-"inicio": 4.32,
-"fin": 4.39,
+"inicio": 3.76,
+"fin": 3.83,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
 "texto": "estar",
-"inicio": 4.413,
-"fin": 4.622,
+"inicio": 3.853,
+"fin": 4.062,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
 "texto": "agachado?",
-"inicio": 4.668,
-"fin": 6.085,
+"inicio": 4.108,
+"fin": 5.525,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
 "texto": "Techos",
-"inicio": 6.365,
-"fin": 6.829,
+"inicio": 5.685,
+"fin": 6.089,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "con",
-"inicio": 6.887,
-"fin": 6.992,
+"inicio": 6.139,
+"fin": 6.231,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "personalidad.",
-"inicio": 7.05,
-"fin": 7.909,
+"inicio": 6.281,
+"fin": 7.028,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "Es",
-"inicio": 8.606,
-"fin": 8.768,
+"inicio": 7.634,
+"fin": 7.775,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "una",
-"inicio": 8.826,
-"fin": 8.942,
+"inicio": 7.825,
+"fin": 7.926,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "buhardilla,",
-"inicio": 8.989,
-"fin": 9.546,
+"inicio": 7.967,
+"fin": 8.451,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "muy",
-"inicio": 9.604,
-"fin": 9.802,
+"inicio": 8.502,
+"fin": 8.674,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "de",
-"inicio": 9.86,
-"fin": 9.918,
+"inicio": 8.724,
+"fin": 8.775,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "París.",
-"inicio": 9.964,
-"fin": 10.963,
+"inicio": 8.815,
+"fin": 9.684,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "Me",
-"inicio": 11.243,
-"fin": 11.347,
+"inicio": 9.851,
+"fin": 9.955,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
 "texto": "acabo",
-"inicio": 11.382,
-"fin": 11.603,
+"inicio": 9.99,
+"fin": 10.211,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
 "texto": "de",
-"inicio": 11.649,
-"fin": 11.707,
+"inicio": 10.257,
+"fin": 10.315,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
 "texto": "dar",
-"inicio": 11.742,
-"fin": 11.847,
+"inicio": 10.35,
+"fin": 10.455,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
 "texto": "con",
-"inicio": 11.893,
-"fin": 11.998,
+"inicio": 10.501,
+"fin": 10.606,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
 "texto": "la",
-"inicio": 12.021,
-"fin": 12.067,
+"inicio": 10.629,
+"fin": 10.675,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
 "texto": "viga.",
-"inicio": 12.114,
-"fin": 12.683,
+"inicio": 10.722,
+"fin": 11.291,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
 "texto": "Eso",
-"inicio": 12.962,
-"fin": 13.287,
+"inicio": 11.451,
+"fin": 11.734,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "es",
-"inicio": 13.322,
-"fin": 13.38,
+"inicio": 11.764,
+"fin": 11.815,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "el",
-"inicio": 13.438,
-"fin": 13.496,
+"inicio": 11.865,
+"fin": 11.915,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "encanto.",
-"inicio": 13.554,
-"fin": 14.065,
+"inicio": 11.966,
+"fin": 12.41,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "Seiscientos",
-"inicio": 14.576,
-"fin": 15.249,
+"inicio": 12.855,
+"fin": 13.44,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "cincuenta",
-"inicio": 15.272,
-"fin": 15.76,
+"inicio": 13.46,
+"fin": 13.884,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "al",
-"inicio": 15.783,
-"fin": 15.841,
+"inicio": 13.904,
+"fin": 13.955,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "mes,",
-"inicio": 15.911,
-"fin": 16.236,
+"inicio": 14.015,
+"fin": 14.298,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "gastos",
-"inicio": 16.352,
-"fin": 16.689,
+"inicio": 14.399,
+"fin": 14.692,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "aparte.",
-"inicio": 16.747,
-"fin": 17.42,
+"inicio": 14.742,
+"fin": 15.328,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "¿Y",
-"inicio": 17.7,
-"fin": 17.921,
+"inicio": 15.491,
+"fin": 15.712,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
 "texto": "la",
-"inicio": 18.002,
-"fin": 18.06,
+"inicio": 15.793,
+"fin": 15.851,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
 "texto": "ducha?",
-"inicio": 18.106,
-"fin": 18.629,
+"inicio": 15.897,
+"fin": 16.42,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
 "texto": "Ducha",
-"inicio": 18.909,
-"fin": 19.211,
+"inicio": 16.58,
+"fin": 16.842,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "sentado.",
-"inicio": 19.257,
-"fin": 19.815,
+"inicio": 16.882,
+"fin": 17.368,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "Como",
-"inicio": 19.966,
-"fin": 20.209,
+"inicio": 17.499,
+"fin": 17.71,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "un",
-"inicio": 20.233,
-"fin": 20.291,
+"inicio": 17.731,
+"fin": 17.781,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "spa.",
-"inicio": 20.407,
-"fin": 20.859,
+"inicio": 17.882,
+"fin": 18.275,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "¿Y",
-"inicio": 21.14,
-"fin": 21.349,
+"inicio": 18.436,
+"fin": 18.645,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
 "texto": "la",
-"inicio": 21.419,
-"fin": 21.477,
+"inicio": 18.715,
+"fin": 18.773,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
 "texto": "cocina?",
-"inicio": 21.523,
-"fin": 22.115,
+"inicio": 18.819,
+"fin": 19.411,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
 "texto": "De",
-"inicio": 22.395,
-"fin": 22.558,
+"inicio": 19.572,
+"fin": 19.713,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "rodillas.",
-"inicio": 22.616,
-"fin": 23.301,
+"inicio": 19.764,
+"fin": 20.36,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "Así",
-"inicio": 23.417,
-"fin": 23.73,
+"inicio": 20.46,
+"fin": 20.733,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "quedas",
-"inicio": 23.8,
-"fin": 24.067,
+"inicio": 20.793,
+"fin": 21.026,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "a",
-"inicio": 24.125,
-"fin": 24.148,
+"inicio": 21.076,
+"fin": 21.096,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "la",
-"inicio": 24.183,
-"fin": 24.229,
+"inicio": 21.126,
+"fin": 21.166,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "altura",
-"inicio": 24.253,
-"fin": 24.578,
+"inicio": 21.187,
+"fin": 21.47,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "de",
-"inicio": 24.624,
-"fin": 24.671,
+"inicio": 21.51,
+"fin": 21.551,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "los",
-"inicio": 24.705,
-"fin": 24.81,
+"inicio": 21.58,
+"fin": 21.672,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "fogones.",
-"inicio": 24.868,
-"fin": 25.495,
+"inicio": 21.722,
+"fin": 22.267,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "Ergonomía.",
-"inicio": 25.739,
-"fin": 27.225,
+"inicio": 22.48,
+"fin": 23.772,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "Esto",
-"inicio": 27.505,
-"fin": 27.784,
+"inicio": 23.936,
+"fin": 24.215,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
 "texto": "es",
-"inicio": 27.807,
-"fin": 27.853,
+"inicio": 24.238,
+"fin": 24.284,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
 "texto": "un",
-"inicio": 27.935,
-"fin": 27.993,
+"inicio": 24.366,
+"fin": 24.424,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
 "texto": "trastero.",
-"inicio": 28.039,
-"fin": 28.945,
+"inicio": 24.47,
+"fin": 25.376,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
 "texto": "No,",
-"inicio": 29.224,
-"fin": 29.398,
+"inicio": 25.535,
+"fin": 25.686,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "no,",
-"inicio": 29.421,
-"fin": 29.526,
+"inicio": 25.706,
+"fin": 25.798,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "no.",
-"inicio": 29.561,
-"fin": 29.816,
+"inicio": 25.828,
+"fin": 26.05,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "El",
-"inicio": 30.06,
-"fin": 30.222,
+"inicio": 26.262,
+"fin": 26.403,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "trastero",
-"inicio": 30.281,
-"fin": 30.78,
+"inicio": 26.454,
+"fin": 26.888,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "es",
-"inicio": 30.896,
-"fin": 31.082,
+"inicio": 26.989,
+"fin": 27.151,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "el",
-"inicio": 31.14,
-"fin": 31.198,
+"inicio": 27.201,
+"fin": 27.252,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "de",
-"inicio": 31.256,
-"fin": 31.302,
+"inicio": 27.302,
+"fin": 27.342,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "abajo,",
-"inicio": 31.337,
-"fin": 31.755,
+"inicio": 27.373,
+"fin": 27.736,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "y",
-"inicio": 32.034,
-"fin": 32.115,
+"inicio": 27.979,
+"fin": 28.049,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "cuesta",
-"inicio": 32.208,
-"fin": 32.568,
+"inicio": 28.13,
+"fin": 28.443,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "setecientos.",
-"inicio": 32.614,
-"fin": 33.473,
+"inicio": 28.483,
+"fin": 29.23,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "Esto",
-"inicio": 33.798,
-"fin": 34.24,
+"inicio": 29.513,
+"fin": 29.897,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "es",
-"inicio": 34.356,
-"fin": 34.507,
+"inicio": 29.998,
+"fin": 30.129,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "un",
-"inicio": 34.599,
-"fin": 34.681,
+"inicio": 30.209,
+"fin": 30.28,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "loft.",
-"inicio": 34.75,
-"fin": 35.261,
+"inicio": 30.34,
+"fin": 30.785,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "¿Un",
-"inicio": 35.541,
-"fin": 35.785,
+"inicio": 30.95,
+"fin": 31.194,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
 "texto": "loft",
-"inicio": 35.82,
-"fin": 36.017,
+"inicio": 31.229,
+"fin": 31.426,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
 "texto": "de",
-"inicio": 36.04,
-"fin": 36.087,
+"inicio": 31.449,
+"fin": 31.496,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
 "texto": "metro",
-"inicio": 36.133,
-"fin": 36.354,
+"inicio": 31.542,
+"fin": 31.763,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
 "texto": "veinte?",
-"inicio": 36.377,
-"fin": 36.888,
+"inicio": 31.786,
+"fin": 32.297,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
 "texto": "Un",
-"inicio": 37.168,
-"fin": 37.447,
+"inicio": 32.457,
+"fin": 32.699,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "mini",
-"inicio": 37.505,
-"fin": 37.737,
+"inicio": 32.75,
+"fin": 32.952,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "loft.",
-"inicio": 37.783,
-"fin": 38.213,
+"inicio": 32.992,
+"fin": 33.365,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "Ahora",
-"inicio": 38.654,
-"fin": 39.107,
+"inicio": 33.749,
+"fin": 34.143,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "se",
-"inicio": 39.386,
-"fin": 39.594,
+"inicio": 34.385,
+"fin": 34.566,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "lleva",
-"inicio": 39.629,
-"fin": 39.85,
+"inicio": 34.597,
+"fin": 34.789,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "todo",
-"inicio": 39.908,
-"fin": 40.129,
+"inicio": 34.839,
+"fin": 35.032,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "mini.",
-"inicio": 40.187,
-"fin": 41.162,
+"inicio": 35.082,
+"fin": 35.93,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "¿Y",
-"inicio": 41.442,
-"fin": 41.663,
+"inicio": 36.092,
+"fin": 36.313,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
 "texto": "si",
-"inicio": 41.744,
-"fin": 41.825,
+"inicio": 36.394,
+"fin": 36.475,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
 "texto": "vienen",
-"inicio": 41.86,
-"fin": 42.081,
+"inicio": 36.51,
+"fin": 36.731,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
 "texto": "amigos?",
-"inicio": 42.127,
-"fin": 42.649,
+"inicio": 36.777,
+"fin": 37.299,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
 "texto": "Que",
-"inicio": 42.93,
-"fin": 43.093,
+"inicio": 37.46,
+"fin": 37.601,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "vengan",
-"inicio": 43.139,
-"fin": 43.383,
+"inicio": 37.641,
+"fin": 37.854,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "agachados,",
-"inicio": 43.429,
-"fin": 44.172,
+"inicio": 37.894,
+"fin": 38.54,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "que",
-"inicio": 44.555,
-"fin": 44.648,
+"inicio": 38.873,
+"fin": 38.954,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "es",
-"inicio": 44.671,
-"fin": 44.73,
+"inicio": 38.974,
+"fin": 39.025,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "más",
-"inicio": 44.788,
-"fin": 44.927,
+"inicio": 39.075,
+"fin": 39.196,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "íntimo.",
-"inicio": 45.008,
-"fin": 45.716,
+"inicio": 39.267,
+"fin": 39.882,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "Me",
-"inicio": 45.996,
-"fin": 46.124,
+"inicio": 40.053,
+"fin": 40.181,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
 "texto": "lo",
-"inicio": 46.159,
-"fin": 46.228,
+"inicio": 40.216,
+"fin": 40.285,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
 "texto": "tengo",
-"inicio": 46.263,
-"fin": 46.437,
+"inicio": 40.32,
+"fin": 40.494,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
 "texto": "que",
-"inicio": 46.472,
-"fin": 46.542,
+"inicio": 40.529,
+"fin": 40.599,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
 "texto": "pensar.",
-"inicio": 46.576,
-"fin": 47.25,
+"inicio": 40.633,
+"fin": 41.307,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
 "texto": "Tienes",
-"inicio": 47.53,
-"fin": 47.867,
+"inicio": 41.466,
+"fin": 41.759,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "hasta",
-"inicio": 47.913,
-"fin": 48.087,
+"inicio": 41.799,
+"fin": 41.951,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "las",
-"inicio": 48.134,
-"fin": 48.261,
+"inicio": 41.992,
+"fin": 42.102,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "cinco.",
-"inicio": 48.285,
-"fin": 48.703,
+"inicio": 42.123,
+"fin": 42.486,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "Hay",
-"inicio": 49.028,
-"fin": 49.213,
+"inicio": 42.769,
+"fin": 42.93,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "veinte",
-"inicio": 49.295,
-"fin": 49.713,
+"inicio": 43.001,
+"fin": 43.365,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "interesados",
-"inicio": 49.759,
-"fin": 50.491,
+"inicio": 43.405,
+"fin": 44.041,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "esperando",
-"inicio": 50.56,
-"fin": 51.025,
+"inicio": 44.101,
+"fin": 44.506,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "en",
-"inicio": 51.048,
-"fin": 51.094,
+"inicio": 44.526,
+"fin": 44.566,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "la",
-"inicio": 51.141,
-"fin": 51.21,
+"inicio": 44.606,
+"fin": 44.666,
 "tipo": "word",
 "quien": "AGENTE"
 },
 {
 "texto": "escalera.",
-"inicio": 51.234,
-"fin": 52.035,
+"inicio": 44.687,
+"fin": 45.384,
 "tipo": "word",
 "quien": "AGENTE"
 }
@@ -874,103 +874,103 @@
 "quien": "AGENTE",
 "texto": "Pues este es el piso. Bienvenido a tu nuevo hogar.",
 "inicio": 0.0,
-"fin": 3.39
+"fin": 2.95
 },
 {
 "quien": "ROSA",
 "texto": "¿Por qué tengo que estar agachado?",
-"inicio": 3.67,
-"fin": 6.085
+"inicio": 3.11,
+"fin": 5.525
 },
 {
 "quien": "AGENTE",
 "texto": "Techos con personalidad. Es una buhardilla, muy de París.",
-"inicio": 6.365,
-"fin": 10.963
+"inicio": 5.685,
+"fin": 9.691
 },
 {
 "quien": "ROSA",
 "texto": "Me acabo de dar con la viga.",
-"inicio": 11.243,
-"fin": 12.682
+"inicio": 9.851,
+"fin": 11.291
 },
 {
 "quien": "AGENTE",
 "texto": "Eso es el encanto. Seiscientos cincuenta al mes, gastos aparte.",
-"inicio": 12.962,
-"fin": 17.42
+"inicio": 11.451,
+"fin": 15.331
 },
 {
 "quien": "ROSA",
 "texto": "¿Y la ducha?",
-"inicio": 17.7,
-"fin": 18.629
+"inicio": 15.491,
+"fin": 16.42
 },
 {
 "quien": "AGENTE",
 "texto": "Ducha sentado. Como un spa.",
-"inicio": 18.909,
-"fin": 20.86
+"inicio": 16.58,
+"fin": 18.276
 },
 {
 "quien": "ROSA",
 "texto": "¿Y la cocina?",
-"inicio": 21.14,
-"fin": 22.115
+"inicio": 18.436,
+"fin": 19.412
 },
 {
 "quien": "AGENTE",
 "texto": "De rodillas. Así quedas a la altura de los fogones. Ergonomía.",
-"inicio": 22.395,
-"fin": 27.225
+"inicio": 19.572,
+"fin": 23.776
 },
 {
 "quien": "ROSA",
 "texto": "Esto es un trastero.",
-"inicio": 27.505,
-"fin": 28.944
+"inicio": 23.936,
+"fin": 25.375
 },
 {
 "quien": "AGENTE",
 "texto": "No, no, no. El trastero es el de abajo, y cuesta setecientos. Esto es un loft.",
-"inicio": 29.224,
-"fin": 35.261
+"inicio": 25.535,
+"fin": 30.79
 },
 {
 "quien": "ROSA",
 "texto": "¿Un loft de metro veinte?",
-"inicio": 35.541,
-"fin": 36.888
+"inicio": 30.95,
+"fin": 32.297
 },
 {
 "quien": "AGENTE",
 "texto": "Un mini loft. Ahora se lleva todo mini.",
-"inicio": 37.168,
-"fin": 41.162
+"inicio": 32.457,
+"fin": 35.932
 },
 {
 "quien": "ROSA",
 "texto": "¿Y si vienen amigos?",
-"inicio": 41.442,
-"fin": 42.65
+"inicio": 36.092,
+"fin": 37.3
 },
 {
 "quien": "AGENTE",
 "texto": "Que vengan agachados, que es más íntimo.",
-"inicio": 42.93,
-"fin": 45.716
+"inicio": 37.46,
+"fin": 39.893
 },
 {
 "quien": "ROSA",
 "texto": "Me lo tengo que pensar.",
-"inicio": 45.996,
-"fin": 47.25
+"inicio": 40.053,
+"fin": 41.306
 },
 {
 "quien": "AGENTE",
 "texto": "Tienes hasta las cinco. Hay veinte interesados esperando en la escalera.",
-"inicio": 47.53,
-"fin": 52.034
+"inicio": 41.466,
+"fin": 45.384
 }
 ]
 }

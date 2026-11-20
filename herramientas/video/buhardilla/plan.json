@@ -8,6 +8,7 @@
   "max": 3,
   "contorno": 14,
   "mayusculas": true,
+  "cola": 0.2,
   "colores": {
    "ROSA": [
     255,
@@ -21,7 +22,7 @@
    ]
   }
  },
- "duracion": 54.0,
+ "duracion": 47.78,
  "planos": [
   {
    "t0": 0,
@@ -57,7 +58,7 @@
      ],
      "parpadeo": "img/cv_a_parp.png",
      "cada_habla": 0.8,
-     "cada_escucha": 2.2
+     "cada_escucha": 2.6
     },
     "ROSA": {
      "habla": [
@@ -68,25 +69,25 @@
      ],
      "escucha": [
       null,
-      "img/cv_r_h3.png",
-      "img/cv_r_e1.png",
-      null
+      null,
+      null,
+      "img/cv_r_h3.png"
      ],
      "parpadeo": "img/cv_r_parp.png",
-     "cada_habla": 0.9,
-     "cada_escucha": 2.0
+     "cada_habla": 1.1,
+     "cada_escucha": 4.5
     }
    },
    "gestos": [
     {
-     "t0": 6.3,
-     "t1": 11.1,
+     "t0": 5.6049999999999995,
+     "t1": 9.771,
      "quien": "AGENTE",
      "img": "img/cv_g_techos.png"
     },
     {
-     "t0": 11.14,
-     "t1": 12.9,
+     "t0": 9.771,
+     "t1": 11.371,
      "quien": "ROSA",
      "img": "img/cv_g_viga.png",
      "boca": "img/cv_g_viga_rboca.png"
@@ -94,7 +95,7 @@
    ]
   },
   {
-   "t0": 18.81,
+   "t0": 16.5,
    "fondo": "img/es_ducha.jpg",
    "zoom": 1.12,
    "cx": 0.5,
@@ -112,7 +113,7 @@
    },
    "cambios": [
     {
-     "t": 20.36,
+     "t": 17.802000000000003,
      "fondo": "img/es_ducha_b.jpg"
     }
    ],
@@ -122,11 +123,11 @@
      "img/es_ducha_c.jpg"
     ],
     "cada": 0.42,
-    "hasta": 20.36
+    "hasta": 17.802000000000003
    }
   },
   {
-   "t0": 21.04,
+   "t0": 18.356,
    "fondo": "img/es_charla.jpg",
    "zoom": 1.12,
    "cx": 0.5,
@@ -159,7 +160,7 @@
      ],
      "parpadeo": "img/cv_a_parp.png",
      "cada_habla": 0.8,
-     "cada_escucha": 2.2
+     "cada_escucha": 2.6
     },
     "ROSA": {
      "habla": [
@@ -170,19 +171,19 @@
      ],
      "escucha": [
       null,
-      "img/cv_r_h3.png",
-      "img/cv_r_e1.png",
-      null
+      null,
+      null,
+      "img/cv_r_h3.png"
      ],
      "parpadeo": "img/cv_r_parp.png",
-     "cada_habla": 0.9,
-     "cada_escucha": 2.0
+     "cada_habla": 1.1,
+     "cada_escucha": 4.5
     }
    },
    "gestos": []
   },
   {
-   "t0": 22.29,
+   "t0": 19.492,
    "fondo": "img/es_cocina.jpg",
    "zoom": 1.07,
    "cx": 0.5,
@@ -203,7 +204,7 @@
    },
    "cambios": [
     {
-     "t": 25.68,
+     "t": 22.400000000000002,
      "fondo": "img/es_cocina_b.jpg"
     }
    ],
@@ -213,11 +214,11 @@
      "img/es_cocina_c.jpg"
     ],
     "cada": 0.42,
-    "hasta": 25.68
+    "hasta": 22.400000000000002
    }
   },
   {
-   "t0": 27.4,
+   "t0": 23.856,
    "fondo": "img/es_pprosa.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -232,7 +233,7 @@
    }
   },
   {
-   "t0": 29.12,
+   "t0": 25.455000000000002,
    "fondo": "img/es_charla.jpg",
    "zoom": 1.12,
    "cx": 0.5,
@@ -265,7 +266,7 @@
      ],
      "parpadeo": "img/cv_a_parp.png",
      "cada_habla": 0.8,
-     "cada_escucha": 2.2
+     "cada_escucha": 2.6
     },
     "ROSA": {
      "habla": [
@@ -276,50 +277,50 @@
      ],
      "escucha": [
       null,
-      "img/cv_r_h3.png",
-      "img/cv_r_e1.png",
-      null
+      null,
+      null,
+      "img/cv_r_h3.png"
      ],
      "parpadeo": "img/cv_r_parp.png",
-     "cada_habla": 0.9,
-     "cada_escucha": 2.0
+     "cada_habla": 1.1,
+     "cada_escucha": 4.5
     }
    },
    "gestos": [
     {
-     "t0": 29.12,
-     "t1": 31.2,
+     "t0": 25.455000000000002,
+     "t1": 27.293000000000003,
      "quien": "AGENTE",
      "img": "img/cv_g_no.png"
     },
     {
-     "t0": 31.24,
-     "t1": 33.7,
+     "t0": 27.293000000000003,
+     "t1": 30.26,
      "quien": "AGENTE",
      "img": "img/cv_g_abajo.png"
     },
     {
-     "t0": 34.66,
-     "t1": 35.6,
+     "t0": 30.26,
+     "t1": 30.87,
      "quien": "AGENTE",
      "img": "img/cv_g_loft.png"
     },
     {
-     "t0": 35.44,
-     "t1": 37.0,
+     "t0": 30.87,
+     "t1": 32.377,
      "quien": "ROSA",
      "img": "img/cv_r_h2.png"
     },
     {
-     "t0": 37.07,
-     "t1": 41.2,
+     "t0": 32.377,
+     "t1": 33.949000000000005,
      "quien": "AGENTE",
      "img": "img/cv_g_mini.png"
     }
    ]
   },
   {
-   "t0": 42.83,
+   "t0": 37.38,
    "fondo": "img/es_amigos.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -338,7 +339,7 @@
    }
   },
   {
-   "t0": 45.9,
+   "t0": 39.973,
    "fondo": "img/es_pprosa.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -353,7 +354,7 @@
    }
   },
   {
-   "t0": 47.43,
+   "t0": 41.386,
    "fondo": "img/es_charla.jpg",
    "zoom": 1.12,
    "cx": 0.5,
@@ -386,7 +387,7 @@
      ],
      "parpadeo": "img/cv_a_parp.png",
      "cada_habla": 0.8,
-     "cada_escucha": 2.2
+     "cada_escucha": 2.6
     },
     "ROSA": {
      "habla": [
@@ -397,26 +398,26 @@
      ],
      "escucha": [
       null,
-      "img/cv_r_h3.png",
-      "img/cv_r_e1.png",
-      null
+      null,
+      null,
+      "img/cv_r_h3.png"
      ],
      "parpadeo": "img/cv_r_parp.png",
-     "cada_habla": 0.9,
-     "cada_escucha": 2.0
+     "cada_habla": 1.1,
+     "cada_escucha": 4.5
     }
    },
    "gestos": [
     {
-     "t0": 47.43,
-     "t1": 48.9,
+     "t0": 41.386,
+     "t1": 42.689,
      "quien": "AGENTE",
      "img": "img/cv_g_reloj.png"
     }
    ]
   },
   {
-   "t0": 48.93,
+   "t0": 42.689,
    "fondo": "img/es_escalera.jpg",
    "zoom": 1.12,
    "cx": 0.5,

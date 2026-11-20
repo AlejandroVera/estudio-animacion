@@ -54,3 +54,15 @@ En la referencia (vídeo generativo) se mueven todo el rato. Con dibujos fijos s
 - Revisar cada capa pegada sobre el plano fijo (hoja de comprobación): si una mano queda cortada, ensanchar el lado
   de ese personaje; si la edición giró el cuerpo entero (el metro), descartarla.
 - Coste: ~22 ediciones (≈1.400 créditos) para un plano fijo bien animado.
+
+## Lecciones de la revisión de «La buhardilla» v4 → v5
+- El que ESCUCHA casi quieto: solo parpadea y como mucho un cambio cada 4-5 s (`escucha` con muchos None,
+  `cada_escucha` 4,5). Si cambia de brazos cada 2 s «gesticula demasiado mientras el otro habla».
+- Ritmo de conversación: el agente hablaba lento → `dialogo.py --tempo AGENTE=1.15 --hueco 0.16` (acelera sin cambiar
+  el tono; comprobar con `voz.py comprobar`). 54 s → 45,5 s.
+- El plan saca TODOS los tiempos de la voz (`L[i]` = inicio de cada frase, `T(palabra, n)`) y escribe también
+  `efectos.json`: si se rehace la voz, todo se recoloca solo.
+- Subtítulo que se queda sobre el plano siguiente: `"cola": 0.2` (lo que dura tras su última palabra).
+- La zona que protege la cabeza en las capas, un ÓVALO ajustado a la cara: un rectángulo le cortaba el hombro al
+  levantar el brazo (muesca junto a la barba).
+- Un gesto concreto no debe congelar al personaje más de ~2 s (la casita: solo en «mini loft»).
