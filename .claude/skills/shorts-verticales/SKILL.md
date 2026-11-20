@@ -131,3 +131,10 @@ Ejemplo completo: `herramientas/shorts/domingo/` (3 shorts del vídeo «domingo�
 - Coste real: ~100 imágenes (≈6.500 créditos) para 66 s, sin contar el personaje nuevo.
 - Para descargar de Magnific sin gastar contexto: `creations_get` con 40+ ids (rellenar con ids viejos) para que la
   respuesta vaya a fichero y leerla con `herramientas/dl_magnific.py`; con 28 aún salía en línea.
+- REVISIÓN de «La buhardilla» («no se entiende bien, en el que te pasé había un plano más fijo»): un dibujo nuevo por
+  frase, cada uno con otro encuadre (el agente diminuto en uno y gigante en el siguiente) y los dos mirando a cámara
+  no se lee como conversación. Estructura que funciona: 1) PLANO FIJO de los dos mirándose, grandes (de rodillas
+  arriba), que vuelve una y otra vez; los gestos son ediciones de ESE dibujo; 2) PRIMER PLANO de cada uno mirando
+  fuera de cuadro hacia el otro, para las preguntas y las reacciones; 3) los gags, planos aparte y cortos.
+  Subtítulos de 2-3 palabras (`"max": 3`), `tam` 96 y `contorno` 14; casi sin rótulos (los rótulos ocultan el
+  subtítulo y en un diálogo lo que importa es saber qué dice cada uno). Si el subtítulo tapa una cabeza: `sub_y` 1700.

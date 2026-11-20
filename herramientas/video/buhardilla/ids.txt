@@ -70,3 +70,15 @@ es_loft_aboca JNCbQ6IOq4
 es_mini_aboca CqnMcKpEEy
 es_pensar_aboca hu2czK1vqL
 es_dormitorio_b_aboca ksetB3016B
+ma_salon_1 s7ICjocl8e
+ma_salon_2 xSBv1XsjfW
+pp_rosa_1 s7ICjtVl8e
+pp_rosa_2 8aizB3TIrU
+pp_agente_1 KLpIbBakqp
+pp_agente_2 cpSPYOF0eP
+elegidos: ma_salon_1 pp_rosa_1 pp_agente_1
+es_salon_b 3zKs3yMREY
+es_salon_rboca 8aiz8evIrU
+es_salon_aboca If3nI8dtvE
+es_pprosa_rboca dt42BoDXSL
+es_ppagente_aboca p8yRdI5ehw

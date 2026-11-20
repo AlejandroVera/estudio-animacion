@@ -31,32 +31,36 @@ def R(t0, txt, y=1560, col='negro', tam=120, t1=None, **k):
     return d
 
 
+# Estructura del vídeo de referencia: PLANO FIJO de los dos (es_salon, se miran, siempre igual), PRIMEROS PLANOS de
+# reacción (es_pprosa, es_ppagente) y los gags como planos aparte. Casi sin rótulos: los subtítulos cuentan.
 P = [
-    esc('es_entrada', 0, rosa=['es_entrada'], agente=['es_entrada']),
-    esc('es_paris', 5.70, agente=['es_paris'], rotulos=[R(9.0, 'MUY DE PARÍS', 1580, 'azul', 110, 10.6)]),
-    esc('es_viga', 10.63, rosa=['es_viga'], zoom=1.08, cy=0.42),
-    esc('es_precio', 12.26, agente=['es_precio'],
-        rotulos=[R(13.6, '650 €/MES', 1580, 'rojo', 130, 15.8), R(15.82, '+ GASTOS', 1580, 'rojo', 130, 17.1)]),
-    esc('es_dormitorio', 17.18, rosa=['es_dormitorio'], agente=['es_dormitorio', 'es_dormitorio_b'],
-        cambios=[ch(22.18, 'es_dormitorio_b')]),
-    esc('es_pie', 24.76, rosa=['es_pie']),
-    esc('es_dormitorio', 26.71, agente=['es_dormitorio'], rotulos=[R(26.95, 'POR TURNOS', 1580, 'negro', 120, 28.8)]),
-    esc('es_turnos', 28.90, agente=['es_turnos']),
-    esc('es_ducha', 29.82, rosa=['es_ducha'], agente=['es_ducha'], cambios=[ch(32.75, 'es_ducha_b')],
-        rotulos=[R(32.75, 'SPA', 1600, 'verde', 160, 33.6)]),
-    esc('es_cocina', 33.63, zoom=1.07, rosa=['es_cocina'], agente=['es_cocina', 'es_cocina_b'], cambios=[ch(38.73, 'es_cocina_b')],
-        rotulos=[R(38.73, 'ERGONOMÍA', 1640, 'azul', 120, 40.0)]),
-    esc('es_trastero', 40.04, rosa=['es_trastero']),
+    esc('es_entrada', 0, rosa=['es_entrada'], agente=['es_entrada']),                       # entra a gatas
+    esc('es_pprosa', 3.52, rosa=['es_pprosa']),                                              # ¿por qué agachado?
+    esc('es_salon', 5.70, rosa=['es_salon'], agente=['es_salon', 'es_salon_b'],
+        cambios=[ch(5.78, 'es_salon_b')]),                                                   # techos con personalidad
+    esc('es_viga', 10.63, rosa=['es_viga'], zoom=1.08, cy=0.42),                             # gag: la viga
+    esc('es_ppagente', 12.26, agente=['es_ppagente'],
+        rotulos=[R(13.6, '650 €/MES', 1640, 'rojo', 130, 15.8), R(15.82, '+ GASTOS', 1640, 'rojo', 130, 17.1)]),
+    esc('es_salon', 17.18, rosa=['es_salon'], agente=['es_salon']),                          # ¿y el dormitorio?
+    esc('es_dormitorio', 18.48, zoom=1.06, cy=0.44, sub_y=1700, agente=['es_dormitorio', 'es_dormitorio_b'], rosa=['es_dormitorio'],
+        cambios=[ch(22.18, 'es_dormitorio_b')]),                                             # la cama, único sitio de pie
+    esc('es_pie', 24.76, rosa=['es_pie']),                                                   # ¿y yo dónde?
+    esc('es_dormitorio_b', 26.71, zoom=1.06, cy=0.42, sub_y=1700, agente=['es_dormitorio_b']),                               # por turnos: primero la cama
+    esc('es_turnos', 28.90, zoom=1.18, cy=0.62, agente=['es_turnos']),                                           # luego tú
+    esc('es_ducha', 29.82, zoom=1.12, cy=0.6, rosa=['es_ducha'], agente=['es_ducha'], cambios=[ch(32.75, 'es_ducha_b')]),
+    esc('es_cocina', 33.63, zoom=1.07, rosa=['es_cocina'], agente=['es_cocina', 'es_cocina_b'],
+        cambios=[ch(38.73, 'es_cocina_b')]),
+    esc('es_pprosa', 40.04, rosa=['es_pprosa']),                                             # esto es un trastero
     esc('es_loft', 41.76, agente=['es_loft', 'es_loft_b', 'es_loft_c'],
-        cambios=[ch(43.65, 'es_loft_b'), ch(46.80, 'es_loft_c')],
-        rotulos=[R(44.9, 'TRASTERO: 700 €', 1620, 'rojo', 105, 46.7), R(46.82, 'LOFT', 1620, 'azul', 170, 47.75)]),
-    esc('es_metro', 47.75, rosa=['es_metro'], rotulos=[R(48.4, '1,20 m', 1560, 'rojo', 150, 49.45)]),
-    esc('es_mini', 49.47, rosa=['es_mini'], agente=['es_mini'], rotulos=[R(49.82, 'MiNi LOFT', 1640, 'azul', 130, 51.6)]),
-    esc('es_amigos', 54.72, rotulos=[R(56.35, 'MÁS ÍNTiMO', 1640, 'rojo', 130, 57.9)]),
-    esc('es_pensar', 58.12, rosa=['es_pensar'], agente=['es_pensar', 'es_pensar_b'], cambios=[ch(60.55, 'es_pensar_b')],
-        rotulos=[R(60.55, 'HASTA LAS 5', 1600, 'rojo', 120, 61.55)]),
-    esc('es_escalera', 61.61, zoom=1.12, cy=0.55, rotulos=[R(61.9, '20 iNTERESADOS', 1650, 'rojo', 105)]),
+        cambios=[ch(43.65, 'es_loft_b'), ch(46.80, 'es_loft_c')]),
+    esc('es_metro', 47.75, rosa=['es_metro'], rotulos=[R(48.4, '1,20 m', 1600, 'rojo', 150, 49.45)]),
+    esc('es_mini', 49.47, agente=['es_mini']),                                               # mini loft
+    esc('es_pprosa', 53.28, rosa=['es_pprosa']),                                             # ¿y si vienen amigos?
+    esc('es_amigos', 54.72),                                                                 # gag: amigos agachados
+    esc('es_salon', 58.12, rosa=['es_salon'], agente=['es_salon']),                          # me lo tengo que pensar
+    esc('es_ppagente', 59.65, agente=['es_ppagente']),                                       # tienes hasta las cinco
+    esc('es_escalera', 61.61, zoom=1.12, cy=0.55, rotulos=[R(64.45, '20 iNTERESADOS', 1650, 'rojo', 105)]),
 ]
 json.dump({'alineacion': 'voz/buhardilla.json', 'audio': 'voz/buhardilla.mp3', 'vel_letra': 0.03,
-           'subtitulos': {'y': 230, 'tam': 70, 'colores': {'ROSA': [255, 120, 210], 'AGENTE': [255, 222, 90]}},
+           'subtitulos': {'y': 250, 'tam': 96, 'max': 3, 'contorno': 14, 'colores': {'ROSA': [255, 100, 205], 'AGENTE': [255, 226, 40]}},
            'duracion': 66.4, 'planos': P}, open('plan.json', 'w'), indent=1, ensure_ascii=False)

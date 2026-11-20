@@ -3,18 +3,20 @@
  "audio": "voz/buhardilla.mp3",
  "vel_letra": 0.03,
  "subtitulos": {
-  "y": 230,
-  "tam": 70,
+  "y": 250,
+  "tam": 96,
+  "max": 3,
+  "contorno": 14,
   "colores": {
    "ROSA": [
     255,
-    120,
-    210
+    100,
+    205
    ],
    "AGENTE": [
     255,
-    222,
-    90
+    226,
+    40
    ]
   }
  },
@@ -40,31 +42,45 @@
    }
   },
   {
-   "t0": 5.7,
-   "fondo": "img/es_paris.jpg",
+   "t0": 3.52,
+   "fondo": "img/es_pprosa.jpg",
    "zoom": 1.0,
    "cx": 0.5,
    "cy": 0.5,
    "hablan": {
-    "ROSA": {},
+    "ROSA": {
+     "img/es_pprosa.jpg": [
+      "img/es_pprosa_boca.png"
+     ]
+    },
+    "AGENTE": {}
+   }
+  },
+  {
+   "t0": 5.7,
+   "fondo": "img/es_salon.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "hablan": {
+    "ROSA": {
+     "img/es_salon.jpg": [
+      "img/es_salon_boca.png"
+     ]
+    },
     "AGENTE": {
-     "img/es_paris.jpg": [
-      "img/es_paris_aboca.png"
+     "img/es_salon.jpg": [
+      "img/es_salon_aboca.png"
+     ],
+     "img/es_salon_b.jpg": [
+      "img/es_salon_aboca.png"
      ]
     }
    },
-   "rotulos": [
+   "cambios": [
     {
-     "t0": 9.0,
-     "texto": "MUY DE PARÍS",
-     "x": 540,
-     "y": 1580,
-     "color": "azul",
-     "tam": 110,
-     "centro": true,
-     "fijo": true,
-     "caja": true,
-     "t1": 10.6
+     "t": 5.78,
+     "fondo": "img/es_salon_b.jpg"
     }
    ]
   },
@@ -85,15 +101,15 @@
   },
   {
    "t0": 12.26,
-   "fondo": "img/es_precio.jpg",
+   "fondo": "img/es_ppagente.jpg",
    "zoom": 1.0,
    "cx": 0.5,
    "cy": 0.5,
    "hablan": {
     "ROSA": {},
     "AGENTE": {
-     "img/es_precio.jpg": [
-      "img/es_precio_aboca.png"
+     "img/es_ppagente.jpg": [
+      "img/es_ppagente_aboca.png"
      ]
     }
    },
@@ -102,7 +118,7 @@
      "t0": 13.6,
      "texto": "650 €/MES",
      "x": 540,
-     "y": 1580,
+     "y": 1640,
      "color": "rojo",
      "tam": 130,
      "centro": true,
@@ -114,7 +130,7 @@
      "t0": 15.82,
      "texto": "+ GASTOS",
      "x": 540,
-     "y": 1580,
+     "y": 1640,
      "color": "rojo",
      "tam": 130,
      "centro": true,
@@ -126,10 +142,29 @@
   },
   {
    "t0": 17.18,
-   "fondo": "img/es_dormitorio.jpg",
+   "fondo": "img/es_salon.jpg",
    "zoom": 1.0,
    "cx": 0.5,
    "cy": 0.5,
+   "hablan": {
+    "ROSA": {
+     "img/es_salon.jpg": [
+      "img/es_salon_boca.png"
+     ]
+    },
+    "AGENTE": {
+     "img/es_salon.jpg": [
+      "img/es_salon_aboca.png"
+     ]
+    }
+   }
+  },
+  {
+   "t0": 18.48,
+   "fondo": "img/es_dormitorio.jpg",
+   "zoom": 1.06,
+   "cx": 0.5,
+   "cy": 0.44,
    "hablan": {
     "ROSA": {
      "img/es_dormitorio.jpg": [
@@ -145,6 +180,7 @@
      ]
     }
    },
+   "sub_y": 1700,
    "cambios": [
     {
      "t": 22.18,
@@ -169,39 +205,26 @@
   },
   {
    "t0": 26.71,
-   "fondo": "img/es_dormitorio.jpg",
-   "zoom": 1.0,
+   "fondo": "img/es_dormitorio_b.jpg",
+   "zoom": 1.06,
    "cx": 0.5,
-   "cy": 0.5,
+   "cy": 0.42,
    "hablan": {
     "ROSA": {},
     "AGENTE": {
-     "img/es_dormitorio.jpg": [
-      "img/es_dormitorio_aboca.png"
+     "img/es_dormitorio_b.jpg": [
+      "img/es_dormitorio_b_aboca.png"
      ]
     }
    },
-   "rotulos": [
-    {
-     "t0": 26.95,
-     "texto": "POR TURNOS",
-     "x": 540,
-     "y": 1580,
-     "color": "negro",
-     "tam": 120,
-     "centro": true,
-     "fijo": true,
-     "caja": true,
-     "t1": 28.8
-    }
-   ]
+   "sub_y": 1700
   },
   {
    "t0": 28.9,
    "fondo": "img/es_turnos.jpg",
-   "zoom": 1.0,
+   "zoom": 1.18,
    "cx": 0.5,
-   "cy": 0.5,
+   "cy": 0.62,
    "hablan": {
     "ROSA": {},
     "AGENTE": {
@@ -214,9 +237,9 @@
   {
    "t0": 29.82,
    "fondo": "img/es_ducha.jpg",
-   "zoom": 1.0,
+   "zoom": 1.12,
    "cx": 0.5,
-   "cy": 0.5,
+   "cy": 0.6,
    "hablan": {
     "ROSA": {
      "img/es_ducha.jpg": [
@@ -233,20 +256,6 @@
     {
      "t": 32.75,
      "fondo": "img/es_ducha_b.jpg"
-    }
-   ],
-   "rotulos": [
-    {
-     "t0": 32.75,
-     "texto": "SPA",
-     "x": 540,
-     "y": 1600,
-     "color": "verde",
-     "tam": 160,
-     "centro": true,
-     "fijo": true,
-     "caja": true,
-     "t1": 33.6
     }
    ]
   },
@@ -276,32 +285,18 @@
      "t": 38.73,
      "fondo": "img/es_cocina_b.jpg"
     }
-   ],
-   "rotulos": [
-    {
-     "t0": 38.73,
-     "texto": "ERGONOMÍA",
-     "x": 540,
-     "y": 1640,
-     "color": "azul",
-     "tam": 120,
-     "centro": true,
-     "fijo": true,
-     "caja": true,
-     "t1": 40.0
-    }
    ]
   },
   {
    "t0": 40.04,
-   "fondo": "img/es_trastero.jpg",
+   "fondo": "img/es_pprosa.jpg",
    "zoom": 1.0,
    "cx": 0.5,
    "cy": 0.5,
    "hablan": {
     "ROSA": {
-     "img/es_trastero.jpg": [
-      "img/es_trastero_boca.png"
+     "img/es_pprosa.jpg": [
+      "img/es_pprosa_boca.png"
      ]
     },
     "AGENTE": {}
@@ -336,32 +331,6 @@
      "t": 46.8,
      "fondo": "img/es_loft_c.jpg"
     }
-   ],
-   "rotulos": [
-    {
-     "t0": 44.9,
-     "texto": "TRASTERO: 700 €",
-     "x": 540,
-     "y": 1620,
-     "color": "rojo",
-     "tam": 105,
-     "centro": true,
-     "fijo": true,
-     "caja": true,
-     "t1": 46.7
-    },
-    {
-     "t0": 46.82,
-     "texto": "LOFT",
-     "x": 540,
-     "y": 1620,
-     "color": "azul",
-     "tam": 170,
-     "centro": true,
-     "fijo": true,
-     "caja": true,
-     "t1": 47.75
-    }
    ]
   },
   {
@@ -383,7 +352,7 @@
      "t0": 48.4,
      "texto": "1,20 m",
      "x": 540,
-     "y": 1560,
+     "y": 1600,
      "color": "rojo",
      "tam": 150,
      "centro": true,
@@ -400,31 +369,28 @@
    "cx": 0.5,
    "cy": 0.5,
    "hablan": {
-    "ROSA": {
-     "img/es_mini.jpg": [
-      "img/es_mini_boca.png"
-     ]
-    },
+    "ROSA": {},
     "AGENTE": {
      "img/es_mini.jpg": [
       "img/es_mini_aboca.png"
      ]
     }
-   },
-   "rotulos": [
-    {
-     "t0": 49.82,
-     "texto": "MiNi LOFT",
-     "x": 540,
-     "y": 1640,
-     "color": "azul",
-     "tam": 130,
-     "centro": true,
-     "fijo": true,
-     "caja": true,
-     "t1": 51.6
-    }
-   ]
+   }
+  },
+  {
+   "t0": 53.28,
+   "fondo": "img/es_pprosa.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "hablan": {
+    "ROSA": {
+     "img/es_pprosa.jpg": [
+      "img/es_pprosa_boca.png"
+     ]
+    },
+    "AGENTE": {}
+   }
   },
   {
    "t0": 54.72,
@@ -435,63 +401,41 @@
    "hablan": {
     "ROSA": {},
     "AGENTE": {}
-   },
-   "rotulos": [
-    {
-     "t0": 56.35,
-     "texto": "MÁS ÍNTiMO",
-     "x": 540,
-     "y": 1640,
-     "color": "rojo",
-     "tam": 130,
-     "centro": true,
-     "fijo": true,
-     "caja": true,
-     "t1": 57.9
-    }
-   ]
+   }
   },
   {
    "t0": 58.12,
-   "fondo": "img/es_pensar.jpg",
+   "fondo": "img/es_salon.jpg",
    "zoom": 1.0,
    "cx": 0.5,
    "cy": 0.5,
    "hablan": {
     "ROSA": {
-     "img/es_pensar.jpg": [
-      "img/es_pensar_boca.png"
+     "img/es_salon.jpg": [
+      "img/es_salon_boca.png"
      ]
     },
     "AGENTE": {
-     "img/es_pensar.jpg": [
-      "img/es_pensar_aboca.png"
-     ],
-     "img/es_pensar_b.jpg": [
-      "img/es_pensar_aboca.png"
+     "img/es_salon.jpg": [
+      "img/es_salon_aboca.png"
      ]
     }
-   },
-   "cambios": [
-    {
-     "t": 60.55,
-     "fondo": "img/es_pensar_b.jpg"
+   }
+  },
+  {
+   "t0": 59.65,
+   "fondo": "img/es_ppagente.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "hablan": {
+    "ROSA": {},
+    "AGENTE": {
+     "img/es_ppagente.jpg": [
+      "img/es_ppagente_aboca.png"
+     ]
     }
-   ],
-   "rotulos": [
-    {
-     "t0": 60.55,
-     "texto": "HASTA LAS 5",
-     "x": 540,
-     "y": 1600,
-     "color": "rojo",
-     "tam": 120,
-     "centro": true,
-     "fijo": true,
-     "caja": true,
-     "t1": 61.55
-    }
-   ]
+   }
   },
   {
    "t0": 61.61,
@@ -505,7 +449,7 @@
    },
    "rotulos": [
     {
-     "t0": 61.9,
+     "t0": 64.45,
      "texto": "20 iNTERESADOS",
      "x": 540,
      "y": 1650,

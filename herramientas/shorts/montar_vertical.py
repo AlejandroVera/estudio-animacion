@@ -647,7 +647,7 @@ def _trozos_subtitulos():
         sig = palabras[k + 1] if k + 1 < len(palabras) else None
         fin_frase = w['texto'][-1:] in '.,?!:;…»'
         otro = sig is not None and sig.get('quien') != w.get('quien')
-        if len(cur) >= 5 or fin_frase or otro or sig is None or sig['inicio'] - w['fin'] > 0.35:
+        if len(cur) >= plan['subtitulos'].get('max', 5) or fin_frase or otro or sig is None or sig['inicio'] - w['fin'] > 0.35:
             out.append(cur); cur = []
     trozos = []
     for i, g in enumerate(out):
@@ -688,7 +688,8 @@ def subtitulo(im, t, y):
         w = f.getlength(l)
         pos = ((W - w) / 2, y + i * tam * 1.2)
         # contorno negro grueso y letra blanca engordada (la Coming Soon es fina)
-        d.text(pos, l, font=f, fill=(20, 20, 20, 255), stroke_width=max(8, tam // 6), stroke_fill=(20, 20, 20, 255))
+        gr = plan['subtitulos'].get('contorno', max(8, tam // 6))
+        d.text(pos, l, font=f, fill=(20, 20, 20, 255), stroke_width=gr, stroke_fill=(20, 20, 20, 255))
         col = tuple(plan['subtitulos'].get('colores', {}).get(quien or '', (255, 255, 255))) + (255,)
         d.text(pos, l, font=f, fill=col, stroke_width=max(2, tam // 28), stroke_fill=col)
 
