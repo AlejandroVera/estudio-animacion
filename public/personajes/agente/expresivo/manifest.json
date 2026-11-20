@@ -1,0 +1,54 @@
+{
+ "lienzo": [
+  45,
+  53,
+  1462,
+  2654
+ ],
+ "pies": [
+  786.0,
+  2694.0
+ ],
+ "cabeza": [
+  778.5,
+  381.0,
+  271.5
+ ],
+ "poses": [
+  "reposo",
+  "reposo~b",
+  "habla",
+  "habla~b",
+  "senala",
+  "senala~b",
+  "presenta",
+  "presenta~b",
+  "pulgar",
+  "pulgar~b",
+  "carpeta",
+  "carpeta~b",
+  "cruzado",
+  "cruzado~b",
+  "niega",
+  "niega~b",
+  "piensa",
+  "piensa~b",
+  "sorpresa",
+  "sorpresa~b",
+  "agachado",
+  "agachado~b",
+  "risa",
+  "risa~b",
+  "movil",
+  "movil~b"
+ ],
+ "bocas": [],
+ "original": [
+  1536,
+  2752
+ ],
+ "voz": {
+  "nombre": "Rafa N – Confident Sales Agent",
+  "id": "Zb72NBThGN2Rv3y1RSTT"
+ }
+}
