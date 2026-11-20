@@ -659,6 +659,8 @@ def _trozos_subtitulos():
         texto = ' '.join(w['texto'] for w in g).replace('«', '').replace('»', '')
         for a, b in cambiar.items():
             texto = re.sub(r'\b%s\b' % re.escape(a), b, texto)
+        if plan['subtitulos'].get('mayusculas'):
+            texto = texto.upper().replace('I', 'i').replace('Í', 'í')  # la «I» de esta letra parece un palo
         trozos.append((ini, fin, texto, g[0].get('quien')))
     return trozos
 

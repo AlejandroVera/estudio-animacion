@@ -7,12 +7,13 @@ from PIL import Image, ImageFilter
 from scipy import ndimage as ndi
 
 ESC = ['entrada_1', 'paris_1', 'viga_1', 'precio_1', 'dormitorio_2', 'pie_1', 'turnos_1', 'ducha_1', 'cocina_1',
-       'trastero_1', 'loft_1', 'metro_1', 'mini_1', 'amigos_2', 'pensar_1', 'escalera_1', 'salon_1', 'pprosa_1', 'ppagente_1']
+       'trastero_1', 'loft_1', 'metro_1', 'mini_1', 'amigos_2', 'pensar_1', 'escalera_1', 'salon_1', 'pprosa_1', 'ppagente_1', 'fijo_1']
 BASES = {'es_' + e.rsplit('_', 1)[0]: 'es_' + e for e in ESC}
-TAL_CUAL = []
+TAL_CUAL = ['es_amigos_b', 'es_escalera_b']
 VARIANTES = {'es_dormitorio_b': 'es_dormitorio', 'es_ducha_b': 'es_ducha', 'es_cocina_b': 'es_cocina',
-             'es_loft_b': 'es_loft', 'es_loft_c': 'es_loft', 'es_pensar_b': 'es_pensar', 'es_salon_b': 'es_salon'}
-SIN_PROTEGER = {'es_ducha_b'}
+             'es_loft_b': 'es_loft', 'es_loft_c': 'es_loft', 'es_pensar_b': 'es_pensar', 'es_salon_b': 'es_salon', 'es_ducha_c': 'es_ducha', 'es_cocina_c': 'es_cocina',
+             **{f'es_fijo_{x}': 'es_fijo' for x in ('b', 'viga', 'no', 'abajo', 'loft', 'mini', 'metro', 'reloj')}}
+SIN_PROTEGER = {'es_ducha_b', 'es_ducha_c', 'es_fijo_viga', 'es_fijo_metro'}
 ANTES = {}
 import glob as _g
 BOCAS = sorted(os.path.basename(f)[:-4] for f in _g.glob('crudo/*_rboca.png'))   # boca del chico rosa

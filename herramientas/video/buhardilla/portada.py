@@ -4,7 +4,7 @@ import sys, os
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'shorts', 'portadas'))
 import portadas as P
 from PIL import Image, ImageDraw, ImageFilter
-im = Image.open('img/es_paris.jpg').convert('RGB')
+im = Image.open('img/es_fijo.jpg').convert('RGB')
 im = im.resize((1080, round(im.height * 1080 / im.width)), Image.LANCZOS)
 y0 = (im.height - 1920) // 2
 im = im.crop((0, y0, 1080, y0 + 1920)).convert('RGBA')

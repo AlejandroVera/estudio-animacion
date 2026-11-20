@@ -82,3 +82,22 @@ es_salon_rboca 8aiz8evIrU
 es_salon_aboca If3nI8dtvE
 es_pprosa_rboca dt42BoDXSL
 es_ppagente_aboca p8yRdI5ehw
+# v3 (plano fijo de cuerpo entero, como la referencia)
+mf_1 Cqnpx0XEEy
+mf_2 lJtQ6fwgv9
+es_ducha_c If3WqoztvE
+es_cocina_c xSBfPxojfW
+es_amigos_b KLpmJrqkqp
+es_escalera_b If3WbaTtvE
+es_fijo_b xSBf90IjfW
+es_fijo_viga KLpmOWZkqp
+es_fijo_no N2qLTuU6D9
+es_fijo_abajo 1ldvPpCr4r
+es_fijo_loft s7Iuit6l8e
+es_fijo_mini 1ldvPoCr4r
+es_fijo_metro hu2T1WkvqL
+es_fijo_reloj fHzDjMHCDY
+es_fijo_rboca 79f5GSLJAL
+es_fijo_aboca hu2T1mPvqL
+es_fijo_viga_rboca MBJ3C8YDCm
+es_fijo_metro_rboca rgXa6svxtc

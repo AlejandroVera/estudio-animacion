@@ -4,9 +4,10 @@
  "vel_letra": 0.03,
  "subtitulos": {
   "y": 250,
-  "tam": 96,
+  "tam": 92,
   "max": 3,
   "contorno": 14,
+  "mayusculas": true,
   "colores": {
    "ROSA": [
     255,
@@ -20,259 +21,154 @@
    ]
   }
  },
- "duracion": 66.4,
+ "duracion": 54.0,
  "planos": [
   {
    "t0": 0,
-   "fondo": "img/es_entrada.jpg",
+   "fondo": "img/es_fijo.jpg",
    "zoom": 1.0,
    "cx": 0.5,
    "cy": 0.5,
    "hablan": {
     "ROSA": {
-     "img/es_entrada.jpg": [
-      "img/es_entrada_boca.png"
-     ]
-    },
-    "AGENTE": {
-     "img/es_entrada.jpg": [
-      "img/es_entrada_aboca.png"
-     ]
-    }
-   }
-  },
-  {
-   "t0": 3.52,
-   "fondo": "img/es_pprosa.jpg",
-   "zoom": 1.0,
-   "cx": 0.5,
-   "cy": 0.5,
-   "hablan": {
-    "ROSA": {
-     "img/es_pprosa.jpg": [
-      "img/es_pprosa_boca.png"
-     ]
-    },
-    "AGENTE": {}
-   }
-  },
-  {
-   "t0": 5.7,
-   "fondo": "img/es_salon.jpg",
-   "zoom": 1.0,
-   "cx": 0.5,
-   "cy": 0.5,
-   "hablan": {
-    "ROSA": {
-     "img/es_salon.jpg": [
-      "img/es_salon_boca.png"
-     ]
-    },
-    "AGENTE": {
-     "img/es_salon.jpg": [
-      "img/es_salon_aboca.png"
+     "img/es_fijo.jpg": [
+      "img/es_fijo_boca.png"
      ],
-     "img/es_salon_b.jpg": [
-      "img/es_salon_aboca.png"
+     "img/es_fijo_viga.jpg": [
+      "img/es_fijo_viga_boca.png"
+     ],
+     "img/es_fijo_metro.jpg": [
+      "img/es_fijo_metro_boca.png"
+     ]
+    },
+    "AGENTE": {
+     "img/es_fijo.jpg": [
+      "img/es_fijo_aboca.png"
+     ],
+     "img/es_fijo_b.jpg": [
+      "img/es_fijo_aboca.png"
+     ],
+     "img/es_fijo_no.jpg": [
+      "img/es_fijo_aboca.png"
+     ],
+     "img/es_fijo_abajo.jpg": [
+      "img/es_fijo_aboca.png"
+     ],
+     "img/es_fijo_loft.jpg": [
+      "img/es_fijo_aboca.png"
+     ],
+     "img/es_fijo_mini.jpg": [
+      "img/es_fijo_aboca.png"
+     ],
+     "img/es_fijo_reloj.jpg": [
+      "img/es_fijo_aboca.png"
      ]
     }
    },
    "cambios": [
     {
-     "t": 5.78,
-     "fondo": "img/es_salon_b.jpg"
+     "t": 6.3,
+     "fondo": "img/es_fijo_b.jpg"
+    },
+    {
+     "t": 11.14,
+     "fondo": "img/es_fijo_viga.jpg"
+    },
+    {
+     "t": 12.88,
+     "fondo": "img/es_fijo.jpg"
     }
    ]
   },
   {
-   "t0": 10.63,
-   "fondo": "img/es_viga.jpg",
-   "zoom": 1.08,
-   "cx": 0.5,
-   "cy": 0.42,
-   "hablan": {
-    "ROSA": {
-     "img/es_viga.jpg": [
-      "img/es_viga_boca.png"
-     ]
-    },
-    "AGENTE": {}
-   }
-  },
-  {
-   "t0": 12.26,
-   "fondo": "img/es_ppagente.jpg",
-   "zoom": 1.0,
-   "cx": 0.5,
-   "cy": 0.5,
-   "hablan": {
-    "ROSA": {},
-    "AGENTE": {
-     "img/es_ppagente.jpg": [
-      "img/es_ppagente_aboca.png"
-     ]
-    }
-   },
-   "rotulos": [
-    {
-     "t0": 13.6,
-     "texto": "650 €/MES",
-     "x": 540,
-     "y": 1640,
-     "color": "rojo",
-     "tam": 130,
-     "centro": true,
-     "fijo": true,
-     "caja": true,
-     "t1": 15.8
-    },
-    {
-     "t0": 15.82,
-     "texto": "+ GASTOS",
-     "x": 540,
-     "y": 1640,
-     "color": "rojo",
-     "tam": 130,
-     "centro": true,
-     "fijo": true,
-     "caja": true,
-     "t1": 17.1
-    }
-   ]
-  },
-  {
-   "t0": 17.18,
-   "fondo": "img/es_salon.jpg",
-   "zoom": 1.0,
-   "cx": 0.5,
-   "cy": 0.5,
-   "hablan": {
-    "ROSA": {
-     "img/es_salon.jpg": [
-      "img/es_salon_boca.png"
-     ]
-    },
-    "AGENTE": {
-     "img/es_salon.jpg": [
-      "img/es_salon_aboca.png"
-     ]
-    }
-   }
-  },
-  {
-   "t0": 18.48,
-   "fondo": "img/es_dormitorio.jpg",
-   "zoom": 1.06,
-   "cx": 0.5,
-   "cy": 0.44,
-   "hablan": {
-    "ROSA": {
-     "img/es_dormitorio.jpg": [
-      "img/es_dormitorio_boca.png"
-     ]
-    },
-    "AGENTE": {
-     "img/es_dormitorio.jpg": [
-      "img/es_dormitorio_aboca.png"
-     ],
-     "img/es_dormitorio_b.jpg": [
-      "img/es_dormitorio_b_aboca.png"
-     ]
-    }
-   },
-   "sub_y": 1700,
-   "cambios": [
-    {
-     "t": 22.18,
-     "fondo": "img/es_dormitorio_b.jpg"
-    }
-   ]
-  },
-  {
-   "t0": 24.76,
-   "fondo": "img/es_pie.jpg",
-   "zoom": 1.0,
-   "cx": 0.5,
-   "cy": 0.5,
-   "hablan": {
-    "ROSA": {
-     "img/es_pie.jpg": [
-      "img/es_pie_boca.png"
-     ]
-    },
-    "AGENTE": {}
-   }
-  },
-  {
-   "t0": 26.71,
-   "fondo": "img/es_dormitorio_b.jpg",
-   "zoom": 1.06,
-   "cx": 0.5,
-   "cy": 0.42,
-   "hablan": {
-    "ROSA": {},
-    "AGENTE": {
-     "img/es_dormitorio_b.jpg": [
-      "img/es_dormitorio_b_aboca.png"
-     ]
-    }
-   },
-   "sub_y": 1700
-  },
-  {
-   "t0": 28.9,
-   "fondo": "img/es_turnos.jpg",
-   "zoom": 1.18,
-   "cx": 0.5,
-   "cy": 0.62,
-   "hablan": {
-    "ROSA": {},
-    "AGENTE": {
-     "img/es_turnos.jpg": [
-      "img/es_turnos_aboca.png"
-     ]
-    }
-   }
-  },
-  {
-   "t0": 29.82,
+   "t0": 18.81,
    "fondo": "img/es_ducha.jpg",
    "zoom": 1.12,
    "cx": 0.5,
    "cy": 0.6,
    "hablan": {
-    "ROSA": {
-     "img/es_ducha.jpg": [
-      "img/es_ducha_boca.png"
-     ]
-    },
+    "ROSA": {},
     "AGENTE": {
      "img/es_ducha.jpg": [
+      "img/es_ducha_aboca.png"
+     ],
+     "img/es_ducha_c.jpg": [
       "img/es_ducha_aboca.png"
      ]
     }
    },
    "cambios": [
     {
-     "t": 32.75,
+     "t": 20.36,
      "fondo": "img/es_ducha_b.jpg"
     }
-   ]
+   ],
+   "alterna": {
+    "imgs": [
+     "img/es_ducha.jpg",
+     "img/es_ducha_c.jpg"
+    ],
+    "cada": 0.42,
+    "hasta": 20.36
+   }
   },
   {
-   "t0": 33.63,
+   "t0": 21.04,
+   "fondo": "img/es_fijo.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "hablan": {
+    "ROSA": {
+     "img/es_fijo.jpg": [
+      "img/es_fijo_boca.png"
+     ],
+     "img/es_fijo_viga.jpg": [
+      "img/es_fijo_viga_boca.png"
+     ],
+     "img/es_fijo_metro.jpg": [
+      "img/es_fijo_metro_boca.png"
+     ]
+    },
+    "AGENTE": {
+     "img/es_fijo.jpg": [
+      "img/es_fijo_aboca.png"
+     ],
+     "img/es_fijo_b.jpg": [
+      "img/es_fijo_aboca.png"
+     ],
+     "img/es_fijo_no.jpg": [
+      "img/es_fijo_aboca.png"
+     ],
+     "img/es_fijo_abajo.jpg": [
+      "img/es_fijo_aboca.png"
+     ],
+     "img/es_fijo_loft.jpg": [
+      "img/es_fijo_aboca.png"
+     ],
+     "img/es_fijo_mini.jpg": [
+      "img/es_fijo_aboca.png"
+     ],
+     "img/es_fijo_reloj.jpg": [
+      "img/es_fijo_aboca.png"
+     ]
+    }
+   },
+   "cambios": []
+  },
+  {
+   "t0": 22.29,
    "fondo": "img/es_cocina.jpg",
    "zoom": 1.07,
    "cx": 0.5,
    "cy": 0.5,
    "hablan": {
-    "ROSA": {
-     "img/es_cocina.jpg": [
-      "img/es_cocina_boca.png"
-     ]
-    },
+    "ROSA": {},
     "AGENTE": {
      "img/es_cocina.jpg": [
+      "img/es_cocina_aboca.png"
+     ],
+     "img/es_cocina_c.jpg": [
       "img/es_cocina_aboca.png"
      ],
      "img/es_cocina_b.jpg": [
@@ -282,13 +178,21 @@
    },
    "cambios": [
     {
-     "t": 38.73,
+     "t": 25.68,
      "fondo": "img/es_cocina_b.jpg"
     }
-   ]
+   ],
+   "alterna": {
+    "imgs": [
+     "img/es_cocina.jpg",
+     "img/es_cocina_c.jpg"
+    ],
+    "cada": 0.42,
+    "hasta": 25.68
+   }
   },
   {
-   "t0": 40.04,
+   "t0": 27.4,
    "fondo": "img/es_pprosa.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -303,97 +207,76 @@
    }
   },
   {
-   "t0": 41.76,
-   "fondo": "img/es_loft.jpg",
+   "t0": 29.12,
+   "fondo": "img/es_fijo.jpg",
    "zoom": 1.0,
    "cx": 0.5,
    "cy": 0.5,
    "hablan": {
-    "ROSA": {},
+    "ROSA": {
+     "img/es_fijo.jpg": [
+      "img/es_fijo_boca.png"
+     ],
+     "img/es_fijo_viga.jpg": [
+      "img/es_fijo_viga_boca.png"
+     ],
+     "img/es_fijo_metro.jpg": [
+      "img/es_fijo_metro_boca.png"
+     ]
+    },
     "AGENTE": {
-     "img/es_loft.jpg": [
-      "img/es_loft_aboca.png"
+     "img/es_fijo.jpg": [
+      "img/es_fijo_aboca.png"
      ],
-     "img/es_loft_b.jpg": [
-      "img/es_loft_aboca.png"
+     "img/es_fijo_b.jpg": [
+      "img/es_fijo_aboca.png"
      ],
-     "img/es_loft_c.jpg": [
-      "img/es_loft_aboca.png"
+     "img/es_fijo_no.jpg": [
+      "img/es_fijo_aboca.png"
+     ],
+     "img/es_fijo_abajo.jpg": [
+      "img/es_fijo_aboca.png"
+     ],
+     "img/es_fijo_loft.jpg": [
+      "img/es_fijo_aboca.png"
+     ],
+     "img/es_fijo_mini.jpg": [
+      "img/es_fijo_aboca.png"
+     ],
+     "img/es_fijo_reloj.jpg": [
+      "img/es_fijo_aboca.png"
      ]
     }
    },
    "cambios": [
     {
-     "t": 43.65,
-     "fondo": "img/es_loft_b.jpg"
+     "t": 29.12,
+     "fondo": "img/es_fijo_no.jpg"
     },
     {
-     "t": 46.8,
-     "fondo": "img/es_loft_c.jpg"
+     "t": 31.24,
+     "fondo": "img/es_fijo_abajo.jpg"
+    },
+    {
+     "t": 34.66,
+     "fondo": "img/es_fijo_loft.jpg"
+    },
+    {
+     "t": 35.44,
+     "fondo": "img/es_fijo_metro.jpg"
+    },
+    {
+     "t": 37.07,
+     "fondo": "img/es_fijo_mini.jpg"
+    },
+    {
+     "t": 41.3,
+     "fondo": "img/es_fijo.jpg"
     }
    ]
   },
   {
-   "t0": 47.75,
-   "fondo": "img/es_metro.jpg",
-   "zoom": 1.0,
-   "cx": 0.5,
-   "cy": 0.5,
-   "hablan": {
-    "ROSA": {
-     "img/es_metro.jpg": [
-      "img/es_metro_boca.png"
-     ]
-    },
-    "AGENTE": {}
-   },
-   "rotulos": [
-    {
-     "t0": 48.4,
-     "texto": "1,20 m",
-     "x": 540,
-     "y": 1600,
-     "color": "rojo",
-     "tam": 150,
-     "centro": true,
-     "fijo": true,
-     "caja": true,
-     "t1": 49.45
-    }
-   ]
-  },
-  {
-   "t0": 49.47,
-   "fondo": "img/es_mini.jpg",
-   "zoom": 1.0,
-   "cx": 0.5,
-   "cy": 0.5,
-   "hablan": {
-    "ROSA": {},
-    "AGENTE": {
-     "img/es_mini.jpg": [
-      "img/es_mini_aboca.png"
-     ]
-    }
-   }
-  },
-  {
-   "t0": 53.28,
-   "fondo": "img/es_pprosa.jpg",
-   "zoom": 1.0,
-   "cx": 0.5,
-   "cy": 0.5,
-   "hablan": {
-    "ROSA": {
-     "img/es_pprosa.jpg": [
-      "img/es_pprosa_boca.png"
-     ]
-    },
-    "AGENTE": {}
-   }
-  },
-  {
-   "t0": 54.72,
+   "t0": 42.83,
    "fondo": "img/es_amigos.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -401,44 +284,82 @@
    "hablan": {
     "ROSA": {},
     "AGENTE": {}
+   },
+   "alterna": {
+    "imgs": [
+     "img/es_amigos.jpg",
+     "img/es_amigos_b.jpg"
+    ],
+    "cada": 0.42,
+    "hasta": 99
    }
   },
   {
-   "t0": 58.12,
-   "fondo": "img/es_salon.jpg",
+   "t0": 45.9,
+   "fondo": "img/es_pprosa.jpg",
    "zoom": 1.0,
    "cx": 0.5,
    "cy": 0.5,
    "hablan": {
     "ROSA": {
-     "img/es_salon.jpg": [
-      "img/es_salon_boca.png"
+     "img/es_pprosa.jpg": [
+      "img/es_pprosa_boca.png"
      ]
     },
-    "AGENTE": {
-     "img/es_salon.jpg": [
-      "img/es_salon_aboca.png"
-     ]
-    }
+    "AGENTE": {}
    }
   },
   {
-   "t0": 59.65,
-   "fondo": "img/es_ppagente.jpg",
+   "t0": 47.43,
+   "fondo": "img/es_fijo.jpg",
    "zoom": 1.0,
    "cx": 0.5,
    "cy": 0.5,
    "hablan": {
-    "ROSA": {},
+    "ROSA": {
+     "img/es_fijo.jpg": [
+      "img/es_fijo_boca.png"
+     ],
+     "img/es_fijo_viga.jpg": [
+      "img/es_fijo_viga_boca.png"
+     ],
+     "img/es_fijo_metro.jpg": [
+      "img/es_fijo_metro_boca.png"
+     ]
+    },
     "AGENTE": {
-     "img/es_ppagente.jpg": [
-      "img/es_ppagente_aboca.png"
+     "img/es_fijo.jpg": [
+      "img/es_fijo_aboca.png"
+     ],
+     "img/es_fijo_b.jpg": [
+      "img/es_fijo_aboca.png"
+     ],
+     "img/es_fijo_no.jpg": [
+      "img/es_fijo_aboca.png"
+     ],
+     "img/es_fijo_abajo.jpg": [
+      "img/es_fijo_aboca.png"
+     ],
+     "img/es_fijo_loft.jpg": [
+      "img/es_fijo_aboca.png"
+     ],
+     "img/es_fijo_mini.jpg": [
+      "img/es_fijo_aboca.png"
+     ],
+     "img/es_fijo_reloj.jpg": [
+      "img/es_fijo_aboca.png"
      ]
     }
-   }
+   },
+   "cambios": [
+    {
+     "t": 47.43,
+     "fondo": "img/es_fijo_reloj.jpg"
+    }
+   ]
   },
   {
-   "t0": 61.61,
+   "t0": 48.93,
    "fondo": "img/es_escalera.jpg",
    "zoom": 1.12,
    "cx": 0.5,
@@ -447,19 +368,14 @@
     "ROSA": {},
     "AGENTE": {}
    },
-   "rotulos": [
-    {
-     "t0": 64.45,
-     "texto": "20 iNTERESADOS",
-     "x": 540,
-     "y": 1650,
-     "color": "rojo",
-     "tam": 105,
-     "centro": true,
-     "fijo": true,
-     "caja": true
-    }
-   ]
+   "alterna": {
+    "imgs": [
+     "img/es_escalera.jpg",
+     "img/es_escalera_b.jpg"
+    ],
+    "cada": 0.42,
+    "hasta": 99
+   }
   }
  ]
 }
