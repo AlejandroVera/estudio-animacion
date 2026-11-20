@@ -342,6 +342,18 @@ def boca_en(t):
     return None
 
 
+def quien_en(t):
+    """Personaje que habla en t (diálogos: cada palabra lleva «quien»); None si no hay nadie."""
+    mejor, dmin = None, 0.35
+    for w in palabras:
+        if w['inicio'] - 0.05 <= t <= w['fin'] + 0.05:
+            return w.get('quien')
+        d = min(abs(t - w['inicio']), abs(t - w['fin']))
+        if d < dmin:
+            mejor, dmin = w.get('quien'), d
+    return mejor
+
+
 random.seed(3)
 PARPADEOS = []
 t = 1.2
@@ -557,6 +569,10 @@ def frame(t):
         # boca abierta dibujada de la escena (vale para sus dibujos alternos: misma cabeza); «o/u» con su
         # propia boca redonda si la hay
         encima = plano.get('boca_o') if forma == 'b_o' and plano.get('boca_o') else plano['boca']
+    if forma and plano.get('hablan'):
+        # diálogo: solo se abre la boca del que habla, y solo en los dibujos donde tiene boca preparada
+        b = plano['hablan'].get(quien_en(t) or '', {}).get(nombre)
+        encima = (b[1] if forma == 'b_o' and len(b) > 1 else b[0]) if b else None
     if forma and nombre in plano.get('bocas', {}):
         # dibujo con la cabeza en otro sitio (se ha movido entero): su propia boca [a/e/i, o/u]
         b = plano['bocas'][nombre]
@@ -630,7 +646,8 @@ def _trozos_subtitulos():
         cur.append(w)
         sig = palabras[k + 1] if k + 1 < len(palabras) else None
         fin_frase = w['texto'][-1:] in '.,?!:;…»'
-        if len(cur) >= 5 or fin_frase or sig is None or sig['inicio'] - w['fin'] > 0.35:
+        otro = sig is not None and sig.get('quien') != w.get('quien')
+        if len(cur) >= 5 or fin_frase or otro or sig is None or sig['inicio'] - w['fin'] > 0.35:
             out.append(cur); cur = []
     trozos = []
     for i, g in enumerate(out):
@@ -642,7 +659,7 @@ def _trozos_subtitulos():
         texto = ' '.join(w['texto'] for w in g).replace('«', '').replace('»', '')
         for a, b in cambiar.items():
             texto = re.sub(r'\b%s\b' % re.escape(a), b, texto)
-        trozos.append((ini, fin, texto))
+        trozos.append((ini, fin, texto, g[0].get('quien')))
     return trozos
 
 
@@ -651,7 +668,7 @@ INICIOS_ROTULOS = [r['t0'] for p in plan['planos'] for r in p.get('rotulos', [])
 
 
 def subtitulo(im, t, y):
-    for ini, fin, texto in SUBS:
+    for ini, fin, texto, quien in SUBS:
         if ini <= t < fin:
             break
     else:
@@ -672,7 +689,8 @@ def subtitulo(im, t, y):
         pos = ((W - w) / 2, y + i * tam * 1.2)
         # contorno negro grueso y letra blanca engordada (la Coming Soon es fina)
         d.text(pos, l, font=f, fill=(20, 20, 20, 255), stroke_width=max(8, tam // 6), stroke_fill=(20, 20, 20, 255))
-        d.text(pos, l, font=f, fill=(255, 255, 255, 255), stroke_width=max(2, tam // 28), stroke_fill=(255, 255, 255, 255))
+        col = tuple(plan['subtitulos'].get('colores', {}).get(quien or '', (255, 255, 255))) + (255,)
+        d.text(pos, l, font=f, fill=col, stroke_width=max(2, tam // 28), stroke_fill=col)
 
 
 def pegar_objeto(im, o, t):

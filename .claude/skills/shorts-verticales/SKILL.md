@@ -116,3 +116,18 @@ Ejemplo completo: `herramientas/shorts/domingo/` (3 shorts del vídeo «domingo�
 - Portadas (2026-11-19, «no se ve bien el texto» en la de la pasta de dientes): sobre un fondo cargado (estanterías,
   pasillos llenos de colores) el halo blanco no basta. Poner el título en CARTELES blancos con borde negro grueso,
   sombra y un poco girados (`herramientas/video/pasta_dientes/portada.py`), letra más grande y el remate en rojo.
+
+## Sketch de DIÁLOGO entre dos personajes (ejemplo `herramientas/video/buhardilla/`, Chico rosa + agente)
+- Personaje secundario completo antes (como el agente: `public/personajes/agente/`), y su referencia en cada escena.
+- Voz: `herramientas/video/dialogo.py guion.txt voz/x` (líneas «QUIEN: texto», voces en `VOCES`; cada frase con la
+  anterior y la siguiente como contexto; `--rehacer N` rehace solo una). El json lleva `quien` en cada palabra.
+- Dibujos: decorados vacíos primero (`loc_*`) y cada escena editando su decorado con las DOS referencias (siempre
+  el mismo piso). Bocas: una edición por personaje que habla en ese dibujo («_rboca» del rosa, «_aboca» del otro,
+  «Change ONLY the mouth of the bearded man…»); `preparar.py` recorta cada una (rosa por la cabeza magenta, el otro
+  por la mancha de cambio). Un movimiento con la cabeza en el mismo sitio reutiliza la boca de su base.
+- Plan: `"hablan": {"ROSA": {dibujo: [boca]}, "AGENTE": {...}}` en cada plano: el montador abre solo la boca del
+  que habla en ese instante. Subtítulos de un color por personaje: `"subtitulos": {"colores": {"ROSA": [255,120,210],
+  "AGENTE": [255,222,90]}}` (se cortan al cambiar de personaje).
+- Coste real: ~100 imágenes (≈6.500 créditos) para 66 s, sin contar el personaje nuevo.
+- Para descargar de Magnific sin gastar contexto: `creations_get` con 40+ ids (rellenar con ids viejos) para que la
+  respuesta vaya a fichero y leerla con `herramientas/dl_magnific.py`; con 28 aún salía en línea.

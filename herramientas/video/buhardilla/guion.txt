@@ -1,0 +1,22 @@
+
+AGENTE: Pasa, pasa. Bienvenido a tu nuevo hogar.
+ROSA: ¿Por qué tengo que entrar agachado?
+AGENTE: Techos con personalidad. Es una buhardilla, muy de París.
+ROSA: Me acabo de dar con la viga.
+AGENTE: Eso es el encanto. Seiscientos cincuenta al mes, gastos aparte.
+ROSA: ¿Y el dormitorio?
+AGENTE: Aquí. La cama va bajo la ventana, que es el único sitio donde se está de pie.
+ROSA: ¿Y yo dónde me pongo de pie?
+AGENTE: Por turnos. Primero la cama, luego tú.
+ROSA: ¿Y la ducha?
+AGENTE: Ducha sentado. Como un spa.
+ROSA: ¿Y la cocina?
+AGENTE: De rodillas. Así quedas a la altura de los fogones. Ergonomía.
+ROSA: Esto es un trastero.
+AGENTE: No, no, no. El trastero es el de abajo, y cuesta setecientos. Esto es un loft.
+ROSA: ¿Un loft de metro veinte?
+AGENTE: Un mini loft. Ahora se lleva todo mini.
+ROSA: ¿Y si vienen amigos?
+AGENTE: Que vengan agachados, que es más íntimo.
+ROSA: Me lo tengo que pensar.
+AGENTE: Tienes hasta las cinco. Hay veinte interesados esperando en la escalera.
