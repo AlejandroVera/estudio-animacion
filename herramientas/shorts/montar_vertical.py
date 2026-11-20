@@ -541,9 +541,40 @@ def fondo_completo(nombre, encima=None):
     im = pantalon_escena(nombre) if recolor else img(nombre).convert('RGB')
     if encima:
         im = im.convert('RGBA')
-        im.alpha_composite(img(encima).resize(im.size, Image.LANCZOS))
+        for e in (encima if isinstance(encima, (list, tuple)) else [encima]):
+            im.alpha_composite(img(e).resize(im.size, Image.LANCZOS))
         im = im.convert('RGB')
     return im
+
+
+def capas_vivas(plano, t):
+    """ANIMACIÓN LIMITADA de diálogo (`vivas`): cada personaje tiene capas de gesto (RGBA del tamaño del dibujo,
+    solo lo que cambia) que se pegan sobre el plano fijo. El que habla cambia de gesto cada `cada_habla` s, el que
+    escucha cada `cada_escucha` s (None = postura base), los dos parpadean, y `gestos` [{t0, t1, quien, img, boca}]
+    fuerzan un gesto concreto en su palabra. Devuelve (capas, boca del gesto activo del que habla) o None."""
+    V = plano.get('vivas')
+    if not V:
+        return None
+    habla = quien_en(t)
+    capas, boca_g = [], None
+    for k, (quien, c) in enumerate(V.items()):
+        g = next((g for g in plano.get('gestos', []) if g['quien'] == quien and g['t0'] <= t < g.get('t1', 99)), None)
+        if g:
+            capas.append(g['img'])
+            if quien == habla and g.get('boca'):
+                boca_g = g['boca']
+            continue
+        lista, cada = (c.get('habla', []), c.get('cada_habla', 0.7)) if quien == habla else \
+                      (c.get('escucha', [None]), c.get('cada_escucha', 1.8))
+        if lista:
+            n = int((t - plano['t0']) / cada)
+            rnd = random.Random(n * 7919 + k * 104729 + int(plano['t0'] * 10))
+            sel = lista[rnd.randrange(len(lista))]
+            if sel:
+                capas.append(sel)
+        if c.get('parpadeo') and parpadea(t + 1.7 * k):
+            capas.append(c['parpadeo'])
+    return capas, boca_g
 
 
 def frame(t):
@@ -577,6 +608,12 @@ def frame(t):
         # dibujo con la cabeza en otro sitio (se ha movido entero): su propia boca [a/e/i, o/u]
         b = plano['bocas'][nombre]
         encima = b[1] if forma == 'b_o' and len(b) > 1 else b[0]
+    vivas = capas_vivas(plano, t)
+    if vivas is not None:
+        capas, boca_g = vivas
+        if forma and boca_g:
+            encima = boca_g
+        encima = tuple(capas + ([encima] if encima else []))
     im = encuadrar(nombre, plano, encima).convert('RGBA')
     for o in plano.get('objetos', []):
         if o['t0'] <= t < o.get('t1', 99) and o.get('detras'):

@@ -13,8 +13,8 @@ nutri, Alejandro (Daniel - Podcast).
 ## Cómo está montada la referencia (copiar esto)
 - **Empieza ya en el sitio**: primera frase «Pues esta es la habitación». Nada de entradas, puertas ni
   presentaciones que haya que entender (con «Pasa, pasa» + puerta + él a gatas no se entendía nada).
-- **UN PLANO FIJO de los dos ~70 % del vídeo**: de cuerpo entero, de pie uno al lado del otro, mismo tamaño, de
-  cara a cámara, en el decorado donde el chiste SE VE (la cama en mitad del pasillo; aquí: él doblado con la cabeza
+- **UN PLANO FIJO de los dos ~70 % del vídeo**: de cuerpo entero, mismo tamaño, **GIRADOS EL UNO HACIA EL OTRO**
+  (tres cuartos, el que enseña dirigiéndose al otro; mirando al frente «no es natural, no se entiende»), en el decorado donde el chiste SE VE (la cama en mitad del pasillo; aquí: él doblado con la cabeza
   contra el techo). Dentro del plano solo cambian el gesto (brazo que señala, mano abierta…) y las bocas.
 - **Primeros planos de reacción** del que se queja (cara de hartazgo), 2 veces en el vídeo, en la frase clave.
 - **Clips de gag ANIMADOS**, 2-4 por vídeo, ~3 s, en la frase que los cuenta (Puerta del Sol con turistas y un
@@ -39,3 +39,18 @@ nutri, Alejandro (Daniel - Podcast).
    `mayusculas`, `tam` ~90, `contorno` 14. Casi sin rótulos (tapan el subtítulo); como mucho la cifra del chiste.
 6. **Montar** con `herramientas/shorts/montar_vertical.py`, efectos suaves (`efectos.py`; sin música), revisar con
    hoja de 2 fps ENTERA antes de entregar, y portada con carteles (`portada.py`).
+
+## ANIMACIÓN LIMITADA en el plano fijo (imprescindible: con dibujos quietos «la animación es casi nula»)
+En la referencia (vídeo generativo) se mueven todo el rato. Con dibujos fijos se consigue así
+(`herramientas/video/buhardilla/capas.py` + `vivas` en `montar_vertical.py`):
+- Del plano fijo se piden ~5 gestos por personaje SIN mover la cabeza («Keep … the agent's head and face in exactly
+  the same place. Change ONLY the agent's free arm: …»): hablando (explica con la mano, dedo arriba, mano al pecho,
+  señala al otro), escuchando (mira la carpeta), un parpadeo de cada uno, y los gestos de las palabras clave.
+- `capas.py` convierte cada edición en una CAPA de un solo personaje (RGBA: solo lo que cambia, en su lado, sin su
+  cabeza) → se pueden combinar libremente: el agente gesticula mientras el chico cruza los brazos.
+- En el plan, `vivas` = {QUIEN: {habla: [capas], escucha: [capas o None], parpadeo, cada_habla ~0,8, cada_escucha
+  ~2}} y `gestos` [{t0, t1, quien, img, boca}] para el gesto concreto en su palabra (con su propia boca si la cabeza
+  cambia, p. ej. el chichón). La boca del que habla va encima de todo.
+- Revisar cada capa pegada sobre el plano fijo (hoja de comprobación): si una mano queda cortada, ensanchar el lado
+  de ese personaje; si la edición giró el cuerpo entero (el metro), descartarla.
+- Coste: ~22 ediciones (≈1.400 créditos) para un plano fijo bien animado.
