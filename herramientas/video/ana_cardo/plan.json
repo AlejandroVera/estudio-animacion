@@ -1,0 +1,413 @@
+{
+ "alineacion": "voz/ana.json",
+ "audio": "voz/ana.mp3",
+ "sin_recolor": [
+  "es_",
+  "br_"
+ ],
+ "vel_letra": 0.03,
+ "subtitulos": {
+  "y": 230,
+  "tam": 76,
+  "cola": 0.25,
+  "cambiar": {
+   "cero por ciento": "0 %"
+  }
+ },
+ "duracion": 73.14,
+ "planos": [
+  {
+   "t0": 0,
+   "fondo": "img/es_consulta.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_consulta.jpg": [
+     "img/es_consulta_boca.png"
+    ],
+    "img/es_consulta_b.jpg": [
+     "img/es_consulta_b_boca.png"
+    ],
+    "img/es_consulta_c.jpg": [
+     "img/es_consulta_c_boca.png"
+    ]
+   },
+   "habla": true,
+   "cambios": [
+    {
+     "t": 2.366,
+     "fondo": "img/es_consulta_b.jpg"
+    },
+    {
+     "t": 3.284,
+     "fondo": "img/es_consulta_c.jpg"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 1.293,
+     "texto": "ANA CARDO",
+     "x": 540,
+     "y": 1600,
+     "color": "verde",
+     "tam": 120,
+     "centro": true,
+     "fijo": true,
+     "caja": true,
+     "t1": 2.326
+    }
+   ]
+  },
+  {
+   "t0": 6.3020000000000005,
+   "fondo": "img/es_familia.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": false
+  },
+  {
+   "t0": 9.309,
+   "fondo": "img/es_madre.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_madre.jpg": [
+     "img/es_madre_boca.png"
+    ],
+    "img/es_madre_b.jpg": [
+     "img/es_madre_boca.png"
+    ]
+   },
+   "habla": true,
+   "alterna": {
+    "imgs": [
+     "img/es_madre.jpg",
+     "img/es_madre_b.jpg"
+    ],
+    "cada": 0.3,
+    "desde": 0,
+    "hasta": 999
+   }
+  },
+  {
+   "t0": 11.852,
+   "fondo": "img/es_padre.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_padre.jpg": [
+     "img/es_padre_boca.png"
+    ]
+   },
+   "habla": true
+  },
+  {
+   "t0": 14.743,
+   "fondo": "img/es_abuela.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_abuela.jpg": [
+     "img/es_abuela_boca.png"
+    ],
+    "img/es_abuela_b.jpg": [
+     "img/es_abuela_boca.png"
+    ]
+   },
+   "habla": true,
+   "alterna": {
+    "imgs": [
+     "img/es_abuela.jpg",
+     "img/es_abuela_b.jpg"
+    ],
+    "cada": 0.45,
+    "desde": 0,
+    "hasta": 999
+   }
+  },
+  {
+   "t0": 17.065,
+   "fondo": "img/es_tia.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_tia.jpg": [
+     "img/es_tia_boca.png"
+    ],
+    "img/es_tia_b.jpg": [
+     "img/es_tia_boca.png"
+    ]
+   },
+   "habla": true,
+   "cambios": [
+    {
+     "t": 23.009,
+     "fondo": "img/es_tia_b.jpg"
+    }
+   ]
+  },
+  {
+   "t0": 25.331,
+   "fondo": "img/es_estudia.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_estudia.jpg": [
+     "img/es_estudia_boca.png"
+    ],
+    "img/es_estudia_b.jpg": [
+     "img/es_estudia_b_boca.png"
+    ]
+   },
+   "habla": true,
+   "cambios": [
+    {
+     "t": 28.914,
+     "fondo": "img/es_estudia_b.jpg"
+    }
+   ]
+  },
+  {
+   "t0": 30.242,
+   "fondo": "img/es_grad.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_grad.jpg": [
+     "img/es_grad_boca.png"
+    ],
+    "img/es_grad_b.jpg": [
+     "img/es_grad_boca.png"
+    ]
+   },
+   "habla": true,
+   "cambios": [
+    {
+     "t": 31.496000000000002,
+     "fondo": "img/es_grad_b.jpg"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 30.201999999999998,
+     "texto": "4 AÑOS",
+     "x": 540,
+     "y": 1620,
+     "color": "negro",
+     "tam": 120,
+     "centro": true,
+     "fijo": true,
+     "caja": true,
+     "t1": 31.456
+    },
+    {
+     "t0": 31.456,
+     "texto": "+ MÁSTER",
+     "x": 540,
+     "y": 1620,
+     "color": "rojo",
+     "tam": 120,
+     "centro": true,
+     "fijo": true,
+     "caja": true
+    }
+   ]
+  },
+  {
+   "t0": 32.586999999999996,
+   "fondo": "img/es_navidad.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_navidad.jpg": [
+     "img/es_navidad_boca.png"
+    ]
+   },
+   "habla": true,
+   "alterna": {
+    "imgs": [
+     "img/es_navidad.jpg",
+     "img/es_navidad_b.jpg"
+    ],
+    "cada": 0.32,
+    "desde": 35.001999999999995,
+    "hasta": 999
+   }
+  },
+  {
+   "t0": 39.041,
+   "fondo": "img/br_tele.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": false,
+   "alterna": {
+    "imgs": [
+     "img/br_tele.jpg",
+     "img/br_tele_b.jpg"
+    ],
+    "cada": 0.5,
+    "desde": 0,
+    "hasta": 999
+   }
+  },
+  {
+   "t0": 42.467,
+   "fondo": "img/es_lupa.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_lupa.jpg": [
+     "img/es_lupa_boca.png"
+    ],
+    "img/es_lupa_b.jpg": [
+     "img/es_lupa_b_boca.png"
+    ]
+   },
+   "habla": true,
+   "cambios": [
+    {
+     "t": 45.509,
+     "fondo": "img/es_lupa_b.jpg"
+    }
+   ]
+  },
+  {
+   "t0": 46.495999999999995,
+   "fondo": "img/es_yogur.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_yogur.jpg": [
+     "img/es_yogur_boca.png"
+    ]
+   },
+   "habla": true,
+   "cambios": [
+    {
+     "t": 50.942,
+     "fondo": "img/es_yogur_b.jpg"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 47.745,
+     "texto": "0 %",
+     "x": 540,
+     "y": 1620,
+     "color": "azul",
+     "tam": 150,
+     "centro": true,
+     "fijo": true,
+     "caja": true,
+     "t1": 49.219
+    },
+    {
+     "t0": 49.219,
+     "texto": "MÁS AZÚCAR",
+     "x": 540,
+     "y": 1620,
+     "color": "rojo",
+     "tam": 120,
+     "centro": true,
+     "fijo": true,
+     "caja": true,
+     "t1": 50.902
+    }
+   ]
+  },
+  {
+   "t0": 53.241,
+   "fondo": "img/es_estante.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_estante.jpg": [
+     "img/es_estante_boca.png"
+    ],
+    "img/es_estante_b.jpg": [
+     "img/es_estante_boca.png"
+    ]
+   },
+   "habla": true,
+   "alterna": {
+    "imgs": [
+     "img/es_estante.jpg",
+     "img/es_estante_b.jpg"
+    ],
+    "cada": 0.3,
+    "desde": 56.364,
+    "hasta": 999
+   }
+  },
+  {
+   "t0": 58.836999999999996,
+   "fondo": "img/es_habla.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_habla.jpg": [
+     "img/es_habla_boca.png"
+    ],
+    "img/es_habla_come.jpg": [
+     "img/es_habla_boca.png"
+    ],
+    "img/es_habla_vende.jpg": [
+     "img/es_habla_boca.png"
+    ],
+    "img/es_habla_cree.jpg": [
+     "img/es_habla_boca.png"
+    ]
+   },
+   "habla": true,
+   "cambios": [
+    {
+     "t": 61.565,
+     "fondo": "img/es_habla_come.jpg"
+    },
+    {
+     "t": 62.552,
+     "fondo": "img/es_habla_vende.jpg"
+    },
+    {
+     "t": 63.574,
+     "fondo": "img/es_habla_cree.jpg"
+    }
+   ]
+  },
+  {
+   "t0": 64.54899999999999,
+   "fondo": "img/es_sigue.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_sigue.jpg": [
+     "img/es_sigue_boca.png"
+    ]
+   },
+   "habla": true,
+   "cambios": [
+    {
+     "t": 70.238,
+     "fondo": "img/es_jajas.jpg"
+    }
+   ]
+  }
+ ]
+}
