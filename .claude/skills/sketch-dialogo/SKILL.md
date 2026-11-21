@@ -1,82 +1,85 @@
 ---
 name: sketch-dialogo
-description: Hacer sketches verticales (9:16) de DIÁLOGO entre dos personajes de Alejandro (p. ej. Chico rosa + el agente inmobiliario), al estilo del vídeo de referencia del pasillo-habitación: un plano fijo de los dos casi todo el rato, primeros planos de reacción y clips de gag animados. Úsala cuando Alejandro pida un vídeo con dos personajes hablando, un sketch o una conversación. Es un formato DISTINTO del narrador a cámara (video-inventario) y de los shorts derivados (shorts-verticales).
+description: Hacer sketches verticales (9:16) de DIÁLOGO entre dos personajes de Alejandro (p. ej. Chico rosa + el agente inmobiliario), al estilo del vídeo de referencia del pasillo-habitación: un plano fijo de los dos mirándose casi todo el rato, con animación limitada por capas, primeros planos de reacción y clips de gag animados. Úsala cuando Alejandro pida un vídeo con dos personajes hablando, un sketch o una conversación. Es un formato DISTINTO del narrador a cámara (video-inventario) y de los shorts derivados (shorts-verticales).
 ---
 
 # Sketch de diálogo entre dos personajes
 
-Formato pedido por Alejandro tras ver un sketch de referencia (agente inmobiliario enseñando un pasillo como
-«habitación», 49 s). Ejemplo completo nuestro: `herramientas/video/buhardilla/` («La buhardilla», Chico rosa +
-agente). Personajes con repertorio y voz: chico rosa (Aaron Abad), agente (`public/personajes/agente/`, Rafa),
-nutri, Alejandro (Daniel - Podcast).
+Formato pedido por Alejandro tras ver un sketch de referencia (un agente inmobiliario enseña un pasillo como
+«habitación», 49 s, vídeo generativo). Ejemplo terminado y aprobado: `herramientas/video/buhardilla/` («La buhardilla»,
+Chico rosa + agente, 47 s, versión 7; las versiones viejas del plan están como `plan_v2…v5.py`).
+Personajes con repertorio y voz: chico rosa (Aaron Abad `t9LRTh3y1ioN00e9wsNh`), agente (`public/personajes/agente/`,
+Rafa `Zb72NBThGN2Rv3y1RSTT`), nutri, Alejandro (Daniel - Podcast). Si falta el otro personaje, se crea completo antes
+(como el agente: posturas, inventario, caras; ~210 imágenes).
 
-## Cómo está montada la referencia (copiar esto)
-- **Empieza ya en el sitio**: primera frase «Pues esta es la habitación». Nada de entradas, puertas ni
-  presentaciones que haya que entender (con «Pasa, pasa» + puerta + él a gatas no se entendía nada).
-- **UN PLANO FIJO de los dos ~70 % del vídeo**: de cuerpo entero, mismo tamaño, **GIRADOS EL UNO HACIA EL OTRO**
-  (tres cuartos, el que enseña dirigiéndose al otro; mirando al frente «no es natural, no se entiende»), en el decorado donde el chiste SE VE (la cama en mitad del pasillo; aquí: él doblado con la cabeza
-  contra el techo). Dentro del plano solo cambian el gesto (brazo que señala, mano abierta…) y las bocas.
-- **Primeros planos de reacción** del que se queja (cara de hartazgo), 2 veces en el vídeo, en la frase clave.
-- **Clips de gag ANIMADOS**, 2-4 por vídeo, ~3 s, en la frase que los cuenta (Puerta del Sol con turistas y un
-  sofá = «el salón es Madrid»; cocina llena de gente = «compartida entre nueve»). En la referencia son vídeo: aquí se
-  recrean con 2-3 dibujos que se ALTERNAN (`alterna` cada 0,35-0,5 s: la gente se mueve, cae el agua, sale vapor).
-- Subtítulos en MAYÚSCULAS, 2-3 palabras, arriba, un color por personaje (amarillo uno, el otro distinto).
-- Ritmo: pocos cortes (unos 8 en 49 s). Un dibujo nuevo por frase NO se entiende (lección de la buhardilla v1).
+## Lo que funciona (copiado de la referencia y de 7 revisiones de Alejandro)
+1. **Empieza ya en el sitio**: «Pues este es el piso». Nada de entradas ni puertas que haya que entender («Pasa,
+   pasa» + ruido de puerta + él a gatas «no pasa a ningún sitio, no se entiende»).
+2. **UN PLANO FIJO de los dos ~70 % del vídeo**, del que solo se sale para la reacción y los gags. Un dibujo nuevo por
+   frase NO se entiende (v1: 21 cortes en 66 s, el agente diminuto en un plano y gigante en el siguiente).
+3. En ese plano, **los dos GIRADOS EL UNO HACIA EL OTRO** (tres cuartos, el que enseña dirigiéndose al otro), de
+   cuerpo entero y del mismo tamaño, en el decorado donde el chiste SE VE (él doblado bajo el techo). Mirando al frente
+   «no es natural, no se entiende».
+4. **Animación limitada**: dibujos quietos = «animación casi nula». Cada personaje tiene capas de gesto que se pegan
+   sobre el plano fijo por separado (ver abajo). Pero **un gesto por frase, con sentido**: gestos al azar «gesticulan
+   demasiado, movimientos sin sentido». El que ESCUCHA, QUIETO (solo parpadea; como mucho una reacción con motivo,
+   p. ej. brazos cruzados tras «esto es un trastero»).
+5. **Primer plano de reacción** del que se queja (cara de hartazgo, mirando hacia el otro), 2 veces, en la frase clave.
+6. **Clips de gag ANIMADOS**, 2-4 por vídeo, ~3 s, en la frase que los cuenta (ducha sentado, cocina de rodillas,
+   amigos apiñados, escalera llena de interesados). Se recrean con 2 dibujos que se alternan cada ~0,4 s (`alterna`:
+   cae el agua, sale vapor, la gente se mueve) y un cambio en el remate («spa» = toalla y pepinos).
+7. **Voces con ritmo de conversación**: pausas cortas (`--hueco 0.16`); si uno habla lento, `--tempo QUIEN=1.15`
+   (sin cambiar el tono). **Las preguntas tienen que sonar a pregunta**: `--preguntas 4` (ver Voz).
+8. **Subtítulos** en MAYÚSCULAS, 2-3 palabras, arriba, un color por personaje (agente amarillo [255,226,40], chico
+   rosa [255,100,205]), que se van al acabar la frase (`cola` 0,2). Sin rótulos (tapan el subtítulo).
+9. Remate final con imagen y ~2,4 s de cola (la escalera con 20 interesados agachados y murmullo).
 
 ## Pasos
-1. **Guion**: líneas «QUIEN: texto», ~45-55 s, empezando ya en situación; cada pregunta del que se queja + respuesta
-   absurda del otro; remate final con imagen (la escalera llena de interesados agachados). Visto bueno de Alejandro.
-2. **Voz**: `herramientas/video/dialogo.py guion.txt voz/x` (voces en `VOCES`; cada frase con la anterior y la
-   siguiente de contexto; `--rehacer N`). El json lleva `quien` por palabra.
-3. **Dibujos (Magnific, 9:16)**: decorado vacío (`loc_*`) → PLANO FIJO de los dos sobre él (2 versiones) → cada gesto
-   EDITANDO ese plano fijo («Keep EVERYTHING exactly the same… Change ONLY the agent's arms…») → primer plano del que
-   reacciona (mismo decorado) → clips de gag (dibujo + 1-2 ediciones «a moment later…» para alternar) → bocas: una
-   edición por personaje y dibujo («_rboca» rosa, «_aboca» el otro). Un gesto con la cabeza igual reutiliza la boca
-   del plano fijo. ~25-30 imágenes (≈1.800 créditos) si el personaje ya existe.
-4. **Preparar**: `preparar.py` (copia de buhardilla): mezcla solo lo que cambia en cada gesto y recorta las bocas.
-5. **Plan** (`plan.py`): `"hablan": {"ROSA": {dibujo: [boca]}, "AGENTE": {...}}` (solo se abre la boca del que
-   habla), `cambios` en la palabra del gesto, `alterna` en los gags, `subtitulos` con `colores`, `max` 3,
-   `mayusculas`, `tam` ~90, `contorno` 14. Casi sin rótulos (tapan el subtítulo); como mucho la cifra del chiste.
-6. **Montar** con `herramientas/shorts/montar_vertical.py`, efectos suaves (`efectos.py`; sin música), revisar con
-   hoja de 2 fps ENTERA antes de entregar, y portada con carteles (`portada.py`).
+1. **Guion** `guion.txt`: líneas «QUIEN: texto», 45-50 s, en situación desde la primera frase; preguntas del que se
+   queja + respuestas absurdas del otro; remate con imagen. Visto bueno de Alejandro antes de gastar.
+2. **Voz**: `python3 herramientas/video/dialogo.py guion.txt voz/x --hueco 0.16 --tempo AGENTE=1.15 --preguntas 4`.
+   Cada frase con la anterior y la siguiente de contexto; guarda cada frase en `voz/x_frases/NN` (`--rehacer N` para
+   una). El json lleva `quien` por palabra y `frases` con su inicio. Comprobar con `voz.py comprobar voz/x.mp3`: debe
+   decir el texto exacto y escribir «¿…?» en las preguntas (si sale «Porque tengo…» sin interrogación, no suena a
+   pregunta: rehacerla). `tono.py <mp3>` da la subida final en semitonos (≤ 0 afirmación, ≥ +3 pregunta clara).
+3. **Dibujos (Magnific Nano Banana 2.1, 9:16)**, con la referencia de cada personaje:
+   - decorado vacío (`loc_*`, 2 versiones) → **plano fijo** de los dos mirándose sobre él (2 versiones, elegir);
+   - **gestos editando el plano fijo, sin mover la cabeza**: «Keep EVERYTHING exactly the same (room, the boy…, the
+     agent's head and face in exactly the same place). Change ONLY the estate agent's free arm: …». Uno por cada
+     frase que lo pida (presenta el piso, señala el techo, mano al pecho, dedo arriba, «no, no, no», señala abajo,
+     brazos abiertos, la casita, el reloj; el chico: palmas arriba, señala el techo, brazos cruzados) + un PARPADEO de
+     cada uno («Change ONLY the eyes…: closed for a blink») + los gestos que cambian la cabeza (chichón) con su boca;
+   - bocas del plano fijo: una edición por personaje («Change ONLY the mouth of the bearded man…: open, talking…»);
+   - primer plano del que reacciona en el mismo decorado (+ su boca);
+   - clips de gag: dibujo con los dos dentro + 1 edición «a moment later…» para alternar (+ boca si habla alguien).
+   - Coste real de la buhardilla v7: ~45 imágenes (≈3.000 créditos) sin contar el personaje nuevo.
+4. **Capas**: `capas.py` (copiar de buhardilla y ajustar `BASE`): cada edición `cv_*` → RGBA de un solo personaje
+   con solo lo que cambia. Reglas que salieron de los fallos:
+   - la zona de cada personaje llega hasta donde empieza el otro (un margen alrededor de su cabeza le cortaba la mano);
+   - al agente se le protege la cara con un ÓVALO ajustado (un rectángulo le cortaba el hombro al levantar el brazo);
+     al chico NO (su brazo pegado a la cabeza quedaba cortado; si la cabeza no cambió, no entra en la capa igualmente);
+   - descartar ediciones que giran el cuerpo entero (el metro) y revisar TODAS las capas a tamaño real pegadas sobre
+     el plano fijo (hoja de recortes por personaje) antes de montar.
+   Los gags y primeros planos se preparan con `preparar.py` (variantes que solo copian lo que cambia + bocas).
+5. **Plan** `plan.py` (copiar de buhardilla): TODOS los tiempos salen de la voz (`L[i]` inicio de la frase i,
+   `T(palabra, n)`), también los efectos (`efectos.json`), así que si se rehace la voz todo se recoloca solo.
+   - `charla(t0, gestos)`: el plano fijo con `vivas` (solo `parpadeo` de cada uno; listas `habla`/`escucha` VACÍAS),
+     `hablan` (la boca del que habla va encima de todo) y `gestos` [G(t0, t1, QUIEN, capa, boca)] — UN gesto por
+     frase, desde su inicio hasta la frase siguiente; un gesto concreto no congela más de ~2 s (la casita solo en
+     «mini loft», luego otro).
+   - `gag(base, t0, otro, hasta)` y `esc('es_pprosa', …)` para los cortes; cortes y gestos 0,08 s antes de su palabra.
+   - `subtitulos`: `{'y': 250, 'tam': 92, 'max': 3, 'contorno': 14, 'mayusculas': True, 'cola': 0.2, 'colores': …}`.
+6. **Montar**: `python3 herramientas/shorts/montar_vertical.py plan.json salida.mp4` (antes `--frames …` en momentos
+   clave), efectos suaves sin música (`herramientas/video/efectos.py`: whoosh en los cortes a gag, golpe, ding, agua,
+   sartén, tictac, murmullo). **Revisar el vídeo ENTERO** con hojas a 3-4 fps y recortes ampliados (brazos cortados,
+   manchas junto a hombros, subtítulos que pisan el plano siguiente, quién gesticula mientras escucha) antes de entregar.
+7. **Portada** con carteles (`portada.py`: plano fijo de los dos + carteles blancos con borde negro, sombra y un poco
+   girados; título arriba, remate en rojo abajo).
 
-## ANIMACIÓN LIMITADA en el plano fijo (imprescindible: con dibujos quietos «la animación es casi nula»)
-En la referencia (vídeo generativo) se mueven todo el rato. Con dibujos fijos se consigue así
-(`herramientas/video/buhardilla/capas.py` + `vivas` en `montar_vertical.py`):
-- Del plano fijo se piden ~5 gestos por personaje SIN mover la cabeza («Keep … the agent's head and face in exactly
-  the same place. Change ONLY the agent's free arm: …»): hablando (explica con la mano, dedo arriba, mano al pecho,
-  señala al otro), escuchando (mira la carpeta), un parpadeo de cada uno, y los gestos de las palabras clave.
-- `capas.py` convierte cada edición en una CAPA de un solo personaje (RGBA: solo lo que cambia, en su lado, sin su
-  cabeza) → se pueden combinar libremente: el agente gesticula mientras el chico cruza los brazos.
-- En el plan, `vivas` = {QUIEN: {habla: [capas], escucha: [capas o None], parpadeo, cada_habla ~0,8, cada_escucha
-  ~2}} y `gestos` [{t0, t1, quien, img, boca}] para el gesto concreto en su palabra (con su propia boca si la cabeza
-  cambia, p. ej. el chichón). La boca del que habla va encima de todo.
-- Revisar cada capa pegada sobre el plano fijo (hoja de comprobación): si una mano queda cortada, ensanchar el lado
-  de ese personaje; si la edición giró el cuerpo entero (el metro), descartarla.
-- Coste: ~22 ediciones (≈1.400 créditos) para un plano fijo bien animado.
-
-## Lecciones de la revisión de «La buhardilla» v4 → v5
-- El que ESCUCHA casi quieto: solo parpadea y como mucho un cambio cada 4-5 s (`escucha` con muchos None,
-  `cada_escucha` 4,5). Si cambia de brazos cada 2 s «gesticula demasiado mientras el otro habla».
-- Ritmo de conversación: el agente hablaba lento → `dialogo.py --tempo AGENTE=1.15 --hueco 0.16` (acelera sin cambiar
-  el tono; comprobar con `voz.py comprobar`). 54 s → 45,5 s.
-- El plan saca TODOS los tiempos de la voz (`L[i]` = inicio de cada frase, `T(palabra, n)`) y escribe también
-  `efectos.json`: si se rehace la voz, todo se recoloca solo.
-- Subtítulo que se queda sobre el plano siguiente: `"cola": 0.2` (lo que dura tras su última palabra).
-- La zona que protege la cabeza en las capas, un ÓVALO ajustado a la cara: un rectángulo le cortaba el hombro al
-  levantar el brazo (muesca junto a la barba).
-- Un gesto concreto no debe congelar al personaje más de ~2 s (la casita: solo en «mini loft»).
-
-## Lecciones de la revisión v5 → v6 («el brazo se corta, gesticulan demasiado, movimientos sin sentido»)
-- NADA de gestos al azar (`vivas` con listas `habla`/`escucha` vacías, solo `parpadeo`). Coreografía escrita a mano
-  en `gestos`: UN gesto por frase elegido para lo que dice (pregunta = palmas arriba; «techos» = señala el techo;
-  «el encanto» = mano al pecho; «650 al mes» = dedo arriba; «mini loft» = la casita…), mantenido toda la frase.
-  El que escucha, quieto; como mucho una reacción con sentido (brazos cruzados tras «esto es un trastero»).
-- Recortar las capas sin cortar brazos: la zona de cada personaje llega hasta donde empieza el otro (no un margen
-  alrededor de su cabeza), y NO proteger la cabeza del chico (su brazo pegado a la cabeza quedaba cortado; si la
-  edición no cambió la cabeza, no entra en la capa de todas formas). Al agente sí: óvalo de la cara.
-- Revisar cada capa a tamaño real sobre el plano fijo antes de montar (hoja de recortes por personaje).
-- PREGUNTAS que no suenan a pregunta (la voz de ElevenLabs a veces las dice planas o bajando): `dialogo.py
-  --preguntas 4` genera 4 tomas de cada frase con «?» y se queda la que más sube al final (`herramientas/video/
-  tono.py` mide la subida en semitonos; planas/afirmación ≤ 0, pregunta clara ≥ +3). Comprobación extra: con
-  `voz.py comprobar` el transcriptor escribe «¿…?» si suena a pregunta.
+## Herramientas de este formato
+- `herramientas/video/dialogo.py` (voces de diálogo: `--hueco`, `--tempo`, `--preguntas`, `--rehacer`).
+- `herramientas/video/tono.py` (subida de tono al final de una frase).
+- `herramientas/shorts/montar_vertical.py`: `hablan` (boca solo del que habla), `vivas` y `gestos` (capas por
+  personaje), `alterna`, subtítulos con `colores`/`max`/`mayusculas`/`contorno`/`cola`.
+- Descargas de Magnific sin gastar contexto: `creations_get` con 40+ ids (rellenar con ids viejos) para que la
+  respuesta vaya a fichero y leerla con `herramientas/dl_magnific.py` (con 28 aún salía en línea).
