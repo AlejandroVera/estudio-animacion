@@ -2,8 +2,9 @@
 
 - Persona normal, trazo tosco como el Chico rosa: moño alto, gafas redondas, sudadera verde con un aguacate grande
   en el centro, vaqueros y zapatillas blancas. Dibujo de referencia: `referencia.jpg` (Magnific: `EbnxlnSuuO`).
-- **Voz: Lulú – Voz española cálida y natural** (ElevenLabs `OvG3ld31AQ6IRXW4ojTa`, multilingual v2), elegida por
-  Alejandro. Está también en `expresivo/manifest.json` (`voz`).
+- **Nombre: Ana Cardo** (elegido por Alejandro). **Voz: Sofía – Natural Conversations** (ElevenLabs
+  `eZxqQzb5CuYo3Kl6EXfZ`), elegida en el vídeo de presentación (la anterior, Lulú `OvG3ld31AQ6IRXW4ojTa`, no le
+  convencía: quería algo «más hablado»). Está también en `expresivo/manifest.json` (`voz`).
 - Posturas (13, cada una con su `~b` = boca al revés): reposo, habla, senala, presenta, pulgar, cruzado, jarras,
   niega, piensa, sorpresa, enfado, risa, agotada. Originales en `posturas/`, listas para animar (sin fondo,
   alineadas por la cabeza) en `expresivo/` con `manifest.json`.
