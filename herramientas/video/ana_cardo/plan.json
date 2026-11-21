@@ -14,7 +14,7 @@
    "cero por ciento": "0 %"
   }
  },
- "duracion": 73.14,
+ "duracion": 79.6,
  "planos": [
   {
    "t0": 0,
@@ -36,17 +36,17 @@
    "habla": true,
    "cambios": [
     {
-     "t": 2.366,
+     "t": 2.308,
      "fondo": "img/es_consulta_b.jpg"
     },
     {
-     "t": 3.284,
+     "t": 3.4579999999999997,
      "fondo": "img/es_consulta_c.jpg"
     }
    ],
    "rotulos": [
     {
-     "t0": 1.293,
+     "t0": 1.131,
      "texto": "ANA CARDO",
      "x": 540,
      "y": 1600,
@@ -55,12 +55,12 @@
      "centro": true,
      "fijo": true,
      "caja": true,
-     "t1": 2.326
+     "t1": 2.268
     }
    ]
   },
   {
-   "t0": 6.3020000000000005,
+   "t0": 6.0920000000000005,
    "fondo": "img/es_familia.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -69,7 +69,7 @@
    "habla": false
   },
   {
-   "t0": 9.309,
+   "t0": 9.075999999999999,
    "fondo": "img/es_madre.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -94,7 +94,7 @@
    }
   },
   {
-   "t0": 11.852,
+   "t0": 12.048,
    "fondo": "img/es_padre.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -107,7 +107,7 @@
    "habla": true
   },
   {
-   "t0": 14.743,
+   "t0": 15.218,
    "fondo": "img/es_abuela.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -132,7 +132,7 @@
    }
   },
   {
-   "t0": 17.065,
+   "t0": 17.715,
    "fondo": "img/es_tia.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -148,13 +148,13 @@
    "habla": true,
    "cambios": [
     {
-     "t": 23.009,
+     "t": 24.434,
      "fondo": "img/es_tia_b.jpg"
     }
    ]
   },
   {
-   "t0": 25.331,
+   "t0": 27.171000000000003,
    "fondo": "img/es_estudia.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -170,13 +170,13 @@
    "habla": true,
    "cambios": [
     {
-     "t": 28.914,
+     "t": 31.219,
      "fondo": "img/es_estudia_b.jpg"
     }
    ]
   },
   {
-   "t0": 30.242,
+   "t0": 32.905,
    "fondo": "img/es_grad.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -192,13 +192,13 @@
    "habla": true,
    "cambios": [
     {
-     "t": 31.496000000000002,
+     "t": 34.346,
      "fondo": "img/es_grad_b.jpg"
     }
    ],
    "rotulos": [
     {
-     "t0": 30.201999999999998,
+     "t0": 32.865,
      "texto": "4 AÑOS",
      "x": 540,
      "y": 1620,
@@ -207,10 +207,10 @@
      "centro": true,
      "fijo": true,
      "caja": true,
-     "t1": 31.456
+     "t1": 34.306
     },
     {
-     "t0": 31.456,
+     "t0": 34.306,
      "texto": "+ MÁSTER",
      "x": 540,
      "y": 1620,
@@ -223,7 +223,7 @@
    ]
   },
   {
-   "t0": 32.586999999999996,
+   "t0": 35.516,
    "fondo": "img/es_navidad.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -240,12 +240,12 @@
      "img/es_navidad_b.jpg"
     ],
     "cada": 0.32,
-    "desde": 35.001999999999995,
+    "desde": 38.489,
     "hasta": 999
    }
   },
   {
-   "t0": 39.041,
+   "t0": 42.504999999999995,
    "fondo": "img/br_tele.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -263,7 +263,7 @@
    }
   },
   {
-   "t0": 42.467,
+   "t0": 46.835,
    "fondo": "img/es_lupa.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -279,13 +279,13 @@
    "habla": true,
    "cambios": [
     {
-     "t": 45.509,
+     "t": 49.910999999999994,
      "fondo": "img/es_lupa_b.jpg"
     }
    ]
   },
   {
-   "t0": 46.495999999999995,
+   "t0": 51.027,
    "fondo": "img/es_yogur.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -298,13 +298,13 @@
    "habla": true,
    "cambios": [
     {
-     "t": 50.942,
+     "t": 55.067,
      "fondo": "img/es_yogur_b.jpg"
     }
    ],
    "rotulos": [
     {
-     "t0": 47.745,
+     "t0": 51.833999999999996,
      "texto": "0 %",
      "x": 540,
      "y": 1620,
@@ -313,10 +313,10 @@
      "centro": true,
      "fijo": true,
      "caja": true,
-     "t1": 49.219
+     "t1": 52.787
     },
     {
-     "t0": 49.219,
+     "t0": 52.787,
      "texto": "MÁS AZÚCAR",
      "x": 540,
      "y": 1620,
@@ -325,12 +325,12 @@
      "centro": true,
      "fijo": true,
      "caja": true,
-     "t1": 50.902
+     "t1": 55.027
     }
    ]
   },
   {
-   "t0": 53.241,
+   "t0": 57.204,
    "fondo": "img/es_estante.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -350,12 +350,12 @@
      "img/es_estante_b.jpg"
     ],
     "cada": 0.3,
-    "desde": 56.364,
+    "desde": 60.756,
     "hasta": 999
    }
   },
   {
-   "t0": 58.836999999999996,
+   "t0": 63.21,
    "fondo": "img/es_habla.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -377,21 +377,21 @@
    "habla": true,
    "cambios": [
     {
-     "t": 61.565,
+     "t": 66.067,
      "fondo": "img/es_habla_come.jpg"
     },
     {
-     "t": 62.552,
+     "t": 67.344,
      "fondo": "img/es_habla_vende.jpg"
     },
     {
-     "t": 63.574,
+     "t": 68.597,
      "fondo": "img/es_habla_cree.jpg"
     }
    ]
   },
   {
-   "t0": 64.54899999999999,
+   "t0": 69.676,
    "fondo": "img/es_sigue.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -404,7 +404,7 @@
    "habla": true,
    "cambios": [
     {
-     "t": 70.238,
+     "t": 76.676,
      "fondo": "img/es_jajas.jpg"
     }
    ]
