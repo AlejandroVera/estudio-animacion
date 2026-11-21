@@ -44,41 +44,29 @@
    },
    "vivas": {
     "AGENTE": {
-     "habla": [
-      "img/cv_a_h1.png",
-      "img/cv_a_h2.png",
-      "img/cv_a_h3.png",
-      "img/cv_a_h4.png",
-      null
-     ],
-     "escucha": [
-      null,
-      null,
-      "img/cv_a_e1.png"
-     ],
-     "parpadeo": "img/cv_a_parp.png",
-     "cada_habla": 0.8,
-     "cada_escucha": 2.6
+     "habla": [],
+     "escucha": [],
+     "parpadeo": "img/cv_a_parp.png"
     },
     "ROSA": {
-     "habla": [
-      "img/cv_r_h1.png",
-      null,
-      "img/cv_r_h1.png",
-      "img/cv_r_h3.png"
-     ],
-     "escucha": [
-      null,
-      null,
-      null,
-      "img/cv_r_h3.png"
-     ],
-     "parpadeo": "img/cv_r_parp.png",
-     "cada_habla": 1.1,
-     "cada_escucha": 4.5
+     "habla": [],
+     "escucha": [],
+     "parpadeo": "img/cv_r_parp.png"
     }
    },
    "gestos": [
+    {
+     "t0": 0,
+     "t1": 3.03,
+     "quien": "AGENTE",
+     "img": "img/cv_a_h1.png"
+    },
+    {
+     "t0": 3.03,
+     "t1": 5.6049999999999995,
+     "quien": "ROSA",
+     "img": "img/cv_r_h1.png"
+    },
     {
      "t0": 5.6049999999999995,
      "t1": 9.771,
@@ -91,6 +79,24 @@
      "quien": "ROSA",
      "img": "img/cv_g_viga.png",
      "boca": "img/cv_g_viga_rboca.png"
+    },
+    {
+     "t0": 11.371,
+     "t1": 12.775,
+     "quien": "AGENTE",
+     "img": "img/cv_a_h3.png"
+    },
+    {
+     "t0": 12.775,
+     "t1": 15.411,
+     "quien": "AGENTE",
+     "img": "img/cv_a_h2.png"
+    },
+    {
+     "t0": 15.411,
+     "t1": 16.58,
+     "quien": "ROSA",
+     "img": "img/cv_r_h1.png"
     }
    ]
   },
@@ -146,41 +152,24 @@
    },
    "vivas": {
     "AGENTE": {
-     "habla": [
-      "img/cv_a_h1.png",
-      "img/cv_a_h2.png",
-      "img/cv_a_h3.png",
-      "img/cv_a_h4.png",
-      null
-     ],
-     "escucha": [
-      null,
-      null,
-      "img/cv_a_e1.png"
-     ],
-     "parpadeo": "img/cv_a_parp.png",
-     "cada_habla": 0.8,
-     "cada_escucha": 2.6
+     "habla": [],
+     "escucha": [],
+     "parpadeo": "img/cv_a_parp.png"
     },
     "ROSA": {
-     "habla": [
-      "img/cv_r_h1.png",
-      null,
-      "img/cv_r_h1.png",
-      "img/cv_r_h3.png"
-     ],
-     "escucha": [
-      null,
-      null,
-      null,
-      "img/cv_r_h3.png"
-     ],
-     "parpadeo": "img/cv_r_parp.png",
-     "cada_habla": 1.1,
-     "cada_escucha": 4.5
+     "habla": [],
+     "escucha": [],
+     "parpadeo": "img/cv_r_parp.png"
     }
    },
-   "gestos": []
+   "gestos": [
+    {
+     "t0": 18.356,
+     "t1": 19.572,
+     "quien": "ROSA",
+     "img": "img/cv_r_h1.png"
+    }
+   ]
   },
   {
    "t0": 19.492,
@@ -252,41 +241,23 @@
    },
    "vivas": {
     "AGENTE": {
-     "habla": [
-      "img/cv_a_h1.png",
-      "img/cv_a_h2.png",
-      "img/cv_a_h3.png",
-      "img/cv_a_h4.png",
-      null
-     ],
-     "escucha": [
-      null,
-      null,
-      "img/cv_a_e1.png"
-     ],
-     "parpadeo": "img/cv_a_parp.png",
-     "cada_habla": 0.8,
-     "cada_escucha": 2.6
+     "habla": [],
+     "escucha": [],
+     "parpadeo": "img/cv_a_parp.png"
     },
     "ROSA": {
-     "habla": [
-      "img/cv_r_h1.png",
-      null,
-      "img/cv_r_h1.png",
-      "img/cv_r_h3.png"
-     ],
-     "escucha": [
-      null,
-      null,
-      null,
-      "img/cv_r_h3.png"
-     ],
-     "parpadeo": "img/cv_r_parp.png",
-     "cada_habla": 1.1,
-     "cada_escucha": 4.5
+     "habla": [],
+     "escucha": [],
+     "parpadeo": "img/cv_r_parp.png"
     }
    },
    "gestos": [
+    {
+     "t0": 25.455000000000002,
+     "t1": 30.87,
+     "quien": "ROSA",
+     "img": "img/cv_r_h3.png"
+    },
     {
      "t0": 25.455000000000002,
      "t1": 27.293000000000003,
@@ -313,9 +284,21 @@
     },
     {
      "t0": 32.377,
-     "t1": 33.949000000000005,
+     "t1": 33.669000000000004,
      "quien": "AGENTE",
      "img": "img/cv_g_mini.png"
+    },
+    {
+     "t0": 33.669000000000004,
+     "t1": 36.012,
+     "quien": "AGENTE",
+     "img": "img/cv_a_h1.png"
+    },
+    {
+     "t0": 36.012,
+     "t1": 37.46,
+     "quien": "ROSA",
+     "img": "img/cv_r_h1.png"
     }
    ]
   },
@@ -373,38 +356,14 @@
    },
    "vivas": {
     "AGENTE": {
-     "habla": [
-      "img/cv_a_h1.png",
-      "img/cv_a_h2.png",
-      "img/cv_a_h3.png",
-      "img/cv_a_h4.png",
-      null
-     ],
-     "escucha": [
-      null,
-      null,
-      "img/cv_a_e1.png"
-     ],
-     "parpadeo": "img/cv_a_parp.png",
-     "cada_habla": 0.8,
-     "cada_escucha": 2.6
+     "habla": [],
+     "escucha": [],
+     "parpadeo": "img/cv_a_parp.png"
     },
     "ROSA": {
-     "habla": [
-      "img/cv_r_h1.png",
-      null,
-      "img/cv_r_h1.png",
-      "img/cv_r_h3.png"
-     ],
-     "escucha": [
-      null,
-      null,
-      null,
-      "img/cv_r_h3.png"
-     ],
-     "parpadeo": "img/cv_r_parp.png",
-     "cada_habla": 1.1,
-     "cada_escucha": 4.5
+     "habla": [],
+     "escucha": [],
+     "parpadeo": "img/cv_r_parp.png"
     }
    },
    "gestos": [

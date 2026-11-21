@@ -50,7 +50,7 @@ ax, ay = int(np.median(xs)), int(np.median(ys))
 print('chico', rx, ry, int(rr), 'boca agente', ax, ay)
 cab_agente = ((xx - ax) / (0.068 * W)) ** 2 + ((yy - (ay - 0.035 * H)) / (0.072 * H)) ** 2 <= 1   # óvalo de la cara (un rectángulo cortaba el hombro al levantar el brazo)
 cab_chico = (xx - rx) ** 2 + (yy - ry) ** 2 <= (rr * 1.02) ** 2
-lado_chico = xx > (rx - 1.9 * rr)           # zona del chico (su mano al señalar el techo llega lejos)
+lado_chico = xx > int(0.47 * W)             # zona del chico: hasta donde empieza el agente (antes le cortaba la mano)
 lado_agente = xx < (rx - 0.9 * rr)          # zona del agente (su mano al señalar al chico)
 CABEZA = {'cv_g_viga', 'cv_g_metro'}
 
@@ -60,8 +60,8 @@ def capa(nom):
     e, d = cambio(nom)
     lado = lado_chico if quien == 'ROSA' else lado_agente
     d &= lado
-    if nom not in CABEZA:
-        d &= ~(cab_chico if quien == 'ROSA' else cab_agente)
+    if nom not in CABEZA and quien == 'AGENTE':   # al chico no se le protege la cabeza: le cortaba el brazo pegado a ella
+        d &= ~cab_agente
     d = ndi.binary_opening(d, iterations=2)
     lab, n = ndi.label(ndi.binary_dilation(d, iterations=8))
     if n:
@@ -70,8 +70,8 @@ def capa(nom):
     else:
         m = d
     m = ndi.binary_fill_holes(m) & lado
-    if nom not in CABEZA:
-        m &= ~(cab_chico if quien == 'ROSA' else cab_agente)
+    if nom not in CABEZA and quien == 'AGENTE':
+        m &= ~cab_agente
     guardar(e, m, nom)
 
 

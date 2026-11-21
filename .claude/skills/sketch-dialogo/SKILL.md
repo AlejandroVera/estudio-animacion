@@ -66,3 +66,13 @@ En la referencia (vídeo generativo) se mueven todo el rato. Con dibujos fijos s
 - La zona que protege la cabeza en las capas, un ÓVALO ajustado a la cara: un rectángulo le cortaba el hombro al
   levantar el brazo (muesca junto a la barba).
 - Un gesto concreto no debe congelar al personaje más de ~2 s (la casita: solo en «mini loft»).
+
+## Lecciones de la revisión v5 → v6 («el brazo se corta, gesticulan demasiado, movimientos sin sentido»)
+- NADA de gestos al azar (`vivas` con listas `habla`/`escucha` vacías, solo `parpadeo`). Coreografía escrita a mano
+  en `gestos`: UN gesto por frase elegido para lo que dice (pregunta = palmas arriba; «techos» = señala el techo;
+  «el encanto» = mano al pecho; «650 al mes» = dedo arriba; «mini loft» = la casita…), mantenido toda la frase.
+  El que escucha, quieto; como mucho una reacción con sentido (brazos cruzados tras «esto es un trastero»).
+- Recortar las capas sin cortar brazos: la zona de cada personaje llega hasta donde empieza el otro (no un margen
+  alrededor de su cabeza), y NO proteger la cabeza del chico (su brazo pegado a la cabeza quedaba cortado; si la
+  edición no cambió la cabeza, no entra en la capa de todas formas). Al agente sí: óvalo de la cara.
+- Revisar cada capa a tamaño real sobre el plano fijo antes de montar (hoja de recortes por personaje).

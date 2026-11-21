@@ -47,12 +47,10 @@ def T(palabra, n=0):
 
 
 C = I + 'cv_'
-VIVAS = {'AGENTE': {'habla': [C + 'a_h1.png', C + 'a_h2.png', C + 'a_h3.png', C + 'a_h4.png', None],
-                    'escucha': [None, None, C + 'a_e1.png'], 'parpadeo': C + 'a_parp.png',
-                    'cada_habla': 0.8, 'cada_escucha': 2.6},
-         'ROSA': {'habla': [C + 'r_h1.png', None, C + 'r_h1.png', C + 'r_h3.png'],
-                  'escucha': [None, None, None, C + 'r_h3.png'], 'parpadeo': C + 'r_parp.png',
-                  'cada_habla': 1.1, 'cada_escucha': 4.5}}
+# Sin gestos al azar («gesticulan demasiado, algunos movimientos no tienen sentido»): solo parpadean solos; cada
+# frase lleva UN gesto elegido para lo que dice (abajo, en P) y el que escucha se queda quieto.
+VIVAS = {'AGENTE': {'habla': [], 'escucha': [], 'parpadeo': C + 'a_parp.png'},
+         'ROSA': {'habla': [], 'escucha': [], 'parpadeo': C + 'r_parp.png'}}
 
 
 def G(t0, t1, quien, n, boca=None):
@@ -73,19 +71,29 @@ def gag(base, t0, otro, hasta=99, **k):
 
 c = 0.08   # los cortes y gestos, un pelín antes de su palabra
 P = [
-    charla(0, [G(L[2] - c, L[3] - c, 'AGENTE', 'g_techos'), G(L[3] - c, L[4] - c, 'ROSA', 'g_viga', 'g_viga_rboca')]),
+    charla(0, [G(0, L[1] - c, 'AGENTE', 'a_h1'),                                   # «este es el piso»: lo presenta
+               G(L[1] - c, L[2] - c, 'ROSA', 'r_h1'),                              # «¿por qué agachado?»: palmas arriba
+               G(L[2] - c, L[3] - c, 'AGENTE', 'g_techos'),                        # «techos con personalidad»
+               G(L[3] - c, L[4] - c, 'ROSA', 'g_viga', 'g_viga_rboca'),            # «me acabo de dar con la viga»
+               G(L[4] - c, T('seiscientos') - c, 'AGENTE', 'a_h3'),                # «eso es el encanto»: mano al pecho
+               G(T('seiscientos') - c, L[5] - c, 'AGENTE', 'a_h2'),                # «650 al mes»: dedo arriba
+               G(L[5] - c, L[6], 'ROSA', 'r_h1')]),                                # «¿y la ducha?»
     gag('es_ducha', L[6] - c, 'es_ducha_c', hasta=T('spa') - c, zoom=1.12, cy=0.6, agente=['es_ducha', 'es_ducha_c'],
         cambios=[ch(T('spa') - c, 'es_ducha_b')]),
-    charla(L[7] - c),
+    charla(L[7] - c, [G(L[7] - c, L[8], 'ROSA', 'r_h1')]),                         # «¿y la cocina?»
     gag('es_cocina', L[8] - c, 'es_cocina_c', hasta=T('ergonomía') - c, zoom=1.07,
         agente=['es_cocina', 'es_cocina_c', 'es_cocina_b'], cambios=[ch(T('ergonomía') - c, 'es_cocina_b')]),
-    esc('es_pprosa', L[9] - c, rosa=['es_pprosa']),
-    charla(L[10] - c, [G(L[10] - c, T('abajo') - c, 'AGENTE', 'g_no'), G(T('abajo') - c, T('loft') - c, 'AGENTE', 'g_abajo'),
-                       G(T('loft') - c, L[11] - c, 'AGENTE', 'g_loft'), G(L[11] - c, L[12] - c, 'ROSA', 'r_h2'),
-                       G(L[12] - c, T('ahora') + 0.2, 'AGENTE', 'g_mini')]),
+    esc('es_pprosa', L[9] - c, rosa=['es_pprosa']),                                # «esto es un trastero»
+    charla(L[10] - c, [G(L[10] - c, L[11] - c, 'ROSA', 'r_h3'),                   # escucha con los brazos cruzados
+                       G(L[10] - c, T('abajo') - c, 'AGENTE', 'g_no'), G(T('abajo') - c, T('loft') - c, 'AGENTE', 'g_abajo'),
+                       G(T('loft') - c, L[11] - c, 'AGENTE', 'g_loft'),
+                       G(L[11] - c, L[12] - c, 'ROSA', 'r_h2'),                    # «¿metro veinte?»: señala el techo
+                       G(L[12] - c, T('ahora') - c, 'AGENTE', 'g_mini'),           # «un mini loft»: la casita
+                       G(T('ahora') - c, L[13] - c, 'AGENTE', 'a_h1'),             # «ahora se lleva todo mini»
+                       G(L[13] - c, L[14], 'ROSA', 'r_h1')]),                      # «¿y si vienen amigos?»
     gag('es_amigos', L[14] - c, 'es_amigos_b'),
-    esc('es_pprosa', L[15] - c, rosa=['es_pprosa']),
-    charla(L[16] - c, [G(L[16] - c, T('hay') - c, 'AGENTE', 'g_reloj')]),
+    esc('es_pprosa', L[15] - c, rosa=['es_pprosa']),                               # «me lo tengo que pensar»
+    charla(L[16] - c, [G(L[16] - c, T('hay') - c, 'AGENTE', 'g_reloj')]),          # «hasta las cinco»: el reloj
     gag('es_escalera', T('hay') - c, 'es_escalera_b', zoom=1.12, cy=0.55),
 ]
 FIN = PAL[-1]['fin'] + 2.4
