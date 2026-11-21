@@ -6,7 +6,9 @@
       siguiente como contexto (entonación de conversación), se le quita el silencio de los bordes y se pegan con
       un hueco corto. Escribe salida.mp3 y salida.json ({palabras: [{texto, inicio, fin, tipo, quien}],
       frases: [{quien, texto, inicio, fin}]}). Cada frase se guarda también en salida_frases/NN.mp3/json, así
-      `--rehacer N` vuelve a generar solo esa frase y se monta todo otra vez.
+      `--rehacer N` vuelve a generar solo esa frase y se monta todo otra vez. `--preguntas 4`: cada frase con «?» se
+      genera 4 veces y se queda la toma cuyo tono más SUBE al final (tono.py), porque la voz a veces las dice como
+      afirmaciones. `--tempo AGENTE=1.15` acelera a un personaje sin cambiar su tono.
 """
 import json, os, re, sys
 import numpy as np
@@ -20,6 +22,7 @@ VOCES = {'ROSA': 't9LRTh3y1ioN00e9wsNh',      # Aaron Abad (Chico rosa)
 
 hueco = float(opcion('--hueco', '0.28'))
 # velocidad por personaje (atempo de ffmpeg: no cambia el tono), p. ej. --tempo AGENTE=1.15
+PREGUNTAS = int(opcion('--preguntas', '0'))  # tomas por cada pregunta: se queda la que más SUBE al final
 TEMPO = {k: float(v) for k, v in (x.split('=') for x in (opcion('--tempo', '') or '').split(',') if x)}
 rehacer = opcion('--rehacer')
 rehacer = {int(x) for x in rehacer.split(',')} if rehacer else set()
@@ -53,6 +56,20 @@ for i, (quien, texto) in enumerate(frases):
         open(f + '.mp3', 'wb').write(mp3)
         json.dump({'palabras': palabras_de(al)}, open(f + '.json', 'w'), ensure_ascii=False)
         print('generada', i, quien, texto)
+        if PREGUNTAS > 1 and texto.rstrip().endswith('?'):
+            # la voz a veces dice las preguntas como afirmaciones: varias tomas y la de más subida de tono final
+            from tono import subida
+            mejor = (subida(f + '.mp3'), None)
+            for k in range(PREGUNTAS - 1):
+                mp3, al = api_voz(texto, VOCES[quien], antes, despues)
+                open(f + '_t.mp3', 'wb').write(mp3)
+                st = subida(f + '_t.mp3')
+                if st > mejor[0]:
+                    mejor = (st, (mp3, al))
+            if mejor[1]:
+                open(f + '.mp3', 'wb').write(mejor[1][0])
+                json.dump({'palabras': palabras_de(mejor[1][1])}, open(f + '.json', 'w'), ensure_ascii=False)
+            print('   pregunta: subida final %.1f semitonos' % mejor[0])
     x = decodificar(open(f + '.mp3', 'rb').read())
     pal = json.load(open(f + '.json'))['palabras']
     tp = TEMPO.get(quien, 1.0)

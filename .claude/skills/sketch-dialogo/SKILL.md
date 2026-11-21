@@ -76,3 +76,7 @@ En la referencia (vídeo generativo) se mueven todo el rato. Con dibujos fijos s
   alrededor de su cabeza), y NO proteger la cabeza del chico (su brazo pegado a la cabeza quedaba cortado; si la
   edición no cambió la cabeza, no entra en la capa de todas formas). Al agente sí: óvalo de la cara.
 - Revisar cada capa a tamaño real sobre el plano fijo antes de montar (hoja de recortes por personaje).
+- PREGUNTAS que no suenan a pregunta (la voz de ElevenLabs a veces las dice planas o bajando): `dialogo.py
+  --preguntas 4` genera 4 tomas de cada frase con «?» y se queda la que más sube al final (`herramientas/video/
+  tono.py` mide la subida en semitonos; planas/afirmación ≤ 0, pregunta clara ≥ +3). Comprobación extra: con
+  `voz.py comprobar` el transcriptor escribe «¿…?» si suena a pregunta.
