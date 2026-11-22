@@ -84,6 +84,50 @@ P = [
     # «Así que si estás harto… sígueme. Yo también te lo voy a decir, pero de jajas»: el guiño al final
     esc('es_sigue', T('así', 2) - c, ['es_sigue'], cambios=[ch(T('jajas') - c, 'es_jajas')]),
 ]
+
+# GOLPES DE ZOOM (ritmo): en el remate de cada frase, corte seco acercándose a la cara de Ana (centro sacado de su
+# capa de boca) y vuelta al plano abierto donde haga falta. [palabra, n, zoom, palabra de vuelta (o None), n]
+import copy
+from PIL import Image as _Im
+import numpy as _np
+
+
+def cara(fondo):
+    import os
+    alias = {'es_jajas': 'es_sigue', 'es_habla_come': 'es_habla', 'es_habla_vende': 'es_habla', 'es_habla_cree': 'es_habla'}
+    n = os.path.basename(fondo)[:-4]
+    n = alias.get(n, n)
+    while not os.path.exists(f'img/{n}_boca.png') and '_' in n[3:]:
+        n = n.rsplit('_', 1)[0]
+    b = f'img/{n}_boca.png'
+    a = _np.asarray(_Im.open(b).getchannel('A'))
+    ys, xs = _np.nonzero(a > 10)
+    return xs.mean() / a.shape[1], ys.mean() / a.shape[0] - 0.035
+
+
+GOLPES = [('sin', 0, 1.45, 'porque', 0), ('madre', 1, 1.35, 'mi', 4), ('huesos', 0, 1.35, 'y', 0),
+          ('cartera', 0, 1.35, 'así', 0), ('fin', 0, 1.4, 'cuatro', 0), ('tele', 0, 1.4, 'tele', 1),
+          ('dónut', 0, 1.35, 'pero', 1), ('ojos', 0, 1.4, 'pues', 0), ('creemos', 0, 1.35, 'así', 2),
+          ('sígueme', 0, 1.3, 'yo', 1), ('jajas', 0, 1.45, None, 0)]
+nuevos = []
+for pal, n, z, vuelta, nv in GOLPES:
+    t = T(pal, n) - c
+    base = [p for p in P if p['t0'] <= t][-1]
+    g = copy.deepcopy(base)
+    fondo_actual = base['fondo']
+    for cmb in base.get('cambios', []):
+        if cmb['t'] <= t:
+            fondo_actual = cmb['fondo']
+    cx, cy = cara(fondo_actual)
+    g.update(t0=t, zoom=z, cx=round(cx, 3), cy=round(cy, 3))
+    g.pop('rotulos', None)
+    nuevos.append(g)
+    if vuelta:
+        tv = T(vuelta, nv) - c
+        if not any(abs(p['t0'] - tv) < 0.35 for p in P):   # si ahí ya empieza otro plano, no hace falta volver
+            v = copy.deepcopy(base); v['t0'] = tv; v.pop('rotulos', None); nuevos.append(v)
+P = sorted(P + nuevos, key=lambda p: p['t0'])
+
 for p in P:
     p.pop('bocas_fix', None)
 FIN = PAL[-1]['fin'] + 2.0
