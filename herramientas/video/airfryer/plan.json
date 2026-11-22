@@ -1,0 +1,811 @@
+{
+ "alineacion": "voz/air.json",
+ "audio": "voz/air.mp3",
+ "sin_recolor": [
+  "es_",
+  "br_"
+ ],
+ "vel_letra": 0.03,
+ "subtitulos": {
+  "y": 230,
+  "tam": 76,
+  "cola": 0.15,
+  "cambiar": {
+   "air fryer": "air fryer"
+  }
+ },
+ "duracion": 72.59,
+ "planos": [
+  {
+   "t0": 0,
+   "fondo": "img/es_espera.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_espera.jpg": [
+     "img/es_espera_boca.png"
+    ]
+   },
+   "habla": true,
+   "rotulos": [
+    {
+     "t0": 0.18000000000000002,
+     "texto": "5 MESES",
+     "x": 760,
+     "y": 300,
+     "color": "rojo",
+     "tam": 110,
+     "centro": true,
+     "fijo": true,
+     "caja": true,
+     "t1": 1.526
+    }
+   ]
+  },
+  {
+   "t0": 3.16,
+   "fondo": "img/es_verano_c.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_verano_c.jpg": [
+     "img/es_verano_c_boca.png"
+    ]
+   },
+   "habla": true,
+   "cambios": [
+    {
+     "t": 5.380000000000001,
+     "fondo": "img/es_verano_b.jpg"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 3.421,
+     "texto": "JUNiO",
+     "x": 700,
+     "y": 1450,
+     "color": "rojo",
+     "tam": 120,
+     "centro": true,
+     "fijo": true,
+     "caja": true,
+     "t1": 4.1000000000000005
+    }
+   ]
+  },
+  {
+   "t0": 6.659000000000001,
+   "fondo": "img/br_web.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": false,
+   "rotulos": [
+    {
+     "t0": 6.759,
+     "texto": "69 €",
+     "x": 607,
+     "y": 1010.6,
+     "color": "negro",
+     "tam": 170,
+     "centro": true,
+     "fijo": true,
+     "caja": false
+    }
+   ]
+  },
+  {
+   "t0": 7.815,
+   "fondo": "img/es_hospital.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_hospital.jpg": [
+     "img/es_hospital_boca.png"
+    ],
+    "img/es_hospital_b.jpg": [
+     "img/es_hospital_boca.png"
+    ]
+   },
+   "habla": true,
+   "cambios": [
+    {
+     "t": 11.443999999999999,
+     "fondo": "img/es_hospital_b.jpg"
+    },
+    {
+     "t": 16.061,
+     "fondo": "img/es_hospital_c.jpg"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 11.453999999999999,
+     "texto": "69",
+     "x": 518,
+     "y": 405.6,
+     "color": "verde",
+     "tam": 120,
+     "centro": true,
+     "fijo": true,
+     "caja": false,
+     "t1": 12.431
+    },
+    {
+     "t0": 12.431,
+     "texto": "69",
+     "x": 518,
+     "y": 405.6,
+     "color": "verde",
+     "tam": 120,
+     "centro": true,
+     "fijo": true,
+     "caja": false,
+     "t1": 13.443
+    },
+    {
+     "t0": 13.443,
+     "texto": "69",
+     "x": 518,
+     "y": 405.6,
+     "color": "verde",
+     "tam": 120,
+     "centro": true,
+     "fijo": true,
+     "caja": false,
+     "t1": 14.469
+    },
+    {
+     "t0": 14.634,
+     "texto": "OCTUBRE",
+     "x": 540,
+     "y": 1500,
+     "color": "negro",
+     "tam": 110,
+     "centro": true,
+     "fijo": true,
+     "caja": true,
+     "t1": 16.061
+    },
+    {
+     "t0": 16.101,
+     "texto": "129",
+     "x": 505,
+     "y": 410.6,
+     "color": "blanco",
+     "tam": 120,
+     "centro": true,
+     "fijo": true,
+     "caja": false
+    }
+   ]
+  },
+  {
+   "t0": 10.696,
+   "fondo": "img/es_hospital.jpg",
+   "zoom": 1.4,
+   "cx": 0.763,
+   "cy": 0.38,
+   "bocas": {
+    "img/es_hospital.jpg": [
+     "img/es_hospital_boca.png"
+    ],
+    "img/es_hospital_b.jpg": [
+     "img/es_hospital_boca.png"
+    ]
+   },
+   "habla": true,
+   "cambios": [
+    {
+     "t": 11.443999999999999,
+     "fondo": "img/es_hospital_b.jpg"
+    },
+    {
+     "t": 16.061,
+     "fondo": "img/es_hospital_c.jpg"
+    }
+   ]
+  },
+  {
+   "t0": 11.443999999999999,
+   "fondo": "img/es_hospital.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_hospital.jpg": [
+     "img/es_hospital_boca.png"
+    ],
+    "img/es_hospital_b.jpg": [
+     "img/es_hospital_boca.png"
+    ]
+   },
+   "habla": true,
+   "cambios": [
+    {
+     "t": 11.443999999999999,
+     "fondo": "img/es_hospital_b.jpg"
+    },
+    {
+     "t": 16.061,
+     "fondo": "img/es_hospital_c.jpg"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 11.453999999999999,
+     "texto": "69",
+     "x": 518,
+     "y": 405.6,
+     "color": "verde",
+     "tam": 120,
+     "centro": true,
+     "fijo": true,
+     "caja": false,
+     "t1": 12.431
+    },
+    {
+     "t0": 12.431,
+     "texto": "69",
+     "x": 518,
+     "y": 405.6,
+     "color": "verde",
+     "tam": 120,
+     "centro": true,
+     "fijo": true,
+     "caja": false,
+     "t1": 13.443
+    },
+    {
+     "t0": 13.443,
+     "texto": "69",
+     "x": 518,
+     "y": 405.6,
+     "color": "verde",
+     "tam": 120,
+     "centro": true,
+     "fijo": true,
+     "caja": false,
+     "t1": 14.469
+    },
+    {
+     "t0": 14.634,
+     "texto": "OCTUBRE",
+     "x": 540,
+     "y": 1500,
+     "color": "negro",
+     "tam": 110,
+     "centro": true,
+     "fijo": true,
+     "caja": true,
+     "t1": 16.061
+    },
+    {
+     "t0": 16.101,
+     "texto": "129",
+     "x": 505,
+     "y": 410.6,
+     "color": "blanco",
+     "tam": 120,
+     "centro": true,
+     "fijo": true,
+     "caja": false
+    }
+   ]
+  },
+  {
+   "t0": 17.067,
+   "fondo": "img/br_correo.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": false,
+   "rotulos": [
+    {
+     "t0": 18.006,
+     "texto": "BLACK",
+     "x": 548,
+     "y": 515.6,
+     "color": "blanco",
+     "tam": 120,
+     "centro": true,
+     "fijo": true,
+     "caja": false
+    },
+    {
+     "t0": 18.241999999999997,
+     "texto": "FRiDAY",
+     "x": 548,
+     "y": 655.6,
+     "color": "blanco",
+     "tam": 120,
+     "centro": true,
+     "fijo": true,
+     "caja": false
+    },
+    {
+     "t0": 18.93,
+     "texto": "3 NOV",
+     "x": 548,
+     "y": 811.8,
+     "color": "rojo",
+     "tam": 110,
+     "centro": true,
+     "fijo": true,
+     "caja": true
+    }
+   ]
+  },
+  {
+   "t0": 19.911,
+   "fondo": "img/es_calendario.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_calendario.jpg": [
+     "img/es_calendario_boca.png"
+    ]
+   },
+   "habla": true,
+   "rotulos": [
+    {
+     "t0": 20.581,
+     "texto": "28",
+     "x": 766,
+     "y": 937.4,
+     "color": "rojo",
+     "tam": 80,
+     "centro": true,
+     "fijo": true,
+     "caja": false
+    },
+    {
+     "t0": 22.805999999999997,
+     "texto": "1 MES ENTERO",
+     "x": 540,
+     "y": 1640,
+     "color": "rojo",
+     "tam": 110,
+     "centro": true,
+     "fijo": true,
+     "caja": true
+    }
+   ]
+  },
+  {
+   "t0": 23.018,
+   "fondo": "img/es_calendario.jpg",
+   "zoom": 1.35,
+   "cx": 0.266,
+   "cy": 0.493,
+   "bocas": {
+    "img/es_calendario.jpg": [
+     "img/es_calendario_boca.png"
+    ]
+   },
+   "habla": true
+  },
+  {
+   "t0": 23.501,
+   "fondo": "img/es_corre.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": false,
+   "alterna": {
+    "imgs": [
+     "img/es_corre.jpg",
+     "img/es_corre_b.jpg"
+    ],
+    "cada": 0.14,
+    "desde": 0,
+    "hasta": 999
+   }
+  },
+  {
+   "t0": 25.743000000000002,
+   "fondo": "img/br_web.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": false,
+   "rotulos": [
+    {
+     "t0": 26.218999999999998,
+     "texto": "129 €",
+     "x": 607,
+     "y": 1010.6,
+     "color": "negro",
+     "tam": 170,
+     "centro": true,
+     "fijo": true,
+     "caja": false,
+     "t1": 27.605999999999998
+    },
+    {
+     "t0": 27.605999999999998,
+     "texto": "69 €",
+     "x": 607,
+     "y": 1010.6,
+     "color": "rojo",
+     "tam": 170,
+     "centro": true,
+     "fijo": true,
+     "caja": false
+    },
+    {
+     "t0": 29.003,
+     "texto": "-46 %",
+     "x": 760,
+     "y": 330,
+     "color": "rojo",
+     "tam": 130,
+     "centro": true,
+     "fijo": true,
+     "caja": true
+    }
+   ]
+  },
+  {
+   "t0": 30.849,
+   "fondo": "img/es_espera_seco.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_espera_seco.jpg": [
+     "img/es_espera_seco_boca.png"
+    ]
+   },
+   "habla": true,
+   "cambios": [
+    {
+     "t": 34.187,
+     "fondo": "img/es_espera_ilusion.jpg"
+    }
+   ]
+  },
+  {
+   "t0": 34.187,
+   "fondo": "img/es_espera_seco.jpg",
+   "zoom": 1.45,
+   "cx": 0.45,
+   "cy": 0.32,
+   "bocas": {
+    "img/es_espera_seco.jpg": [
+     "img/es_espera_seco_boca.png"
+    ]
+   },
+   "habla": true,
+   "cambios": [
+    {
+     "t": 34.187,
+     "fondo": "img/es_espera_ilusion.jpg"
+    }
+   ]
+  },
+  {
+   "t0": 34.934999999999995,
+   "fondo": "img/es_espera.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_espera.jpg": [
+     "img/es_espera_boca.png"
+    ],
+    "img/es_espera_ventana.jpg": [
+     "img/es_espera_boca.png"
+    ]
+   },
+   "habla": true,
+   "cambios": [
+    {
+     "t": 37.355,
+     "fondo": "img/es_espera_ventana.jpg"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 36.315,
+     "texto": "QUEDAN 3",
+     "x": 760,
+     "y": 1480,
+     "color": "rojo",
+     "tam": 110,
+     "centro": true,
+     "fijo": true,
+     "caja": true
+    }
+   ]
+  },
+  {
+   "t0": 39.370999999999995,
+   "fondo": "img/es_carrito.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_carrito.jpg": [
+     "img/es_carrito_boca.png"
+    ]
+   },
+   "habla": true
+  },
+  {
+   "t0": 43.004,
+   "fondo": "img/es_carrito.jpg",
+   "zoom": 1.35,
+   "cx": 0.77,
+   "cy": 0.401,
+   "bocas": {
+    "img/es_carrito.jpg": [
+     "img/es_carrito_boca.png"
+    ]
+   },
+   "habla": true
+  },
+  {
+   "t0": 43.955999999999996,
+   "fondo": "img/es_espera_compra.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_espera_compra.jpg": [
+     "img/es_espera_compra_boca.png"
+    ]
+   },
+   "habla": true,
+   "rotulos": [
+    {
+     "t0": 45.001,
+     "texto": "ENViO GRATiS",
+     "x": 540,
+     "y": 1470,
+     "color": "verde",
+     "tam": 100,
+     "centro": true,
+     "fijo": true,
+     "caja": true,
+     "t1": 46.105000000000004
+    },
+    {
+     "t0": 46.055,
+     "texto": "7-10 DÍAS",
+     "x": 540,
+     "y": 1470,
+     "color": "negro",
+     "tam": 110,
+     "centro": true,
+     "fijo": true,
+     "caja": true
+    }
+   ]
+  },
+  {
+   "t0": 48.632,
+   "fondo": "img/br_reyes.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": false,
+   "alterna": {
+    "imgs": [
+     "img/br_reyes.jpg",
+     "img/br_reyes_b.jpg"
+    ],
+    "cada": 0.4,
+    "desde": 0,
+    "hasta": 999
+   }
+  },
+  {
+   "t0": 50.024,
+   "fondo": "img/es_cyber.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_cyber.jpg": [
+     "img/es_cyber_boca.png"
+    ]
+   },
+   "habla": true,
+   "rotulos": [
+    {
+     "t0": 52.295,
+     "texto": "59 €",
+     "x": 760,
+     "y": 1500,
+     "color": "rojo",
+     "tam": 140,
+     "centro": true,
+     "fijo": true,
+     "caja": true,
+     "t1": 53.383
+    },
+    {
+     "t0": 53.333,
+     "texto": "-10 €",
+     "x": 760,
+     "y": 1500,
+     "color": "rojo",
+     "tam": 140,
+     "centro": true,
+     "fijo": true,
+     "caja": true
+    }
+   ]
+  },
+  {
+   "t0": 55.018,
+   "fondo": "img/es_cyber.jpg",
+   "zoom": 1.4,
+   "cx": 0.459,
+   "cy": 0.39,
+   "bocas": {
+    "img/es_cyber.jpg": [
+     "img/es_cyber_boca.png"
+    ]
+   },
+   "habla": true
+  },
+  {
+   "t0": 55.47,
+   "fondo": "img/es_puerta.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_puerta.jpg": [
+     "img/es_puerta_boca.png"
+    ]
+   },
+   "habla": true
+  },
+  {
+   "t0": 58.516999999999996,
+   "fondo": "img/br_punto.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": false,
+   "cambios": [
+    {
+     "t": 60.678,
+     "fondo": "img/br_punto_b.jpg"
+    }
+   ]
+  },
+  {
+   "t0": 61.172,
+   "fondo": "img/es_oficina.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_oficina.jpg": [
+     "img/es_oficina_boca.png"
+    ]
+   },
+   "habla": true,
+   "sub_y": 1700,
+   "cambios": [
+    {
+     "t": 61.71,
+     "fondo": "img/es_oficina_b.jpg"
+    }
+   ]
+  },
+  {
+   "t0": 61.71,
+   "fondo": "img/es_oficina.jpg",
+   "zoom": 1.3,
+   "cx": 0.574,
+   "cy": 0.422,
+   "bocas": {
+    "img/es_oficina.jpg": [
+     "img/es_oficina_boca.png"
+    ]
+   },
+   "habla": true,
+   "sub_y": 1700,
+   "cambios": [
+    {
+     "t": 61.71,
+     "fondo": "img/es_oficina_b.jpg"
+    }
+   ]
+  },
+  {
+   "t0": 62.172,
+   "fondo": "img/br_madre.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": false,
+   "alterna": {
+    "imgs": [
+     "img/br_madre.jpg",
+     "img/br_madre_b.jpg"
+    ],
+    "cada": 0.22,
+    "desde": 0,
+    "hasta": 999
+   }
+  },
+  {
+   "t0": 64.876,
+   "fondo": "img/es_lee.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_lee.jpg": [
+     "img/es_lee_boca.png"
+    ]
+   },
+   "habla": true
+  },
+  {
+   "t0": 66.956,
+   "fondo": "img/br_madre_c.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": false
+  },
+  {
+   "t0": 69.202,
+   "fondo": "img/es_final.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_final.jpg": [
+     "img/es_final_boca.png"
+    ]
+   },
+   "habla": true,
+   "cambios": [
+    {
+     "t": 70.945,
+     "fondo": "img/es_final_b.jpg"
+    }
+   ]
+  },
+  {
+   "t0": 69.901,
+   "fondo": "img/es_final.jpg",
+   "zoom": 1.4,
+   "cx": 0.455,
+   "cy": 0.388,
+   "bocas": {
+    "img/es_final.jpg": [
+     "img/es_final_boca.png"
+    ]
+   },
+   "habla": true,
+   "cambios": [
+    {
+     "t": 70.945,
+     "fondo": "img/es_final_b.jpg"
+    }
+   ]
+  }
+ ]
+}
