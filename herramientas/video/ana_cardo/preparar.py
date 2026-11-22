@@ -44,10 +44,19 @@ for f in sorted(os.listdir('crudo')):
     if not f.endswith('_boca.png'):
         continue
     base = f[:-9]
-    A = Image.open(f'img/{base}.jpg').convert('RGB')
+    # la boca se busca comparando con el dibujo del que se editó (si la base final es otra versión, p. ej. con el
+    # aguacate añadido, la diferencia se comería el aguacate y palpitaría al hablar)
+    ORIGEN = {'es_sigue': 'crudo/es_sigue_1.png'}
+    A = Image.open(ORIGEN.get(base, f'img/{base}.jpg')).convert('RGB')
     a = np.asarray(A).astype(int)
     b = np.asarray(carga(f[:-4], A.size)).astype(int)
     d = ndi.binary_opening(np.abs(a - b).max(2) > 50, iterations=2)
+    # solo dentro de la cara (si no, un cambio en el aguacate de la sudadera se toma por la boca y palpita)
+    ZONA = {}
+    if base in ZONA:
+        y0, y1 = ZONA[base]
+        d[:int(y0 * d.shape[0])] = False
+        d[int(y1 * d.shape[0]):] = False
     lab, n = ndi.label(ndi.binary_dilation(d, iterations=6))
     m = np.zeros(d.shape, bool)
     if n:

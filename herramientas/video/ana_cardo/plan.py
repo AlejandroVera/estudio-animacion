@@ -48,6 +48,8 @@ P = [
     esc('es_consulta', 0, ['es_consulta', 'es_consulta_b', 'es_consulta_c'],
         cambios=[ch(T('sin') - c, 'es_consulta_b'), ch(T('nutricionista') - c, 'es_consulta_c')],
         rotulos=[R(T('ana', 1) - 0.1, 'ANA CARDO', 1600, 'verde', 120, T('sin') - 0.1)]),
+    # «¿Que por qué me hice nutri?»: corte a otro plano de la consulta (sentada en la mesa)
+    esc('es_habla', T('que') - c, ['es_habla']),
     # «¿Que por qué me hice nutri? Porque en mi casa todo el mundo sabía de nutrición»: la familia opinando
     esc('es_familia', T('porque') - c, []),
     # «Mi madre decía que el huevo sube el colesterol»: el huevo como si fuera peligroso, el dedo moviéndose
@@ -109,7 +111,7 @@ def cara(fondo):
     return xs.mean() / a.shape[1], ys.mean() / a.shape[0] - 0.035
 
 
-GOLPES = [('sin', 0, 1.45, 'porque', 0), ('madre', 1, 1.35, 'mi', 4), ('huesos', 0, 1.35, 'y', 0),
+GOLPES = [('sin', 0, 1.45, 'nutricionista', 0), ('madre', 1, 1.35, 'mi', 4), ('huesos', 0, 1.35, 'y', 0),
           ('cartera', 0, 1.35, 'así', 0), ('fin', 0, 1.4, 'cuatro', 0), ('tele', 0, 1.4, 'tele', 1),
           ('dónut', 0, 1.35, 'pero', 1), ('ojos', 0, 1.4, 'pues', 0), ('creemos', 0, 1.35, 'así', 2),
           ('sígueme', 0, 1.3, 'yo', 1), ('jajas', 0, 1.45, None, 0)]

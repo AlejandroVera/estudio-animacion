@@ -89,6 +89,48 @@
    ]
   },
   {
+   "t0": 3.085,
+   "fondo": "img/es_consulta.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_consulta.jpg": [
+     "img/es_consulta_boca.png"
+    ],
+    "img/es_consulta_b.jpg": [
+     "img/es_consulta_b_boca.png"
+    ],
+    "img/es_consulta_c.jpg": [
+     "img/es_consulta_c_boca.png"
+    ]
+   },
+   "habla": true,
+   "cambios": [
+    {
+     "t": 2.039,
+     "fondo": "img/es_consulta_b.jpg"
+    },
+    {
+     "t": 3.085,
+     "fondo": "img/es_consulta_c.jpg"
+    }
+   ]
+  },
+  {
+   "t0": 4.045000000000001,
+   "fondo": "img/es_habla.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_habla.jpg": [
+     "img/es_habla_boca.png"
+    ]
+   },
+   "habla": true
+  },
+  {
    "t0": 5.4270000000000005,
    "fondo": "img/es_familia.jpg",
    "zoom": 1.0,
@@ -622,8 +664,8 @@
    "t0": 63.614,
    "fondo": "img/es_sigue.jpg",
    "zoom": 1.3,
-   "cx": 0.657,
-   "cy": 0.529,
+   "cx": 0.646,
+   "cy": 0.355,
    "bocas": {
     "img/es_sigue.jpg": [
      "img/es_sigue_boca.png"
@@ -660,8 +702,8 @@
    "t0": 66.485,
    "fondo": "img/es_sigue.jpg",
    "zoom": 1.45,
-   "cx": 0.657,
-   "cy": 0.529,
+   "cx": 0.646,
+   "cy": 0.355,
    "bocas": {
     "img/es_sigue.jpg": [
      "img/es_sigue_boca.png"
