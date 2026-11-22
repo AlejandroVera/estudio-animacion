@@ -55,7 +55,7 @@ def capa(nom):
     e, d = cambio(nom)
     lado = lado_chico if quien == 'ROSA' else lado_ana
     d &= lado
-    cabeza = nom in ('cv_a_gafas', 'cv_a_escribe')   # gafas bajadas / mira el papel: la cara cambia a propósito (a medias quedaba un ojo partido)
+    cabeza = nom in ('cv_a_gafas', 'cv_a_escribe', 'cv_a_cierra')   # gafas bajadas / mira el papel: la cara cambia a propósito (a medias quedaba un ojo partido)
     if quien == 'ANA' and not cabeza:
         d &= ~cab_ana
     if quien == 'ROSA':
@@ -85,6 +85,8 @@ def capa(nom):
         m = ndi.binary_fill_holes(m)
     if quien == 'ANA' and not cabeza:
         m &= ~cab_ana
+    if cabeza:
+        m |= cab_ana   # la cara entera del dibujo nuevo (por bloques se mezclaban ojos viejos y nuevos)
     guardar(e, m, nom)
 
 
@@ -110,7 +112,7 @@ def cara(nom, base_img, zona):
 
 for f in sorted(glob.glob('crudo/cv_*.png')):
     nom = os.path.basename(f)[:-4]
-    if nom in ('cv_rboca', 'cv_aboca'):
+    if nom in ('cv_rboca', 'cv_aboca') or nom.endswith('_boca'):
         continue
     if nom == 'cv_a_parp':
         cara(nom, BASE, cab_ana)
@@ -120,4 +122,6 @@ for f in sorted(glob.glob('crudo/cv_*.png')):
         capa(nom)
 cara('cv_rboca', BASE, cab_chico)
 cara('cv_aboca', BASE, cab_ana)
-# boca de Ana con las gafas bajadas (la cara cambia en ese gesto)
+# boca de Ana en el gesto final (sonriendo con la carpeta cerrada): su cara cambia, lleva boca propia
+if os.path.exists('crudo/cv_a_cierra_boca.png'):
+    cara('cv_a_cierra_boca', 'crudo/cv_a_cierra.png', cab_ana)

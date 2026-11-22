@@ -20,8 +20,8 @@ def cartel(caja, ang):
 
 cartel((70, 120, 1010, 430), 1.5)
 cartel((55, 1290, 1025, 1720), -1.5)
-P.linea(im, 'CiTA DE TiNDER', 150, 115, 'negro', 3)
-P.linea(im, 'O ENTREViSTA', 290, 105, 'rojo', 5)
+P.linea(im, 'PRiMERA CiTA', 150, 120, 'negro', 3)
+P.linea(im, 'DE TiNDER', 290, 110, 'rojo', 5)
 P.linea(im, '¿TÚ QUÉ', 1320, 130, 'negro', 7)
 P.linea(im, 'BUSCAS?', 1470, 150, 'rojo', 9)
 P.letras(im)

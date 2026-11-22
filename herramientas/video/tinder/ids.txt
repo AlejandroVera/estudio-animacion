@@ -32,3 +32,7 @@ es_pprosa_boca Td7Xd4cVNR
 es_ppana cpUep4w0eP
 es_ppana2 cpUedaB0eP
 es_ppana_aboca fHnqK8zCDY
+cierra_1 tCZE1XUmZJ
+cierra_2 fHnqstRCDY
+cv_a_cierra = cierra_1
+cv_a_cierra_boca LwI7REvswO

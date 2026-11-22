@@ -1,6 +1,6 @@
 {
- "alineacion": "voz/tinder.json",
- "audio": "voz/tinder.mp3",
+ "alineacion": "voz/tinder2.json",
+ "audio": "voz/tinder2.mp3",
  "vel_letra": 0.03,
  "subtitulos": {
   "y": 250,
@@ -22,7 +22,7 @@
    ]
   }
  },
- "duracion": 43.22,
+ "duracion": 34.23,
  "planos": [
   {
    "t0": 0,
@@ -57,32 +57,32 @@
    "gestos": [
     {
      "t0": 0,
-     "t1": 1.7979999999999998,
+     "t1": 1.845,
      "quien": "ANA",
      "img": "img/cv_a_boli.png"
     },
     {
-     "t0": 1.7979999999999998,
-     "t1": 3.398,
+     "t0": 1.845,
+     "t1": 3.537,
      "quien": "ROSA",
      "img": "img/cv_r_pecho.png"
     },
     {
-     "t0": 3.398,
-     "t1": 4.129,
+     "t0": 3.537,
+     "t1": 5.546,
      "quien": "ANA",
      "img": "img/cv_a_escribe.png"
     },
     {
-     "t0": 4.129,
-     "t1": 5.973,
+     "t0": 5.546,
+     "t1": 7.366,
      "quien": "ANA",
-     "img": "img/cv_a_boli.png"
+     "img": "img/cv_a_dos.png"
     }
    ]
   },
   {
-   "t0": 5.973,
+   "t0": 7.366,
    "fondo": "img/es_pprosa.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -97,7 +97,7 @@
    }
   },
   {
-   "t0": 7.375,
+   "t0": 8.594,
    "fondo": "img/es_charla.jpg",
    "zoom": 1.1,
    "cx": 0.5,
@@ -128,27 +128,27 @@
    },
    "gestos": [
     {
-     "t0": 7.375,
-     "t1": 9.033,
+     "t0": 8.594,
+     "t1": 10.565,
      "quien": "ANA",
      "img": "img/cv_a_boli.png"
     },
     {
-     "t0": 9.033,
-     "t1": 10.307,
+     "t0": 10.565,
+     "t1": 12.118,
      "quien": "ROSA",
      "img": "img/cv_r_palmas.png"
     },
     {
-     "t0": 11.015,
-     "t1": 13.302,
+     "t0": 12.815,
+     "t1": 14.73,
      "quien": "ANA",
      "img": "img/cv_a_dos.png"
     }
    ]
   },
   {
-   "t0": 13.302,
+   "t0": 14.73,
    "fondo": "img/es_sofa.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -163,13 +163,13 @@
    },
    "cambios": [
     {
-     "t": 15.158,
+     "t": 16.679000000000002,
      "fondo": "img/es_sofa_b.jpg"
     }
    ]
   },
   {
-   "t0": 16.432000000000002,
+   "t0": 18.383000000000003,
    "fondo": "img/es_charla.jpg",
    "zoom": 1.1,
    "cx": 0.5,
@@ -200,45 +200,27 @@
    },
    "gestos": [
     {
-     "t0": 16.432000000000002,
-     "t1": 18.382,
+     "t0": 18.383000000000003,
+     "t1": 18.963,
      "quien": "ANA",
      "img": "img/cv_a_escribe.png"
     },
     {
-     "t0": 18.382,
-     "t1": 20.307000000000002,
+     "t0": 18.963,
+     "t1": 20.586000000000002,
      "quien": "ANA",
      "img": "img/cv_a_boli.png"
     },
     {
-     "t0": 20.307000000000002,
-     "t1": 22.093,
-     "quien": "ROSA",
-     "img": "img/cv_r_pecho.png"
-    },
-    {
-     "t0": 22.093,
-     "t1": 23.277,
-     "quien": "ANA",
-     "img": "img/cv_a_gafas.png"
-    },
-    {
-     "t0": 23.277,
-     "t1": 24.714000000000002,
-     "quien": "ANA",
-     "img": "img/cv_a_boli.png"
-    },
-    {
-     "t0": 24.714000000000002,
-     "t1": 25.571,
+     "t0": 20.586000000000002,
+     "t1": 21.396,
      "quien": "ROSA",
      "img": "img/cv_r_dedo.png"
     }
    ]
   },
   {
-   "t0": 25.571,
+   "t0": 21.396,
    "fondo": "img/es_ppana.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -253,7 +235,7 @@
    }
   },
   {
-   "t0": 26.474,
+   "t0": 22.253,
    "fondo": "img/es_pizza.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -272,7 +254,7 @@
    }
   },
   {
-   "t0": 28.805000000000003,
+   "t0": 23.806,
    "fondo": "img/es_charla.jpg",
    "zoom": 1.1,
    "cx": 0.5,
@@ -303,15 +285,21 @@
    },
    "gestos": [
     {
-     "t0": 28.805000000000003,
-     "t1": 30.648000000000003,
+     "t0": 23.806,
+     "t1": 24.802000000000003,
      "quien": "ANA",
      "img": "img/cv_a_boli.png"
+    },
+    {
+     "t0": 24.802000000000003,
+     "t1": 25.8,
+     "quien": "ROSA",
+     "img": "img/cv_r_palmas.png"
     }
    ]
   },
   {
-   "t0": 30.648000000000003,
+   "t0": 25.8,
    "fondo": "img/es_madre.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -337,7 +325,7 @@
    }
   },
   {
-   "t0": 32.779,
+   "t0": 28.976000000000003,
    "fondo": "img/es_charla.jpg",
    "zoom": 1.1,
    "cx": 0.5,
@@ -368,44 +356,29 @@
    },
    "gestos": [
     {
-     "t0": 32.779,
-     "t1": 34.472,
+     "t0": 28.976000000000003,
+     "t1": 30.576,
      "quien": "ROSA",
      "img": "img/cv_r_palmas.png"
     },
     {
-     "t0": 34.472,
-     "t1": 37.279,
+     "t0": 30.576,
+     "t1": 99,
      "quien": "ANA",
-     "img": "img/cv_a_boli.png"
-    },
-    {
-     "t0": 37.279,
-     "t1": 38.646,
-     "quien": "ROSA",
-     "img": "img/cv_r_dedo.png"
-    },
-    {
-     "t0": 38.646,
-     "t1": 39.51,
-     "quien": "ANA",
-     "img": "img/cv_a_escribe.png"
+     "img": "img/cv_a_cierra.png",
+     "boca": "img/cv_a_cierra_boca.png"
     }
    ]
   },
   {
-   "t0": 39.51,
-   "fondo": "img/es_cola.jpg",
+   "t0": 32.628,
+   "fondo": "img/es_pprosa.jpg",
    "zoom": 1.0,
    "cx": 0.5,
    "cy": 0.5,
    "hablan": {
     "ROSA": {},
-    "ANA": {
-     "img/es_cola.jpg": [
-      "img/es_cola_aboca.png"
-     ]
-    }
+    "ANA": {}
    }
   }
  ]

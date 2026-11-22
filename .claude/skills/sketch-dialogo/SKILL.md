@@ -83,3 +83,13 @@ Rafa `Zb72NBThGN2Rv3y1RSTT`), nutri, Alejandro (Daniel - Podcast). Si falta el o
   personaje), `alterna`, subtítulos con `colores`/`max`/`mayusculas`/`contorno`/`cola`.
 - Descargas de Magnific sin gastar contexto: `creations_get` con 40+ ids (rellenar con ids viejos) para que la
   respuesta vaya a fichero y leerla con `herramientas/dl_magnific.py` (con 28 aún salía en línea).
+
+## Lecciones del sketch de Tinder (`herramientas/video/tinder/`, chico rosa + Ana Cardo, v2)
+- **La analogía no se fuerza**: la v1 llenaba la cita de jerga de entrevista de trabajo («¿indefinido o de prácticas?»,
+  «punto débil», «referencias», «ya te llamaremos, el siguiente») y a Alejandro le pareció forzada. Mejor una situación
+  normal con UN detalle absurdo (ella lo apunta todo en una carpeta) y preguntas que suenen a cita.
+- **El remate es la respuesta a la pregunta que se devuelve**: él pregunta «¿Y tú qué buscas?» y ella, tras el
+  interrogatorio, dice «No lo sé. Fluir.» (contradicción con lo que ha hecho). Después, 1,5 s de reacción en silencio.
+- Capas: gestos que cambian la cara (gafas, mirar el papel, sonrisa final) llevan la cara ENTERA del dibujo nuevo
+  (copiada por bloques quedaba un ojo partido) y su propia boca (`G(..., boca=...)`); en los gestos de brazos del chico
+  solo se copia la piel y su contorno (la IA redibujaba la camiseta sin la montaña).
