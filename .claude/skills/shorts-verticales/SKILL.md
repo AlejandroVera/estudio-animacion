@@ -144,3 +144,12 @@ Ejemplo completo: `herramientas/shorts/domingo/` (3 shorts del vídeo «domingo�
   plano con `zoom` 1,3-1,45 centrado en la cara (sacada de su capa de boca) en la palabra del remate y vuelta al
   plano abierto en la frase siguiente (`GOLPES` en su plan.py) + un whoosh muy bajo (-14 dB) en cada golpe.
   Ningún plano de más de 3-4 s sin un corte o un cambio.
+- 2026-11-22 (Ana Cardo, vídeo vertical de la nutri): «le falta el aguacate en el jersey en algunos planos; el súper con
+  los alimentos a la altura de los ojos no es realista; siempre está de frente». 1) Revisar el VESTUARIO de cada dibujo
+  (seña del personaje: aguacate en la sudadera) en una hoja de todos los `img/*.jpg`; si falta, edición «Change ONLY her
+  sweatshirt: big avocado print… like the reference» con la referencia como segunda imagen, y que lo que sujeta no lo tape.
+  2) Los gags del mundo real, como son de verdad (pasillo de cereales: los de mascotas a la altura de los ojos y de los
+  niños, avena sencilla abajo; nada de verduras en bandejas por el suelo). 3) Variar el ÁNGULO: no todo de frente a
+  cámara; de lado o de tres cuartos haciendo la acción (estudiando de perfil, recogiendo el título de una profesora, de
+  perfil con la lupa, en la nevera leyendo la etiqueta), y a cámara solo cuando se dirige al público (presentación,
+  remates, «sígueme»). Una boca de perfil que gira la cara entera no vale: ese plano va en voz en off.
