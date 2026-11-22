@@ -167,3 +167,8 @@ Ejemplo completo: `herramientas/shorts/domingo/` (3 shorts del vídeo «domingo�
   También: cada imagen cuando se dice («todas las semanas entraba a mirarla» = él mirando el portátil; el hospital
   entra en «como quien va a ver…»; «ahí está mi air fryer» = la web) y ningún rótulo tapa una frase entera de la voz
   (darles `t1` para que el subtítulo vuelva).
+- 2026-11-22 (nutri, «no está bien el clip de la madre»): al pedir un personaje ya visto usando como referencia una
+  ESCENA anterior, la IA copió el decorado entero (el comedor familiar con la silla vacía de Ana y dos mesas con la
+  misma olla, ella de pie detrás de una silla): no se entendía dónde estaba. Pedir «use the image ONLY for her
+  appearance… a NEW simple clean scene: one single room, no other people» y describir el sitio que toca (de noche en
+  su sillón con el teléfono). Revisar que cada escena tenga UNA composición clara, sin elementos duplicados.

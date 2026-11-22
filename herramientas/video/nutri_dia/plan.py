@@ -78,18 +78,18 @@ P = [
     # «Y justo me llama mi madre.»
     esc('es_llamada', T('y', 7) - c),
     # «¿Qué has cenado?»: su madre al teléfono
-    esc('br_madre', T('qué') - c),
+    esc('br_madre', T('qué') - c, zoom=1.15, cx=0.62, cy=0.55),
     # «Croquetas.»: pillada con la croqueta en la mano
     esc('es_llamada', T('croquetas', 1) - c),
     # «Y me dice: ¿y tú eres la nutricionista?»: la madre con la ceja levantada
-    esc('br_madre', T('y', 8) - c, ['br_madre'], cambios=[ch(T('y', 9) - c, 'br_madre_b')]),
+    esc('br_madre', T('y', 8) - c, ['br_madre'], zoom=1.15, cx=0.62, cy=0.55, cambios=[ch(T('y', 9) - c, 'br_madre_b')]),
     # «Pues sí. La misma que les dice a sus pacientes que para comer bien hacen falta tiempo y descanso. Y yo, de esas
     # dos cosas, no tengo ninguna.»: en el sofá con las croquetas; al final se queda dormida
     esc('es_final', T('pues') - c, cambios=[ch(PAL[-1]['fin'] + 0.3, 'es_final_b')],
         rotulos=[R(T('tiempo') - b, 'TiEMPO Y DESCANSO', 540, 1640, 'verde', 90, T('y', 11) - 0.05)]),
 ]
 
-CARA_FIJA = {'br_madre_b': (0.66, 0.5)}
+CARA_FIJA = {'br_madre_b': (0.73, 0.47)}
 
 
 def cara(fondo):

@@ -32,3 +32,8 @@ es_consulta2_b gOhiJc1SXO
 es_consulta2_c 79C24DlJAL
 br_whatsapp_c fHnrFPwCDY
 es_consulta1_c_boca UPaRypRwny
+madre2_1 0ewtmuBTfW
+madre2_2 ksdJOiA16B
+br_madre (v2) = madre2_1
+br_madre_b (v2) Bh6QFMRoQR
+br_madre_boca (v2) rgByP5Sxtc

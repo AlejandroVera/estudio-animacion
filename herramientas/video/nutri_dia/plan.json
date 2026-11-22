@@ -413,9 +413,9 @@
   {
    "t0": 44.711,
    "fondo": "img/br_madre.jpg",
-   "zoom": 1.0,
-   "cx": 0.5,
-   "cy": 0.5,
+   "zoom": 1.15,
+   "cx": 0.62,
+   "cy": 0.55,
    "bocas": {
     "img/br_madre.jpg": [
      "img/br_madre_boca.png"
@@ -439,9 +439,9 @@
   {
    "t0": 46.832,
    "fondo": "img/br_madre.jpg",
-   "zoom": 1.0,
-   "cx": 0.5,
-   "cy": 0.5,
+   "zoom": 1.15,
+   "cx": 0.62,
+   "cy": 0.55,
    "bocas": {
     "img/br_madre.jpg": [
      "img/br_madre_boca.png"
@@ -459,8 +459,8 @@
    "t0": 48.436,
    "fondo": "img/br_madre.jpg",
    "zoom": 1.35,
-   "cx": 0.66,
-   "cy": 0.5,
+   "cx": 0.73,
+   "cy": 0.47,
    "bocas": {
     "img/br_madre.jpg": [
      "img/br_madre_boca.png"
