@@ -1,0 +1,412 @@
+{
+ "alineacion": "voz/tinder.json",
+ "audio": "voz/tinder.mp3",
+ "vel_letra": 0.03,
+ "subtitulos": {
+  "y": 250,
+  "tam": 92,
+  "max": 3,
+  "contorno": 14,
+  "mayusculas": true,
+  "cola": 0.2,
+  "colores": {
+   "ROSA": [
+    255,
+    100,
+    205
+   ],
+   "ANA": [
+    120,
+    230,
+    90
+   ]
+  }
+ },
+ "duracion": 43.22,
+ "planos": [
+  {
+   "t0": 0,
+   "fondo": "img/es_charla.jpg",
+   "zoom": 1.1,
+   "cx": 0.5,
+   "cy": 0.56,
+   "hablan": {
+    "ROSA": {
+     "img/es_charla.jpg": [
+      "img/cv_rboca.png"
+     ]
+    },
+    "ANA": {
+     "img/es_charla.jpg": [
+      "img/cv_aboca.png"
+     ]
+    }
+   },
+   "vivas": {
+    "ANA": {
+     "habla": [],
+     "escucha": [],
+     "parpadeo": "img/cv_a_parp.png"
+    },
+    "ROSA": {
+     "habla": [],
+     "escucha": [],
+     "parpadeo": "img/cv_r_parp.png"
+    }
+   },
+   "gestos": [
+    {
+     "t0": 0,
+     "t1": 1.7979999999999998,
+     "quien": "ANA",
+     "img": "img/cv_a_boli.png"
+    },
+    {
+     "t0": 1.7979999999999998,
+     "t1": 3.398,
+     "quien": "ROSA",
+     "img": "img/cv_r_pecho.png"
+    },
+    {
+     "t0": 3.398,
+     "t1": 4.129,
+     "quien": "ANA",
+     "img": "img/cv_a_escribe.png"
+    },
+    {
+     "t0": 4.129,
+     "t1": 5.973,
+     "quien": "ANA",
+     "img": "img/cv_a_boli.png"
+    }
+   ]
+  },
+  {
+   "t0": 5.973,
+   "fondo": "img/es_pprosa.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "hablan": {
+    "ROSA": {
+     "img/es_pprosa.jpg": [
+      "img/es_pprosa_boca.png"
+     ]
+    },
+    "ANA": {}
+   }
+  },
+  {
+   "t0": 7.375,
+   "fondo": "img/es_charla.jpg",
+   "zoom": 1.1,
+   "cx": 0.5,
+   "cy": 0.56,
+   "hablan": {
+    "ROSA": {
+     "img/es_charla.jpg": [
+      "img/cv_rboca.png"
+     ]
+    },
+    "ANA": {
+     "img/es_charla.jpg": [
+      "img/cv_aboca.png"
+     ]
+    }
+   },
+   "vivas": {
+    "ANA": {
+     "habla": [],
+     "escucha": [],
+     "parpadeo": "img/cv_a_parp.png"
+    },
+    "ROSA": {
+     "habla": [],
+     "escucha": [],
+     "parpadeo": "img/cv_r_parp.png"
+    }
+   },
+   "gestos": [
+    {
+     "t0": 7.375,
+     "t1": 9.033,
+     "quien": "ANA",
+     "img": "img/cv_a_boli.png"
+    },
+    {
+     "t0": 9.033,
+     "t1": 10.307,
+     "quien": "ROSA",
+     "img": "img/cv_r_palmas.png"
+    },
+    {
+     "t0": 11.015,
+     "t1": 13.302,
+     "quien": "ANA",
+     "img": "img/cv_a_dos.png"
+    }
+   ]
+  },
+  {
+   "t0": 13.302,
+   "fondo": "img/es_sofa.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "hablan": {
+    "ROSA": {},
+    "ANA": {
+     "img/es_sofa.jpg": [
+      "img/es_sofa_aboca.png"
+     ]
+    }
+   },
+   "cambios": [
+    {
+     "t": 15.158,
+     "fondo": "img/es_sofa_b.jpg"
+    }
+   ]
+  },
+  {
+   "t0": 16.432000000000002,
+   "fondo": "img/es_charla.jpg",
+   "zoom": 1.1,
+   "cx": 0.5,
+   "cy": 0.56,
+   "hablan": {
+    "ROSA": {
+     "img/es_charla.jpg": [
+      "img/cv_rboca.png"
+     ]
+    },
+    "ANA": {
+     "img/es_charla.jpg": [
+      "img/cv_aboca.png"
+     ]
+    }
+   },
+   "vivas": {
+    "ANA": {
+     "habla": [],
+     "escucha": [],
+     "parpadeo": "img/cv_a_parp.png"
+    },
+    "ROSA": {
+     "habla": [],
+     "escucha": [],
+     "parpadeo": "img/cv_r_parp.png"
+    }
+   },
+   "gestos": [
+    {
+     "t0": 16.432000000000002,
+     "t1": 18.382,
+     "quien": "ANA",
+     "img": "img/cv_a_escribe.png"
+    },
+    {
+     "t0": 18.382,
+     "t1": 20.307000000000002,
+     "quien": "ANA",
+     "img": "img/cv_a_boli.png"
+    },
+    {
+     "t0": 20.307000000000002,
+     "t1": 22.093,
+     "quien": "ROSA",
+     "img": "img/cv_r_pecho.png"
+    },
+    {
+     "t0": 22.093,
+     "t1": 23.277,
+     "quien": "ANA",
+     "img": "img/cv_a_gafas.png"
+    },
+    {
+     "t0": 23.277,
+     "t1": 24.714000000000002,
+     "quien": "ANA",
+     "img": "img/cv_a_boli.png"
+    },
+    {
+     "t0": 24.714000000000002,
+     "t1": 25.571,
+     "quien": "ROSA",
+     "img": "img/cv_r_dedo.png"
+    }
+   ]
+  },
+  {
+   "t0": 25.571,
+   "fondo": "img/es_ppana.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "hablan": {
+    "ROSA": {},
+    "ANA": {
+     "img/es_ppana.jpg": [
+      "img/es_ppana_aboca.png"
+     ]
+    }
+   }
+  },
+  {
+   "t0": 26.474,
+   "fondo": "img/es_pizza.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "hablan": {
+    "ROSA": {},
+    "ANA": {}
+   },
+   "alterna": {
+    "imgs": [
+     "img/es_pizza.jpg",
+     "img/es_pizza_b.jpg"
+    ],
+    "cada": 0.45,
+    "hasta": 99
+   }
+  },
+  {
+   "t0": 28.805000000000003,
+   "fondo": "img/es_charla.jpg",
+   "zoom": 1.1,
+   "cx": 0.5,
+   "cy": 0.56,
+   "hablan": {
+    "ROSA": {
+     "img/es_charla.jpg": [
+      "img/cv_rboca.png"
+     ]
+    },
+    "ANA": {
+     "img/es_charla.jpg": [
+      "img/cv_aboca.png"
+     ]
+    }
+   },
+   "vivas": {
+    "ANA": {
+     "habla": [],
+     "escucha": [],
+     "parpadeo": "img/cv_a_parp.png"
+    },
+    "ROSA": {
+     "habla": [],
+     "escucha": [],
+     "parpadeo": "img/cv_r_parp.png"
+    }
+   },
+   "gestos": [
+    {
+     "t0": 28.805000000000003,
+     "t1": 30.648000000000003,
+     "quien": "ANA",
+     "img": "img/cv_a_boli.png"
+    }
+   ]
+  },
+  {
+   "t0": 30.648000000000003,
+   "fondo": "img/es_madre.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "hablan": {
+    "ROSA": {},
+    "ANA": {
+     "img/es_madre.jpg": [
+      "img/es_madre_aboca.png"
+     ],
+     "img/es_madre_b.jpg": [
+      "img/es_madre_aboca.png"
+     ]
+    }
+   },
+   "alterna": {
+    "imgs": [
+     "img/es_madre.jpg",
+     "img/es_madre_b.jpg"
+    ],
+    "cada": 0.5,
+    "hasta": 99
+   }
+  },
+  {
+   "t0": 32.779,
+   "fondo": "img/es_charla.jpg",
+   "zoom": 1.1,
+   "cx": 0.5,
+   "cy": 0.56,
+   "hablan": {
+    "ROSA": {
+     "img/es_charla.jpg": [
+      "img/cv_rboca.png"
+     ]
+    },
+    "ANA": {
+     "img/es_charla.jpg": [
+      "img/cv_aboca.png"
+     ]
+    }
+   },
+   "vivas": {
+    "ANA": {
+     "habla": [],
+     "escucha": [],
+     "parpadeo": "img/cv_a_parp.png"
+    },
+    "ROSA": {
+     "habla": [],
+     "escucha": [],
+     "parpadeo": "img/cv_r_parp.png"
+    }
+   },
+   "gestos": [
+    {
+     "t0": 32.779,
+     "t1": 34.472,
+     "quien": "ROSA",
+     "img": "img/cv_r_palmas.png"
+    },
+    {
+     "t0": 34.472,
+     "t1": 37.279,
+     "quien": "ANA",
+     "img": "img/cv_a_boli.png"
+    },
+    {
+     "t0": 37.279,
+     "t1": 38.646,
+     "quien": "ROSA",
+     "img": "img/cv_r_dedo.png"
+    },
+    {
+     "t0": 38.646,
+     "t1": 39.51,
+     "quien": "ANA",
+     "img": "img/cv_a_escribe.png"
+    }
+   ]
+  },
+  {
+   "t0": 39.51,
+   "fondo": "img/es_cola.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "hablan": {
+    "ROSA": {},
+    "ANA": {
+     "img/es_cola.jpg": [
+      "img/es_cola_aboca.png"
+     ]
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,867 @@
+{
+"palabras": [
+{
+"texto": "Bueno.",
+"inicio": 0.0,
+"fin": 0.43,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "¿Tú",
+"inicio": 0.453,
+"fin": 0.697,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "qué",
+"inicio": 0.743,
+"fin": 0.824,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "buscas",
+"inicio": 0.871,
+"fin": 1.161,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "en",
+"inicio": 1.207,
+"fin": 1.265,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "Tinder?",
+"inicio": 1.335,
+"fin": 1.718,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "Pues...",
+"inicio": 1.878,
+"fin": 2.296,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "algo",
+"inicio": 2.575,
+"fin": 2.795,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "estable.",
+"inicio": 2.818,
+"fin": 3.318,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "Estable.",
+"inicio": 3.478,
+"fin": 4.163,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "¿Indefinido",
+"inicio": 4.209,
+"fin": 4.964,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "o",
+"inicio": 5.022,
+"fin": 5.057,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "de",
+"inicio": 5.103,
+"fin": 5.161,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "prácticas?",
+"inicio": 5.196,
+"fin": 5.893,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "¿Perdona?",
+"inicio": 6.053,
+"fin": 6.61,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "¿Dónde",
+"inicio": 6.77,
+"fin": 7.258,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "te",
+"inicio": 7.316,
+"fin": 7.397,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "ves",
+"inicio": 7.455,
+"fin": 7.641,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "dentro",
+"inicio": 7.699,
+"fin": 7.943,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "de",
+"inicio": 7.966,
+"fin": 8.024,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "cinco",
+"inicio": 8.059,
+"fin": 8.349,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "años?",
+"inicio": 8.395,
+"fin": 8.953,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "En",
+"inicio": 9.113,
+"fin": 9.264,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "un",
+"inicio": 9.334,
+"fin": 9.38,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "sofá",
+"inicio": 9.403,
+"fin": 9.612,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "contigo,",
+"inicio": 9.659,
+"fin": 10.03,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "¿no?",
+"inicio": 10.053,
+"fin": 10.228,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "¿Sofá",
+"inicio": 10.387,
+"fin": 10.921,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "de",
+"inicio": 10.967,
+"fin": 11.037,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "dos",
+"inicio": 11.095,
+"fin": 11.339,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "o",
+"inicio": 11.85,
+"fin": 11.978,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "de",
+"inicio": 12.024,
+"fin": 12.082,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "tres",
+"inicio": 12.117,
+"fin": 12.279,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "plazas?",
+"inicio": 12.326,
+"fin": 12.872,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "Porque",
+"inicio": 13.382,
+"fin": 13.626,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "yo",
+"inicio": 13.661,
+"fin": 13.707,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "tengo",
+"inicio": 13.754,
+"fin": 13.916,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "un",
+"inicio": 13.94,
+"fin": 13.986,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "gato.",
+"inicio": 14.021,
+"fin": 14.567,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "Es",
+"inicio": 14.727,
+"fin": 14.878,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "que",
+"inicio": 14.924,
+"fin": 14.994,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "soy",
+"inicio": 15.04,
+"fin": 15.191,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "alérgico",
+"inicio": 15.238,
+"fin": 15.609,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "a",
+"inicio": 15.633,
+"fin": 15.656,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "los",
+"inicio": 15.679,
+"fin": 15.795,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "gatos.",
+"inicio": 15.842,
+"fin": 16.352,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "Apuntado.",
+"inicio": 16.512,
+"fin": 17.278,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "Punto",
+"inicio": 17.394,
+"fin": 17.719,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "débil.",
+"inicio": 17.766,
+"fin": 18.137,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "¿Alguna",
+"inicio": 18.462,
+"fin": 18.95,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "otra",
+"inicio": 18.997,
+"fin": 19.182,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "debilidad?",
+"inicio": 19.217,
+"fin": 20.227,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "Soy",
+"inicio": 20.387,
+"fin": 20.596,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "demasiado",
+"inicio": 20.642,
+"fin": 21.06,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "perfeccionista.",
+"inicio": 21.107,
+"fin": 22.012,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "Eso",
+"inicio": 22.173,
+"fin": 22.417,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "lo",
+"inicio": 22.452,
+"fin": 22.51,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "dicen",
+"inicio": 22.533,
+"fin": 22.742,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "todos.",
+"inicio": 22.8,
+"fin": 23.311,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "¿Qué",
+"inicio": 23.357,
+"fin": 23.589,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "cenaste",
+"inicio": 23.624,
+"fin": 23.926,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "ayer?",
+"inicio": 23.949,
+"fin": 24.634,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "Una",
+"inicio": 24.794,
+"fin": 24.957,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "pizza.",
+"inicio": 25.003,
+"fin": 25.491,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "¿Entera?",
+"inicio": 25.651,
+"fin": 26.394,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "Familiar.",
+"inicio": 26.554,
+"fin": 27.158,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "¿Tienes",
+"inicio": 27.318,
+"fin": 27.794,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "referencias?",
+"inicio": 27.84,
+"fin": 28.642,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "¿Alguna",
+"inicio": 28.885,
+"fin": 29.338,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "ex",
+"inicio": 29.408,
+"fin": 29.547,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "que",
+"inicio": 29.605,
+"fin": 29.675,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "hable",
+"inicio": 29.71,
+"fin": 29.884,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "bien",
+"inicio": 29.919,
+"fin": 30.046,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "de",
+"inicio": 30.081,
+"fin": 30.151,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "ti?",
+"inicio": 30.197,
+"fin": 30.569,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "Mi",
+"inicio": 30.728,
+"fin": 30.856,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "madre.",
+"inicio": 30.914,
+"fin": 31.378,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "Tu",
+"inicio": 31.538,
+"fin": 31.701,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "madre",
+"inicio": 31.747,
+"fin": 31.968,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "no",
+"inicio": 32.014,
+"fin": 32.072,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "cuenta.",
+"inicio": 32.107,
+"fin": 32.699,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "¿Y",
+"inicio": 32.859,
+"fin": 33.068,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "tú",
+"inicio": 33.149,
+"fin": 33.231,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "qué",
+"inicio": 33.277,
+"fin": 33.347,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "buscas",
+"inicio": 33.381,
+"fin": 33.66,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "en",
+"inicio": 33.718,
+"fin": 33.776,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "Tinder?",
+"inicio": 33.834,
+"fin": 34.392,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "Alguien",
+"inicio": 34.552,
+"fin": 34.9,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "que",
+"inicio": 34.947,
+"fin": 35.016,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "coma",
+"inicio": 35.063,
+"fin": 35.249,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "verdura",
+"inicio": 35.283,
+"fin": 35.597,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "sin",
+"inicio": 35.632,
+"fin": 35.748,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "que",
+"inicio": 35.783,
+"fin": 35.852,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "se",
+"inicio": 35.887,
+"fin": 35.957,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "lo",
+"inicio": 35.992,
+"fin": 36.073,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "pidan.",
+"inicio": 36.119,
+"fin": 37.199,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "El",
+"inicio": 37.359,
+"fin": 37.498,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "kétchup",
+"inicio": 37.556,
+"fin": 37.881,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "es",
+"inicio": 37.939,
+"fin": 37.986,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "tomate.",
+"inicio": 38.032,
+"fin": 38.566,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "Ya",
+"inicio": 38.726,
+"fin": 38.854,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "te",
+"inicio": 38.9,
+"fin": 38.958,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "llamaremos.",
+"inicio": 38.981,
+"fin": 39.632,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "¡El",
+"inicio": 39.666,
+"fin": 39.852,
+"tipo": "word",
+"quien": "ANA"
+},
+{
+"texto": "siguiente!",
+"inicio": 39.91,
+"fin": 40.816,
+"tipo": "word",
+"quien": "ANA"
+}
+],
+"frases": [
+{
+"quien": "ANA",
+"texto": "Bueno. ¿Tú qué buscas en Tinder?",
+"inicio": 0.0,
+"fin": 1.718
+},
+{
+"quien": "ROSA",
+"texto": "Pues... algo estable.",
+"inicio": 1.878,
+"fin": 3.318
+},
+{
+"quien": "ANA",
+"texto": "Estable. ¿Indefinido o de prácticas?",
+"inicio": 3.478,
+"fin": 5.893
+},
+{
+"quien": "ROSA",
+"texto": "¿Perdona?",
+"inicio": 6.053,
+"fin": 6.61
+},
+{
+"quien": "ANA",
+"texto": "¿Dónde te ves dentro de cinco años?",
+"inicio": 6.77,
+"fin": 8.953
+},
+{
+"quien": "ROSA",
+"texto": "En un sofá contigo, ¿no?",
+"inicio": 9.113,
+"fin": 10.227
+},
+{
+"quien": "ANA",
+"texto": "¿Sofá de dos o de tres plazas? Porque yo tengo un gato.",
+"inicio": 10.387,
+"fin": 14.567
+},
+{
+"quien": "ROSA",
+"texto": "Es que soy alérgico a los gatos.",
+"inicio": 14.727,
+"fin": 16.352
+},
+{
+"quien": "ANA",
+"texto": "Apuntado. Punto débil. ¿Alguna otra debilidad?",
+"inicio": 16.512,
+"fin": 20.227
+},
+{
+"quien": "ROSA",
+"texto": "Soy demasiado perfeccionista.",
+"inicio": 20.387,
+"fin": 22.013
+},
+{
+"quien": "ANA",
+"texto": "Eso lo dicen todos. ¿Qué cenaste ayer?",
+"inicio": 22.173,
+"fin": 24.634
+},
+{
+"quien": "ROSA",
+"texto": "Una pizza.",
+"inicio": 24.794,
+"fin": 25.491
+},
+{
+"quien": "ANA",
+"texto": "¿Entera?",
+"inicio": 25.651,
+"fin": 26.394
+},
+{
+"quien": "ROSA",
+"texto": "Familiar.",
+"inicio": 26.554,
+"fin": 27.158
+},
+{
+"quien": "ANA",
+"texto": "¿Tienes referencias? ¿Alguna ex que hable bien de ti?",
+"inicio": 27.318,
+"fin": 30.568
+},
+{
+"quien": "ROSA",
+"texto": "Mi madre.",
+"inicio": 30.728,
+"fin": 31.378
+},
+{
+"quien": "ANA",
+"texto": "Tu madre no cuenta.",
+"inicio": 31.538,
+"fin": 32.699
+},
+{
+"quien": "ROSA",
+"texto": "¿Y tú qué buscas en Tinder?",
+"inicio": 32.859,
+"fin": 34.392
+},
+{
+"quien": "ANA",
+"texto": "Alguien que coma verdura sin que se lo pidan.",
+"inicio": 34.552,
+"fin": 37.199
+},
+{
+"quien": "ROSA",
+"texto": "El kétchup es tomate.",
+"inicio": 37.359,
+"fin": 38.566
+},
+{
+"quien": "ANA",
+"texto": "Ya te llamaremos. ¡El siguiente!",
+"inicio": 38.726,
+"fin": 40.816
+}
+]
+}

@@ -1,0 +1,34 @@
+# nombre id (Magnific)
+loc_cafe_1 0ewe0buTfW
+loc_cafe_2 O6u6Odvynm
+mf_1 jU8UjW1LD0
+mf_2 UPaPUpiwny
+cv_a_escribe mE2uadwhJQ
+cv_a_gafas gOhywxYSXO
+cv_a_boli lJmOUxsgv9
+cv_a_dos 1lXgjKdr4r
+cv_a_fuera eI4tBefdqL
+cv_a_parp iGKz2RE3uK
+cv_aboca Td7XpeFVNR
+cv_r_palmas VXJBeXTMMU
+cv_r_pecho 4RHZi219Aa
+cv_r_dedo nVlM0eBYQD
+cv_r_parp 4RHZizj9Aa
+cv_rboca nVlM0BIYQD
+es_sofa s7tJUpol8e
+es_pizza cpUeMjk0eP
+es_madre ksdljVf16B
+es_cola lJmOw8tgv9
+es_pprosa YMgDTljWeC
+elegido plano fijo: mf_1
+es_sofa_b dt9mtgNXSL
+es_sofa_aboca JNE6NIjOq4
+es_pizza_b u5cK5GAQLD
+es_madre_b 5jpLjVIKxe
+es_madre_aboca LwI7w8LswO
+es_cola_b CqYbqcLEEy
+es_cola_aboca yiQ3ibMPW9
+es_pprosa_boca Td7Xd4cVNR
+es_ppana cpUep4w0eP
+es_ppana2 cpUedaB0eP
+es_ppana_aboca fHnqK8zCDY
