@@ -116,7 +116,7 @@ for f in sorted(glob.glob('crudo/cv_*.png')):
         continue
     if nom == 'cv_a_parp':
         cara(nom, BASE, cab_ana)
-    elif nom == 'cv_r_parp':
+    elif nom in ('cv_r_parp', 'cv_r_camara'):   # solo cambia su cara
         cara(nom, BASE, cab_chico)
     else:
         capa(nom)

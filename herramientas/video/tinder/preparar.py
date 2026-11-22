@@ -35,7 +35,9 @@ for nom, base in VARIANTES.items():
 for f in sorted(glob.glob('crudo/es_*boca.png')):
     nom = os.path.basename(f)[:-4]
     base = nom.rsplit('_', 1)[0]
-    A = Image.open(f'img/{base}.jpg').convert('RGB')
+    # la boca se busca comparando con el dibujo del que se editó (es_ppana se limpió después: la mancha borrada no es boca)
+    ORIGEN = {'es_ppana': 'crudo/es_ppana_orig.png'}
+    A = Image.open(ORIGEN.get(base, f'img/{base}.jpg')).convert('RGB')
     a = np.asarray(A).astype(int)
     b = np.asarray(carga(nom, A.size)).astype(int)
     d = ndi.binary_opening(np.abs(a - b).max(2) > 50, iterations=2)

@@ -93,3 +93,10 @@ Rafa `Zb72NBThGN2Rv3y1RSTT`), nutri, Alejandro (Daniel - Podcast). Si falta el o
 - Capas: gestos que cambian la cara (gafas, mirar el papel, sonrisa final) llevan la cara ENTERA del dibujo nuevo
   (copiada por bloques quedaba un ojo partido) y su propia boca (`G(..., boca=...)`); en los gestos de brazos del chico
   solo se copia la piel y su contorno (la IA redibujaba la camiseta sin la montaña).
+- Revisión de la v2 (Alejandro): «¿Perdona?» suelto no sonaba a pregunta (aunque el tono subiera) → mejor una pregunta
+  con contenido que repite lo absurdo («¿Cómo que hipoteca?»). El remate NO termina en un primer plano con zoom (no
+  tenía sentido): se queda en el plano fijo y el que encaja el golpe MIRA A CÁMARA, serio (`cv_r_camara`).
+- Revisar en cada gesto que los objetos no cambien (la carpeta salía del revés con el boli), restos raros en los
+  primeros planos, que la cara del gag cuadre con lo que se dice (vergüenza solo en «tu madre no cuenta», no mientras
+  él presume) y que los planos de gag no pisen la frase siguiente: `dialogo.py --pausa N=0.7` deja respirar el gag.
+  Subtítulos con `cola` 0,05 para que no pasen al plano siguiente.

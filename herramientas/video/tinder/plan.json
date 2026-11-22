@@ -8,7 +8,7 @@
   "max": 3,
   "contorno": 14,
   "mayusculas": true,
-  "cola": 0.2,
+  "cola": 0.05,
   "colores": {
    "ROSA": [
     255,
@@ -22,7 +22,7 @@
    ]
   }
  },
- "duracion": 34.23,
+ "duracion": 35.62,
  "planos": [
   {
    "t0": 0,
@@ -97,7 +97,7 @@
    }
   },
   {
-   "t0": 8.594,
+   "t0": 8.733,
    "fondo": "img/es_charla.jpg",
    "zoom": 1.1,
    "cx": 0.5,
@@ -128,27 +128,27 @@
    },
    "gestos": [
     {
-     "t0": 8.594,
-     "t1": 10.565,
+     "t0": 8.733,
+     "t1": 11.262,
      "quien": "ANA",
      "img": "img/cv_a_boli.png"
     },
     {
-     "t0": 10.565,
-     "t1": 12.118,
+     "t0": 11.262,
+     "t1": 12.815,
      "quien": "ROSA",
      "img": "img/cv_r_palmas.png"
     },
     {
-     "t0": 12.815,
-     "t1": 14.73,
+     "t0": 13.512,
+     "t1": 15.427,
      "quien": "ANA",
      "img": "img/cv_a_dos.png"
     }
    ]
   },
   {
-   "t0": 14.73,
+   "t0": 15.427,
    "fondo": "img/es_sofa.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -163,13 +163,13 @@
    },
    "cambios": [
     {
-     "t": 16.679000000000002,
+     "t": 17.375,
      "fondo": "img/es_sofa_b.jpg"
     }
    ]
   },
   {
-   "t0": 18.383000000000003,
+   "t0": 19.079,
    "fondo": "img/es_charla.jpg",
    "zoom": 1.1,
    "cx": 0.5,
@@ -200,27 +200,27 @@
    },
    "gestos": [
     {
-     "t0": 18.383000000000003,
-     "t1": 18.963,
+     "t0": 19.079,
+     "t1": 19.659000000000002,
      "quien": "ANA",
      "img": "img/cv_a_escribe.png"
     },
     {
-     "t0": 18.963,
-     "t1": 20.586000000000002,
+     "t0": 19.659000000000002,
+     "t1": 21.283,
      "quien": "ANA",
      "img": "img/cv_a_boli.png"
     },
     {
-     "t0": 20.586000000000002,
-     "t1": 21.396,
+     "t0": 21.283,
+     "t1": 22.093,
      "quien": "ROSA",
      "img": "img/cv_r_dedo.png"
     }
    ]
   },
   {
-   "t0": 21.396,
+   "t0": 22.093,
    "fondo": "img/es_ppana.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -235,7 +235,7 @@
    }
   },
   {
-   "t0": 22.253,
+   "t0": 22.949,
    "fondo": "img/es_pizza.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -254,7 +254,7 @@
    }
   },
   {
-   "t0": 23.806,
+   "t0": 24.413,
    "fondo": "img/es_charla.jpg",
    "zoom": 1.1,
    "cx": 0.5,
@@ -285,21 +285,27 @@
    },
    "gestos": [
     {
-     "t0": 23.806,
-     "t1": 24.802000000000003,
+     "t0": 24.413,
+     "t1": 26.199,
      "quien": "ANA",
      "img": "img/cv_a_boli.png"
     },
     {
-     "t0": 24.802000000000003,
-     "t1": 25.8,
+     "t0": 26.199,
+     "t1": 27.197000000000003,
      "quien": "ROSA",
      "img": "img/cv_r_palmas.png"
+    },
+    {
+     "t0": 27.197000000000003,
+     "t1": 28.773000000000003,
+     "quien": "ROSA",
+     "img": "img/cv_r_pecho.png"
     }
    ]
   },
   {
-   "t0": 25.8,
+   "t0": 28.773000000000003,
    "fondo": "img/es_madre.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -325,7 +331,7 @@
    }
   },
   {
-   "t0": 28.976000000000003,
+   "t0": 30.373,
    "fondo": "img/es_charla.jpg",
    "zoom": 1.1,
    "cx": 0.5,
@@ -356,30 +362,25 @@
    },
    "gestos": [
     {
-     "t0": 28.976000000000003,
-     "t1": 30.576,
+     "t0": 30.373,
+     "t1": 31.973,
      "quien": "ROSA",
      "img": "img/cv_r_palmas.png"
     },
     {
-     "t0": 30.576,
+     "t0": 31.973,
      "t1": 99,
      "quien": "ANA",
      "img": "img/cv_a_cierra.png",
      "boca": "img/cv_a_cierra_boca.png"
+    },
+    {
+     "t0": 34.025,
+     "t1": 99,
+     "quien": "ROSA",
+     "img": "img/cv_r_camara.png"
     }
    ]
-  },
-  {
-   "t0": 32.628,
-   "fondo": "img/es_pprosa.jpg",
-   "zoom": 1.0,
-   "cx": 0.5,
-   "cy": 0.5,
-   "hablan": {
-    "ROSA": {},
-    "ANA": {}
-   }
   }
  ]
 }

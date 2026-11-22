@@ -36,3 +36,11 @@ cierra_1 tCZE1XUmZJ
 cierra_2 fHnqstRCDY
 cv_a_cierra = cierra_1
 cv_a_cierra_boca LwI7REvswO
+camara_1 rgBSrwYxtc
+camara_2 vQGFvq0a47
+boli2_1 p8PIp35ehw
+boli2_2 bxDjbot5Y2
+ppana3 LwI7LELswO
+cv_a_boli = boli2_1 (la v1 giraba la carpeta)
+es_ppana = ppana3 (sin la mancha rosa)
+cv_r_camara = camara_1

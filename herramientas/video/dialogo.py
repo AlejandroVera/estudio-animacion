@@ -8,7 +8,7 @@
       frases: [{quien, texto, inicio, fin}]}). Cada frase se guarda también en salida_frases/NN.mp3/json, así
       `--rehacer N` vuelve a generar solo esa frase y se monta todo otra vez. `--preguntas 4`: cada frase con «?» se
       genera 4 veces y se queda la toma cuyo tono más SUBE al final (tono.py), porque la voz a veces las dice como
-      afirmaciones. `--tempo AGENTE=1.15` acelera a un personaje sin cambiar su tono.
+      afirmaciones. `--pausa 11=0.6` alarga el silencio tras la frase 11 (un gag que respire). `--tempo AGENTE=1.15` acelera a un personaje sin cambiar su tono.
 """
 import json, os, re, sys
 import numpy as np
@@ -24,6 +24,8 @@ hueco = float(opcion('--hueco', '0.28'))
 # velocidad por personaje (atempo de ffmpeg: no cambia el tono), p. ej. --tempo AGENTE=1.15
 PREGUNTAS = int(opcion('--preguntas', '0'))  # tomas por cada pregunta: se queda la que más SUBE al final
 TEMPO = {k: float(v) for k, v in (x.split('=') for x in (opcion('--tempo', '') or '').split(',') if x)}
+# pausa extra tras una frase (para que respire un gag), p. ej. --pausa 11=0.6
+PAUSA = {int(k): float(v) for k, v in (x.split('=') for x in (opcion('--pausa', '') or '').split(',') if x)}
 rehacer = opcion('--rehacer')
 rehacer = {int(x) for x in rehacer.split(',')} if rehacer else set()
 guion, salida = sys.argv[1], sys.argv[2]
@@ -87,8 +89,9 @@ for i, (quien, texto) in enumerate(frases):
     for p in pal:
         palabras.append({**p, 'inicio': round(p['inicio'] - a + t, 3), 'fin': round(p['fin'] - a + t, 3), 'quien': quien})
     info.append({'quien': quien, 'texto': texto, 'inicio': round(t, 3), 'fin': round(t + len(seg) / SR, 3)})
-    partes += [seg, np.zeros(int(hueco * SR), np.float32)]
-    t += len(seg) / SR + hueco
+    h = hueco + PAUSA.get(i, 0.0)
+    partes += [seg, np.zeros(int(h * SR), np.float32)]
+    t += len(seg) / SR + h
 y = np.concatenate(partes)
 escribir(salida + '.mp3', y)
 json.dump({'palabras': palabras, 'frases': info}, open(salida + '.json', 'w'), ensure_ascii=False, indent=0)
