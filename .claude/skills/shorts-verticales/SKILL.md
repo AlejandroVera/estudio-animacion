@@ -138,3 +138,9 @@ Ejemplo completo: `herramientas/shorts/domingo/` (3 shorts del vídeo «domingo�
   fuera de cuadro hacia el otro, para las preguntas y las reacciones; 3) los gags, planos aparte y cortos.
   Subtítulos de 2-3 palabras (`"max": 3`), `tam` 96 y `contorno` 14; casi sin rótulos (los rótulos ocultan el
   subtítulo y en un diálogo lo que importa es saber qué dice cada uno). Si el subtítulo tapa una cabeza: `sub_y` 1700.
+- RITMO (Ana Cardo, 2026-11-22: «siento que le falta algo de ritmo»): 1) voz más ágil sin rehacerla:
+  `herramientas/video/ana_cardo/ritmo_voz.py entrada salida 1.1 0.22` (deja cada silencio en ≤ 0,22 s y acelera un
+  10 % sin cambiar el tono; corrige el json): 80 s → 67 s. 2) GOLPES DE ZOOM en el remate de cada frase: copia del
+  plano con `zoom` 1,3-1,45 centrado en la cara (sacada de su capa de boca) en la palabra del remate y vuelta al
+  plano abierto en la frase siguiente (`GOLPES` en su plan.py) + un whoosh muy bajo (-14 dB) en cada golpe.
+  Ningún plano de más de 3-4 s sin un corte o un cambio.
