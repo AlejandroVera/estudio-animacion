@@ -1,0 +1,582 @@
+{
+ "alineacion": "voz/nd.json",
+ "audio": "voz/nd.mp3",
+ "sin_recolor": [
+  "es_",
+  "br_"
+ ],
+ "vel_letra": 0.03,
+ "subtitulos": {
+  "y": 230,
+  "tam": 76,
+  "cola": 0.15
+ },
+ "duracion": 59.75,
+ "planos": [
+  {
+   "t0": 0,
+   "fondo": "img/es_presenta.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_presenta.jpg": [
+     "img/es_presenta_boca.png"
+    ]
+   },
+   "habla": true,
+   "rotulos": [
+    {
+     "t0": 1.5359999999999998,
+     "texto": "DE VERDAD",
+     "x": 540,
+     "y": 1560,
+     "color": "verde",
+     "tam": 110,
+     "centro": true,
+     "fijo": true,
+     "caja": true,
+     "t1": 2.2720000000000002
+    }
+   ]
+  },
+  {
+   "t0": 2.262,
+   "fondo": "img/br_influ.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": false,
+   "alterna": {
+    "imgs": [
+     "img/br_influ.jpg",
+     "img/br_influ_b.jpg"
+    ],
+    "cada": 0.4
+   },
+   "rotulos": [
+    {
+     "t0": 3.2039999999999997,
+     "texto": "CÓDiGO -10 %",
+     "x": 540,
+     "y": 1600,
+     "color": "rojo",
+     "tam": 100,
+     "centro": true,
+     "fijo": true,
+     "caja": true
+    }
+   ]
+  },
+  {
+   "t0": 4.541,
+   "fondo": "img/es_consulta1.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_consulta1_c.jpg": [
+     "img/es_consulta1_c_boca.png"
+    ]
+   },
+   "habla": true,
+   "cambios": [
+    {
+     "t": 7.8340000000000005,
+     "fondo": "img/es_consulta1_b.jpg"
+    },
+    {
+     "t": 8.783,
+     "fondo": "img/es_consulta1_c.jpg"
+    },
+    {
+     "t": 10.588,
+     "fondo": "img/es_consulta1_d.jpg"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 4.785,
+     "texto": "9:00",
+     "x": 540,
+     "y": 1580,
+     "color": "negro",
+     "tam": 120,
+     "centro": true,
+     "fijo": true,
+     "caja": true,
+     "t1": 6.672000000000001
+    }
+   ]
+  },
+  {
+   "t0": 9.215,
+   "fondo": "img/es_consulta1.jpg",
+   "zoom": 1.35,
+   "cx": 0.753,
+   "cy": 0.435,
+   "bocas": {
+    "img/es_consulta1_c.jpg": [
+     "img/es_consulta1_c_boca.png"
+    ]
+   },
+   "habla": true,
+   "cambios": [
+    {
+     "t": 7.8340000000000005,
+     "fondo": "img/es_consulta1_b.jpg"
+    },
+    {
+     "t": 8.783,
+     "fondo": "img/es_consulta1_c.jpg"
+    },
+    {
+     "t": 10.588,
+     "fondo": "img/es_consulta1_d.jpg"
+    }
+   ]
+  },
+  {
+   "t0": 9.943999999999999,
+   "fondo": "img/es_consulta1.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_consulta1_c.jpg": [
+     "img/es_consulta1_c_boca.png"
+    ]
+   },
+   "habla": true,
+   "cambios": [
+    {
+     "t": 7.8340000000000005,
+     "fondo": "img/es_consulta1_b.jpg"
+    },
+    {
+     "t": 8.783,
+     "fondo": "img/es_consulta1_c.jpg"
+    },
+    {
+     "t": 10.588,
+     "fondo": "img/es_consulta1_d.jpg"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 4.785,
+     "texto": "9:00",
+     "x": 540,
+     "y": 1580,
+     "color": "negro",
+     "tam": 120,
+     "centro": true,
+     "fijo": true,
+     "caja": true,
+     "t1": 6.672000000000001
+    }
+   ]
+  },
+  {
+   "t0": 12.559999999999999,
+   "fondo": "img/br_influ.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": false,
+   "alterna": {
+    "imgs": [
+     "img/br_influ.jpg",
+     "img/br_influ_b.jpg"
+    ],
+    "cada": 0.4
+   },
+   "rotulos": [
+    {
+     "t0": 14.114,
+     "texto": "CÓDiGO -10 %",
+     "x": 540,
+     "y": 1600,
+     "color": "rojo",
+     "tam": 100,
+     "centro": true,
+     "fijo": true,
+     "caja": true
+    }
+   ]
+  },
+  {
+   "t0": 15.42,
+   "fondo": "img/es_consulta2.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": false,
+   "rotulos": [
+    {
+     "t0": 15.675,
+     "texto": "10:00",
+     "x": 540,
+     "y": 1580,
+     "color": "negro",
+     "tam": 120,
+     "centro": true,
+     "fijo": true,
+     "caja": true
+    }
+   ]
+  },
+  {
+   "t0": 17.466,
+   "fondo": "img/br_plan.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": false,
+   "rotulos": [
+    {
+     "t0": 19.979999999999997,
+     "texto": "SiN HiDRATOS",
+     "x": 540,
+     "y": 1640,
+     "color": "rojo",
+     "tam": 100,
+     "centro": true,
+     "fijo": true,
+     "caja": true,
+     "t1": 20.895
+    },
+    {
+     "t0": 20.845,
+     "texto": "SiN FRUTA",
+     "x": 540,
+     "y": 1640,
+     "color": "rojo",
+     "tam": 100,
+     "centro": true,
+     "fijo": true,
+     "caja": true,
+     "t1": 21.75
+    },
+    {
+     "t0": 21.7,
+     "texto": "SiN ALEGRÍA",
+     "x": 540,
+     "y": 1640,
+     "color": "rojo",
+     "tam": 110,
+     "centro": true,
+     "fijo": true,
+     "caja": true
+    }
+   ]
+  },
+  {
+   "t0": 22.743000000000002,
+   "fondo": "img/es_consulta2_b.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": false,
+   "cambios": [
+    {
+     "t": 24.304000000000002,
+     "fondo": "img/es_consulta2_c.jpg"
+    }
+   ]
+  },
+  {
+   "t0": 25.717000000000002,
+   "fondo": "img/es_ojos.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_ojos.jpg": [
+     "img/es_ojos_boca.png"
+    ]
+   },
+   "habla": true
+  },
+  {
+   "t0": 28.483,
+   "fondo": "img/br_whatsapp.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": false,
+   "cambios": [
+    {
+     "t": 29.833000000000002,
+     "fondo": "img/br_whatsapp_b.jpg"
+    },
+    {
+     "t": 31.626,
+     "fondo": "img/br_whatsapp_c.jpg"
+    }
+   ]
+  },
+  {
+   "t0": 33.653,
+   "fondo": "img/es_ojos.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_ojos.jpg": [
+     "img/es_ojos_boca.png"
+    ]
+   },
+   "habla": true
+  },
+  {
+   "t0": 34.94,
+   "fondo": "img/es_ojos.jpg",
+   "zoom": 1.35,
+   "cx": 0.5,
+   "cy": 0.353,
+   "bocas": {
+    "img/es_ojos.jpg": [
+     "img/es_ojos_boca.png"
+    ]
+   },
+   "habla": true
+  },
+  {
+   "t0": 35.635999999999996,
+   "fondo": "img/es_chiringuito.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_chiringuito.jpg": [
+     "img/es_chiringuito_boca.png"
+    ]
+   },
+   "habla": true
+  },
+  {
+   "t0": 37.294,
+   "fondo": "img/es_casa.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": false,
+   "rotulos": [
+    {
+     "t0": 37.538,
+     "texto": "20:30",
+     "x": 540,
+     "y": 300,
+     "color": "negro",
+     "tam": 120,
+     "centro": true,
+     "fijo": true,
+     "caja": true,
+     "t1": 39.075
+    }
+   ]
+  },
+  {
+   "t0": 40.541999999999994,
+   "fondo": "img/es_cocina.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_cocina.jpg": [
+     "img/es_cocina_boca.png"
+    ]
+   },
+   "habla": true
+  },
+  {
+   "t0": 43.192,
+   "fondo": "img/es_llamada.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_llamada.jpg": [
+     "img/es_llamada_boca.png"
+    ]
+   },
+   "habla": true
+  },
+  {
+   "t0": 44.711,
+   "fondo": "img/br_madre.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/br_madre.jpg": [
+     "img/br_madre_boca.png"
+    ]
+   },
+   "habla": true
+  },
+  {
+   "t0": 45.861,
+   "fondo": "img/es_llamada.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_llamada.jpg": [
+     "img/es_llamada_boca.png"
+    ]
+   },
+   "habla": true
+  },
+  {
+   "t0": 46.832,
+   "fondo": "img/br_madre.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/br_madre.jpg": [
+     "img/br_madre_boca.png"
+    ]
+   },
+   "habla": true,
+   "cambios": [
+    {
+     "t": 47.75,
+     "fondo": "img/br_madre_b.jpg"
+    }
+   ]
+  },
+  {
+   "t0": 48.436,
+   "fondo": "img/br_madre.jpg",
+   "zoom": 1.35,
+   "cx": 0.66,
+   "cy": 0.5,
+   "bocas": {
+    "img/br_madre.jpg": [
+     "img/br_madre_boca.png"
+    ]
+   },
+   "habla": true,
+   "cambios": [
+    {
+     "t": 47.75,
+     "fondo": "img/br_madre_b.jpg"
+    }
+   ]
+  },
+  {
+   "t0": 49.428,
+   "fondo": "img/es_final.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_final.jpg": [
+     "img/es_final_boca.png"
+    ]
+   },
+   "habla": true,
+   "cambios": [
+    {
+     "t": 57.849999999999994,
+     "fondo": "img/es_final_b.jpg"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 53.312999999999995,
+     "texto": "TiEMPO Y DESCANSO",
+     "x": 540,
+     "y": 1640,
+     "color": "verde",
+     "tam": 90,
+     "centro": true,
+     "fijo": true,
+     "caja": true,
+     "t1": 54.608000000000004
+    }
+   ]
+  },
+  {
+   "t0": 51.285,
+   "fondo": "img/es_final.jpg",
+   "zoom": 1.25,
+   "cx": 0.505,
+   "cy": 0.299,
+   "bocas": {
+    "img/es_final.jpg": [
+     "img/es_final_boca.png"
+    ]
+   },
+   "habla": true,
+   "cambios": [
+    {
+     "t": 57.849999999999994,
+     "fondo": "img/es_final_b.jpg"
+    }
+   ]
+  },
+  {
+   "t0": 53.352999999999994,
+   "fondo": "img/es_final.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_final.jpg": [
+     "img/es_final_boca.png"
+    ]
+   },
+   "habla": true,
+   "cambios": [
+    {
+     "t": 57.849999999999994,
+     "fondo": "img/es_final_b.jpg"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 53.312999999999995,
+     "texto": "TiEMPO Y DESCANSO",
+     "x": 540,
+     "y": 1640,
+     "color": "verde",
+     "tam": 90,
+     "centro": true,
+     "fijo": true,
+     "caja": true,
+     "t1": 54.608000000000004
+    }
+   ]
+  },
+  {
+   "t0": 56.794,
+   "fondo": "img/es_final.jpg",
+   "zoom": 1.35,
+   "cx": 0.505,
+   "cy": 0.299,
+   "bocas": {
+    "img/es_final.jpg": [
+     "img/es_final_boca.png"
+    ]
+   },
+   "habla": true,
+   "cambios": [
+    {
+     "t": 57.849999999999994,
+     "fondo": "img/es_final_b.jpg"
+    }
+   ]
+  }
+ ]
+}
