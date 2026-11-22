@@ -153,3 +153,8 @@ Ejemplo completo: `herramientas/shorts/domingo/` (3 shorts del vídeo «domingo�
   cámara; de lado o de tres cuartos haciendo la acción (estudiando de perfil, recogiendo el título de una profesora, de
   perfil con la lupa, en la nevera leyendo la etiqueta), y a cámara solo cuando se dirige al público (presentación,
   remates, «sígueme»). Una boca de perfil que gira la cara entera no vale: ese plano va en voz en off.
+- 2026-11-22 «el aguacate le palpita en el jersey»: la capa de boca de un dibujo se había sacado comparando con OTRA
+  versión del dibujo (la base se cambió después por una con el aguacate) y la diferencia más grande era el aguacate:
+  al hablar aparecía y desaparecía. La boca se compara siempre con el dibujo del que se editó (`ORIGEN` en
+  `ana_cardo/preparar.py`). Comprobación automática: buscar fotogramas que cambian y vuelven al siguiente con más de
+  ~200 px (a 180×320) fuera de los subtítulos; si caen en el cuerpo y no en la cara, es una capa mal recortada.
