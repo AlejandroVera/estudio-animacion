@@ -7,12 +7,15 @@ from PIL import Image, ImageFilter
 from scipy import ndimage as ndi
 
 ELEGIDOS = ['es_consulta_1', 'es_familia_1', 'es_estudia_1', 'es_grad_1', 'es_lupa_1', 'es_yogur_1', 'es_estante_2',
-            'br_tele_2', 'es_madre_1', 'es_padre_1', 'es_abuela_2', 'es_tia_1', 'es_navidad_2', 'es_habla_1']
+            'br_tele_2', 'es_madre_1', 'es_padre_1', 'es_abuela_2', 'es_tia_1', 'es_navidad_2', 'es_habla_1',
+            'es_estudia2_2', 'es_grad2_2', 'es_lupa2_2', 'es_yogur2_2', 'es_cereal_1']
 BASES = {e.rsplit('_', 1)[0]: e for e in ELEGIDOS}
-TAL_CUAL = {'es_sigue': 'es_sigue_1', 'es_jajas': 'es_jajas_1', 'es_estudia_b': 'es_estudia_b', 'es_yogur_b': 'es_yogur_b'}  # estos movieron el encuadre: enteros
+TAL_CUAL = {'es_sigue': 'es_sigue_1', 'es_jajas': 'es_jajas_1', 'es_estudia_b': 'es_estudia_b', 'es_yogur_b': 'es_yogur_b',
+            'es_estudia2_b': 'es_estudia2_b', 'es_grad2_b': 'es_grad2_b', 'es_lupa2_b': 'es_lupa2_b', 'es_cereal_b': 'es_cereal_b',
+            'es_habla_vende': 'es_habla_vende3', 'es_habla_come': 'es_habla_come2', 'es_sigue': 'es_sigue2'}  # estos movieron el encuadre: enteros
 VARIANTES = {'es_consulta_b': 'es_consulta', 'es_consulta_c': 'es_consulta', 'es_grad_b': 'es_grad', 'br_tele_b': 'br_tele', 'es_lupa_b': 'es_lupa',
              'es_estante_b': 'es_estante', 'es_tia_b': 'es_tia', 'es_madre_b': 'es_madre', 'es_abuela_b': 'es_abuela',
-             'es_navidad_b': 'es_navidad', 'es_habla_come': 'es_habla', 'es_habla_vende': 'es_habla',
+             'es_navidad_b': 'es_navidad', 'es_yogur2_b': 'es_yogur2',
              'es_habla_cree': 'es_habla'}
 os.makedirs('img', exist_ok=True)
 

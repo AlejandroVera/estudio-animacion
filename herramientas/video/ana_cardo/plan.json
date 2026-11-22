@@ -244,67 +244,50 @@
   },
   {
    "t0": 23.328000000000003,
-   "fondo": "img/es_estudia.jpg",
+   "fondo": "img/es_estudia2.jpg",
    "zoom": 1.0,
    "cx": 0.5,
    "cy": 0.5,
-   "bocas": {
-    "img/es_estudia.jpg": [
-     "img/es_estudia_boca.png"
-    ],
-    "img/es_estudia_b.jpg": [
-     "img/es_estudia_b_boca.png"
-    ]
-   },
-   "habla": true,
+   "bocas": {},
+   "habla": false,
    "cambios": [
     {
      "t": 26.937,
-     "fondo": "img/es_estudia_b.jpg"
+     "fondo": "img/es_estudia2_b.jpg"
     }
    ]
   },
   {
    "t0": 27.127000000000002,
-   "fondo": "img/es_estudia.jpg",
+   "fondo": "img/es_estudia2.jpg",
    "zoom": 1.4,
-   "cx": 0.703,
-   "cy": 0.543,
-   "bocas": {
-    "img/es_estudia.jpg": [
-     "img/es_estudia_boca.png"
-    ],
-    "img/es_estudia_b.jpg": [
-     "img/es_estudia_b_boca.png"
-    ]
-   },
-   "habla": true,
+   "cx": 0.64,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": false,
    "cambios": [
     {
      "t": 26.937,
-     "fondo": "img/es_estudia_b.jpg"
+     "fondo": "img/es_estudia2_b.jpg"
     }
    ]
   },
   {
    "t0": 28.287000000000003,
-   "fondo": "img/es_grad.jpg",
+   "fondo": "img/es_grad2.jpg",
    "zoom": 1.0,
    "cx": 0.5,
    "cy": 0.5,
    "bocas": {
-    "img/es_grad.jpg": [
-     "img/es_grad_boca.png"
-    ],
-    "img/es_grad_b.jpg": [
-     "img/es_grad_boca.png"
+    "img/es_grad2.jpg": [
+     "img/es_grad2_boca.png"
     ]
    },
    "habla": true,
    "cambios": [
     {
      "t": 29.597,
-     "fondo": "img/es_grad_b.jpg"
+     "fondo": "img/es_grad2_b.jpg"
     }
    ],
    "rotulos": [
@@ -397,42 +380,42 @@
   },
   {
    "t0": 40.076,
-   "fondo": "img/es_lupa.jpg",
+   "fondo": "img/es_lupa2.jpg",
    "zoom": 1.0,
    "cx": 0.5,
    "cy": 0.5,
    "bocas": {
-    "img/es_lupa.jpg": [
-     "img/es_lupa_boca.png"
-    ],
-    "img/es_lupa_b.jpg": [
-     "img/es_lupa_b_boca.png"
+    "img/es_lupa2.jpg": [
+     "img/es_lupa2_boca.png"
     ]
    },
    "habla": true,
    "cambios": [
     {
      "t": 42.873,
-     "fondo": "img/es_lupa_b.jpg"
+     "fondo": "img/es_lupa2_b.jpg"
     }
    ]
   },
   {
    "t0": 43.623,
-   "fondo": "img/es_yogur.jpg",
+   "fondo": "img/es_yogur2.jpg",
    "zoom": 1.0,
    "cx": 0.5,
    "cy": 0.5,
    "bocas": {
-    "img/es_yogur.jpg": [
-     "img/es_yogur_boca.png"
+    "img/es_yogur2.jpg": [
+     "img/es_yogur2_boca.png"
+    ],
+    "img/es_yogur2_b.jpg": [
+     "img/es_yogur2_boca.png"
     ]
    },
    "habla": true,
    "cambios": [
     {
      "t": 47.199999999999996,
-     "fondo": "img/es_yogur_b.jpg"
+     "fondo": "img/es_yogur2_b.jpg"
     }
    ],
    "rotulos": [
@@ -464,91 +447,85 @@
   },
   {
    "t0": 46.028,
-   "fondo": "img/es_yogur.jpg",
+   "fondo": "img/es_yogur2.jpg",
    "zoom": 1.35,
-   "cx": 0.505,
-   "cy": 0.48,
+   "cx": 0.492,
+   "cy": 0.482,
    "bocas": {
-    "img/es_yogur.jpg": [
-     "img/es_yogur_boca.png"
+    "img/es_yogur2.jpg": [
+     "img/es_yogur2_boca.png"
+    ],
+    "img/es_yogur2_b.jpg": [
+     "img/es_yogur2_boca.png"
     ]
    },
    "habla": true,
    "cambios": [
     {
      "t": 47.199999999999996,
-     "fondo": "img/es_yogur_b.jpg"
+     "fondo": "img/es_yogur2_b.jpg"
     }
    ]
   },
   {
    "t0": 46.693999999999996,
-   "fondo": "img/es_yogur.jpg",
+   "fondo": "img/es_yogur2.jpg",
    "zoom": 1.0,
    "cx": 0.5,
    "cy": 0.5,
    "bocas": {
-    "img/es_yogur.jpg": [
-     "img/es_yogur_boca.png"
+    "img/es_yogur2.jpg": [
+     "img/es_yogur2_boca.png"
+    ],
+    "img/es_yogur2_b.jpg": [
+     "img/es_yogur2_boca.png"
     ]
    },
    "habla": true,
    "cambios": [
     {
      "t": 47.199999999999996,
-     "fondo": "img/es_yogur_b.jpg"
+     "fondo": "img/es_yogur2_b.jpg"
     }
    ]
   },
   {
    "t0": 48.878,
-   "fondo": "img/es_estante.jpg",
+   "fondo": "img/es_cereal.jpg",
    "zoom": 1.0,
    "cx": 0.5,
    "cy": 0.5,
    "bocas": {
-    "img/es_estante.jpg": [
-     "img/es_estante_boca.png"
-    ],
-    "img/es_estante_b.jpg": [
-     "img/es_estante_boca.png"
+    "img/es_cereal.jpg": [
+     "img/es_cereal_boca.png"
     ]
    },
    "habla": true,
-   "alterna": {
-    "imgs": [
-     "img/es_estante.jpg",
-     "img/es_estante_b.jpg"
-    ],
-    "cada": 0.3,
-    "desde": 52.012,
-    "hasta": 999
-   }
+   "cambios": [
+    {
+     "t": 52.012,
+     "fondo": "img/es_cereal_b.jpg"
+    }
+   ]
   },
   {
    "t0": 53.637,
-   "fondo": "img/es_estante.jpg",
+   "fondo": "img/es_cereal.jpg",
    "zoom": 1.4,
-   "cx": 0.506,
-   "cy": 0.541,
+   "cx": 0.688,
+   "cy": 0.438,
    "bocas": {
-    "img/es_estante.jpg": [
-     "img/es_estante_boca.png"
-    ],
-    "img/es_estante_b.jpg": [
-     "img/es_estante_boca.png"
+    "img/es_cereal.jpg": [
+     "img/es_cereal_boca.png"
     ]
    },
    "habla": true,
-   "alterna": {
-    "imgs": [
-     "img/es_estante.jpg",
-     "img/es_estante_b.jpg"
-    ],
-    "cada": 0.3,
-    "desde": 52.012,
-    "hasta": 999
-   }
+   "cambios": [
+    {
+     "t": 52.012,
+     "fondo": "img/es_cereal_b.jpg"
+    }
+   ]
   },
   {
    "t0": 54.242999999999995,
@@ -645,8 +622,8 @@
    "t0": 63.614,
    "fondo": "img/es_sigue.jpg",
    "zoom": 1.3,
-   "cx": 0.646,
-   "cy": 0.355,
+   "cx": 0.657,
+   "cy": 0.529,
    "bocas": {
     "img/es_sigue.jpg": [
      "img/es_sigue_boca.png"
@@ -683,8 +660,8 @@
    "t0": 66.485,
    "fondo": "img/es_sigue.jpg",
    "zoom": 1.45,
-   "cx": 0.646,
-   "cy": 0.355,
+   "cx": 0.657,
+   "cy": 0.529,
    "bocas": {
     "img/es_sigue.jpg": [
      "img/es_sigue_boca.png"

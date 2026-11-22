@@ -70,3 +70,29 @@ es_estante_boca 79fwGnpJAL
 es_habla_boca JNC7zcDOq4
 es_sigue_boca nVsz8QdYQD
 es_lupa_b_boca 1ldkPzQr4r
+# v2: más ángulos, súper realista y aguacate
+es_estudia2_1 huAu6lpvqL
+es_estudia2_2 KLeL0iOkqp
+es_grad2_1 O6u6hD7ynm
+es_grad2_2 gOhOBcGSXO
+es_lupa2_1 jU8UpnGLD0
+es_lupa2_2 yiQivdaPW9
+es_yogur2_1 fHnHRyMCDY
+es_yogur2_2 nVlV1QGYQD
+es_cereal_1 YMgMrHRWeC
+es_cereal_2 xSoSDWljfW
+es_sigue2 aFzF3GcfSh
+es_habla_vende2 lJmJXmLgv9
+es_habla_come2 YMgMrUpWeC
+elegidos v2: es_estudia2_2 es_grad2_2 es_lupa2_2 es_yogur2_2 es_cereal_1 es_sigue2 es_habla_come2
+es_habla_vende3 XmNmyHcBfo
+es_estudia2_b s7t7BZ3l8e
+es_grad2_b nVlVxh9YQD
+es_lupa2_b w4f4mcN7EI
+es_yogur2_b SyvyIWqUb8
+es_cereal_b 79C9hMYJAL
+es_estudia2_boca s7t7BfRl8e
+es_grad2_boca Td7dgNxVNR
+es_lupa2_boca LwIwXEIswO
+es_yogur2_boca nVlVx4vYQD
+es_cereal_boca Td7dgZgVNR

@@ -59,9 +59,9 @@ P = [
     # «Y mi tía… solo piña… La cartera»: la cartera vacía
     esc('es_tia', T('y') - c, ['es_tia', 'es_tia_b'], cambios=[ch(T('cartera') - c, 'es_tia_b')]),
     # «Así que pensé: voy a estudiar esto… por fin tendré razón»: puño de triunfo en «por fin»
-    esc('es_estudia', T('así') - c, ['es_estudia', 'es_estudia_b'], cambios=[ch(T('fin') - 0.25, 'es_estudia_b')]),
+    esc('es_estudia2', T('así') - c, [], cambios=[ch(T('fin') - 0.25, 'es_estudia2_b')]),   # de lado estudiando (voz en off); se gira en «por fin»
     # «Cuatro años de carrera. Un máster»: el segundo título en «máster»
-    esc('es_grad', T('cuatro') - c, ['es_grad', 'es_grad_b'], cambios=[ch(T('un') - c, 'es_grad_b')],
+    esc('es_grad2', T('cuatro') - c, ['es_grad2'], cambios=[ch(T('un') - c, 'es_grad2_b')],
         bocas_fix=True,
         rotulos=[R(T('cuatro') - 0.1, '4 AÑOS', 1620, 'negro', 120, T('un') - 0.1), R(T('un') - 0.1, '+ MÁSTER', 1620, 'rojo', 120)]),
     # «Y en la primera Navidad con el título, mi tío: eso lo dirás tú, pero en la tele…»: el tío insiste
@@ -69,14 +69,13 @@ P = [
     # «La tele. Que se ha sacado la carrera en anuncios de yogures»: la tele con birrete
     esc('br_tele', T('tele', 1) - 0.2, [], alterna=alt('br_tele', 'br_tele_b', 0.5)),
     # «Y claro, cuando te dedicas a esto, empiezas a fijarte en cosas»: con la lupa; en «cosas» la baja
-    esc('es_lupa', T('claro,') - 0.2 if False else T('y', 4) - c, ['es_lupa', 'es_lupa_b'], cambios=[ch(T('cosas') - c, 'es_lupa_b')]),
+    esc('es_lupa2', T('y', 4) - c, ['es_lupa2'], cambios=[ch(T('cosas') - c, 'es_lupa2_b')]),
     # «Como que el yogur cero por ciento tenga más azúcar que un dónut, pero con una vaca sonriendo»
-    esc('es_yogur', T('como') - c, ['es_yogur'], cambios=[ch(T('vaca') - c, 'es_yogur_b')],
+    esc('es_yogur2', T('como') - c, ['es_yogur2', 'es_yogur2_b'], cambios=[ch(T('vaca') - c, 'es_yogur2_b')],
         rotulos=[R(T('cero') - 0.1, '0 %', 1620, 'azul', 150, T('más') - 0.1),
                  R(T('más') - 0.1, 'MÁS AZÚCAR', 1620, 'rojo', 120, T('vaca') - 0.1)]),
     # «O que en el súper lo sano esté abajo y las galletas a la altura de los ojos»: las galletas brillan
-    esc('es_estante', T('o') - c, ['es_estante', 'es_estante_b'],
-        alterna=alt('es_estante', 'es_estante_b', 0.3, desde=T('galletas') - c)),
+    esc('es_cereal', T('o') - c, ['es_cereal'], cambios=[ch(T('galletas') - c, 'es_cereal_b')]),   # pasillo de cereales realista
     # «Pues de eso voy a hablar aquí. De lo que comemos, de lo que nos venden y de lo que nos creemos»
     esc('es_habla', T('pues') - c, ['es_habla', 'es_habla_come', 'es_habla_vende', 'es_habla_cree'],
         cambios=[ch(T('comemos,') - c if False else T('comemos') - c, 'es_habla_come'),
@@ -92,11 +91,16 @@ from PIL import Image as _Im
 import numpy as _np
 
 
+CARA_FIJA = {'es_estudia2_b': (0.64, 0.5)}   # dibujos sin boca: centro de su cara a mano
+
+
 def cara(fondo):
     import os
     alias = {'es_jajas': 'es_sigue', 'es_habla_come': 'es_habla', 'es_habla_vende': 'es_habla', 'es_habla_cree': 'es_habla'}
     n = os.path.basename(fondo)[:-4]
     n = alias.get(n, n)
+    if n in CARA_FIJA:
+        return CARA_FIJA[n]
     while not os.path.exists(f'img/{n}_boca.png') and '_' in n[3:]:
         n = n.rsplit('_', 1)[0]
     b = f'img/{n}_boca.png'
