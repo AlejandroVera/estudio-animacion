@@ -100,6 +100,19 @@
   },
   {
    "t0": 7.815,
+   "fondo": "img/es_espera.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_espera.jpg": [
+     "img/es_espera_boca.png"
+    ]
+   },
+   "habla": true
+  },
+  {
+   "t0": 9.417,
    "fondo": "img/es_hospital.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -380,38 +393,16 @@
    ]
   },
   {
-   "t0": 23.018,
-   "fondo": "img/es_calendario.jpg",
-   "zoom": 1.35,
-   "cx": 0.266,
-   "cy": 0.493,
-   "bocas": {
-    "img/es_calendario.jpg": [
-     "img/es_calendario_boca.png"
-    ]
-   },
-   "habla": true
-  },
-  {
    "t0": 23.501,
-   "fondo": "img/es_corre.jpg",
-   "zoom": 1.0,
-   "cx": 0.5,
-   "cy": 0.5,
+   "fondo": "img/es_corre2.jpg",
+   "zoom": 1.55,
+   "cx": 0.36,
+   "cy": 0.6,
    "bocas": {},
-   "habla": false,
-   "alterna": {
-    "imgs": [
-     "img/es_corre.jpg",
-     "img/es_corre_b.jpg"
-    ],
-    "cada": 0.14,
-    "desde": 0,
-    "hasta": 999
-   }
+   "habla": false
   },
   {
-   "t0": 25.743000000000002,
+   "t0": 24.405,
    "fondo": "img/br_web.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -524,7 +515,8 @@
      "tam": 110,
      "centro": true,
      "fijo": true,
-     "caja": true
+     "caja": true,
+     "t1": 37.265
     }
    ]
   },
@@ -556,39 +548,49 @@
   },
   {
    "t0": 43.955999999999996,
-   "fondo": "img/es_espera_compra.jpg",
+   "fondo": "img/es_decide.jpg",
    "zoom": 1.0,
    "cx": 0.5,
    "cy": 0.5,
    "bocas": {
-    "img/es_espera_compra.jpg": [
-     "img/es_espera_compra_boca.png"
+    "img/es_decide.jpg": [
+     "img/es_decide_boca.png"
     ]
    },
-   "habla": true,
+   "habla": true
+  },
+  {
+   "t0": 44.851,
+   "fondo": "img/br_web_clic.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": false,
    "rotulos": [
     {
      "t0": 45.001,
      "texto": "ENViO GRATiS",
-     "x": 540,
-     "y": 1470,
+     "x": 607,
+     "y": 1066.4,
      "color": "verde",
-     "tam": 100,
+     "tam": 80,
      "centro": true,
      "fijo": true,
-     "caja": true,
+     "caja": false,
      "t1": 46.105000000000004
     },
     {
      "t0": 46.055,
      "texto": "7-10 DÍAS",
-     "x": 540,
-     "y": 1470,
+     "x": 607,
+     "y": 1057.1,
      "color": "negro",
-     "tam": 110,
+     "tam": 95,
      "centro": true,
      "fijo": true,
-     "caja": true
+     "caja": false,
+     "t1": 47.731
     }
    ]
   },
@@ -644,7 +646,8 @@
      "tam": 140,
      "centro": true,
      "fijo": true,
-     "caja": true
+     "caja": true,
+     "t1": 54.168000000000006
     }
    ]
   },
@@ -663,13 +666,13 @@
   },
   {
    "t0": 55.47,
-   "fondo": "img/es_puerta.jpg",
+   "fondo": "img/es_puerta2.jpg",
    "zoom": 1.0,
    "cx": 0.5,
    "cy": 0.5,
    "bocas": {
-    "img/es_puerta.jpg": [
-     "img/es_puerta_boca.png"
+    "img/es_puerta2.jpg": [
+     "img/es_puerta2_boca.png"
     ]
    },
    "habla": true

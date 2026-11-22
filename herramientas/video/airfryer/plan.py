@@ -59,7 +59,9 @@ P = [
     esc('br_web', T('a', 0) - c, [], rotulos=[Rc(T('69') - b, '69 €', 607, 1116, 'negro', 170)]),
     # «Todas las semanas entraba a mirarla, como quien va a ver a un familiar al hospital»: la air fryer en la cama
     # del hospital; «69. 69. 69.» en el monitor (la acaricia); «en octubre, de repente, 129»: alarma y salta
-    esc('es_hospital', T('todas') - c, ['es_hospital', 'es_hospital_b'],
+    # «Todas las semanas entraba a mirarla»: en el sofá mirándola en el portátil (el hospital entra en «como quien»)
+    esc('es_espera', T('todas') - c),
+    esc('es_hospital', T('como') - c, ['es_hospital', 'es_hospital_b'],
         cambios=[ch(T('69', 1) - c, 'es_hospital_b'), ch(T('129') - c, 'es_hospital_c')],
         rotulos=[Rc(T('69', 1) - 0.05, '69', 518, 480, 'verde', 120, T('69', 2) - 0.05),
                  Rc(T('69', 2) - 0.05, '69', 518, 480, 'verde', 120, T('69', 3) - 0.05),
@@ -74,28 +76,31 @@ P = [
     esc('es_calendario', T('que', 1) - c, rotulos=[Rc(T('28') - b, '28', 766, 987, 'rojo', 80),
                                                    R(T('mes') - b, '1 MES ENTERO', 540, 1640, 'rojo', 110, caja=True)]),
     # «Entro corriendo y ahí está mi air fryer»: corre hacia el sofá
-    esc('es_corre', T('entro') - c, [], alterna=alt('es_corre', 'es_corre_b', 0.14)),
-    # «Antes 129, ahora 69. Un 46 % de descuento.»: la web
-    esc('br_web', T('antes') - c, [], rotulos=[Rc(T('129', 1) - b, '129 €', 607, 1116, 'negro', 170, T('69', 4) - b),
+    # (la v1 alternaba dos posturas distintas y parecía que daba saltitos: ahora de lado, con líneas de velocidad)
+    esc('es_corre2', T('entro') - c, [], zoom=1.55, cx=0.36, cy=0.6),
+    # «…y ahí está mi air fryer. Antes 129, ahora 69. Un 46 % de descuento.»: la web
+    esc('br_web', T('ahí') - c, [], rotulos=[Rc(T('129', 1) - b, '129 €', 607, 1116, 'negro', 170, T('69', 4) - b),
                                                Rc(T('69', 4) - b, '69 €', 607, 1116, 'rojo', 170),
                                                R(T('46') - b, '-46 %', 760, 330, 'rojo', 130, caja=True)]),
     # «O sea que he esperado cinco meses para pagar lo mismo que en junio.»: serio a cámara; «Pero con ilusión»: sonrisa forzada
     esc('es_espera_seco', T('o', 0) - c, ['es_espera_seco'], cambios=[ch(T('ilusión') - c, 'es_espera_ilusion')]),
     # «Y encima me pone que solo quedan 3 unidades y que 14 personas la están viendo ahora mismo»: la gente en la ventana
     esc('es_espera', T('y', 3) - c, ['es_espera', 'es_espera_ventana'], cambios=[ch(T('14') - c, 'es_espera_ventana')],
-        rotulos=[R(T('3', 1) - b, 'QUEDAN 3', 760, 1480, 'rojo', 110, caja=True)]),
+        rotulos=[R(T('3', 1) - b, 'QUEDAN 3', 760, 1480, 'rojo', 110, T('14') - 0.15, caja=True)]),
     # «Así que la meto en el carrito para pensármelo…»: el carrito del súper en el salón, tomando té
     esc('es_carrito', T('así') - c),
     # «Decido comprarla. Envío gratis, de 7 a 10 días laborables.»: aprieta la tecla
-    esc('es_espera_compra', T('decido') - c, rotulos=[R(T('envío') - b, 'ENViO GRATiS', 540, 1470, 'verde', 100, T('7') - 0.05, caja=True),
-                                                      R(T('7') - b, '7-10 DÍAS', 540, 1470, 'negro', 110, caja=True)]),
+    # (la v1 tenía una mano rara aporreando el teclado: ahora cara decidida y el dedo pulsando el botón de la web)
+    esc('es_decide', T('decido') - c),
+    esc('br_web_clic', T('envío') - 0.25, [], rotulos=[Rc(T('envío') - b, 'ENViO GRATiS', 607, 1116, 'verde', 80, T('7') - 0.05),
+                                                          Rc(T('7') - b, '7-10 DÍAS', 607, 1116, 'negro', 95, T('o', 1) - 0.1)]),
     # «O sea que llega para Reyes»: los Reyes Magos con la caja en el camello
     esc('br_reyes', T('reyes') - c, [], alterna=alt('br_reyes', 'br_reyes_b', 0.4)),
     # «Y el lunes, Cyber Monday. La misma air fryer, a 59. Diez euros menos por esperar tres días más.»: de noche, llorando
     esc('es_cyber', T('cyber') - c, rotulos=[R(T('59') - b, '59 €', 760, 1500, 'rojo', 140, T('diez') - 0.05, caja=True),
-                                             R(T('diez') - b, '-10 €', 760, 1500, 'rojo', 140, caja=True)]),
+                                             R(T('diez') - b, '-10 €', 760, 1500, 'rojo', 140, T('por', 1) - 0.05, caja=True)]),
     # «Quiero devolverla, pero para devolverla primero tiene que llegar»: esperando en la puerta, sin paquete
-    esc('es_puerta', T('quiero') - c),
+    esc('es_puerta2', T('quiero') - c),
     # «Luego hay que llevarla a un punto de recogida que cierra a las siete»: bajan la persiana; cerrada en «siete»
     esc('br_punto', T('luego') - c, [], cambios=[ch(T('siete') - c, 'br_punto_b')]),
     # «Yo salgo a las siete»: en la oficina con el reloj a las siete; se levanta en «siete»
@@ -123,7 +128,7 @@ def cara(fondo):
     return xs.mean() / a.shape[1], ys.mean() / a.shape[0] - 0.04
 
 
-GOLPES = [('hospital', 0, 1.4, '69', 1), ('entero', 0, 1.35, None, 0),
+GOLPES = [('hospital', 0, 1.4, '69', 1),
           ('ilusión', 0, 1.45, None, 0), ('precipitarse', 0, 1.35, None, 0), ('más', 0, 1.4, None, 0),
           ('siete', 1, 1.3, None, 0), ('razón', 0, 1.4, None, 0)]
 nuevos = []
@@ -154,7 +159,7 @@ EF = [[T('desde') - 0.1, 'olas', -10, 3.4], [T('69') - 0.05, 'pop', -9], [T('tod
       [T('69', 1), 'pitido', -8, 0.5], [T('69', 2), 'pitido', -8, 0.5], [T('69', 3), 'pitido', -8, 0.5],
       [T('129'), 'alarma', -7, 1.0], [T('me', 0) - 0.05, 'notificacion', -8], [T('28'), 'pop', -10],
       [T('entro') - 0.05, 'pasos', -8, 2.1], [T('69', 4), 'caja', -8], [T('46'), 'pop', -9],
-      [T('14'), 'murmullo', -9, 1.8], [T('decido') + 0.1, 'clic', -6], [T('reyes') - 0.2, 'whoosh2', -12],
+      [T('14'), 'murmullo', -9, 1.8], [T('envío') - 0.2, 'clic', -6], [T('reyes') - 0.2, 'whoosh2', -12],
       [T('reyes'), 'cascabel', -10, 1.3], [T('59'), 'golpe', -8], [T('quiero'), 'tap', -9, 2.8],
       [T('luego') + 0.1, 'persiana', -9, 2.4], [T('yo', 1), 'tictac', -9, 1.0], [T('me', 2) - 0.15, 'whoosh', -12],
       [T('me', 2) + 0.2, 'tecleo', -10, 2.4], [T('le') - 0.1, 'notificacion', -10], [T('y', 6) - 0.1, 'tecleo', -11, 1.6], [PAL[-1]['fin'] + 0.35, 'suspiro', -9, 1.6]]

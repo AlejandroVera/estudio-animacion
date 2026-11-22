@@ -158,3 +158,12 @@ Ejemplo completo: `herramientas/shorts/domingo/` (3 shorts del vídeo «domingo�
   al hablar aparecía y desaparecía. La boca se compara siempre con el dibujo del que se editó (`ORIGEN` en
   `ana_cardo/preparar.py`). Comprobación automática: buscar fotogramas que cambian y vuelven al siguiente con más de
   ~200 px (a 180×320) fuera de los subtítulos; si caen en el cuerpo y no en la cara, es una capa mal recortada.
+- 2026-11-22 (air fryer, «revisa el vídeo entero: cuando sale corriendo, el dedo raro al comprar»): antes de montar,
+  hoja de TODOS los `img/*.jpg` a ~420 px de ancho y mirar la anatomía y la pose de cada uno: 1) un «corriendo» con dos
+  dibujos de posturas distintas alternados parece que da saltitos: mejor UNA pose de carrera clara de lado con líneas de
+  velocidad (y si se alterna, la variante tiene que ser la misma pose con solo las piernas cambiadas); 2) manos que
+  aprietan teclas salen deformes: contar la acción con un plano de detalle limpio (el dedo pulsando el botón de la web)
+  y su cara decidida aparte; 3) poses inclinadas raras (piernas atravesando el marco de la puerta) → redibujar de pie.
+  También: cada imagen cuando se dice («todas las semanas entraba a mirarla» = él mirando el portátil; el hospital
+  entra en «como quien va a ver…»; «ahí está mi air fryer» = la web) y ningún rótulo tapa una frase entera de la voz
+  (darles `t1` para que el subtítulo vuelva).

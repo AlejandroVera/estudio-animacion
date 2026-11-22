@@ -11,10 +11,10 @@ BASES = {'es_espera': 'es_espera_1', 'es_verano': 'es_verano_1', 'br_web': 'br_w
          'br_correo': 'br_correo_1', 'br_reyes': 'br_reyes_1', 'br_punto': 'br_punto_1', 'es_oficina': 'es_oficina_1',
          'br_madre': 'br_madre_1'}
 TAL_CUAL = ['es_espera_seco', 'es_espera_ilusion', 'es_espera_compra', 'es_cyber', 'es_lee', 'es_final', 'es_calendario',
-            'es_corre', 'es_carrito', 'es_puerta', 'es_verano_c', 'es_hospital_c', 'es_oficina_b', 'es_final_b']
+            'es_corre', 'es_carrito', 'es_puerta', 'es_verano_c', 'es_hospital_c', 'es_oficina_b', 'es_final_b', 'es_corre2', 'es_puerta2', 'es_decide', 'br_web_clic']
 VARIANTES = {'es_espera_ventana': 'es_espera', 'es_verano_b': 'es_verano', 'es_hospital_b': 'es_hospital',
              'br_reyes_b': 'br_reyes', 'br_punto_b': 'br_punto', 'br_madre_b': 'br_madre', 'br_madre_c': 'br_madre',
-             'es_corre_b': 'es_corre'}
+             'es_corre_b': 'es_corre', 'es_corre2_b': 'es_corre2'}
 os.makedirs('img', exist_ok=True)
 
 

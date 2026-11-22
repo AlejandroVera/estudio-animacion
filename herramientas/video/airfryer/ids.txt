@@ -44,3 +44,12 @@ es_lee_boca LwIO9TCswO
 es_final_boca eI4hCg7dqL
 es_corre_b tCZQb4umZJ
 es_final_b CqYKwioEEy
+corre2_1 WDSdLUzcXe
+corre2_2 s7tyBhRl8e
+es_decide 8a3E92RIrU
+br_web_clic mE2FiYchJQ
+puerta2_1 Doytw3qpcl
+puerta2_2 LwIOXCmswO
+es_decide_boca eI4hO2LdqL
+es_puerta2_boca 6A5nHgTiJO
+es_corre2_b 1lXUpCKr4r
