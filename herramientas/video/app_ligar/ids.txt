@@ -58,3 +58,7 @@ desliza4_1 UPatgZewny
 desliza4_2 YMgjz8OWeC
 es_desliza4 = desliza4_1 (los anteriores tenían 3 brazos)
 es_desliza4_boca w4fmUX07EI
+br_instala_b ksdDBGz16B
+seis_1 cpUl7ka0eP
+seis_2 Td7SOrwVNR
+br_seis = seis_1

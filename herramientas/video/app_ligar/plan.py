@@ -52,14 +52,14 @@ b = 0.1
 P = [
     # «Mi hermana dice que ya va siendo hora… me ha instalado una aplicación de ligar. Mientras yo cenaba.»
     # (v1: 7 s en el mismo plano de la cocina, «algo estático») «ya va siendo hora»: ella da golpecitos al reloj
-    # (v2: la hermana quieta «es raro») da golpecitos al reloj y le señala, alternando
-    esc('es_cena_reloj', 0, ['es_cena_reloj', 'es_cena_reloj_b'], alterna=alt('es_cena_reloj', 'es_cena_reloj_b', 0.45)),
-    # «Así que me ha instalado una aplicación de ligar»: la app instalándose en su móvil
-    esc('br_instala', T('así') - c, [], zoom=1.05),
+    # (v4: «la intro no me convence»: la hermana alternando cada 0,45 s temblaba) un solo cambio en «conozca a alguien»
+    esc('es_cena_reloj', 0, ['es_cena_reloj', 'es_cena_reloj_b'], cambios=[ch(T('conozca') - c, 'es_cena_reloj_b')]),
+    # «Así que me ha instalado una aplicación de ligar»: la app instalándose; terminada en «ligar»
+    esc('br_instala', T('así') - c, [], zoom=1.05, cambios=[ch(T('ligar') - c, 'br_instala_b')]),
     # «Mientras yo cenaba»: él sorbiendo espaguetis sin enterarse
-    esc('es_cena', T('mientras') - c, [], alterna={'imgs': [I + 'es_cena.jpg', I + 'es_cena_sorbe.jpg', I + 'es_cena_teclea.jpg', I + 'es_cena_sorbe.jpg'], 'cada': 0.28}),
-    # «Primero, seis fotos.»: la hermana con el móvil
-    esc('es_cena_b', T('primero') - c, ['es_cena_b', 'es_cena_b2'], cambios=[ch(T('fotos') - c, 'es_cena_b2')], rotulos=[R(T('primero') - b, '6 FOTOS', 540, 1560, 'rojo', 120, T('yo', 1) - 0.05, caja=True)]),
+    esc('es_cena', T('mientras') - c, [], alterna=alt('es_cena', 'es_cena_sorbe', 0.3)),
+    # «Primero, seis fotos.»: la app pide seis huecos de foto
+    esc('br_seis', T('primero') - c, [], zoom=1.05, rotulos=[R(T('seis') - b, '6 FOTOS', 540, 1580, 'rojo', 120, caja=True)]),
     # «Yo en el móvil tengo tres del DNI y una del ticket del parking.»: la galería
     esc('br_galeria', T('yo', 1) - c, []),
     # «Así que me hace una en el pasillo. 33 intentos.»: posa; el flash
@@ -154,7 +154,7 @@ for p in P:
     print(round(p['t0'], 2), os.path.basename(p['fondo']), p.get('zoom'))
 
 
-EF = [[T('así') - 0.1, 'notificacion', -12], [T('mientras') - 0.05, 'cuchara', -10, 0.9], [T('yo', 1) - 0.15, 'whoosh', -12], [T('así', 1) - 0.15, 'whoosh2', -12],
+EF = [[T('así') - 0.1, 'notificacion', -12], [T('ligar'), 'match', -12, 0.8], [T('primero') - 0.15, 'whoosh2', -13], [T('mientras') - 0.05, 'cuchara', -10, 0.9], [T('yo', 1) - 0.15, 'whoosh', -12], [T('así', 1) - 0.15, 'whoosh2', -12],
       [T('33'), 'camara', -8], [T('33') + 0.7, 'camara', -10], [T('en', 2), 'camara', -8], [T('en', 3), 'tecleo', -11, 1.5],
       [T('cero') + 0.1, 'grillos', -10, 1.7], [T('y', 1) - 0.15, 'whoosh', -12], [T('una', 3) - 0.05, 'pop', -12], [T('una', 4) - 0.05, 'pop', -12],
       [T('deslizo'), 'swipe', -9, 2.3], [T('match') - 0.05, 'match', -8], [T('hola'), 'tecleo', -11, 1.0],

@@ -14,7 +14,7 @@
    "air fryer": "air fryer"
   }
  },
- "duracion": 77.14,
+ "duracion": 76.47,
  "planos": [
   {
    "t0": 0,
@@ -31,27 +31,30 @@
     ]
    },
    "habla": true,
-   "alterna": {
-    "imgs": [
-     "img/es_cena_reloj.jpg",
-     "img/es_cena_reloj_b.jpg"
-    ],
-    "cada": 0.45,
-    "desde": 0,
-    "hasta": 999
-   }
+   "cambios": [
+    {
+     "t": 1.542,
+     "fondo": "img/es_cena_reloj_b.jpg"
+    }
+   ]
   },
   {
-   "t0": 3.133,
+   "t0": 2.896,
    "fondo": "img/br_instala.jpg",
    "zoom": 1.05,
    "cx": 0.5,
    "cy": 0.5,
    "bocas": {},
-   "habla": false
+   "habla": false,
+   "cambios": [
+    {
+     "t": 4.445,
+     "fondo": "img/br_instala_b.jpg"
+    }
+   ]
   },
   {
-   "t0": 5.571000000000001,
+   "t0": 5.154000000000001,
    "fondo": "img/es_cena.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -61,51 +64,37 @@
    "alterna": {
     "imgs": [
      "img/es_cena.jpg",
-     "img/es_cena_sorbe.jpg",
-     "img/es_cena_teclea.jpg",
      "img/es_cena_sorbe.jpg"
     ],
-    "cada": 0.28
+    "cada": 0.3,
+    "desde": 0,
+    "hasta": 999
    }
   },
   {
-   "t0": 7.219,
-   "fondo": "img/es_cena_b.jpg",
-   "zoom": 1.0,
+   "t0": 6.680000000000001,
+   "fondo": "img/br_seis.jpg",
+   "zoom": 1.05,
    "cx": 0.5,
    "cy": 0.5,
-   "bocas": {
-    "img/es_cena_b.jpg": [
-     "img/es_cena_boca.png"
-    ],
-    "img/es_cena_b2.jpg": [
-     "img/es_cena_boca.png"
-    ]
-   },
-   "habla": true,
-   "cambios": [
-    {
-     "t": 7.8580000000000005,
-     "fondo": "img/es_cena_b2.jpg"
-    }
-   ],
+   "bocas": {},
+   "habla": false,
    "rotulos": [
     {
-     "t0": 7.179,
+     "t0": 7.006,
      "texto": "6 FOTOS",
      "x": 540,
-     "y": 1560,
+     "y": 1580,
      "color": "rojo",
      "tam": 120,
      "centro": true,
      "fijo": true,
-     "caja": true,
-     "t1": 9.167
+     "caja": true
     }
    ]
   },
   {
-   "t0": 9.157,
+   "t0": 8.488999999999999,
    "fondo": "img/br_galeria.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -114,7 +103,7 @@
    "habla": false
   },
   {
-   "t0": 11.382,
+   "t0": 10.713999999999999,
    "fondo": "img/br_galeria.jpg",
    "zoom": 1.5,
    "cx": 0.5,
@@ -123,7 +112,7 @@
    "habla": false
   },
   {
-   "t0": 12.408999999999999,
+   "t0": 11.741,
    "fondo": "img/es_pasillo.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -136,12 +125,12 @@
      "img/es_pasillo_b.jpg"
     ],
     "cada": 0.35,
-    "desde": 13.882,
+    "desde": 13.213999999999999,
     "hasta": 999
    },
    "rotulos": [
     {
-     "t0": 13.842,
+     "t0": 13.174,
      "texto": "33 iNTENTOS",
      "x": 540,
      "y": 300,
@@ -150,12 +139,12 @@
      "centro": true,
      "fijo": true,
      "caja": true,
-     "t1": 15.171999999999999
+     "t1": 14.504
     }
    ]
   },
   {
-   "t0": 15.161999999999999,
+   "t0": 14.494,
    "fondo": "img/br_foto.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -164,7 +153,7 @@
    "habla": false,
    "rotulos": [
     {
-     "t0": 17.298,
+     "t0": 16.63,
      "texto": "PAZ",
      "x": 540,
      "y": 1580,
@@ -177,7 +166,7 @@
    ]
   },
   {
-   "t0": 18.295,
+   "t0": 17.627000000000002,
    "fondo": "img/es_cama.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -190,7 +179,7 @@
    "habla": true,
    "rotulos": [
     {
-     "t0": 19.567,
+     "t0": 18.898999999999997,
      "texto": "ME ACUESTO A LAS 11",
      "x": 540,
      "y": 1640,
@@ -203,7 +192,7 @@
    ]
   },
   {
-   "t0": 21.473000000000003,
+   "t0": 20.805,
    "fondo": "img/es_cero.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -216,7 +205,7 @@
    "habla": true,
    "rotulos": [
     {
-     "t0": 21.433,
+     "t0": 20.764999999999997,
      "texto": "0 MATCHES",
      "x": 540,
      "y": 330,
@@ -225,12 +214,12 @@
      "centro": true,
      "fijo": true,
      "caja": true,
-     "t1": 23.299
+     "t1": 22.631
     }
    ]
   },
   {
-   "t0": 23.289,
+   "t0": 22.621000000000002,
    "fondo": "img/br_tigre.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -239,17 +228,17 @@
    "habla": false,
    "cambios": [
     {
-     "t": 26.482000000000003,
+     "t": 25.814,
      "fondo": "img/br_montana.jpg"
     },
     {
-     "t": 28.201,
+     "t": 27.533,
      "fondo": "img/br_boda.jpg"
     }
    ]
   },
   {
-   "t0": 30.717000000000002,
+   "t0": 30.049000000000003,
    "fondo": "img/es_brazo.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -262,7 +251,7 @@
    "habla": true
   },
   {
-   "t0": 31.244,
+   "t0": 30.576,
    "fondo": "img/es_brazo.jpg",
    "zoom": 1.35,
    "cx": 0.455,
@@ -275,7 +264,7 @@
    "habla": true
   },
   {
-   "t0": 31.895,
+   "t0": 31.227,
    "fondo": "img/es_desliza4.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -295,12 +284,12 @@
      "img/es_desliza4_b.jpg"
     ],
     "cada": 0.15,
-    "desde": 33.324999999999996,
+    "desde": 32.657,
     "hasta": 999
    },
    "rotulos": [
     {
-     "t0": 35.806,
+     "t0": 35.138,
      "texto": "47 EN 2 SEGUNDOS",
      "x": 540,
      "y": 330,
@@ -313,7 +302,7 @@
    ]
   },
   {
-   "t0": 37.861999999999995,
+   "t0": 37.193999999999996,
    "fondo": "img/br_match.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -322,7 +311,7 @@
    "habla": false,
    "rotulos": [
     {
-     "t0": 39.202999999999996,
+     "t0": 38.535,
      "texto": "LAURA",
      "x": 540,
      "y": 1500,
@@ -335,7 +324,7 @@
    ]
   },
   {
-   "t0": 40.512,
+   "t0": 39.844,
    "fondo": "img/br_chat.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -344,13 +333,13 @@
    "habla": false,
    "cambios": [
     {
-     "t": 42.796,
+     "t": 42.128,
      "fondo": "img/br_chat_b.jpg"
     }
    ],
    "rotulos": [
     {
-     "t0": 40.472,
+     "t0": 39.804,
      "texto": "HOLA, ¿QUÉ TAL?",
      "x": 660,
      "y": 500,
@@ -361,7 +350,7 @@
      "caja": false
     },
     {
-     "t0": 42.756,
+     "t0": 42.088,
      "texto": "JAJAJA",
      "x": 465,
      "y": 740,
@@ -372,7 +361,7 @@
      "caja": false
     },
     {
-     "t0": 41.428,
+     "t0": 40.76,
      "texto": "17:42",
      "x": 540,
      "y": 1500,
@@ -381,12 +370,12 @@
      "centro": true,
      "fijo": true,
      "caja": true,
-     "t1": 42.756
+     "t1": 42.088
     }
    ]
   },
   {
-   "t0": 44.451,
+   "t0": 43.783,
    "fondo": "img/es_brazo.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -399,7 +388,7 @@
    "habla": true
   },
   {
-   "t0": 45.074999999999996,
+   "t0": 44.407,
    "fondo": "img/es_brazo.jpg",
    "zoom": 1.35,
    "cx": 0.455,
@@ -412,7 +401,7 @@
    "habla": true
   },
   {
-   "t0": 45.736999999999995,
+   "t0": 45.068999999999996,
    "fondo": "img/es_bar.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -425,7 +414,7 @@
    "habla": true
   },
   {
-   "t0": 48.8,
+   "t0": 48.132,
    "fondo": "img/es_bar_b.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -434,17 +423,17 @@
    "habla": false,
    "cambios": [
     {
-     "t": 50.229,
+     "t": 49.561,
      "fondo": "img/es_bar_c.jpg"
     },
     {
-     "t": 51.433,
+     "t": 50.765,
      "fondo": "img/es_bar_d.jpg"
     }
    ],
    "rotulos": [
     {
-     "t0": 49.039,
+     "t0": 48.370999999999995,
      "texto": "+20 MiN",
      "x": 540,
      "y": 300,
@@ -453,10 +442,10 @@
      "centro": true,
      "fijo": true,
      "caja": true,
-     "t1": 50.239000000000004
+     "t1": 49.571000000000005
     },
     {
-     "t0": 50.458,
+     "t0": 49.79,
      "texto": "40 MiN DE SU EX",
      "x": 540,
      "y": 300,
@@ -465,12 +454,12 @@
      "centro": true,
      "fijo": true,
      "caja": true,
-     "t1": 52.002
+     "t1": 51.334
     }
    ]
   },
   {
-   "t0": 53.556999999999995,
+   "t0": 52.888999999999996,
    "fondo": "img/es_despedida.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -479,13 +468,13 @@
    "habla": false,
    "cambios": [
     {
-     "t": 54.32,
+     "t": 53.652,
      "fondo": "img/es_despedida_b.jpg"
     }
    ]
   },
   {
-   "t0": 54.916999999999994,
+   "t0": 54.248999999999995,
    "fondo": "img/es_deshecho.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -494,7 +483,7 @@
    "habla": false
   },
   {
-   "t0": 56.841,
+   "t0": 56.172999999999995,
    "fondo": "img/br_notif.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -503,7 +492,7 @@
    "habla": false,
    "rotulos": [
     {
-     "t0": 56.801,
+     "t0": 56.132999999999996,
      "texto": "7 DÍAS DESPUÉS",
      "x": 540,
      "y": 300,
@@ -512,10 +501,10 @@
      "centro": true,
      "fijo": true,
      "caja": true,
-     "t1": 59.082
+     "t1": 58.414
     },
     {
-     "t0": 59.032,
+     "t0": 58.364,
      "texto": "LAURA TE SiGUE",
      "x": 540,
      "y": 1500,
@@ -528,7 +517,7 @@
    ]
   },
   {
-   "t0": 60.631,
+   "t0": 59.963,
    "fondo": "img/br_insta.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -537,7 +526,7 @@
    "habla": false
   },
   {
-   "t0": 63.238,
+   "t0": 62.57,
    "fondo": "img/es_copia.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -550,7 +539,7 @@
    "habla": true
   },
   {
-   "t0": 63.989999999999995,
+   "t0": 63.321999999999996,
    "fondo": "img/es_copia.jpg",
    "zoom": 1.35,
    "cx": 0.581,
@@ -563,7 +552,7 @@
    "habla": true
   },
   {
-   "t0": 64.587,
+   "t0": 63.919,
    "fondo": "img/br_madre.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -581,7 +570,7 @@
    }
   },
   {
-   "t0": 66.743,
+   "t0": 66.075,
    "fondo": "img/es_madre_resp.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -594,7 +583,7 @@
    "habla": true,
    "rotulos": [
     {
-     "t0": 67.34700000000001,
+     "t0": 66.679,
      "texto": "47",
      "x": 540,
      "y": 330,
@@ -603,12 +592,12 @@
      "centro": true,
      "fijo": true,
      "caja": true,
-     "t1": 69.333
+     "t1": 68.665
     }
    ]
   },
   {
-   "t0": 70.473,
+   "t0": 69.80499999999999,
    "fondo": "img/es_madre_resp.jpg",
    "zoom": 1.3,
    "cx": 0.453,
@@ -621,7 +610,7 @@
    "habla": true
   },
   {
-   "t0": 70.995,
+   "t0": 70.327,
    "fondo": "img/es_cama.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -634,13 +623,13 @@
    "habla": true,
    "cambios": [
     {
-     "t": 73.672,
+     "t": 73.00399999999999,
      "fondo": "img/es_cama_b.jpg"
     }
    ]
   },
   {
-   "t0": 74.5,
+   "t0": 73.832,
    "fondo": "img/es_cama.jpg",
    "zoom": 1.3,
    "cx": 0.612,
@@ -653,7 +642,7 @@
    "habla": true,
    "cambios": [
     {
-     "t": 73.672,
+     "t": 73.00399999999999,
      "fondo": "img/es_cama_b.jpg"
     }
    ]
