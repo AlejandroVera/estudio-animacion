@@ -186,3 +186,7 @@ Ejemplo completo: `herramientas/shorts/domingo/` (3 shorts del vídeo «domingo�
   Revisar los brazos con recortes AMPLIADOS de la zona de las manos (en la hoja pequeña no se ve). Y un secundario que
   está en el plano no se queda congelado: dos dibujos suyos alternando (golpecitos al reloj ↔ señalarle, teclear) o
   un cambio en su palabra; si el segundo dibujo la mueve entera, mejor como cambio único que alternando (salta).
+- 2026-11-23 (app de ligar, «la intro va atropellada»): la voz decía «…conozca a alguien, así que…» del tirón y
+  `ritmo_voz.py` dejó «cenaba. Primero» casi pegado. Las primeras frases (el gancho) NO se aceleran ni se les recortan
+  pausas: se rehacen solas con <break> de la propia voz y se empalman con el resto (`app_ligar/empalme_intro.py`);
+  el plan y los efectos se recolocan solos porque salen de la voz. Escuchar (transcribir) el arranque siempre.
