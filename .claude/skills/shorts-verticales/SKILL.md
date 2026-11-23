@@ -179,3 +179,10 @@ Ejemplo completo: `herramientas/shorts/domingo/` (3 shorts del vídeo «domingo�
   después de un golpe no sale nunca («47 EN 2 SEGUNDOS» no se veía): no poner golpes antes de un rótulo del mismo plano.
   3) Los planos de pantalla de móvil de más de 4 s se parten (notificación en la pantalla bloqueada → la foto), y las
   acciones repetidas (deslizar) llevan dos dibujos alternando cada 0,15 s.
+- 2026-11-23 (app de ligar v3, «tiene 3 brazos con los 47 corazones; la hermana estática es raro»): la IA dibuja TRES BRAZOS
+  casi siempre que se pide «desliza con el dedo / sujeta el móvil con una mano y toca con la otra» (dos antebrazos
+  saliendo del mismo lado); tres intentos fallaron aunque se pidiera «exactly two arms». Lo que funcionó: EDITAR un
+  dibujo que ya tiene los brazos bien («keep BOTH ARMS AND HANDS EXACTLY AS THEY ARE… change ONLY the face, add hearts»).
+  Revisar los brazos con recortes AMPLIADOS de la zona de las manos (en la hoja pequeña no se ve). Y un secundario que
+  está en el plano no se queda congelado: dos dibujos suyos alternando (golpecitos al reloj ↔ señalarle, teclear) o
+  un cambio en su palabra; si el segundo dibujo la mueve entera, mejor como cambio único que alternando (salta).

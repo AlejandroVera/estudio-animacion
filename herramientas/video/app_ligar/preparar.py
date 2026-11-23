@@ -10,9 +10,10 @@ from scipy import ndimage as ndi
 BASES = {'es_cena': 'es_cena_2', 'es_pasillo': 'es_pasillo_2', 'br_galeria': 'br_galeria2', 'br_montana': 'br_montana2',
          'br_boda': 'br_boda2'}
 TAL_CUAL = ['es_cama', 'es_cero', 'br_tigre', 'es_bar', 'es_bar_b', 'es_desliza', 'br_match', 'br_chat', 'es_despedida',
-            'es_despedida_b', 'br_insta', 'br_foto', 'es_cama_b', 'es_brazo', 'es_copia', 'es_madre_resp', 'es_deshecho', 'br_madre', 'br_instala', 'br_notif']
+            'es_despedida_b', 'br_insta', 'br_foto', 'es_cama_b', 'es_brazo', 'es_copia', 'es_madre_resp', 'es_deshecho', 'br_madre', 'br_instala', 'br_notif', 'es_desliza4']
 VARIANTES = {'es_cena_b': 'es_cena', 'es_pasillo_b': 'es_pasillo', 'es_bar_c': 'es_bar_b', 'es_bar_d': 'es_bar_b',
-             'br_chat_b': 'br_chat', 'br_madre_b': 'br_madre', 'es_cena_reloj': 'es_cena', 'es_cena_sorbe': 'es_cena', 'es_desliza_b': 'es_desliza'}
+             'br_chat_b': 'br_chat', 'br_madre_b': 'br_madre', 'es_cena_reloj': 'es_cena', 'es_cena_sorbe': 'es_cena', 'es_cena_reloj_b': 'es_cena_reloj', 'es_cena_teclea': 'es_cena',
+             'es_cena_b2': 'es_cena_b'}
 os.makedirs('img', exist_ok=True)
 
 
@@ -37,6 +38,13 @@ for nom, base in VARIANTES.items():
     al = np.asarray(Image.fromarray((m * 255).astype('uint8')).filter(ImageFilter.GaussianBlur(3))).astype(float)[..., None] / 255
     Image.fromarray((a * (1 - al) + b * al).astype('uint8')).save(f'img/{nom}.jpg', quality=92)
     print(nom, 'cambia %.1f%%' % (m.mean() * 100))
+
+
+B = np.asarray(Image.open('img/es_desliza4.jpg').convert('RGB')).astype(float)
+O = np.asarray(carga('desliza4_2', (B.shape[1], B.shape[0]))).astype(float)
+m = np.zeros(B.shape[:2]); m[int(0.36 * B.shape[0]):int(0.6 * B.shape[0]), int(0.63 * B.shape[1]):] = 1
+m = np.asarray(Image.fromarray((m * 255).astype('uint8')).filter(ImageFilter.GaussianBlur(12))).astype(float)[..., None] / 255
+Image.fromarray((B * (1 - m) + O * m).astype('uint8')).save('img/es_desliza4_b.jpg', quality=92)
 
 
 def cabeza(a):

@@ -25,9 +25,21 @@
    "bocas": {
     "img/es_cena_reloj.jpg": [
      "img/es_cena_boca.png"
+    ],
+    "img/es_cena_reloj_b.jpg": [
+     "img/es_cena_boca.png"
     ]
    },
-   "habla": true
+   "habla": true,
+   "alterna": {
+    "imgs": [
+     "img/es_cena_reloj.jpg",
+     "img/es_cena_reloj_b.jpg"
+    ],
+    "cada": 0.45,
+    "desde": 0,
+    "hasta": 999
+   }
   },
   {
    "t0": 2.359,
@@ -49,11 +61,11 @@
    "alterna": {
     "imgs": [
      "img/es_cena.jpg",
+     "img/es_cena_sorbe.jpg",
+     "img/es_cena_teclea.jpg",
      "img/es_cena_sorbe.jpg"
     ],
-    "cada": 0.3,
-    "desde": 0,
-    "hasta": 999
+    "cada": 0.28
    }
   },
   {
@@ -65,9 +77,18 @@
    "bocas": {
     "img/es_cena_b.jpg": [
      "img/es_cena_boca.png"
+    ],
+    "img/es_cena_b2.jpg": [
+     "img/es_cena_boca.png"
     ]
    },
    "habla": true,
+   "cambios": [
+    {
+     "t": 6.057,
+     "fondo": "img/es_cena_b2.jpg"
+    }
+   ],
    "rotulos": [
     {
      "t0": 5.436,
@@ -255,23 +276,23 @@
   },
   {
    "t0": 29.504,
-   "fondo": "img/es_desliza.jpg",
+   "fondo": "img/es_desliza4.jpg",
    "zoom": 1.0,
    "cx": 0.5,
    "cy": 0.5,
    "bocas": {
-    "img/es_desliza.jpg": [
-     "img/es_desliza_boca.png"
+    "img/es_desliza4.jpg": [
+     "img/es_desliza4_boca.png"
     ],
-    "img/es_desliza_b.jpg": [
-     "img/es_desliza_boca.png"
+    "img/es_desliza4_b.jpg": [
+     "img/es_desliza4_boca.png"
     ]
    },
    "habla": true,
    "alterna": {
     "imgs": [
-     "img/es_desliza.jpg",
-     "img/es_desliza_b.jpg"
+     "img/es_desliza4.jpg",
+     "img/es_desliza4_b.jpg"
     ],
     "cada": 0.15,
     "desde": 30.934,

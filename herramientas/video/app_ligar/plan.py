@@ -52,13 +52,14 @@ b = 0.1
 P = [
     # «Mi hermana dice que ya va siendo hora… me ha instalado una aplicación de ligar. Mientras yo cenaba.»
     # (v1: 7 s en el mismo plano de la cocina, «algo estático») «ya va siendo hora»: ella da golpecitos al reloj
-    esc('es_cena_reloj', 0, ['es_cena_reloj']),
+    # (v2: la hermana quieta «es raro») da golpecitos al reloj y le señala, alternando
+    esc('es_cena_reloj', 0, ['es_cena_reloj', 'es_cena_reloj_b'], alterna=alt('es_cena_reloj', 'es_cena_reloj_b', 0.45)),
     # «Así que me ha instalado una aplicación de ligar»: la app instalándose en su móvil
     esc('br_instala', T('así') - c, [], zoom=1.05),
     # «Mientras yo cenaba»: él sorbiendo espaguetis sin enterarse
-    esc('es_cena', T('mientras') - c, [], alterna=alt('es_cena', 'es_cena_sorbe', 0.3)),
+    esc('es_cena', T('mientras') - c, [], alterna={'imgs': [I + 'es_cena.jpg', I + 'es_cena_sorbe.jpg', I + 'es_cena_teclea.jpg', I + 'es_cena_sorbe.jpg'], 'cada': 0.28}),
     # «Primero, seis fotos.»: la hermana con el móvil
-    esc('es_cena_b', T('primero') - c, rotulos=[R(T('primero') - b, '6 FOTOS', 540, 1560, 'rojo', 120, T('yo', 1) - 0.05, caja=True)]),
+    esc('es_cena_b', T('primero') - c, ['es_cena_b', 'es_cena_b2'], cambios=[ch(T('fotos') - c, 'es_cena_b2')], rotulos=[R(T('primero') - b, '6 FOTOS', 540, 1560, 'rojo', 120, T('yo', 1) - 0.05, caja=True)]),
     # «Yo en el móvil tengo tres del DNI y una del ticket del parking.»: la galería
     esc('br_galeria', T('yo', 1) - c, []),
     # «Así que me hace una en el pasillo. 33 intentos.»: posa; el flash
@@ -75,7 +76,8 @@ P = [
     # «¿De quién es el brazo?»
     esc('es_brazo', T('de', 2) - c),
     # «Decido cambiar de estrategia y deslizo hacia la derecha a todo ser viviente…»
-    esc('es_desliza', T('decido') - c, ['es_desliza', 'es_desliza_b'], alterna=alt('es_desliza', 'es_desliza_b', 0.15, desde=T('deslizo') - c), rotulos=[R(T('47') - b, '47 EN 2 SEGUNDOS', 540, 330, 'rojo', 90, caja=True)]),
+    # (v2: tenía TRES brazos) nuevo dibujo hecho editando es_brazo, que tiene los brazos bien
+    esc('es_desliza4', T('decido') - c, ['es_desliza4', 'es_desliza4_b'], alterna=alt('es_desliza4', 'es_desliza4_b', 0.15, desde=T('deslizo') - c), rotulos=[R(T('47') - b, '47 EN 2 SEGUNDOS', 540, 330, 'rojo', 90, caja=True)]),
     # «Y me hace match una. Laura.»
     esc('br_match', T('y', 4) - c, [], rotulos=[R(T('laura') - b, 'LAURA', 540, 1500, 'rojo', 120, caja=True)]),
     # «Le escribo: hola, ¿qué tal? A media tarde me contesta: jajaja.»

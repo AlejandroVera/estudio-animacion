@@ -47,3 +47,14 @@ es_cena_sorbe DoykFNApcl
 br_instala bxD3Pth5Y2
 es_desliza_b ksd2NEU16B
 br_notif VXJ5un2MMU
+desliza2_1 p8P7c6Wehw
+desliza2_2 bxD0EB95Y2
+es_cena_reloj_b cpUsA4C0eP
+es_cena_teclea 8a39pWMIrU
+es_cena_b2 rgBpqEIxtc
+desliza3_1 79ChgImJAL
+desliza3_2 YMgjArMWeC
+desliza4_1 UPatgZewny
+desliza4_2 YMgjz8OWeC
+es_desliza4 = desliza4_1 (los anteriores tenían 3 brazos)
+es_desliza4_boca w4fmUX07EI
