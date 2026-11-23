@@ -10,9 +10,9 @@ from scipy import ndimage as ndi
 BASES = {'es_cena': 'es_cena_2', 'es_pasillo': 'es_pasillo_2', 'br_galeria': 'br_galeria2', 'br_montana': 'br_montana2',
          'br_boda': 'br_boda2'}
 TAL_CUAL = ['es_cama', 'es_cero', 'br_tigre', 'es_bar', 'es_bar_b', 'es_desliza', 'br_match', 'br_chat', 'es_despedida',
-            'es_despedida_b', 'br_insta', 'br_foto', 'es_cama_b', 'es_brazo', 'es_copia', 'es_madre_resp', 'es_deshecho', 'br_madre']
+            'es_despedida_b', 'br_insta', 'br_foto', 'es_cama_b', 'es_brazo', 'es_copia', 'es_madre_resp', 'es_deshecho', 'br_madre', 'br_instala', 'br_notif']
 VARIANTES = {'es_cena_b': 'es_cena', 'es_pasillo_b': 'es_pasillo', 'es_bar_c': 'es_bar_b', 'es_bar_d': 'es_bar_b',
-             'br_chat_b': 'br_chat', 'br_madre_b': 'br_madre'}
+             'br_chat_b': 'br_chat', 'br_madre_b': 'br_madre', 'es_cena_reloj': 'es_cena', 'es_cena_sorbe': 'es_cena', 'es_desliza_b': 'es_desliza'}
 os.makedirs('img', exist_ok=True)
 
 

@@ -172,3 +172,10 @@ Ejemplo completo: `herramientas/shorts/domingo/` (3 shorts del vídeo «domingo�
   misma olla, ella de pie detrás de una silla): no se entendía dónde estaba. Pedir «use the image ONLY for her
   appearance… a NEW simple clean scene: one single room, no other people» y describir el sitio que toca (de noche en
   su sillón con el teléfono). Revisar que cada escena tenga UNA composición clara, sin elementos duplicados.
+- 2026-11-23 (app de ligar, «tiene fallos y el comienzo es algo estático»): 1) el ARRANQUE no puede ser un solo dibujo
+  5-7 s: partir la primera frase en 2-3 planos (ella da golpecitos al reloj en «ya va siendo hora», la app instalándose,
+  él sorbiendo espaguetis alternando en «mientras cenaba»). 2) Comprobar por código cada rótulo: tiempo que se ve
+  ENTERO hasta su `t1` o el corte (≥ 0,9 s); un GOLPE de zoom copia el plano SIN rótulos, así que un rótulo que empieza
+  después de un golpe no sale nunca («47 EN 2 SEGUNDOS» no se veía): no poner golpes antes de un rótulo del mismo plano.
+  3) Los planos de pantalla de móvil de más de 4 s se parten (notificación en la pantalla bloqueada → la foto), y las
+  acciones repetidas (deslizar) llevan dos dibujos alternando cada 0,15 s.

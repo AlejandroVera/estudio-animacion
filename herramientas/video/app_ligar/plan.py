@@ -51,18 +51,23 @@ def Rc(t0, txt, cx, cy, col='negro', tam=120, t1=None, caja=False):
 b = 0.1
 P = [
     # «Mi hermana dice que ya va siendo hora… me ha instalado una aplicación de ligar. Mientras yo cenaba.»
-    esc('es_cena', 0, ['es_cena', 'es_cena_b'], cambios=[ch(T('mientras') - c, 'es_cena_b')]),
+    # (v1: 7 s en el mismo plano de la cocina, «algo estático») «ya va siendo hora»: ella da golpecitos al reloj
+    esc('es_cena_reloj', 0, ['es_cena_reloj']),
+    # «Así que me ha instalado una aplicación de ligar»: la app instalándose en su móvil
+    esc('br_instala', T('así') - c, [], zoom=1.05),
+    # «Mientras yo cenaba»: él sorbiendo espaguetis sin enterarse
+    esc('es_cena', T('mientras') - c, [], alterna=alt('es_cena', 'es_cena_sorbe', 0.3)),
     # «Primero, seis fotos.»: la hermana con el móvil
-    esc('es_cena_b', T('primero') - c, rotulos=[R(T('seis') - b, '6 FOTOS', 540, 1560, 'rojo', 120, T('yo', 1) - 0.05, caja=True)]),
+    esc('es_cena_b', T('primero') - c, rotulos=[R(T('primero') - b, '6 FOTOS', 540, 1560, 'rojo', 120, T('yo', 1) - 0.05, caja=True)]),
     # «Yo en el móvil tengo tres del DNI y una del ticket del parking.»: la galería
     esc('br_galeria', T('yo', 1) - c, []),
     # «Así que me hace una en el pasillo. 33 intentos.»: posa; el flash
     esc('es_pasillo', T('así', 1) - c, [], alterna=alt('es_pasillo', 'es_pasillo_b', 0.35, desde=T('33') - c),
         rotulos=[R(T('33') - b, '33 iNTENTOS', 540, 300, 'rojo', 110, T('en', 2) - 0.05, caja=True)]),
     # «En la buena salgo con los ojos cerrados. Dice que transmito paz.»: la foto en el móvil de ella
-    esc('br_foto', T('en', 2) - c, [], rotulos=[R(T('paz') - b, 'PAZ', 540, 1580, 'verde', 150, caja=True)]),
+    esc('br_foto', T('en', 2) - c, [], rotulos=[R(T('transmito') - b, 'PAZ', 540, 1580, 'verde', 150, caja=True)]),
     # «En la descripción pongo la verdad. Me acuesto a las 11.»: en la cama escribiendo
-    esc('es_cama', T('en', 3) - c, rotulos=[R(T('11') - b, 'ME ACUESTO A LAS 11', 540, 1640, 'negro', 85, caja=True)]),
+    esc('es_cama', T('en', 3) - c, rotulos=[R(T('verdad') - b, 'ME ACUESTO A LAS 11', 540, 1640, 'negro', 85, caja=True)]),
     # «Cero matches en cuatro días.»: telarañas
     esc('es_cero', T('cero') - c, rotulos=[R(T('cero') - b, '0 MATCHES', 540, 330, 'rojo', 110, T('y', 1) - 0.05, caja=True)]),
     # «Y todos los perfiles son el mismo. Un tigre drogado en Tailandia, una montaña…, una boda…»
@@ -70,28 +75,31 @@ P = [
     # «¿De quién es el brazo?»
     esc('es_brazo', T('de', 2) - c),
     # «Decido cambiar de estrategia y deslizo hacia la derecha a todo ser viviente…»
-    esc('es_desliza', T('decido') - c, rotulos=[R(T('47') - b, '47 EN 2 SEGUNDOS', 540, 330, 'rojo', 90, caja=True)]),
+    esc('es_desliza', T('decido') - c, ['es_desliza', 'es_desliza_b'], alterna=alt('es_desliza', 'es_desliza_b', 0.15, desde=T('deslizo') - c), rotulos=[R(T('47') - b, '47 EN 2 SEGUNDOS', 540, 330, 'rojo', 90, caja=True)]),
     # «Y me hace match una. Laura.»
     esc('br_match', T('y', 4) - c, [], rotulos=[R(T('laura') - b, 'LAURA', 540, 1500, 'rojo', 120, caja=True)]),
     # «Le escribo: hola, ¿qué tal? A media tarde me contesta: jajaja.»
-    esc('br_chat', T('le') - c, [], cambios=[ch(T('jajaja') - c, 'br_chat_b')],
+    esc('br_chat', T('hola') - c, [], cambios=[ch(T('jajaja') - c, 'br_chat_b')],
         rotulos=[R(T('hola') - b, 'HOLA, ¿QUÉ TAL?', 660, 500, 'negro', 50, caja=False),
                  R(T('jajaja') - b, 'JAJAJA', 465, 740, 'negro', 70, caja=False),
                  R(T('media') - b, '17:42', 540, 1500, 'negro', 110, T('jajaja') - 0.1, caja=True)]),
     # «¿De qué se ríe? Le he dicho hola.»
-    esc('es_brazo', T('de', 4) - c),
+    esc('es_brazo', T('le', 1) - c),
     # «Quedamos en un bar donde la caña te la ponen en un tarro de mermelada.»: esperando con el tarro
     esc('es_bar', T('quedamos') - c),
     # «Llega 20 minutos tarde, me habla 40 de su ex y a mitad de cita le entra otro match»
     esc('es_bar_b', T('llega') - c, [], cambios=[ch(T('habla') - c, 'es_bar_c'), ch(T('mitad') - c, 'es_bar_d')],
         rotulos=[R(T('20') - b, '+20 MiN', 540, 300, 'rojo', 110, T('habla') - 0.05, caja=True),
-                 R(T('40') - b, '40 MiN DE SU EX', 540, 300, 'negro', 95, T('mitad') - 0.05, caja=True)]),
+                 R(T('40') - b, '40 MiN DE SU EX', 540, 300, 'negro', 95, T('le', 2) - 0.05, caja=True)]),
     # «Nos despedimos sin beso.»: le da la mano y se va
     esc('es_despedida', T('nos') - c, [], cambios=[ch(T('beso') - c, 'es_despedida_b')]),
     # «Esa misma noche, match deshecho.»
     esc('es_deshecho', T('esa') - c, []),
     # «Siete días después, notificación de Instagram. Laura ha empezado a seguirte. Foto nueva…ojos cerrados»
-    esc('br_insta', T('siete') - c, [], rotulos=[R(T('siete') - b, '7 DÍAS DESPUÉS', 540, 300, 'negro', 95, T('laura', 1) - 0.05, caja=True)]),
+    # (v1: 6 s quieto en la foto) primero la notificación en la pantalla bloqueada, luego la foto
+    esc('br_notif', T('siete') - c, [], rotulos=[R(T('siete') - b, '7 DÍAS DESPUÉS', 540, 300, 'negro', 95, T('laura', 1) - 0.05, caja=True),
+                                                R(T('laura', 1) - b, 'LAURA TE SiGUE', 540, 1500, 'rojo', 105, caja=True)]),
+    esc('br_insta', T('foto') - c, []),
     # «Me ha copiado hasta la paz.»
     esc('es_copia', T('me', 7) - c),
     # «Mi madre me pregunta si estoy conociendo a alguien.»
@@ -115,7 +123,7 @@ def cara(fondo):
     return xs.mean() / a.shape[1], ys.mean() / a.shape[0] - 0.04
 
 
-GOLPES = [('ticket', 0, 1.5, None, 0), ('viviente', 0, 1.3, None, 0), ('foto', 0, 1.45, None, 0), ('brazo', 1, 1.35, None, 0), ('hola', 1, 1.35, None, 0),
+GOLPES = [('ticket', 0, 1.5, None, 0), ('brazo', 1, 1.35, None, 0), ('hola', 1, 1.35, None, 0),
           ('paz', 1, 1.35, None, 0), ('mí', 0, 1.3, None, 0), ('mentí', 0, 1.3, None, 0)]
 _X = [
           ('ilusión', 0, 1.45, None, 0), ('precipitarse', 0, 1.35, None, 0), ('más', 0, 1.4, None, 0),
@@ -144,11 +152,11 @@ for p in P:
     print(round(p['t0'], 2), os.path.basename(p['fondo']), p.get('zoom'))
 
 
-EF = [[T('mientras') - 0.05, 'cuchara', -10, 0.9], [T('yo', 1) - 0.15, 'whoosh', -12], [T('así', 1) - 0.15, 'whoosh2', -12],
+EF = [[T('así') - 0.1, 'notificacion', -12], [T('mientras') - 0.05, 'cuchara', -10, 0.9], [T('yo', 1) - 0.15, 'whoosh', -12], [T('así', 1) - 0.15, 'whoosh2', -12],
       [T('33'), 'camara', -8], [T('33') + 0.7, 'camara', -10], [T('en', 2), 'camara', -8], [T('en', 3), 'tecleo', -11, 1.5],
       [T('cero') + 0.1, 'grillos', -10, 1.7], [T('y', 1) - 0.15, 'whoosh', -12], [T('una', 3) - 0.05, 'pop', -12], [T('una', 4) - 0.05, 'pop', -12],
-      [T('deslizo'), 'swipe', -9, 2.3], [T('match') - 0.05, 'match', -8], [T('le') + 0.1, 'tecleo', -11, 1.0],
+      [T('deslizo'), 'swipe', -9, 2.3], [T('match') - 0.05, 'match', -8], [T('hola'), 'tecleo', -11, 1.0],
       [T('jajaja') - 0.15, 'notificacion', -9], [T('quedamos') - 0.15, 'whoosh', -12], [T('quedamos'), 'murmullo', -14, 3.0],
       [T('mitad'), 'notificacion', -9], [T('beso') + 0.1, 'pasos', -10, 1.4], [T('deshecho') - 0.05, 'roto', -9, 1.3],
-      [T('siete') - 0.15, 'whoosh2', -12], [T('laura', 1) - 0.1, 'notificacion', -9], [T('47', 1), 'pop', -10]]
+      [T('siete') - 0.15, 'whoosh2', -12], [T('siete') + 0.3, 'notificacion', -9], [T('foto') - 0.15, 'whoosh', -13], [T('47', 1), 'pop', -10]]
 json.dump({'nivel': -24, 'efectos': [[round(e[0], 2)] + e[1:] for e in EF]}, open('efectos/efectos.json', 'w'))
