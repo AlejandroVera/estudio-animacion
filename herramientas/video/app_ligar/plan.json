@@ -1,0 +1,613 @@
+{
+ "alineacion": "voz/al.json",
+ "audio": "voz/al.mp3",
+ "sin_recolor": [
+  "es_",
+  "br_"
+ ],
+ "vel_letra": 0.03,
+ "subtitulos": {
+  "y": 230,
+  "tam": 76,
+  "cola": 0.15,
+  "cambiar": {
+   "air fryer": "air fryer"
+  }
+ },
+ "duracion": 74.75,
+ "planos": [
+  {
+   "t0": 0,
+   "fondo": "img/es_cena.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_cena.jpg": [
+     "img/es_cena_boca.png"
+    ],
+    "img/es_cena_b.jpg": [
+     "img/es_cena_boca.png"
+    ]
+   },
+   "habla": true,
+   "cambios": [
+    {
+     "t": 4.407,
+     "fondo": "img/es_cena_b.jpg"
+    }
+   ]
+  },
+  {
+   "t0": 5.476,
+   "fondo": "img/es_cena_b.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_cena_b.jpg": [
+     "img/es_cena_boca.png"
+    ]
+   },
+   "habla": true,
+   "rotulos": [
+    {
+     "t0": 5.812,
+     "texto": "6 FOTOS",
+     "x": 540,
+     "y": 1560,
+     "color": "rojo",
+     "tam": 120,
+     "centro": true,
+     "fijo": true,
+     "caja": true,
+     "t1": 6.776
+    }
+   ]
+  },
+  {
+   "t0": 6.766,
+   "fondo": "img/br_galeria.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": false
+  },
+  {
+   "t0": 8.991,
+   "fondo": "img/br_galeria.jpg",
+   "zoom": 1.5,
+   "cx": 0.5,
+   "cy": 0.27,
+   "bocas": {},
+   "habla": false
+  },
+  {
+   "t0": 10.017999999999999,
+   "fondo": "img/es_pasillo.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": false,
+   "alterna": {
+    "imgs": [
+     "img/es_pasillo.jpg",
+     "img/es_pasillo_b.jpg"
+    ],
+    "cada": 0.35,
+    "desde": 11.491,
+    "hasta": 999
+   },
+   "rotulos": [
+    {
+     "t0": 11.451,
+     "texto": "33 iNTENTOS",
+     "x": 540,
+     "y": 300,
+     "color": "rojo",
+     "tam": 110,
+     "centro": true,
+     "fijo": true,
+     "caja": true,
+     "t1": 12.780999999999999
+    }
+   ]
+  },
+  {
+   "t0": 12.770999999999999,
+   "fondo": "img/br_foto.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": false,
+   "rotulos": [
+    {
+     "t0": 15.348,
+     "texto": "PAZ",
+     "x": 540,
+     "y": 1580,
+     "color": "verde",
+     "tam": 150,
+     "centro": true,
+     "fijo": true,
+     "caja": true
+    }
+   ]
+  },
+  {
+   "t0": 15.904,
+   "fondo": "img/es_cama.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_cama.jpg": [
+     "img/es_cama_boca.png"
+    ]
+   },
+   "habla": true,
+   "rotulos": [
+    {
+     "t0": 18.395999999999997,
+     "texto": "ME ACUESTO A LAS 11",
+     "x": 540,
+     "y": 1640,
+     "color": "negro",
+     "tam": 85,
+     "centro": true,
+     "fijo": true,
+     "caja": true
+    }
+   ]
+  },
+  {
+   "t0": 19.082,
+   "fondo": "img/es_cero.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_cero.jpg": [
+     "img/es_cero_boca.png"
+    ]
+   },
+   "habla": true,
+   "rotulos": [
+    {
+     "t0": 19.041999999999998,
+     "texto": "0 MATCHES",
+     "x": 540,
+     "y": 330,
+     "color": "rojo",
+     "tam": 110,
+     "centro": true,
+     "fijo": true,
+     "caja": true,
+     "t1": 20.907999999999998
+    }
+   ]
+  },
+  {
+   "t0": 20.898,
+   "fondo": "img/br_tigre.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": false,
+   "cambios": [
+    {
+     "t": 24.091,
+     "fondo": "img/br_montana.jpg"
+    },
+    {
+     "t": 25.810000000000002,
+     "fondo": "img/br_boda.jpg"
+    }
+   ]
+  },
+  {
+   "t0": 28.326,
+   "fondo": "img/es_brazo.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_brazo.jpg": [
+     "img/es_brazo_boca.png"
+    ]
+   },
+   "habla": true
+  },
+  {
+   "t0": 28.853,
+   "fondo": "img/es_brazo.jpg",
+   "zoom": 1.35,
+   "cx": 0.455,
+   "cy": 0.388,
+   "bocas": {
+    "img/es_brazo.jpg": [
+     "img/es_brazo_boca.png"
+    ]
+   },
+   "habla": true
+  },
+  {
+   "t0": 29.504,
+   "fondo": "img/es_desliza.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_desliza.jpg": [
+     "img/es_desliza_boca.png"
+    ]
+   },
+   "habla": true,
+   "rotulos": [
+    {
+     "t0": 33.415,
+     "texto": "47 EN 2 SEGUNDOS",
+     "x": 540,
+     "y": 330,
+     "color": "rojo",
+     "tam": 90,
+     "centro": true,
+     "fijo": true,
+     "caja": true
+    }
+   ]
+  },
+  {
+   "t0": 32.309999999999995,
+   "fondo": "img/es_desliza.jpg",
+   "zoom": 1.3,
+   "cx": 0.454,
+   "cy": 0.384,
+   "bocas": {
+    "img/es_desliza.jpg": [
+     "img/es_desliza_boca.png"
+    ]
+   },
+   "habla": true
+  },
+  {
+   "t0": 35.471,
+   "fondo": "img/br_match.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": false,
+   "rotulos": [
+    {
+     "t0": 36.812,
+     "texto": "LAURA",
+     "x": 540,
+     "y": 1500,
+     "color": "rojo",
+     "tam": 120,
+     "centro": true,
+     "fijo": true,
+     "caja": true
+    }
+   ]
+  },
+  {
+   "t0": 37.507999999999996,
+   "fondo": "img/br_chat.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": false,
+   "cambios": [
+    {
+     "t": 40.405,
+     "fondo": "img/br_chat_b.jpg"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 38.080999999999996,
+     "texto": "HOLA, ¿QUÉ TAL?",
+     "x": 660,
+     "y": 500,
+     "color": "negro",
+     "tam": 50,
+     "centro": true,
+     "fijo": true,
+     "caja": false
+    },
+    {
+     "t0": 40.365,
+     "texto": "JAJAJA",
+     "x": 465,
+     "y": 740,
+     "color": "negro",
+     "tam": 70,
+     "centro": true,
+     "fijo": true,
+     "caja": false
+    },
+    {
+     "t0": 39.037,
+     "texto": "17:42",
+     "x": 540,
+     "y": 1500,
+     "color": "negro",
+     "tam": 110,
+     "centro": true,
+     "fijo": true,
+     "caja": true,
+     "t1": 40.365
+    }
+   ]
+  },
+  {
+   "t0": 41.146,
+   "fondo": "img/es_brazo.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_brazo.jpg": [
+     "img/es_brazo_boca.png"
+    ]
+   },
+   "habla": true
+  },
+  {
+   "t0": 42.684,
+   "fondo": "img/es_brazo.jpg",
+   "zoom": 1.35,
+   "cx": 0.455,
+   "cy": 0.388,
+   "bocas": {
+    "img/es_brazo.jpg": [
+     "img/es_brazo_boca.png"
+    ]
+   },
+   "habla": true
+  },
+  {
+   "t0": 43.346,
+   "fondo": "img/es_bar.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_bar.jpg": [
+     "img/es_bar_boca.png"
+    ]
+   },
+   "habla": true
+  },
+  {
+   "t0": 46.409,
+   "fondo": "img/es_bar_b.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": false,
+   "cambios": [
+    {
+     "t": 47.838,
+     "fondo": "img/es_bar_c.jpg"
+    },
+    {
+     "t": 49.041999999999994,
+     "fondo": "img/es_bar_d.jpg"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 46.647999999999996,
+     "texto": "+20 MiN",
+     "x": 540,
+     "y": 300,
+     "color": "rojo",
+     "tam": 110,
+     "centro": true,
+     "fijo": true,
+     "caja": true,
+     "t1": 47.848000000000006
+    },
+    {
+     "t0": 48.067,
+     "texto": "40 MiN DE SU EX",
+     "x": 540,
+     "y": 300,
+     "color": "negro",
+     "tam": 95,
+     "centro": true,
+     "fijo": true,
+     "caja": true,
+     "t1": 49.052
+    }
+   ]
+  },
+  {
+   "t0": 51.166,
+   "fondo": "img/es_despedida.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": false,
+   "cambios": [
+    {
+     "t": 51.928999999999995,
+     "fondo": "img/es_despedida_b.jpg"
+    }
+   ]
+  },
+  {
+   "t0": 52.525999999999996,
+   "fondo": "img/es_deshecho.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": false
+  },
+  {
+   "t0": 54.449999999999996,
+   "fondo": "img/br_insta.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": false,
+   "rotulos": [
+    {
+     "t0": 54.41,
+     "texto": "7 DÍAS DESPUÉS",
+     "x": 540,
+     "y": 300,
+     "color": "negro",
+     "tam": 95,
+     "centro": true,
+     "fijo": true,
+     "caja": true,
+     "t1": 56.691
+    }
+   ]
+  },
+  {
+   "t0": 58.239999999999995,
+   "fondo": "img/br_insta.jpg",
+   "zoom": 1.45,
+   "cx": 0.5,
+   "cy": 0.33,
+   "bocas": {},
+   "habla": false
+  },
+  {
+   "t0": 60.846999999999994,
+   "fondo": "img/es_copia.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_copia.jpg": [
+     "img/es_copia_boca.png"
+    ]
+   },
+   "habla": true
+  },
+  {
+   "t0": 61.599,
+   "fondo": "img/es_copia.jpg",
+   "zoom": 1.35,
+   "cx": 0.581,
+   "cy": 0.392,
+   "bocas": {
+    "img/es_copia.jpg": [
+     "img/es_copia_boca.png"
+    ]
+   },
+   "habla": true
+  },
+  {
+   "t0": 62.196,
+   "fondo": "img/br_madre.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": false,
+   "alterna": {
+    "imgs": [
+     "img/br_madre.jpg",
+     "img/br_madre_b.jpg"
+    ],
+    "cada": 0.22,
+    "desde": 0,
+    "hasta": 999
+   }
+  },
+  {
+   "t0": 64.352,
+   "fondo": "img/es_madre_resp.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_madre_resp.jpg": [
+     "img/es_madre_resp_boca.png"
+    ]
+   },
+   "habla": true,
+   "rotulos": [
+    {
+     "t0": 64.956,
+     "texto": "47",
+     "x": 540,
+     "y": 330,
+     "color": "rojo",
+     "tam": 150,
+     "centro": true,
+     "fijo": true,
+     "caja": true,
+     "t1": 66.94200000000001
+    }
+   ]
+  },
+  {
+   "t0": 68.082,
+   "fondo": "img/es_madre_resp.jpg",
+   "zoom": 1.3,
+   "cx": 0.453,
+   "cy": 0.387,
+   "bocas": {
+    "img/es_madre_resp.jpg": [
+     "img/es_madre_resp_boca.png"
+    ]
+   },
+   "habla": true
+  },
+  {
+   "t0": 68.604,
+   "fondo": "img/es_cama.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {
+    "img/es_cama.jpg": [
+     "img/es_cama_boca.png"
+    ]
+   },
+   "habla": true,
+   "cambios": [
+    {
+     "t": 71.28099999999999,
+     "fondo": "img/es_cama_b.jpg"
+    }
+   ]
+  },
+  {
+   "t0": 72.109,
+   "fondo": "img/es_cama.jpg",
+   "zoom": 1.3,
+   "cx": 0.612,
+   "cy": 0.302,
+   "bocas": {
+    "img/es_cama.jpg": [
+     "img/es_cama_boca.png"
+    ]
+   },
+   "habla": true,
+   "cambios": [
+    {
+     "t": 71.28099999999999,
+     "fondo": "img/es_cama_b.jpg"
+    }
+   ]
+  }
+ ]
+}
