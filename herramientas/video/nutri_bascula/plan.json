@@ -9,9 +9,26 @@
  "subtitulos": {
   "y": 230,
   "tam": 76,
-  "cola": 0.15
+  "cola": 0.15,
+  "colores": {
+   "PACIENTE": [
+    255,
+    226,
+    40
+   ],
+   "SENORA": [
+    120,
+    230,
+    255
+   ],
+   "ABUELA": [
+    255,
+    160,
+    90
+   ]
+  }
  },
- "duracion": 72.31,
+ "duracion": 78.16,
  "planos": [
   {
    "t0": 0,
@@ -58,7 +75,7 @@
    "cx": 0.5,
    "cy": 0.5,
    "bocas": {},
-   "habla": false,
+   "habla": true,
    "cambios": [
     {
      "t": 11.116999999999999,
@@ -78,37 +95,83 @@
      "caja": true,
      "t1": 9.132
     }
-   ]
+   ],
+   "hablan": {
+    "ANA": {
+     "img/es_zapatos.jpg": [
+      "img/es_zapatos_ana_boca.png"
+     ],
+     "img/es_zapatos_b.jpg": [
+      "img/es_zapatos_ana_boca.png"
+     ]
+    }
+   }
   },
   {
    "t0": 12.09,
-   "fondo": "img/es_hueco.jpg",
+   "fondo": "img/es_hueco_c.jpg",
    "zoom": 1.0,
    "cx": 0.5,
    "cy": 0.5,
    "bocas": {},
-   "habla": false
+   "habla": true,
+   "hablan": {
+    "ANA": {
+     "img/es_hueco_c.jpg": [
+      "img/es_hueco_ana_boca.png"
+     ]
+    },
+    "PACIENTE": {
+     "img/es_hueco_c.jpg": [
+      "img/es_hueco_pac_boca.png"
+     ]
+    }
+   }
   },
   {
    "t0": 12.994,
-   "fondo": "img/es_hueco.jpg",
+   "fondo": "img/es_hueco_c.jpg",
    "zoom": 1.4,
    "cx": 0.64,
    "cy": 0.64,
    "bocas": {},
-   "habla": false
+   "habla": true,
+   "hablan": {
+    "ANA": {
+     "img/es_hueco_c.jpg": [
+      "img/es_hueco_ana_boca.png"
+     ]
+    },
+    "PACIENTE": {
+     "img/es_hueco_c.jpg": [
+      "img/es_hueco_pac_boca.png"
+     ]
+    }
+   }
   },
   {
    "t0": 16.138,
-   "fondo": "img/es_hueco.jpg",
+   "fondo": "img/es_hueco_c.jpg",
    "zoom": 1.35,
    "cx": 0.48,
    "cy": 0.25,
    "bocas": {},
-   "habla": false
+   "habla": true,
+   "hablan": {
+    "ANA": {
+     "img/es_hueco_c.jpg": [
+      "img/es_hueco_ana_boca.png"
+     ]
+    },
+    "PACIENTE": {
+     "img/es_hueco_c.jpg": [
+      "img/es_hueco_pac_boca.png"
+     ]
+    }
+   }
   },
   {
-   "t0": 18.089000000000002,
+   "t0": 18.398,
    "fondo": "img/es_habla.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -121,31 +184,43 @@
    "habla": true
   },
   {
-   "t0": 23.475,
-   "fondo": "img/es_habla_b.jpg",
+   "t0": 23.784000000000002,
+   "fondo": "img/es_habla_bc.jpg",
    "zoom": 1.0,
    "cx": 0.5,
    "cy": 0.5,
    "bocas": {},
-   "habla": false
+   "habla": true,
+   "hablan": {
+    "ANA": {
+     "img/es_habla_bc.jpg": [
+      "img/es_habla_boca.png"
+     ]
+    },
+    "PACIENTE": {
+     "img/es_habla_bc.jpg": [
+      "img/es_habla_bc_boca.png"
+     ]
+    }
+   }
   },
   {
-   "t0": 25.684,
+   "t0": 26.87,
    "fondo": "img/es_cuanto.jpg",
    "zoom": 1.0,
    "cx": 0.5,
    "cy": 0.5,
    "bocas": {},
-   "habla": false,
+   "habla": true,
    "cambios": [
     {
-     "t": 27.378,
+     "t": 28.564,
      "fondo": "img/es_cuanto_b.jpg"
     }
    ],
    "rotulos": [
     {
-     "t0": 25.644,
+     "t0": 26.83,
      "texto": "50 MiN",
      "x": 540,
      "y": 300,
@@ -154,10 +229,10 @@
      "centro": true,
      "fijo": true,
      "caja": true,
-     "t1": 27.387999999999998
+     "t1": 28.573999999999998
     },
     {
-     "t0": 27.337999999999997,
+     "t0": 28.523999999999997,
      "texto": "48 PREGUNTANDO",
      "x": 540,
      "y": 300,
@@ -167,16 +242,23 @@
      "fijo": true,
      "caja": true
     }
-   ]
+   ],
+   "hablan": {
+    "ANA": {
+     "img/es_cuanto.jpg": [
+      "img/es_cuanto_ana_boca.png"
+     ]
+    }
+   }
   },
   {
-   "t0": 29.512,
+   "t0": 30.698,
    "fondo": "img/es_martes.jpg",
    "zoom": 1.0,
    "cx": 0.5,
    "cy": 0.5,
    "bocas": {},
-   "habla": false,
+   "habla": true,
    "alterna": {
     "imgs": [
      "img/es_martes.jpg",
@@ -186,7 +268,7 @@
    },
    "rotulos": [
     {
-     "t0": 29.697999999999997,
+     "t0": 30.884,
      "texto": "MARTES",
      "x": 540,
      "y": 300,
@@ -195,10 +277,10 @@
      "centro": true,
      "fijo": true,
      "caja": true,
-     "t1": 31.506
+     "t1": 32.692
     },
     {
-     "t0": 35.169,
+     "t0": 36.355,
      "texto": "NOViEMBRE",
      "x": 540,
      "y": 300,
@@ -208,32 +290,52 @@
      "fijo": true,
      "caja": true
     }
-   ]
+   ],
+   "hablan": {
+    "ANA": {
+     "img/es_martes.jpg": [
+      "img/es_martes_ana_boca.png"
+     ],
+     "img/es_martes_b.jpg": [
+      "img/es_martes_ana_boca.png"
+     ]
+    }
+   }
   },
   {
-   "t0": 33.495,
+   "t0": 34.681,
    "fondo": "img/es_martes.jpg",
    "zoom": 1.45,
    "cx": 0.6,
    "cy": 0.36,
    "bocas": {},
-   "habla": false,
+   "habla": true,
    "alterna": {
     "imgs": [
      "img/es_martes.jpg",
      "img/es_martes_b.jpg"
     ],
     "cada": 0.12
+   },
+   "hablan": {
+    "ANA": {
+     "img/es_martes.jpg": [
+      "img/es_martes_ana_boca.png"
+     ],
+     "img/es_martes_b.jpg": [
+      "img/es_martes_ana_boca.png"
+     ]
+    }
    }
   },
   {
-   "t0": 35.208999999999996,
+   "t0": 36.394999999999996,
    "fondo": "img/es_martes.jpg",
    "zoom": 1.0,
    "cx": 0.5,
    "cy": 0.5,
    "bocas": {},
-   "habla": false,
+   "habla": true,
    "alterna": {
     "imgs": [
      "img/es_martes.jpg",
@@ -243,7 +345,7 @@
    },
    "rotulos": [
     {
-     "t0": 29.697999999999997,
+     "t0": 30.884,
      "texto": "MARTES",
      "x": 540,
      "y": 300,
@@ -252,10 +354,10 @@
      "centro": true,
      "fijo": true,
      "caja": true,
-     "t1": 31.506
+     "t1": 32.692
     },
     {
-     "t0": 35.169,
+     "t0": 36.355,
      "texto": "NOViEMBRE",
      "x": 540,
      "y": 300,
@@ -265,25 +367,35 @@
      "fijo": true,
      "caja": true
     }
-   ]
+   ],
+   "hablan": {
+    "ANA": {
+     "img/es_martes.jpg": [
+      "img/es_martes_ana_boca.png"
+     ],
+     "img/es_martes_b.jpg": [
+      "img/es_martes_ana_boca.png"
+     ]
+    }
+   }
   },
   {
-   "t0": 37.085,
+   "t0": 38.271,
    "fondo": "img/es_miercoles.jpg",
    "zoom": 1.0,
    "cx": 0.5,
    "cy": 0.5,
    "bocas": {},
-   "habla": false,
+   "habla": true,
    "cambios": [
     {
-     "t": 42.559,
-     "fondo": "img/es_miercoles_b.jpg"
+     "t": 43.745,
+     "fondo": "img/es_miercoles_bc.jpg"
     }
    ],
    "rotulos": [
     {
-     "t0": 37.25,
+     "t0": 38.436,
      "texto": "MiÉRCOLES",
      "x": 540,
      "y": 300,
@@ -292,12 +404,27 @@
      "centro": true,
      "fijo": true,
      "caja": true,
-     "t1": 39.660000000000004
+     "t1": 40.846000000000004
     }
-   ]
+   ],
+   "hablan": {
+    "ANA": {
+     "img/es_miercoles.jpg": [
+      "img/es_miercoles_ana_boca.png"
+     ],
+     "img/es_miercoles_bc.jpg": [
+      "img/es_miercoles_ana_boca.png"
+     ]
+    },
+    "SENORA": {
+     "img/es_miercoles_bc.jpg": [
+      "img/es_miercoles_bc_boca.png"
+     ]
+    }
+   }
   },
   {
-   "t0": 46.171,
+   "t0": 47.913,
    "fondo": "img/br_resenas.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -306,7 +433,7 @@
    "habla": false,
    "rotulos": [
     {
-     "t0": 46.292,
+     "t0": 48.034,
      "texto": "JUEVES",
      "x": 540,
      "y": 300,
@@ -315,10 +442,10 @@
      "centro": true,
      "fijo": true,
      "caja": true,
-     "t1": 48.271
+     "t1": 50.013000000000005
     },
     {
-     "t0": 49.232,
+     "t0": 50.974,
      "texto": "«LA NUTRiCiONiSTA",
      "x": 540,
      "y": 1450,
@@ -329,7 +456,7 @@
      "caja": true
     },
     {
-     "t0": 49.232,
+     "t0": 50.974,
      "texto": "NO PESA»",
      "x": 540,
      "y": 1560,
@@ -342,7 +469,7 @@
    ]
   },
   {
-   "t0": 48.260999999999996,
+   "t0": 50.003,
    "fondo": "img/br_resenas.jpg",
    "zoom": 1.5,
    "cx": 0.45,
@@ -351,7 +478,7 @@
    "habla": false
   },
   {
-   "t0": 49.272,
+   "t0": 51.013999999999996,
    "fondo": "img/br_resenas.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -360,7 +487,7 @@
    "habla": false,
    "rotulos": [
     {
-     "t0": 46.292,
+     "t0": 48.034,
      "texto": "JUEVES",
      "x": 540,
      "y": 300,
@@ -369,10 +496,10 @@
      "centro": true,
      "fijo": true,
      "caja": true,
-     "t1": 48.271
+     "t1": 50.013000000000005
     },
     {
-     "t0": 49.232,
+     "t0": 50.974,
      "texto": "«LA NUTRiCiONiSTA",
      "x": 540,
      "y": 1450,
@@ -383,7 +510,7 @@
      "caja": true
     },
     {
-     "t0": 49.232,
+     "t0": 50.974,
      "texto": "NO PESA»",
      "x": 540,
      "y": 1560,
@@ -396,7 +523,7 @@
    ]
   },
   {
-   "t0": 51.062,
+   "t0": 52.803999999999995,
    "fondo": "img/br_fontanero.jpg",
    "zoom": 1.06,
    "cx": 0.5,
@@ -412,7 +539,7 @@
    }
   },
   {
-   "t0": 51.482,
+   "t0": 53.224,
    "fondo": "img/br_fontanero.jpg",
    "zoom": 1.25,
    "cx": 0.4,
@@ -428,7 +555,7 @@
    }
   },
   {
-   "t0": 53.217999999999996,
+   "t0": 54.96,
    "fondo": "img/br_resenas.jpg",
    "zoom": 1.5,
    "cx": 0.5,
@@ -437,7 +564,7 @@
    "habla": false
   },
   {
-   "t0": 53.873,
+   "t0": 55.614999999999995,
    "fondo": "img/br_resenas.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -446,7 +573,7 @@
    "habla": false,
    "rotulos": [
     {
-     "t0": 53.833,
+     "t0": 55.574999999999996,
      "texto": "«MUY MAJA, PERO",
      "x": 540,
      "y": 1400,
@@ -457,7 +584,7 @@
      "caja": true
     },
     {
-     "t0": 53.833,
+     "t0": 55.574999999999996,
      "texto": "NO SÉ Si HE",
      "x": 540,
      "y": 1500,
@@ -468,7 +595,7 @@
      "caja": true
     },
     {
-     "t0": 53.833,
+     "t0": 55.574999999999996,
      "texto": "ADELGAZADO»",
      "x": 540,
      "y": 1600,
@@ -481,7 +608,7 @@
    ]
   },
   {
-   "t0": 56.406,
+   "t0": 58.147999999999996,
    "fondo": "img/es_orgullosa.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -494,7 +621,7 @@
    "habla": true
   },
   {
-   "t0": 57.254999999999995,
+   "t0": 58.997,
    "fondo": "img/es_orgullosa.jpg",
    "zoom": 1.3,
    "cx": 0.51,
@@ -507,7 +634,7 @@
    "habla": true
   },
   {
-   "t0": 57.927,
+   "t0": 59.669,
    "fondo": "img/br_abuela.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -516,7 +643,7 @@
    "habla": false,
    "rotulos": [
     {
-     "t0": 58.07,
+     "t0": 59.812,
      "texto": "ViERNES",
      "x": 540,
      "y": 300,
@@ -525,25 +652,28 @@
      "centro": true,
      "fijo": true,
      "caja": true,
-     "t1": 59.717000000000006
+     "t1": 61.459
     }
    ]
   },
   {
-   "t0": 62.507999999999996,
+   "t0": 64.25,
    "fondo": "img/br_abuela.jpg",
    "zoom": 1.0,
    "cx": 0.5,
    "cy": 0.5,
-   "bocas": {
-    "img/br_abuela.jpg": [
-     "img/br_abuela_boca.png"
-    ]
-   },
-   "habla": true
+   "bocas": {},
+   "habla": true,
+   "hablan": {
+    "ABUELA": {
+     "img/br_abuela.jpg": [
+      "img/br_abuela_boca.png"
+     ]
+    }
+   }
   },
   {
-   "t0": 65.663,
+   "t0": 69.307,
    "fondo": "img/es_tel.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -556,25 +686,39 @@
    "habla": true
   },
   {
-   "t0": 67.598,
+   "t0": 71.304,
    "fondo": "img/br_abuela_c.jpg",
    "zoom": 1.0,
    "cx": 0.5,
    "cy": 0.5,
    "bocas": {},
-   "habla": false
+   "habla": true,
+   "hablan": {
+    "ABUELA": {
+     "img/br_abuela_c.jpg": [
+      "img/br_abuela_c_boca.png"
+     ]
+    }
+   }
   },
   {
-   "t0": 69.071,
+   "t0": 74.239,
    "fondo": "img/br_abuela_c.jpg",
    "zoom": 1.35,
    "cx": 0.42,
    "cy": 0.42,
    "bocas": {},
-   "habla": false
+   "habla": true,
+   "hablan": {
+    "ABUELA": {
+     "img/br_abuela_c.jpg": [
+      "img/br_abuela_c_boca.png"
+     ]
+    }
+   }
   },
   {
-   "t0": 70.359,
+   "t0": 76.214,
    "fondo": "img/es_tel.jpg",
    "zoom": 1.0,
    "cx": 0.5,

@@ -28,11 +28,16 @@ def boca(x):
     return I + x + '_boca.png'
 
 
-def esc(n, t0, bocas=None, **k):
+def esc(n, t0, bocas=None, hablan=None, **k):
+    """hablan = {QUIEN: {dibujo: capa de boca}}: cada boca se abre solo cuando habla ese personaje"""
     bocas = bocas if bocas is not None else [n]
+    if hablan:
+        bocas, k['hablan'] = [], {q: {I + d + '.jpg': [I + c + '_boca.png'] for d, c in m.items()} for q, m in hablan.items()}
     d = {'t0': t0, 'fondo': I + n + '.jpg', 'zoom': 1.0, 'cx': 0.5, 'cy': 0.5,
          'bocas': {I + x + '.jpg': [boca(x)] for x in bocas}, 'habla': bool(bocas)}
     d.update(k)
+    if hablan:
+        d['habla'] = True
     return d
 
 
@@ -62,46 +67,47 @@ P = [
     # «Así que la guardé en el armario de la limpieza. Al lado de la fregona.»: cierra la puerta en «fregona»
     esc('br_armario', T('así') - c, [], zoom=1.27, cy=0.49, cambios=[ch(T('fregona') + 0.2, 'br_armario_b')]),
     # «Primera paciente del lunes. Entra y se quita los zapatos, el reloj y los pendientes.»
-    esc('es_zapatos', T('primera') - c, [], cambios=[ch(T('pendientes') - c, 'es_zapatos_b')],
+    esc('es_zapatos', T('primera') - c, hablan={'ANA': {'es_zapatos': 'es_zapatos_ana', 'es_zapatos_b': 'es_zapatos_ana'}}, cambios=[ch(T('pendientes') - c, 'es_zapatos_b')],
         rotulos=[DIA(T('lunes') - b, 'LUNES', T('entra') + 0.6)]),
     # «Y se queda mirando el hueco donde estaba la báscula, como quien busca el coche en el parking. ¿Y la báscula?»
-    esc('es_hueco', Tt('y', 11.5) - c, []),
+    esc('es_hueco_c', Tt('y', 11.5) - c, hablan={'ANA': {'es_hueco_c': 'es_hueco_ana'}, 'PACIENTE': {'es_hueco_c': 'es_hueco_pac'}}),
     # «Le digo que ya no pesamos. Que vamos a hablar de cómo come, de cómo duerme, de cómo se siente.»
     esc('es_habla', T('le') - c, ['es_habla']),
     # «Vale, me dice. Pero ¿cuánto peso?»: la paciente se echa encima de la mesa
-    esc('es_habla_b', T('vale') - c, []),
+    esc('es_habla_bc', T('vale') - c, hablan={'ANA': {'es_habla_bc': 'es_habla'}, 'PACIENTE': {'es_habla_bc': 'es_habla_bc'}}),
     # «Cincuenta minutos de consulta. Cuarenta y ocho preguntándome cuánto pesa.»: Ana derrotada
-    esc('es_cuanto', T('cincuenta') - c, [], cambios=[ch(T('cuarenta') - c, 'es_cuanto_b')],
+    esc('es_cuanto', T('cincuenta') - c, hablan={'ANA': {'es_cuanto': 'es_cuanto_ana'}}, cambios=[ch(T('cuarenta') - c, 'es_cuanto_b')],
         rotulos=[R(T('cincuenta') - b, '50 MiN', 540, 300, 'negro', 110, T('cuarenta') - 0.05),
                  R(T('cuarenta') - b, '48 PREGUNTANDO', 540, 300, 'rojo', 95)]),
     # «El martes viene otro en ayunas… en noviembre. Para pesarse.»
-    esc('es_martes', Tt('el', 29) - c, [], alterna=alt('es_martes', 'es_martes_b', 0.12),
+    esc('es_martes', Tt('el', 30.5) - c, hablan={'ANA': {'es_martes': 'es_martes_ana', 'es_martes_b': 'es_martes_ana'}}, alterna=alt('es_martes', 'es_martes_b', 0.12),
         rotulos=[DIA(T('martes') - b, 'MARTES', T('sin') - 0.05), R(T('noviembre') - b, 'NOViEMBRE', 540, 300, 'azul', 110)]),
     # «El miércoles una señora se trae la báscula de su casa. En una bolsa del Mercadona.»
-    esc('es_miercoles', Tt('el', 37) - c, [], cambios=[ch(T('sube') - c, 'es_miercoles_b')],
-        rotulos=[DIA(T('miércoles') - b, 'MiÉRCOLES', Tt('en', 39.5) - 0.05)]),
+    esc('es_miercoles', Tt('el', 38) - c, cambios=[ch(T('sube') - c, 'es_miercoles_bc')],
+        hablan={'ANA': {'es_miercoles': 'es_miercoles_ana', 'es_miercoles_bc': 'es_miercoles_ana'}, 'SENORA': {'es_miercoles_bc': 'es_miercoles_bc'}},
+        rotulos=[DIA(T('miércoles') - b, 'MiÉRCOLES', Tt('en', 40.5) - 0.05)]),
     # «El jueves tengo tres reseñas en Google. Una estrella. «La nutricionista no pesa».»
-    esc('br_resenas', Tt('el', 46) - c, [], rotulos=[DIA(T('jueves') - b, 'JUEVES', Tt('una', 48) - 0.05),
-        R(Tt('la', 49) - b, '«LA NUTRiCiONiSTA', 540, 1450, 'negro', 82), R(Tt('la', 49) - b, 'NO PESA»', 540, 1560, 'negro', 82)]),
+    esc('br_resenas', Tt('el', 47.5) - c, [], rotulos=[DIA(T('jueves') - b, 'JUEVES', Tt('una', 49.8) - 0.05),
+        R(Tt('la', 50.8) - b, '«LA NUTRiCiONiSTA', 540, 1450, 'negro', 82), R(Tt('la', 50.8) - b, 'NO PESA»', 540, 1560, 'negro', 82)]),
     # «Como un fontanero sin llave inglesa.»
     esc('br_fontanero', T('como', 1) - c, [], zoom=1.06, cy=0.48, alterna=alt('br_fontanero', 'br_fontanero_b', 0.2)),
     # «Y otra: «Muy maja, pero no sé si he adelgazado».»: vuelve a las reseñas
-    esc('br_resenas', Tt('y', 53) - c, [], rotulos=[R(T('muy') - b, '«MUY MAJA, PERO', 540, 1400, 'negro', 72),
+    esc('br_resenas', Tt('y', 54.8) - c, [], rotulos=[R(T('muy') - b, '«MUY MAJA, PERO', 540, 1400, 'negro', 72),
         R(T('muy') - b, 'NO SÉ Si HE', 540, 1500, 'negro', 72), R(T('muy') - b, 'ADELGAZADO»', 540, 1600, 'negro', 72)]),
     # «Esa era justo la idea.»
     esc('es_orgullosa', T('esa') - c),
     # «El viernes me llama mi abuela. Que me ha visto en un vídeo en Instagram y me dice: «Hija, te veo más delgada…»»
-    esc('br_abuela', Tt('el', 57.5) - c, [], rotulos=[DIA(T('viernes') - b, 'ViERNES', Tt('que', 59.5) - 0.05)]),
-    esc('br_abuela', T('hija') - c, ['br_abuela']),
+    esc('br_abuela', Tt('el', 59.5) - c, [], rotulos=[DIA(T('viernes') - b, 'ViERNES', Tt('que', 61.3) - 0.05)]),
+    esc('br_abuela', T('hija') - c, hablan={'ABUELA': {'br_abuela': 'br_abuela'}}),
     # «No lo sé, abuela, no me peso.»
-    esc('es_tel', Tt('no', 65.5) - c),
+    esc('es_tel', Tt('no', 69.2) - c),
     # «Pues pésate, que para eso eres nutricionista.»: la abuela, mandona
-    esc('br_abuela_c', T('pues') - c, []),
+    esc('br_abuela_c', T('pues') - c, hablan={'ABUELA': {'br_abuela_c': 'br_abuela_c'}}),
     # remate: Ana, sin palabras
     esc('es_tel', PAL[-1]['fin'] + 0.25, []),
 ]
 
-CARA_FIJA = {'br_fontanero': (0.4, 0.42), 'es_cuanto_b': (0.6, 0.45), 'br_abuela_c': (0.42, 0.42), 'es_hueco': (0.48, 0.25)}
+CARA_FIJA = {'br_fontanero': (0.4, 0.42), 'es_cuanto_b': (0.6, 0.45), 'br_abuela_c': (0.42, 0.42), 'es_hueco_c': (0.48, 0.25)}
 
 
 def cara(fondo):
@@ -117,8 +123,8 @@ def cara(fondo):
 GOLPES = [(T('hueco') - c, 1.4, (0.64, 0.64), None),                        # el hueco con polvo
           (T('parking') - c, 1.35, None, None), (T('fontanero') - c, 1.25, None, None),
           (T('camiseta') - c, 1.45, (0.6, 0.36), T('noviembre') - c),          # el del martes, tiritando
-          (Tt('una', 48) - c, 1.5, (0.45, 0.28), Tt('la', 49) - c),           # «una estrella»
-          (Tt('y', 53) - c, 1.5, (0.5, 0.55), T('muy') - c),                  # otra reseña de una estrella
+          (Tt('una', 49.8) - c, 1.5, (0.45, 0.28), Tt('la', 50.8) - c),           # «una estrella»
+          (Tt('y', 54.8) - c, 1.5, (0.5, 0.55), T('muy') - c),                  # otra reseña de una estrella
           (T('idea') - c, 1.3, None, None), (T('nutricionista', 1) - c, 1.35, None, None)]
 nuevos = []
 for t, z, centro, vuelta in GOLPES:
@@ -138,16 +144,16 @@ tg = {round(g['t0'], 3) for g in nuevos}
 P = sorted([p for p in P if round(p['t0'], 3) not in tg] + nuevos, key=lambda p: p['t0'])
 FIN = PAL[-1]['fin'] + 2.2
 json.dump({'alineacion': 'voz/nb.json', 'audio': 'voz/nb.mp3', 'sin_recolor': ['es_', 'br_'], 'vel_letra': 0.03,
-           'subtitulos': {'y': 230, 'tam': 76, 'cola': 0.15},
+           'subtitulos': {'y': 230, 'tam': 76, 'cola': 0.15, 'colores': {'PACIENTE': [255, 226, 40], 'SENORA': [120, 230, 255], 'ABUELA': [255, 160, 90]}},
            'duracion': round(FIN, 2), 'planos': P}, open('plan.json', 'w'), indent=1, ensure_ascii=False)
 for p in P:
     print(round(p['t0'], 2), os.path.basename(p['fondo']), p.get('zoom'))
 
 EF = [[T('así') - 0.15, 'whoosh', -12], [T('fregona') + 0.2, 'puerta', -9, 0.8],
       [T('primera') - 0.15, 'whoosh2', -12], [T('zapatos'), 'zapato', -9], [T('pendientes'), 'pop', -12],
-      [T('parking') - 0.1, 'whoosh', -15], [Tt('el', 29) - 0.15, 'whoosh', -12], [T('noviembre'), 'viento', -10, 1.8],
-      [Tt('el', 29) + 0.3, 'tirita', -12, 3.0], [Tt('el', 37) - 0.15, 'whoosh2', -12], [T('bolsa'), 'bolsa', -9, 1.2],
-      [T('sube'), 'bascula', -9], [Tt('el', 46) - 0.15, 'whoosh', -12], [Tt('una', 48), 'notificacion', -10],
+      [T('parking') - 0.1, 'whoosh', -15], [Tt('el', 30.5) - 0.15, 'whoosh', -12], [T('noviembre'), 'viento', -10, 1.8],
+      [Tt('el', 30.5) + 0.3, 'tirita', -12, 3.0], [Tt('el', 38) - 0.15, 'whoosh2', -12], [T('bolsa'), 'bolsa', -9, 1.2],
+      [T('sube'), 'bascula', -9], [Tt('el', 47.5) - 0.15, 'whoosh', -12], [Tt('una', 49.8), 'notificacion', -10],
       [T('como', 1) - 0.15, 'whoosh2', -12], [T('como', 1), 'agua', -10, 1.8], [T('esa'), 'ding', -11],
-      [Tt('el', 57.5) - 0.15, 'whoosh', -12], [Tt('el', 57.5) + 0.1, 'telefono', -11, 1.2]]
+      [Tt('el', 59.5) - 0.15, 'whoosh', -12], [Tt('el', 59.5) + 0.1, 'telefono', -11, 1.2]]
 json.dump({'nivel': -24, 'efectos': [[round(e[0], 2)] + e[1:] for e in EF]}, open('efectos/efectos.json', 'w'))

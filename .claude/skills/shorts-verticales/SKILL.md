@@ -116,6 +116,13 @@ Ejemplo completo: `herramientas/shorts/domingo/` (3 shorts del vídeo «domingo�
 - Portadas (2026-11-19, «no se ve bien el texto» en la de la pasta de dientes): sobre un fondo cargado (estanterías,
   pasillos llenos de colores) el halo blanco no basta. Poner el título en CARTELES blancos con borde negro grueso,
   sombra y un poco girados (`herramientas/video/pasta_dientes/portada.py`), letra más grande y el remate en rojo.
+- Narrador que CITA a otros (2026-11-24, «La báscula» de la nutri: «cuando dice "¿Y la báscula?" debería sonar la
+  paciente» y «en varios momentos la nutri no está animada»): 1) cada frase citada de otro personaje (paciente, señora,
+  abuela…) va con SU voz: `nutri_bascula/voces_citas.py` parte de la locución aprobada y sustituye solo esas frases
+  (cada palabra lleva `quien`; los tiempos de después se recolocan solos con `Tt`), subtítulo de otro color por persona.
+  2) La narradora mueve la boca en TODOS los planos donde se le ve la cara, no solo en los suyos de cerca, y el que
+  habla en cada momento abre la suya: `esc(..., hablan={'ANA': {dibujo: capa}, 'PACIENTE': {...}})`. Un dibujo donde
+  alguien tiene la boca ya abierta y no habla se cierra antes con una edición (`CERRADAS` en `preparar.py`).
 
 ## Sketch de DIÁLOGO entre dos personajes (ejemplo `herramientas/video/buhardilla/`, Chico rosa + agente)
 - Personaje secundario completo antes (como el agente: `public/personajes/agente/`), y su referencia en cada escena.

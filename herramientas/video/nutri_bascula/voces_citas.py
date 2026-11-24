@@ -1,0 +1,63 @@
+"""Pone las frases de los otros personajes (paciente, señora, abuela) con su propia voz sobre la locución de Ana.
+Parte de voz/nb_v1 (solo Ana) y escribe voz/nb.mp3/json con «quien» en cada palabra. Tomas en voz/citas/."""
+import json, os, sys
+import numpy as np
+sys.path.insert(0, '..')
+exec(open('../voz.py').read().split('\norden = sys.argv[1]')[0])
+VOZ = {'PACIENTE': 'uShnBlXHAqA27srS28g2', 'SENORA': '9oWKy782oltLmeuOUdq7', 'ABUELA': 'M9RTtrzRACmbUzsEMq8p'}
+TEMPO = 1.06
+# (quien, texto, primera palabra, última palabra, buscar desde el segundo)
+CITAS = [('PACIENTE', '¿Y la báscula?', 'y', 'báscula?', 16.9),
+         ('PACIENTE', 'Vale...', 'vale', 'vale', 23),
+         ('PACIENTE', 'Pero ¿cuánto peso?', 'pero', 'peso?', 24),
+         ('SENORA', '¿Lo apunta usted o lo apunto yo?', '¿lo', 'yo?', 43.9),
+         ('ABUELA', 'Hija, te veo más delgada. ¿Cuánto has perdido?', 'hija', 'perdido', 60),
+         ('ABUELA', 'Pues pésate, que para eso eres nutricionista.', 'pues', 'nutricionista', 66)]
+rehacer = {int(x) for x in (opcion('--rehacer') or '').split(',') if x}
+os.makedirs('voz/citas', exist_ok=True)
+x = leer('voz/nb_v1.mp3')
+pal = [dict(p, quien='ANA') for p in json.load(open('voz/nb_v1.json'))['palabras'] if p['tipo'] == 'word']
+lim = lambda s: s.strip('«»¡!¿?.,;:…"').lower()
+trozos = []
+for i, (quien, texto, w0, w1, desde) in enumerate(CITAS):
+    a = next(k for k, p in enumerate(pal) if lim(p['texto']) == lim(w0) and p['inicio'] >= desde)
+    b = next(k for k in range(a, len(pal)) if lim(pal[k]['texto']) == lim(w1))
+    f = f'voz/citas/{i:02d}'
+    if i in rehacer or not os.path.exists(f + '.json'):
+        antes = ' '.join(p['texto'] for p in pal[max(0, a - 12):a])
+        mp3, al = api_voz(texto, VOZ[quien], antes, ' '.join(p['texto'] for p in pal[b + 1:b + 8]))
+        open(f + '_crudo.mp3', 'wb').write(mp3)
+        subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', f + '_crudo.mp3', '-af', f'atempo={TEMPO}', f + '.mp3'], check=True)
+        ws = palabras_de(al)
+        for w in ws:
+            w['inicio'], w['fin'] = w['inicio'] / TEMPO, w['fin'] / TEMPO
+        json.dump({'palabras': ws}, open(f + '.json', 'w'), ensure_ascii=False)
+        print('generada', i, quien, texto)
+    trozos.append((a, b, quien, f))
+partes, nuevas, prev_t, prev_k = [], [], 0.0, 0
+for a, b, quien, f in trozos:
+    ini = (pal[a - 1]['fin'] + pal[a]['inicio']) / 2
+    fin = (pal[b]['fin'] + pal[b + 1]['inicio']) / 2 if b + 1 < len(pal) else pal[b]['fin'] + 0.3
+    ga, gb = max(pal[a]['inicio'] - ini, 0.1), max(fin - pal[b]['fin'], 0.1)
+    y = leer(f + '.mp3'); ws = json.load(open(f + '.json'))['palabras']
+    s0, s1 = max(ws[0]['inicio'] - 0.03, 0), min(ws[-1]['fin'] + 0.08, len(y) / SR)
+    clip = y[int(s0 * SR):int(s1 * SR)]
+    clip = clip * (np.sqrt((x ** 2).mean()) / max(np.sqrt((clip ** 2).mean()), 1)) * 1.05  # mismo volumen que Ana
+    t_out = sum(len(p) for p in partes) / SR
+    partes.append(x[int(prev_t * SR):int(ini * SR)])
+    off = (t_out + ini - prev_t) - prev_t
+    nuevas += [dict(p, inicio=round(p['inicio'] + (t_out - prev_t), 3), fin=round(p['fin'] + (t_out - prev_t), 3)) for p in pal[prev_k:a]]
+    t0 = t_out + (ini - prev_t) + ga
+    partes += [np.zeros(int(ga * SR)), clip, np.zeros(int(gb * SR))]
+    nuevas += [dict(w, quien=quien, inicio=round(t0 + w['inicio'] - s0, 3), fin=round(t0 + w['fin'] - s0, 3)) for w in ws]
+    prev_t, prev_k = fin, b + 1
+t_out = sum(len(p) for p in partes) / SR
+partes.append(x[int(prev_t * SR):])
+nuevas += [dict(p, inicio=round(p['inicio'] + (t_out - prev_t), 3), fin=round(p['fin'] + (t_out - prev_t), 3)) for p in pal[prev_k:]]
+y = np.concatenate(partes)
+escribir('voz/nb.mp3', y)
+json.dump({'palabras': nuevas}, open('voz/nb.json', 'w'), ensure_ascii=False)
+print('dura', round(len(y) / SR, 2))
+for w in nuevas:
+    if w['quien'] != 'ANA':
+        print(w['quien'], w['texto'], w['inicio'])
