@@ -143,7 +143,7 @@ json.dump({'alineacion': 'voz/nb.json', 'audio': 'voz/nb.mp3', 'sin_recolor': ['
 for p in P:
     print(round(p['t0'], 2), os.path.basename(p['fondo']), p.get('zoom'))
 
-EF = [[0.2, 'pasos', -11, 2.0], [T('así') - 0.15, 'whoosh', -12], [T('fregona') + 0.2, 'puerta', -9, 0.8],
+EF = [[T('así') - 0.15, 'whoosh', -12], [T('fregona') + 0.2, 'puerta', -9, 0.8],
       [T('primera') - 0.15, 'whoosh2', -12], [T('zapatos'), 'zapato', -9], [T('pendientes'), 'pop', -12],
       [T('parking') - 0.1, 'whoosh', -15], [Tt('el', 29) - 0.15, 'whoosh', -12], [T('noviembre'), 'viento', -10, 1.8],
       [Tt('el', 29) + 0.3, 'tirita', -12, 3.0], [Tt('el', 37) - 0.15, 'whoosh2', -12], [T('bolsa'), 'bolsa', -9, 1.2],
