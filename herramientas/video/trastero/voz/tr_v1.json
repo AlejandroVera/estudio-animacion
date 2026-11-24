@@ -1,0 +1,1104 @@
+{
+"palabras": [
+{
+"texto": "Bueno,",
+"inicio": 0.0,
+"fin": 0.475,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "pues",
+"inicio": 0.657,
+"fin": 0.817,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "este",
+"inicio": 0.878,
+"fin": 1.07,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "es",
+"inicio": 1.09,
+"fin": 1.13,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "el",
+"inicio": 1.171,
+"fin": 1.222,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "estudio.",
+"inicio": 1.272,
+"fin": 1.757,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "Setecientos",
+"inicio": 2.201,
+"fin": 2.857,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "cincuenta",
+"inicio": 2.897,
+"fin": 3.322,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "al",
+"inicio": 3.342,
+"fin": 3.392,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "mes.",
+"inicio": 3.453,
+"fin": 3.766,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "Zona",
+"inicio": 4.049,
+"fin": 4.463,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "Malasaña.",
+"inicio": 4.674,
+"fin": 5.654,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "Esto",
+"inicio": 5.817,
+"fin": 6.072,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "es",
+"inicio": 6.096,
+"fin": 6.142,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "un",
+"inicio": 6.212,
+"fin": 6.27,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "trastero.",
+"inicio": 6.305,
+"fin": 6.885,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "Era",
+"inicio": 7.045,
+"fin": 7.257,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "un",
+"inicio": 7.358,
+"fin": 7.439,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "trastero.",
+"inicio": 7.479,
+"fin": 7.954,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "Ahora",
+"inicio": 8.337,
+"fin": 8.661,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "es",
+"inicio": 8.771,
+"fin": 8.893,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "un",
+"inicio": 8.963,
+"fin": 9.014,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "microloft.",
+"inicio": 9.044,
+"fin": 9.579,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "Lo",
+"inicio": 9.73,
+"fin": 9.821,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "pone",
+"inicio": 9.861,
+"fin": 10.013,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "en",
+"inicio": 10.034,
+"fin": 10.074,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "la",
+"inicio": 10.104,
+"fin": 10.154,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "puerta,",
+"inicio": 10.205,
+"fin": 10.548,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "mira.",
+"inicio": 10.588,
+"fin": 11.002,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "¿Y",
+"inicio": 11.164,
+"fin": 11.373,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "la",
+"inicio": 11.443,
+"fin": 11.501,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "ventana?",
+"inicio": 11.536,
+"fin": 12.093,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "Ventana",
+"inicio": 12.253,
+"fin": 12.656,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "no,",
+"inicio": 12.717,
+"fin": 13.03,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "tienes",
+"inicio": 13.242,
+"fin": 13.505,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "respiradero.",
+"inicio": 13.545,
+"fin": 14.221,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "Mucho",
+"inicio": 14.504,
+"fin": 14.767,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "más",
+"inicio": 14.807,
+"fin": 14.928,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "íntimo:",
+"inicio": 14.999,
+"fin": 15.433,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "nadie",
+"inicio": 15.766,
+"fin": 16.008,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "te",
+"inicio": 16.048,
+"fin": 16.12,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "ve",
+"inicio": 16.17,
+"fin": 16.311,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "y",
+"inicio": 16.442,
+"fin": 16.543,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "tú",
+"inicio": 16.624,
+"fin": 16.715,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "no",
+"inicio": 16.775,
+"fin": 16.826,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "ves",
+"inicio": 16.876,
+"fin": 16.987,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "a",
+"inicio": 17.048,
+"fin": 17.068,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "nadie.",
+"inicio": 17.108,
+"fin": 17.522,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "Desconexión",
+"inicio": 17.734,
+"fin": 18.35,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "total.",
+"inicio": 18.391,
+"fin": 18.875,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "¿Y",
+"inicio": 19.041,
+"fin": 19.262,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "el",
+"inicio": 19.32,
+"fin": 19.378,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "baño?",
+"inicio": 19.424,
+"fin": 19.97,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "Aquí.",
+"inicio": 20.13,
+"fin": 20.605,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "Ducha,",
+"inicio": 21.129,
+"fin": 21.725,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "váter",
+"inicio": 21.775,
+"fin": 22.25,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "y,",
+"inicio": 22.431,
+"fin": 22.745,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "si",
+"inicio": 22.775,
+"fin": 22.886,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "cierras",
+"inicio": 22.926,
+"fin": 23.158,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "la",
+"inicio": 23.198,
+"fin": 23.249,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "puerta,",
+"inicio": 23.29,
+"fin": 23.693,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "armario.",
+"inicio": 23.744,
+"fin": 24.319,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "Tres",
+"inicio": 24.531,
+"fin": 24.804,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "en",
+"inicio": 24.865,
+"fin": 24.915,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "uno.",
+"inicio": 24.985,
+"fin": 25.268,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "Ahorras",
+"inicio": 25.45,
+"fin": 25.763,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "metros.",
+"inicio": 25.824,
+"fin": 26.389,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "¿Y",
+"inicio": 26.552,
+"fin": 26.773,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "la",
+"inicio": 26.854,
+"fin": 26.912,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "cocina?",
+"inicio": 26.958,
+"fin": 27.62,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "La",
+"inicio": 27.781,
+"fin": 27.922,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "ducha",
+"inicio": 27.962,
+"fin": 28.265,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "tiene",
+"inicio": 28.336,
+"fin": 28.578,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "agua",
+"inicio": 28.608,
+"fin": 28.76,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "caliente.",
+"inicio": 28.79,
+"fin": 29.285,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "Con",
+"inicio": 29.668,
+"fin": 29.83,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "un",
+"inicio": 29.881,
+"fin": 29.931,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "hervidor",
+"inicio": 29.961,
+"fin": 30.304,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "te",
+"inicio": 30.365,
+"fin": 30.426,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "apañas.",
+"inicio": 30.456,
+"fin": 31.011,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "Mucha",
+"inicio": 31.223,
+"fin": 31.466,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "gente",
+"inicio": 31.506,
+"fin": 31.748,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "cena",
+"inicio": 31.788,
+"fin": 31.961,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "fideos",
+"inicio": 32.021,
+"fin": 32.364,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "instantáneos,",
+"inicio": 32.414,
+"fin": 33.041,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "¿eh?",
+"inicio": 33.061,
+"fin": 33.323,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "Es",
+"inicio": 33.656,
+"fin": 33.788,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "tendencia.",
+"inicio": 33.828,
+"fin": 34.646,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "¿Y",
+"inicio": 34.811,
+"fin": 35.008,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "ese",
+"inicio": 35.066,
+"fin": 35.206,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "ruido?",
+"inicio": 35.275,
+"fin": 35.786,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "La",
+"inicio": 35.946,
+"fin": 36.088,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "caldera",
+"inicio": 36.128,
+"fin": 36.45,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "del",
+"inicio": 36.481,
+"fin": 36.572,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "edificio.",
+"inicio": 36.612,
+"fin": 37.228,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "Por",
+"inicio": 37.753,
+"fin": 37.895,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "la",
+"inicio": 37.925,
+"fin": 37.965,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "noche",
+"inicio": 38.016,
+"fin": 38.278,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "hace",
+"inicio": 38.329,
+"fin": 38.48,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "un",
+"inicio": 38.51,
+"fin": 38.55,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "ruidito,",
+"inicio": 38.611,
+"fin": 39.126,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "pero",
+"inicio": 39.156,
+"fin": 39.328,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "te",
+"inicio": 39.369,
+"fin": 39.409,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "acostumbras.",
+"inicio": 39.429,
+"fin": 40.105,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "Es",
+"inicio": 40.549,
+"fin": 40.67,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "como",
+"inicio": 40.711,
+"fin": 40.863,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "tener",
+"inicio": 40.903,
+"fin": 41.075,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "un",
+"inicio": 41.125,
+"fin": 41.165,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "gato…",
+"inicio": 41.206,
+"fin": 41.65,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "que",
+"inicio": 41.892,
+"fin": 41.983,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "ronca.",
+"inicio": 42.043,
+"fin": 42.488,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "¿Y",
+"inicio": 42.652,
+"fin": 42.884,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "qué",
+"inicio": 42.954,
+"fin": 43.024,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "pedís",
+"inicio": 43.058,
+"fin": 43.279,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "de",
+"inicio": 43.302,
+"fin": 43.36,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "fianza?",
+"inicio": 43.407,
+"fin": 43.999,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "Seis",
+"inicio": 44.159,
+"fin": 44.371,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "meses.",
+"inicio": 44.431,
+"fin": 44.875,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "Un",
+"inicio": 45.118,
+"fin": 45.239,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "mes",
+"inicio": 45.28,
+"fin": 45.4,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "de",
+"inicio": 45.451,
+"fin": 45.492,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "agencia.",
+"inicio": 45.512,
+"fin": 46.027,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "Y",
+"inicio": 46.36,
+"fin": 46.41,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "una",
+"inicio": 46.471,
+"fin": 46.581,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "carta",
+"inicio": 46.632,
+"fin": 46.854,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "de",
+"inicio": 46.894,
+"fin": 46.935,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "motivación.",
+"inicio": 46.966,
+"fin": 47.873,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "¿Una",
+"inicio": 48.036,
+"fin": 48.291,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "carta",
+"inicio": 48.326,
+"fin": 48.535,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "de",
+"inicio": 48.57,
+"fin": 48.616,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "motivación?",
+"inicio": 48.651,
+"fin": 49.278,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "¿Para",
+"inicio": 49.301,
+"fin": 49.545,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "un",
+"inicio": 49.569,
+"fin": 49.615,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "trastero?",
+"inicio": 49.65,
+"fin": 50.265,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "Microloft.",
+"inicio": 50.425,
+"fin": 51.011,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "Y",
+"inicio": 51.395,
+"fin": 51.455,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "date",
+"inicio": 51.525,
+"fin": 51.677,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "prisa,",
+"inicio": 51.717,
+"fin": 52.131,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "que",
+"inicio": 52.283,
+"fin": 52.374,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "esta",
+"inicio": 52.394,
+"fin": 52.556,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "tarde",
+"inicio": 52.596,
+"fin": 52.848,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "tengo",
+"inicio": 52.919,
+"fin": 53.141,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "cuarenta",
+"inicio": 53.182,
+"fin": 53.484,
+"tipo": "word",
+"quien": "AGENTE"
+},
+{
+"texto": "visitas.",
+"inicio": 53.524,
+"fin": 54.221,
+"tipo": "word",
+"quien": "AGENTE"
+}
+],
+"frases": [
+{
+"quien": "AGENTE",
+"texto": "Bueno, pues este es el estudio. Setecientos cincuenta al mes. Zona Malasaña.",
+"inicio": 0.0,
+"fin": 5.657
+},
+{
+"quien": "ROSA",
+"texto": "Esto es un trastero.",
+"inicio": 5.817,
+"fin": 6.885
+},
+{
+"quien": "AGENTE",
+"texto": "Era un trastero. Ahora es un microloft. Lo pone en la puerta, mira.",
+"inicio": 7.045,
+"fin": 11.004
+},
+{
+"quien": "ROSA",
+"texto": "¿Y la ventana?",
+"inicio": 11.164,
+"fin": 12.093
+},
+{
+"quien": "AGENTE",
+"texto": "Ventana no, tienes respiradero. Mucho más íntimo: nadie te ve y tú no ves a nadie. Desconexión total.",
+"inicio": 12.253,
+"fin": 18.881
+},
+{
+"quien": "ROSA",
+"texto": "¿Y el baño?",
+"inicio": 19.041,
+"fin": 19.97
+},
+{
+"quien": "AGENTE",
+"texto": "Aquí. Ducha, váter y, si cierras la puerta, armario. Tres en uno. Ahorras metros.",
+"inicio": 20.13,
+"fin": 26.392
+},
+{
+"quien": "ROSA",
+"texto": "¿Y la cocina?",
+"inicio": 26.552,
+"fin": 27.621
+},
+{
+"quien": "AGENTE",
+"texto": "La ducha tiene agua caliente. Con un hervidor te apañas. Mucha gente cena fideos instantáneos, ¿eh? Es tendencia.",
+"inicio": 27.781,
+"fin": 34.651
+},
+{
+"quien": "ROSA",
+"texto": "¿Y ese ruido?",
+"inicio": 34.811,
+"fin": 35.786
+},
+{
+"quien": "AGENTE",
+"texto": "La caldera del edificio. Por la noche hace un ruidito, pero te acostumbras. Es como tener un gato… que ronca.",
+"inicio": 35.946,
+"fin": 42.492
+},
+{
+"quien": "ROSA",
+"texto": "¿Y qué pedís de fianza?",
+"inicio": 42.652,
+"fin": 43.999
+},
+{
+"quien": "AGENTE",
+"texto": "Seis meses. Un mes de agencia. Y una carta de motivación.",
+"inicio": 44.159,
+"fin": 47.876
+},
+{
+"quien": "ROSA",
+"texto": "¿Una carta de motivación? ¿Para un trastero?",
+"inicio": 48.036,
+"fin": 50.265
+},
+{
+"quien": "AGENTE",
+"texto": "Microloft. Y date prisa, que esta tarde tengo cuarenta visitas.",
+"inicio": 50.425,
+"fin": 54.226
+}
+]
+}

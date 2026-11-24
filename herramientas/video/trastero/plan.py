@@ -35,7 +35,7 @@ def G(t0, t1, quien, n):
 
 
 def charla(t0, gestos=()):
-    return {'t0': t0, 'fondo': I + 'es_charla.jpg', 'zoom': 1.1, 'cx': 0.5, 'cy': 0.56,
+    return {'t0': t0, 'fondo': I + 'es_charla.jpg', 'zoom': 1.1, 'cx': 0.5, 'cy': 0.5,
             'hablan': {'ROSA': {I + 'es_charla.jpg': [C + 'rboca.png']}, 'AGENTE': {I + 'es_charla.jpg': [C + 'aboca.png']}},
             'vivas': VIVAS, 'gestos': list(gestos)}
 
@@ -87,7 +87,7 @@ P = [
     gag('br_carta', T('carta') - c, 'br_carta_b', cada=0.35,
         rotulos=[R(T('carta') - c, 'CARTA DE MOTiVACiÓN', 511, 425, 'negro', 58)]),
     # «¿Una carta de motivación? ¿Para un trastero?»: primer plano, incrédulo
-    esc('es_pprosa', L[13] - c, rosa=['es_pprosa']),
+    esc('es_pprosa', L[13] - c, rosa=['es_pprosa'], zoom=1.1, cy=0.495),
     charla(L[14] - c, [G(L[14] - c, T('date') - c, 'AGENTE', 'a_dedo'),         # «Microloft.»
                        G(T('date') - c, 99, 'AGENTE', 'a_reloj'),                 # «Y date prisa…»: el reloj
                        G(L[14] - c, 99, 'ROSA', 'r_cruzado')]),
@@ -97,13 +97,21 @@ P = [
 # golpes de zoom a su cara en dos remates (los planos del armario y los fideos duraban 5-6 s)
 import copy
 P0 = list(P)
-for pal, cx, cy in [('metros', 0.27, 0.33), ('tendencia', 0.5, 0.3)]:
+# (v3) también en «trastero» (él, primera réplica) y «desconexión» (el agente): ahí había 4 s casi quietos
+for pal, cx, cy in [('trastero', 0.39, 0.42), ('desconexión', 0.61, 0.42), ('metros', 0.27, 0.33), ('tendencia', 0.5, 0.3)]:
     t = T(pal) - c
     base = [p for p in P0 if p['t0'] <= t][-1]
     g = copy.deepcopy(base); g.update(t0=t, zoom=1.4, cx=cx, cy=cy); g.pop('rotulos', None)
+    if pal == 'trastero':
+        g['t1_golpe'] = T('era') - c
     if base['fondo'].endswith('es_armario.jpg'):
         g['fondo'] = I + 'es_armario_b.jpg'; g.pop('cambios', None)
     P.append(g)
+# tras el golpe en «trastero» se vuelve al plano abierto en «Era un trastero»
+v = copy.deepcopy([p for p in P0 if p['t0'] <= T('era')][-1]); v['t0'] = T('era') - c; v.pop('rotulos', None); P.append(v)
+for p in P:
+    p.pop('t1_golpe', None)
+v = copy.deepcopy([p for p in P0 if p['t0'] <= T('desconexión')][-1]); v['t0'] = L[5] - c; v.pop('rotulos', None); P.append(v)
 P.sort(key=lambda p: p['t0'])
 FIN = PAL[-1]['fin'] + 2.4
 EF = [[L[1] - 0.05, 'pop', -12], [T('puerta') - 0.14, 'whoosh2', -12], [T('puerta'), 'ding', -10],
@@ -111,7 +119,7 @@ EF = [[L[1] - 0.05, 'pop', -12], [T('puerta') - 0.14, 'whoosh2', -12], [T('puert
       [T('cierras'), 'portazo', -9, 0.8], [T('hervidor') - 0.44, 'whoosh2', -11], [T('hervidor') - 0.2, 'hervidor', -11, 2.5],
       [L[9] - 0.2, 'caldera', -12, 1.4], [T('noche') - 0.44, 'whoosh', -11], [T('noche') - 0.2, 'ronquido', -9, 5.0],
       [T('carta') - 0.22, 'whoosh2', -11], [T('carta'), 'boli', -9, 2.0], [L[13] - 0.14, 'whoosh', -12],
-      [T('date'), 'tictac', -10, 1.0], [T('cuarenta') - 0.22, 'whoosh', -10], [T('cuarenta') + 0.2, 'murmullo', -7, 3.6], [T('metros') - 0.1, 'whoosh', -15], [T('tendencia') - 0.1, 'whoosh', -15]]
+      [T('date'), 'tictac', -10, 1.0], [T('cuarenta') - 0.22, 'whoosh', -10], [T('cuarenta') + 0.2, 'murmullo', -7, 3.6], [T('trastero') - 0.1, 'whoosh', -15], [T('desconexión') - 0.1, 'whoosh', -15], [T('metros') - 0.1, 'whoosh', -15], [T('tendencia') - 0.1, 'whoosh', -15]]
 json.dump({'nivel': -24, 'efectos': [[round(e[0], 2)] + e[1:] for e in EF]}, open('efectos/efectos.json', 'w'))
 json.dump({'alineacion': 'voz/tr.json', 'audio': 'voz/tr.mp3', 'vel_letra': 0.03,
            'subtitulos': {'y': 250, 'tam': 92, 'max': 3, 'contorno': 14, 'mayusculas': True, 'cola': 0.05,

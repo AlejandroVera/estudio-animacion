@@ -105,3 +105,8 @@ Rafa `Zb72NBThGN2Rv3y1RSTT`), nutri, Alejandro (Daniel - Podcast). Si falta el o
   cada gag tiene que tener la boca CERRADA de quien habla: pedir una edición «closed-lips smile» y usarla de base
   (solo su zona de boca/cabeza, para no mover nada más); el parpadeo de ese personaje se recorta a los ojos (su dibujo
   trae la boca vieja). Revisar las bocas con recortes de la cara a 15 fps mientras habla cada uno.
+- Revisión del microloft v3: comprobar por código que NINGÚN encuadre (planos, golpes de zoom, primeros planos) enseña
+  el marco blanco que traen los dibujos de Magnific (unos 40-70 px por cada lado): con zoom z, el centro tiene que caer
+  dentro del contenido menos medio encuadre. El plano fijo con cy 0,56 enseñaba una franja blanca abajo todo el vídeo.
+  Y transcribir cada frase: «tienes respiradero» salía «tiene» (rehacer con `--rehacer N`; si la nueva toma sale peor,
+  recuperar la anterior desde una copia de `voz/x_frases`).
