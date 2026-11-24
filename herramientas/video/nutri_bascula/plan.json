@@ -131,9 +131,9 @@
   {
    "t0": 12.994,
    "fondo": "img/es_hueco_c.jpg",
-   "zoom": 1.4,
-   "cx": 0.64,
-   "cy": 0.64,
+   "zoom": 1.2,
+   "cx": 0.58,
+   "cy": 0.52,
    "bocas": {},
    "habla": true,
    "hablan": {
@@ -288,7 +288,8 @@
      "tam": 110,
      "centro": true,
      "fijo": true,
-     "caja": true
+     "caja": true,
+     "t1": 37.18
     }
    ],
    "hablan": {
@@ -365,7 +366,8 @@
      "tam": 110,
      "centro": true,
      "fijo": true,
-     "caja": true
+     "caja": true,
+     "t1": 37.18
     }
    ],
    "hablan": {

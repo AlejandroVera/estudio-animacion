@@ -42,9 +42,13 @@ for a, b, quien, f in trozos:
     y = leer(f + '.mp3'); ws = json.load(open(f + '.json'))['palabras']
     s0, s1 = max(ws[0]['inicio'] - 0.03, 0), min(ws[-1]['fin'] + 0.08, len(y) / SR)
     clip = y[int(s0 * SR):int(s1 * SR)]
+    F = int(0.01 * SR); clip = clip.copy(); clip[:F] *= np.linspace(0, 1, F); clip[-F:] *= np.linspace(1, 0, F)
+    seg = x[int(prev_t * SR):int(ini * SR)].copy()
+    if len(seg) > 2 * F:
+        seg[:F] *= np.linspace(0, 1, F) if prev_t else 1; seg[-F:] *= np.linspace(1, 0, F)
     clip = clip * (np.sqrt((x ** 2).mean()) / max(np.sqrt((clip ** 2).mean()), 1)) * 1.05  # mismo volumen que Ana
     t_out = sum(len(p) for p in partes) / SR
-    partes.append(x[int(prev_t * SR):int(ini * SR)])
+    partes.append(seg)
     off = (t_out + ini - prev_t) - prev_t
     nuevas += [dict(p, inicio=round(p['inicio'] + (t_out - prev_t), 3), fin=round(p['fin'] + (t_out - prev_t), 3)) for p in pal[prev_k:a]]
     t0 = t_out + (ini - prev_t) + ga
@@ -52,7 +56,7 @@ for a, b, quien, f in trozos:
     nuevas += [dict(w, quien=quien, inicio=round(t0 + w['inicio'] - s0, 3), fin=round(t0 + w['fin'] - s0, 3)) for w in ws]
     prev_t, prev_k = fin, b + 1
 t_out = sum(len(p) for p in partes) / SR
-partes.append(x[int(prev_t * SR):])
+fin_ = x[int(prev_t * SR):].copy(); F = int(0.01 * SR); fin_[:F] *= np.linspace(0, 1, F)[:len(fin_[:F])]; partes.append(fin_)
 nuevas += [dict(p, inicio=round(p['inicio'] + (t_out - prev_t), 3), fin=round(p['fin'] + (t_out - prev_t), 3)) for p in pal[prev_k:]]
 y = np.concatenate(partes)
 escribir('voz/nb.mp3', y)

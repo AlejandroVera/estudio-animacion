@@ -81,7 +81,7 @@ P = [
                  R(T('cuarenta') - b, '48 PREGUNTANDO', 540, 300, 'rojo', 95)]),
     # «El martes viene otro en ayunas… en noviembre. Para pesarse.»
     esc('es_martes', Tt('el', 30.5) - c, hablan={'ANA': {'es_martes': 'es_martes_ana', 'es_martes_b': 'es_martes_ana'}}, alterna=alt('es_martes', 'es_martes_b', 0.12),
-        rotulos=[DIA(T('martes') - b, 'MARTES', T('sin') - 0.05), R(T('noviembre') - b, 'NOViEMBRE', 540, 300, 'azul', 110)]),
+        rotulos=[DIA(T('martes') - b, 'MARTES', T('sin') - 0.05), R(T('noviembre') - b, 'NOViEMBRE', 540, 300, 'azul', 110, T('para') - 0.05)]),
     # «El miércoles una señora se trae la báscula de su casa. En una bolsa del Mercadona.»
     esc('es_miercoles', Tt('el', 38) - c, cambios=[ch(T('sube') - c, 'es_miercoles_bc')],
         hablan={'ANA': {'es_miercoles': 'es_miercoles_ana', 'es_miercoles_bc': 'es_miercoles_ana'}, 'SENORA': {'es_miercoles_bc': 'es_miercoles_bc'}},
@@ -120,7 +120,7 @@ def cara(fondo):
 
 
 # (instante, zoom, centro o None = la cara, vuelta al plano entero o None)
-GOLPES = [(T('hueco') - c, 1.4, (0.64, 0.64), None),                        # el hueco con polvo
+GOLPES = [(T('hueco') - c, 1.2, (0.58, 0.52), None),                        # el hueco con polvo
           (T('parking') - c, 1.35, None, None), (T('fontanero') - c, 1.25, None, None),
           (T('camiseta') - c, 1.45, (0.6, 0.36), T('noviembre') - c),          # el del martes, tiritando
           (Tt('una', 49.8) - c, 1.5, (0.45, 0.28), Tt('la', 50.8) - c),           # «una estrella»
