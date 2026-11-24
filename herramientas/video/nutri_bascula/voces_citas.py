@@ -4,7 +4,7 @@ import json, os, sys
 import numpy as np
 sys.path.insert(0, '..')
 exec(open('../voz.py').read().split('\norden = sys.argv[1]')[0])
-VOZ = {'PACIENTE': 'uShnBlXHAqA27srS28g2', 'SENORA': '9oWKy782oltLmeuOUdq7', 'ABUELA': 'M9RTtrzRACmbUzsEMq8p'}
+VOZ = {'PACIENTE': 'UOIqAnmS11Reiei1Ytkc', 'SENORA': '9oWKy782oltLmeuOUdq7', 'ABUELA': 'M9RTtrzRACmbUzsEMq8p'}
 TEMPO = 1.06
 # (quien, texto, primera palabra, última palabra, buscar desde el segundo)
 CITAS = [('PACIENTE', '¿Y la báscula?', 'y', 'báscula?', 16.9),
@@ -33,13 +33,15 @@ for i, (quien, texto, w0, w1, desde) in enumerate(CITAS):
             w['inicio'], w['fin'] = w['inicio'] / TEMPO, w['fin'] / TEMPO
         json.dump({'palabras': ws}, open(f + '.json', 'w'), ensure_ascii=False)
         print('generada', i, quien, texto)
+    if not os.path.exists(f + '_limpio.mp3') or i in rehacer:  # quita el siseo de fondo de la toma
+        subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', f + '.mp3', '-af', 'highpass=f=80,afftdn=nf=-30:nr=18,agate=threshold=0.012:ratio=3:attack=5:release=120', f + '_limpio.mp3'], check=True)
     trozos.append((a, b, quien, f))
 partes, nuevas, prev_t, prev_k = [], [], 0.0, 0
 for a, b, quien, f in trozos:
     ini = (pal[a - 1]['fin'] + pal[a]['inicio']) / 2
     fin = (pal[b]['fin'] + pal[b + 1]['inicio']) / 2 if b + 1 < len(pal) else pal[b]['fin'] + 0.3
     ga, gb = max(pal[a]['inicio'] - ini, 0.1), max(fin - pal[b]['fin'], 0.1)
-    y = leer(f + '.mp3'); ws = json.load(open(f + '.json'))['palabras']
+    y = leer(f + '_limpio.mp3'); ws = json.load(open(f + '.json'))['palabras']
     s0, s1 = max(ws[0]['inicio'] - 0.03, 0), min(ws[-1]['fin'] + 0.08, len(y) / SR)
     clip = y[int(s0 * SR):int(s1 * SR)]
     F = int(0.01 * SR); clip = clip.copy(); clip[:F] *= np.linspace(0, 1, F); clip[-F:] *= np.linspace(1, 0, F)

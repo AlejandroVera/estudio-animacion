@@ -11,7 +11,7 @@ BASES = {'es_zapatos': 'es_zapatos_1', 'es_habla': 'es_habla_1', 'es_cuanto': 'e
          'br_abuela': 'br_abuela_1'}
 TAL_CUAL = ['es_saca', 'br_armario', 'es_hueco', 'es_martes', 'br_resenas', 'br_fontanero', 'es_orgullosa', 'es_tel', 'br_abuela_c']
 VARIANTES = {'es_zapatos_b': 'es_zapatos', 'es_habla_b': 'es_habla', 'es_cuanto_b': 'es_cuanto', 'es_martes_b': 'es_martes',
-             'es_miercoles_b': 'es_miercoles', 'br_fontanero_b': 'br_fontanero', 'es_saca_b': 'es_saca', 'br_armario_b': 'br_armario'}
+             'es_miercoles_b': 'es_miercoles', 'es_miercoles_s': 'es_miercoles', 'br_fontanero_b': 'br_fontanero', 'es_saca_b': 'es_saca', 'br_armario_b': 'br_armario'}
 ZONA = {}
 # capas de boca de cada personaje: capa -> (dibujo base en img/, dibujo con la boca en crudo/, caja x0 x1 y0 y1)
 BOCAS = {'es_zapatos_ana': ('es_zapatos', 'es_zapatos_ana_bk', (0.55, 1, 0.2, 0.5)),

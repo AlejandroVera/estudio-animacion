@@ -123,6 +123,13 @@ Ejemplo completo: `herramientas/shorts/domingo/` (3 shorts del vídeo «domingo�
   2) La narradora mueve la boca en TODOS los planos donde se le ve la cara, no solo en los suyos de cerca, y el que
   habla en cada momento abre la suya: `esc(..., hablan={'ANA': {dibujo: capa}, 'PACIENTE': {...}})`. Un dibujo donde
   alguien tiene la boca ya abierta y no habla se cierra antes con una edición (`CERRADAS` en `preparar.py`).
+  3) «Ruido de fondo cuando habla la paciente»: algunas voces de la biblioteca de ElevenLabs vienen grabadas bajas y
+  con siseo; al igualar el volumen sube también el ruido. Medir el suelo de ruido de cada toma (percentil 10 por
+  ventanas de 50 ms) antes de usarla, preferir voces de la cuenta y limpiar las citas (`highpass`, `afftdn`, `agate`).
+  4) «No van bien los sonidos con lo que hace»: cada efecto tiene que tener su dibujo. Si suena el golpe de la báscula
+  contra el suelo, en ese momento se tiene que VER en el suelo (un dibujo intermedio, `es_miercoles_s`).
+  5) Los `Tt(palabra, desde)` anclados a otra palabra (`Tt('el', T('pesarse'))`), nunca a segundos fijos: al cambiar una
+  voz los segundos se mueven y el plan se rompe.
 
 ## Sketch de DIÁLOGO entre dos personajes (ejemplo `herramientas/video/buhardilla/`, Chico rosa + agente)
 - Personaje secundario completo antes (como el agente: `public/personajes/agente/`), y su referencia en cada escena.
