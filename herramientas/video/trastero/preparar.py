@@ -59,3 +59,11 @@ for f in sorted(glob.glob('crudo/es_*boca.png')):
     out[al == 0, :3] = 0
     Image.fromarray(out, 'RGBA').save(f'img/{nom}.png', optimize=True)
     print(nom, 'boca %.2f%%' % (m.mean() * 100), 'en', int(mx) if n else '-', int(my) if n else '-')
+
+# es_armario_b (cierra la taquilla) traía la sonrisa ABIERTA y al hablar no se notaba la boca: se le pone la boca
+# cerrada de es_armario (misma cabeza en el mismo sitio)
+A = np.asarray(Image.open('img/es_armario.jpg').convert('RGB')).astype(float)
+B = np.asarray(Image.open('img/es_armario_b.jpg').convert('RGB')).astype(float)
+z = np.zeros(A.shape[:2]); z[700:1160, 1060:1400] = 1
+z = np.asarray(Image.fromarray((z * 255).astype('uint8')).filter(ImageFilter.GaussianBlur(6))).astype(float)[..., None] / 255
+Image.fromarray((B * (1 - z) + A * z).astype('uint8')).save('img/es_armario_b.jpg', quality=92)

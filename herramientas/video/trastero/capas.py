@@ -7,7 +7,15 @@ import numpy as np
 from PIL import Image, ImageFilter
 from scipy import ndimage as ndi
 
-BASE = 'crudo/mf_2.png'
+# v2 («no se le mueven bien las bocas»): en mf_2 el agente ya sonríe con la boca ABIERTA y su boca de hablar era casi
+# igual; la base lleva ahora su boca cerrada (de crudo/cerrada_1.png, solo la zona de la boca) y así se nota al hablar
+_M = Image.open('crudo/mf_2.png').convert('RGB')
+_C = np.asarray(Image.open('crudo/cerrada_1.png').convert('RGB').resize(_M.size)).astype(float)
+_m0 = np.asarray(_M).astype(float)
+_z = np.zeros(_m0.shape[:2]); _z[int(0.385 * _m0.shape[0]):int(0.425 * _m0.shape[0]), int(0.6 * _m0.shape[1]):int(0.73 * _m0.shape[1])] = 1
+_z = np.asarray(Image.fromarray((_z * 255).astype('uint8')).filter(ImageFilter.GaussianBlur(8))).astype(float)[..., None] / 255
+Image.fromarray((_m0 * (1 - _z) + _C * _z).astype('uint8')).save('crudo/base_charla.png')
+BASE = 'crudo/base_charla.png'
 A = Image.open(BASE).convert('RGB')
 a = np.asarray(A).astype(int)
 H, W = a.shape[:2]
@@ -115,7 +123,7 @@ for f in sorted(glob.glob('crudo/cv_*.png')):
     if nom in ('cv_rboca', 'cv_aboca') or nom.endswith('_boca'):
         continue
     if nom == 'cv_a_parp':
-        cara(nom, BASE, cab_ag)
+        cara(nom, BASE, cab_ag & (yy < ay - 0.012 * H))   # solo los ojos (su dibujo tiene la boca abierta)
     elif nom in ('cv_r_parp', 'cv_r_camara'):   # solo cambia su cara
         cara(nom, BASE, cab_chico)
     else:

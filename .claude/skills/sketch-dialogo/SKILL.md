@@ -100,3 +100,8 @@ Rafa `Zb72NBThGN2Rv3y1RSTT`), nutri, Alejandro (Daniel - Podcast). Si falta el o
   primeros planos, que la cara del gag cuadre con lo que se dice (vergüenza solo en «tu madre no cuenta», no mientras
   él presume) y que los planos de gag no pisen la frase siguiente: `dialogo.py --pausa N=0.7` deja respirar el gag.
   Subtítulos con `cola` 0,05 para que no pasen al plano siguiente.
+- 2026-11-24 (microloft, «no se le mueven bien las bocas»): si el dibujo base ya tiene la BOCA ABIERTA (sonrisa de
+  vendedor con dientes), la capa de «boca hablando» apenas cambia y parece que no habla. La base del plano fijo y de
+  cada gag tiene que tener la boca CERRADA de quien habla: pedir una edición «closed-lips smile» y usarla de base
+  (solo su zona de boca/cabeza, para no mover nada más); el parpadeo de ese personaje se recorta a los ojos (su dibujo
+  trae la boca vieja). Revisar las bocas con recortes de la cara a 15 fps mientras habla cada uno.

@@ -72,7 +72,7 @@ P = [
                       G(T('mucho') - c, L[5] - c, 'AGENTE', 'a_pecho'),           # «mucho más íntimo… desconexión total»
                       G(L[5] - c, L[6], 'ROSA', 'r_palmas')]),                    # «¿Y el baño?»
     # «Aquí. Ducha, váter y, si cierras la puerta, armario. Tres en uno. Ahorras metros.»
-    esc('es_armario', L[6] - c, cambios=[ch(T('cierras') - c, 'es_armario_b')]),
+    esc('es_armario', L[6] - c, ag=['es_armario', 'es_armario_b'], cambios=[ch(T('cierras') - c, 'es_armario_b')]),
     charla(L[7] - c, [G(L[7] - c, L[8] - c, 'ROSA', 'r_palmas'),                  # «¿Y la cocina?»
                       G(L[8] - c, L[9], 'AGENTE', 'a_dedo')]),                    # «La ducha tiene agua caliente»
     # «Con un hervidor te apañas. Mucha gente cena fideos instantáneos, ¿eh? Es tendencia.»

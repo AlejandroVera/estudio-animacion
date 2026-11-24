@@ -30,3 +30,8 @@ es_cola_b eI430R6dqL
 es_armario_aboca xSohbEtjfW
 es_pprosa_boca UPaQLOXwny
 br_carta_b P3FKwZz42C
+cerrada_1 eI4RJcadqL
+cerrada_2 jU8ad5ALD0
+armario_cerrada 9ZqruPwNYZ
+armario_boca_1 KLeIDFRkqp
+armario_boca_2 ksdtpqU16B

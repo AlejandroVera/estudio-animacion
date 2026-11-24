@@ -181,7 +181,14 @@
    "cy": 0.5,
    "hablan": {
     "ROSA": {},
-    "AGENTE": {}
+    "AGENTE": {
+     "img/es_armario.jpg": [
+      "img/es_armario_aboca.png"
+     ],
+     "img/es_armario_b.jpg": [
+      "img/es_armario_aboca.png"
+     ]
+    }
    },
    "cambios": [
     {
@@ -198,7 +205,14 @@
    "cy": 0.33,
    "hablan": {
     "ROSA": {},
-    "AGENTE": {}
+    "AGENTE": {
+     "img/es_armario.jpg": [
+      "img/es_armario_aboca.png"
+     ],
+     "img/es_armario_b.jpg": [
+      "img/es_armario_aboca.png"
+     ]
+    }
    }
   },
   {
