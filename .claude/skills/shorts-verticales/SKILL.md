@@ -125,7 +125,10 @@ Ejemplo completo: `herramientas/shorts/domingo/` (3 shorts del vídeo «domingo�
   alguien tiene la boca ya abierta y no habla se cierra antes con una edición (`CERRADAS` en `preparar.py`).
   3) «Ruido de fondo cuando habla la paciente»: algunas voces de la biblioteca de ElevenLabs vienen grabadas bajas y
   con siseo; al igualar el volumen sube también el ruido. Medir el suelo de ruido de cada toma (percentil 10 por
-  ventanas de 50 ms) antes de usarla, preferir voces de la cuenta y limpiar las citas (`highpass`, `afftdn`, `agate`).
+  ventanas de 50 ms) antes de usarla y limpiar las citas con `highpass` + `afftdn` suave (el `agate` se comía el «¿Y…»).
+  Después «ahora está súper baja»: la voz elegida (Carolina) era apagada, con la mitad de energía en 1-4 kHz que la
+  narradora; a igual RMS se oía floja. Elegir voces con PRESENCIA parecida a la narradora (proporción 1-4 kHz ≈ 0,3),
+  medir cada frase en LUFS en el vídeo final (`ebur128`), y quien reclama o se impacienta, 1-2 dB por encima.
   4) «No van bien los sonidos con lo que hace»: cada efecto tiene que tener su dibujo. Si suena el golpe de la báscula
   contra el suelo, en ese momento se tiene que VER en el suelo (un dibujo intermedio, `es_miercoles_s`).
   5) Los `Tt(palabra, desde)` anclados a otra palabra (`Tt('el', T('pesarse'))`), nunca a segundos fijos: al cambiar una

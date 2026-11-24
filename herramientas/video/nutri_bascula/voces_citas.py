@@ -4,8 +4,9 @@ import json, os, sys
 import numpy as np
 sys.path.insert(0, '..')
 exec(open('../voz.py').read().split('\norden = sys.argv[1]')[0])
-VOZ = {'PACIENTE': 'UOIqAnmS11Reiei1Ytkc', 'SENORA': '9oWKy782oltLmeuOUdq7', 'ABUELA': 'M9RTtrzRACmbUzsEMq8p'}
+VOZ = {'PACIENTE': 'iuYybvSfclFoJ9ab2Im6', 'SENORA': '9oWKy782oltLmeuOUdq7', 'ABUELA': 'M9RTtrzRACmbUzsEMq8p'}
 TEMPO = 1.06
+GANANCIA = {'PACIENTE': 1.3, 'ABUELA': 0.72}  # la paciente habla un poco más alto que la narradora (se impacienta)
 # (quien, texto, primera palabra, última palabra, buscar desde el segundo)
 CITAS = [('PACIENTE', '¿Y la báscula?', 'y', 'báscula?', 16.9),
          ('PACIENTE', 'Vale...', 'vale', 'vale', 23),
@@ -34,7 +35,7 @@ for i, (quien, texto, w0, w1, desde) in enumerate(CITAS):
         json.dump({'palabras': ws}, open(f + '.json', 'w'), ensure_ascii=False)
         print('generada', i, quien, texto)
     if not os.path.exists(f + '_limpio.mp3') or i in rehacer:  # quita el siseo de fondo de la toma
-        subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', f + '.mp3', '-af', 'highpass=f=80,afftdn=nf=-30:nr=18,agate=threshold=0.012:ratio=3:attack=5:release=120', f + '_limpio.mp3'], check=True)
+        subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', f + '.mp3', '-af', 'highpass=f=80,afftdn=nf=-35:nr=10', f + '_limpio.mp3'], check=True)
     trozos.append((a, b, quien, f))
 partes, nuevas, prev_t, prev_k = [], [], 0.0, 0
 for a, b, quien, f in trozos:
@@ -48,7 +49,7 @@ for a, b, quien, f in trozos:
     seg = x[int(prev_t * SR):int(ini * SR)].copy()
     if len(seg) > 2 * F:
         seg[:F] *= np.linspace(0, 1, F) if prev_t else 1; seg[-F:] *= np.linspace(1, 0, F)
-    clip = clip * (np.sqrt((x ** 2).mean()) / max(np.sqrt((clip ** 2).mean()), 1)) * 1.05  # mismo volumen que Ana
+    clip = clip * (np.sqrt((x ** 2).mean()) / max(np.sqrt((clip ** 2).mean()), 1)) * 1.05 * GANANCIA.get(quien, 1)  # mismo volumen que Ana
     t_out = sum(len(p) for p in partes) / SR
     partes.append(seg)
     off = (t_out + ini - prev_t) - prev_t
