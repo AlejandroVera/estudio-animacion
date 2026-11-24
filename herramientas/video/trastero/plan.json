@@ -1,0 +1,513 @@
+{
+ "alineacion": "voz/tr.json",
+ "audio": "voz/tr.mp3",
+ "vel_letra": 0.03,
+ "subtitulos": {
+  "y": 250,
+  "tam": 92,
+  "max": 3,
+  "contorno": 14,
+  "mayusculas": true,
+  "cola": 0.05,
+  "colores": {
+   "ROSA": [
+    255,
+    100,
+    205
+   ],
+   "AGENTE": [
+    255,
+    226,
+    40
+   ]
+  }
+ },
+ "duracion": 56.62,
+ "planos": [
+  {
+   "t0": 0,
+   "fondo": "img/es_charla.jpg",
+   "zoom": 1.1,
+   "cx": 0.5,
+   "cy": 0.56,
+   "hablan": {
+    "ROSA": {
+     "img/es_charla.jpg": [
+      "img/cv_rboca.png"
+     ]
+    },
+    "AGENTE": {
+     "img/es_charla.jpg": [
+      "img/cv_aboca.png"
+     ]
+    }
+   },
+   "vivas": {
+    "AGENTE": {
+     "habla": [],
+     "escucha": [],
+     "parpadeo": "img/cv_a_parp.png"
+    },
+    "ROSA": {
+     "habla": [],
+     "escucha": [],
+     "parpadeo": "img/cv_r_parp.png"
+    }
+   },
+   "gestos": [
+    {
+     "t0": 0,
+     "t1": 2.121,
+     "quien": "AGENTE",
+     "img": "img/cv_a_presenta.png"
+    },
+    {
+     "t0": 2.121,
+     "t1": 3.9690000000000003,
+     "quien": "AGENTE",
+     "img": "img/cv_a_dedo.png"
+    },
+    {
+     "t0": 3.9690000000000003,
+     "t1": 5.737,
+     "quien": "AGENTE",
+     "img": "img/cv_a_presenta.png"
+    },
+    {
+     "t0": 5.737,
+     "t1": 11.084,
+     "quien": "ROSA",
+     "img": "img/cv_r_cruzado.png"
+    },
+    {
+     "t0": 6.965,
+     "t1": 9.65,
+     "quien": "AGENTE",
+     "img": "img/cv_a_dedo.png"
+    },
+    {
+     "t0": 9.65,
+     "t1": 11.164,
+     "quien": "AGENTE",
+     "img": "img/cv_a_puerta.png"
+    }
+   ]
+  },
+  {
+   "t0": 10.125,
+   "fondo": "img/br_puerta.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "hablan": {
+    "ROSA": {},
+    "AGENTE": {}
+   },
+   "rotulos": [
+    {
+     "t0": 10.125,
+     "texto": "MiCROLOFT",
+     "x": 538,
+     "y": 474,
+     "color": "negro",
+     "tam": 70,
+     "centro": true,
+     "fijo": true
+    }
+   ]
+  },
+  {
+   "t0": 11.084,
+   "fondo": "img/es_charla.jpg",
+   "zoom": 1.1,
+   "cx": 0.5,
+   "cy": 0.56,
+   "hablan": {
+    "ROSA": {
+     "img/es_charla.jpg": [
+      "img/cv_rboca.png"
+     ]
+    },
+    "AGENTE": {
+     "img/es_charla.jpg": [
+      "img/cv_aboca.png"
+     ]
+    }
+   },
+   "vivas": {
+    "AGENTE": {
+     "habla": [],
+     "escucha": [],
+     "parpadeo": "img/cv_a_parp.png"
+    },
+    "ROSA": {
+     "habla": [],
+     "escucha": [],
+     "parpadeo": "img/cv_r_parp.png"
+    }
+   },
+   "gestos": [
+    {
+     "t0": 11.084,
+     "t1": 12.173,
+     "quien": "ROSA",
+     "img": "img/cv_r_palmas.png"
+    },
+    {
+     "t0": 12.173,
+     "t1": 14.424,
+     "quien": "AGENTE",
+     "img": "img/cv_a_arriba.png"
+    },
+    {
+     "t0": 14.424,
+     "t1": 18.961000000000002,
+     "quien": "AGENTE",
+     "img": "img/cv_a_pecho.png"
+    },
+    {
+     "t0": 18.961000000000002,
+     "t1": 20.13,
+     "quien": "ROSA",
+     "img": "img/cv_r_palmas.png"
+    }
+   ]
+  },
+  {
+   "t0": 20.05,
+   "fondo": "img/es_armario.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "hablan": {
+    "ROSA": {},
+    "AGENTE": {}
+   },
+   "cambios": [
+    {
+     "t": 22.846,
+     "fondo": "img/es_armario_b.jpg"
+    }
+   ]
+  },
+  {
+   "t0": 25.744000000000003,
+   "fondo": "img/es_armario_b.jpg",
+   "zoom": 1.4,
+   "cx": 0.27,
+   "cy": 0.33,
+   "hablan": {
+    "ROSA": {},
+    "AGENTE": {}
+   }
+  },
+  {
+   "t0": 26.472,
+   "fondo": "img/es_charla.jpg",
+   "zoom": 1.1,
+   "cx": 0.5,
+   "cy": 0.56,
+   "hablan": {
+    "ROSA": {
+     "img/es_charla.jpg": [
+      "img/cv_rboca.png"
+     ]
+    },
+    "AGENTE": {
+     "img/es_charla.jpg": [
+      "img/cv_aboca.png"
+     ]
+    }
+   },
+   "vivas": {
+    "AGENTE": {
+     "habla": [],
+     "escucha": [],
+     "parpadeo": "img/cv_a_parp.png"
+    },
+    "ROSA": {
+     "habla": [],
+     "escucha": [],
+     "parpadeo": "img/cv_r_parp.png"
+    }
+   },
+   "gestos": [
+    {
+     "t0": 26.472,
+     "t1": 27.701,
+     "quien": "ROSA",
+     "img": "img/cv_r_palmas.png"
+    },
+    {
+     "t0": 27.701,
+     "t1": 34.811,
+     "quien": "AGENTE",
+     "img": "img/cv_a_dedo.png"
+    }
+   ]
+  },
+  {
+   "t0": 29.660999999999998,
+   "fondo": "img/es_fideos.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "hablan": {
+    "ROSA": {},
+    "AGENTE": {}
+   },
+   "alterna": {
+    "imgs": [
+     "img/es_fideos.jpg",
+     "img/es_fideos_b.jpg"
+    ],
+    "cada": 0.45,
+    "hasta": 99
+   }
+  },
+  {
+   "t0": 33.748000000000005,
+   "fondo": "img/es_fideos.jpg",
+   "zoom": 1.4,
+   "cx": 0.5,
+   "cy": 0.3,
+   "hablan": {
+    "ROSA": {},
+    "AGENTE": {}
+   },
+   "alterna": {
+    "imgs": [
+     "img/es_fideos.jpg",
+     "img/es_fideos_b.jpg"
+    ],
+    "cada": 0.45,
+    "hasta": 99
+   }
+  },
+  {
+   "t0": 34.731,
+   "fondo": "img/es_charla.jpg",
+   "zoom": 1.1,
+   "cx": 0.5,
+   "cy": 0.56,
+   "hablan": {
+    "ROSA": {
+     "img/es_charla.jpg": [
+      "img/cv_rboca.png"
+     ]
+    },
+    "AGENTE": {
+     "img/es_charla.jpg": [
+      "img/cv_aboca.png"
+     ]
+    }
+   },
+   "vivas": {
+    "AGENTE": {
+     "habla": [],
+     "escucha": [],
+     "parpadeo": "img/cv_a_parp.png"
+    },
+    "ROSA": {
+     "habla": [],
+     "escucha": [],
+     "parpadeo": "img/cv_r_parp.png"
+    }
+   },
+   "gestos": [
+    {
+     "t0": 34.731,
+     "t1": 35.866,
+     "quien": "ROSA",
+     "img": "img/cv_r_oreja.png"
+    },
+    {
+     "t0": 35.866,
+     "t1": 42.652,
+     "quien": "AGENTE",
+     "img": "img/cv_a_arriba.png"
+    }
+   ]
+  },
+  {
+   "t0": 37.716,
+   "fondo": "img/es_caldera.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "hablan": {
+    "ROSA": {},
+    "AGENTE": {}
+   },
+   "alterna": {
+    "imgs": [
+     "img/es_caldera.jpg",
+     "img/es_caldera_b.jpg"
+    ],
+    "cada": 0.6,
+    "hasta": 99
+   }
+  },
+  {
+   "t0": 42.572,
+   "fondo": "img/es_charla.jpg",
+   "zoom": 1.1,
+   "cx": 0.5,
+   "cy": 0.56,
+   "hablan": {
+    "ROSA": {
+     "img/es_charla.jpg": [
+      "img/cv_rboca.png"
+     ]
+    },
+    "AGENTE": {
+     "img/es_charla.jpg": [
+      "img/cv_aboca.png"
+     ]
+    }
+   },
+   "vivas": {
+    "AGENTE": {
+     "habla": [],
+     "escucha": [],
+     "parpadeo": "img/cv_a_parp.png"
+    },
+    "ROSA": {
+     "habla": [],
+     "escucha": [],
+     "parpadeo": "img/cv_r_parp.png"
+    }
+   },
+   "gestos": [
+    {
+     "t0": 42.572,
+     "t1": 44.079,
+     "quien": "ROSA",
+     "img": "img/cv_r_palmas.png"
+    },
+    {
+     "t0": 44.079,
+     "t1": 48.036,
+     "quien": "AGENTE",
+     "img": "img/cv_a_dedo.png"
+    }
+   ]
+  },
+  {
+   "t0": 46.552,
+   "fondo": "img/br_carta.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "hablan": {
+    "ROSA": {},
+    "AGENTE": {}
+   },
+   "rotulos": [
+    {
+     "t0": 46.552,
+     "texto": "CARTA DE MOTiVACiÓN",
+     "x": 511,
+     "y": 425,
+     "color": "negro",
+     "tam": 58,
+     "centro": true,
+     "fijo": true
+    }
+   ],
+   "alterna": {
+    "imgs": [
+     "img/br_carta.jpg",
+     "img/br_carta_b.jpg"
+    ],
+    "cada": 0.35,
+    "hasta": 99
+   }
+  },
+  {
+   "t0": 47.956,
+   "fondo": "img/es_pprosa.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "hablan": {
+    "ROSA": {
+     "img/es_pprosa.jpg": [
+      "img/es_pprosa_boca.png"
+     ]
+    },
+    "AGENTE": {}
+   }
+  },
+  {
+   "t0": 50.345,
+   "fondo": "img/es_charla.jpg",
+   "zoom": 1.1,
+   "cx": 0.5,
+   "cy": 0.56,
+   "hablan": {
+    "ROSA": {
+     "img/es_charla.jpg": [
+      "img/cv_rboca.png"
+     ]
+    },
+    "AGENTE": {
+     "img/es_charla.jpg": [
+      "img/cv_aboca.png"
+     ]
+    }
+   },
+   "vivas": {
+    "AGENTE": {
+     "habla": [],
+     "escucha": [],
+     "parpadeo": "img/cv_a_parp.png"
+    },
+    "ROSA": {
+     "habla": [],
+     "escucha": [],
+     "parpadeo": "img/cv_r_parp.png"
+    }
+   },
+   "gestos": [
+    {
+     "t0": 50.345,
+     "t1": 51.445,
+     "quien": "AGENTE",
+     "img": "img/cv_a_dedo.png"
+    },
+    {
+     "t0": 51.445,
+     "t1": 99,
+     "quien": "AGENTE",
+     "img": "img/cv_a_reloj.png"
+    },
+    {
+     "t0": 50.345,
+     "t1": 99,
+     "quien": "ROSA",
+     "img": "img/cv_r_cruzado.png"
+    }
+   ]
+  },
+  {
+   "t0": 53.102000000000004,
+   "fondo": "img/es_cola.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "hablan": {
+    "ROSA": {},
+    "AGENTE": {}
+   },
+   "alterna": {
+    "imgs": [
+     "img/es_cola.jpg",
+     "img/es_cola_b.jpg"
+    ],
+    "cada": 0.5,
+    "hasta": 99
+   }
+  }
+ ]
+}
