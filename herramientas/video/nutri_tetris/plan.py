@@ -161,6 +161,6 @@ mel = sorted((e[0], e[0] + e[3]) for e in EF if e[1] == 'tetris')
 t = 0.0
 for a0, a1 in mel + [(FIN, FIN)]:
     if a0 - t > 0.5:
-        EF.append([t, 'fondo', -13, round(a0 - t + 0.25, 2)])
+        pass  # base de 8 bits de fondo QUITADA a petición de Alejandro («no me cuadra, es una locura»)
     t = a1 - 0.1
 json.dump({'nivel': -24, 'efectos': [[round(e[0], 2)] + e[1:] for e in sorted(EF)]}, open('efectos/efectos.json', 'w'))

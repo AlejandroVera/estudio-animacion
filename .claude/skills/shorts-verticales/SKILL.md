@@ -149,7 +149,8 @@ Ejemplo completo: `herramientas/shorts/domingo/` (3 shorts del vídeo «domingo�
 - Ritmo (El Tetris: «corta los espacios sin locución», «falta sonido, cuando quitas la música cae el ritmo», «el agua
   entra tarde»): 1) toda pausa entre palabras > 0,18 s se deja en 0,14 s aunque tenga respiración (al final de
   `voces_citas.py`; ritmo_voz solo corta silencio absoluto); 76 s → 71 s. 2) Base de 8 bits por código todo el vídeo
-  (`efectos/fondo.mp3`, ~13 dB bajo la voz) que se calla cuando suena la melodía del Tetris, para que no caiga el ritmo.
+  (`efectos/fondo.mp3`) → DESCARTADO: «la música de fondo no me cuadra, es una locura». Sin base musical continua; el
+  ritmo, con pausas cortas, efectos y la melodía solo donde se menciona.
   3) Golpe de aire en cada corte sin efecto y «pop» en cada rótulo (automático en el plan). 4) Un sonido de algo que
   se VE desde el primer fotograma (agua saliendo) empieza con el plano, no en la palabra que lo nombra.
   4) «No van bien los sonidos con lo que hace»: cada efecto tiene que tener su dibujo. Si suena el golpe de la báscula
