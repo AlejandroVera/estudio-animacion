@@ -110,3 +110,19 @@ Rafa `Zb72NBThGN2Rv3y1RSTT`), nutri, Alejandro (Daniel - Podcast). Si falta el o
   dentro del contenido menos medio encuadre. El plano fijo con cy 0,56 enseñaba una franja blanca abajo todo el vídeo.
   Y transcribir cada frase: «tienes respiradero» salía «tiene» (rehacer con `--rehacer N`; si la nueva toma sale peor,
   recuperar la anterior desde una copia de `voz/x_frases`).
+
+## Con Higgsfield (ejemplo `herramientas/video/veterano/`, «El veterano», 2026-11-25)
+- Nano Banana 2 en Higgsfield (`nano_banana_2`, 2k, 9:16) cuesta 2 créditos por imagen: se pueden pedir 2-3 versiones de
+  todo. Referencias: subir con `media_upload` + curl PUT + `media_confirm`; luego los `job_id` de imágenes ya hechas
+  sirven directamente como referencia (`medias: [{value: job_id, role: image_references}]`). `generate_image_batch`
+  lanza 12 ediciones a la vez; `jobs_wait` y `dl.py` (sirve con cualquier URL).
+- Personaje nuevo: 4 propuestas de hoja de personaje con el chico y un plano de un sketch anterior como referencias de
+  estilo («NOT magenta, he is not the boy»), se elige una y su job_id es su referencia para todo lo demás.
+- Las ediciones de Nano Banana en Higgsfield DESPLAZAN un poco a todo el personaje: las capas de gesto salen grandes
+  (cuerpo entero); recortarlas por debajo de lo que redibuja (el panel de números de la pared) y proteger cabezas.
+  La boca del veterano (bigote) cambiaba también los ojos: capa de boca solo por debajo de las gafas.
+- «Todos se levantan»: EDITANDO el plano sentados la IA los deja sentados; hay que pedirlo como dibujo nuevo con el
+  plano como referencia de sitio. Apagón: edición «all lights switched off… only the eyes glow».
+- Megafonía: voz formal + filtro de altavoz (`highpass 350, lowpass 3400, aecho`) solo en sus frases; `nivelar.py`
+  iguala cada frase (cada voz de ElevenLabs sale a un nivel distinto: los avisos finales quedaban a −28 LUFS).
+

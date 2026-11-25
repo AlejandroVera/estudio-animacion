@@ -1,0 +1,37 @@
+referencias: chico 526b9089-06aa-4e10-b5bd-f7a4e24b926b, estilo charla d8ac3e43-308a-448b-a922-1f7ca19d681c
+vet_1 afc7889a-c307-4120-a616-06dbec918f79
+vet_2 a36bee4c-081f-43cb-950e-add24d178599
+vet_3 f8d1f442-92da-4efe-ab00-b138d14960e4
+voces: ROSA Aaron t9LRTh3y1ioN00e9wsNh, VETERANO Gaspar nMvZRihyU408YNgNXHuX, MEGAFONIA Azu 4v1uoUi065MedHZMinXC, SENOR Enrique KbHzTDrKkWZhO8WaGUeG
+mf_1 2613f6c5-47fb-4b52-aaec-85972d568414
+mf_2 8937ff90-172a-442e-9af8-475d346c1e3f
+mf_3 f257a449-f330-453c-90ba-ccd22bf0add7
+elegido plano fijo: mf_2 8937ff90-172a-442e-9af8-475d346c1e3f
+cv_v_encoge 2a677cea-af6e-4445-ad9b-b763cc83d252
+cv_v_ticket b6819b80-6461-4d2f-91d5-b3cf28040364
+cv_v_dedo 478c4abb-6b16-4895-9f82-e7215adba311
+cv_v_senala c00d11b7-b066-4fb2-a014-9c2edc393a00
+cv_v_brazos a3a6d114-cb8f-40f3-874d-814b62cf8659
+cv_v_tique e2e38a08-d596-4f6e-bfbe-6332cfb15dde
+cv_r_ticket cf69b59b-03a7-4440-be30-274004d6fdef
+cv_r_palmas 11a49e2e-dbc1-4769-88cb-2384ac2c19a9
+cv_r_dni 18a772ab-86e7-4e14-9cc6-a9b921678da7
+cv_r_cruzado cef71f03-c073-4dcc-93c2-fa0d784ba6de
+cv_vboca 09667bb3-978e-4b7e-8974-dee938f1916a
+cv_rboca fbbb8aad-c367-4319-97d8-a4466adc57d0
+cv_v_parp 06f7b051-a6f9-48a9-adbf-4b6c30c45832
+cv_r_parp 46e7cad6-a6d9-4d76-8c05-f11dea283fdd
+es_pprosa f9c836f0-a62a-4f29-bb9c-b9012c4e73af
+es_senora ccb72dba-2dfc-4502-be72-bc9f12f71e48
+br_web cb4ece62-8767-42de-893c-7b22eff8c5d2
+es_paco ac1ccc89-fbe8-432b-8041-5034f854d62d
+es_levantan dcb6252c-cc04-469e-bc7c-061b26ce0160
+cv_v_parp(2) edf300ea-2c32-49ad-bfb1-7dc8793a0f2a
+es_levantan(2) a3de0b89-748b-467b-bf05-f86421880870
+es_senora_b 5d5aa1e2-ce99-43ca-a8fb-88a3f10f21df
+es_pprosa_bk 805ff64c-a44f-4c15-b037-c61f592ef295
+es_paco_bk 54bcadf9-4b0b-46bd-97fc-eb55fc4e801f
+es_levantan_3 d6cf28bd-cd47-4226-b5a3-e2548e8b39ab
+es_levantan_4 aa8f733b-a882-46ff-b689-57cff2b49aab
+es_oscuro_1 b866aaf5-c402-4ee8-b0c0-a39d653e6da3
+es_oscuro_2 223f63de-64d3-4c17-aa96-8bb29366a40b

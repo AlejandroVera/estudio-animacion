@@ -1,0 +1,26 @@
+# voz ROSA t9LRTh3y1ioN00e9wsNh
+# voz VETERANO nMvZRihyU408YNgNXHuX
+# voz MEGAFONIA 4v1uoUi065MedHZMinXC
+# voz SENOR KbHzTDrKkWZhO8WaGUeG
+MEGAFONIA: Número A cero cero tres, mesa dos. Les informamos de que se ha caído el sistema.
+ROSA: ¿Se ha caído el sistema? ¿Y ahora qué?
+VETERANO: Ahora nada. Se cae todos los días a esta hora. Es su rato de descanso.
+ROSA: Yo tengo el A cuatrocientos doce.
+VETERANO: Qué suerte. Yo tengo el B siete, del sistema antiguo. Ya no lo cantan ni las máquinas.
+ROSA: Si solo vengo a renovar el DNI…
+VETERANO: Para renovarlo necesitas el DNI en vigor.
+ROSA: Pero está caducado, por eso lo renuevo.
+VETERANO: Entonces necesitas cita. Y para pedir la cita, el DNI. Bienvenido.
+ROSA: ¿Y esa señora con el táper?
+VETERANO: Vino a pedir la jubilación. Se la concedieron aquí mismo, esperando. Ya cobra.
+ROSA: Bueno, pues pregunto en información.
+VETERANO: Para información también hay que coger número. Y el número se pide por internet.
+ROSA: ¿Y la web?
+VETERANO: Abre los martes a las ocho y cinco. Dura cuatro segundos. Como las entradas de un concierto.
+ROSA: Pues me espero.
+VETERANO: Saca antes el tique de espera, que esperar sin número es colarse.
+SENOR: Perdona, ¿la mesa cuatro atiende?
+VETERANO: La mesa cuatro es un póster, Paco. Lleva ahí desde dos mil diecinueve.
+MEGAFONIA: Les informamos de que el sistema se ha restablecido…
+MEGAFONIA: …y de que el horario de atención termina ahora.
+VETERANO: Hasta mañana, compañero.

@@ -1,0 +1,434 @@
+{
+ "alineacion": "voz/vt.json",
+ "audio": "voz/vt.mp3",
+ "vel_letra": 0.03,
+ "sin_recolor": [
+  "es_",
+  "br_"
+ ],
+ "subtitulos": {
+  "y": 250,
+  "tam": 88,
+  "max": 3,
+  "contorno": 14,
+  "mayusculas": true,
+  "cola": 0.2,
+  "colores": {
+   "ROSA": [
+    255,
+    100,
+    205
+   ],
+   "VETERANO": [
+    255,
+    226,
+    40
+   ],
+   "MEGAFONIA": [
+    140,
+    220,
+    255
+   ],
+   "SENOR": [
+    150,
+    240,
+    150
+   ]
+  }
+ },
+ "duracion": 77.4,
+ "planos": [
+  {
+   "t0": 0,
+   "fondo": "img/es_charla.jpg",
+   "zoom": 2.6,
+   "cx": 0.5,
+   "cy": 0.193,
+   "bocas": {},
+   "habla": false,
+   "sub_y": 1300,
+   "rotulos": [
+    {
+     "t0": 0.05,
+     "texto": "A-003   MESA 2",
+     "x": 540,
+     "y": 740,
+     "color": "rojo",
+     "tam": 125,
+     "centro": true,
+     "fijo": true,
+     "caja": false,
+     "t1": 1.982
+    },
+    {
+     "t0": 1.952,
+     "texto": "SiSTEMA CAÍDO",
+     "x": 540,
+     "y": 740,
+     "color": "rojo",
+     "tam": 125,
+     "centro": true,
+     "fijo": true,
+     "caja": false
+    }
+   ]
+  },
+  {
+   "t0": 4.445,
+   "fondo": "img/es_charla.jpg",
+   "zoom": 1.1,
+   "cx": 0.5,
+   "cy": 0.56,
+   "hablan": {
+    "ROSA": {
+     "img/es_charla.jpg": [
+      "img/cv_rboca.png"
+     ]
+    },
+    "VETERANO": {
+     "img/es_charla.jpg": [
+      "img/cv_vboca.png"
+     ]
+    }
+   },
+   "vivas": {
+    "VETERANO": {
+     "habla": [],
+     "escucha": [],
+     "parpadeo": "img/cv_v_parp.png"
+    },
+    "ROSA": {
+     "habla": [],
+     "escucha": [],
+     "parpadeo": "img/cv_r_parp.png"
+    }
+   },
+   "gestos": [
+    {
+     "t0": 4.445,
+     "t1": 6.788,
+     "quien": "ROSA",
+     "img": "img/cv_r_palmas.png"
+    },
+    {
+     "t0": 6.788,
+     "t1": 12.474,
+     "quien": "VETERANO",
+     "img": "img/cv_v_encoge.png"
+    },
+    {
+     "t0": 12.474,
+     "t1": 14.26,
+     "quien": "ROSA",
+     "img": "img/cv_r_ticket.png"
+    },
+    {
+     "t0": 14.26,
+     "t1": 20.503,
+     "quien": "VETERANO",
+     "img": "img/cv_v_ticket.png"
+    },
+    {
+     "t0": 20.503,
+     "t1": 22.8,
+     "quien": "ROSA",
+     "img": "img/cv_r_dni.png"
+    },
+    {
+     "t0": 22.8,
+     "t1": 26.118000000000002,
+     "quien": "VETERANO",
+     "img": "img/cv_v_dedo.png"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 12.985,
+     "texto": "A-412",
+     "x": 540,
+     "y": 1560,
+     "color": "negro",
+     "tam": 110,
+     "centro": true,
+     "fijo": true,
+     "caja": true,
+     "t1": 14.29
+    },
+    {
+     "t0": 15.816,
+     "texto": "B-7",
+     "x": 540,
+     "y": 1560,
+     "color": "rojo",
+     "tam": 120,
+     "centro": true,
+     "fijo": true,
+     "caja": true,
+     "t1": 20.532999999999998
+    }
+   ]
+  },
+  {
+   "t0": 26.118000000000002,
+   "fondo": "img/es_pprosa.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": true,
+   "hablan": {
+    "ROSA": {
+     "img/es_pprosa.jpg": [
+      "img/es_pprosa_boca.png"
+     ]
+    }
+   }
+  },
+  {
+   "t0": 28.182000000000002,
+   "fondo": "img/es_charla.jpg",
+   "zoom": 1.1,
+   "cx": 0.5,
+   "cy": 0.56,
+   "hablan": {
+    "ROSA": {
+     "img/es_charla.jpg": [
+      "img/cv_rboca.png"
+     ]
+    },
+    "VETERANO": {
+     "img/es_charla.jpg": [
+      "img/cv_vboca.png"
+     ]
+    }
+   },
+   "vivas": {
+    "VETERANO": {
+     "habla": [],
+     "escucha": [],
+     "parpadeo": "img/cv_v_parp.png"
+    },
+    "ROSA": {
+     "habla": [],
+     "escucha": [],
+     "parpadeo": "img/cv_r_parp.png"
+    }
+   },
+   "gestos": [
+    {
+     "t0": 28.182000000000002,
+     "t1": 32.814,
+     "quien": "VETERANO",
+     "img": "img/cv_v_dedo.png"
+    },
+    {
+     "t0": 32.814,
+     "t1": 33.868,
+     "quien": "VETERANO",
+     "img": "img/cv_v_brazos.png"
+    },
+    {
+     "t0": 35.607,
+     "t1": 36.408,
+     "quien": "VETERANO",
+     "img": "img/cv_v_senala.png"
+    }
+   ]
+  },
+  {
+   "t0": 36.408,
+   "fondo": "img/es_senora.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": false,
+   "cambios": [
+    {
+     "t": 40.379000000000005,
+     "fondo": "img/es_senora_b.jpg"
+    }
+   ]
+  },
+  {
+   "t0": 41.154,
+   "fondo": "img/es_charla.jpg",
+   "zoom": 1.1,
+   "cx": 0.5,
+   "cy": 0.56,
+   "hablan": {
+    "ROSA": {
+     "img/es_charla.jpg": [
+      "img/cv_rboca.png"
+     ]
+    },
+    "VETERANO": {
+     "img/es_charla.jpg": [
+      "img/cv_vboca.png"
+     ]
+    }
+   },
+   "vivas": {
+    "VETERANO": {
+     "habla": [],
+     "escucha": [],
+     "parpadeo": "img/cv_v_parp.png"
+    },
+    "ROSA": {
+     "habla": [],
+     "escucha": [],
+     "parpadeo": "img/cv_r_parp.png"
+    }
+   },
+   "gestos": [
+    {
+     "t0": 43.357,
+     "t1": 48.208,
+     "quien": "VETERANO",
+     "img": "img/cv_v_dedo.png"
+    },
+    {
+     "t0": 48.208,
+     "t1": 49.343,
+     "quien": "ROSA",
+     "img": "img/cv_r_palmas.png"
+    }
+   ]
+  },
+  {
+   "t0": 49.343,
+   "fondo": "img/br_web.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": false,
+   "rotulos": [
+    {
+     "t0": 49.889,
+     "texto": "MARTES 8:05",
+     "x": 540,
+     "y": 300,
+     "color": "rojo",
+     "tam": 110,
+     "centro": true,
+     "fijo": true,
+     "caja": true,
+     "t1": 51.765
+    },
+    {
+     "t0": 51.735,
+     "texto": "4 SEGUNDOS",
+     "x": 540,
+     "y": 300,
+     "color": "rojo",
+     "tam": 110,
+     "centro": true,
+     "fijo": true,
+     "caja": true
+    }
+   ]
+  },
+  {
+   "t0": 55.679,
+   "fondo": "img/es_charla.jpg",
+   "zoom": 1.1,
+   "cx": 0.5,
+   "cy": 0.56,
+   "hablan": {
+    "ROSA": {
+     "img/es_charla.jpg": [
+      "img/cv_rboca.png"
+     ]
+    },
+    "VETERANO": {
+     "img/es_charla.jpg": [
+      "img/cv_vboca.png"
+     ]
+    }
+   },
+   "vivas": {
+    "VETERANO": {
+     "habla": [],
+     "escucha": [],
+     "parpadeo": "img/cv_v_parp.png"
+    },
+    "ROSA": {
+     "habla": [],
+     "escucha": [],
+     "parpadeo": "img/cv_r_parp.png"
+    }
+   },
+   "gestos": [
+    {
+     "t0": 55.679,
+     "t1": 56.768,
+     "quien": "ROSA",
+     "img": "img/cv_r_cruzado.png"
+    },
+    {
+     "t0": 56.768,
+     "t1": 60.690000000000005,
+     "quien": "VETERANO",
+     "img": "img/cv_v_tique.png"
+    }
+   ]
+  },
+  {
+   "t0": 60.690000000000005,
+   "fondo": "img/es_paco.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": true,
+   "hablan": {
+    "SENOR": {
+     "img/es_paco.jpg": [
+      "img/es_paco_boca.png"
+     ]
+    }
+   }
+  },
+  {
+   "t0": 64.345,
+   "fondo": "img/es_paco.jpg",
+   "zoom": 1.5,
+   "cx": 0.36,
+   "cy": 0.4,
+   "bocas": {},
+   "habla": false,
+   "rotulos": [
+    {
+     "t0": 65.959,
+     "texto": "DESDE 2019",
+     "x": 540,
+     "y": 1560,
+     "color": "rojo",
+     "tam": 110,
+     "centro": true,
+     "fijo": true,
+     "caja": true
+    }
+   ]
+  },
+  {
+   "t0": 69.81,
+   "fondo": "img/es_levantan.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": false
+  },
+  {
+   "t0": 72.907,
+   "fondo": "img/es_oscuro.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": false
+  }
+ ]
+}
