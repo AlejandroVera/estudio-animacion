@@ -146,6 +146,12 @@ Ejemplo completo: `herramientas/shorts/domingo/` (3 shorts del vídeo «domingo�
   bocado al cruasán, espiar entre los dedos, chorro de agua) alternado con `alterna` cada 0,25-0,7 s; con `hasta` se
   para antes de un `cambio`. Y el mismo personaje en dos escenas, con la MISMA ropa (editar con su dibujo como 2.ª
   referencia). Planos con marcos (videollamada) o personaje pequeño: zoom hasta que llenen el cuadro.
+- Ritmo (El Tetris: «corta los espacios sin locución», «falta sonido, cuando quitas la música cae el ritmo», «el agua
+  entra tarde»): 1) toda pausa entre palabras > 0,18 s se deja en 0,14 s aunque tenga respiración (al final de
+  `voces_citas.py`; ritmo_voz solo corta silencio absoluto); 76 s → 71 s. 2) Base de 8 bits por código todo el vídeo
+  (`efectos/fondo.mp3`, ~13 dB bajo la voz) que se calla cuando suena la melodía del Tetris, para que no caiga el ritmo.
+  3) Golpe de aire en cada corte sin efecto y «pop» en cada rótulo (automático en el plan). 4) Un sonido de algo que
+  se VE desde el primer fotograma (agua saliendo) empieza con el plano, no en la palabra que lo nombra.
   4) «No van bien los sonidos con lo que hace»: cada efecto tiene que tener su dibujo. Si suena el golpe de la báscula
   contra el suelo, en ese momento se tiene que VER en el suelo (un dibujo intermedio, `es_miercoles_s`).
   5) Los `Tt(palabra, desde)` anclados a otra palabra (`Tt('el', T('pesarse'))`), nunca a segundos fijos: al cambiar una

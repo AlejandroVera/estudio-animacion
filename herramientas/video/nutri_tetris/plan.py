@@ -145,6 +145,22 @@ EF = [[T('jugar') - 0.12, 'whoosh2', -14], [T('es', 1) - 0.1, 'tetris', -7, 2.6]
       [Tt('y', T('nunca')) - 0.15, 'whoosh', -13], [Tt('llega', T('nunca')), 'puerta', -11, 0.8], [T('once'), 'bloque', -10],
       [Tt('no', T('once')) + 0.4, 'grillos', -13, 1.4], [T('nunca'), 'ding', -12], [T('luego') - 0.15, 'whoosh2', -13],
       [T('coche'), 'bocina', -13], [T('sincero'), 'ding', -12], [Tt('la', T('sincero')) - 0.15, 'whoosh', -12],
-      [T('agua'), 'agua', -11, 1.6], [Tt('y', T('agua')) - 0.15, 'whoosh2', -13], [T('martes') + 0.1, 'pop', -12],
+      [Tt('es', T('mal')) - 0.05, 'agua', -12, round(Tt('y', T('agua')) - Tt('es', T('mal')), 2)], [Tt('y', T('agua')) - 0.15, 'whoosh2', -13], [T('martes') + 0.1, 'pop', -12],
       [Tt('le', T('martes')) - 0.15, 'whoosh', -12], [T('final') - 0.15, 'whoosh2', -13], [T('venir', 1) + 0.4, 'ding', -12]]
-json.dump({'nivel': -24, 'efectos': [[round(e[0], 2)] + e[1:] for e in EF]}, open('efectos/efectos.json', 'w'))
+# ritmo: un golpe de aire en cada corte que no tenga ya un efecto cerca, y un «pop» en cada rótulo
+cortes = sorted({round(p['t0'], 2) for p in P if p['t0'] > 0.5})
+for k, t in enumerate(cortes):
+    if not any(abs(e[0] - t) < 0.35 for e in EF):
+        EF.append([t - 0.12, 'whoosh' if k % 2 else 'whoosh2', -15])
+for p in P:
+    for r in p.get('rotulos', []):
+        if not any(abs(e[0] - r['t0']) < 0.2 for e in EF):
+            EF.append([r['t0'], 'pop', -15])
+# base de 8 bits de fondo todo el vídeo, que se calla mientras suena la melodía del Tetris
+mel = sorted((e[0], e[0] + e[3]) for e in EF if e[1] == 'tetris')
+t = 0.0
+for a0, a1 in mel + [(FIN, FIN)]:
+    if a0 - t > 0.5:
+        EF.append([t, 'fondo', -13, round(a0 - t + 0.25, 2)])
+    t = a1 - 0.1
+json.dump({'nivel': -24, 'efectos': [[round(e[0], 2)] + e[1:] for e in sorted(EF)]}, open('efectos/efectos.json', 'w'))

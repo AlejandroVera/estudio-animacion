@@ -12,9 +12,9 @@ TEMPO_Q = {'P9': 1.0}  # la de las nueve a su velocidad natural (acelerada sonab
 GANANCIA = {}
 # (quien, texto, primera palabra, última palabra, buscar desde el segundo)
 CITAS = [('P9', 'Hola, no puedo ir, me ha surgido algo.', 'hola', 'algo', 0),
-         ('P12', '¿La podemos hacer online?', '¿la', 'online', 28.5),
-         ('HUECOS', '¿Tienes algo por la tarde? Pero no muy tarde. O por la mañana, pero no muy pronto. Y que no sea martes.', '¿tienes', 'martes', 50),
-         ('HUECOS', 'Uy, a las dos como yo.', 'uy', 'yo', 50)]
+         ('P12', '¿La podemos hacer online?', '¿la', 'online', 'doce'),
+         ('HUECOS', '¿Tienes algo por la tarde? Pero no muy tarde. O por la mañana, pero no muy pronto. Y que no sea martes.', '¿tienes', 'martes', 'huecos'),
+         ('HUECOS', 'Uy, a las dos como yo.', 'uy', 'yo', 'comer')]
 rehacer = {int(x) for x in (opcion('--rehacer') or '').split(',') if x}
 os.makedirs('voz/citas', exist_ok=True)
 x = leer('voz/nt_v1.mp3')
@@ -22,6 +22,8 @@ pal = [dict(p, quien='ANA') for p in json.load(open('voz/nt_v1.json'))['palabras
 lim = lambda s: s.strip('«»¡!¿?.,;:…"').lower()
 trozos = []
 for i, (quien, texto, w0, w1, desde) in enumerate(CITAS):
+    if isinstance(desde, str):  # anclado a una palabra (los segundos cambian al ajustar el ritmo)
+        desde = next(p['inicio'] for p in pal if lim(p['texto']) == desde)
     a = next(k for k, p in enumerate(pal) if lim(p['texto']) == lim(w0) and p['inicio'] >= desde)
     b = next(k for k in range(a, len(pal)) if lim(pal[k]['texto']) == lim(w1))
     f = f'voz/citas/{i:02d}'
@@ -46,7 +48,7 @@ partes, nuevas, prev_t, prev_k = [], [], 0.0, 0
 for a, b, quien, f in trozos:
     ini = (pal[a - 1]['fin'] + pal[a]['inicio']) / 2
     fin = (pal[b]['fin'] + pal[b + 1]['inicio']) / 2 if b + 1 < len(pal) else pal[b]['fin'] + 0.3
-    ga, gb = max(pal[a]['inicio'] - ini, 0.1), max(fin - pal[b]['fin'], 0.1)
+    ga, gb = min(max(pal[a]['inicio'] - ini, 0.07), 0.14), min(max(fin - pal[b]['fin'], 0.07), 0.14)
     y = leer(f + '_limpio.mp3'); ws = json.load(open(f + '.json'))['palabras']
     s0, s1 = max(ws[0]['inicio'] - 0.03, 0), min(ws[-1]['fin'] + 0.08, len(y) / SR)
     clip = y[int(s0 * SR):int(s1 * SR)]
@@ -67,6 +69,24 @@ t_out = sum(len(p) for p in partes) / SR
 fin_ = x[int(prev_t * SR):].copy(); F = int(0.01 * SR); fin_[:F] *= np.linspace(0, 1, F)[:len(fin_[:F])]; partes.append(fin_)
 nuevas += [dict(p, inicio=round(p['inicio'] + (t_out - prev_t), 3), fin=round(p['fin'] + (t_out - prev_t), 3)) for p in pal[prev_k:]]
 y = np.concatenate(partes)
+# ritmo: toda pausa entre palabras de más de MAXP se deja en DEJA (con respiración o sin ella), con fundidos
+MAXP, DEJA = 0.18, 0.14
+F = int(0.012 * SR)
+cortes = []
+for p, q in zip(nuevas, nuevas[1:]):
+    if q['inicio'] - p['fin'] > MAXP:
+        a0 = p['fin'] + DEJA / 2
+        cortes.append((a0, q['inicio'] - DEJA / 2))
+trozos, prev = [], 0.0
+for a0, a1 in cortes:
+    t = y[int(prev * SR):int(a0 * SR)].copy(); t[-F:] *= np.linspace(1, 0, F); trozos.append(t); prev = a1
+t = y[int(prev * SR):].copy(); trozos.append(t)
+for t in trozos[1:]:
+    t[:F] *= np.linspace(0, 1, F)
+y = np.concatenate(trozos)
+mover = lambda t: t - sum(min(max(t - a0, 0), a1 - a0) for a0, a1 in cortes)
+for w in nuevas:
+    w['inicio'], w['fin'] = round(mover(w['inicio']), 3), round(mover(w['fin']), 3)
 escribir('voz/nt.mp3', y)
 json.dump({'palabras': nuevas}, open('voz/nt.json', 'w'), ensure_ascii=False)
 print('dura', round(len(y) / SR, 2))
