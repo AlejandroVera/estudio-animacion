@@ -141,6 +141,11 @@ Ejemplo completo: `herramientas/shorts/domingo/` (3 shorts del vídeo «domingo�
   tele»): dibujar la foto con el dibujo de esa escena como referencia («same room: the same TV, cabinet…») y desde sus
   ojos (sus manos en primer plano), y luego meterla en la pantalla editando el dibujo del móvil («replace ONLY the
   picture inside the phone screen with the second reference»). Comprobar que el mueble principal mira a la tele.
+- «Poca animación de los pacientes, parecen fotos fijas» (El Tetris): TODO personaje que sale más de ~1,5 s necesita un
+  segundo dibujo (misma cabeza, cambia una mano/gesto o algo del decorado: pulgares tecleando, risa, plato que se aleja,
+  bocado al cruasán, espiar entre los dedos, chorro de agua) alternado con `alterna` cada 0,25-0,7 s; con `hasta` se
+  para antes de un `cambio`. Y el mismo personaje en dos escenas, con la MISMA ropa (editar con su dibujo como 2.ª
+  referencia). Planos con marcos (videollamada) o personaje pequeño: zoom hasta que llenen el cuadro.
   4) «No van bien los sonidos con lo que hace»: cada efecto tiene que tener su dibujo. Si suena el golpe de la báscula
   contra el suelo, en ese momento se tiene que VER en el suelo (un dibujo intermedio, `es_miercoles_s`).
   5) Los `Tt(palabra, desde)` anclados a otra palabra (`Tt('el', T('pesarse'))`), nunca a segundos fijos: al cambiar una

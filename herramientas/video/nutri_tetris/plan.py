@@ -28,6 +28,7 @@ def esc(n, t0, hablan=None, **k):
 
 
 def ch(t, n): return {'t': t, 'fondo': I + n + '.jpg'}
+def alt(a, b_, cada): return {'imgs': [I + a + '.jpg', I + b_ + '.jpg'], 'cada': cada}
 
 
 def R(t0, txt, x, y, col='negro', tam=110, t1=None, caja=True):
@@ -49,36 +50,37 @@ P = [
         rotulos=[R(T('lunes') - b, 'LUNES', 540, 300, 'rojo', 120, T('menos') - b - 0.02),
                  R(T('menos') - b, '8:57', 540, 300, 'negro', 130)]),
     # «Hola, no puedo ir, me ha surgido algo.» (ella, en pijama con el mando)
-    esc('br_p9', T('hola') - c, {'P9': {'br_p9': 'br_p9_p9'}}),
+    esc('br_p9', T('hola') - c, {'P9': {'br_p9': 'br_p9_p9', 'br_p9_b': 'br_p9_p9'}}, alterna=alt('br_p9', 'br_p9_b', 0.3)),
     # «A los diez minutos sube una story jugando al GTA. Está haciendo un alunizaje.»
     esc('br_story', Tt('a', T('algo')) - c, zoom=1.2, cx=0.49, cy=0.52, sub_y=1560, rotulos=[R(Tt('a', T('algo')) - b, '10 MiN DESPUÉS', 540, 230, 'rojo', 90, T('sube') + 0.6)]),
     # «Así que paso a la de las diez a las nueve.»
     esc('es_mueve', T('así') - c, ana(es_mueve='es_tetris_ana'), rotulos=[R(T('diez', 1) - b, 'LA DE LAS 10, A LAS 9', 540, 300, 'azul', 80)]),
     # «Me dice que sí, perfecto, genial.»
-    esc('br_p10', Tt('me', T('así')) - c),
+    esc('br_p10', Tt('me', T('así')) - c, alterna=alt('br_p10', 'br_p10_b', 0.45)),
     # «Y llega a las diez.»
-    esc('es_llega', Tt('y', T('genial')) - c, ana(es_llega='es_llega_ana'), rotulos=[R(Tt('diez', T('genial')) - b, '10:00', 540, 300, 'rojo', 130)]),
+    esc('es_llega2', Tt('y', T('genial')) - c, ana(es_llega2='es_llega_ana'), rotulos=[R(Tt('diez', T('genial')) - b, '10:00', 540, 300, 'rojo', 130)]),
     # «Paso al de las once a las diez.»
     esc('es_mueve', Tt('paso', T('llega')) - c, ana(es_mueve='es_tetris_ana'), rotulos=[R(T('once') - b, 'EL DE LAS 11, A LAS 10', 540, 300, 'azul', 78)]),
     # «No contesta.»
     esc('es_espera', Tt('no', T('once')) - c, ana(es_espera='es_espera_ana')),
     # «Contesta los mensajes como se come la verdura. Nunca.»
-    esc('br_verdura', Tt('contesta', Tt('no', T('once')) + 0.3) - c),
+    esc('br_verdura', Tt('contesta', Tt('no', T('once')) + 0.3) - c, alterna=alt('br_verdura', 'br_verdura_b', 0.35)),
     # «Luego, el de las doce: ¿La podemos hacer online? Claro.»
     esc('es_portatil', T('luego') - c, ana(es_portatil='es_portatil_ana'), rotulos=[R(T('doce') - b, '12:00', 540, 300, 'negro', 120, T('claro') - 0.05)]),
     # «Se conecta desde el coche, en un semáforo, con medio cruasán en la mano. Le pregunto… y me enseña el cruasán.»
-    esc('br_coche', Tt('se', T('claro')) - c, cambios=[ch(T('enseña') - c, 'br_coche_b')]),
+    esc('br_coche', Tt('se', T('claro')) - c, zoom=1.2, cx=0.498, cy=0.507, alterna=dict(alt('br_coche', 'br_coche_c', 0.6), hasta=T('pregunto') - c)),
+    esc('br_coche_b', T('enseña') - c, zoom=1.2, cx=0.498, cy=0.507),
     # «Por lo menos es sincero.»
     esc('es_sincero', Tt('por', T('enseña')) - c, ana(es_sincero='es_portatil_ana')),
     # «La de la una cancela porque esta semana no ha hecho bien la dieta y le da vergüenza venir.»
-    esc('br_verguenza', Tt('la', T('sincero')) - c, rotulos=[R(Tt('una', T('sincero')) - b, '13:00', 540, 300, 'negro', 120, T('cancela') + 0.8)]),
+    esc('br_verguenza', Tt('la', T('sincero')) - c, zoom=1.15, cy=0.45, alterna=alt('br_verguenza', 'br_verguenza_c', 0.7), rotulos=[R(Tt('una', T('sincero')) - b, '13:00', 540, 300, 'negro', 120, T('cancela') + 0.8)]),
     # «O sea, que no viene a la nutricionista porque come mal.»
     esc('es_incredula', Tt('o', T('vergüenza')) - c, ana(es_incredula='es_final_ana')),
     # «Es como no llamar al fontanero porque se te sale el agua.»
-    esc('br_fontanero', Tt('es', T('mal')) - c, sub_y=1560),
+    esc('br_fontanero', Tt('es', T('mal')) - c, sub_y=1560, alterna=alt('br_fontanero', 'br_fontanero_b', 0.25)),
     # «Y luego están los de los huecos: ¿Tienes algo por la tarde? Pero no muy tarde. O por la mañana… Y que no sea martes.»
-    esc('br_huecos', Tt('y', T('agua')) - c, {'HUECOS': {'br_huecos': 'br_huecos_h', 'br_huecos_b': 'br_huecos_h'}},
-        cambios=[ch(Tt('o', T('pero')) - c, 'br_huecos_b')],
+    esc('br_huecos', Tt('y', T('agua')) - c, {'HUECOS': {'br_huecos': 'br_huecos_h', 'br_huecos_b': 'br_huecos_h', 'br_huecos_d': 'br_huecos_h'}},
+        cambios=[ch(Tt('o', T('pero')) - c, 'br_huecos_b'), ch(Tt('y', T('pronto')) - c, 'br_huecos_d')],
         rotulos=[R(Tt('no', T('pero')) - b, 'NO MUY TARDE', 540, 330, 'rojo', 90),
                  R(Tt('no', T('mañana')) - b, 'NO MUY PRONTO', 540, 470, 'rojo', 90),
                  R(Tt('no', T('pronto')) - b, 'NO MARTES', 540, 610, 'rojo', 90)]),
@@ -90,7 +92,7 @@ P = [
     # «Ya. Yo también comía.»
     esc('es_tupper_b', Tt('ya', T('uy')) - c, ana(es_tupper_b='es_tupper_ana')),
     # «Al final, la de la vergüenza me pide otra cita. Dentro de dos semanas.»
-    esc('br_verguenza_b', T('final') - 0.3, rotulos=[R(T('dentro') - b, 'DENTRO DE 2 SEMANAS', 540, 300, 'azul', 85)]),
+    esc('br_verguenza_b', T('final') - 0.3, alterna=alt('br_verguenza_b', 'br_verguenza_b2', 0.6), rotulos=[R(T('dentro') - b, 'DENTRO DE 2 SEMANAS', 540, 300, 'azul', 85)]),
     # «Así le da tiempo a hacer la dieta antes de venir.»
     esc('es_final', Tt('así', T('dentro')) - c, ana(es_final='es_final_ana')),
 ]
@@ -121,7 +123,7 @@ for t, z, (cx, cy), vuelta in GOLPES:
     if vuelta and vuelta != 'rotulos':
         v = copy.deepcopy(base); v['t0'] = vuelta; nuevos.append(v)
 # «es jugar al Tetris»: Ana con el mando delante del juego; en «Tetris», la pantalla de cerca y cae una pieza
-nuevos.append(esc('es_juego', T('jugar') - 0.12))
+nuevos.append(esc('es_juego', T('jugar') - 0.12, zoom=1.15, cx=0.5, cy=0.47))
 z, cx, cy = 1.5, 0.47, 0.34
 tz = T('tetris') - c
 gz = esc('es_juego', tz, zoom=z, cx=cx, cy=cy)

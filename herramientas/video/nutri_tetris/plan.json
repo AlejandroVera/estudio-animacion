@@ -58,9 +58,9 @@
   {
    "t0": 2.836,
    "fondo": "img/es_juego.jpg",
-   "zoom": 1.0,
+   "zoom": 1.15,
    "cx": 0.5,
-   "cy": 0.5,
+   "cy": 0.47,
    "bocas": {},
    "habla": false
   },
@@ -147,8 +147,18 @@
     "P9": {
      "img/br_p9.jpg": [
       "img/br_p9_p9_boca.png"
+     ],
+     "img/br_p9_b.jpg": [
+      "img/br_p9_p9_boca.png"
      ]
     }
+   },
+   "alterna": {
+    "imgs": [
+     "img/br_p9.jpg",
+     "img/br_p9_b.jpg"
+    ],
+    "cada": 0.3
    }
   },
   {
@@ -221,11 +231,18 @@
    "cx": 0.5,
    "cy": 0.5,
    "bocas": {},
-   "habla": false
+   "habla": false,
+   "alterna": {
+    "imgs": [
+     "img/br_p10.jpg",
+     "img/br_p10_b.jpg"
+    ],
+    "cada": 0.45
+   }
   },
   {
    "t0": 19.517000000000003,
-   "fondo": "img/es_llega.jpg",
+   "fondo": "img/es_llega2.jpg",
    "zoom": 1.0,
    "cx": 0.5,
    "cy": 0.5,
@@ -233,7 +250,7 @@
    "habla": true,
    "hablan": {
     "ANA": {
-     "img/es_llega.jpg": [
+     "img/es_llega2.jpg": [
       "img/es_llega_ana_boca.png"
      ]
     }
@@ -304,7 +321,14 @@
    "cx": 0.5,
    "cy": 0.5,
    "bocas": {},
-   "habla": false
+   "habla": false,
+   "alterna": {
+    "imgs": [
+     "img/br_verdura.jpg",
+     "img/br_verdura_b.jpg"
+    ],
+    "cada": 0.35
+   }
   },
   {
    "t0": 26.334,
@@ -313,7 +337,14 @@
    "cx": 0.5,
    "cy": 0.33,
    "bocas": {},
-   "habla": false
+   "habla": false,
+   "alterna": {
+    "imgs": [
+     "img/br_verdura.jpg",
+     "img/br_verdura_b.jpg"
+    ],
+    "cada": 0.35
+   }
   },
   {
    "t0": 27.092000000000002,
@@ -348,17 +379,28 @@
   {
    "t0": 31.109,
    "fondo": "img/br_coche.jpg",
-   "zoom": 1.0,
-   "cx": 0.5,
-   "cy": 0.5,
+   "zoom": 1.2,
+   "cx": 0.498,
+   "cy": 0.507,
    "bocas": {},
    "habla": false,
-   "cambios": [
-    {
-     "t": 37.006,
-     "fondo": "img/br_coche_b.jpg"
-    }
-   ]
+   "alterna": {
+    "imgs": [
+     "img/br_coche.jpg",
+     "img/br_coche_c.jpg"
+    ],
+    "cada": 0.6,
+    "hasta": 34.974
+   }
+  },
+  {
+   "t0": 37.006,
+   "fondo": "img/br_coche_b.jpg",
+   "zoom": 1.2,
+   "cx": 0.498,
+   "cy": 0.507,
+   "bocas": {},
+   "habla": false
   },
   {
    "t0": 37.403,
@@ -367,8 +409,7 @@
    "cx": 0.6,
    "cy": 0.45,
    "bocas": {},
-   "habla": false,
-   "cambios": []
+   "habla": false
   },
   {
    "t0": 38.172999999999995,
@@ -389,11 +430,18 @@
   {
    "t0": 39.683,
    "fondo": "img/br_verguenza.jpg",
-   "zoom": 1.0,
+   "zoom": 1.15,
    "cx": 0.5,
-   "cy": 0.5,
+   "cy": 0.45,
    "bocas": {},
    "habla": false,
+   "alterna": {
+    "imgs": [
+     "img/br_verguenza.jpg",
+     "img/br_verguenza_c.jpg"
+    ],
+    "cada": 0.7
+   },
    "rotulos": [
     {
      "t0": 39.998,
@@ -433,7 +481,14 @@
    "cy": 0.5,
    "bocas": {},
    "habla": false,
-   "sub_y": 1560
+   "sub_y": 1560,
+   "alterna": {
+    "imgs": [
+     "img/br_fontanero.jpg",
+     "img/br_fontanero_b.jpg"
+    ],
+    "cada": 0.25
+   }
   },
   {
    "t0": 50.907,
@@ -450,6 +505,9 @@
      ],
      "img/br_huecos_b.jpg": [
       "img/br_huecos_h_boca.png"
+     ],
+     "img/br_huecos_d.jpg": [
+      "img/br_huecos_h_boca.png"
      ]
     }
    },
@@ -457,6 +515,10 @@
     {
      "t": 56.079,
      "fondo": "img/br_huecos_b.jpg"
+    },
+    {
+     "t": 58.553999999999995,
+     "fondo": "img/br_huecos_d.jpg"
     }
    ],
    "rotulos": [
@@ -497,7 +559,7 @@
   },
   {
    "t0": 58.806,
-   "fondo": "img/br_huecos_b.jpg",
+   "fondo": "img/br_huecos_d.jpg",
    "zoom": 1.35,
    "cx": 0.5,
    "cy": 0.58,
@@ -509,6 +571,9 @@
       "img/br_huecos_h_boca.png"
      ],
      "img/br_huecos_b.jpg": [
+      "img/br_huecos_h_boca.png"
+     ],
+     "img/br_huecos_d.jpg": [
       "img/br_huecos_h_boca.png"
      ]
     }
@@ -636,6 +701,13 @@
    "cy": 0.5,
    "bocas": {},
    "habla": false,
+   "alterna": {
+    "imgs": [
+     "img/br_verguenza_b.jpg",
+     "img/br_verguenza_b2.jpg"
+    ],
+    "cada": 0.6
+   },
    "rotulos": [
     {
      "t0": 70.492,
