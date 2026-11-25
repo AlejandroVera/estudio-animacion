@@ -27,7 +27,7 @@ def G(t0, t1, quien, n):
 
 
 def charla(t0, gestos=(), **k):
-    d = {'t0': t0, 'fondo': I + 'es_charla.jpg', 'zoom': 1.1, 'cx': 0.5, 'cy': 0.56,
+    d = {'t0': t0, 'fondo': I + 'es_charla.jpg', 'zoom': 1.04, 'cx': 0.5, 'cy': 0.56,
          'hablan': {'ROSA': {I + 'es_charla.jpg': [C + 'rboca.png']}, 'VETERANO': {I + 'es_charla.jpg': [C + 'vboca.png']}},
          'vivas': VIVAS, 'gestos': list(gestos)}
     d.update(k)
@@ -74,12 +74,14 @@ P = [
     charla(L[11] - c, [G(L[12] - c, L[13] - c, 'VETERANO', 'v_dedo'),   # «para información también hay que coger número»
                        G(L[13] - c, L[14] - c, 'ROSA', 'r_palmas')]),   # «¿y la web?»
     esc('br_web', L[14] - c, rotulos=[R(T('martes') - c, 'MARTES 8:05', 300, 'rojo', 110, T('dura') - 0.05),
-                                      R(T('dura') - c, '4 SEGUNDOS', 300, 'rojo', 110)]),   # la web «como las entradas de un concierto»
+                                      R(T('dura') - c, '4 SEGUNDOS', 300, 'rojo', 110, T('como', -1) - 0.05)]),   # la web «como las entradas de un concierto»
     charla(L[15] - c, [G(L[15] - c, L[16] - c, 'ROSA', 'r_cruzado'),     # «pues me espero»
                        G(L[16] - c, L[17] - c, 'VETERANO', 'v_tique')]),  # «saca antes el tique de espera»
     esc('es_paco', L[17] - c, {'SENOR': {'es_paco': 'es_paco'}}),          # «perdona, ¿la mesa 4 atiende?»
-    esc('es_paco', T('póster') - c, zoom=1.5, cx=0.36, cy=0.4,             # «la mesa 4 es un póster, Paco»
+    charla(L[18] - c, [G(L[18] - c, T('póster') - c, 'VETERANO', 'v_dedo')]),   # «la mesa cuatro…»: el veterano se lo explica
+    esc('es_paco', T('póster') - c, zoom=1.3, cx=0.5, cy=0.42,             # «…es un póster, Paco»: el cartón de cerca
         rotulos=[R(T('desde') - c, 'DESDE 2019', 1560, 'rojo', 110)]),
+    charla(L[19] - c),                                                     # «les informamos… »: todos escuchan, sentados
     esc('es_levantan', T('restablecido') - c),                             # «el sistema se ha restablecido…» todos se levantan
     esc('es_oscuro', T('ahora', -1) - c),                                  # «…termina ahora»: se apagan las luces
 ]
