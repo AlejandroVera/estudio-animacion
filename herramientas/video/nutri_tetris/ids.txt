@@ -42,3 +42,9 @@ es_juego_2 CqWL7xnEEy
 br_story2_1 4RqceM19Aa
 br_story2_2 IfZ5LxstvE
 elegidos: es_juego = es_juego_1, br_story = br_story2_2; voz P9 = Lía anxpogu2yu4T91ajAsSp
+br_p9_lado_1 4RqcbXh9Aa
+br_p9_lado_2 MByfPKhDCm
+voz P9 = Carmen iHGx33VgO2KQ1Fdw6noG (toma sin contexto, sin acelerar)
+br_p9_perfil_1 eI9uiPFdqL
+br_p9_perfil_2 DoPCNyhpcl
+br_p9_perfil_bk lJh3ECNgv9 (elegido br_p9 = br_p9_perfil_1)

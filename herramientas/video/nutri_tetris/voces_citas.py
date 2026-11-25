@@ -4,10 +4,11 @@ import json, os, sys
 import numpy as np
 sys.path.insert(0, '..')
 exec(open('../voz.py').read().split('\norden = sys.argv[1]')[0])
-VOZ = {'P9': 'anxpogu2yu4T91ajAsSp',      # Lía (la de las nueve, mensaje)
+VOZ = {'P9': 'iHGx33VgO2KQ1Fdw6noG',      # Carmen (la de las nueve, mensaje; toma elegida sin contexto ni aceleración)
        'P12': 'QdeV7TsH9psct2D4UdTk',     # Marco (el de las doce, desde el coche)
        'HUECOS': 'iuYybvSfclFoJ9ab2Im6'}  # Estela (la de los huecos)
 TEMPO = 1.06
+TEMPO_Q = {'P9': 1.0}  # la de las nueve a su velocidad natural (acelerada sonaba rara)
 GANANCIA = {}
 # (quien, texto, primera palabra, última palabra, buscar desde el segundo)
 CITAS = [('P9', 'Hola, no puedo ir, me ha surgido algo.', 'hola', 'algo', 0),
@@ -28,10 +29,10 @@ for i, (quien, texto, w0, w1, desde) in enumerate(CITAS):
         antes = ' '.join(p['texto'] for p in pal[max(0, a - 12):a])
         mp3, al = api_voz(texto, VOZ[quien], antes, ' '.join(p['texto'] for p in pal[b + 1:b + 8]))
         open(f + '_crudo.mp3', 'wb').write(mp3)
-        subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', f + '_crudo.mp3', '-af', f'atempo={TEMPO}', f + '.mp3'], check=True)
+        subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', f + '_crudo.mp3', '-af', f'atempo={TEMPO_Q.get(quien, TEMPO)}', f + '.mp3'], check=True)
         ws = palabras_de(al)
         for w in ws:
-            w['inicio'], w['fin'] = w['inicio'] / TEMPO, w['fin'] / TEMPO
+            w['inicio'], w['fin'] = w['inicio'] / TEMPO_Q.get(quien, TEMPO), w['fin'] / TEMPO_Q.get(quien, TEMPO)
         json.dump({'palabras': ws}, open(f + '.json', 'w'), ensure_ascii=False)
         print('generada', i, quien, texto)
     if not os.path.exists(f + '_limpio.mp3') or i in rehacer:  # quita el siseo de fondo de la toma
