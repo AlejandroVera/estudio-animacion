@@ -7,8 +7,8 @@ import numpy as np
 from PIL import Image, ImageFilter
 from scipy import ndimage as ndi
 
-BASES = {'es_tetris': 'es_tetris_2'}
-TAL_CUAL = ['es_reloj', 'br_p9', 'br_story', 'br_p10', 'es_llega', 'es_espera', 'br_verdura', 'es_portatil', 'br_coche',
+BASES = {'es_tetris': 'es_tetris_2', 'es_juego': 'es_juego_1', 'br_story': 'br_story2_2'}
+TAL_CUAL = ['es_reloj', 'br_p9', 'br_p10', 'es_llega', 'es_espera', 'br_verdura', 'es_portatil', 'br_coche',
             'br_verguenza', 'br_fontanero', 'br_huecos', 'es_tupper', 'es_final']
 VARIANTES = {'es_mueve': 'es_tetris', 'es_dieta': 'es_tetris', 'es_reloj_b': 'es_reloj', 'br_coche_b': 'br_coche', 'es_sincero': 'es_portatil', 'br_huecos_b': 'br_huecos',
              'es_tupper_b': 'es_tupper', 'br_verguenza_b': 'br_verguenza', 'es_incredula': 'es_final'}

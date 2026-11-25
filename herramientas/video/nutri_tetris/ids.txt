@@ -37,3 +37,8 @@ br_huecos_bk N25WQ2t6D9
 es_dieta 4RqYQu19Aa
 es_reloj_b gOvitfhSXO
 voz P9 cambiada a Sara Martín gD1IexrzCvsXPHUuT0s3
+es_juego_1 SyaZWigUb8
+es_juego_2 CqWL7xnEEy
+br_story2_1 4RqceM19Aa
+br_story2_2 IfZ5LxstvE
+elegidos: es_juego = es_juego_1, br_story = br_story2_2; voz P9 = Lía anxpogu2yu4T91ajAsSp

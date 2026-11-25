@@ -4,7 +4,7 @@ import json, os, sys
 import numpy as np
 sys.path.insert(0, '..')
 exec(open('../voz.py').read().split('\norden = sys.argv[1]')[0])
-VOZ = {'P9': 'gD1IexrzCvsXPHUuT0s3',      # Sara Martín (la de las nueve, mensaje)
+VOZ = {'P9': 'anxpogu2yu4T91ajAsSp',      # Lía (la de las nueve, mensaje)
        'P12': 'QdeV7TsH9psct2D4UdTk',     # Marco (el de las doce, desde el coche)
        'HUECOS': 'iuYybvSfclFoJ9ab2Im6'}  # Estela (la de los huecos)
 TEMPO = 1.06
