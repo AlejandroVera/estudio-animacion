@@ -56,7 +56,7 @@ P = [
     # «Así que paso a la de las diez a las nueve.»
     esc('es_mueve', T('así') - c, ana(es_mueve='es_tetris_ana'), rotulos=[R(T('diez', 1) - b, 'LA DE LAS 10, A LAS 9', 540, 300, 'azul', 80)]),
     # «Me dice que sí, perfecto, genial.»
-    esc('br_p10', Tt('me', T('así')) - c, alterna=alt('br_p10', 'br_p10_b', 0.45)),
+    esc('br_p10', Tt('me', T('así')) - c, ana(br_p10='br_p10_x'), alterna=alt('br_p10', 'br_p10_b', 0.45)),
     # «Y llega a las diez.»
     esc('es_llega2', Tt('y', T('genial')) - c, ana(es_llega2='es_llega_ana'), rotulos=[R(Tt('diez', T('genial')) - b, '10:00', 540, 300, 'rojo', 130)]),
     # «Paso al de las once a las diez.»
@@ -92,7 +92,7 @@ P = [
     # «Ya. Yo también comía.»
     esc('es_tupper_b', Tt('ya', T('uy')) - c, ana(es_tupper_b='es_tupper_ana')),
     # «Al final, la de la vergüenza me pide otra cita. Dentro de dos semanas.»
-    esc('br_verguenza_b', T('final') - 0.3, alterna=alt('br_verguenza_b', 'br_verguenza_b2', 0.6), rotulos=[R(T('dentro') - b, 'DENTRO DE 2 SEMANAS', 540, 300, 'azul', 85)]),
+    esc('br_verguenza_b', T('final') - 0.3, hablan=ana(br_verguenza_b='br_verguenza_b_x'), alterna=alt('br_verguenza_b', 'br_verguenza_b2', 0.6), rotulos=[R(T('dentro') - b, 'DENTRO DE 2 SEMANAS', 540, 300, 'azul', 85)]),
     # «Así le da tiempo a hacer la dieta antes de venir.»
     esc('es_final', Tt('así', T('dentro')) - c, ana(es_final='es_final_ana')),
 ]
@@ -123,11 +123,11 @@ for t, z, (cx, cy), vuelta in GOLPES:
     if vuelta and vuelta != 'rotulos':
         v = copy.deepcopy(base); v['t0'] = vuelta; nuevos.append(v)
 # «es jugar al Tetris»: Ana con el mando delante del juego; en «Tetris», la pantalla de cerca y cae una pieza
-nuevos.append(esc('es_juego', T('jugar') - 0.12, zoom=1.15, cx=0.5, cy=0.47))
-z, cx, cy = 1.5, 0.47, 0.34
+nuevos.append(esc('es_juego', T('jugar') - 0.12, sub_y=800))
+z, cx, cy = 1.3, 0.47, 0.39
 tz = T('tetris') - c
-gz = esc('es_juego', tz, zoom=z, cx=cx, cy=cy)
-gz['objetos'] = [{'img': I + 'bloque_T.png', 'x': 590, 'y': 715, 'w': 105, 't0': tz + 0.05, 'cae': 0.45, 'y0': 420, 'pop': False}]
+gz = esc('es_juego', tz, zoom=z, cx=cx, cy=cy, sub_y=800)
+gz['objetos'] = [{'img': I + 'bloque_T.png', 'x': 569, 'y': 600, 'w': 80, 't0': tz + 0.05, 'cae': 0.45, 'y0': 300, 'pop': False}]
 nuevos.append(gz)
 tg = {round(g['t0'], 3) for g in nuevos}
 P = sorted([p for p in P if round(p['t0'], 3) not in tg] + nuevos, key=lambda p: p['t0'])

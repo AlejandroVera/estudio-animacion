@@ -7,7 +7,7 @@ import numpy as np
 from PIL import Image, ImageFilter
 from scipy import ndimage as ndi
 
-BASES = {'es_tetris': 'es_tetris_2', 'es_juego': 'es_juego_1', 'br_story': 'br_story4_2'}
+BASES = {'es_tetris': 'es_tetris_2', 'es_juego': 'es_juego_tv_2', 'br_story': 'br_story4_2'}
 TAL_CUAL = ['es_reloj', 'br_p9', 'br_p10', 'es_llega', 'es_espera', 'br_verdura', 'es_portatil', 'br_coche',
             'br_verguenza', 'br_fontanero', 'br_huecos', 'es_tupper', 'es_final']
 VARIANTES = {'es_llega2': 'es_llega', 'br_p9_b': 'br_p9', 'br_p10_b': 'br_p10', 'br_verdura_b': 'br_verdura', 'br_coche_c': 'br_coche', 'br_verguenza_c': 'br_verguenza', 'br_fontanero_b': 'br_fontanero', 'br_huecos_d': 'br_huecos', 'es_mueve': 'es_tetris', 'es_dieta': 'es_tetris', 'es_reloj_b': 'es_reloj', 'br_coche_b': 'br_coche', 'es_sincero': 'es_portatil', 'br_huecos_b': 'br_huecos',
@@ -24,7 +24,9 @@ BOCAS = {'es_tetris_ana': ('es_tetris', 'es_tetris_bk', (0.2, 0.8, 0.15, 0.4)),
          'es_final_ana': ('es_final', 'es_final_bk', (0.2, 0.8, 0.15, 0.45)),
          'br_p9_p9': ('br_p9', 'br_p9_bk', (0.2, 0.8, 0.2, 0.5)),
          'br_coche_p12': ('br_coche', 'br_coche_bk', (0.2, 0.8, 0.15, 0.5)),
-         'br_huecos_h': ('br_huecos', 'br_huecos_bk', (0.2, 0.8, 0.5, 0.75))}
+         'br_huecos_h': ('br_huecos', 'br_huecos_bk', (0.2, 0.8, 0.5, 0.75)),
+         'br_p10_x': ('br_p10', 'br_p10_bk', (0.25, 0.8, 0.25, 0.5)),
+         'br_verguenza_b_x': ('br_verguenza_b', 'br_verguenza_b_bk', (0.3, 0.8, 0.2, 0.45))}
 CERRADAS = {}
 os.makedirs('img', exist_ok=True)
 
