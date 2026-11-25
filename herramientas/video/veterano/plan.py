@@ -76,7 +76,7 @@ P = [
                                       R(T('dura') - c, '4 SEGUNDOS', 300, 'rojo', 110, T('como', -1) - 0.05)]),   # la web «como las entradas de un concierto»
     charla(L[15] - c, [G(L[15] - c, L[16] - c, 'ROSA', 'r_cruzado'),     # «pues me espero»
                        G(L[16] - c, L[17] - c, 'VETERANO', 'v_tique')]),  # «saca antes el tique de espera»
-    esc('es_paco', L[17] - c, {'SENOR': {'es_paco': 'es_paco'}}),          # «perdona, ¿la mesa 4 atiende?»
+    esc('es_paco', L[17] - c, {'SENOR': {'es_paco': 'es_paco', 'es_paco_g': 'es_paco'}}, cambios=[ch(T('mesa', 0) - c, 'es_paco_g')]),          # «perdona, ¿la mesa 4 atiende?»
     charla(L[18] - c, [G(L[18] - c, T('póster') - c, 'VETERANO', 'v_dedo')]),   # «la mesa cuatro…»: el veterano se lo explica
     esc('es_paco', T('póster') - c, zoom=1.3, cx=0.5, cy=0.42,             # «…es un póster, Paco»: el cartón de cerca
         rotulos=[R(T('desde') - c, 'DESDE 2019', 1560, 'rojo', 110)]),

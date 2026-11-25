@@ -375,9 +375,18 @@
     "SENOR": {
      "img/es_paco.jpg": [
       "img/es_paco_boca.png"
+     ],
+     "img/es_paco_g.jpg": [
+      "img/es_paco_boca.png"
      ]
     }
-   }
+   },
+   "cambios": [
+    {
+     "t": 60.18,
+     "fondo": "img/es_paco_g.jpg"
+    }
+   ]
   },
   {
    "t0": 61.733000000000004,

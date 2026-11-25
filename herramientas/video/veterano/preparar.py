@@ -5,15 +5,48 @@ import numpy as np
 from PIL import Image, ImageFilter
 from scipy import ndimage as ndi
 
-BASES = {'es_pprosa': 'es_pprosa', 'es_senora': 'es_senora', 'br_web': 'br_web', 'es_paco': 'es_paco',
+BASES = {'es_pprosa': 'es_pprosa', 'es_senora': 'es_senora', 'br_web': 'br_web', 'es_paco': 'es_paco_c',
          'es_levantan': 'es_levantan_3', 'es_oscuro': 'es_oscuro_1'}
-VARIANTES = {'es_senora_b': 'es_senora'}
-BOCAS = {'es_pprosa': ('es_pprosa_bk', (0.3, 0.75, 0.45, 0.65)), 'es_paco': ('es_paco_bk', (0.6, 1, 0.3, 0.5))}
+VARIANTES = {'es_senora_b': 'es_senora', 'es_paco_g': 'es_paco'}
+BOCAS = {'es_pprosa': ('es_pprosa_bk', (0.3, 0.75, 0.45, 0.65)), 'es_paco': ('es_paco', (0.5, 0.75, 0.42, 0.48))}
 
 
 def carga(n, tam=None):
     im = Image.open(f'crudo/{n}.png').convert('RGB')
     return im.resize(tam) if tam else im
+
+
+def _pcc(a, b):
+    a = a - a.mean(); b = b - b.mean()
+    F = np.fft.fft2(a) * np.conj(np.fft.fft2(b)); F /= np.abs(F) + 1e-9
+    c = np.fft.ifft2(F).real; y, x = np.unravel_index(np.argmax(c), c.shape)
+    if y > a.shape[0] // 2: y -= a.shape[0]
+    if x > a.shape[1] // 2: x -= a.shape[1]
+    return y, x, c.max()
+
+
+def alineada(nom, base_img):
+    """la edición de Higgsfield sale ampliada ~1 %: se mide la afín por parches y se devuelve la edición llevada
+    al marco del dibujo base (si no, las capas «parten» al personaje)"""
+    A = np.asarray(base_img.convert('L')).astype(float)
+    E = carga(nom, base_img.size)
+    B = np.asarray(E.convert('L')).astype(float)
+    pts = []
+    for y0 in range(100, A.shape[0] - 200, 180):
+        for x0 in range(0, A.shape[1] - 192, 180):
+            a, b = A[y0:y0 + 192, x0:x0 + 192], B[y0:y0 + 192, x0:x0 + 192]
+            if a.std() < 12: continue
+            dy, dx, q = _pcc(a, b)
+            if q > 0.2 and abs(dy) < 60 and abs(dx) < 60: pts.append((x0 + 96, y0 + 96, -dx, -dy))
+    P = np.array(pts, float)
+    M = np.c_[P[:, 0], P[:, 1], np.ones(len(P))]
+    for _ in range(3):
+        cx = np.linalg.lstsq(M, P[:, 0] + P[:, 2], rcond=None)[0]; cy = np.linalg.lstsq(M, P[:, 1] + P[:, 3], rcond=None)[0]
+        res = np.hypot(M @ cx - (P[:, 0] + P[:, 2]), M @ cy - (P[:, 1] + P[:, 3])); k = res <= np.percentile(res, 75)
+        M, P = M[k], P[k]
+    print('  ', nom, 'escala %.4f %.4f desplaz %.1f %.1f' % (cx[0], cy[1], cx[2], cy[2]))
+    # salida en el marco base: pixel base (x,y) <- edición (cx·(x,y,1), cy·(x,y,1))
+    return E.transform(E.size, Image.AFFINE, tuple(cx) + tuple(cy), resample=Image.BICUBIC)
 
 
 for k, v in BASES.items():
@@ -23,7 +56,7 @@ for k, v in BASES.items():
         print('falta', v)
 for nom, base in VARIANTES.items():
     A = Image.open(f'img/{base}.jpg').convert('RGB'); a = np.asarray(A).astype(int)
-    b = np.asarray(carga(nom, A.size)).astype(int)
+    b = np.asarray(alineada(nom, A)).astype(int)
     d = ndi.binary_opening(np.abs(a - b).max(2) > 45, iterations=2)
     lab, n = ndi.label(ndi.binary_dilation(d, iterations=8))
     m = np.isin(lab, [i + 1 for i, t in enumerate(ndi.sum(d, lab, range(1, n + 1))) if t > 1500]) if n else d
@@ -33,7 +66,7 @@ for nom, base in VARIANTES.items():
     print(nom, 'cambia %.1f%%' % (m.mean() * 100))
 for base, (fuente, (x0, x1, y0, y1)) in BOCAS.items():
     A = Image.open(f'img/{base}.jpg').convert('RGB'); a = np.asarray(A).astype(int)
-    b = np.asarray(carga(fuente, A.size)).astype(int)
+    b = np.asarray(alineada(fuente, A)).astype(int)
     d = ndi.binary_opening(np.abs(a - b).max(2) > 50, iterations=2)
     H, W = d.shape; z = np.zeros_like(d); z[int(y0 * H):int(y1 * H), int(x0 * W):int(x1 * W)] = True; d &= z
     lab, n = ndi.label(ndi.binary_dilation(d, iterations=6))

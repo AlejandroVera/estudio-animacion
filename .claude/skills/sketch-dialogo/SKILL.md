@@ -121,6 +121,8 @@ Rafa `Zb72NBThGN2Rv3y1RSTT`), nutri, Alejandro (Daniel - Podcast). Si falta el o
 - ¡IMPORTANTE! Las ediciones de Nano Banana en Higgsfield salen AMPLIADAS ~1,1 % respecto al dibujo base: pegadas como
   capas, los cuerpos «se parten, se salen de la forma». Medir la afín base→edición (correlación por parches) y usar
   como BASE el plano fijo transformado igual (`crudo/mf_2_alin.png`); las capas pasan del 20 % al 2-3 %.
+  Lo mismo en los planos sueltos (`alineada()` en `preparar.py` lleva cada edición al marco de su dibujo). Y si el
+  dibujo de un personaje que habla ya tiene la BOCA ABIERTA (Paco), pedir antes su versión cerrada para la base.
 - (antes) Las ediciones de Nano Banana en Higgsfield DESPLAZAN un poco a todo el personaje: las capas de gesto salen grandes
   (cuerpo entero); recortarlas por debajo de lo que redibuja (el panel de números de la pared) y proteger cabezas.
   La boca del veterano (bigote) cambiaba también los ojos: capa de boca solo por debajo de las gafas.

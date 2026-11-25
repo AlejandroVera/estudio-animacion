@@ -35,3 +35,6 @@ es_levantan_3 d6cf28bd-cd47-4226-b5a3-e2548e8b39ab
 es_levantan_4 aa8f733b-a882-46ff-b689-57cff2b49aab
 es_oscuro_1 b866aaf5-c402-4ee8-b0c0-a39d653e6da3
 es_oscuro_2 223f63de-64d3-4c17-aa96-8bb29366a40b
+es_paco_c (boca cerrada) db6f25da-73d7-4d8d-8509-fb3d51314b9e
+es_paco_g1 c492cee0-00c1-4517-b77f-bd0ca0155794
+es_paco_g2 98879b22-639b-4b5e-b7d3-d770c0437518
