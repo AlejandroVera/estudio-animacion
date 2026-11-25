@@ -57,14 +57,14 @@ P = [
     esc('es_mueve', T('así') - c, ana(es_mueve='es_tetris_ana'), rotulos=[R(T('diez', 1) - b, 'LA DE LAS 10, A LAS 9', 540, 300, 'azul', 80)]),
     # «Me dice que sí, perfecto, genial.»
     esc('br_p10', Tt('me', T('así')) - c, ana(br_p10='br_p10_x'), alterna=alt('br_p10', 'br_p10_b', 0.45)),
-    # «Y llega a las diez.»
-    esc('es_llega2', Tt('y', T('genial')) - c, ana(es_llega2='es_llega_ana'), rotulos=[R(Tt('diez', T('genial')) - b, '10:00', 540, 300, 'rojo', 130)]),
     # «Paso al de las once a las diez.»
-    esc('es_mueve', Tt('paso', T('llega')) - c, ana(es_mueve='es_tetris_ana'), rotulos=[R(T('once') - b, 'EL DE LAS 11, A LAS 10', 540, 300, 'azul', 78)]),
+    esc('es_mueve', Tt('y', T('genial')) - c, ana(es_mueve='es_tetris_ana'), rotulos=[R(T('once') - b, 'EL DE LAS 11, A LAS 10', 540, 300, 'azul', 78)]),
     # «No contesta.»
     esc('es_espera', Tt('no', T('once')) - c, ana(es_espera='es_espera_ana')),
     # «Contesta los mensajes como se come la verdura. Nunca.»
     esc('br_verdura', Tt('contesta', Tt('no', T('once')) + 0.3) - c, alterna=alt('br_verdura', 'br_verdura_b', 0.35)),
+    # «Y la de las diez… llega a las diez.» (el remate de la de las diez, al final del lío)
+    esc('es_llega2', Tt('y', T('nunca')) - c, ana(es_llega2='es_llega_ana'), rotulos=[R(Tt('diez', Tt('llega', T('nunca'))) - b, '10:00', 540, 300, 'rojo', 130)]),
     # «Luego, el de las doce: ¿La podemos hacer online? Claro.»
     esc('es_portatil', T('luego') - c, ana(es_portatil='es_portatil_ana'), rotulos=[R(T('doce') - b, '12:00', 540, 300, 'negro', 120, T('claro') - 0.05)]),
     # «Se conecta desde el coche, en un semáforo, con medio cruasán en la mano. Le pregunto… y me enseña el cruasán.»
@@ -139,10 +139,10 @@ json.dump({'alineacion': 'voz/nt.json', 'audio': 'voz/nt.mp3', 'sin_recolor': ['
 for p in P:
     print(round(p['t0'], 2), os.path.basename(p['fondo']), p.get('zoom'))
 
-EF = [[T('jugar') - 0.12, 'whoosh2', -14], [T('es', 1) - 0.1, 'tetris', -7, 2.6], [T('así') - 0.05, 'tetris', -10, 1.9], [Tt('paso', T('llega')) - 0.05, 'tetris', -10, 1.9], [T('tetris') + 0.45, 'bloque', -10], [T('lunes') - 0.15, 'whoosh', -12], [T('lunes') + 0.2, 'tictac', -14, 1.6],
+EF = [[T('jugar') - 0.12, 'whoosh2', -14], [T('es', 1) - 0.1, 'tetris', -7, 2.6], [T('así') - 0.05, 'tetris', -10, 1.9], [Tt('y', T('genial')) - 0.05, 'tetris', -10, 1.9], [T('tetris') + 0.45, 'bloque', -10], [T('lunes') - 0.15, 'whoosh', -12], [T('lunes') + 0.2, 'tictac', -14, 1.6],
       [T('escribe'), 'notificacion', -10], [T('hola') - 0.15, 'whoosh2', -13], [Tt('a', T('algo')) - 0.15, 'whoosh', -12],
       [T('alunizaje'), 'cristales', -10, 1.2], [T('así') - 0.15, 'whoosh2', -13], [T('nueve', 2), 'bloque', -10],
-      [Tt('y', T('genial')) - 0.15, 'whoosh', -13], [Tt('y', T('genial')), 'puerta', -11, 0.8], [T('once'), 'bloque', -10],
+      [Tt('y', T('nunca')) - 0.15, 'whoosh', -13], [Tt('llega', T('nunca')), 'puerta', -11, 0.8], [T('once'), 'bloque', -10],
       [Tt('no', T('once')) + 0.4, 'grillos', -13, 1.4], [T('nunca'), 'ding', -12], [T('luego') - 0.15, 'whoosh2', -13],
       [T('coche'), 'bocina', -13], [T('sincero'), 'ding', -12], [Tt('la', T('sincero')) - 0.15, 'whoosh', -12],
       [T('agua'), 'agua', -11, 1.6], [Tt('y', T('agua')) - 0.15, 'whoosh2', -13], [T('martes') + 0.1, 'pop', -12],
