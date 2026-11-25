@@ -1,0 +1,36 @@
+voces: ANA Sofía eZxqQzb5CuYo3Kl6EXfZ, P9 Gloria Xj1OOa85CcJ7mNrqTmBx, P12 Marco QdeV7TsH9psct2D4UdTk, HUECOS Estela iuYybvSfclFoJ9ab2Im6
+es_tetris_1 P3Hz8xr42C
+es_tetris_2 N25WmlM6D9
+es_reloj 4RqnIUz9Aa
+br_p9 WDUobnHcXe
+br_story O6QAo9xynm
+br_p10 nVgXqp6YQD
+es_llega UPf3e2twny
+es_espera SyaipYlUb8
+br_verdura VXOmr5cMMU
+es_portatil s7m9VDil8e
+br_coche KLdwzMekqp
+br_verguenza u50jiMPQLD
+br_fontanero UPf3e5Nwny
+br_huecos jUIP0qjLD0
+es_tupper 1lBJYK9r4r
+es_final TdJtrp0VNR
+elegido: es_tetris = es_tetris_2
+es_mueve N25WEK36D9
+br_coche_b aFnk3MtfSh
+es_sincero CqWrZouEEy
+br_huecos_b s7m9drol8e
+br_huecos_c P3Hzf9U42C
+es_tupper_b s7m9XJ4l8e
+br_verguenza_b s7m9X4Hl8e
+es_incredula jUIPeiRLD0
+es_tetris_bk bxpSc4f5Y2
+es_reloj_bk gOv6o0CSXO
+es_llega_bk eI9f7SQdqL
+es_espera_bk gOv6o81SXO
+es_portatil_bk rgoOD8cxtc
+es_tupper_bk N25WujA6D9
+es_final_bk lJhNBbigv9
+br_p9_bk 1lBJMqSr4r
+br_coche_bk JNu2h7gOq4
+br_huecos_bk N25WQ2t6D9
