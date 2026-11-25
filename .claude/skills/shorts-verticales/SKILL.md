@@ -129,6 +129,13 @@ Ejemplo completo: `herramientas/shorts/domingo/` (3 shorts del vídeo «domingo�
   Después «ahora está súper baja»: la voz elegida (Carolina) era apagada, con la mitad de energía en 1-4 kHz que la
   narradora; a igual RMS se oía floja. Elegir voces con PRESENCIA parecida a la narradora (proporción 1-4 kHz ≈ 0,3),
   medir cada frase en LUFS en el vídeo final (`ebur128`), y quien reclama o se impacienta, 1-2 dB por encima.
+  En «El Tetris» la primera paciente «sonaba muy mal»: era una voz de atención al cliente (Gloria), lenta y rígida, y
+  además pasada por el filtro de ruido. Para personajes, voces de diálogo o de personajes (Sara Martín, Estela, Marco),
+  probar 3-4 con la frase real y quedarse con la limpia; el `afftdn` SOLO si la toma tiene ruido (mínimo por ventanas
+  > 20 dB): en una voz limpia la deja «a lata» (`voces_citas.py` ya lo decide solo).
+- «El comienzo muy estático» (El Tetris): los primeros 5 s piden un cambio cada ~1,5 s ligado a la frase (Ana enseña el
+  plan de dieta en «dietas», sube un bloque en «Tetris» y caen piezas sobre el planificador con su sonido; coge el
+  móvil en «me escribe»). Objetos que caen: `"cae": s, "y0": -250` en `objetos` de `montar_vertical.py`.
   4) «No van bien los sonidos con lo que hace»: cada efecto tiene que tener su dibujo. Si suena el golpe de la báscula
   contra el suelo, en ese momento se tiene que VER en el suelo (un dibujo intermedio, `es_miercoles_s`).
   5) Los `Tt(palabra, desde)` anclados a otra palabra (`Tt('el', T('pesarse'))`), nunca a segundos fijos: al cambiar una

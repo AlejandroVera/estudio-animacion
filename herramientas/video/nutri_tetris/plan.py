@@ -43,10 +43,10 @@ def ana(**m):
 
 P = [
     # «Soy nutricionista. Y mi trabajo no es hacer dietas, es jugar al Tetris.»
-    esc('es_tetris', 0, ana(es_tetris='es_tetris_ana')),
+    esc('es_tetris', 0, ana(es_tetris='es_tetris_ana', es_dieta='es_tetris_ana'), cambios=[ch(T('hacer') - c, 'es_dieta')]),
     # «Lunes, nueve menos tres minutos. Me escribe la paciente de las nueve:»
-    esc('es_reloj', T('lunes') - c, ana(es_reloj='es_reloj_ana'),
-        rotulos=[R(T('lunes') - b, 'LUNES', 540, 300, 'rojo', 120, T('me') - 0.05),
+    esc('es_reloj', T('lunes') - c, ana(es_reloj='es_reloj_ana', es_reloj_b='es_reloj_ana'), cambios=[ch(T('escribe') - c, 'es_reloj_b')],
+        rotulos=[R(T('lunes') - b, 'LUNES', 540, 300, 'rojo', 120, T('menos') - b - 0.02),
                  R(T('menos') - b, '8:57', 540, 300, 'negro', 130)]),
     # «Hola, no puedo ir, me ha surgido algo.» (ella, en pijama con el mando)
     esc('br_p9', T('hola') - c, {'P9': {'br_p9': 'br_p9_p9'}}),
@@ -98,8 +98,7 @@ P = [
 P[-2]['t0'] = Tt('al', T('comía')) - c
 
 # golpes de cámara (copian el plano sin sus rótulos): (instante, zoom, centro, vuelta o None)
-GOLPES = [(T('tetris') - c, 1.45, (0.72, 0.42), None),                    # el planificador hecho Tetris
-          (T('alunizaje') - c, 1.6, (0.47, 0.4), None),                 # el coche entrando en la tienda
+GOLPES = [(T('alunizaje') - c, 1.6, (0.47, 0.4), None),                 # el coche entrando en la tienda
           (T('nunca') - c, 1.35, (0.5, 0.33), None),                     # «Nunca.»
           (T('cruasán', 1) - c, 1.3, (0.6, 0.45), None),                  # le enseña el cruasán
           (Tt('no', T('pronto')) - c, 1.35, (0.5, 0.58), 'rotulos'),        # «Y que no sea martes»
@@ -121,6 +120,20 @@ for t, z, (cx, cy), vuelta in GOLPES:
     nuevos.append(g)
     if vuelta and vuelta != 'rotulos':
         v = copy.deepcopy(base); v['t0'] = vuelta; nuevos.append(v)
+# «jugar al Tetris»: Ana sube un bloque y caen piezas sobre el planificador
+for g in nuevos:
+    if abs(g['t0'] - (T('tetris') - c)) < 1e-6:
+        g['fondo'], g['cambios'] = I + 'es_mueve.jpg', []
+        g['hablan'] = {'ANA': {I + 'es_mueve.jpg': [I + 'es_tetris_ana_boca.png']}}
+t0 = T('jugar') - 0.05
+g0 = copy.deepcopy([p for p in P if p['t0'] <= t0][-1]); g0['t0'] = t0; g0['cambios'] = []
+g0['fondo'] = I + 'es_mueve.jpg'; g0['hablan'] = {'ANA': {I + 'es_mueve.jpg': [I + 'es_tetris_ana_boca.png']}}
+g0['objetos'] = [{'img': I + 'bloque_%s.png' % f, 'x': x, 'y': y, 'w': w, 't0': t0 + k * 0.28, 'cae': 0.26, 'y0': -250, 'pop': False}
+                 for k, (f, x, y, w) in enumerate([('T', 920, 420, 145), ('S', 925, 760, 145), ('L', 1010, 590, 92)])]
+nuevos.append(g0)
+for g in nuevos:
+    if abs(g['t0'] - (T('tetris') - c)) < 1e-6:
+        g['objetos'] = []
 tg = {round(g['t0'], 3) for g in nuevos}
 P = sorted([p for p in P if round(p['t0'], 3) not in tg] + nuevos, key=lambda p: p['t0'])
 FIN = PAL[-1]['fin'] + 2.2
@@ -131,7 +144,7 @@ json.dump({'alineacion': 'voz/nt.json', 'audio': 'voz/nt.mp3', 'sin_recolor': ['
 for p in P:
     print(round(p['t0'], 2), os.path.basename(p['fondo']), p.get('zoom'))
 
-EF = [[T('tetris'), 'bloque', -10], [T('lunes') - 0.15, 'whoosh', -12], [T('lunes') + 0.2, 'tictac', -14, 1.6],
+EF = [[T('jugar') + 0.21, 'bloque', -11], [T('jugar') + 0.49, 'bloque', -11], [T('jugar') + 0.77, 'bloque', -11], [T('lunes') - 0.15, 'whoosh', -12], [T('lunes') + 0.2, 'tictac', -14, 1.6],
       [T('escribe'), 'notificacion', -10], [T('hola') - 0.15, 'whoosh2', -13], [Tt('a', T('algo')) - 0.15, 'whoosh', -12],
       [T('alunizaje'), 'cristales', -10, 1.2], [T('así') - 0.15, 'whoosh2', -13], [T('nueve', 2), 'bloque', -10],
       [Tt('y', T('genial')) - 0.15, 'whoosh', -13], [Tt('y', T('genial')), 'puerta', -11, 0.8], [T('once'), 'bloque', -10],

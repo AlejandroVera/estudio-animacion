@@ -4,11 +4,11 @@ import json, os, sys
 import numpy as np
 sys.path.insert(0, '..')
 exec(open('../voz.py').read().split('\norden = sys.argv[1]')[0])
-VOZ = {'P9': 'Xj1OOa85CcJ7mNrqTmBx',      # Gloria (la de las nueve, mensaje)
+VOZ = {'P9': 'gD1IexrzCvsXPHUuT0s3',      # Sara Martín (la de las nueve, mensaje)
        'P12': 'QdeV7TsH9psct2D4UdTk',     # Marco (el de las doce, desde el coche)
        'HUECOS': 'iuYybvSfclFoJ9ab2Im6'}  # Estela (la de los huecos)
 TEMPO = 1.06
-GANANCIA = {'P9': 1.12}
+GANANCIA = {}
 # (quien, texto, primera palabra, última palabra, buscar desde el segundo)
 CITAS = [('P9', 'Hola, no puedo ir, me ha surgido algo.', 'hola', 'algo', 0),
          ('P12', '¿La podemos hacer online?', '¿la', 'online', 28.5),
@@ -35,7 +35,11 @@ for i, (quien, texto, w0, w1, desde) in enumerate(CITAS):
         json.dump({'palabras': ws}, open(f + '.json', 'w'), ensure_ascii=False)
         print('generada', i, quien, texto)
     if not os.path.exists(f + '_limpio.mp3') or i in rehacer:  # quita el siseo de fondo de la toma
-        subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', f + '.mp3', '-af', 'highpass=f=80,afftdn=nf=-35:nr=10', f + '_limpio.mp3'], check=True)
+        # el filtro de ruido solo si la toma tiene ruido de fondo (en una voz limpia la estropea: suena a lata)
+        yy = leer(f + '.mp3'); fr = [20 * np.log10(np.sqrt((yy[k:k + 2205] ** 2).mean()) + 1) for k in range(0, len(yy) - 2205, 2205)]
+        filtro = 'highpass=f=80' + (',afftdn=nf=-35:nr=10' if min(fr) > 20 else '')
+        subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', f + '.mp3', '-af', filtro, f + '_limpio.mp3'], check=True)
+        print('toma', i, 'suelo', round(float(min(fr)), 1), filtro)
     trozos.append((a, b, quien, f))
 partes, nuevas, prev_t, prev_k = [], [], 0.0, 0
 for a, b, quien, f in trozos:

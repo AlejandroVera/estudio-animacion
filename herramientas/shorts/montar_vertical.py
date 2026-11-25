@@ -739,7 +739,14 @@ def pegar_objeto(im, o, t):
     k = min(1, (t - o['t0']) / 0.12)
     s = (0.6 + 0.4 * k) if o.get('pop', True) else 1
     ob = ob.resize((max(1, int(w * s)), max(1, int(ob.height * w / ob.width * s))), Image.LANCZOS)
-    im.alpha_composite(ob, (int(o['x'] - ob.width / 2), int(o['y'] - ob.height / 2)))
+    y = o['y']
+    if 'cae' in o:  # cae desde y0 hasta y en `cae` s, con un rebote pequeño al llegar
+        q = min(1, (t - o['t0']) / o['cae'])
+        y = o.get('y0', -300) + (o['y'] - o.get('y0', -300)) * q * q
+        if q >= 1:
+            r = (t - o['t0'] - o['cae']) / 0.18
+            y = o['y'] - (18 * math.sin(math.pi * r) if r < 1 else 0)
+    im.alpha_composite(ob, (int(o['x'] - ob.width / 2), int(y - ob.height / 2)))
 
 
 if SOLO:
