@@ -48,3 +48,6 @@ voz P9 = Carmen iHGx33VgO2KQ1Fdw6noG (toma sin contexto, sin acelerar)
 br_p9_perfil_1 eI9uiPFdqL
 br_p9_perfil_2 DoPCNyhpcl
 br_p9_perfil_bk lJh3ECNgv9 (elegido br_p9 = br_p9_perfil_1)
+vuelta al dibujo original de la de las nueve (br_p9 WDUobnHcXe)
+br_story3_1 mEA1xrzhJQ
+br_story3_2 rgo966nxtc

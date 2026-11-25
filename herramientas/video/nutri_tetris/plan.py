@@ -98,7 +98,7 @@ P = [
 P[-2]['t0'] = Tt('al', T('comía')) - c
 
 # golpes de cámara (copian el plano sin sus rótulos): (instante, zoom, centro, vuelta o None)
-GOLPES = [(T('alunizaje') - c, 1.6, (0.47, 0.4), None),                 # el coche entrando en la tienda
+GOLPES = [(T('alunizaje') - c, 1.6, (0.5, 0.4), None),                 # el coche entrando en la tienda
           (T('nunca') - c, 1.35, (0.5, 0.33), None),                     # «Nunca.»
           (T('cruasán', 1) - c, 1.3, (0.6, 0.45), None),                  # le enseña el cruasán
           (Tt('no', T('pronto')) - c, 1.35, (0.5, 0.58), 'rotulos'),        # «Y que no sea martes»
@@ -137,7 +137,7 @@ json.dump({'alineacion': 'voz/nt.json', 'audio': 'voz/nt.mp3', 'sin_recolor': ['
 for p in P:
     print(round(p['t0'], 2), os.path.basename(p['fondo']), p.get('zoom'))
 
-EF = [[T('jugar') - 0.12, 'whoosh2', -14], [T('tetris') + 0.45, 'bloque', -10], [T('lunes') - 0.15, 'whoosh', -12], [T('lunes') + 0.2, 'tictac', -14, 1.6],
+EF = [[T('jugar') - 0.12, 'whoosh2', -14], [T('es', 1) - 0.1, 'tetris', -7, 2.6], [T('así') - 0.05, 'tetris', -10, 1.9], [Tt('paso', T('llega')) - 0.05, 'tetris', -10, 1.9], [T('tetris') + 0.45, 'bloque', -10], [T('lunes') - 0.15, 'whoosh', -12], [T('lunes') + 0.2, 'tictac', -14, 1.6],
       [T('escribe'), 'notificacion', -10], [T('hola') - 0.15, 'whoosh2', -13], [Tt('a', T('algo')) - 0.15, 'whoosh', -12],
       [T('alunizaje'), 'cristales', -10, 1.2], [T('así') - 0.15, 'whoosh2', -13], [T('nueve', 2), 'bloque', -10],
       [Tt('y', T('genial')) - 0.15, 'whoosh', -13], [Tt('y', T('genial')), 'puerta', -11, 0.8], [T('once'), 'bloque', -10],

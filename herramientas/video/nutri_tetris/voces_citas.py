@@ -4,7 +4,7 @@ import json, os, sys
 import numpy as np
 sys.path.insert(0, '..')
 exec(open('../voz.py').read().split('\norden = sys.argv[1]')[0])
-VOZ = {'P9': 'iHGx33VgO2KQ1Fdw6noG',      # Carmen (la de las nueve, mensaje; toma elegida sin contexto ni aceleración)
+VOZ = {'P9': 'Wi5NZQRxyOb3Jx4r0hrI',      # Gala (la de las nueve, mensaje; toma sin contexto ni aceleración)
        'P12': 'QdeV7TsH9psct2D4UdTk',     # Marco (el de las doce, desde el coche)
        'HUECOS': 'iuYybvSfclFoJ9ab2Im6'}  # Estela (la de los huecos)
 TEMPO = 1.06

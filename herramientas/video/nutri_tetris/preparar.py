@@ -7,8 +7,8 @@ import numpy as np
 from PIL import Image, ImageFilter
 from scipy import ndimage as ndi
 
-BASES = {'es_tetris': 'es_tetris_2', 'es_juego': 'es_juego_1', 'br_story': 'br_story2_2', 'br_p9': 'br_p9_perfil_1'}
-TAL_CUAL = ['es_reloj', 'br_p10', 'es_llega', 'es_espera', 'br_verdura', 'es_portatil', 'br_coche',
+BASES = {'es_tetris': 'es_tetris_2', 'es_juego': 'es_juego_1', 'br_story': 'br_story3_2'}
+TAL_CUAL = ['es_reloj', 'br_p9', 'br_p10', 'es_llega', 'es_espera', 'br_verdura', 'es_portatil', 'br_coche',
             'br_verguenza', 'br_fontanero', 'br_huecos', 'es_tupper', 'es_final']
 VARIANTES = {'es_mueve': 'es_tetris', 'es_dieta': 'es_tetris', 'es_reloj_b': 'es_reloj', 'br_coche_b': 'br_coche', 'es_sincero': 'es_portatil', 'br_huecos_b': 'br_huecos',
              'es_tupper_b': 'es_tupper', 'br_verguenza_b': 'br_verguenza', 'es_incredula': 'es_final'}
@@ -22,7 +22,7 @@ BOCAS = {'es_tetris_ana': ('es_tetris', 'es_tetris_bk', (0.2, 0.8, 0.15, 0.4)),
          'es_portatil_ana': ('es_portatil', 'es_portatil_bk', (0.2, 0.8, 0.15, 0.45)),
          'es_tupper_ana': ('es_tupper', 'es_tupper_bk', (0.2, 0.8, 0.15, 0.45)),
          'es_final_ana': ('es_final', 'es_final_bk', (0.2, 0.8, 0.15, 0.45)),
-         'br_p9_p9': ('br_p9', 'br_p9_perfil_bk', (0.62, 0.85, 0.38, 0.46)),
+         'br_p9_p9': ('br_p9', 'br_p9_bk', (0.2, 0.8, 0.2, 0.5)),
          'br_coche_p12': ('br_coche', 'br_coche_bk', (0.2, 0.8, 0.15, 0.5)),
          'br_huecos_h': ('br_huecos', 'br_huecos_bk', (0.2, 0.8, 0.5, 0.75))}
 CERRADAS = {}
@@ -84,11 +84,3 @@ for nom, (base, fuente, caja) in CERRADAS.items():
     Image.fromarray((a * (1 - f) + b * f).astype('uint8')).save(f'img/{nom}.jpg', quality=92)
     capa(a, al, nom)   # la boca abierta original, para cuando habla
 
-# boca de la de las nueve (de perfil): la boca toca el contorno de la cara, así que se toma de la edición toda la parte
-# baja de la cara (óvalo fijo) para que contorno y boca casen
-A = Image.open('img/br_p9.jpg').convert('RGB')
-b = np.asarray(carga('br_p9_perfil_bk', A.size)).astype(int)
-H, W = b.shape[:2]
-yy, xx = np.ogrid[:H, :W]
-m = ((xx - 985) / 175) ** 2 + ((yy - 1150) / 95) ** 2 <= 1
-capa(b, np.asarray(Image.fromarray((m * 255).astype('uint8')).filter(ImageFilter.GaussianBlur(4))), 'br_p9_p9')
