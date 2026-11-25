@@ -159,6 +159,7 @@
    "cy": 0.52,
    "bocas": {},
    "habla": false,
+   "sub_y": 1560,
    "rotulos": [
     {
      "t0": 10.359,
@@ -177,11 +178,12 @@
   {
    "t0": 13.995999999999999,
    "fondo": "img/br_story.jpg",
-   "zoom": 1.6,
-   "cx": 0.5,
-   "cy": 0.4,
+   "zoom": 1.45,
+   "cx": 0.52,
+   "cy": 0.42,
    "bocas": {},
-   "habla": false
+   "habla": false,
+   "sub_y": 1560
   },
   {
    "t0": 15.011999999999999,

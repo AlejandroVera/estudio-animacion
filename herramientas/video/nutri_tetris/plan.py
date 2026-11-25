@@ -51,7 +51,7 @@ P = [
     # «Hola, no puedo ir, me ha surgido algo.» (ella, en pijama con el mando)
     esc('br_p9', T('hola') - c, {'P9': {'br_p9': 'br_p9_p9'}}),
     # «A los diez minutos sube una story jugando al GTA. Está haciendo un alunizaje.»
-    esc('br_story', Tt('a', T('algo')) - c, zoom=1.2, cx=0.49, cy=0.52, rotulos=[R(Tt('a', T('algo')) - b, '10 MiN DESPUÉS', 540, 230, 'rojo', 90, T('sube') + 0.6)]),
+    esc('br_story', Tt('a', T('algo')) - c, zoom=1.2, cx=0.49, cy=0.52, sub_y=1560, rotulos=[R(Tt('a', T('algo')) - b, '10 MiN DESPUÉS', 540, 230, 'rojo', 90, T('sube') + 0.6)]),
     # «Así que paso a la de las diez a las nueve.»
     esc('es_mueve', T('así') - c, ana(es_mueve='es_tetris_ana'), rotulos=[R(T('diez', 1) - b, 'LA DE LAS 10, A LAS 9', 540, 300, 'azul', 80)]),
     # «Me dice que sí, perfecto, genial.»
@@ -98,7 +98,7 @@ P = [
 P[-2]['t0'] = Tt('al', T('comía')) - c
 
 # golpes de cámara (copian el plano sin sus rótulos): (instante, zoom, centro, vuelta o None)
-GOLPES = [(T('alunizaje') - c, 1.6, (0.5, 0.4), None),                 # el coche entrando en la tienda
+GOLPES = [(T('alunizaje') - c, 1.45, (0.52, 0.42), None),                 # el coche entrando en la tienda
           (T('nunca') - c, 1.35, (0.5, 0.33), None),                     # «Nunca.»
           (T('cruasán', 1) - c, 1.3, (0.6, 0.45), None),                  # le enseña el cruasán
           (Tt('no', T('pronto')) - c, 1.35, (0.5, 0.58), 'rotulos'),        # «Y que no sea martes»

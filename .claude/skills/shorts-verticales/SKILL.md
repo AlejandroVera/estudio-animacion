@@ -136,6 +136,11 @@ Ejemplo completo: `herramientas/shorts/domingo/` (3 shorts del vídeo «domingo�
 - «El comienzo muy estático» (El Tetris): los primeros 5 s piden un cambio cada ~1,5 s ligado a la frase (Ana enseña el
   plan de dieta en «dietas», sube un bloque en «Tetris» y caen piezas sobre el planificador con su sonido; coge el
   móvil en «me escribe»). Objetos que caen: `"cae": s, "y0": -250` en `objetos` de `montar_vertical.py`.
+- Lo que se ve DENTRO de un móvil (story, foto, videollamada) tiene que ser el MISMO sitio que la escena donde está
+  esa persona («no coinciden la escena donde escribe y la story», «hay 2 sofás», «el sofá está girado respecto a la
+  tele»): dibujar la foto con el dibujo de esa escena como referencia («same room: the same TV, cabinet…») y desde sus
+  ojos (sus manos en primer plano), y luego meterla en la pantalla editando el dibujo del móvil («replace ONLY the
+  picture inside the phone screen with the second reference»). Comprobar que el mueble principal mira a la tele.
   4) «No van bien los sonidos con lo que hace»: cada efecto tiene que tener su dibujo. Si suena el golpe de la báscula
   contra el suelo, en ese momento se tiene que VER en el suelo (un dibujo intermedio, `es_miercoles_s`).
   5) Los `Tt(palabra, desde)` anclados a otra palabra (`Tt('el', T('pesarse'))`), nunca a segundos fijos: al cambiar una

@@ -51,3 +51,8 @@ br_p9_perfil_bk lJh3ECNgv9 (elegido br_p9 = br_p9_perfil_1)
 vuelta al dibujo original de la de las nueve (br_p9 WDUobnHcXe)
 br_story3_1 mEA1xrzhJQ
 br_story3_2 rgo966nxtc
+br_pov_1 cpwvomI0eP
+br_pov_2 1lB97Pqr4r
+br_story4_1 4RqTYIi9Aa
+br_story4_2 iGkpTv43uK
+elegido br_story = br_story4_2 (mismo salón que br_p9, desde sus ojos)
