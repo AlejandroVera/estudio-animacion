@@ -36,7 +36,7 @@
    ]
   }
  },
- "duracion": 77.4,
+ "duracion": 75.87,
  "planos": [
   {
    "t0": 0,
@@ -49,19 +49,7 @@
    "sub_y": 1300,
    "rotulos": [
     {
-     "t0": 0.05,
-     "texto": "A-003   MESA 2",
-     "x": 540,
-     "y": 740,
-     "color": "rojo",
-     "tam": 125,
-     "centro": true,
-     "fijo": true,
-     "caja": false,
-     "t1": 1.982
-    },
-    {
-     "t0": 1.952,
+     "t0": 1.708,
      "texto": "SiSTEMA CAÍDO",
      "x": 540,
      "y": 740,
@@ -74,7 +62,7 @@
    ]
   },
   {
-   "t0": 4.445,
+   "t0": 2.913,
    "fondo": "img/es_charla.jpg",
    "zoom": 1.04,
    "cx": 0.5,
@@ -105,45 +93,45 @@
    },
    "gestos": [
     {
-     "t0": 4.445,
-     "t1": 6.788,
+     "t0": 2.913,
+     "t1": 5.256,
      "quien": "ROSA",
      "img": "img/cv_r_palmas.png"
     },
     {
-     "t0": 6.788,
-     "t1": 12.474,
+     "t0": 5.256,
+     "t1": 10.942,
      "quien": "VETERANO",
      "img": "img/cv_v_encoge.png"
     },
     {
-     "t0": 12.474,
-     "t1": 14.26,
+     "t0": 10.942,
+     "t1": 12.728,
      "quien": "ROSA",
      "img": "img/cv_r_ticket.png"
     },
     {
-     "t0": 14.26,
-     "t1": 20.503,
+     "t0": 12.728,
+     "t1": 18.971,
      "quien": "VETERANO",
      "img": "img/cv_v_ticket.png"
     },
     {
-     "t0": 20.503,
-     "t1": 22.8,
+     "t0": 18.971,
+     "t1": 21.268,
      "quien": "ROSA",
      "img": "img/cv_r_dni.png"
     },
     {
-     "t0": 22.8,
-     "t1": 26.118000000000002,
+     "t0": 21.268,
+     "t1": 24.586000000000002,
      "quien": "VETERANO",
      "img": "img/cv_v_dedo.png"
     }
    ],
    "rotulos": [
     {
-     "t0": 12.985,
+     "t0": 11.453,
      "texto": "A-412",
      "x": 540,
      "y": 1560,
@@ -152,10 +140,10 @@
      "centro": true,
      "fijo": true,
      "caja": true,
-     "t1": 14.29
+     "t1": 12.758
     },
     {
-     "t0": 15.816,
+     "t0": 14.284,
      "texto": "B-7",
      "x": 540,
      "y": 1560,
@@ -164,12 +152,12 @@
      "centro": true,
      "fijo": true,
      "caja": true,
-     "t1": 20.532999999999998
+     "t1": 19.000999999999998
     }
    ]
   },
   {
-   "t0": 26.118000000000002,
+   "t0": 24.586000000000002,
    "fondo": "img/es_pprosa.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -185,7 +173,7 @@
    }
   },
   {
-   "t0": 28.182000000000002,
+   "t0": 26.650000000000002,
    "fondo": "img/es_charla.jpg",
    "zoom": 1.04,
    "cx": 0.5,
@@ -216,27 +204,27 @@
    },
    "gestos": [
     {
-     "t0": 28.182000000000002,
-     "t1": 32.814,
+     "t0": 26.650000000000002,
+     "t1": 31.282,
      "quien": "VETERANO",
      "img": "img/cv_v_dedo.png"
     },
     {
-     "t0": 32.814,
-     "t1": 33.868,
+     "t0": 31.282,
+     "t1": 32.336,
      "quien": "VETERANO",
      "img": "img/cv_v_brazos.png"
     },
     {
-     "t0": 35.607,
-     "t1": 36.408,
+     "t0": 34.075,
+     "t1": 34.876000000000005,
      "quien": "VETERANO",
      "img": "img/cv_v_senala.png"
     }
    ]
   },
   {
-   "t0": 36.408,
+   "t0": 34.876000000000005,
    "fondo": "img/es_senora.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -245,13 +233,13 @@
    "habla": false,
    "cambios": [
     {
-     "t": 40.379000000000005,
+     "t": 38.847,
      "fondo": "img/es_senora_b.jpg"
     }
    ]
   },
   {
-   "t0": 41.154,
+   "t0": 39.622,
    "fondo": "img/es_charla.jpg",
    "zoom": 1.04,
    "cx": 0.5,
@@ -282,21 +270,21 @@
    },
    "gestos": [
     {
-     "t0": 43.357,
-     "t1": 48.208,
+     "t0": 41.825,
+     "t1": 46.676,
      "quien": "VETERANO",
      "img": "img/cv_v_dedo.png"
     },
     {
-     "t0": 48.208,
-     "t1": 49.343,
+     "t0": 46.676,
+     "t1": 47.811,
      "quien": "ROSA",
      "img": "img/cv_r_palmas.png"
     }
    ]
   },
   {
-   "t0": 49.343,
+   "t0": 47.811,
    "fondo": "img/br_web.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -305,7 +293,7 @@
    "habla": false,
    "rotulos": [
     {
-     "t0": 49.889,
+     "t0": 48.357,
      "texto": "MARTES 8:05",
      "x": 540,
      "y": 300,
@@ -314,10 +302,10 @@
      "centro": true,
      "fijo": true,
      "caja": true,
-     "t1": 51.765
+     "t1": 50.233000000000004
     },
     {
-     "t0": 51.735,
+     "t0": 50.203,
      "texto": "4 SEGUNDOS",
      "x": 540,
      "y": 300,
@@ -326,12 +314,12 @@
      "centro": true,
      "fijo": true,
      "caja": true,
-     "t1": 53.204
+     "t1": 51.672000000000004
     }
    ]
   },
   {
-   "t0": 55.679,
+   "t0": 54.147,
    "fondo": "img/es_charla.jpg",
    "zoom": 1.04,
    "cx": 0.5,
@@ -362,21 +350,21 @@
    },
    "gestos": [
     {
-     "t0": 55.679,
-     "t1": 56.768,
+     "t0": 54.147,
+     "t1": 55.236000000000004,
      "quien": "ROSA",
      "img": "img/cv_r_cruzado.png"
     },
     {
-     "t0": 56.768,
-     "t1": 60.690000000000005,
+     "t0": 55.236000000000004,
+     "t1": 59.158,
      "quien": "VETERANO",
      "img": "img/cv_v_tique.png"
     }
    ]
   },
   {
-   "t0": 60.690000000000005,
+   "t0": 59.158,
    "fondo": "img/es_paco.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -392,7 +380,7 @@
    }
   },
   {
-   "t0": 63.265,
+   "t0": 61.733000000000004,
    "fondo": "img/es_charla.jpg",
    "zoom": 1.04,
    "cx": 0.5,
@@ -423,15 +411,15 @@
    },
    "gestos": [
     {
-     "t0": 63.265,
-     "t1": 64.345,
+     "t0": 61.733000000000004,
+     "t1": 62.813,
      "quien": "VETERANO",
      "img": "img/cv_v_dedo.png"
     }
    ]
   },
   {
-   "t0": 64.345,
+   "t0": 62.813,
    "fondo": "img/es_paco.jpg",
    "zoom": 1.3,
    "cx": 0.5,
@@ -440,7 +428,7 @@
    "habla": false,
    "rotulos": [
     {
-     "t0": 65.959,
+     "t0": 64.427,
      "texto": "DESDE 2019",
      "x": 540,
      "y": 1560,
@@ -453,7 +441,7 @@
    ]
   },
   {
-   "t0": 68.022,
+   "t0": 66.49,
    "fondo": "img/es_charla.jpg",
    "zoom": 1.04,
    "cx": 0.5,
@@ -485,7 +473,7 @@
    "gestos": []
   },
   {
-   "t0": 69.81,
+   "t0": 68.278,
    "fondo": "img/es_levantan.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -494,7 +482,7 @@
    "habla": false
   },
   {
-   "t0": 72.907,
+   "t0": 71.375,
    "fondo": "img/es_oscuro.jpg",
    "zoom": 1.0,
    "cx": 0.5,

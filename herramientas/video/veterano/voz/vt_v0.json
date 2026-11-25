@@ -1,0 +1,1580 @@
+{
+"palabras": [
+{
+"texto": "Número",
+"inicio": 0.0,
+"fin": 0.36,
+"tipo": "word",
+"quien": "MEGAFONIA"
+},
+{
+"texto": "A",
+"inicio": 0.464,
+"fin": 0.488,
+"tipo": "word",
+"quien": "MEGAFONIA"
+},
+{
+"texto": "cero",
+"inicio": 0.546,
+"fin": 0.755,
+"tipo": "word",
+"quien": "MEGAFONIA"
+},
+{
+"texto": "cero",
+"inicio": 0.778,
+"fin": 0.964,
+"tipo": "word",
+"quien": "MEGAFONIA"
+},
+{
+"texto": "tres,",
+"inicio": 0.998,
+"fin": 1.3,
+"tipo": "word",
+"quien": "MEGAFONIA"
+},
+{
+"texto": "mesa",
+"inicio": 1.335,
+"fin": 1.544,
+"tipo": "word",
+"quien": "MEGAFONIA"
+},
+{
+"texto": "dos.",
+"inicio": 1.591,
+"fin": 1.869,
+"tipo": "word",
+"quien": "MEGAFONIA"
+},
+{
+"texto": "Les",
+"inicio": 2.032,
+"fin": 2.183,
+"tipo": "word",
+"quien": "MEGAFONIA"
+},
+{
+"texto": "informamos",
+"inicio": 2.264,
+"fin": 2.775,
+"tipo": "word",
+"quien": "MEGAFONIA"
+},
+{
+"texto": "de",
+"inicio": 2.821,
+"fin": 2.891,
+"tipo": "word",
+"quien": "MEGAFONIA"
+},
+{
+"texto": "que",
+"inicio": 2.949,
+"fin": 3.042,
+"tipo": "word",
+"quien": "MEGAFONIA"
+},
+{
+"texto": "se",
+"inicio": 3.1,
+"fin": 3.193,
+"tipo": "word",
+"quien": "MEGAFONIA"
+},
+{
+"texto": "ha",
+"inicio": 3.228,
+"fin": 3.274,
+"tipo": "word",
+"quien": "MEGAFONIA"
+},
+{
+"texto": "caído",
+"inicio": 3.32,
+"fin": 3.587,
+"tipo": "word",
+"quien": "MEGAFONIA"
+},
+{
+"texto": "el",
+"inicio": 3.611,
+"fin": 3.657,
+"tipo": "word",
+"quien": "MEGAFONIA"
+},
+{
+"texto": "sistema.",
+"inicio": 3.715,
+"fin": 4.365,
+"tipo": "word",
+"quien": "MEGAFONIA"
+},
+{
+"texto": "¿Se",
+"inicio": 4.525,
+"fin": 4.78,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "ha",
+"inicio": 4.804,
+"fin": 4.85,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "caído",
+"inicio": 4.885,
+"fin": 5.14,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "el",
+"inicio": 5.164,
+"fin": 5.21,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "sistema?",
+"inicio": 5.268,
+"fin": 5.802,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "¿Y",
+"inicio": 5.872,
+"fin": 6.034,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "ahora",
+"inicio": 6.081,
+"fin": 6.266,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "qué?",
+"inicio": 6.325,
+"fin": 6.708,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "Ahora",
+"inicio": 6.868,
+"fin": 7.216,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "nada.",
+"inicio": 7.274,
+"fin": 7.75,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "Se",
+"inicio": 8.133,
+"fin": 8.296,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "cae",
+"inicio": 8.342,
+"fin": 8.528,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "todos",
+"inicio": 8.609,
+"fin": 8.923,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "los",
+"inicio": 8.993,
+"fin": 9.144,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "días",
+"inicio": 9.202,
+"fin": 9.469,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "a",
+"inicio": 9.538,
+"fin": 9.562,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "esta",
+"inicio": 9.631,
+"fin": 9.875,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "hora.",
+"inicio": 9.898,
+"fin": 10.293,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "Es",
+"inicio": 10.572,
+"fin": 10.769,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "su",
+"inicio": 10.804,
+"fin": 10.92,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "rato",
+"inicio": 11.036,
+"fin": 11.257,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "de",
+"inicio": 11.315,
+"fin": 11.384,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "descanso.",
+"inicio": 11.442,
+"fin": 12.394,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "Yo",
+"inicio": 12.554,
+"fin": 12.705,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "tengo",
+"inicio": 12.74,
+"fin": 12.926,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "el",
+"inicio": 12.949,
+"fin": 13.007,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "A",
+"inicio": 13.065,
+"fin": 13.088,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "cuatrocientos",
+"inicio": 13.111,
+"fin": 13.634,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "doce.",
+"inicio": 13.669,
+"fin": 14.179,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "Qué",
+"inicio": 14.34,
+"fin": 14.491,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "suerte.",
+"inicio": 14.549,
+"fin": 15.095,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "Yo",
+"inicio": 15.211,
+"fin": 15.35,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "tengo",
+"inicio": 15.397,
+"fin": 15.71,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "el",
+"inicio": 15.756,
+"fin": 15.814,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "B",
+"inicio": 15.896,
+"fin": 15.931,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "siete,",
+"inicio": 16.047,
+"fin": 16.592,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "del",
+"inicio": 16.801,
+"fin": 16.952,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "sistema",
+"inicio": 16.999,
+"fin": 17.428,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "antiguo.",
+"inicio": 17.451,
+"fin": 18.055,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "Ya",
+"inicio": 18.229,
+"fin": 18.369,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "no",
+"inicio": 18.415,
+"fin": 18.485,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "lo",
+"inicio": 18.52,
+"fin": 18.589,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "cantan",
+"inicio": 18.636,
+"fin": 19.1,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "ni",
+"inicio": 19.123,
+"fin": 19.193,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "las",
+"inicio": 19.251,
+"fin": 19.39,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "máquinas.",
+"inicio": 19.472,
+"fin": 20.424,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "Si",
+"inicio": 20.583,
+"fin": 20.734,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "solo",
+"inicio": 20.78,
+"fin": 20.966,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "vengo",
+"inicio": 21.001,
+"fin": 21.163,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "a",
+"inicio": 21.187,
+"fin": 21.21,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "renovar",
+"inicio": 21.245,
+"fin": 21.547,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "el",
+"inicio": 21.593,
+"fin": 21.64,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "DNI…",
+"inicio": 21.686,
+"fin": 22.719,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "Para",
+"inicio": 22.88,
+"fin": 23.124,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "renovarlo",
+"inicio": 23.193,
+"fin": 23.704,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "necesitas",
+"inicio": 23.751,
+"fin": 24.459,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "el",
+"inicio": 24.529,
+"fin": 24.621,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "DNI",
+"inicio": 24.703,
+"fin": 25.086,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "en",
+"inicio": 25.121,
+"fin": 25.19,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "vigor.",
+"inicio": 25.248,
+"fin": 26.038,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "Pero",
+"inicio": 26.198,
+"fin": 26.407,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "está",
+"inicio": 26.43,
+"fin": 26.593,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "caducado,",
+"inicio": 26.639,
+"fin": 27.069,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "por",
+"inicio": 27.092,
+"fin": 27.208,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "eso",
+"inicio": 27.255,
+"fin": 27.382,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "lo",
+"inicio": 27.417,
+"fin": 27.487,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "renuevo.",
+"inicio": 27.556,
+"fin": 28.102,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "Entonces",
+"inicio": 28.262,
+"fin": 29.11,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "necesitas",
+"inicio": 29.226,
+"fin": 29.783,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "cita.",
+"inicio": 29.818,
+"fin": 30.305,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "Y",
+"inicio": 30.549,
+"fin": 30.63,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "para",
+"inicio": 30.712,
+"fin": 30.874,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "pedir",
+"inicio": 30.921,
+"fin": 31.153,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "la",
+"inicio": 31.199,
+"fin": 31.269,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "cita,",
+"inicio": 31.304,
+"fin": 31.768,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "el",
+"inicio": 31.815,
+"fin": 31.931,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "DNI.",
+"inicio": 32.012,
+"fin": 32.569,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "Bienvenido.",
+"inicio": 32.894,
+"fin": 33.788,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "¿Y",
+"inicio": 33.948,
+"fin": 34.169,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "esa",
+"inicio": 34.227,
+"fin": 34.354,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "señora",
+"inicio": 34.378,
+"fin": 34.645,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "con",
+"inicio": 34.679,
+"fin": 34.772,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "el",
+"inicio": 34.819,
+"fin": 34.865,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "táper?",
+"inicio": 34.923,
+"fin": 35.527,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "Vino",
+"inicio": 35.687,
+"fin": 35.966,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "a",
+"inicio": 36.0,
+"fin": 36.024,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "pedir",
+"inicio": 36.07,
+"fin": 36.337,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "la",
+"inicio": 36.384,
+"fin": 36.453,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "jubilación.",
+"inicio": 36.488,
+"fin": 37.359,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "Se",
+"inicio": 37.475,
+"fin": 37.614,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "la",
+"inicio": 37.661,
+"fin": 37.73,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "concedieron",
+"inicio": 37.777,
+"fin": 38.299,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "aquí",
+"inicio": 38.346,
+"fin": 38.485,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "mismo,",
+"inicio": 38.543,
+"fin": 39.054,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "esperando.",
+"inicio": 39.1,
+"fin": 39.82,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "Ya",
+"inicio": 40.261,
+"fin": 40.412,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "cobra.",
+"inicio": 40.459,
+"fin": 41.074,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "Bueno,",
+"inicio": 41.234,
+"fin": 41.524,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "pues",
+"inicio": 41.547,
+"fin": 41.687,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "pregunto",
+"inicio": 41.733,
+"fin": 42.023,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "en",
+"inicio": 42.047,
+"fin": 42.093,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "información.",
+"inicio": 42.14,
+"fin": 43.277,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "Para",
+"inicio": 43.437,
+"fin": 43.669,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "información",
+"inicio": 43.704,
+"fin": 44.389,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "también",
+"inicio": 44.447,
+"fin": 44.749,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "hay",
+"inicio": 44.784,
+"fin": 44.853,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "que",
+"inicio": 44.888,
+"fin": 44.97,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "coger",
+"inicio": 45.028,
+"fin": 45.318,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "número.",
+"inicio": 45.387,
+"fin": 45.875,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "Y",
+"inicio": 46.084,
+"fin": 46.177,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "el",
+"inicio": 46.235,
+"fin": 46.293,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "número",
+"inicio": 46.363,
+"fin": 46.653,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "se",
+"inicio": 46.711,
+"fin": 46.804,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "pide",
+"inicio": 46.85,
+"fin": 47.036,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "por",
+"inicio": 47.094,
+"fin": 47.222,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "internet.",
+"inicio": 47.28,
+"fin": 48.127,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "¿Y",
+"inicio": 48.288,
+"fin": 48.497,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "la",
+"inicio": 48.578,
+"fin": 48.66,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "web?",
+"inicio": 48.741,
+"fin": 49.263,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "Abre",
+"inicio": 49.423,
+"fin": 49.713,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "los",
+"inicio": 49.748,
+"fin": 49.887,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "martes",
+"inicio": 49.969,
+"fin": 50.317,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "a",
+"inicio": 50.375,
+"fin": 50.398,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "las",
+"inicio": 50.445,
+"fin": 50.561,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "ocho",
+"inicio": 50.63,
+"fin": 50.805,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "y",
+"inicio": 50.839,
+"fin": 50.863,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "cinco.",
+"inicio": 50.909,
+"fin": 51.432,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "Dura",
+"inicio": 51.815,
+"fin": 52.047,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "cuatro",
+"inicio": 52.105,
+"fin": 52.418,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "segundos.",
+"inicio": 52.465,
+"fin": 53.173,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "Como",
+"inicio": 53.254,
+"fin": 53.475,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "las",
+"inicio": 53.521,
+"fin": 53.637,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "entradas",
+"inicio": 53.707,
+"fin": 54.218,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "de",
+"inicio": 54.253,
+"fin": 54.299,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "un",
+"inicio": 54.369,
+"fin": 54.439,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "concierto.",
+"inicio": 54.485,
+"fin": 55.6,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "Pues",
+"inicio": 55.759,
+"fin": 55.933,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "me",
+"inicio": 55.991,
+"fin": 56.049,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "espero.",
+"inicio": 56.072,
+"fin": 56.688,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "Saca",
+"inicio": 56.848,
+"fin": 57.196,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "antes",
+"inicio": 57.22,
+"fin": 57.51,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "el",
+"inicio": 57.579,
+"fin": 57.626,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "tique",
+"inicio": 57.684,
+"fin": 57.881,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "de",
+"inicio": 57.928,
+"fin": 57.986,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "espera,",
+"inicio": 58.009,
+"fin": 58.555,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "que",
+"inicio": 58.671,
+"fin": 58.787,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "esperar",
+"inicio": 58.81,
+"fin": 59.193,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "sin",
+"inicio": 59.263,
+"fin": 59.402,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "número",
+"inicio": 59.437,
+"fin": 59.716,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "es",
+"inicio": 59.739,
+"fin": 59.785,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "colarse.",
+"inicio": 59.843,
+"fin": 60.61,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "Perdona,",
+"inicio": 60.77,
+"fin": 61.281,
+"tipo": "word",
+"quien": "SENOR"
+},
+{
+"texto": "¿la",
+"inicio": 61.467,
+"fin": 61.734,
+"tipo": "word",
+"quien": "SENOR"
+},
+{
+"texto": "mesa",
+"inicio": 61.792,
+"fin": 61.989,
+"tipo": "word",
+"quien": "SENOR"
+},
+{
+"texto": "cuatro",
+"inicio": 62.024,
+"fin": 62.291,
+"tipo": "word",
+"quien": "SENOR"
+},
+{
+"texto": "atiende?",
+"inicio": 62.314,
+"fin": 63.185,
+"tipo": "word",
+"quien": "SENOR"
+},
+{
+"texto": "La",
+"inicio": 63.345,
+"fin": 63.508,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "mesa",
+"inicio": 63.566,
+"fin": 63.786,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "cuatro",
+"inicio": 63.833,
+"fin": 64.134,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "es",
+"inicio": 64.158,
+"fin": 64.216,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "un",
+"inicio": 64.297,
+"fin": 64.355,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "póster,",
+"inicio": 64.425,
+"fin": 64.878,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "Paco.",
+"inicio": 64.912,
+"fin": 65.342,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "Lleva",
+"inicio": 65.516,
+"fin": 65.771,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "ahí",
+"inicio": 65.806,
+"fin": 65.957,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "desde",
+"inicio": 66.039,
+"fin": 66.561,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "dos",
+"inicio": 66.607,
+"fin": 66.782,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "mil",
+"inicio": 66.863,
+"fin": 67.002,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "diecinueve.",
+"inicio": 67.049,
+"fin": 67.943,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "Les",
+"inicio": 68.102,
+"fin": 68.265,
+"tipo": "word",
+"quien": "MEGAFONIA"
+},
+{
+"texto": "informamos",
+"inicio": 68.323,
+"fin": 68.833,
+"tipo": "word",
+"quien": "MEGAFONIA"
+},
+{
+"texto": "de",
+"inicio": 68.891,
+"fin": 68.961,
+"tipo": "word",
+"quien": "MEGAFONIA"
+},
+{
+"texto": "que",
+"inicio": 69.019,
+"fin": 69.089,
+"tipo": "word",
+"quien": "MEGAFONIA"
+},
+{
+"texto": "el",
+"inicio": 69.112,
+"fin": 69.17,
+"tipo": "word",
+"quien": "MEGAFONIA"
+},
+{
+"texto": "sistema",
+"inicio": 69.228,
+"fin": 69.6,
+"tipo": "word",
+"quien": "MEGAFONIA"
+},
+{
+"texto": "se",
+"inicio": 69.658,
+"fin": 69.751,
+"tipo": "word",
+"quien": "MEGAFONIA"
+},
+{
+"texto": "ha",
+"inicio": 69.785,
+"fin": 69.832,
+"tipo": "word",
+"quien": "MEGAFONIA"
+},
+{
+"texto": "restablecido…",
+"inicio": 69.89,
+"fin": 70.842,
+"tipo": "word",
+"quien": "MEGAFONIA"
+},
+{
+"texto": "…y",
+"inicio": 71.002,
+"fin": 71.362,
+"tipo": "word",
+"quien": "MEGAFONIA"
+},
+{
+"texto": "de",
+"inicio": 71.42,
+"fin": 71.478,
+"tipo": "word",
+"quien": "MEGAFONIA"
+},
+{
+"texto": "que",
+"inicio": 71.536,
+"fin": 71.617,
+"tipo": "word",
+"quien": "MEGAFONIA"
+},
+{
+"texto": "el",
+"inicio": 71.652,
+"fin": 71.71,
+"tipo": "word",
+"quien": "MEGAFONIA"
+},
+{
+"texto": "horario",
+"inicio": 71.757,
+"fin": 72.059,
+"tipo": "word",
+"quien": "MEGAFONIA"
+},
+{
+"texto": "de",
+"inicio": 72.105,
+"fin": 72.151,
+"tipo": "word",
+"quien": "MEGAFONIA"
+},
+{
+"texto": "atención",
+"inicio": 72.186,
+"fin": 72.558,
+"tipo": "word",
+"quien": "MEGAFONIA"
+},
+{
+"texto": "termina",
+"inicio": 72.616,
+"fin": 72.964,
+"tipo": "word",
+"quien": "MEGAFONIA"
+},
+{
+"texto": "ahora.",
+"inicio": 72.987,
+"fin": 73.417,
+"tipo": "word",
+"quien": "MEGAFONIA"
+},
+{
+"texto": "Hasta",
+"inicio": 73.577,
+"fin": 73.96,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "mañana,",
+"inicio": 74.007,
+"fin": 74.355,
+"tipo": "word",
+"quien": "VETERANO"
+},
+{
+"texto": "compañero.",
+"inicio": 74.378,
+"fin": 75.202,
+"tipo": "word",
+"quien": "VETERANO"
+}
+],
+"frases": [
+{
+"quien": "MEGAFONIA",
+"texto": "Número A cero cero tres, mesa dos. Les informamos de que se ha caído el sistema.",
+"inicio": 0.0,
+"fin": 4.365
+},
+{
+"quien": "ROSA",
+"texto": "¿Se ha caído el sistema? ¿Y ahora qué?",
+"inicio": 4.525,
+"fin": 6.708
+},
+{
+"quien": "VETERANO",
+"texto": "Ahora nada. Se cae todos los días a esta hora. Es su rato de descanso.",
+"inicio": 6.868,
+"fin": 12.394
+},
+{
+"quien": "ROSA",
+"texto": "Yo tengo el A cuatrocientos doce.",
+"inicio": 12.554,
+"fin": 14.18
+},
+{
+"quien": "VETERANO",
+"texto": "Qué suerte. Yo tengo el B siete, del sistema antiguo. Ya no lo cantan ni las máquinas.",
+"inicio": 14.34,
+"fin": 20.423
+},
+{
+"quien": "ROSA",
+"texto": "Si solo vengo a renovar el DNI…",
+"inicio": 20.583,
+"fin": 22.72
+},
+{
+"quien": "VETERANO",
+"texto": "Para renovarlo necesitas el DNI en vigor.",
+"inicio": 22.88,
+"fin": 26.038
+},
+{
+"quien": "ROSA",
+"texto": "Pero está caducado, por eso lo renuevo.",
+"inicio": 26.198,
+"fin": 28.102
+},
+{
+"quien": "VETERANO",
+"texto": "Entonces necesitas cita. Y para pedir la cita, el DNI. Bienvenido.",
+"inicio": 28.262,
+"fin": 33.788
+},
+{
+"quien": "ROSA",
+"texto": "¿Y esa señora con el táper?",
+"inicio": 33.948,
+"fin": 35.527
+},
+{
+"quien": "VETERANO",
+"texto": "Vino a pedir la jubilación. Se la concedieron aquí mismo, esperando. Ya cobra.",
+"inicio": 35.687,
+"fin": 41.074
+},
+{
+"quien": "ROSA",
+"texto": "Bueno, pues pregunto en información.",
+"inicio": 41.234,
+"fin": 43.277
+},
+{
+"quien": "VETERANO",
+"texto": "Para información también hay que coger número. Y el número se pide por internet.",
+"inicio": 43.437,
+"fin": 48.128
+},
+{
+"quien": "ROSA",
+"texto": "¿Y la web?",
+"inicio": 48.288,
+"fin": 49.263
+},
+{
+"quien": "VETERANO",
+"texto": "Abre los martes a las ocho y cinco. Dura cuatro segundos. Como las entradas de un concierto.",
+"inicio": 49.423,
+"fin": 55.599
+},
+{
+"quien": "ROSA",
+"texto": "Pues me espero.",
+"inicio": 55.759,
+"fin": 56.688
+},
+{
+"quien": "VETERANO",
+"texto": "Saca antes el tique de espera, que esperar sin número es colarse.",
+"inicio": 56.848,
+"fin": 60.61
+},
+{
+"quien": "SENOR",
+"texto": "Perdona, ¿la mesa cuatro atiende?",
+"inicio": 60.77,
+"fin": 63.185
+},
+{
+"quien": "VETERANO",
+"texto": "La mesa cuatro es un póster, Paco. Lleva ahí desde dos mil diecinueve.",
+"inicio": 63.345,
+"fin": 67.942
+},
+{
+"quien": "MEGAFONIA",
+"texto": "Les informamos de que el sistema se ha restablecido…",
+"inicio": 68.102,
+"fin": 70.842
+},
+{
+"quien": "MEGAFONIA",
+"texto": "…y de que el horario de atención termina ahora.",
+"inicio": 71.002,
+"fin": 73.417
+},
+{
+"quien": "VETERANO",
+"texto": "Hasta mañana, compañero.",
+"inicio": 73.577,
+"fin": 75.203
+}
+]
+}

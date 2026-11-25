@@ -7,7 +7,7 @@ import numpy as np
 from PIL import Image, ImageFilter
 from scipy import ndimage as ndi
 
-BASE = 'crudo/mf_2.png'
+BASE = 'crudo/mf_2_alin.png'   # mf_2 ampliado 1,1 % como salen las ediciones de Higgsfield (sin esto los cuerpos se partían)
 A = Image.open(BASE).convert('RGB')
 a = np.asarray(A).astype(int)
 H, W = a.shape[:2]

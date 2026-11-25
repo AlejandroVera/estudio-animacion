@@ -56,8 +56,7 @@ c = 0.08
 P = [
     # MEGAFONÍA «Número A-003, mesa 2… se ha caído el sistema»: el panel de números de cerca
     esc('es_charla', 0, zoom=2.6, cx=0.5, cy=0.193, sub_y=1300,
-        rotulos=[R(0.05, 'A-003   MESA 2', 740, 'rojo', 125, T('les') - 0.05, caja=False),
-                 R(T('les') - c, 'SiSTEMA CAÍDO', 740, 'rojo', 125, caja=False)]),
+        rotulos=[R(T('caído') - c, 'SiSTEMA CAÍDO', 740, 'rojo', 125, caja=False)]),
     charla(L[1] - c, [G(L[1] - c, L[2] - c, 'ROSA', 'r_palmas'),          # «¿se ha caído el sistema? ¿y ahora qué?»
                       G(L[2] - c, L[3] - c, 'VETERANO', 'v_encoge'),       # «ahora nada… su rato de descanso»
                       G(L[3] - c, L[4] - c, 'ROSA', 'r_ticket'),           # «yo tengo el A-412»

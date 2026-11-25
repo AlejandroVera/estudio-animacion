@@ -118,7 +118,10 @@ Rafa `Zb72NBThGN2Rv3y1RSTT`), nutri, Alejandro (Daniel - Podcast). Si falta el o
   lanza 12 ediciones a la vez; `jobs_wait` y `dl.py` (sirve con cualquier URL).
 - Personaje nuevo: 4 propuestas de hoja de personaje con el chico y un plano de un sketch anterior como referencias de
   estilo («NOT magenta, he is not the boy»), se elige una y su job_id es su referencia para todo lo demás.
-- Las ediciones de Nano Banana en Higgsfield DESPLAZAN un poco a todo el personaje: las capas de gesto salen grandes
+- ¡IMPORTANTE! Las ediciones de Nano Banana en Higgsfield salen AMPLIADAS ~1,1 % respecto al dibujo base: pegadas como
+  capas, los cuerpos «se parten, se salen de la forma». Medir la afín base→edición (correlación por parches) y usar
+  como BASE el plano fijo transformado igual (`crudo/mf_2_alin.png`); las capas pasan del 20 % al 2-3 %.
+- (antes) Las ediciones de Nano Banana en Higgsfield DESPLAZAN un poco a todo el personaje: las capas de gesto salen grandes
   (cuerpo entero); recortarlas por debajo de lo que redibuja (el panel de números de la pared) y proteger cabezas.
   La boca del veterano (bigote) cambiaba también los ojos: capa de boca solo por debajo de las gafas.
 - «Todos se levantan»: EDITANDO el plano sentados la IA los deja sentados; hay que pedirlo como dibujo nuevo con el
