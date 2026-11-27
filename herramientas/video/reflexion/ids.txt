@@ -1,0 +1,31 @@
+referencias: chico 526b9089-06aa-4e10-b5bd-f7a4e24b926b, estilo charla d8ac3e43-308a-448b-a922-1f7ca19d681c
+voces: ROSA Aaron t9LRTh3y1ioN00e9wsNh, BOT Gabriel Blanco II Xdk5eWaS3lO6Yz2HBOBv (+ filtro metálico)
+bot_1..4 20cb561b-9162-4909-b028-38f1bfe811f6 08373224-500c-4a78-a076-61cc7357fcae 5ac8d9dd-4068-4469-832f-0d573d4c2202 583c6f0d-7537-4342-9407-4b047c4e44d8
+elegido bot = bot_1 20cb561b-9162-4909-b028-38f1bfe811f6
+br_papeletas d5ff7474-2935-46b1-a97b-9bcc116305c9
+es_suspira f3c425f8-d287-4b36-9102-ada3b4a01a10
+es_stand 019b6d9c-e02b-4e11-80b2-95674c92f1b1
+mf_1 f1bd8fdc-a9ba-47c9-9d5c-8cfd03319995
+mf_2 f0ebdd85-1f2a-4ada-b964-ee38b8dd8301
+elegido plano fijo: mf_1 f1bd8fdc-a9ba-47c9-9d5c-8cfd03319995
+cv_b_hola 0beb603c-92ad-4431-a677-e184afe14b84
+cv_b_pecho 9531a5a4-0501-4df1-9e8f-65dbaf960760
+cv_b_palmas 1e759211-cf7f-4c15-b62c-fd6b36e7e77e
+cv_b_dedo e36f7eca-d9e8-449f-acf6-5a8e360a1973
+cv_b_tablet 4eb8b97e-ba12-455d-bdcb-6f1eb41abb20
+cv_b_papeleta e6017825-1732-4fa6-816f-0126d25f3c44
+cv_r_palmas 07e84dcc-b26d-4485-8855-8d21a8d69e36
+cv_r_senala b7c5cde3-8636-41de-9175-8c8d69af2e2c
+cv_r_barbilla b1cdb6b4-9147-4f02-bdbb-687f7a99c830
+cv_r_pulgar 4ebba136-f8ae-4198-aa1b-91cd0f09d9a7
+cv_bboca 5db25455-794a-48fd-b6f2-43a3ff80a265
+cv_rboca 54dcf6bf-ed08-45fa-be67-87da2e44c11b
+cv_b_parp 5df8cdf0-7de2-4a50-a0d3-d76040c4c3c9
+cv_r_parp ea16a353-a253-46d0-a75e-461d050234ca
+es_pprosa 421fa785-6517-43ca-bf55-c0a01f76fdbf
+es_terminos 93e21b0a-67ee-460f-b21d-d559c64908d6
+es_terminos2_1 24fe68ff-e082-41f6-ad1e-f4ed73126d8b
+es_terminos2_2 e668d43e-cdf7-4f17-8ee0-37574b515947
+es_pprosa_bk 63d7a55d-4b5d-4c01-880e-9532a0924c3c
+es_suspira_bk d1c1d842-c628-4821-9ae8-7b07ea865107
+es_stand_bk 356f8919-4f33-439f-b170-6e08d1c2d4a0
