@@ -1,0 +1,477 @@
+{
+ "alineacion": "voz/ni.json",
+ "audio": "voz/ni.mp3",
+ "vel_letra": 0.03,
+ "sin_recolor": [
+  "es_",
+  "br_"
+ ],
+ "subtitulos": {
+  "y": 230,
+  "tam": 80,
+  "max": 4,
+  "contorno": 14,
+  "mayusculas": true,
+  "cola": 0.2
+ },
+ "duracion": 58.38,
+ "planos": [
+  {
+   "t0": 0,
+   "fondo": "img/es_pregunta.jpg",
+   "zoom": 1.12,
+   "cx": 0.56,
+   "cy": 0.4,
+   "bocas": {},
+   "habla": true,
+   "hablan": {
+    "ANA": {
+     "img/es_pregunta.jpg": [
+      "img/es_pregunta_boca.png"
+     ],
+     "img/es_pregunta_b.jpg": [
+      "img/es_pregunta_boca.png"
+     ]
+    }
+   },
+   "sub_y": 1680,
+   "cambios": [
+    {
+     "t": 3.342,
+     "fondo": "img/es_pregunta_b.jpg"
+    }
+   ]
+  },
+  {
+   "t0": 4.468,
+   "fondo": "img/es_movil.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": true,
+   "hablan": {
+    "ANA": {
+     "img/es_movil.jpg": [
+      "img/es_movil_boca.png"
+     ]
+    }
+   },
+   "rotulos": [
+    {
+     "t0": 5.868,
+     "texto": "UN MÓVIL",
+     "x": 540,
+     "y": 1640,
+     "color": "rojo",
+     "tam": 150,
+     "centro": true,
+     "fijo": true,
+     "caja": true
+    }
+   ]
+  },
+  {
+   "t0": 6.845000000000001,
+   "fondo": "img/br_requisitos.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": false,
+   "sub_y": 1680,
+   "rotulos": [
+    {
+     "t0": 8.822000000000001,
+     "texto": "2 REQUiSiTOS",
+     "x": 540,
+     "y": 1450,
+     "color": "negro",
+     "tam": 120,
+     "centro": true,
+     "fijo": true,
+     "caja": true
+    }
+   ]
+  },
+  {
+   "t0": 10.613,
+   "fondo": "img/br_kilos.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": false,
+   "sub_y": 1680,
+   "alterna": {
+    "imgs": [
+     "img/br_kilos.jpg",
+     "img/br_kilos_b.jpg"
+    ],
+    "cada": 0.4,
+    "desde": 0,
+    "hasta": 999
+   },
+   "rotulos": [
+    {
+     "t0": 11.269,
+     "texto": "-3 KG",
+     "x": 540,
+     "y": 1640,
+     "color": "rojo",
+     "tam": 170,
+     "centro": true,
+     "fijo": true,
+     "caja": true
+    }
+   ]
+  },
+  {
+   "t0": 12.433,
+   "fondo": "img/br_experto.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": false,
+   "sub_y": 1680,
+   "cambios": [
+    {
+     "t": 13.825999999999999,
+     "fondo": "img/br_experto_b.jpg"
+    }
+   ]
+  },
+  {
+   "t0": 14.693999999999999,
+   "fondo": "img/br_metabolismo.jpg",
+   "zoom": 1.15,
+   "cx": 0.5,
+   "cy": 0.4,
+   "bocas": {},
+   "habla": false,
+   "rotulos": [
+    {
+     "t0": 16.895,
+     "texto": "METABOLiSMO",
+     "x": 540,
+     "y": 300,
+     "color": "azul",
+     "tam": 120,
+     "centro": true,
+     "fijo": true,
+     "caja": true
+    }
+   ]
+  },
+  {
+   "t0": 17.954,
+   "fondo": "img/br_batido.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": false,
+   "sub_y": 1680,
+   "cambios": [
+    {
+     "t": 20.601000000000003,
+     "fondo": "img/br_batido_b.jpg"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 19.237,
+     "texto": "PROTEÍNA",
+     "x": 540,
+     "y": 1450,
+     "color": "rojo",
+     "tam": 130,
+     "centro": true,
+     "fijo": true,
+     "caja": true
+    }
+   ]
+  },
+  {
+   "t0": 21.341,
+   "fondo": "img/br_pan.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": false,
+   "sub_y": 1680,
+   "rotulos": [
+    {
+     "t0": 22.404,
+     "texto": "ENGORDA",
+     "x": 540,
+     "y": 1450,
+     "color": "rojo",
+     "tam": 140,
+     "centro": true,
+     "fijo": true,
+     "caja": true
+    }
+   ]
+  },
+  {
+   "t0": 23.336000000000002,
+   "fondo": "img/br_panaderia.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": false,
+   "alterna": {
+    "imgs": [
+     "img/br_panaderia.jpg",
+     "img/br_panaderia_b.jpg"
+    ],
+    "cada": 0.35,
+    "desde": 25.482000000000003,
+    "hasta": 999
+   },
+   "rotulos": [
+    {
+     "t0": 23.336000000000002,
+     "texto": "ENGORDA",
+     "x": 540,
+     "y": 230,
+     "color": "rojo",
+     "tam": 140,
+     "centro": true,
+     "fijo": true,
+     "caja": true,
+     "t1": 25.392
+    },
+    {
+     "t0": 25.442,
+     "texto": "MEDiO iNSTAGRAM",
+     "x": 540,
+     "y": 230,
+     "color": "negro",
+     "tam": 110,
+     "centro": true,
+     "fijo": true,
+     "caja": true
+    }
+   ]
+  },
+  {
+   "t0": 27.603,
+   "fondo": "img/es_campeon.jpg",
+   "zoom": 1.1,
+   "cx": 0.5,
+   "cy": 0.45,
+   "bocas": {},
+   "habla": true,
+   "hablan": {
+    "ANA": {
+     "img/es_campeon.jpg": [
+      "img/es_campeon_boca.png"
+     ]
+    }
+   },
+   "rotulos": [
+    {
+     "t0": 28.979,
+     "texto": "CAMPEÓN",
+     "x": 540,
+     "y": 1650,
+     "color": "verde",
+     "tam": 150,
+     "centro": true,
+     "fijo": true,
+     "caja": true
+    }
+   ]
+  },
+  {
+   "t0": 30.259,
+   "fondo": "img/br_formacion.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": false,
+   "cambios": [
+    {
+     "t": 32.129,
+     "fondo": "img/br_formacion_b.jpg"
+    }
+   ]
+  },
+  {
+   "t0": 32.717999999999996,
+   "fondo": "img/br_pdf.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": false,
+   "sub_y": 1680,
+   "cambios": [
+    {
+     "t": 35.966,
+     "fondo": "img/br_pdf_b.jpg"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 34.838,
+     "texto": "PDF",
+     "x": 540,
+     "y": 1450,
+     "color": "rojo",
+     "tam": 190,
+     "centro": true,
+     "fijo": true,
+     "caja": true,
+     "t1": 35.976000000000006
+    }
+   ]
+  },
+  {
+   "t0": 37.44,
+   "fondo": "img/es_carrera.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": true,
+   "hablan": {
+    "ANA": {
+     "img/es_carrera.jpg": [
+      "img/es_carrera_boca.png"
+     ]
+    }
+   }
+  },
+  {
+   "t0": 38.888999999999996,
+   "fondo": "img/br_riesgo.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": false,
+   "sub_y": 1680,
+   "cambios": [
+    {
+     "t": 40.397999999999996,
+     "fondo": "img/br_riesgo_b.jpg"
+    }
+   ]
+  },
+  {
+   "t0": 41.486999999999995,
+   "fondo": "img/br_detox.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": false,
+   "sub_y": 1680,
+   "cambios": [
+    {
+     "t": 45.013999999999996,
+     "fondo": "img/br_detox_b.jpg"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 43.838,
+     "texto": "TOXiNAS",
+     "x": 540,
+     "y": 1450,
+     "color": "verde",
+     "tam": 140,
+     "centro": true,
+     "fijo": true,
+     "caja": true,
+     "t1": 45.024
+    }
+   ]
+  },
+  {
+   "t0": 47.586,
+   "fondo": "img/br_comer.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": false,
+   "sub_y": 1680,
+   "alterna": {
+    "imgs": [
+     "img/br_comer_b.jpg",
+     "img/br_comer.jpg"
+    ],
+    "cada": 0.45,
+    "desde": 0,
+    "hasta": 999
+   }
+  },
+  {
+   "t0": 50.541999999999994,
+   "fondo": "img/es_final.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": true,
+   "hablan": {
+    "ANA": {
+     "img/es_final.jpg": [
+      "img/es_final_boca.png"
+     ]
+    }
+   },
+   "cambios": [
+    {
+     "t": 55.260999999999996,
+     "fondo": "img/es_final_b.jpg"
+    }
+   ],
+   "rotulos": [
+    {
+     "t0": 51.558,
+     "texto": "4 AÑOS",
+     "x": 540,
+     "y": 1600,
+     "color": "negro",
+     "tam": 130,
+     "centro": true,
+     "fijo": true,
+     "caja": true,
+     "t1": 52.592000000000006
+    },
+    {
+     "t0": 53.099,
+     "texto": "+ MÁSTER",
+     "x": 540,
+     "y": 1600,
+     "color": "negro",
+     "tam": 130,
+     "centro": true,
+     "fijo": true,
+     "caja": true,
+     "t1": 53.878
+    },
+    {
+     "t0": 55.221,
+     "texto": "TODA LA ViDA",
+     "x": 540,
+     "y": 1600,
+     "color": "rojo",
+     "tam": 130,
+     "centro": true,
+     "fijo": true,
+     "caja": true
+    }
+   ]
+  }
+ ]
+}
