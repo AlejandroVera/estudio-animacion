@@ -20,9 +20,10 @@ for f in J['frases']:
             j = k
             while j < i1 and env[j] < 80:
                 j += 1
-            if (j - k) / 100 > MAXP:
+            mp = 0.45 if f['texto'].startswith('Bueno…') else MAXP   # esta frase pide pausas (iba atropellada)
+            if (j - k) / 100 > mp:
                 c = (k + j) / 2 / 100
-                quitar.append((int((c - (j - k) / 200 + MAXP / 2) * SR), int((c + (j - k) / 200 - MAXP / 2) * SR)))
+                quitar.append((int((c - (j - k) / 200 + mp / 2) * SR), int((c + (j - k) / 200 - mp / 2) * SR)))
             k = j
         k += 1
 def nuevo_t(t):
