@@ -1,0 +1,123 @@
+{
+ "tam": [
+  2048,
+  2048
+ ],
+ "pantalla": [
+  302,
+  42,
+  1830,
+  859
+ ],
+ "capas": {
+  "a_aureola": {
+   "x": 611,
+   "y": 22,
+   "w": 890,
+   "h": 287
+  },
+  "a_auriculares": {
+   "x": 85,
+   "y": 197,
+   "w": 1938,
+   "h": 1244
+  },
+  "a_bigote": {
+   "x": 838,
+   "y": 1127,
+   "w": 362,
+   "h": 117
+  },
+  "a_birrete": {
+   "x": 434,
+   "y": 23,
+   "w": 1205,
+   "h": 480
+  },
+  "a_bombilla": {
+   "x": 1109,
+   "y": 0,
+   "w": 522,
+   "h": 517
+  },
+  "a_chispas": {
+   "x": 552,
+   "y": 0,
+   "w": 1046,
+   "h": 406
+  },
+  "a_corazon": {
+   "x": 607,
+   "y": 148,
+   "w": 248,
+   "h": 243
+  },
+  "a_corona": {
+   "x": 1332,
+   "y": 211,
+   "w": 481,
+   "h": 376
+  },
+  "a_cuernos": {
+   "x": 516,
+   "y": 239,
+   "w": 1028,
+   "h": 275
+  },
+  "a_exclamacion": {
+   "x": 1847,
+   "y": 301,
+   "w": 162,
+   "h": 551
+  },
+  "a_gafas": {
+   "x": 381,
+   "y": 939,
+   "w": 1208,
+   "h": 266
+  },
+  "a_gorra": {
+   "x": 658,
+   "y": 177,
+   "w": 823,
+   "h": 403
+  },
+  "a_humo": {
+   "x": 744,
+   "y": 0,
+   "w": 1133,
+   "h": 501
+  },
+  "a_interrogacion": {
+   "x": 1644,
+   "y": 47,
+   "w": 356,
+   "h": 546
+  },
+  "a_nube": {
+   "x": 792,
+   "y": 16,
+   "w": 539,
+   "h": 380
+  },
+  "a_sudor": {
+   "x": 121,
+   "y": 697,
+   "w": 294,
+   "h": 409
+  },
+  "a_tirita": {
+   "x": 1291,
+   "y": 458,
+   "w": 456,
+   "h": 439
+  },
+  "a_wifi": {
+   "x": 890,
+   "y": 22,
+   "w": 331,
+   "h": 373
+  }
+ },
+ "nota": "x,y,w,h en píxeles de base.webp; para pegarlas en un cuerpo, escalar por ancho de pantalla del cuerpo / ancho de pantalla de la base y colocar desde la esquina de la pantalla"
+}

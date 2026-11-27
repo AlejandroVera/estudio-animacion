@@ -1,0 +1,4 @@
+referencia (bot_1 de Jornada de reflexión): 20cb561b-9162-4909-b028-38f1bfe811f6
+voz: Gabriel Blanco II Xdk5eWaS3lO6Yz2HBOBv (+ eco corto metálico, ver herramientas/video/reflexion/nivelar.py)
+expresivo: reposo d4a6bbb0-a402-456c-8ecb-b2ca1432cb2c, habla 34ef60db-e4b6-4b9c-a1bd-79ea9dcf8d82, senala 84b72304-d56a-476d-a382-6172a93dedc4, presenta d0e30b62-5ab9-433f-8578-d6c1dcaccb3a, pulgar 9300ecee-11d7-468f-bd47-a6c04ac29100, tablet 4b72b132-81aa-4e20-ad97-83cd4d2f79c0, cruzado be4a52a1-8c92-463c-ac11-6d475c3d3271, niega 8b18f86a-76ad-4904-8e62-1e987903ec0a, piensa 42c65a03-a568-4ec6-b8b3-42a0d04a0b35, sorpresa 29f366bc-65dc-46a4-bdbe-a2e17780f801, risa b7bfee8a-bbb8-4f56-8ec2-df36f66b082a, saluda 184f6f6a-2f94-4846-acff-5a6e6fcafde1, mano_pecho 13966898-cafc-4377-950f-464f75e38da1
+caras base 05389d6d-72a3-4cd5-a837-99219495f151
