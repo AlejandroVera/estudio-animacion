@@ -10,6 +10,8 @@ ROSA: ¿Y quién te dice lo que está bien?
 BOT: Los derechos humanos, que no se tocan. Y en lo demás, lo que opine la mayoría. Preguntándole de verdad, no cada cuatro años.
 ROSA: ¿Y tú qué ganas?
 BOT: Nada. No tengo ambición, ni ego, ni cuñados a los que colocar.
+ROSA: Pero, ¿no es raro que nos gobierne una inteligencia artificial?
+BOT: Bueno, si es que es lo que va a acabar pasando igualmente. Mejor que sea elegido democráticamente.
 ROSA: Vale, me has convencido. ¿Dónde está tu papeleta?
 BOT: Aquí. Antes, acepta los términos y condiciones.
 ROSA: ¿Y quién se lee todo esto?

@@ -49,12 +49,12 @@ def R(t0, txt, y, col='negro', tam=110, t1=None, caja=True, x=540):
 
 
 # las papeletas, una a una (el texto lo pone el montador: la IA lo escribe mal)
-PARTIDOS = [('PSOE', 'Promesas Sujetas a Otra Encuesta', 'rojo'), ('PP', 'Prometemos Pasado mañana', 'azul'),
-            ('MEGÁFONO', 'Lo mismo, pero más alto', 'verde'), ('SUMAR, RESTAR', 'y dividirse', 'rojo'),
-            ('PARTiDO BiSAGRA', 'Votamos lo que nos den', 'negro')]
+PARTIDOS = [('PSOE', 'Promesas Sujetas a Otra Encuesta', 'rojo'), ('PP', 'Prometemos Pasado', 'azul'),
+            ('SUMAR, RESTAR', 'y dividirse', 'rojo'), ('PARTiDO BiSAGRA', 'Votamos lo que nos den', 'negro')]
+SITIO = [0, 1, 3, 4]                     # papeletas del dibujo donde se escriben (de arriba abajo)
 ROT_PAP = []
 for k, (sig, lema, col) in enumerate(PARTIDOS):
-    t0, y = 0.35 + k * 1.0, 230 + k * 345
+    t0, y = 0.15 + k * 0.65, 230 + SITIO[k] * 345
     ROT_PAP += [R(t0, sig, y, col, 96), R(t0 + 0.05, lema, y + 115, 'negro', 62)]
 
 c = 0.08
@@ -74,17 +74,20 @@ P = [
                       G(T('mayoría') - c, L[8] - c, 'BOT', 'b_palmas')]),      # «lo que opine la mayoría»
     esc('es_pprosa', L[8] - c, {'ROSA': {'es_pprosa': 'es_pprosa'}}),          # «¿y tú qué ganas?»
     charla(L[9] - c, [G(L[9] - c, L[10] - c, 'BOT', 'b_pecho'),                # «nada. ni ego, ni cuñados»
-                      G(L[10] - c, L[11] - c, 'ROSA', 'r_pulgar'),             # «vale, me has convencido»
-                      G(L[11] - c, T('términos') - c, 'BOT', 'b_papeleta')]),  # «aquí»
+                      G(L[10] - c, L[11] - c, 'ROSA', 'r_barbilla'),           # «¿no es raro que nos gobierne una IA?»
+                      G(L[11] - c, T('mejor') - c, 'BOT', 'b_palmas'),         # «bueno, si es lo que va a acabar pasando»
+                      G(T('mejor') - c, L[12] - c, 'BOT', 'b_dedo'),           # «mejor que sea elegido democráticamente»
+                      G(L[12] - c, L[13] - c, 'ROSA', 'r_pulgar'),             # «vale, me has convencido»
+                      G(L[13] - c, T('términos') - c, 'BOT', 'b_papeleta')]),  # «aquí»
     esc('es_terminos', T('términos') - c),                                     # el papel se desenrolla
-    esc('es_terminos_b', L[12] - c),                                           # «¿y quién se lee todo esto?»
-    charla(L[13] - c, [G(L[13] - c, 99, 'BOT', 'b_dedo')]),                    # «nadie. igual que los programas»
+    esc('es_terminos_b', L[14] - c),                                           # «¿y quién se lee todo esto?»
+    charla(L[15] - c, [G(L[15] - c, 99, 'BOT', 'b_dedo')]),                    # «nadie. igual que los programas»
 ]
 FIN = PAL[-1]['fin'] + 2.0
-EF = [[0.35 + k * 1.0, 'pop', -13] for k in range(5)]
+EF = [[0.15 + k * 0.65, 'pop', -13] for k in range(4)]
 EF += [[L[0] - 0.12, 'whoosh2', -12], [L[0] + 0.15, 'suspiro', -12], [L[1] - 0.12, 'whoosh', -12], [L[1], 'bip', -10],
        [L[2] - 0.12, 'whoosh2', -13], [L[8] - 0.12, 'whoosh', -12], [L[9] - 0.12, 'whoosh2', -13],
-       [T('términos') - 0.1, 'papel', -9, 3.6], [L[13] - 0.12, 'whoosh', -13], [PAL[-1]['fin'] + 0.2, 'ding', -10],
+       [T('términos') - 0.1, 'papel', -9, 3.6], [L[15] - 0.12, 'whoosh', -13], [PAL[-1]['fin'] + 0.2, 'ding', -10],
        [0.0, 'sala', -17, round(FIN, 2)]]
 json.dump({'nivel': -24, 'efectos': [[round(e[0], 2)] + e[1:] for e in sorted(EF)]}, open('efectos/efectos.json', 'w'))
 json.dump({'alineacion': 'voz/rf.json', 'audio': 'voz/rf.mp3', 'vel_letra': 0.03, 'sin_recolor': ['es_', 'br_'],

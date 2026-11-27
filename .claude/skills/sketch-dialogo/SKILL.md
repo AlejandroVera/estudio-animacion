@@ -130,4 +130,12 @@ Rafa `Zb72NBThGN2Rv3y1RSTT`), nutri, Alejandro (Daniel - Podcast). Si falta el o
   plano como referencia de sitio. Apagón: edición «all lights switched off… only the eyes glow».
 - Megafonía: voz formal + filtro de altavoz (`highpass 350, lowpass 3400, aecho`) solo en sus frases; `nivelar.py`
   iguala cada frase (cada voz de ElevenLabs sale a un nivel distinto: los avisos finales quedaban a −28 LUFS).
+- **Frases cortadas** («Jornada de reflexión»): ElevenLabs a veces entrega la frase con la última sílaba a medias (el
+  audio acaba en plena vocal: «colocar», «¿…todo esto?»). `dialogo.py` ya lo evita (`voz_entera`: añade «...» a las
+  afirmaciones y repite la toma si acaba en pleno sonido; a las preguntas NO se les ponen puntos, les quitan la subida).
+  Comprobar siempre la cola de cada frase (energía de los últimos 40 ms) y acortar las pausas de más de 0,3 s dentro de
+  las frases (`nivelar.py` de reflexion). Si una buena pregunta viene cortada, se puede alargar su última vocal
+  repitiendo un periodo con fundido (0,09 s).
+- **Dibujo de un personaje mirando a otro**: comprobar que cabeza y cuerpo miran hacia el mismo lado (salió el chico de
+  espaldas con la cabeza de perfil: «está girado raro»). La camiseta de montaña va DELANTE: de espaldas, lisa.
 

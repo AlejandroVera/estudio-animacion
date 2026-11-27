@@ -55,6 +55,13 @@ for k, v in BASES.items():
         carga(v).save(f'img/{k}.jpg', quality=92)
     except FileNotFoundError:
         print('falta', v)
+# el saludo: el chico tenía el cuerpo de espaldas y la cabeza de perfil girada raro; se rehízo (es_stand2_1) y se
+# lleva al marco del original para que la boca del bot siga encajando
+_s = np.asarray(alineada('es_stand2_1', carga('es_stand'))).copy()
+_v = _s.max(2) > 12                          # la afín deja franjas negras en los bordes: se repite el borde
+_f = np.nonzero(_v.mean(1) > 0.98)[0]; _c = np.nonzero(_v.mean(0) > 0.98)[0]
+_s[:_f[0]] = _s[_f[0]]; _s[_f[-1] + 1:] = _s[_f[-1]]; _s[:, :_c[0]] = _s[:, _c[0]:_c[0] + 1]; _s[:, _c[-1] + 1:] = _s[:, _c[-1]:_c[-1] + 1]
+Image.fromarray(_s).save('img/es_stand.jpg', quality=92)
 for nom, base in VARIANTES.items():
     A = Image.open(f'img/{base}.jpg').convert('RGB'); a = np.asarray(A).astype(int)
     b = np.asarray(alineada(nom, A)).astype(int)

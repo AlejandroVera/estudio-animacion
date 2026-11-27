@@ -29,3 +29,5 @@ es_terminos2_2 e668d43e-cdf7-4f17-8ee0-37574b515947
 es_pprosa_bk 63d7a55d-4b5d-4c01-880e-9532a0924c3c
 es_suspira_bk d1c1d842-c628-4821-9ae8-7b07ea865107
 es_stand_bk 356f8919-4f33-439f-b170-6e08d1c2d4a0
+es_stand2_1 67cae46d-c2fd-472e-a603-db7acea1d44c
+es_stand2_2 622e103d-da28-46cf-9438-2bc5d68e38cc

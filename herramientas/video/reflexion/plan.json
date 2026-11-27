@@ -26,7 +26,7 @@
    ]
   }
  },
- "duracion": 57.47,
+ "duracion": 63.41,
  "planos": [
   {
    "t0": 0,
@@ -38,7 +38,7 @@
    "habla": false,
    "rotulos": [
     {
-     "t0": 0.35,
+     "t0": 0.15,
      "texto": "PSOE",
      "x": 540,
      "y": 230,
@@ -49,7 +49,7 @@
      "caja": true
     },
     {
-     "t0": 0.39999999999999997,
+     "t0": 0.2,
      "texto": "Promesas Sujetas a Otra Encuesta",
      "x": 540,
      "y": 345,
@@ -60,7 +60,7 @@
      "caja": true
     },
     {
-     "t0": 1.35,
+     "t0": 0.8,
      "texto": "PP",
      "x": 540,
      "y": 575,
@@ -71,8 +71,8 @@
      "caja": true
     },
     {
-     "t0": 1.4000000000000001,
-     "texto": "Prometemos Pasado mañana",
+     "t0": 0.8500000000000001,
+     "texto": "Prometemos Pasado",
      "x": 540,
      "y": 690,
      "color": "negro",
@@ -82,29 +82,7 @@
      "caja": true
     },
     {
-     "t0": 2.35,
-     "texto": "MEGÁFONO",
-     "x": 540,
-     "y": 920,
-     "color": "verde",
-     "tam": 96,
-     "centro": true,
-     "fijo": true,
-     "caja": true
-    },
-    {
-     "t0": 2.4,
-     "texto": "Lo mismo, pero más alto",
-     "x": 540,
-     "y": 1035,
-     "color": "negro",
-     "tam": 62,
-     "centro": true,
-     "fijo": true,
-     "caja": true
-    },
-    {
-     "t0": 3.35,
+     "t0": 1.45,
      "texto": "SUMAR, RESTAR",
      "x": 540,
      "y": 1265,
@@ -115,7 +93,7 @@
      "caja": true
     },
     {
-     "t0": 3.4,
+     "t0": 1.5,
      "texto": "y dividirse",
      "x": 540,
      "y": 1380,
@@ -126,7 +104,7 @@
      "caja": true
     },
     {
-     "t0": 4.35,
+     "t0": 2.1,
      "texto": "PARTiDO BiSAGRA",
      "x": 540,
      "y": 1610,
@@ -137,7 +115,7 @@
      "caja": true
     },
     {
-     "t0": 4.3999999999999995,
+     "t0": 2.15,
      "texto": "Votamos lo que nos den",
      "x": 540,
      "y": 1725,
@@ -150,7 +128,7 @@
    ]
   },
   {
-   "t0": 5.52,
+   "t0": 3.7199999999999998,
    "fondo": "img/es_suspira.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -166,7 +144,7 @@
    }
   },
   {
-   "t0": 7.352,
+   "t0": 5.552,
    "fondo": "img/es_stand.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -183,7 +161,7 @@
    "sub_y": 1790
   },
   {
-   "t0": 10.066,
+   "t0": 7.676,
    "fondo": "img/es_charla.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -214,62 +192,62 @@
    },
    "gestos": [
     {
-     "t0": 10.066,
-     "t1": 16.263,
+     "t0": 7.676,
+     "t1": 13.552999999999999,
      "quien": "ROSA",
      "img": "img/cv_r_palmas.png"
     },
     {
-     "t0": 16.263,
-     "t1": 18.852,
+     "t0": 13.552999999999999,
+     "t1": 16.142000000000003,
      "quien": "BOT",
      "img": "img/cv_b_palmas.png"
     },
     {
-     "t0": 18.852,
-     "t1": 20.092000000000002,
+     "t0": 16.142000000000003,
+     "t1": 17.372000000000003,
      "quien": "BOT",
      "img": "img/cv_b_pecho.png"
     },
     {
-     "t0": 20.092000000000002,
-     "t1": 20.533,
+     "t0": 17.372000000000003,
+     "t1": 17.813000000000002,
      "quien": "ROSA",
      "img": "img/cv_r_senala.png"
     },
     {
-     "t0": 20.533,
-     "t1": 23.178,
+     "t0": 17.813000000000002,
+     "t1": 20.078000000000003,
      "quien": "ROSA",
      "img": "img/cv_r_palmas.png"
     },
     {
-     "t0": 23.178,
-     "t1": 25.686,
+     "t0": 20.078000000000003,
+     "t1": 21.936,
      "quien": "BOT",
      "img": "img/cv_b_palmas.png"
     },
     {
-     "t0": 25.686,
-     "t1": 30.768,
+     "t0": 21.936,
+     "t1": 27.008000000000003,
      "quien": "BOT",
      "img": "img/cv_b_tablet.png"
     },
     {
-     "t0": 30.768,
-     "t1": 32.646,
+     "t0": 27.008000000000003,
+     "t1": 28.886000000000003,
      "quien": "ROSA",
      "img": "img/cv_r_barbilla.png"
     },
     {
-     "t0": 32.646,
-     "t1": 36.303000000000004,
+     "t0": 28.886000000000003,
+     "t1": 32.659,
      "quien": "BOT",
      "img": "img/cv_b_dedo.png"
     },
     {
-     "t0": 36.303000000000004,
-     "t1": 39.819,
+     "t0": 32.659,
+     "t1": 36.755,
      "quien": "BOT",
      "img": "img/cv_b_palmas.png"
     }
@@ -277,7 +255,7 @@
    "sub_y": 1660
   },
   {
-   "t0": 39.819,
+   "t0": 36.755,
    "fondo": "img/es_pprosa.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -293,7 +271,7 @@
    }
   },
   {
-   "t0": 41.0,
+   "t0": 37.937000000000005,
    "fondo": "img/es_charla.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -324,20 +302,38 @@
    },
    "gestos": [
     {
-     "t0": 41.0,
-     "t1": 44.690000000000005,
+     "t0": 37.937000000000005,
+     "t1": 42.457,
      "quien": "BOT",
      "img": "img/cv_b_pecho.png"
     },
     {
-     "t0": 44.690000000000005,
-     "t1": 47.451,
+     "t0": 42.457,
+     "t1": 45.969,
+     "quien": "ROSA",
+     "img": "img/cv_r_barbilla.png"
+    },
+    {
+     "t0": 45.969,
+     "t1": 48.303000000000004,
+     "quien": "BOT",
+     "img": "img/cv_b_palmas.png"
+    },
+    {
+     "t0": 48.303000000000004,
+     "t1": 50.568000000000005,
+     "quien": "BOT",
+     "img": "img/cv_b_dedo.png"
+    },
+    {
+     "t0": 50.568000000000005,
+     "t1": 53.329,
      "quien": "ROSA",
      "img": "img/cv_r_pulgar.png"
     },
     {
-     "t0": 47.451,
-     "t1": 49.367000000000004,
+     "t0": 53.329,
+     "t1": 55.175000000000004,
      "quien": "BOT",
      "img": "img/cv_b_papeleta.png"
     }
@@ -345,7 +341,7 @@
    "sub_y": 1660
   },
   {
-   "t0": 49.367000000000004,
+   "t0": 55.175000000000004,
    "fondo": "img/es_terminos.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -354,7 +350,7 @@
    "habla": false
   },
   {
-   "t0": 51.233000000000004,
+   "t0": 57.041000000000004,
    "fondo": "img/es_terminos_b.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -363,7 +359,7 @@
    "habla": false
   },
   {
-   "t0": 52.74,
+   "t0": 58.688,
    "fondo": "img/es_charla.jpg",
    "zoom": 1.0,
    "cx": 0.5,
@@ -394,7 +390,7 @@
    },
    "gestos": [
     {
-     "t0": 52.74,
+     "t0": 58.688,
      "t1": 99,
      "quien": "BOT",
      "img": "img/cv_b_dedo.png"

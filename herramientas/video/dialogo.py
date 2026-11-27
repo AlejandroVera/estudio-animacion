@@ -28,6 +28,28 @@ TEMPO = {k: float(v) for k, v in (x.split('=') for x in (opcion('--tempo', '') o
 PAUSA = {int(k): float(v) for k, v in (x.split('=') for x in (opcion('--pausa', '') or '').split(',') if x)}
 rehacer = opcion('--rehacer')
 rehacer = {int(x) for x in rehacer.split(',')} if rehacer else set()
+
+def voz_entera(texto, voz, antes, despues):
+    """ElevenLabs a veces entrega la frase con la última sílaba a medias (el audio acaba en plena vocal: se cortaba
+    «colocar», «¿…todo esto?»). Con «...» al final la termina; si aun así acaba en pleno sonido, otra toma."""
+    t = texto.rstrip()
+    if not t.endswith(('...', '…', '?')):   # a las preguntas los puntos les quitan la subida final
+        t += '...'
+    for _ in range(6 if t.endswith('?') else 3):
+        mp3, al = api_voz(t, voz, antes, despues)
+        open('/tmp/_voz_entera.mp3', 'wb').write(mp3)
+        x = leer('/tmp/_voz_entera.mp3')
+        W = int(0.01 * SR)
+        env = np.array([np.sqrt((x[k:k + W] ** 2).mean()) for k in range(0, len(x) - W, W)])
+        if env[-4:].max() < env.max() * 0.1:
+            break
+        print('   la frase sale cortada, otra toma')
+    # quitar los puntos añadidos de la alineación (que no salgan en los subtítulos)
+    n = len(t) - len(texto.rstrip())
+    if n:
+        al = {k: v[:-n] for k, v in al.items()}
+    return mp3, al
+
 guion, salida = sys.argv[1], sys.argv[2]
 frases = []
 for l in open(guion):
@@ -54,7 +76,7 @@ for i, (quien, texto) in enumerate(frases):
     if i in rehacer or not os.path.exists(f + '.json'):
         antes = ' '.join(x for _, x in frases[max(0, i - 2):i])
         despues = frases[i + 1][1] if i + 1 < len(frases) else ''
-        mp3, al = api_voz(texto, VOCES[quien], antes, despues)
+        mp3, al = voz_entera(texto, VOCES[quien], antes, despues)
         open(f + '.mp3', 'wb').write(mp3)
         json.dump({'palabras': palabras_de(al)}, open(f + '.json', 'w'), ensure_ascii=False)
         print('generada', i, quien, texto)
@@ -63,7 +85,7 @@ for i, (quien, texto) in enumerate(frases):
             from tono import subida
             mejor = (subida(f + '.mp3'), None)
             for k in range(PREGUNTAS - 1):
-                mp3, al = api_voz(texto, VOCES[quien], antes, despues)
+                mp3, al = voz_entera(texto, VOCES[quien], antes, despues)
                 open(f + '_t.mp3', 'wb').write(mp3)
                 st = subida(f + '_t.mp3')
                 if st > mejor[0]:
@@ -81,8 +103,19 @@ for i, (quien, texto) in enumerate(frases):
                              capture_output=True).stdout
         x = np.frombuffer(raw, np.int16).astype(np.float32)
         pal = [{**p, 'inicio': p['inicio'] / tp, 'fin': p['fin'] / tp} for p in pal]
-    a = max(0.0, pal[0]['inicio'] - 0.06)
-    b = min(len(x) / SR, pal[-1]['fin'] + 0.12)
+    # bordes por el SONIDO, no solo por la alineación: ElevenLabs a veces da el final de la última palabra antes de
+    # que acabe de sonar (se cortaba «colocar», «¿…todo esto?») o el inicio después de que empiece («No, no»)
+    W = int(0.01 * SR)
+    env = np.array([np.sqrt((x[k:k + W] ** 2).mean()) for k in range(0, len(x) - W, W)])
+    umbral = max(60.0, env.max() * 0.012)
+    k = max(0, int((pal[0]['inicio'] - 0.06) * 100))
+    while k > 0 and env[max(0, k - 8):k].max(initial=0) > umbral:
+        k -= 1
+    a = max(0.0, k / 100 - 0.04)
+    k = min(len(env) - 1, int(pal[-1]['fin'] * 100))
+    while k < len(env) - 1 and env[k:k + 8].max() > umbral:
+        k += 1
+    b = min(len(x) / SR, max(pal[-1]['fin'] + 0.12, k / 100 + 0.06))
     seg = x[int(a * SR):int(b * SR)].copy()
     F = int(0.015 * SR)
     seg[:F] *= np.linspace(0, 1, F); seg[-F:] *= np.linspace(1, 0, F)

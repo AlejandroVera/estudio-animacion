@@ -555,14 +555,14 @@
 },
 {
 "texto": "derechos",
-"inicio": 27.335,
-"fin": 27.625,
+"inicio": 27.347,
+"fin": 27.648,
 "tipo": "word",
 "quien": "BOT"
 },
 {
 "texto": "humanos,",
-"inicio": 27.66,
+"inicio": 27.672,
 "fin": 28.055,
 "tipo": "word",
 "quien": "BOT"
@@ -576,435 +576,624 @@
 },
 {
 "texto": "no",
-"inicio": 28.206,
-"fin": 28.275,
+"inicio": 28.217,
+"fin": 28.299,
 "tipo": "word",
 "quien": "BOT"
 },
 {
 "texto": "se",
-"inicio": 28.322,
-"fin": 28.403,
+"inicio": 28.357,
+"fin": 28.45,
 "tipo": "word",
 "quien": "BOT"
 },
 {
 "texto": "tocan.",
-"inicio": 28.45,
-"fin": 29.03,
+"inicio": 28.508,
+"fin": 29.042,
 "tipo": "word",
 "quien": "BOT"
 },
 {
 "texto": "Y",
-"inicio": 29.355,
-"fin": 29.436,
+"inicio": 29.216,
+"fin": 29.309,
 "tipo": "word",
 "quien": "BOT"
 },
 {
 "texto": "en",
-"inicio": 29.506,
-"fin": 29.552,
+"inicio": 29.39,
+"fin": 29.448,
 "tipo": "word",
 "quien": "BOT"
 },
 {
 "texto": "lo",
-"inicio": 29.599,
-"fin": 29.669,
+"inicio": 29.494,
+"fin": 29.576,
 "tipo": "word",
 "quien": "BOT"
 },
 {
 "texto": "demás,",
-"inicio": 29.715,
-"fin": 30.075,
+"inicio": 29.622,
+"fin": 30.005,
 "tipo": "word",
 "quien": "BOT"
 },
 {
 "texto": "lo",
-"inicio": 30.133,
-"fin": 30.249,
+"inicio": 30.063,
+"fin": 30.179,
 "tipo": "word",
 "quien": "BOT"
 },
 {
 "texto": "que",
-"inicio": 30.296,
-"fin": 30.365,
+"inicio": 30.237,
+"fin": 30.33,
 "tipo": "word",
 "quien": "BOT"
 },
 {
 "texto": "opine",
-"inicio": 30.4,
-"fin": 30.644,
+"inicio": 30.365,
+"fin": 30.713,
 "tipo": "word",
 "quien": "BOT"
 },
 {
 "texto": "la",
-"inicio": 30.679,
-"fin": 30.737,
+"inicio": 30.772,
+"fin": 30.841,
 "tipo": "word",
 "quien": "BOT"
 },
 {
 "texto": "mayoría.",
-"inicio": 30.783,
-"fin": 31.398,
+"inicio": 30.899,
+"fin": 31.457,
 "tipo": "word",
 "quien": "BOT"
 },
 {
 "texto": "Preguntándole",
-"inicio": 31.607,
-"fin": 32.258,
+"inicio": 31.782,
+"fin": 32.548,
 "tipo": "word",
 "quien": "BOT"
 },
 {
 "texto": "de",
-"inicio": 32.292,
-"fin": 32.35,
+"inicio": 32.594,
+"fin": 32.652,
 "tipo": "word",
 "quien": "BOT"
 },
 {
 "texto": "verdad,",
-"inicio": 32.397,
-"fin": 32.722,
+"inicio": 32.687,
+"fin": 33.105,
 "tipo": "word",
 "quien": "BOT"
 },
 {
 "texto": "no",
-"inicio": 32.896,
-"fin": 33.07,
+"inicio": 33.43,
+"fin": 33.616,
 "tipo": "word",
 "quien": "BOT"
 },
 {
 "texto": "cada",
-"inicio": 33.128,
-"fin": 33.314,
+"inicio": 33.697,
+"fin": 33.918,
 "tipo": "word",
 "quien": "BOT"
 },
 {
 "texto": "cuatro",
-"inicio": 33.361,
-"fin": 33.674,
+"inicio": 33.964,
+"fin": 34.278,
 "tipo": "word",
 "quien": "BOT"
 },
 {
 "texto": "años.",
-"inicio": 33.697,
-"fin": 34.138,
+"inicio": 34.301,
+"fin": 34.835,
 "tipo": "word",
 "quien": "BOT"
 },
 {
 "texto": "¿Y",
-"inicio": 34.299,
-"fin": 34.496,
+"inicio": 34.995,
+"fin": 35.192,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
 "texto": "tú",
-"inicio": 34.578,
-"fin": 34.659,
+"inicio": 35.274,
+"fin": 35.355,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
 "texto": "qué",
-"inicio": 34.694,
-"fin": 34.763,
+"inicio": 35.39,
+"fin": 35.459,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
 "texto": "ganas?",
-"inicio": 34.798,
-"fin": 35.321,
+"inicio": 35.494,
+"fin": 36.017,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
 "texto": "Nada.",
-"inicio": 35.48,
-"fin": 35.886,
+"inicio": 36.177,
+"fin": 36.816,
 "tipo": "word",
 "quien": "BOT"
 },
 {
 "texto": "No",
-"inicio": 36.211,
-"fin": 36.328,
+"inicio": 37.431,
+"fin": 37.57,
 "tipo": "word",
 "quien": "BOT"
 },
 {
 "texto": "tengo",
-"inicio": 36.362,
-"fin": 36.525,
+"inicio": 37.617,
+"fin": 37.802,
 "tipo": "word",
 "quien": "BOT"
 },
 {
 "texto": "ambición,",
-"inicio": 36.548,
-"fin": 37.117,
+"inicio": 37.826,
+"fin": 38.534,
 "tipo": "word",
 "quien": "BOT"
 },
 {
 "texto": "ni",
-"inicio": 37.14,
-"fin": 37.256,
+"inicio": 38.615,
+"fin": 38.824,
 "tipo": "word",
 "quien": "BOT"
 },
 {
 "texto": "ego,",
-"inicio": 37.303,
-"fin": 37.558,
+"inicio": 38.917,
+"fin": 39.184,
 "tipo": "word",
 "quien": "BOT"
 },
 {
 "texto": "ni",
-"inicio": 37.581,
-"fin": 37.651,
+"inicio": 39.219,
+"fin": 39.3,
 "tipo": "word",
 "quien": "BOT"
 },
 {
 "texto": "cuñados",
-"inicio": 37.686,
-"fin": 38.092,
+"inicio": 39.347,
+"fin": 39.857,
 "tipo": "word",
 "quien": "BOT"
 },
 {
 "texto": "a",
-"inicio": 38.15,
-"fin": 38.174,
+"inicio": 39.927,
+"fin": 39.95,
 "tipo": "word",
 "quien": "BOT"
 },
 {
 "texto": "los",
-"inicio": 38.208,
-"fin": 38.301,
+"inicio": 39.997,
+"fin": 40.113,
 "tipo": "word",
 "quien": "BOT"
 },
 {
 "texto": "que",
-"inicio": 38.336,
-"fin": 38.406,
+"inicio": 40.159,
+"fin": 40.24,
 "tipo": "word",
 "quien": "BOT"
 },
 {
 "texto": "colocar.",
-"inicio": 38.452,
-"fin": 39.009,
+"inicio": 40.299,
+"fin": 40.867,
 "tipo": "word",
 "quien": "BOT"
 },
 {
-"texto": "Vale,",
-"inicio": 39.17,
-"fin": 39.53,
+"texto": "Pero,",
+"inicio": 41.147,
+"fin": 41.727,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
-"texto": "me",
-"inicio": 39.623,
-"fin": 39.692,
+"texto": "¿no",
+"inicio": 41.751,
+"fin": 41.983,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
-"texto": "has",
-"inicio": 39.716,
-"fin": 39.785,
+"texto": "es",
+"inicio": 42.006,
+"fin": 42.053,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
-"texto": "convencido.",
-"inicio": 39.832,
-"fin": 40.424,
+"texto": "raro",
+"inicio": 42.134,
+"fin": 42.366,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
-"texto": "¿Dónde",
-"inicio": 40.494,
-"fin": 40.784,
+"texto": "que",
+"inicio": 42.412,
+"fin": 42.482,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
-"texto": "está",
-"inicio": 40.807,
-"fin": 40.958,
+"texto": "nos",
+"inicio": 42.529,
+"fin": 42.645,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
-"texto": "tu",
-"inicio": 41.016,
-"fin": 41.086,
+"texto": "gobierne",
+"inicio": 42.68,
+"fin": 43.005,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
-"texto": "papeleta?",
-"inicio": 41.12,
-"fin": 41.771,
+"texto": "una",
+"inicio": 43.039,
+"fin": 43.144,
 "tipo": "word",
 "quien": "ROSA"
 },
 {
-"texto": "Aquí.",
-"inicio": 41.931,
-"fin": 42.465,
+"texto": "inteligencia",
+"inicio": 43.167,
+"fin": 43.643,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "artificial?",
+"inicio": 43.666,
+"fin": 44.769,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "Bueno,",
+"inicio": 44.929,
+"fin": 45.219,
 "tipo": "word",
 "quien": "BOT"
 },
 {
-"texto": "Antes,",
-"inicio": 42.906,
-"fin": 43.266,
+"texto": "si",
+"inicio": 45.254,
+"fin": 45.347,
 "tipo": "word",
 "quien": "BOT"
 },
 {
-"texto": "acepta",
-"inicio": 43.289,
-"fin": 43.626,
-"tipo": "word",
-"quien": "BOT"
-},
-{
-"texto": "los",
-"inicio": 43.672,
-"fin": 43.789,
-"tipo": "word",
-"quien": "BOT"
-},
-{
-"texto": "términos",
-"inicio": 43.847,
-"fin": 44.311,
-"tipo": "word",
-"quien": "BOT"
-},
-{
-"texto": "y",
-"inicio": 44.392,
-"fin": 44.416,
-"tipo": "word",
-"quien": "BOT"
-},
-{
-"texto": "condiciones.",
-"inicio": 44.485,
-"fin": 45.553,
-"tipo": "word",
-"quien": "BOT"
-},
-{
-"texto": "¿Y",
-"inicio": 45.713,
-"fin": 45.992,
-"tipo": "word",
-"quien": "ROSA"
-},
-{
-"texto": "quién",
-"inicio": 46.085,
-"fin": 46.235,
-"tipo": "word",
-"quien": "ROSA"
-},
-{
-"texto": "se",
-"inicio": 46.293,
-"fin": 46.363,
-"tipo": "word",
-"quien": "ROSA"
-},
-{
-"texto": "lee",
-"inicio": 46.41,
-"fin": 46.537,
-"tipo": "word",
-"quien": "ROSA"
-},
-{
-"texto": "todo",
-"inicio": 46.572,
-"fin": 46.758,
-"tipo": "word",
-"quien": "ROSA"
-},
-{
-"texto": "esto?",
-"inicio": 46.793,
-"fin": 47.06,
-"tipo": "word",
-"quien": "ROSA"
-},
-{
-"texto": "Nadie.",
-"inicio": 47.22,
-"fin": 47.777,
-"tipo": "word",
-"quien": "BOT"
-},
-{
-"texto": "Igual",
-"inicio": 47.893,
-"fin": 48.184,
+"texto": "es",
+"inicio": 45.393,
+"fin": 45.451,
 "tipo": "word",
 "quien": "BOT"
 },
 {
 "texto": "que",
-"inicio": 48.23,
-"fin": 48.3,
+"inicio": 45.498,
+"fin": 45.568,
+"tipo": "word",
+"quien": "BOT"
+},
+{
+"texto": "es",
+"inicio": 45.591,
+"fin": 45.637,
+"tipo": "word",
+"quien": "BOT"
+},
+{
+"texto": "lo",
+"inicio": 45.695,
+"fin": 45.777,
+"tipo": "word",
+"quien": "BOT"
+},
+{
+"texto": "que",
+"inicio": 45.811,
+"fin": 45.881,
+"tipo": "word",
+"quien": "BOT"
+},
+{
+"texto": "va",
+"inicio": 45.916,
+"fin": 45.974,
+"tipo": "word",
+"quien": "BOT"
+},
+{
+"texto": "a",
+"inicio": 45.997,
+"fin": 46.02,
+"tipo": "word",
+"quien": "BOT"
+},
+{
+"texto": "acabar",
+"inicio": 46.055,
+"fin": 46.345,
+"tipo": "word",
+"quien": "BOT"
+},
+{
+"texto": "pasando",
+"inicio": 46.403,
+"fin": 46.705,
+"tipo": "word",
+"quien": "BOT"
+},
+{
+"texto": "igualmente.",
+"inicio": 46.74,
+"fin": 47.239,
+"tipo": "word",
+"quien": "BOT"
+},
+{
+"texto": "Mejor",
+"inicio": 47.263,
+"fin": 47.483,
+"tipo": "word",
+"quien": "BOT"
+},
+{
+"texto": "que",
+"inicio": 47.53,
+"fin": 47.599,
+"tipo": "word",
+"quien": "BOT"
+},
+{
+"texto": "sea",
+"inicio": 47.646,
+"fin": 47.762,
+"tipo": "word",
+"quien": "BOT"
+},
+{
+"texto": "elegido",
+"inicio": 47.785,
+"fin": 48.191,
+"tipo": "word",
+"quien": "BOT"
+},
+{
+"texto": "democráticamente.",
+"inicio": 48.238,
+"fin": 49.248,
+"tipo": "word",
+"quien": "BOT"
+},
+{
+"texto": "Vale,",
+"inicio": 49.528,
+"fin": 49.888,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "me",
+"inicio": 49.981,
+"fin": 50.05,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "has",
+"inicio": 50.074,
+"fin": 50.143,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "convencido.",
+"inicio": 50.19,
+"fin": 50.782,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "¿Dónde",
+"inicio": 50.852,
+"fin": 51.142,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "está",
+"inicio": 51.165,
+"fin": 51.316,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "tu",
+"inicio": 51.374,
+"fin": 51.444,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "papeleta?",
+"inicio": 51.478,
+"fin": 52.129,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "Aquí.",
+"inicio": 52.289,
+"fin": 52.823,
+"tipo": "word",
+"quien": "BOT"
+},
+{
+"texto": "Antes,",
+"inicio": 53.264,
+"fin": 53.624,
+"tipo": "word",
+"quien": "BOT"
+},
+{
+"texto": "acepta",
+"inicio": 53.647,
+"fin": 53.984,
 "tipo": "word",
 "quien": "BOT"
 },
 {
 "texto": "los",
-"inicio": 48.335,
-"fin": 48.439,
+"inicio": 54.03,
+"fin": 54.147,
+"tipo": "word",
+"quien": "BOT"
+},
+{
+"texto": "términos",
+"inicio": 54.205,
+"fin": 54.669,
+"tipo": "word",
+"quien": "BOT"
+},
+{
+"texto": "y",
+"inicio": 54.75,
+"fin": 54.774,
+"tipo": "word",
+"quien": "BOT"
+},
+{
+"texto": "condiciones.",
+"inicio": 54.843,
+"fin": 55.911,
+"tipo": "word",
+"quien": "BOT"
+},
+{
+"texto": "¿Y",
+"inicio": 56.071,
+"fin": 56.35,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "quién",
+"inicio": 56.443,
+"fin": 56.593,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "se",
+"inicio": 56.651,
+"fin": 56.721,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "lee",
+"inicio": 56.768,
+"fin": 56.895,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "todo",
+"inicio": 56.93,
+"fin": 57.116,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "esto?",
+"inicio": 57.151,
+"fin": 57.538,
+"tipo": "word",
+"quien": "ROSA"
+},
+{
+"texto": "Nadie.",
+"inicio": 57.718,
+"fin": 58.275,
+"tipo": "word",
+"quien": "BOT"
+},
+{
+"texto": "Igual",
+"inicio": 58.391,
+"fin": 58.682,
+"tipo": "word",
+"quien": "BOT"
+},
+{
+"texto": "que",
+"inicio": 58.728,
+"fin": 58.798,
+"tipo": "word",
+"quien": "BOT"
+},
+{
+"texto": "los",
+"inicio": 58.833,
+"fin": 58.937,
 "tipo": "word",
 "quien": "BOT"
 },
 {
 "texto": "programas",
-"inicio": 48.485,
-"fin": 48.869,
+"inicio": 58.983,
+"fin": 59.367,
 "tipo": "word",
 "quien": "BOT"
 },
 {
 "texto": "electorales.",
-"inicio": 48.915,
-"fin": 49.867,
+"inicio": 59.413,
+"fin": 60.365,
 "tipo": "word",
 "quien": "BOT"
 }
@@ -1056,43 +1245,55 @@
 "quien": "BOT",
 "texto": "Los derechos humanos, que no se tocan. Y en lo demás, lo que opine la mayoría. Preguntándole de verdad, no cada cuatro años.",
 "inicio": 27.126,
-"fin": 34.139
+"fin": 34.835
 },
 {
 "quien": "ROSA",
 "texto": "¿Y tú qué ganas?",
-"inicio": 34.299,
-"fin": 35.32
+"inicio": 34.995,
+"fin": 36.017
 },
 {
 "quien": "BOT",
 "texto": "Nada. No tengo ambición, ni ego, ni cuñados a los que colocar.",
-"inicio": 35.48,
-"fin": 39.01
+"inicio": 36.177,
+"fin": 40.987
+},
+{
+"quien": "ROSA",
+"texto": "Pero, ¿no es raro que nos gobierne una inteligencia artificial?",
+"inicio": 41.147,
+"fin": 44.769
+},
+{
+"quien": "BOT",
+"texto": "Bueno, si es que es lo que va a acabar pasando igualmente. Mejor que sea elegido democráticamente.",
+"inicio": 44.929,
+"fin": 49.368
 },
 {
 "quien": "ROSA",
 "texto": "Vale, me has convencido. ¿Dónde está tu papeleta?",
-"inicio": 39.17,
-"fin": 41.771
+"inicio": 49.528,
+"fin": 52.129
 },
 {
 "quien": "BOT",
 "texto": "Aquí. Antes, acepta los términos y condiciones.",
-"inicio": 41.931,
-"fin": 45.553
+"inicio": 52.289,
+"fin": 55.911
 },
 {
 "quien": "ROSA",
 "texto": "¿Y quién se lee todo esto?",
-"inicio": 45.713,
-"fin": 47.06
+"inicio": 56.071,
+"fin": 57.558
 },
 {
 "quien": "BOT",
 "texto": "Nadie. Igual que los programas electorales.",
-"inicio": 47.22,
-"fin": 49.867
+"inicio": 57.718,
+"fin": 60.365
 }
 ]
 }
