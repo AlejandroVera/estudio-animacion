@@ -5,9 +5,10 @@ import numpy as np
 from PIL import Image, ImageFilter
 from scipy import ndimage as ndi
 
-BASES = {'br_papeletas': 'br_papeletas', 'es_suspira': 'es_suspira', 'es_stand': 'es_stand', 'es_pprosa': 'es_pprosa',
+BASES = {'br_papeletas': 'br_papeletas', 'br_indeciso': 'br_indeciso_1', 'es_suspira': 'es_suspira', 'es_stand': 'es_stand', 'es_pprosa': 'es_pprosa',
          'es_terminos': 'es_terminos2_2', 'es_terminos_b': 'es_terminos2_1'}
-VARIANTES = {}
+VARIANTES = {'br_indeciso_b': 'br_indeciso'}
+HASTA_Y = {'br_indeciso_b': 0.468}   # solo se copia por encima de esta altura (la mesa la mueve la IA)   # el chico se rasca la cabeza (se alterna con la base)
 BOCAS = {'es_pprosa': ('es_pprosa_bk', (0.3, 0.75, 0.45, 0.65)), 'es_suspira': ('es_suspira_bk', (0.33, 0.62, 0.5, 0.66)),
          'es_stand': ('es_stand_bk', (0.38, 0.68, 0.36, 0.52))}
 
@@ -69,6 +70,8 @@ for nom, base in VARIANTES.items():
     lab, n = ndi.label(ndi.binary_dilation(d, iterations=8))
     m = np.isin(lab, [i + 1 for i, t in enumerate(ndi.sum(d, lab, range(1, n + 1))) if t > 1500]) if n else d
     m = ndi.binary_fill_holes(m)
+    if nom in HASTA_Y:
+        m[int(HASTA_Y[nom] * m.shape[0]):] = False
     al = np.asarray(Image.fromarray((m * 255).astype('uint8')).filter(ImageFilter.GaussianBlur(3))).astype(float)[..., None] / 255
     Image.fromarray((a * (1 - al) + b * al).astype('uint8')).save(f'img/{nom}.jpg', quality=92)
     print(nom, 'cambia %.1f%%' % (m.mean() * 100))
@@ -88,3 +91,7 @@ for base, (fuente, (x0, x1, y0, y1)) in BOCAS.items():
     out = np.dstack([b.astype('uint8'), al]); out[al == 0, :3] = 0
     Image.fromarray(out, 'RGBA').save(f'img/{base}_boca.png', optimize=True)
     print(base, 'boca en', int(mx), int(my))
+# las papeletas del plano inicial, escritas por código sobre los papeles (en los dos dibujos que se alternan)
+from papeletas import escribe
+for n in ('br_indeciso', 'br_indeciso_b'):
+    escribe(Image.open(f'img/{n}.jpg')).save(f'img/{n}.jpg', quality=92)

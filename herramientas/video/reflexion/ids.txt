@@ -31,3 +31,7 @@ es_suspira_bk d1c1d842-c628-4821-9ae8-7b07ea865107
 es_stand_bk 356f8919-4f33-439f-b170-6e08d1c2d4a0
 es_stand2_1 67cae46d-c2fd-472e-a603-db7acea1d44c
 es_stand2_2 622e103d-da28-46cf-9438-2bc5d68e38cc
+br_indeciso_1 4dd3e7d9-83e8-44d0-b728-20705e278cdd
+br_indeciso_2 1051c7e4-1904-40f8-8858-f3ced865a754
+br_indeciso_b1 5cb99d73-3810-4065-a364-70c182b75acc
+br_indeciso_b2 b2039c4f-9d09-4c16-9f6b-9d97b4831b16

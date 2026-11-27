@@ -30,102 +30,19 @@
  "planos": [
   {
    "t0": 0,
-   "fondo": "img/br_papeletas.jpg",
+   "fondo": "img/br_indeciso.jpg",
    "zoom": 1.0,
    "cx": 0.5,
    "cy": 0.5,
    "bocas": {},
    "habla": false,
-   "rotulos": [
-    {
-     "t0": 0.15,
-     "texto": "PSOE",
-     "x": 540,
-     "y": 230,
-     "color": "rojo",
-     "tam": 96,
-     "centro": true,
-     "fijo": true,
-     "caja": true
-    },
-    {
-     "t0": 0.2,
-     "texto": "Promesas Sujetas a Otra Encuesta",
-     "x": 540,
-     "y": 345,
-     "color": "negro",
-     "tam": 62,
-     "centro": true,
-     "fijo": true,
-     "caja": true
-    },
-    {
-     "t0": 0.8,
-     "texto": "PP",
-     "x": 540,
-     "y": 575,
-     "color": "azul",
-     "tam": 96,
-     "centro": true,
-     "fijo": true,
-     "caja": true
-    },
-    {
-     "t0": 0.8500000000000001,
-     "texto": "Prometemos Pasado",
-     "x": 540,
-     "y": 690,
-     "color": "negro",
-     "tam": 62,
-     "centro": true,
-     "fijo": true,
-     "caja": true
-    },
-    {
-     "t0": 1.45,
-     "texto": "SUMAR, RESTAR",
-     "x": 540,
-     "y": 1265,
-     "color": "rojo",
-     "tam": 96,
-     "centro": true,
-     "fijo": true,
-     "caja": true
-    },
-    {
-     "t0": 1.5,
-     "texto": "y dividirse",
-     "x": 540,
-     "y": 1380,
-     "color": "negro",
-     "tam": 62,
-     "centro": true,
-     "fijo": true,
-     "caja": true
-    },
-    {
-     "t0": 2.1,
-     "texto": "PARTiDO BiSAGRA",
-     "x": 540,
-     "y": 1610,
-     "color": "negro",
-     "tam": 96,
-     "centro": true,
-     "fijo": true,
-     "caja": true
-    },
-    {
-     "t0": 2.15,
-     "texto": "Votamos lo que nos den",
-     "x": 540,
-     "y": 1725,
-     "color": "negro",
-     "tam": 62,
-     "centro": true,
-     "fijo": true,
-     "caja": true
-    }
-   ]
+   "alterna": {
+    "imgs": [
+     "img/br_indeciso.jpg",
+     "img/br_indeciso_b.jpg"
+    ],
+    "cada": 1.25
+   }
   },
   {
    "t0": 3.7199999999999998,

@@ -59,7 +59,7 @@ for k, (sig, lema, col) in enumerate(PARTIDOS):
 
 c = 0.08
 P = [
-    esc('br_papeletas', 0, rotulos=ROT_PAP),                                   # la mesa de papeletas
+    esc('br_indeciso', 0, alterna={'imgs': [I + 'br_indeciso.jpg', I + 'br_indeciso_b.jpg'], 'cada': 1.25}),  # las 4 papeletas y él dudando
     esc('es_suspira', L[0] - c, {'ROSA': {'es_suspira': 'es_suspira'}}),       # «madre mía… ninguno me convence»
     esc('es_stand', L[1] - c, {'BOT': {'es_stand': 'es_stand'}}, sub_y=1790),              # «hola, ¿te ayudo a decidir?»
     charla(L[2] - c, [G(L[2] - c, L[3] - c, 'ROSA', 'r_palmas'),                # «¿eres un asistente? resúmeme…»
@@ -84,7 +84,7 @@ P = [
     charla(L[15] - c, [G(L[15] - c, 99, 'BOT', 'b_dedo')]),                    # «nadie. igual que los programas»
 ]
 FIN = PAL[-1]['fin'] + 2.0
-EF = [[0.15 + k * 0.65, 'pop', -13] for k in range(4)]
+EF = [[1.25, 'whoosh', -20], [2.5, 'whoosh', -20]]   # dudando: un roce suave en cada cambio
 EF += [[L[0] - 0.12, 'whoosh2', -12], [L[0] + 0.15, 'suspiro', -12], [L[1] - 0.12, 'whoosh', -12], [L[1], 'bip', -10],
        [L[2] - 0.12, 'whoosh2', -13], [L[8] - 0.12, 'whoosh', -12], [L[9] - 0.12, 'whoosh2', -13],
        [T('términos') - 0.1, 'papel', -9, 3.6], [L[15] - 0.12, 'whoosh', -13], [PAL[-1]['fin'] + 0.2, 'ding', -10],
