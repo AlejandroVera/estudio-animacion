@@ -242,3 +242,7 @@ Ejemplo completo: `herramientas/shorts/domingo/` (3 shorts del vídeo «domingo�
   y con `hablan` el montador solo abre la boca del que habla según ese campo: sin él, NADIE abre la boca. Poner
   `quien='ANA'` (o el narrador) en todas las palabras al preparar la voz. Antes de entregar, mirar SIEMPRE una tira de
   recortes AMPLIADOS de la boca a 8 fps en dos planos del narrador (la hoja de contactos pequeña no lo enseña).
+- 2026-11-27 («¿no tienes las imágenes de la nutri?»): los planos de Ana se dibujaron con su referencia suelta y salió
+  OTRA consulta y otra Ana. Los vídeos de un personaje que ya tiene vídeos se hacen EDITANDO sus escenas anteriores
+  (Ana: `nutri_bascula/img/es_orgullosa.jpg`, `nutri_tetris/img/es_portatil.jpg` = su consulta de siempre con diploma,
+  reloj, póster de verduras y mesa con fruta), no con la referencia de personaje sola.

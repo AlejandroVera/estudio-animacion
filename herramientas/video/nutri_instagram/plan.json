@@ -19,9 +19,9 @@
   {
    "t0": 0,
    "fondo": "img/es_pregunta.jpg",
-   "zoom": 1.12,
-   "cx": 0.56,
-   "cy": 0.4,
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
    "bocas": {},
    "habla": true,
    "hablan": {
@@ -37,7 +37,6 @@
      ]
     }
    },
-   "sub_y": 1680,
    "cambios": [
     {
      "t": 1.519,
@@ -331,9 +330,9 @@
   {
    "t0": 27.603,
    "fondo": "img/es_campeon.jpg",
-   "zoom": 1.1,
+   "zoom": 1.0,
    "cx": 0.5,
-   "cy": 0.45,
+   "cy": 0.5,
    "bocas": {},
    "habla": true,
    "hablan": {

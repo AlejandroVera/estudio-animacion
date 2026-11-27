@@ -46,7 +46,7 @@ def alt(imgs, cada, desde=0, hasta=999):
 P = [
     # «¿Sabías que en España existe una forma de ser nutricionista sin pisar la universidad?»
     esc('es_pregunta', 0, {x: 'es_pregunta' for x in ('es_pregunta', 'es_pregunta_b', 'es_pregunta_c')},
-        zoom=1.12, cx=0.56, cy=0.4, sub_y=1680,
+        
         cambios=[ch(T('forma') - c, 'es_pregunta_c'), ch(T('universidad') - c, 'es_pregunta_b')]),
     # «Se llama tener un móvil.»
     esc('es_movil', T('se') - c, {'es_movil': 'es_movil', 'es_movil_b': 'es_movil'},
@@ -76,7 +76,7 @@ P = [
         rotulos=[R(Tt('y', T('engorda')) - c, 'ENGORDA', 230, 'rojo', 140, T('medio') - b - 0.05),
                  R(T('medio') - b, 'MEDiO iNSTAGRAM', 230, 'negro', 110)]),
     # «Porque aquí la ciencia la pones tú, campeón.»
-    esc('es_campeon', T('porque') - c, {'es_campeon': 'es_campeon', 'es_campeon_b': 'es_campeon'}, zoom=1.1, cy=0.45,
+    esc('es_campeon', T('porque') - c, {'es_campeon': 'es_campeon', 'es_campeon_b': 'es_campeon'},
         cambios=[ch(T('tú', 2) - c, 'es_campeon_b')], rotulos=[R(T('tú', 2) - b, 'CAMPEÓN', 1650, 'verde', 150)]),
     # «¿Que alguien te pregunta por tu formación?»
     esc('br_formacion', Tt('que', T('campeón')) - c, alterna=alt(['br_formacion', 'br_formacion_c'], 0.45, hasta=T('formación') + 0.3),

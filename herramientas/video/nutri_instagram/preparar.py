@@ -22,9 +22,9 @@ VARIANTES = {'es_pregunta_b': 'es_pregunta', 'br_kilos_b': 'br_kilos', 'br_exper
              'br_detox_d': 'br_detox', 'br_kilos_c': 'br_kilos'}
 HASTA_Y = {}
 # capa de boca: base -> (edición con la boca abierta en crudo/, caja x0 x1 y0 y1 donde buscarla)
-BOCAS = {'es_pregunta': ('es_pregunta_bk', (0.2, 0.8, 0.1, 0.4)), 'es_movil': ('es_movil_bk', (0.1, 0.9, 0.2, 0.6)),
-         'es_campeon': ('es_campeon_bk', (0.2, 0.8, 0.2, 0.55)), 'es_carrera': ('es_carrera_bk', (0.1, 0.6, 0.3, 0.65)),
-         'es_final': ('es_final_bk', (0.25, 0.8, 0.3, 0.7))}
+BOCAS = {'es_pregunta': ('es_pregunta_bk', (0.25, 0.75, 0.15, 0.42)), 'es_movil': ('es_movil_bk', (0.25, 0.75, 0.15, 0.42)),
+         'es_campeon': ('es_campeon_bk', (0.25, 0.75, 0.15, 0.42)), 'es_carrera': ('es_carrera_bk', (0.5, 0.95, 0.15, 0.45)),
+         'es_final': ('es_final_bk', (0.25, 0.75, 0.15, 0.42))}
 
 
 def carga(n, tam=None):

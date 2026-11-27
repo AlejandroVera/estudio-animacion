@@ -54,3 +54,21 @@ br_riesgo_d f9af50fd-a4bd-48fd-b832-46829f50aefb
 br_detox_c ce1101d9-1e38-4e86-99aa-77730adf476a
 br_detox_d c397e866-b472-48d3-902c-403b0503ceca
 br_kilos_c 788198ea-fefa-447b-aa7e-1a9b1963dbcf
+# v2: Ana en su consulta de La báscula (ref 97bf9b4d orgullosa, a2c101c1 portátil)
+es_pregunta e9fdcec9-fd00-4b28-9162-bb3b02fda17b
+es_movil 946c2cb0-73fa-4a83-8f5e-f856e745dcc1
+es_campeon 811addd9-20e6-4bad-b51c-90244e511880
+es_carrera 576b496b-8116-4041-bdae-e60793463e67
+es_final 5ca1c04f-5940-4091-8d1c-5f10c4c95b15
+es_pregunta_b 3a723d40-3ecb-4df2-a368-86a14c83ec7e
+es_pregunta_c 346feaea-8be5-4226-81e7-ab35b429aaf4
+es_movil_b 26ccd5c4-f339-4b5c-9c3d-7280c0e6eea4
+es_campeon_b dda89529-adad-4b3d-9a6d-639a310722e6
+es_carrera_b 3d8440fc-943c-4657-8e8c-95c98b914751
+es_final_b 6eba2c83-cee8-4992-b572-599360ec4218
+es_final_c 3ba412c4-26f0-4fb0-982e-97dac5fb21b8
+es_pregunta_bk f7f44cb5-3f93-4046-a920-5c2e44f265c8
+es_movil_bk 5caa4f85-a378-4d71-95ab-1296a9b3dfba
+es_campeon_bk ee5f1b49-30e5-4f7b-943b-746d8cda6a5e
+es_carrera_bk a7c5dc61-96ca-4800-abee-c43f2f27eeb3
+es_final_bk c7342c44-f9ad-48dd-841f-98d3f08e2297

@@ -69,11 +69,7 @@ def bocadillo(n):
     im.save(f'img/{n}.jpg', quality=92)
 
 
-for n in ('es_pregunta', 'es_pregunta_b', 'es_pregunta_c'):
-    titulo_pregunta(n)
-titulo_campeon('es_campeon')
-for n in ('es_final', 'es_final_b', 'es_final_c'):
-    diplomal(n)
+# (v2: los planos de Ana son de su consulta de siempre, con su diploma de siempre: no hay textos que arreglar en ellos)
 for n in ('br_formacion', 'br_formacion_b', 'br_formacion_c'):
     bocadillo(n)
 print('textos arreglados')
