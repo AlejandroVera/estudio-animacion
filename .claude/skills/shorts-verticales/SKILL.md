@@ -231,3 +231,10 @@ Ejemplo completo: `herramientas/shorts/domingo/` (3 shorts del vídeo «domingo�
   `ritmo_voz.py` dejó «cenaba. Primero» casi pegado. Las primeras frases (el gancho) NO se aceleran ni se les recortan
   pausas: se rehacen solas con <break> de la propia voz y se empalman con el resto (`app_ligar/empalme_intro.py`);
   el plan y los efectos se recolocan solos porque salen de la voz. Escuchar (transcribir) el arranque siempre.
+- 2026-11-27 («Nutricionista de Instagram», nutri + «gurú»: «no has animado nada, solo salen imágenes»): un dibujo por
+  frase con UN cambio no basta. Cada plano lleva 2-3 dibujos de gesto del mismo personaje (ediciones del dibujo: otra mano,
+  otra cara, sorbe, guiña, se rasca) alternando cada 0,35-0,6 s mientras dura (`alterna` con `hasta` hasta la palabra del
+  cambio) y el gesto que cuenta la frase en SU palabra; si después del cambio también tiene que moverse, otro plano con
+  `seguido` (sin golpe de aire) y su propia alternancia. A Ana se le cambian solo los brazos (misma cabeza = sirve la
+  misma capa de boca). Un gesto hecho editando OTRO gesto se pega primero sobre ese gesto en bruto y se lleva a la escena
+  con la MISMA afín del gesto madre (medirla otra vez fallaba y salía la imagen emborronada).

@@ -31,11 +31,18 @@
      ],
      "img/es_pregunta_b.jpg": [
       "img/es_pregunta_boca.png"
+     ],
+     "img/es_pregunta_c.jpg": [
+      "img/es_pregunta_boca.png"
      ]
     }
    },
    "sub_y": 1680,
    "cambios": [
+    {
+     "t": 1.519,
+     "fondo": "img/es_pregunta_c.jpg"
+    },
     {
      "t": 3.342,
      "fondo": "img/es_pregunta_b.jpg"
@@ -54,9 +61,22 @@
     "ANA": {
      "img/es_movil.jpg": [
       "img/es_movil_boca.png"
+     ],
+     "img/es_movil_b.jpg": [
+      "img/es_movil_boca.png"
      ]
     }
    },
+   "cambios": [
+    {
+     "t": 5.188000000000001,
+     "fondo": "img/es_movil_b.jpg"
+    },
+    {
+     "t": 6.318,
+     "fondo": "img/es_movil.jpg"
+    }
+   ],
    "rotulos": [
     {
      "t0": 5.868,
@@ -80,6 +100,15 @@
    "bocas": {},
    "habla": false,
    "sub_y": 1680,
+   "alterna": {
+    "imgs": [
+     "img/br_requisitos.jpg",
+     "img/br_requisitos_b.jpg"
+    ],
+    "cada": 0.6,
+    "desde": 0,
+    "hasta": 999
+   },
    "rotulos": [
     {
      "t0": 8.822000000000001,
@@ -106,9 +135,10 @@
    "alterna": {
     "imgs": [
      "img/br_kilos.jpg",
-     "img/br_kilos_b.jpg"
+     "img/br_kilos_b.jpg",
+     "img/br_kilos_c.jpg"
     ],
-    "cada": 0.4,
+    "cada": 0.35,
     "desde": 0,
     "hasta": 999
    },
@@ -135,6 +165,15 @@
    "bocas": {},
    "habla": false,
    "sub_y": 1680,
+   "alterna": {
+    "imgs": [
+     "img/br_experto.jpg",
+     "img/br_experto_c.jpg"
+    ],
+    "cada": 0.45,
+    "desde": 0,
+    "hasta": 13.825999999999999
+   },
    "cambios": [
     {
      "t": 13.825999999999999,
@@ -150,6 +189,15 @@
    "cy": 0.4,
    "bocas": {},
    "habla": false,
+   "alterna": {
+    "imgs": [
+     "img/br_metabolismo.jpg",
+     "img/br_metabolismo_b.jpg"
+    ],
+    "cada": 0.6,
+    "desde": 0,
+    "hasta": 999
+   },
    "rotulos": [
     {
      "t0": 16.895,
@@ -173,6 +221,15 @@
    "bocas": {},
    "habla": false,
    "sub_y": 1680,
+   "alterna": {
+    "imgs": [
+     "img/br_batido.jpg",
+     "img/br_batido_c.jpg"
+    ],
+    "cada": 0.55,
+    "desde": 0,
+    "hasta": 20.601000000000003
+   },
    "cambios": [
     {
      "t": 20.601000000000003,
@@ -202,6 +259,12 @@
    "bocas": {},
    "habla": false,
    "sub_y": 1680,
+   "cambios": [
+    {
+     "t": 22.444000000000003,
+     "fondo": "img/br_pan_c.jpg"
+    }
+   ],
    "rotulos": [
     {
      "t0": 22.404,
@@ -227,12 +290,18 @@
    "alterna": {
     "imgs": [
      "img/br_panaderia.jpg",
-     "img/br_panaderia_b.jpg"
+     "img/br_panaderia_c.jpg"
     ],
-    "cada": 0.35,
-    "desde": 25.482000000000003,
-    "hasta": 999
+    "cada": 0.4,
+    "desde": 0,
+    "hasta": 25.482000000000003
    },
+   "cambios": [
+    {
+     "t": 25.482000000000003,
+     "fondo": "img/br_panaderia_b.jpg"
+    }
+   ],
    "rotulos": [
     {
      "t0": 23.336000000000002,
@@ -271,9 +340,18 @@
     "ANA": {
      "img/es_campeon.jpg": [
       "img/es_campeon_boca.png"
+     ],
+     "img/es_campeon_b.jpg": [
+      "img/es_campeon_boca.png"
      ]
     }
    },
+   "cambios": [
+    {
+     "t": 29.019000000000002,
+     "fondo": "img/es_campeon_b.jpg"
+    }
+   ],
    "rotulos": [
     {
      "t0": 28.979,
@@ -296,6 +374,15 @@
    "cy": 0.5,
    "bocas": {},
    "habla": false,
+   "alterna": {
+    "imgs": [
+     "img/br_formacion.jpg",
+     "img/br_formacion_c.jpg"
+    ],
+    "cada": 0.45,
+    "desde": 0,
+    "hasta": 32.129
+   },
    "cambios": [
     {
      "t": 32.129,
@@ -313,6 +400,10 @@
    "habla": false,
    "sub_y": 1680,
    "cambios": [
+    {
+     "t": 34.285999999999994,
+     "fondo": "img/br_pdf_c.jpg"
+    },
     {
      "t": 35.966,
      "fondo": "img/br_pdf_b.jpg"
@@ -345,8 +436,20 @@
     "ANA": {
      "img/es_carrera.jpg": [
       "img/es_carrera_boca.png"
+     ],
+     "img/es_carrera_b.jpg": [
+      "img/es_carrera_boca.png"
      ]
     }
+   },
+   "alterna": {
+    "imgs": [
+     "img/es_carrera.jpg",
+     "img/es_carrera_b.jpg"
+    ],
+    "cada": 0.3,
+    "desde": 0,
+    "hasta": 999
    }
   },
   {
@@ -358,12 +461,35 @@
    "bocas": {},
    "habla": false,
    "sub_y": 1680,
-   "cambios": [
-    {
-     "t": 40.397999999999996,
-     "fondo": "img/br_riesgo_b.jpg"
-    }
-   ]
+   "alterna": {
+    "imgs": [
+     "img/br_riesgo.jpg",
+     "img/br_riesgo_c.jpg"
+    ],
+    "cada": 0.5,
+    "desde": 0,
+    "hasta": 999
+   }
+  },
+  {
+   "t0": 40.397999999999996,
+   "fondo": "img/br_riesgo_b.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": false,
+   "sub_y": 1680,
+   "alterna": {
+    "imgs": [
+     "img/br_riesgo_b.jpg",
+     "img/br_riesgo_d.jpg"
+    ],
+    "cada": 0.55,
+    "desde": 0,
+    "hasta": 999
+   },
+   "seguido": true
   },
   {
    "t0": 41.486999999999995,
@@ -374,12 +500,15 @@
    "bocas": {},
    "habla": false,
    "sub_y": 1680,
-   "cambios": [
-    {
-     "t": 45.013999999999996,
-     "fondo": "img/br_detox_b.jpg"
-    }
-   ],
+   "alterna": {
+    "imgs": [
+     "img/br_detox.jpg",
+     "img/br_detox_c.jpg"
+    ],
+    "cada": 0.6,
+    "desde": 0,
+    "hasta": 999
+   },
    "rotulos": [
     {
      "t0": 43.838,
@@ -394,6 +523,26 @@
      "t1": 45.024
     }
    ]
+  },
+  {
+   "t0": 45.013999999999996,
+   "fondo": "img/br_detox_b.jpg",
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.5,
+   "bocas": {},
+   "habla": false,
+   "sub_y": 1680,
+   "alterna": {
+    "imgs": [
+     "img/br_detox_b.jpg",
+     "img/br_detox_d.jpg"
+    ],
+    "cada": 0.6,
+    "desde": 0,
+    "hasta": 999
+   },
+   "seguido": true
   },
   {
    "t0": 47.586,
@@ -426,10 +575,21 @@
     "ANA": {
      "img/es_final.jpg": [
       "img/es_final_boca.png"
+     ],
+     "img/es_final_c.jpg": [
+      "img/es_final_boca.png"
      ]
     }
    },
    "cambios": [
+    {
+     "t": 51.598,
+     "fondo": "img/es_final_c.jpg"
+    },
+    {
+     "t": 53.138999999999996,
+     "fondo": "img/es_final.jpg"
+    },
     {
      "t": 55.260999999999996,
      "fondo": "img/es_final_b.jpg"

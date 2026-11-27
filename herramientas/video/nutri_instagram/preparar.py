@@ -12,7 +12,14 @@ BASES['br_pan'] = 'br_pan_b'
 BASES['br_comer'] = 'br_comer2_1'      # el primero tenía tres manos          # la barra de pan rehecha (la primera parecía un pescado)
 VARIANTES = {'es_pregunta_b': 'es_pregunta', 'br_kilos_b': 'br_kilos', 'br_experto_b': 'br_experto',
              'br_batido_b': 'br_batido', 'br_panaderia_b': 'br_panaderia', 'br_formacion_b': 'br_formacion',
-             'br_pdf_b': 'br_pdf', 'br_riesgo_b': 'br_riesgo', 'br_detox_b': 'br_detox', 'es_final_b': 'es_final', 'br_comer_b': 'br_comer'}
+             'br_pdf_b': 'br_pdf', 'br_riesgo_b': 'br_riesgo', 'br_detox_b': 'br_detox', 'es_final_b': 'es_final', 'br_comer_b': 'br_comer',
+             # segunda tanda: gestos para que nadie se quede quieto
+             'es_pregunta_c': 'es_pregunta', 'es_movil_b': 'es_movil', 'es_campeon_b': 'es_campeon',
+             'es_carrera_b': 'es_carrera', 'es_final_c': 'es_final', 'br_requisitos_b': 'br_requisitos',
+             'br_experto_c': 'br_experto', 'br_metabolismo_b': 'br_metabolismo', 'br_batido_c': 'br_batido',
+             'br_pan_c': 'br_pan', 'br_panaderia_c': 'br_panaderia', 'br_formacion_c': 'br_formacion',
+             'br_pdf_c': 'br_pdf', 'br_riesgo_c': 'br_riesgo', 'br_riesgo_d': 'br_riesgo', 'br_detox_c': 'br_detox',
+             'br_detox_d': 'br_detox', 'br_kilos_c': 'br_kilos'}
 HASTA_Y = {}
 # capa de boca: base -> (edición con la boca abierta en crudo/, caja x0 x1 y0 y1 donde buscarla)
 BOCAS = {'es_pregunta': ('es_pregunta_bk', (0.2, 0.8, 0.1, 0.4)), 'es_movil': ('es_movil_bk', (0.1, 0.9, 0.2, 0.6)),
@@ -34,11 +41,17 @@ def _pcc(a, b):
     return y, x, c.max()
 
 
+COEF = {}
+
+
 def alineada(nom, base_img):
     """la edición de Higgsfield sale ampliada ~1 %: se mide la afín por parches y se devuelve la edición llevada
     al marco del dibujo base (si no, las capas «parten» al personaje)"""
-    A = np.asarray(base_img.convert('L')).astype(float)
     E = carga(nom, base_img.size)
+    if nom in globals().get('EN_GESTO', {}) and EN_GESTO[nom] in COEF and globals().get('_SEGUNDO'):
+        cx, cy = COEF[EN_GESTO[nom]]      # ya está en el marco de su gesto madre: misma afín que ella
+        return _transforma(E, cx, cy)
+    A = np.asarray(base_img.convert('L')).astype(float)
     B = np.asarray(E.convert('L')).astype(float)
     pts = []
     for y0 in range(100, A.shape[0] - 200, 180):
@@ -55,6 +68,11 @@ def alineada(nom, base_img):
         M, P = M[k], P[k]
     print('  ', nom, 'escala %.4f %.4f desplaz %.1f %.1f' % (cx[0], cy[1], cx[2], cy[2]))
     # salida en el marco base: pixel base (x,y) <- edición (cx·(x,y,1), cy·(x,y,1))
+    COEF[nom] = (cx, cy)
+    return _transforma(E, cx, cy)
+
+
+def _transforma(E, cx, cy):
     s = np.asarray(E.transform(E.size, Image.AFFINE, tuple(cx) + tuple(cy), resample=Image.BICUBIC)).copy()
     v = s.max(2) > 14                     # la afín deja franjas negras en los bordes: se repite la última fila/columna buena
     f = np.nonzero(v.mean(1) > 0.5)[0]; c = np.nonzero(v.mean(0) > 0.5)[0]
@@ -68,6 +86,21 @@ def alineada(nom, base_img):
 
 for k, v in BASES.items():
     carga(v).save(f'img/{k}.jpg', quality=92)
+# gestos hechos editando OTRO gesto (no la escena): primero se pegan sobre ese gesto en bruto, en su marco, y luego se
+# tratan como un gesto más de la escena (alinear dos veces de golpe fallaba: la imagen salía emborronada)
+EN_GESTO = {'br_riesgo_d': 'br_riesgo_b', 'br_detox_d': 'br_detox_b'}
+for nom, madre in EN_GESTO.items():
+    A = carga(madre); a = np.asarray(A).astype(int)
+    b = np.asarray(alineada(nom, A)).astype(int)
+    d = ndi.binary_opening(np.abs(a - b).max(2) > 45, iterations=2)
+    lab, n = ndi.label(ndi.binary_dilation(d, iterations=8))
+    m = ndi.binary_fill_holes(np.isin(lab, [i + 1 for i, t in enumerate(ndi.sum(d, lab, range(1, n + 1))) if t > 1500]))
+    al = np.asarray(Image.fromarray((m * 255).astype('uint8')).filter(ImageFilter.GaussianBlur(3))).astype(float)[..., None] / 255
+    Image.fromarray((a * (1 - al) + b * al).astype('uint8')).save(f'crudo/{nom}_en_gesto.png')
+_carga_orig = carga
+_SEGUNDO = True
+def carga(n, tam=None):
+    return _carga_orig(n + '_en_gesto' if n in EN_GESTO else n, tam)
 for nom, base in VARIANTES.items():
     A = Image.open(f'img/{base}.jpg').convert('RGB'); a = np.asarray(A).astype(int)
     b = np.asarray(alineada(nom, A)).astype(int)
@@ -95,4 +128,8 @@ for base, (fuente, (x0, x1, y0, y1)) in BOCAS.items():
     al = np.asarray(Image.fromarray((m * 255).astype('uint8')).filter(ImageFilter.GaussianBlur(2)))
     out = np.dstack([b.astype('uint8'), al]); out[al == 0, :3] = 0
     Image.fromarray(out, 'RGBA').save(f'img/{base}_boca.png', optimize=True)
-    print(base, 'boca en', int(mx), int(my))
+    print(base, 'boca en', int(mx), int(my))# los gestos alineados dos veces pueden dejar una franja mala abajo: esas filas, del gesto madre (mismo decorado)
+for nom, madre in EN_GESTO.items():
+    a = np.asarray(Image.open(f'img/{nom}.jpg')).copy(); m = np.asarray(Image.open(f'img/{madre}.jpg'))
+    a[-100:] = m[-100:]
+    Image.fromarray(a).save(f'img/{nom}.jpg', quality=92)
