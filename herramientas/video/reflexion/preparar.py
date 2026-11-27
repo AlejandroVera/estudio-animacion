@@ -10,7 +10,7 @@ BASES = {'br_papeletas': 'br_papeletas', 'br_indeciso': 'br_indeciso_1', 'es_sus
 VARIANTES = {'br_indeciso_b': 'br_indeciso'}
 HASTA_Y = {'br_indeciso_b': 0.468}   # solo se copia por encima de esta altura (la mesa la mueve la IA)   # el chico se rasca la cabeza (se alterna con la base)
 BOCAS = {'es_pprosa': ('es_pprosa_bk', (0.3, 0.75, 0.45, 0.65)), 'es_suspira': ('es_suspira_bk', (0.33, 0.62, 0.5, 0.66)),
-         'es_stand': ('es_stand_bk', (0.38, 0.68, 0.36, 0.52))}
+         'es_stand': ('es_stand_bk', (0.44, 0.58, 0.33, 0.40))}   # solo la pantalla del bot
 
 
 def carga(n, tam=None):
@@ -60,8 +60,12 @@ for k, v in BASES.items():
 # lleva al marco del original para que la boca del bot siga encajando
 _s = np.asarray(alineada('es_stand2_1', carga('es_stand'))).copy()
 _v = _s.max(2) > 12                          # la afín deja franjas negras en los bordes: se repite el borde
-_f = np.nonzero(_v.mean(1) > 0.98)[0]; _c = np.nonzero(_v.mean(0) > 0.98)[0]
+_f = np.nonzero(_v.mean(1) > 0.5)[0]; _c = np.nonzero(_v.mean(0) > 0.5)[0]   # borde = filas/columnas casi enteras en negro
 _s[:_f[0]] = _s[_f[0]]; _s[_f[-1] + 1:] = _s[_f[-1]]; _s[:, :_c[0]] = _s[:, _c[0]:_c[0] + 1]; _s[:, _c[-1] + 1:] = _s[:, _c[-1]:_c[-1] + 1]
+for _y in range(_s.shape[0] - 40, _s.shape[0]):       # restos negros sueltos en la última franja
+    _n = _s[_y].max(1) < 14; _s[_y][_n] = _s[_y - 1][_n]
+for _x in range(_s.shape[1] - 40, _s.shape[1]):
+    _n = _s[:, _x].max(1) < 14; _s[:, _x][_n] = _s[:, _x - 1][_n]
 Image.fromarray(_s).save('img/es_stand.jpg', quality=92)
 for nom, base in VARIANTES.items():
     A = Image.open(f'img/{base}.jpg').convert('RGB'); a = np.asarray(A).astype(int)

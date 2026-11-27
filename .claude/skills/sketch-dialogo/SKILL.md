@@ -139,3 +139,7 @@ Rafa `Zb72NBThGN2Rv3y1RSTT`), nutri, Alejandro (Daniel - Podcast). Si falta el o
 - **Dibujo de un personaje mirando a otro**: comprobar que cabeza y cuerpo miran hacia el mismo lado (salió el chico de
   espaldas con la cabeza de perfil: «está girado raro»). La camiseta de montaña va DELANTE: de espaldas, lisa.
 
+- **Al rehacer un plano que ya tenía capas** (boca, gestos): recalcular las capas sobre el dibujo nuevo y limitar la
+  caja de la boca a la cara de quien habla (la caja antigua cogía la cabeza vieja del otro y la pegaba encima). Al
+  rellenar los bordes negros que deja la alineación, borde = filas/columnas CASI ENTERAS negras (con «casi ninguna
+  negra» se tomaban por borde las filas con trazos y se emborronaba media imagen). Mirar el dibujo final ENTERO.
