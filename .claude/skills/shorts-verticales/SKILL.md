@@ -238,3 +238,7 @@ Ejemplo completo: `herramientas/shorts/domingo/` (3 shorts del vídeo «domingo�
   `seguido` (sin golpe de aire) y su propia alternancia. A Ana se le cambian solo los brazos (misma cabeza = sirve la
   misma capa de boca). Un gesto hecho editando OTRO gesto se pega primero sobre ese gesto en bruto y se lleva a la escena
   con la MISMA afín del gesto madre (medirla otra vez fallaba y salía la imagen emborronada).
+- 2026-11-27 («la boca permanece cerrada todo el rato»): la locución de `voz.py generar` NO lleva `quien` en las palabras
+  y con `hablan` el montador solo abre la boca del que habla según ese campo: sin él, NADIE abre la boca. Poner
+  `quien='ANA'` (o el narrador) en todas las palabras al preparar la voz. Antes de entregar, mirar SIEMPRE una tira de
+  recortes AMPLIADOS de la boca a 8 fps en dos planos del narrador (la hoja de contactos pequeña no lo enseña).

@@ -29,6 +29,7 @@ fin = nt(P[-1]['fin']) + 0.12
 y = y[:int(fin * SR)]; y[-int(0.08 * SR):] *= np.linspace(1, 0, int(0.08 * SR))
 subprocess.run(['ffmpeg', '-v', 'error', '-y', '-f', 's16le', '-ar', str(SR), '-ac', '1', '-i', '-', '-b:a', '192k', 'voz/ni.mp3'],
                input=np.clip(y, -32768, 32767).astype(np.int16).tobytes(), check=True)
-J['palabras'] = [dict(p, inicio=nt(p['inicio']), fin=nt(p['fin'])) for p in J['palabras']]
+# «quien» en cada palabra: sin él el montador no sabe que habla Ana y no le abre la boca
+J['palabras'] = [dict(p, inicio=nt(p['inicio']), fin=nt(p['fin']), quien='ANA') for p in J['palabras']]
 json.dump(J, open('voz/ni.json', 'w'), ensure_ascii=False)
 print('pausas acortadas', len(quitar), '->', round(len(y) / SR, 2), 's')
