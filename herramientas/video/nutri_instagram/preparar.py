@@ -1,6 +1,7 @@
 """Prepara los dibujos del vídeo «Nutricionista de Instagram» (Ana Cardo, vertical): bases a img/, variantes que
 copian solo lo que cambia (alineadas: las ediciones de Higgsfield salen ~1 % ampliadas) y bocas como capa RGBA.
   python3 preparar.py"""
+import os
 import numpy as np
 from PIL import Image, ImageFilter
 from scipy import ndimage as ndi
@@ -10,7 +11,7 @@ BASES = {n: n for n in ['es_pregunta', 'es_movil', 'br_requisitos', 'br_kilos', 
                          'br_detox', 'br_comer', 'es_final']}
 BASES['br_pan'] = 'br_pan_b'
 BASES['br_comer'] = 'br_comer2_1'      # el primero tenía tres manos
-BASES['br_metabolismo'] = 'br_metabolismo2'   # el primero tenía tres brazos
+BASES['br_metabolismo'] = 'br_metabolismo3'   # el 1.º y el 2.º tenían tres brazos/manos (mano extra tocando el móvil)
 BASES.update(br_reel='br_reel', br_comentario='br_comentario', br_impresora='br_impresora')          # la barra de pan rehecha (la primera parecía un pescado)
 VARIANTES = {'es_pregunta_b': 'es_pregunta', 'br_kilos_b': 'br_kilos', 'br_experto_b': 'br_experto',
              'br_batido_b': 'br_batido', 'br_panaderia_b': 'br_panaderia', 'br_formacion_b': 'br_formacion',
@@ -90,7 +91,7 @@ for k, v in BASES.items():
     carga(v).save(f'img/{k}.jpg', quality=92)
 # gestos hechos editando OTRO gesto (no la escena): primero se pegan sobre ese gesto en bruto, en su marco, y luego se
 # tratan como un gesto más de la escena (alinear dos veces de golpe fallaba: la imagen salía emborronada)
-EN_GESTO = {'br_riesgo_d': 'br_riesgo_b', 'br_detox_d': 'br_detox_b'}
+EN_GESTO = {'br_metabolismo_b': 'br_metabolismo3', 'br_riesgo_d': 'br_riesgo_b', 'br_detox_d': 'br_detox_b'}
 for nom, madre in EN_GESTO.items():
     A = carga(madre); a = np.asarray(A).astype(int)
     b = np.asarray(alineada(nom, A)).astype(int)
@@ -133,6 +134,8 @@ for base, (fuente, (x0, x1, y0, y1)) in BOCAS.items():
     Image.fromarray(out, 'RGBA').save(f'img/{base}_boca.png', optimize=True)
     print(base, 'boca en', int(mx), int(my))# los gestos alineados dos veces pueden dejar una franja mala abajo: esas filas, del gesto madre (mismo decorado)
 for nom, madre in EN_GESTO.items():
+    if not os.path.exists(f'img/{madre}.jpg'):
+        continue                                 # madre que es la propia base (ya en su marco)
     a = np.asarray(Image.open(f'img/{nom}.jpg')).copy(); m = np.asarray(Image.open(f'img/{madre}.jpg'))
     a[-100:] = m[-100:]
     Image.fromarray(a).save(f'img/{nom}.jpg', quality=92)

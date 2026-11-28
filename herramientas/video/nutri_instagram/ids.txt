@@ -80,3 +80,4 @@ br_impresora a7258bbc-aaa1-49db-9d81-b052d510bd5a
 br_metabolismo_b 58cef556-decd-4a1b-b8e7-55f292110816 (sobre metabolismo2)
 br_experto_b 3dbfd3a0-e52d-4fdd-9530-4017f638d48d (rehecho: tenía 3 manos)
 br_detox_d c252b9ab-e38b-492c-bd97-82dbda51df80 (rehecho: tenía 3 brazos)
+br_metabolismo3 1b765ca1-75f5-4f74-8fd7-f6b36d9ebdd9 (base nueva: la anterior tenía 3 manos)
