@@ -72,3 +72,9 @@ es_movil_bk 5caa4f85-a378-4d71-95ab-1296a9b3dfba
 es_campeon_bk ee5f1b49-30e5-4f7b-943b-746d8cda6a5e
 es_carrera_bk a7c5dc61-96ca-4800-abee-c43f2f27eeb3
 es_final_bk c7342c44-f9ad-48dd-841f-98d3f08e2297
+br_metabolismo2 6e3b2fc4-fd5c-4b5c-b77b-cfe6b9f9cb77
+es_pregunta_bk aba8d510-0b8f-4c7a-8d3e-2d2c6d206589
+br_reel 78373a8b-1a38-4cb3-9a62-bc373d89deb0
+br_comentario b3fb742c-6aeb-4b01-af0e-fb6913515c23
+br_impresora a7258bbc-aaa1-49db-9d81-b052d510bd5a
+br_metabolismo_b 58cef556-decd-4a1b-b8e7-55f292110816 (sobre metabolismo2)

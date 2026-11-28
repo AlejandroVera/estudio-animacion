@@ -73,3 +73,32 @@ def bocadillo(n):
 for n in ('br_formacion', 'br_formacion_b', 'br_formacion_c'):
     bocadillo(n)
 print('textos arreglados')
+
+
+def texto_girado(im, txt, cx, cy, tam, ang, col=(25, 25, 25)):
+    f = ImageFont.truetype(F, tam)
+    capa = Image.new('RGBA', (int(tam * len(txt) * 0.75) + 40, tam * 2), (0, 0, 0, 0))
+    d = ImageDraw.Draw(capa)
+    bb = d.textbbox((0, 0), txt, font=f)
+    x, y = (capa.width - (bb[2] - bb[0])) / 2 - bb[0], (capa.height - (bb[3] - bb[1])) / 2 - bb[1]
+    for dx, dy in [(0, 0), (1, 0), (0, 1), (1, 1)]:
+        d.text((x + dx, y + dy), txt, font=f, fill=col + (255,))
+    capa = capa.rotate(ang, resample=Image.BICUBIC, expand=True)
+    im.paste(capa, (int(cx - capa.width / 2), int(cy - capa.height / 2)), capa)
+
+
+def comentarios(n):
+    """la pantalla de comentarios del móvil (girada ~12°): «Comments» -> «Comentarios» y la pregunta en el bocadillo"""
+    im = Image.open(f'img/{n}.jpg').convert('RGB'); a = np.asarray(im).copy()
+    fondo = tuple(int(v) for v in np.median(a[790:830, 420:500].reshape(-1, 3), 0))
+    m = Image.new('L', im.size, 0)
+    ImageDraw.Draw(m).polygon([(555, 742), (790, 690), (802, 760), (567, 812)], fill=255)
+    a[np.asarray(m) > 0] = fondo
+    im = Image.fromarray(a)
+    texto_girado(im, 'Comentarios', 680, 752, 58, 12.3)
+    texto_girado(im, '¿Y tu formación?', 842, 1148, 56, 12.3)
+    im.save(f'img/{n}.jpg', quality=92)
+
+
+comentarios('br_comentario')
+print('comentarios escritos')

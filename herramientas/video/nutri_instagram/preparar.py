@@ -9,7 +9,9 @@ BASES = {n: n for n in ['es_pregunta', 'es_movil', 'br_requisitos', 'br_kilos', 
                          'br_batido', 'br_panaderia', 'es_campeon', 'br_formacion', 'br_pdf', 'es_carrera', 'br_riesgo',
                          'br_detox', 'br_comer', 'es_final']}
 BASES['br_pan'] = 'br_pan_b'
-BASES['br_comer'] = 'br_comer2_1'      # el primero tenía tres manos          # la barra de pan rehecha (la primera parecía un pescado)
+BASES['br_comer'] = 'br_comer2_1'      # el primero tenía tres manos
+BASES['br_metabolismo'] = 'br_metabolismo2'   # el primero tenía tres brazos
+BASES.update(br_reel='br_reel', br_comentario='br_comentario', br_impresora='br_impresora')          # la barra de pan rehecha (la primera parecía un pescado)
 VARIANTES = {'es_pregunta_b': 'es_pregunta', 'br_kilos_b': 'br_kilos', 'br_experto_b': 'br_experto',
              'br_batido_b': 'br_batido', 'br_panaderia_b': 'br_panaderia', 'br_formacion_b': 'br_formacion',
              'br_pdf_b': 'br_pdf', 'br_riesgo_b': 'br_riesgo', 'br_detox_b': 'br_detox', 'es_final_b': 'es_final', 'br_comer_b': 'br_comer',

@@ -246,3 +246,10 @@ Ejemplo completo: `herramientas/shorts/domingo/` (3 shorts del vídeo «domingo�
   OTRA consulta y otra Ana. Los vídeos de un personaje que ya tiene vídeos se hacen EDITANDO sus escenas anteriores
   (Ana: `nutri_bascula/img/es_orgullosa.jpg`, `nutri_tetris/img/es_portatil.jpg` = su consulta de siempre con diploma,
   reloj, póster de verduras y mesa con fruta), no con la referencia de personaje sola.
+- 2026-11-28 («lo siento muy plano, siempre los mismos recursos visuales, le falta ritmo… los otros estaban mejor»): el
+  secundario salía SIEMPRE igual (de cuerpo entero, de frente, en el centro, plano general). Lo que tenían los buenos y
+  faltaba: 1) un ENCUADRE distinto por plano (`zoom` 1,1-1,3 y `cy` hacia la cara, no todo general); 2) planos de detalle
+  intercalados (la pantalla del móvil con su vídeo, los comentarios con la pregunta escrita, él en la impresora); 3) GOLPES
+  de zoom (1,3-1,9) en el remate de cada frase, apuntando a lo que cuenta el chiste (la cara, el panadero llorando, la
+  seguidora desmayada) con un whoosh muy bajo. Y revisar brazos en recortes ampliados de CADA dibujo base (se coló uno con
+  tres brazos) y la capa de boca sobre una cara con sonrisa torcida (asomaba la sonrisa: pedir la boca «centrada, sin labios»).

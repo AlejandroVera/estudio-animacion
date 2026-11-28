@@ -91,11 +91,43 @@
    ]
   },
   {
+   "t0": 6.068,
+   "fondo": "img/es_movil_b.jpg",
+   "zoom": 1.3,
+   "cx": 0.55,
+   "cy": 0.38,
+   "bocas": {},
+   "habla": true,
+   "hablan": {
+    "ANA": {
+     "img/es_movil.jpg": [
+      "img/es_movil_boca.png"
+     ],
+     "img/es_movil_b.jpg": [
+      "img/es_movil_boca.png"
+     ]
+    }
+   },
+   "cambios": [],
+   "seguido": true,
+   "golpe": true
+  },
+  {
    "t0": 6.845000000000001,
-   "fondo": "img/br_requisitos.jpg",
-   "zoom": 1.0,
+   "fondo": "img/br_reel.jpg",
+   "zoom": 1.08,
    "cx": 0.5,
    "cy": 0.5,
+   "bocas": {},
+   "habla": false,
+   "sub_y": 1680
+  },
+  {
+   "t0": 8.862,
+   "fondo": "img/br_requisitos.jpg",
+   "zoom": 1.3,
+   "cx": 0.5,
+   "cy": 0.33,
    "bocas": {},
    "habla": false,
    "sub_y": 1680,
@@ -104,7 +136,7 @@
      "img/br_requisitos.jpg",
      "img/br_requisitos_b.jpg"
     ],
-    "cada": 0.6,
+    "cada": 0.5,
     "desde": 0,
     "hasta": 999
    },
@@ -156,11 +188,34 @@
    ]
   },
   {
+   "t0": 12.064,
+   "fondo": "img/br_kilos.jpg",
+   "zoom": 1.6,
+   "cx": 0.5,
+   "cy": 0.2,
+   "bocas": {},
+   "habla": false,
+   "sub_y": 1680,
+   "alterna": {
+    "imgs": [
+     "img/br_kilos.jpg",
+     "img/br_kilos_b.jpg",
+     "img/br_kilos_c.jpg"
+    ],
+    "cada": 0.35,
+    "desde": 0,
+    "hasta": 999
+   },
+   "cambios": [],
+   "seguido": true,
+   "golpe": true
+  },
+  {
    "t0": 12.433,
    "fondo": "img/br_experto.jpg",
-   "zoom": 1.0,
+   "zoom": 1.15,
    "cx": 0.5,
-   "cy": 0.5,
+   "cy": 0.4,
    "bocas": {},
    "habla": false,
    "sub_y": 1680,
@@ -181,11 +236,33 @@
    ]
   },
   {
+   "t0": 13.825999999999999,
+   "fondo": "img/br_experto_b.jpg",
+   "zoom": 1.7,
+   "cx": 0.52,
+   "cy": 0.19,
+   "bocas": {},
+   "habla": false,
+   "sub_y": 1680,
+   "alterna": {
+    "imgs": [
+     "img/br_experto.jpg",
+     "img/br_experto_c.jpg"
+    ],
+    "cada": 0.45,
+    "desde": 0,
+    "hasta": 13.825999999999999
+   },
+   "cambios": [],
+   "seguido": true,
+   "golpe": true
+  },
+  {
    "t0": 14.693999999999999,
    "fondo": "img/br_metabolismo.jpg",
-   "zoom": 1.15,
+   "zoom": 1.3,
    "cx": 0.5,
-   "cy": 0.4,
+   "cy": 0.35,
    "bocas": {},
    "habla": false,
    "alterna": {
@@ -212,11 +289,32 @@
    ]
   },
   {
+   "t0": 17.245,
+   "fondo": "img/br_metabolismo.jpg",
+   "zoom": 1.5,
+   "cx": 0.5,
+   "cy": 0.3,
+   "bocas": {},
+   "habla": false,
+   "alterna": {
+    "imgs": [
+     "img/br_metabolismo.jpg",
+     "img/br_metabolismo_b.jpg"
+    ],
+    "cada": 0.6,
+    "desde": 0,
+    "hasta": 999
+   },
+   "cambios": [],
+   "seguido": true,
+   "golpe": true
+  },
+  {
    "t0": 17.954,
    "fondo": "img/br_batido.jpg",
-   "zoom": 1.0,
+   "zoom": 1.2,
    "cx": 0.5,
-   "cy": 0.5,
+   "cy": 0.38,
    "bocas": {},
    "habla": false,
    "sub_y": 1680,
@@ -250,11 +348,33 @@
    ]
   },
   {
+   "t0": 20.601000000000003,
+   "fondo": "img/br_batido_b.jpg",
+   "zoom": 1.5,
+   "cx": 0.5,
+   "cy": 0.25,
+   "bocas": {},
+   "habla": false,
+   "sub_y": 1680,
+   "alterna": {
+    "imgs": [
+     "img/br_batido.jpg",
+     "img/br_batido_c.jpg"
+    ],
+    "cada": 0.55,
+    "desde": 0,
+    "hasta": 20.601000000000003
+   },
+   "cambios": [],
+   "seguido": true,
+   "golpe": true
+  },
+  {
    "t0": 21.341,
    "fondo": "img/br_pan.jpg",
-   "zoom": 1.0,
+   "zoom": 1.12,
    "cx": 0.5,
-   "cy": 0.5,
+   "cy": 0.42,
    "bocas": {},
    "habla": false,
    "sub_y": 1680,
@@ -328,6 +448,18 @@
    ]
   },
   {
+   "t0": 27.049000000000003,
+   "fondo": "img/br_panaderia_b.jpg",
+   "zoom": 1.9,
+   "cx": 0.68,
+   "cy": 0.22,
+   "bocas": {},
+   "habla": false,
+   "cambios": [],
+   "seguido": true,
+   "golpe": true
+  },
+  {
    "t0": 27.603,
    "fondo": "img/es_campeon.jpg",
    "zoom": 1.0,
@@ -366,11 +498,43 @@
    ]
   },
   {
+   "t0": 29.379,
+   "fondo": "img/es_campeon_b.jpg",
+   "zoom": 1.3,
+   "cx": 0.5,
+   "cy": 0.38,
+   "bocas": {},
+   "habla": true,
+   "hablan": {
+    "ANA": {
+     "img/es_campeon.jpg": [
+      "img/es_campeon_boca.png"
+     ],
+     "img/es_campeon_b.jpg": [
+      "img/es_campeon_boca.png"
+     ]
+    }
+   },
+   "cambios": [],
+   "seguido": true,
+   "golpe": true
+  },
+  {
    "t0": 30.259,
-   "fondo": "img/br_formacion.jpg",
-   "zoom": 1.0,
+   "fondo": "img/br_comentario.jpg",
+   "zoom": 1.05,
    "cx": 0.5,
    "cy": 0.5,
+   "bocas": {},
+   "habla": false,
+   "sub_y": 1680
+  },
+  {
+   "t0": 31.769000000000002,
+   "fondo": "img/br_formacion.jpg",
+   "zoom": 1.3,
+   "cx": 0.5,
+   "cy": 0.42,
    "bocas": {},
    "habla": false,
    "alterna": {
@@ -378,29 +542,39 @@
      "img/br_formacion.jpg",
      "img/br_formacion_c.jpg"
     ],
-    "cada": 0.45,
+    "cada": 0.3,
     "desde": 0,
-    "hasta": 32.129
+    "hasta": 32.279
    },
    "cambios": [
     {
-     "t": 32.129,
+     "t": 32.279,
      "fondo": "img/br_formacion_b.jpg"
     }
    ]
   },
   {
    "t0": 32.717999999999996,
-   "fondo": "img/br_pdf.jpg",
+   "fondo": "img/br_impresora.jpg",
    "zoom": 1.0,
    "cx": 0.5,
    "cy": 0.5,
    "bocas": {},
    "habla": false,
+   "sub_y": 1680
+  },
+  {
+   "t0": 34.285999999999994,
+   "fondo": "img/br_pdf.jpg",
+   "zoom": 1.15,
+   "cx": 0.5,
+   "cy": 0.4,
+   "bocas": {},
+   "habla": false,
    "sub_y": 1680,
    "cambios": [
     {
-     "t": 34.285999999999994,
+     "t": 35.238,
      "fondo": "img/br_pdf_c.jpg"
     },
     {
@@ -452,6 +626,37 @@
    }
   },
   {
+   "t0": 38.114,
+   "fondo": "img/es_carrera.jpg",
+   "zoom": 1.4,
+   "cx": 0.55,
+   "cy": 0.4,
+   "bocas": {},
+   "habla": true,
+   "hablan": {
+    "ANA": {
+     "img/es_carrera.jpg": [
+      "img/es_carrera_boca.png"
+     ],
+     "img/es_carrera_b.jpg": [
+      "img/es_carrera_boca.png"
+     ]
+    }
+   },
+   "alterna": {
+    "imgs": [
+     "img/es_carrera.jpg",
+     "img/es_carrera_b.jpg"
+    ],
+    "cada": 0.3,
+    "desde": 0,
+    "hasta": 999
+   },
+   "cambios": [],
+   "seguido": true,
+   "golpe": true
+  },
+  {
    "t0": 38.888999999999996,
    "fondo": "img/br_riesgo.jpg",
    "zoom": 1.0,
@@ -491,11 +696,33 @@
    "seguido": true
   },
   {
+   "t0": 40.815999999999995,
+   "fondo": "img/br_riesgo_b.jpg",
+   "zoom": 1.7,
+   "cx": 0.24,
+   "cy": 0.6,
+   "bocas": {},
+   "habla": false,
+   "sub_y": 1680,
+   "alterna": {
+    "imgs": [
+     "img/br_riesgo_b.jpg",
+     "img/br_riesgo_d.jpg"
+    ],
+    "cada": 0.55,
+    "desde": 0,
+    "hasta": 999
+   },
+   "seguido": true,
+   "cambios": [],
+   "golpe": true
+  },
+  {
    "t0": 41.486999999999995,
    "fondo": "img/br_detox.jpg",
-   "zoom": 1.0,
+   "zoom": 1.15,
    "cx": 0.5,
-   "cy": 0.5,
+   "cy": 0.4,
    "bocas": {},
    "habla": false,
    "sub_y": 1680,
@@ -544,11 +771,33 @@
    "seguido": true
   },
   {
+   "t0": 46.961999999999996,
+   "fondo": "img/br_detox_b.jpg",
+   "zoom": 1.55,
+   "cx": 0.5,
+   "cy": 0.22,
+   "bocas": {},
+   "habla": false,
+   "sub_y": 1680,
+   "alterna": {
+    "imgs": [
+     "img/br_detox_b.jpg",
+     "img/br_detox_d.jpg"
+    ],
+    "cada": 0.6,
+    "desde": 0,
+    "hasta": 999
+   },
+   "seguido": true,
+   "cambios": [],
+   "golpe": true
+  },
+  {
    "t0": 47.586,
    "fondo": "img/br_comer.jpg",
-   "zoom": 1.0,
+   "zoom": 1.2,
    "cx": 0.5,
-   "cy": 0.5,
+   "cy": 0.36,
    "bocas": {},
    "habla": false,
    "sub_y": 1680,
@@ -561,6 +810,28 @@
     "desde": 0,
     "hasta": 999
    }
+  },
+  {
+   "t0": 50.022,
+   "fondo": "img/br_comer.jpg",
+   "zoom": 1.5,
+   "cx": 0.5,
+   "cy": 0.24,
+   "bocas": {},
+   "habla": false,
+   "sub_y": 1680,
+   "alterna": {
+    "imgs": [
+     "img/br_comer_b.jpg",
+     "img/br_comer.jpg"
+    ],
+    "cada": 0.45,
+    "desde": 0,
+    "hasta": 999
+   },
+   "cambios": [],
+   "seguido": true,
+   "golpe": true
   },
   {
    "t0": 50.541999999999994,
@@ -631,6 +902,28 @@
      "caja": true
     }
    ]
+  },
+  {
+   "t0": 55.939,
+   "fondo": "img/es_final_b.jpg",
+   "zoom": 1.3,
+   "cx": 0.5,
+   "cy": 0.4,
+   "bocas": {},
+   "habla": true,
+   "hablan": {
+    "ANA": {
+     "img/es_final.jpg": [
+      "img/es_final_boca.png"
+     ],
+     "img/es_final_c.jpg": [
+      "img/es_final_boca.png"
+     ]
+    }
+   },
+   "cambios": [],
+   "seguido": true,
+   "golpe": true
   }
  ]
 }
