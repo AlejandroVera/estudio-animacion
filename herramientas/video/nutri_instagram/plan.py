@@ -51,7 +51,7 @@ P = [
     # «Se llama tener un móvil.»
     esc('es_movil', T('se') - c, {'es_movil': 'es_movil', 'es_movil_b': 'es_movil'},
         cambios=[ch(T('tener') - c, 'es_movil_b'), ch(T('móvil') + 0.35, 'es_movil')],
-        rotulos=[R(T('móvil') - b, 'UN MÓVIL', 1640, 'rojo', 150)]),
+        rotulos=[R(T('un') - b, 'UN MÓVIL', 1640, 'rojo', 150)]),
     # «Y para conseguirlo solo necesitas dos requisitos fundamentales:»
     esc('br_reel', T('y') - c, zoom=1.08, cy=0.5),
     esc('br_requisitos', T('dos') - c, zoom=1.3, cy=0.33, alterna=alt(['br_requisitos', 'br_requisitos_b'], 0.5),
@@ -64,7 +64,7 @@ P = [
         cambios=[ch(T('experto') - c, 'br_experto_b')]),
     # «Da igual que no sepas qué significa la palabra metabolismo.»
     esc('br_metabolismo', T('da') - c, zoom=1.3, cy=0.35, alterna=alt(['br_metabolismo', 'br_metabolismo_b'], 0.6),
-        rotulos=[R(T('metabolismo') - b, 'METABOLiSMO', 300, 'azul', 120)]),
+        rotulos=[R(T('palabra') - b, 'METABOLiSMO', 300, 'azul', 120)]),
     # «Da igual que confundas una proteína con un batido de fresa.»
     esc('br_batido', T('da', 1) - c, zoom=1.2, cy=0.38, alterna=alt(['br_batido', 'br_batido_c'], 0.55, hasta=T('fresa') - c),
         cambios=[ch(T('fresa') - c, 'br_batido_b')], rotulos=[R(T('proteína') - b, 'PROTEÍNA', 1450, 'rojo', 130)]),
@@ -103,8 +103,8 @@ P = [
     # «¿Para qué vas a estudiar cuatro años, luego hacer un máster y continuar formándote durante toda tu vida?»
     esc('es_final', T('para', 1) - c, {'es_final': 'es_final', 'es_final_c': 'es_final'},
         cambios=[ch(T('cuatro') - c, 'es_final_c'), ch(T('máster') - c, 'es_final'), ch(T('toda') - c, 'es_final_b')],
-        rotulos=[R(T('cuatro') - b, '4 AÑOS', 1600, 'negro', 130, T('luego') - 0.05),
-                 R(T('máster') - b, '+ MÁSTER', 1600, 'negro', 130, T('continuar') - 0.05),
+        rotulos=[R(T('cuatro') - b, '4 AÑOS', 1600, 'negro', 130, T('máster') - b - 0.02),
+                 R(T('máster') - b, '+ MÁSTER', 1600, 'negro', 130, T('toda') - b - 0.02),
                  R(T('toda') - b, 'TODA LA ViDA', 1600, 'rojo', 130)]),
 ]
 
@@ -123,7 +123,7 @@ for t, z, gx, gy in GOLPES:
         if cmb['t'] <= t:
             f = cmb['fondo']
     g.update(t0=t, zoom=z, cx=gx, cy=gy, fondo=f, cambios=[], seguido=True, golpe=True)
-    g.pop('rotulos', None)
+    # los rótulos SIGUEN (son de pantalla): si no, un golpe borra el rótulo a medio escribir
     if g.get('alterna', {}).get('hasta', 999) < t:
         g.pop('alterna')
     nuevos.append(g)

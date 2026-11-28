@@ -110,6 +110,7 @@ for nom, base in VARIANTES.items():
     lab, n = ndi.label(ndi.binary_dilation(d, iterations=8))
     m = np.isin(lab, [i + 1 for i, t in enumerate(ndi.sum(d, lab, range(1, n + 1))) if t > 1500]) if n else d
     m = ndi.binary_fill_holes(m)
+    m[:16] = False; m[-16:] = False; m[:, :16] = False; m[:, -16:] = False   # los bordes, siempre de la base (la afín deja rayas)
     if nom in HASTA_Y:
         m[int(HASTA_Y[nom] * m.shape[0]):] = False
     al = np.asarray(Image.fromarray((m * 255).astype('uint8')).filter(ImageFilter.GaussianBlur(3))).astype(float)[..., None] / 255

@@ -78,3 +78,5 @@ br_reel 78373a8b-1a38-4cb3-9a62-bc373d89deb0
 br_comentario b3fb742c-6aeb-4b01-af0e-fb6913515c23
 br_impresora a7258bbc-aaa1-49db-9d81-b052d510bd5a
 br_metabolismo_b 58cef556-decd-4a1b-b8e7-55f292110816 (sobre metabolismo2)
+br_experto_b 3dbfd3a0-e52d-4fdd-9530-4017f638d48d (rehecho: tenía 3 manos)
+br_detox_d c252b9ab-e38b-492c-bd97-82dbda51df80 (rehecho: tenía 3 brazos)

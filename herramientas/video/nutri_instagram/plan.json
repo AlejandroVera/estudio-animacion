@@ -78,7 +78,7 @@
    ],
    "rotulos": [
     {
-     "t0": 5.868,
+     "t0": 5.635000000000001,
      "texto": "UN MÓVIL",
      "x": 540,
      "y": 1640,
@@ -109,6 +109,19 @@
     }
    },
    "cambios": [],
+   "rotulos": [
+    {
+     "t0": 5.635000000000001,
+     "texto": "UN MÓVIL",
+     "x": 540,
+     "y": 1640,
+     "color": "rojo",
+     "tam": 150,
+     "centro": true,
+     "fijo": true,
+     "caja": true
+    }
+   ],
    "seguido": true,
    "golpe": true
   },
@@ -206,6 +219,19 @@
     "desde": 0,
     "hasta": 999
    },
+   "rotulos": [
+    {
+     "t0": 11.269,
+     "texto": "-3 KG",
+     "x": 540,
+     "y": 1640,
+     "color": "rojo",
+     "tam": 170,
+     "centro": true,
+     "fijo": true,
+     "caja": true
+    }
+   ],
    "cambios": [],
    "seguido": true,
    "golpe": true
@@ -276,7 +302,7 @@
    },
    "rotulos": [
     {
-     "t0": 16.895,
+     "t0": 16.488,
      "texto": "METABOLiSMO",
      "x": 540,
      "y": 300,
@@ -305,6 +331,19 @@
     "desde": 0,
     "hasta": 999
    },
+   "rotulos": [
+    {
+     "t0": 16.488,
+     "texto": "METABOLiSMO",
+     "x": 540,
+     "y": 300,
+     "color": "azul",
+     "tam": 120,
+     "centro": true,
+     "fijo": true,
+     "caja": true
+    }
+   ],
    "cambios": [],
    "seguido": true,
    "golpe": true
@@ -366,6 +405,19 @@
     "hasta": 20.601000000000003
    },
    "cambios": [],
+   "rotulos": [
+    {
+     "t0": 19.237,
+     "texto": "PROTEÍNA",
+     "x": 540,
+     "y": 1450,
+     "color": "rojo",
+     "tam": 130,
+     "centro": true,
+     "fijo": true,
+     "caja": true
+    }
+   ],
    "seguido": true,
    "golpe": true
   },
@@ -456,6 +508,31 @@
    "bocas": {},
    "habla": false,
    "cambios": [],
+   "rotulos": [
+    {
+     "t0": 23.336000000000002,
+     "texto": "ENGORDA",
+     "x": 540,
+     "y": 230,
+     "color": "rojo",
+     "tam": 140,
+     "centro": true,
+     "fijo": true,
+     "caja": true,
+     "t1": 25.392
+    },
+    {
+     "t0": 25.442,
+     "texto": "MEDiO iNSTAGRAM",
+     "x": 540,
+     "y": 230,
+     "color": "negro",
+     "tam": 110,
+     "centro": true,
+     "fijo": true,
+     "caja": true
+    }
+   ],
    "seguido": true,
    "golpe": true
   },
@@ -516,6 +593,19 @@
     }
    },
    "cambios": [],
+   "rotulos": [
+    {
+     "t0": 28.979,
+     "texto": "CAMPEÓN",
+     "x": 540,
+     "y": 1650,
+     "color": "verde",
+     "tam": 150,
+     "centro": true,
+     "fijo": true,
+     "caja": true
+    }
+   ],
    "seguido": true,
    "golpe": true
   },
@@ -876,7 +966,7 @@
      "centro": true,
      "fijo": true,
      "caja": true,
-     "t1": 52.592000000000006
+     "t1": 53.07899999999999
     },
     {
      "t0": 53.099,
@@ -888,7 +978,7 @@
      "centro": true,
      "fijo": true,
      "caja": true,
-     "t1": 53.878
+     "t1": 55.20099999999999
     },
     {
      "t0": 55.221,
@@ -922,6 +1012,43 @@
     }
    },
    "cambios": [],
+   "rotulos": [
+    {
+     "t0": 51.558,
+     "texto": "4 AÑOS",
+     "x": 540,
+     "y": 1600,
+     "color": "negro",
+     "tam": 130,
+     "centro": true,
+     "fijo": true,
+     "caja": true,
+     "t1": 53.07899999999999
+    },
+    {
+     "t0": 53.099,
+     "texto": "+ MÁSTER",
+     "x": 540,
+     "y": 1600,
+     "color": "negro",
+     "tam": 130,
+     "centro": true,
+     "fijo": true,
+     "caja": true,
+     "t1": 55.20099999999999
+    },
+    {
+     "t0": 55.221,
+     "texto": "TODA LA ViDA",
+     "x": 540,
+     "y": 1600,
+     "color": "rojo",
+     "tam": 130,
+     "centro": true,
+     "fijo": true,
+     "caja": true
+    }
+   ],
    "seguido": true,
    "golpe": true
   }

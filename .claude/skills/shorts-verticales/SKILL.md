@@ -253,3 +253,9 @@ Ejemplo completo: `herramientas/shorts/domingo/` (3 shorts del vídeo «domingo�
   de zoom (1,3-1,9) en el remate de cada frase, apuntando a lo que cuenta el chiste (la cara, el panadero llorando, la
   seguidora desmayada) con un whoosh muy bajo. Y revisar brazos en recortes ampliados de CADA dibujo base (se coló uno con
   tres brazos) y la capa de boca sobre una cara con sonrisa torcida (asomaba la sonrisa: pedir la boca «centrada, sin labios»).
+- 2026-11-28 («hay un cacho que le salen 3 manos, revisa fotograma a fotograma»): los GESTOS editados son los que fallan
+  (la mano que sujetaba la pizarra se queda y aparece otra en las gafas; el brazo que se encogía se queda y otro se rasca).
+  Al pedir un gesto, decir qué hace CADA mano y que la otra «deja» lo que sujetaba. Revisión obligatoria: hoja de TODOS los
+  dibujos usados (bases, gestos, cambios) recortando la mitad de arriba a ~480 px y contar manos uno a uno. Además: los
+  GOLPES de zoom deben conservar los rótulos (si no, borran el rótulo a medio escribir), y buscar por código destellos de
+  un fotograma y rótulos que se ven enteros menos de 0,9 s.
